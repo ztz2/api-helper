@@ -1,0 +1,41 @@
+{
+  "name": "api-helper-monorepo",
+  "private": false,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm -r run build",
+    "watch": "pnpm --parallel -r run watch",
+    "publish": "pnpm changeset publish",
+    "changeset:exit": "changeset pre exit",
+    "changeset:version": "pnpm changeset version",
+    "changeset:pre-alpha": "changeset pre enter alpha",
+    "changeset:pre-beta": "changeset pre enter beta",
+    "changeset:pre-rc": "changeset pre enter rc",
+    "changeset:pre-next": "changeset pre enter next",
+    "publish:beta": "npm run changeset:pre-beta && npm run changeset:exit && npm run changeset:version && npm run publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.26.0"
+  },
+  "dependencies": {
+    "koa": "^2.14.1"
+  },
+  "version": "0.0.1",
+  "description": "api helper",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztz2/api-helper.git"
+  },
+  "keywords": [
+    "api-helper"
+  ],
+  "author": "ztz2",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ztz2/api-helper/issues"
+  },
+  "homepage": "https://github.com/ztz2/api-helper#readme"
+}

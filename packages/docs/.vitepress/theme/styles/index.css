@@ -1,0 +1,22 @@
+@import "./pages.css";
+@import "./badges.css";
+@import "./options-boxes.css";
+@import "./inline-demo.css";
+@import "./utilities.css";
+@import "./style-guide.css";
+
+.VPNavBarTitle > svg, .VPNavBarTitle > span{
+  display: none;
+}
+.VPNavBarTitle:before{
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-image: url("../assets/logo-red.svg");
+  background-size: cover;
+}
+.VPNavBarTitle:after{
+  content: 'API Helper';
+  font-weight: 600;
+}

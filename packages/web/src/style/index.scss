@@ -1,0 +1,47 @@
+@import "variable";
+@import "reset-arco";
+
+a{
+  color: $link-color;
+  text-decoration: none;
+  transition: color .25s;
+  &:hover{
+    color: $link-color--active;
+  }
+}
+.user-select-none{
+  user-select: none;
+}
+.a-tabs--simplify{
+  >.arco-tabs-nav{
+    &:before{
+      display: none;
+    }
+    >.arco-tabs-nav-tab{
+      justify-content: center;
+      .arco-tabs-tab-title{
+        font-size: 18px;
+      }
+    }
+  }
+  >.arco-tabs-content{
+    padding-top: 10px;
+  }
+}
+.a-space--shim{
+  margin-left: 2px;
+}
+
+.text-center{text-align: center;}
+
+.font-size-10{font-size: 10px;}
+.font-size-11{font-size: 11px;}
+.font-size-12{font-size: 12px;}
+.font-size-13{font-size: 13px;}
+.font-size-14{font-size: 14px;}
+.font-size-15{font-size: 15px;}
+.font-size-16{font-size: 16px;}
+.font-size-17{font-size: 17px;}
+.font-size-18{font-size: 19px;}
+.font-size-19{font-size: 19px;}
+.font-size-20{font-size: 20px;}

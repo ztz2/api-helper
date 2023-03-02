@@ -1,0 +1,282 @@
+<template>
+  <a-form
+    ref="formRef"
+    :model="formModel"
+    :rules="formRules"
+    layout="vertical"
+    auto-label-width
+  >
+    <a-tabs class="a-tabs--simplify" default-active-key="1">
+      <a-tab-pane key="1" title="配置选择">
+        <!--  基础配置  -->
+        <a-row :gutter="gutter">
+          <a-divider orientation="left"><span class="font-size-16">基础配置</span></a-divider>
+          <a-col :span="24">
+            <a-form-item
+                :rules="[{ required: true, message: '必填项' }]"
+                :validate-trigger="['change', 'input']"
+                label="API"
+                field="apiId"
+            >
+              <a-select v-model="formModel.apiId" :options="options.moduleList"></a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item
+                :rules="[{ required: true, message: '必填项' }]"
+                :validate-trigger="['change', 'input']"
+                label="模板"
+                field="tplId"
+            >
+              <a-select v-model="formModel.tplId" :options="templateList"></a-select>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <!--  Input 输入框属性配置  -->
+        <a-row style="margin-top: 6px">
+          <a-divider orientation="left"><span class="font-size-16">Input 输入框属性配置</span></a-divider>
+          <a-col :span="12">
+            <a-space>
+              <div>maxlength</div>
+              <div>
+                <a-form-item field="maxlength" no-style>
+                  <a-input-number v-model="formModel.maxlength" allow-clear hide-button />
+                </a-form-item>
+              </div>
+            </a-space>
+          </a-col>
+          <a-col :span="12">
+            <div style="margin-top: 4px">
+              <a-form-item field="placeholder" no-style>
+                <a-checkbox v-model="formModel.placeholder">生成placeholder</a-checkbox>
+              </a-form-item>
+            </div>
+          </a-col>
+        </a-row>
+        <!--  TS配置  -->
+        <a-row :gutter="gutter" style="margin-top: 32px">
+          <a-divider orientation="left"><span class="font-size-16">TS配置</span></a-divider>
+          <a-space :size="2" class="a-space--shim" direction="vertical">
+            <div><a-checkbox v-model="formModel.requestDataConstraint">请求数据参数类型约束</a-checkbox></div>
+            <div><a-checkbox v-model="formModel.responseDataConstraint">响应数据参数类型约束</a-checkbox></div>
+          </a-space>
+        </a-row>
+        <!--  其他配置  -->
+        <a-row :gutter="gutter" style="margin-top: 26px">
+          <a-divider orientation="left"><span class="font-size-16">其他配置</span></a-divider>
+          <a-space :size="2" class="a-space--shim" direction="vertical">
+            <div><a-checkbox v-model="formModel.semi">分号符</a-checkbox></div>
+            <div><a-checkbox v-model="formModel.crud">生成CURD</a-checkbox></div>
+            <div><a-checkbox v-model="formModel.grid">格栅布局</a-checkbox></div>
+            <div><a-checkbox v-model="formModel.generateLabel">Form表单项生成label</a-checkbox></div>
+          </a-space>
+        </a-row>
+      </a-tab-pane>
+      <a-tab-pane key="2" title="字段选择">
+        <a-row :gutter="5" style="width: 100%">
+          <a-col :span="12">
+            <a-card style="width: 100%">
+              <template #title>
+                <div class="text-center">请求数据字段</div>
+              </template>
+              <div style="width: 100%; height: calc(100vh - 277px)">
+                <ah-tree-field v-model:value="formModel.requestFieldIds" :data="requestFieldTree" />
+              </div>
+            </a-card>
+          </a-col>
+          <a-col :span="12">
+            <a-card style="width: 100%">
+              <template #title>
+                <div class="text-center">响应数据字段</div>
+              </template>
+              <div style="width: 100%; height: calc(100vh - 277px)">
+                <ah-tree-field v-model:value="formModel.responseFieldIds" :data="responseFieldTree" />
+              </div>
+            </a-card>
+          </a-col>
+        </a-row>
+      </a-tab-pane>
+    </a-tabs>
+  </a-form>
+</template>
+
+<script lang="ts" setup>
+import { Message, SelectOptionGroup } from '@arco-design/web-vue';
+import {ref, PropType, defineExpose, watch, computed} from 'vue';
+
+import { useForm } from '@/hooks/use-form';
+import { useModelConfig, useModelTemplate } from '@/store';
+import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
+import { RenderModelConfig } from '@/views/generate/interface';
+import { treeForEach } from '@/utils/tree';
+import { cloneDeep } from 'lodash';
+
+type FormModelType = FormModel;
+
+class FormModel extends RenderModelConfig {
+  tplId = '';
+  api: AhAPI = new AhAPI();
+  requestFields = [] as Array<AhAPIField>
+  requestFieldIds = [] as Array<string>
+  responseFields = [] as Array<AhAPIField>
+  responseFieldIds = [] as Array<string>
+}
+
+const span = ref(12);
+const gutter = ref(15);
+const props = defineProps({
+  data: {
+    type: Object as PropType<{
+      project: AhProject,
+      moduleList: Array<AhModule>
+    }>,
+    default: () => ({})
+  },
+  // ADD = '新增', EDIT = '修改'
+  type: {
+    type: String as PropType<'ADD' | 'EDIT' | 'DETAIL'>,
+    default: 'ADD'
+  }
+});
+
+const { modelConfig, updateModelConfig } = useModelConfig();
+
+const {
+  formRef,
+  formModel,
+  formRules,
+
+  validate,
+  validateField,
+  setFields,
+  resetFields,
+  getFormModel,
+  setFormModel,
+  clearValidate,
+  getReactiveFormModel
+} = useForm<FormModelType>(modelConfig);
+
+const options = ref({
+  moduleList: [] as Array<SelectOptionGroup>
+});
+const { templateList } = useModelTemplate();
+
+const apiMap = ref<Map<string, AhAPI>>(new Map<string, AhAPI>());
+
+watch(() => props.data.moduleList, (moduleList) => {
+  apiMap.value.clear();
+  options.value.moduleList = moduleList?.map((module) => ({
+    id: module.id,
+    label: module.name,
+    isGroup: true,
+    options: module.apiList?.map((api) => {
+      apiMap.value.set(api.id, api);
+      return {
+        value: api.id,
+        label: api.summary
+      };
+    }) ?? []
+  })) ?? [];
+}, { immediate: true });
+
+watch(() => formModel.value.apiId, (val) => {
+  formModel.value.api = apiMap.value.get(val) as AhAPI;
+}, { deep: true });
+
+watch(() => formModel.value, (val) => {
+  updateModelConfig(val);
+}, { deep: true });
+
+watch(() => formModel.value.requestFieldIds, (val) => {
+  val = cloneDeep(val);
+  const fields = [] as AhAPIField[];
+  while (val.length > 0) {
+    const id = val.shift();
+    let row = requestFieldMap.value.get(id as string);
+    if (row) {
+      row = { ...row };
+      row.children = filterChildren(row.children, val);
+      fields.push(cloneDeep(row));
+    }
+  }
+  formModel.value.requestFields = fields;
+}, { deep: true });
+
+watch(() => formModel.value.responseFieldIds, (val) => {
+  val = cloneDeep(val);
+  const fields = [] as AhAPIField[];
+  while (val.length > 0) {
+    const id = val.shift();
+    let row = responseFieldMap.value.get(id as string);
+    if (row) {
+      row = { ...row };
+      row.children = filterChildren(row.children, val);
+      fields.push(cloneDeep(row));
+    }
+  }
+  formModel.value.responseFields = fields;
+}, { deep: true });
+
+const requestFieldTree = computed(() => {
+  const apiId = formModel.value.apiId;
+  const api = apiMap.value.get(apiId);
+  if (!api) {
+    return [];
+  }
+  return api.requestFields;
+});
+
+const responseFieldTree = computed(() => {
+  const apiId = formModel.value.apiId;
+  const api = apiMap.value.get(apiId);
+  if (!api) {
+    return [];
+  }
+  return api.responseFields;
+});
+
+const requestFieldMap = computed<Map<string, AhAPIField>>(() => {
+  const map = new Map<string, AhAPIField>();
+  treeForEach(requestFieldTree.value, (field: AhAPIField) => {
+    map.set(field.id, field);
+  });
+  return map;
+});
+
+const responseFieldMap = computed<Map<string, AhAPIField>>(() => {
+  const map = new Map<string, AhAPIField>();
+  treeForEach(responseFieldTree.value, (field: AhAPIField) => {
+    map.set(field.id, field);
+  });
+  return map;
+});
+
+function filterChildren(fieldList: AhAPIField[], checkIds: string[] = []) {
+  if (checkIds.length === 0) {
+    return [];
+  }
+  return fieldList.filter((field) => {
+    const index = checkIds.indexOf(field.id);
+    if (index === -1) {
+      return false;
+    }
+    checkIds.splice(index, 1);
+    filterChildren(field.children, checkIds);
+    return true;
+  })
+}
+
+defineExpose({
+  validate,
+  validateField,
+  setFields,
+  resetFields,
+  getFormModel,
+  setFormModel,
+  clearValidate,
+  getReactiveFormModel
+})
+</script>
+<style lang="scss" scoped>
+
+</style>
