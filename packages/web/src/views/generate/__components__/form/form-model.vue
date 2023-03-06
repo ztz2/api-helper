@@ -18,7 +18,7 @@
                 label="API"
                 field="apiId"
             >
-              <a-select v-model="formModel.apiId" :options="options.moduleList"></a-select>
+              <a-select v-model="formModel.apiId" :options="options.categoryList"></a-select>
             </a-form-item>
           </a-col>
           <a-col :span="24">
@@ -33,7 +33,7 @@
           </a-col>
         </a-row>
         <!--  Input 输入框属性配置  -->
-        <a-row style="margin-top: 6px">
+        <a-row style="margin-top: 6px" :gutter="30">
           <a-divider orientation="left"><span class="font-size-16">Input 输入框属性配置</span></a-divider>
           <a-col :span="12">
             <a-space>
@@ -53,19 +53,10 @@
             </div>
           </a-col>
         </a-row>
-        <!--  TS配置  -->
-        <a-row :gutter="gutter" style="margin-top: 32px">
-          <a-divider orientation="left"><span class="font-size-16">TS配置</span></a-divider>
-          <a-space :size="2" class="a-space--shim" direction="vertical">
-            <div><a-checkbox v-model="formModel.requestDataConstraint">请求数据参数类型约束</a-checkbox></div>
-            <div><a-checkbox v-model="formModel.responseDataConstraint">响应数据参数类型约束</a-checkbox></div>
-          </a-space>
-        </a-row>
         <!--  其他配置  -->
         <a-row :gutter="gutter" style="margin-top: 26px">
           <a-divider orientation="left"><span class="font-size-16">其他配置</span></a-divider>
           <a-space :size="2" class="a-space--shim" direction="vertical">
-            <div><a-checkbox v-model="formModel.semi">分号符</a-checkbox></div>
             <div><a-checkbox v-model="formModel.crud">生成CURD</a-checkbox></div>
             <div><a-checkbox v-model="formModel.grid">格栅布局</a-checkbox></div>
             <div><a-checkbox v-model="formModel.generateLabel">Form表单项生成label</a-checkbox></div>
@@ -80,7 +71,7 @@
                 <div class="text-center">请求数据字段</div>
               </template>
               <div style="width: 100%; height: calc(100vh - 277px)">
-                <ah-tree-field v-model:value="formModel.requestFieldIds" :data="requestFieldTree" />
+                <apih-tree-field v-model:value="formModel.requestFieldIds" :data="requestFieldTree" />
               </div>
             </a-card>
           </a-col>
@@ -90,7 +81,7 @@
                 <div class="text-center">响应数据字段</div>
               </template>
               <div style="width: 100%; height: calc(100vh - 277px)">
-                <ah-tree-field v-model:value="formModel.responseFieldIds" :data="responseFieldTree" />
+                <apih-tree-field v-model:value="formModel.responseFieldIds" :data="responseFieldTree" />
               </div>
             </a-card>
           </a-col>
@@ -101,8 +92,14 @@
 </template>
 
 <script lang="ts" setup>
-import { Message, SelectOptionGroup } from '@arco-design/web-vue';
-import {ref, PropType, defineExpose, watch, computed} from 'vue';
+import { SelectOptionGroup } from '@arco-design/web-vue';
+import {
+  ref,
+  watch,
+  computed,
+  PropType,
+  defineExpose,
+} from 'vue';
 
 import { useForm } from '@/hooks/use-form';
 import { useModelConfig, useModelTemplate } from '@/store';
@@ -110,6 +107,9 @@ import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
 import { RenderModelConfig } from '@/views/generate/interface';
 import { treeForEach } from '@/utils/tree';
 import { cloneDeep } from 'lodash';
+import { APIHelper } from '@api-helper/core';
+import { filterSchema } from '@/utils';
+import ApihTreeField from '@/components/apih-tree-field/index.vue';
 
 type FormModelType = FormModel;
 
@@ -128,7 +128,7 @@ const props = defineProps({
   data: {
     type: Object as PropType<{
       project: AhProject,
-      moduleList: Array<AhModule>
+      categoryList: Array<AhModule>
     }>,
     default: () => ({})
   },
@@ -157,15 +157,15 @@ const {
 } = useForm<FormModelType>(modelConfig);
 
 const options = ref({
-  moduleList: [] as Array<SelectOptionGroup>
+  categoryList: [] as Array<SelectOptionGroup>
 });
 const { templateList } = useModelTemplate();
 
-const apiMap = ref<Map<string, AhAPI>>(new Map<string, AhAPI>());
+const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
 
-watch(() => props.data.moduleList, (moduleList) => {
+watch(() => props.data.categoryList, (categoryList) => {
   apiMap.value.clear();
-  options.value.moduleList = moduleList?.map((module) => ({
+  options.value.categoryList = categoryList?.map((module) => ({
     id: module.id,
     label: module.name,
     isGroup: true,
@@ -180,7 +180,7 @@ watch(() => props.data.moduleList, (moduleList) => {
 }, { immediate: true });
 
 watch(() => formModel.value.apiId, (val) => {
-  formModel.value.api = apiMap.value.get(val) as AhAPI;
+  formModel.value.api = apiMap.value.get(val) as APIHelper.API;
 }, { deep: true });
 
 watch(() => formModel.value, (val) => {
@@ -189,13 +189,13 @@ watch(() => formModel.value, (val) => {
 
 watch(() => formModel.value.requestFieldIds, (val) => {
   val = cloneDeep(val);
-  const fields = [] as AhAPIField[];
+  const fields = [] as APIHelper.Schema[];
   while (val.length > 0) {
     const id = val.shift();
     let row = requestFieldMap.value.get(id as string);
     if (row) {
       row = { ...row };
-      row.children = filterChildren(row.children, val);
+      row.params = filterChildren(row.params, val);
       fields.push(cloneDeep(row));
     }
   }
@@ -210,7 +210,7 @@ watch(() => formModel.value.responseFieldIds, (val) => {
     let row = responseFieldMap.value.get(id as string);
     if (row) {
       row = { ...row };
-      row.children = filterChildren(row.children, val);
+      row.params = filterChildren(row.params, val);
       fields.push(cloneDeep(row));
     }
   }
@@ -220,19 +220,19 @@ watch(() => formModel.value.responseFieldIds, (val) => {
 const requestFieldTree = computed(() => {
   const apiId = formModel.value.apiId;
   const api = apiMap.value.get(apiId);
-  if (!api) {
+  if (!api || !api.requestDataSchema) {
     return [];
   }
-  return api.requestFields;
+  return filterSchema(api.requestDataSchema.params, true);
 });
 
 const responseFieldTree = computed(() => {
   const apiId = formModel.value.apiId;
   const api = apiMap.value.get(apiId);
-  if (!api) {
+  if (!api || !api.responseDataSchema) {
     return [];
   }
-  return api.responseFields;
+  return filterSchema(api.responseDataSchema.params, true);
 });
 
 const requestFieldMap = computed<Map<string, AhAPIField>>(() => {
@@ -261,7 +261,7 @@ function filterChildren(fieldList: AhAPIField[], checkIds: string[] = []) {
       return false;
     }
     checkIds.splice(index, 1);
-    filterChildren(field.children, checkIds);
+    filterChildren(field.params, checkIds);
     return true;
   })
 }

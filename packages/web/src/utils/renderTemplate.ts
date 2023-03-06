@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
-import { camelCase, pascalCase } from 'change-case';
+import { pascalCase } from 'change-case';
 import { Message } from '@arco-design/web-vue';
 
-import * as uts from './utils/index'; // @ts-ignore
+import * as uts from './renderTemplateUtils'; // @ts-ignore
 import artTemplate from 'art-template/lib/index.js';
 import { ITemplate } from '@/store/template/interface';
 import { RenderAPIConfig as RAC, RenderModelConfig, RenderModelConfig as RMC } from '@/views/generate/interface';
 import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
-import { getPureRequestFunctionName } from './utils/index';
+import { getPureRequestFunctionName } from './renderTemplateUtils';
 
 artTemplate.defaults.escape = false;
 artTemplate.defaults.minimize = false;
@@ -81,13 +81,13 @@ type RenderModelConfigType = RMC;
 
 export type RenderApiTemplateParams = {
   project: AhProject,
-  moduleList: Array<AhModule>,
+  categoryList: Array<AhModule>,
   apiList: Array<AhAPI>
 }
 
 export type RenderModelTemplateParams = {
   project: AhProject,
-  moduleList: Array<AhModule>,
+  categoryList: Array<AhModule>,
   api: AhAPI
   apiList: Array<AhAPI>,
   requestFields: Array<AhAPIField>,
@@ -95,9 +95,9 @@ export type RenderModelTemplateParams = {
 }
 
 export default function renderTemplate(
-    templateMap: ITemplate,
-    params: RenderApiTemplateParams | RenderModelTemplateParams,
-    config: RenderAPIConfigType | RenderModelConfigType
+  templateMap: ITemplate,
+  params: RenderApiTemplateParams | RenderModelTemplateParams,
+  config: RenderAPIConfigType | RenderModelConfigType
 ) {
   let result: Array<string> = [];
   try {
@@ -109,7 +109,7 @@ export default function renderTemplate(
     const RenderModelConfig = RMC;
 
     eval(
-        templateMap.content + '\n' +
+      templateMap.content + '\n' +
       `exe.renderTemplate = typeof renderTemplate === 'function' ? renderTemplate : null`,
     );
 

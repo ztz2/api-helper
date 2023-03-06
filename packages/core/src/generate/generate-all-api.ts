@@ -4,10 +4,13 @@ import { getSchema } from '../helpers';
 import { generateInterface } from './generate-interface';
 import { generateRequestFunc } from './generate-request-func';
 
-export function generateAllApi(apiDocument: APIHelper.Document, options?: {
-  codeType: 'typescript' | 'javascript',
-  responseDataKey?: string
-}) {
+export function generateAllApi(
+  apiDocument: APIHelper.Document,
+  options?: {
+    codeType: 'typescript' | 'javascript';
+    responseDataKey?: string;
+  }
+) {
   if (!apiDocument) {
     return '';
   }
@@ -25,10 +28,6 @@ export function generateAllApi(apiDocument: APIHelper.Document, options?: {
   for (const api of allApi) {
     const p: string[] = [];
     if (isTS) {
-      if (api.path.includes('/cbd-api-project/members/integral/integralObtainSave')
-        && api.method === 'post') {
-        debugger;
-      }
       const responseDataSchema = options?.responseDataKey ? getSchema(api.responseDataSchema, options.responseDataKey) : api.responseDataSchema;
       if (responseDataSchema) {
         responseDataSchema.keyName = '';
@@ -41,9 +40,11 @@ export function generateAllApi(apiDocument: APIHelper.Document, options?: {
       p.push(generateInterface(responseDataSchema, api, { paramType: 'response' }));
     }
     // 3. 生成请求函数
-    p.push(generateRequestFunc(api, {
-      codeType,
-    }));
+    p.push(
+      generateRequestFunc(api, {
+        codeType
+      })
+    );
 
     code.push(p.join(''));
   }

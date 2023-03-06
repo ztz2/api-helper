@@ -4,7 +4,8 @@
     "src/**/*.ts",
     "src/**/*.js",
     "src/**/*.tsx",
-    "global.d.ts"
+    "global.d.ts",
+    ".prettierrc.js"
   ],
   "compilerOptions": {
     "strict": true,

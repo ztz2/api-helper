@@ -26,18 +26,34 @@
         </a-form-item>
       </a-col>
     </a-row>
+    <!------------------  代码约束配置  ------------------>
+    <a-row :gutter="gutter">
+      <a-divider orientation="left">
+        <span class="font-size-16">代码约束配置</span>
+      </a-divider>
+      <a-col :span="24">
+        <a-form-item
+          label="代码类型"
+          field="codeType"
+          :rules="[{ required: true, message: '必填项' }]"
+          :validate-trigger="['change', 'input']"
+        >
+          <a-radio-group v-model="formModel.codeType" :options="options.codeType" />
+        </a-form-item>
+      </a-col>
+    </a-row>
     <!------------------  生成内容配置  ------------------>
     <a-row :gutter="gutter">
       <a-divider orientation="left">
         <span class="font-size-16">生成内容配置</span>
       </a-divider>
       <a-col :span="24">
-        <a-form-item label="接口BaseURL" field="baseURLCodeText">
-          <a-input v-model="formModel.baseURLCodeText" :max-length="1024"></a-input>
-        </a-form-item>
-      </a-col>
-      <a-col :span="24">
-        <a-form-item label="只生成API函数" field="onlyApiFunc">
+        <a-form-item
+          label="只生成API函数"
+          field="onlyApiFunc"
+          :rules="[{ required: true, message: '必填项' }]"
+          :validate-trigger="['change', 'input']"
+        >
           <a-radio-group v-model="formModel.onlyApiFunc" :options="options.boolean" />
         </a-form-item>
       </a-col>
@@ -46,35 +62,6 @@
           <a-textarea v-model="formModel.headCodeText" :max-length="512"></a-textarea>
         </a-form-item>
       </a-col>
-    </a-row>
-    <!------------------  代码约束配置  ------------------>
-    <a-row :gutter="gutter">
-      <a-divider orientation="left">
-        <span class="font-size-16">代码约束配置</span>
-      </a-divider>
-      <a-col :span="24">
-        <a-form-item label="代码类型" field="codeType">
-          <a-radio-group v-model="formModel.codeType" :options="options.codeType" />
-        </a-form-item>
-      </a-col>
-      <a-col v-if="formModel.codeType === 'ts'" style="margin-top: -20px;" :span="24">
-        <a-form-item style="margin-left: -2px">
-          <a-space :size="2" class="a-space--shim" direction="vertical">
-            <div><a-checkbox v-model="formModel.requestDataConstraint">请求参数类型约束</a-checkbox></div>
-            <div><a-checkbox v-model="formModel.responseDataConstraint">响应参数类型约束</a-checkbox></div>
-          </a-space>
-        </a-form-item>
-      </a-col>
-    </a-row>
-    <!------------------  其他配置项  ------------------>
-    <a-row style="margin-top: -6px" :gutter="gutter">
-      <a-divider orientation="left">
-        <span class="font-size-16">其他配置项</span>
-      </a-divider>
-      <a-space :size="2" class="a-space--shim" direction="vertical">
-        <div><a-checkbox v-model="formModel.semi">分号符</a-checkbox></div>
-        <div><a-checkbox v-model="formModel.duplicateRequest">不允许重复请求</a-checkbox></div>
-      </a-space>
     </a-row>
   </a-form>
 </template>
@@ -127,8 +114,8 @@ const {
 });
 const options = ref({
   codeType: [
-    { label: 'Typescript', value: 'ts' },
-    { label: 'ES6', value: 'es6' },
+    { label: 'Typescript', value: 'typescript' },
+    { label: 'Javascript', value: 'javascript' },
   ],
   boolean: [
     { label: '是', value: true },

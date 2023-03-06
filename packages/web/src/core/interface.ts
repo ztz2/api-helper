@@ -10,7 +10,7 @@ export class AhProject {
   openapiVersion = '';
   basePath = '';
   host = '';
-  moduleList = [] as Array<AhModule>;
+  categoryList = [] as Array<AhModule>;
 }
 
 // 项目下面的模块

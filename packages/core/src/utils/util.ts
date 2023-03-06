@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import { APIHelper } from '../types';
+import { cloneDeep } from 'lodash';
 
 export function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;
@@ -25,4 +27,12 @@ export function arrayUniquePush(array: Array<any>, item: any) {
 
 export function randomId() {
   return uuidv4();
+}
+
+// 过滤 keyName 为空的数据，并且合并 array<object>
+export function filterSchema(schemaList: APIHelper.Schema[], deepClone = false): APIHelper.Schema[] {
+  if (deepClone) {
+    schemaList = cloneDeep(schemaList);
+  }
+  return schemaList;
 }

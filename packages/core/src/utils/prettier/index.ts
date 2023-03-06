@@ -7,8 +7,21 @@ const parserTypescript = require('./parser-typescript.js');
 
 export function format(code = '', options: Options = {}) {
   try {
+    let parser = options.parser as string;
+    if ('codeType' in options) {
+      parser = options.codeType as string;
+    }
+
+    if (!['javascript', 'typescript'].includes(parser)) {
+      parser = 'typescript';
+    }
+
+    if (parser === 'javascript') {
+      parser = 'babel';
+    }
+
     return prettier.format(code, {
-      parser: 'typescript',
+      parser,
       plugins: [
         parserBabel,
         parserHtml,

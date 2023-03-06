@@ -8,38 +8,48 @@
     auto-label-width
   >
     <a-row :gutter="gutter">
-      <a-col :span="span">
-        <a-form-item
-          label="项目名称"
-          field="name"
-        >
-          <a-input v-model="formModel.name" :max-length="50" />
-        </a-form-item>
-      </a-col>
       <a-col :span="24">
         <a-form-item
-          label="swagger-ui文档地址"
-          field="url"
-          :rules="[{ required: true, message: '必填项' }]"
-          :validate-trigger="['change', 'input']"
+            label="文档地址"
+            field="url"
+            :rules="[{ required: true, message: '必填项' }]"
+            :validate-trigger="['change', 'input']"
         >
           <a-input v-model="formModel.url" :max-length="1024" />
         </a-form-item>
       </a-col>
-      <a-col :span="span">
+      <a-col :span="24">
         <a-form-item
-            label="用户名"
-            field="username"
+          label="文档类型"
+          field="type"
+          :rules="[{ required: true, message: '必填项' }]"
+          :validate-trigger="['change', 'input']"
         >
-          <a-input v-model="formModel.username" :max-length="32" />
+          <a-select v-model="formModel.type" :options="options.type" />
+        </a-form-item>
+      </a-col>
+      <a-col :span="24">
+        <a-form-item
+            label="Auth Token"
+            field="authToken"
+        >
+          <a-input v-model="formModel.authToken" type="password" :max-length="1024" />
         </a-form-item>
       </a-col>
       <a-col :span="span">
         <a-form-item
-            label="密码"
-            field="password"
+          label="用户名"
+          field="username"
         >
-          <a-input v-model="formModel.password" type="password" :max-length="32" />
+          <a-input v-model="formModel.auth.username" :max-length="32" />
+        </a-form-item>
+      </a-col>
+      <a-col :span="span">
+        <a-form-item
+          label="密码"
+          field="password"
+        >
+          <a-input v-model="formModel.auth.password" type="password" :max-length="32" />
         </a-form-item>
       </a-col>
     </a-row>
@@ -92,6 +102,13 @@
     getReactiveFormModel
   } = useForm<FormModelType>(new Project(), {
     watchFormModel: toRef(props, 'data')
+  });
+
+  const options = ref({
+    type: [
+      { label: 'Swagger', value: 'swagger' },
+      { label: 'YAPI', value: 'yapi' },
+    ]
   });
 
   defineExpose({

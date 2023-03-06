@@ -8,7 +8,7 @@ export class AhProject {
   openapiVersion = '';
   basePath = '';
   host = '';
-  moduleList = [];
+  categoryList = [];
 }
 
 // 项目下面的模块
@@ -51,11 +51,8 @@ export class RenderAPIConfig {
   // 模板ID
   tplId = '';
 
-  // 接口baseURL
-  baseURLCodeText = '';
-
   // 代码类型
-  codeType = 'ts';
+  codeType = 'typescript';
 
   // 请求参数类型约束
   requestDataConstraint = true;
@@ -70,7 +67,7 @@ export class RenderAPIConfig {
   generateNameByBasePath = true;
 
   // 头部代码
-  headCodeText = \`import request from '@/utils/request'\`;
+  headCodeText = \`import request from '@/utils/request';\n\`;
 
   // 是否生成分号
   semi = true;
@@ -82,7 +79,7 @@ export class RenderAPIConfig {
  * @description 渲染函数
  * @param params { object }
  * @param params.project { AhProject }  项目对象
- * @param params.moduleList { Array<AhModule> } 选择的项目下的模块 
+ * @param params.categoryList { Array<AhModule> } 选择的项目下的模块 
  * @param config.apiList { Array<AhAPI> } 选择的API集合
  * @param config { RenderAPIConfig } 配置对象 
  * @return [] { Array<string> } 返回数组，里面每一项字符串都是一个模板

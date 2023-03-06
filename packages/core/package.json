@@ -1,11 +1,11 @@
 {
   "name": "@api-helper/core",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "compile swagger to typescript typings",
   "typings": "dist/index.d.ts",
   "main": "dist/index.js",
-  "browser": "dist/browser.js",
   "module": "dist/index.js",
+  "browser": "dist/dist/apih-core-web.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -17,8 +17,8 @@
   "scripts": {
     "build": "jest && npm run lint && npm run clean && npm run build:browser && npm run build:server",
     "build2": "npm run clean && npm run build:browser && npm run build:server",
-    "build:browser": "browserify src/index.ts -s jstt -p tsify > dist/browser.js",
     "build:server": "tsc -d",
+    "build:browser": "browserify src/index.ts -s jstt -p tsify > dist/apih-core-web.js",
     "clean": "shx rm -rf dist && mkdir dist",
     "lint": "eslint src/*.ts tests/*.ts",
     "tdd": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",

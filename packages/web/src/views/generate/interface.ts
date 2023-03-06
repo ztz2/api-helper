@@ -23,12 +23,6 @@ export class RenderModelConfig {
   // 表单是否生成label
   generateLabel = true;
 
-  // 请求参数类型约束
-  requestDataConstraint = true;
-
-  // 响应参数类型约束
-  responseDataConstraint = true;
-
   // 当没有字段时候是否继续生成
   ignoreEmpty = false;
 }
@@ -37,17 +31,8 @@ export class RenderAPIConfig {
   // 模板ID
   tplId = 'API_gAHoEYCIUVnAlqIifY9S5';
 
-  // 接口baseURL
-  baseURLCodeText = '';
-
   // 代码类型
-  codeType = 'ts';
-
-  // 请求参数类型约束
-  requestDataConstraint = true;
-
-  // 响应参数类型约束
-  responseDataConstraint = true;
+  codeType = 'typescript';
 
   // 只生成API函数
   onlyApiFunc = false;
@@ -56,13 +41,7 @@ export class RenderAPIConfig {
   generateNameByBasePath = true;
 
   // 头部代码
-  headCodeText = `import request from '@/utils/request';`;
-
-  // 是否生成分号
-  semi = true;
-
-  // 重复请求
-  duplicateRequest = false;
+  headCodeText = `import request from '@/utils/request';\n`;
 }
 
 export class GenerateAllApiConfig extends RenderAPIConfig{

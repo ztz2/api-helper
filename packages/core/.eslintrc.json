@@ -1,13 +1,18 @@
 {
   "extends": [
-    "plugin:prettier/recommended",
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "eslint:recommended"
   ],
+  "globals": {
+    "require": true,
+    "console": true
+  },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
-    "project": "./tsconfig.json",
+    "project": [
+      "./tsconfig.json",
+      "./.prettierrc.js"
+    ],
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
@@ -20,10 +25,7 @@
     }],
     "camelcase": "off",
     "@typescript-eslint/consistent-type-assertions": "error",
-    "@typescript-eslint/member-delimiter-style": [
-      "error",
-      { "multiline": { "delimiter": "none" } }
-    ],
+    "@typescript-eslint/member-delimiter-style": 0,
     "@typescript-eslint/naming-convention": "off",
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "error",

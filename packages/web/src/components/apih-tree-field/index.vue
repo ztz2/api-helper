@@ -1,9 +1,9 @@
 <template>
-  <div class="ah-tree-field">
+  <div class="apih-tree-field">
     <template v-if="treeData.length === 0"><a-empty></a-empty></template>
     <template v-else>
       <div>
-        <div class="ah-tree__select-root" @click="handleSelectAll(treeData, true)">
+        <div class="apih-tree__select-root" @click="handleSelectAll(treeData, true)">
           <icon-check-circle-fill
               :size="16"
               :style="{color: checkNodeSelectedAll(treeData, true) ? '#4b88ed' : '#c9cdd4'}"
@@ -19,8 +19,8 @@
           blockNode
       >
         <template #extra="node">
-          <div class="ah-tree-field__node">
-            <div class="ah-tree-field__node-label">
+          <div class="apih-tree-field__node">
+            <div class="apih-tree-field__node-label">
               <a-checkbox
                   :model-value="checkedKeys.includes(node[valueKey])"
                   @click="handleClickNode(node)"
@@ -28,8 +28,8 @@
                 {{node[labelKey]}}
               </a-checkbox>
             </div>
-            <div class="ah-tree-field__node-handle">
-              <template v-if="node.children && node.children.length > 0">
+            <div class="apih-tree-field__node-handle">
+              <template v-if="node[childrenKey] && node[childrenKey].length > 0">
                 <a-tooltip :content="checkNodeSelectedAll(node) ? '取消全选子节点' : '全选子节点'">
                   <icon-check-circle-fill
                       :size="16"
@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'ah-tree-field'
+  name: 'apih-tree-field'
 });
 </script>
 <script lang="ts" setup>
@@ -75,7 +75,11 @@ const props = defineProps({
   },
   labelKey: {
     type: String,
-    default: 'field'
+    default: 'keyName'
+  },
+  childrenKey: {
+    type: String,
+    default: 'params'
   }
 });
 
@@ -86,21 +90,25 @@ watch(() => props.value, () => checkedKeys.value = props.value, { deep: true });
 watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true });
 
 const treeData = computed(() => {
-  return treeMap(props.data, (node: Recordable) => ({
-    ...node,
-    key: node[props.valueKey],
-    title: node[props.labelKey]
-  }));
+  return treeMap(props.data, (node: Recordable) => {
+    node = {
+      ...node,
+      key: node[props.valueKey],
+      title: node[props.labelKey],
+      children: node[props.childrenKey]
+    };
+    return node;
+  });
 });
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
-  const children = isChildren ? node : node.children;
+  const children = isChildren ? node : node[props.childrenKey];
   return children.every((itm: Recordable) => checkedKeys.value.includes(itm[props.valueKey]));
 }
 
 function handleSelectAll(node: Recordable, isChildren = false) {
   const isSelectedAll = checkNodeSelectedAll(node, isChildren);
-  const children = isChildren ? node : node.children;
+  const children = isChildren ? node : node[props.childrenKey];
   for (let i = 0; i < children.length; i++) {
     const itm = children[i];
     const index = checkedKeys.value.indexOf(itm[props.valueKey]);
@@ -125,14 +133,14 @@ function handleClickNode(node: Recordable) {
 </script>
 
 <style lang="scss">
-.ah-tree-field{
+.apih-tree-field{
   width: 100%;
   height: 100%;
   overflow: auto;
   .arco-tree-node-title{
     display: none;
   }
-  @at-root .ah-tree__select-root{
+  @at-root .apih-tree__select-root{
     cursor: pointer;
     display: inline-flex;
     align-items: center;
@@ -141,17 +149,17 @@ function handleClickNode(node: Recordable) {
       margin-left: 4px;
     }
   }
-  @at-root .ah-tree-field__node{
+  @at-root .apih-tree-field__node{
     position: relative;
     width: 100%;
-    @at-root .ah-tree-field__node-label{
+    @at-root .apih-tree-field__node-label{
       width: 100%;
       padding-right: 20px;
       box-sizing: border-box;
       overflow: hidden;
       // #c9cdd4
     }
-    @at-root .ah-tree-field__node-handle{
+    @at-root .apih-tree-field__node-handle{
       position: absolute;
       right: 0;
       top: 50%;

@@ -3,11 +3,11 @@ import { Template } from '@/store/template/interface';
 
 export default new Template({ value: 'class_el2h7OwE9uumxpo6ZCX0s', label: 'class', content: `${COMMON_HEAD}
   const project = params.project;
-  const moduleList = params.moduleList;
+  const categoryList = params.categoryList;
   const apiList = params.apiList;
   const requestFields = params.requestFields;
   const responseFields = params.responseFields;
-  const api = utils.processAPI({ api: params.api, project, apiList, moduleList }, config);
+  const api = utils.processAPI({ api: params.api, project, apiList, categoryList }, config);
 
   // 请求数据生成
   let reqTpl = utils.generateModel({

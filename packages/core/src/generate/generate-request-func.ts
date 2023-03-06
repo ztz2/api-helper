@@ -5,8 +5,8 @@ import { generateInterfaceName, GenerateInterfaceName } from './generate-interfa
 const changeCase = require('change-case');
 
 type GenerateRequestFunctionNameOptions = { changeCase: ChangeCase }
-function generateRequestFunctionName(api: APIHelper.API, options: GenerateRequestFunctionNameOptions) {
-  return options.changeCase.camelCase(`${api.path} By ${api.method}`);
+export function generateRequestFunctionName(api: APIHelper.API) {
+  return changeCase.camelCase(`${api.path} By ${api.method}`);
 }
 
 function generateComment(api: APIHelper.API) {

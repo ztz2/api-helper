@@ -3,7 +3,7 @@ import apiTemplateList from '@/core/template/api';
 import { ITemplate, ITemplateClassify } from '@/store/template/interface';
 
 const useApiTemplate = defineStore('api-template', {
-  persist: true,
+  persist: false,
   state: (): {
     templateList: Array<ITemplateClassify>,
   } => ({

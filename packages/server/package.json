@@ -19,6 +19,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@api-helper/cli": "workspace:^",
+    "@api-helper/core": "workspace:^",
     "@apidevtools/swagger-parser": "^10.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

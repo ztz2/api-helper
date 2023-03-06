@@ -127,9 +127,6 @@ export class ParserOpenAPI {
             for (let j = 0; j < parameters.length; j++) {
               const parameter = parameters[j];
               const keyName = this.filterKeyName(parameter.name);
-              if (api.path === '/v2/user/{username}' && api.method === 'put') {
-debugger;
-              }
               // 路径参数 | url 参数
               if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
                 if (requestKeyNameMemo.includes(keyName)) {

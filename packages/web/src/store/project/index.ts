@@ -19,7 +19,7 @@ const useProject = defineStore('project', {
         if (!value.id) {
           value.id = nanoid();
         }
-        this.data.push(value)
+        this.data.push(value);
       }
     },
     delete(value: (Project | string) | Array<Project | string>) {

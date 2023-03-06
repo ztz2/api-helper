@@ -1,4 +1,5 @@
-import template from 'art-template';
+// @ts-ignore
+import template from 'art-template/lib/template-web.js';
 
 // @ts-ignore
 template.defaults.escape = false;

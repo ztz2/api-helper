@@ -2,10 +2,11 @@
   <ah-dialog
       ref="dialogRef"
       width="100%"
+      cancel-text="返回"
+      hide-ok
       :form-component="Form"
   >
     <template #default>
-      <a-button @click="handleGen">生成</a-button>
       <a-row :gutter="12">
         <a-col v-for="(code, index) of codeList" :span="24 / codeList.length" :key="index">
           <div style="height: calc(100vh - 140px)">
@@ -14,24 +15,31 @@
         </a-col>
       </a-row>
     </template>
+    <template #footer>
+      <a-button type="primary" @click="handleGen(true)">生成</a-button>
+    </template>
   </ah-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineExpose, nextTick } from 'vue';
+import {
+  ref,
+  nextTick,
+  defineExpose,
+} from 'vue';
 import { Message } from '@arco-design/web-vue';
 
 import { useModelTemplate } from '@/store';
 import Form from '../form/form-model.vue';
-import renderTemplate from '@/core/render';
+import renderTemplate from '@/utils/renderTemplate';
 import AhDialog from '@/components/ah-dialog/index.vue';
-import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
+import { AhAPI, AhModule, AhProject } from '@/core/interface';
 import { omit } from 'lodash';
 import { RenderModelConfig } from '@/views/generate/interface';
 
 type OpenDataType = {
   project: AhProject,
-  moduleList: Array<AhModule>
+  categoryList: Array<AhModule>
   apiList: Array<AhAPI>
 };
 
@@ -41,7 +49,7 @@ const { templateMap } = useModelTemplate();
 
 const openData = ref<OpenDataType>({
   project: new AhProject(),
-  moduleList: [],
+  categoryList: [],
   apiList: []
 });
 
@@ -59,7 +67,7 @@ function open(data: OpenDataType) {
   })
 }
 
-async function handleGen() {
+async function handleGen(showMsg = false) {
   const data = await dialogRef.value.getFormRef().validate();
   const template = templateMap.get(data.tplId);
   if (!template) {
@@ -67,7 +75,7 @@ async function handleGen() {
   }
   codeList.value = renderTemplate(template, {
     project: openData.value.project,
-    moduleList: openData.value.moduleList,
+    categoryList: openData.value.categoryList,
     api: data.api,
     apiList: openData.value.apiList,
     requestFields: data.requestFields,
@@ -79,6 +87,9 @@ async function handleGen() {
     'responseFields',
     'responseFieldIds'
   ]) as RenderModelConfig);
+  if (showMsg === true) {
+    Message.success('已生成');
+  }
 }
 
 defineExpose({

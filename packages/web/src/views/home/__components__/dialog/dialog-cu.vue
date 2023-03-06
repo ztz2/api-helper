@@ -22,6 +22,9 @@
   import Form from '../form/form-cu.vue';
   import Dialog from '@/components/ah-dialog/index.vue';
   import { OpenData, OpenConfig } from '@/components/ah-dialog/interface';
+  import { APIHelper } from '@api-helper/core';
+  import { pick } from 'lodash';
+  import { IProject } from '@/store/project/interface';
 
   const emit = defineEmits(['success']);
   const projectStore = useProject();
@@ -46,8 +49,10 @@
       async executor() {
         loadingSave.value = true;
         const data = await dialogRef.value.getFormRef().validate();
-        await getSwaggerDocs(data);
-        await projectStore.save(data);
+        const documentList = await getSwaggerDocs(data);
+        for (const item of documentList) {
+          projectStore.save(pick({ ...data, ...item }, Object.keys(data)) as any);
+        }
       },
       completeCallback() {
         const text = type.value === 'ADD' ? '添加成功' : type.value === 'EDIT' ? '修改成功' : null;

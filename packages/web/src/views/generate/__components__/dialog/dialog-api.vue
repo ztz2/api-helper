@@ -1,35 +1,43 @@
 <template>
   <ah-dialog
-      ref="dialogRef"
-      width="100%"
-      :form-component="Form"
+    ref="dialogRef"
+    width="100%"
+    cancel-text="返回"
+    hide-ok
+    :form-component="Form"
   >
     <template #default>
-      <a-button @click="handleGen">生成</a-button>
       <a-row :gutter="12">
         <a-col v-for="(code, index) of codeList" :span="24 / codeList.length" :key="index">
           <div style="height: calc(100vh - 140px)">
-            <ah-code :code="code"></ah-code>
+            <ah-code :code="code" />
           </div>
         </a-col>
       </a-row>
+    </template>
+    <template #footer>
+      <a-button type="primary" @click="handleGen(true)">生成</a-button>
     </template>
   </ah-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, defineExpose, nextTick } from 'vue';
+import {
+  ref,
+  nextTick,
+  defineExpose,
+} from 'vue';
 import { Message } from '@arco-design/web-vue';
 
 import Form from '../form/form-api.vue';
 import { useApiTemplate } from '@/store';
-import renderTemplate from '@/core/render';
+import renderTemplate from '@/utils/renderTemplate';
 import AhDialog from '@/components/ah-dialog/index.vue';
 import { AhAPI, AhModule, AhProject } from '@/core/interface';
 
 type OpenDataType = {
   project: AhProject,
-  moduleList: Array<AhModule>,
+  categoryList: Array<AhModule>,
   apiList: Array<AhAPI>
 };
 
@@ -51,7 +59,7 @@ function open(data: OpenDataType) {
   });
 }
 
-async function handleGen() {
+async function handleGen(showMsg = false) {
   const data = await dialogRef.value.getFormRef().validate();
   const template = templateMap.get(data.tplId);
   if (!template) {
@@ -60,9 +68,12 @@ async function handleGen() {
   if (openData.value) {
     codeList.value = renderTemplate(template, {
       project: openData.value.project,
-      moduleList: openData.value.moduleList,
+      categoryList: openData.value.categoryList,
       apiList: openData.value.apiList
     }, data);
+    if (showMsg === true) {
+      Message.success('已生成');
+    }
   }
 }
 

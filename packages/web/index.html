@@ -8,6 +8,10 @@
   </head>
   <body>
     <div id="app"></div>
+    <script>
+      globalThis.global = globalThis;
+      globalThis.process = { env: {} };
+    </script>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

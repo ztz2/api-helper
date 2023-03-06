@@ -21,8 +21,9 @@
       row-key="id"
     >
       <template #columns>
-        <a-table-column title="项目名称" data-index="name"></a-table-column>
-        <a-table-column title="swagger-ui文档地址" data-index="url"></a-table-column>
+        <a-table-column title="项目名称" data-index="title"></a-table-column>
+        <a-table-column title="项目ID" data-index="id"></a-table-column>
+        <a-table-column title="文档地址" data-index="url"></a-table-column>
         <a-table-column title="操作" :width="200">
           <template #cell="{ record }">
             <a-space>

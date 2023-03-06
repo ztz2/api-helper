@@ -3,11 +3,14 @@
 import { Injectable } from '@nestjs/common';
 
 // import { swagger20 } from '../mock/api';
-import { ParserOpenAPI } from '../utils/openapi';
+// import { ParserOpenAPI } from '../utils/openapi';
 // import MockSwaggerApi from '../mock/swaggerApi.json';
 
 // const mockSwaggerApi = require('../mock/swaggerApi.json');
 // const {} = require();
+
+import { getDocument } from '@api-helper/cli/dist/server';
+import { APIHelper, ParserOpenAPI } from '@api-helper/core';
 
 @Injectable()
 export class AppService {
@@ -30,10 +33,17 @@ export class AppService {
   //   return '123';
   // }
 
-  // Promise<Array<any>>
-  async getSwaggerDocs(body: any): Promise<any> {
-    const parserOpenAPI = new ParserOpenAPI();
-    await parserOpenAPI.init(body, false);
-    return await parserOpenAPI.parser();
+  async getSwaggerDocs(body: any): Promise<APIHelper.Document[]> {
+    const documentResourceList = await getDocument([body]);
+    let documentList: APIHelper.Document[] = [];
+    for (const d of documentResourceList) {
+      if (d.type === 'swagger') {
+        const p = await new ParserOpenAPI().parser(d.resourceDocumentList);
+        documentList = [...documentList, ...p];
+      } else if (d.type === 'yapi') {
+        // TODO 等待解析yapi文档
+      }
+    }
+    return documentList;
   }
 }

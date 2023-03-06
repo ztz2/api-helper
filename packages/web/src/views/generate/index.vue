@@ -5,7 +5,7 @@
       <a-spin tip="加载中..." style="width: 100%" :loading="loading">
         <div :style="{width: `${gap}px`}" class="generate-left-side">
           <ah-menu
-            :data="ahProject.moduleList"
+            :data="ahProject.categoryList"
             v-model:selected-keys="selectedKeys"
             style="height: calc(100vh - 106px)"
           />
@@ -24,7 +24,7 @@
                 type="primary"
                 @click="dialogAPIRef.open({
                   project: ahProject,
-                  moduleList: selectedAhModule,
+                  categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"
               >
@@ -35,17 +35,11 @@
                 type="primary"
                 @click="dialogModelRef.open({
                   project: ahProject,
-                  moduleList: selectedAhModule,
+                  categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"
               >
                 生成(表单代码)
-              </a-button>
-              <a-button type="primary" @click="dialogGenerateAllApiRef.open({
-                project: ahProject
-              })"
-              >
-                一键生成项目全部API
               </a-button>
             </a-space>
           </div>
@@ -92,18 +86,19 @@
                           </div>
                         </template>
                         <div>
+                          123321
                         </div>
                       </a-collapse-item>
-                      <a-collapse-item key="3-2">
-                        <template #header>
-                          <div>
-                            {{renderTemplate()}}
-                          </div>
-                        </template>
-                        <div>
-                          具体内容
-                        </div>
-                      </a-collapse-item>
+<!--                      <a-collapse-item key="3-2">-->
+<!--                        <template #header>-->
+<!--                          <div>-->
+<!--                            {{renderTemplate()}}-->
+<!--                          </div>-->
+<!--                        </template>-->
+<!--                        <div>-->
+<!--                          具体内容-->
+<!--                        </div>-->
+<!--                      </a-collapse-item>-->
                       <a-collapse-item key="3-3">
                         <template #header>
                           <div>
@@ -127,7 +122,6 @@
 
   <DialogAPI ref="dialogAPIRef" />
   <DialogModel ref="dialogModelRef" />
-  <DialogGenerateAllApi ref="dialogGenerateAllApiRef" />
 </template>
 
 <script lang="ts">
@@ -152,14 +146,12 @@ import { IProject } from '@/store/project/interface';
 import { AhModule, AhProject } from '@/core/interface';
 import DialogAPI from './__components__/dialog/dialog-api.vue';
 import DialogModel from './__components__/dialog/dialog-model.vue';
-import DialogGenerateAllApi from './__components__/dialog/dialog-generate-all-api.vue';
-import renderTemplate from '@api-helper/web/src/core/render';
+import renderTemplate from '@/utils/renderTemplate';
 
 const gap = ref(320);
 const loading = ref(true);
 const dialogAPIRef = ref();
 const dialogModelRef = ref();
-const dialogGenerateAllApiRef = ref();
 const route = useRoute();
 const projectStore = useProject();
 const { toggleApiConfig } = useApiConfig();
@@ -176,8 +168,8 @@ const project = computed<IProject>(() => {
 const ahProject = ref<AhProject>(new AhProject());
 const selectedKeys = ref<string[]>([]);
 const selectedAhModule = computed<Array<AhModule>>(() => {
-  const moduleList = [...ahProject.value.moduleList] as Array<AhModule>;
-  return moduleList.map((module) => {
+  const categoryList = [...ahProject.value.categoryList] as Array<AhModule>;
+  return categoryList.map((module) => {
     module = { ... module };
     module.apiList = module.apiList.filter((api) => selectedKeys.value.includes(api.id));
     return module.apiList.length > 0 ? module : null;
@@ -198,7 +190,7 @@ onMounted(async () => {
   if (project.value) {
     try {
       loading.value = true;
-      const res = await getSwaggerDocs(project.value);
+      const res: any = await getSwaggerDocs(project.value);
       ahProject.value = res?.[0] as AhProject;
       toggleApiConfig(project.value.id);
       toggleModelConfig(project.value.id);
