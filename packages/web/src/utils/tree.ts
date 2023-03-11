@@ -224,7 +224,7 @@ export function treeFindParentNodes(tree = [], node: any, options: any) {
     return result;
 }
 
-export function treeMap(tree: any[] = [], cb: Function, children = 'children') {
+export function treeMap(tree: any[] = [], cb: Function, children = 'children', updateChildrenKey = 'children') {
     if (!Array.isArray(tree)) {
         throw new TypeError('tree is not an array');
     }
@@ -235,15 +235,15 @@ export function treeMap(tree: any[] = [], cb: Function, children = 'children') {
         throw new Error('children is not a valid string');
     }
     function dfs(treeData: any[] = []) {
-        const result: any = [];
+        const result: any[] = [];
         for (const item of treeData) {
             result.push(cb ? cb(item) : item);
             if (Array.isArray(item[children])) {
                 // @ts-ignore
-                item[children] = dfs(item[children]);
+                item[updateChildrenKey] = dfs(item[children]);
             }
         }
-        return result;
+        return result.filter(Boolean);
     }
     return dfs(tree);
 }

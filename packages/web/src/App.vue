@@ -8,7 +8,7 @@
           @mouseenter="linkColor='rgb(22,93,255)'"
           @mouseleave="linkColor='rgba(0,0,0,.8509803922)'"
         >
-          <ah-logo :color="linkColor" />
+          <apih-logo :color="linkColor" />
           <span style="margin-left: 4px">API HELPER</span>
         </a>
       </div>
@@ -86,7 +86,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import AhLogo from '@/components/ah-logo/index.vue';
+import AhLogo from '@/components/apih-logo/index.vue';
 import { nanoid } from 'nanoid';
 
 const linkColor = ref('rgba(0,0,0,.8509803922)');

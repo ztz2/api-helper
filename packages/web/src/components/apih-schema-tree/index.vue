@@ -1,14 +1,15 @@
 <template>
-  <div class="apih-tree-field">
+  <div class="apih-schema-tree">
     <template v-if="treeData.length === 0"><a-empty></a-empty></template>
     <template v-else>
       <div>
         <div class="apih-tree__select-root" @click="handleSelectAll(treeData, true)">
           <icon-check-circle-fill
               :size="16"
-              :style="{color: checkNodeSelectedAll(treeData, true) ? '#4b88ed' : '#c9cdd4'}"
+              :style="{color: checkNodeSelectedAll(treeData, true) ? '#165dff' : '#c9cdd4'}"
           />
-          <span>{{checkNodeSelectedAll(treeData, true) ? '取消全选根节点' : '全选根节点'}}</span>
+<!--          <span>{{checkNodeSelectedAll(treeData, true) ? '取消全选根节点' : '全选根节点'}}</span>-->
+          <span>全选根节点</span>
         </div>
       </div>
       <a-tree
@@ -19,16 +20,16 @@
           blockNode
       >
         <template #extra="node">
-          <div class="apih-tree-field__node">
-            <div class="apih-tree-field__node-label">
+          <div class="apih-schema-tree__node">
+            <div class="apih-schema-tree__node-label">
               <a-checkbox
                   :model-value="checkedKeys.includes(node[valueKey])"
                   @click="handleClickNode(node)"
               >
-                {{node[labelKey]}}
+                {{getLabel(node)}}
               </a-checkbox>
             </div>
-            <div class="apih-tree-field__node-handle">
+            <div class="apih-schema-tree__node-handle">
               <template v-if="node[childrenKey] && node[childrenKey].length > 0">
                 <a-tooltip :content="checkNodeSelectedAll(node) ? '取消全选子节点' : '全选子节点'">
                   <icon-check-circle-fill
@@ -49,7 +50,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'apih-tree-field'
+  name: 'apih-schema-tree'
 });
 </script>
 <script lang="ts" setup>
@@ -61,6 +62,9 @@ import {
   defineComponent,
 } from 'vue';
 import { treeMap } from '@/utils/tree';
+import { pascalCase } from 'change-case';
+import { isBasicDataTypeSchema } from '@/utils';
+import { APIHelper } from '@api-helper/core';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
@@ -91,14 +95,18 @@ watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true 
 
 const treeData = computed(() => {
   return treeMap(props.data, (node: Recordable) => {
+    if (isBasicDataTypeSchema(node as APIHelper.Schema)) {
+      return null;
+    }
     node = {
       ...node,
       key: node[props.valueKey],
       title: node[props.labelKey],
-      children: node[props.childrenKey]
+      children: node[props.childrenKey],
+      isObjectNode: isObjectNode(node)
     };
     return node;
-  });
+  }, props.childrenKey);
 });
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
@@ -130,10 +138,22 @@ function handleClickNode(node: Recordable) {
   const index = checkedKeys.value.indexOf(node[props.valueKey]);
   index === -1 ? checkedKeys.value.push(node[props.valueKey]) : checkedKeys.value.splice(index, 1);
 }
+
+function isObjectNode(node: Recordable): boolean {
+  return !node.keyName && (node.type === 'array' || node.type === 'object');
+}
+
+function getLabel(node: Recordable) {
+  // 如果是Object或者Array类型，会显示数据类型
+  if (node?.isObjectNode) {
+    return '数据格式(' + pascalCase(node.type) + ')';
+  }
+  return node[props.labelKey];
+}
 </script>
 
 <style lang="scss">
-.apih-tree-field{
+.apih-schema-tree{
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -144,22 +164,22 @@ function handleClickNode(node: Recordable) {
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    margin-left: 24px;
+    margin-left: 23px;
     > span:last-child{
       margin-left: 4px;
     }
   }
-  @at-root .apih-tree-field__node{
+  @at-root .apih-schema-tree__node{
     position: relative;
     width: 100%;
-    @at-root .apih-tree-field__node-label{
+    @at-root .apih-schema-tree__node-label{
       width: 100%;
       padding-right: 20px;
       box-sizing: border-box;
       overflow: hidden;
       // #c9cdd4
     }
-    @at-root .apih-tree-field__node-handle{
+    @at-root .apih-schema-tree__node-handle{
       position: absolute;
       right: 0;
       top: 50%;

@@ -25,6 +25,9 @@ export class RenderModelConfig {
 
   // 当没有字段时候是否继续生成
   ignoreEmpty = false;
+
+  // 只生成对象
+  onlyMap = false;
 }
 
 export class RenderAPIConfig {

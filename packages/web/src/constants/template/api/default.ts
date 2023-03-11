@@ -3,8 +3,6 @@ import { Template } from '@/store/template/interface';
 
 export default new Template({ value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', content: `${COMMON_HEAD}
 let apiList = params.apiList;
-const project = params.project;
-const categoryList = params.categoryList;
 
 config.typingList = [];
 const apiCodeWrap = [];

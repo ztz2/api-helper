@@ -1,5 +1,5 @@
 <template>
-  <ah-dialog
+  <apih-dialog
     ref="dialogRef"
     width="100%"
     cancel-text="返回"
@@ -10,7 +10,7 @@
       <a-row :gutter="12">
         <a-col v-for="(code, index) of codeList" :span="24 / codeList.length" :key="index">
           <div style="height: calc(100vh - 140px)">
-            <ah-code :code="code" />
+            <apih-code :code="code" />
           </div>
         </a-col>
       </a-row>
@@ -18,7 +18,7 @@
     <template #footer>
       <a-button type="primary" @click="handleGen(true)">生成</a-button>
     </template>
-  </ah-dialog>
+  </apih-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -32,7 +32,6 @@ import { Message } from '@arco-design/web-vue';
 import Form from '../form/form-api.vue';
 import { useApiTemplate } from '@/store';
 import renderTemplate from '@/utils/renderTemplate';
-import AhDialog from '@/components/ah-dialog/index.vue';
 import { AhAPI, AhModule, AhProject } from '@/core/interface';
 
 type OpenDataType = {

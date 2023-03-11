@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'ah-logo',
+  name: 'apih-logo',
   props: {
     color: {
       type: String,

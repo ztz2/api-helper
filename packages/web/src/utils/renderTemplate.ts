@@ -6,8 +6,9 @@ import * as uts from './renderTemplateUtils'; // @ts-ignore
 import artTemplate from 'art-template/lib/index.js';
 import { ITemplate } from '@/store/template/interface';
 import { RenderAPIConfig as RAC, RenderModelConfig, RenderModelConfig as RMC } from '@/views/generate/interface';
-import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
+import { AhAPIField } from '@/core/interface';
 import { getPureRequestFunctionName } from './renderTemplateUtils';
+import { APIHelper } from '@api-helper/core';
 
 artTemplate.defaults.escape = false;
 artTemplate.defaults.minimize = false;
@@ -75,31 +76,26 @@ artTemplate.defaults.imports.getDefaultValue = function(type: string) {
   }
 }
 
-
 type RenderAPIConfigType = RAC;
 type RenderModelConfigType = RMC;
 
 export type RenderApiTemplateParams = {
-  project: AhProject,
-  categoryList: Array<AhModule>,
-  apiList: Array<AhAPI>
+  apiList: Array<APIHelper.API>
 }
 
 export type RenderModelTemplateParams = {
-  project: AhProject,
-  categoryList: Array<AhModule>,
-  api: AhAPI
-  apiList: Array<AhAPI>,
-  requestFields: Array<AhAPIField>,
-  responseFields: Array<AhAPIField>,
+  api: APIHelper.API
+  requestDataSchemaList: APIHelper.SchemaList
+  responseDataSchemaList: APIHelper.SchemaList
 }
 
 export default function renderTemplate(
   templateMap: ITemplate,
   params: RenderApiTemplateParams | RenderModelTemplateParams,
-  config: RenderAPIConfigType | RenderModelConfigType
+  config?: RenderAPIConfigType | RenderModelConfigType
 ) {
   let result: Array<string> = [];
+  config = config ?? {} as any;
   try {
     const utils = uts;
     const lodash = _;

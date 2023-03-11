@@ -23,10 +23,10 @@
           </a-col>
           <a-col :span="24">
             <a-form-item
-                :rules="[{ required: true, message: '必填项' }]"
-                :validate-trigger="['change', 'input']"
-                label="模板"
-                field="tplId"
+              :rules="[{ required: true, message: '必填项' }]"
+              :validate-trigger="['change', 'input']"
+              label="模板"
+              field="tplId"
             >
               <a-select v-model="formModel.tplId" :options="templateList"></a-select>
             </a-form-item>
@@ -71,7 +71,7 @@
                 <div class="text-center">请求数据字段</div>
               </template>
               <div style="width: 100%; height: calc(100vh - 277px)">
-                <apih-tree-field v-model:value="formModel.requestFieldIds" :data="requestFieldTree" />
+                <ApihSchemaTree v-model:value="formModel.requestDataSchemaIdList" :data="requestFieldTree" />
               </div>
             </a-card>
           </a-col>
@@ -81,7 +81,7 @@
                 <div class="text-center">响应数据字段</div>
               </template>
               <div style="width: 100%; height: calc(100vh - 277px)">
-                <apih-tree-field v-model:value="formModel.responseFieldIds" :data="responseFieldTree" />
+                <ApihSchemaTree v-model:value="formModel.responseDataSchemaIdList" :data="responseFieldTree" />
               </div>
             </a-card>
           </a-col>
@@ -100,26 +100,25 @@ import {
   PropType,
   defineExpose,
 } from 'vue';
-
-import { useForm } from '@/hooks/use-form';
-import { useModelConfig, useModelTemplate } from '@/store';
-import { AhAPI, AhAPIField, AhModule, AhProject } from '@/core/interface';
-import { RenderModelConfig } from '@/views/generate/interface';
-import { treeForEach } from '@/utils/tree';
 import { cloneDeep } from 'lodash';
 import { APIHelper } from '@api-helper/core';
-import { filterSchema } from '@/utils';
-import ApihTreeField from '@/components/apih-tree-field/index.vue';
+
+import { treeForEach } from '@/utils/tree';
+import { useForm } from '@/hooks/use-form';
+import { AhProject } from '@/core/interface';
+import { useModelConfig, useModelTemplate } from '@/store';
+import { RenderModelConfig } from '@/views/generate/interface';
+import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 
 type FormModelType = FormModel;
 
 class FormModel extends RenderModelConfig {
   tplId = '';
-  api: AhAPI = new AhAPI();
-  requestFields = [] as Array<AhAPIField>
-  requestFieldIds = [] as Array<string>
-  responseFields = [] as Array<AhAPIField>
-  responseFieldIds = [] as Array<string>
+  api = {} as APIHelper.API;
+  requestDataSchemaList = [] as APIHelper.SchemaList
+  requestDataSchemaIdList = [] as string[]
+  responseDataSchemaList = [] as APIHelper.SchemaList
+  responseDataSchemaIdList = [] as string[]
 }
 
 const span = ref(12);
@@ -128,7 +127,7 @@ const props = defineProps({
   data: {
     type: Object as PropType<{
       project: AhProject,
-      categoryList: Array<AhModule>
+      categoryList: Array<APIHelper.Category>
     }>,
     default: () => ({})
   },
@@ -154,7 +153,10 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel
-} = useForm<FormModelType>(modelConfig);
+} = useForm<FormModelType>({
+  ...new FormModel(),
+  ...modelConfig,
+});
 
 const options = ref({
   categoryList: [] as Array<SelectOptionGroup>
@@ -187,34 +189,12 @@ watch(() => formModel.value, (val) => {
   updateModelConfig(val);
 }, { deep: true });
 
-watch(() => formModel.value.requestFieldIds, (val) => {
-  val = cloneDeep(val);
-  const fields = [] as APIHelper.Schema[];
-  while (val.length > 0) {
-    const id = val.shift();
-    let row = requestFieldMap.value.get(id as string);
-    if (row) {
-      row = { ...row };
-      row.params = filterChildren(row.params, val);
-      fields.push(cloneDeep(row));
-    }
-  }
-  formModel.value.requestFields = fields;
+watch(() => formModel.value.requestDataSchemaIdList, (val) => {
+  formModel.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
 }, { deep: true });
 
-watch(() => formModel.value.responseFieldIds, (val) => {
-  val = cloneDeep(val);
-  const fields = [] as AhAPIField[];
-  while (val.length > 0) {
-    const id = val.shift();
-    let row = responseFieldMap.value.get(id as string);
-    if (row) {
-      row = { ...row };
-      row.params = filterChildren(row.params, val);
-      fields.push(cloneDeep(row));
-    }
-  }
-  formModel.value.responseFields = fields;
+watch(() => formModel.value.responseDataSchemaIdList, (val) => {
+  formModel.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
 }, { deep: true });
 
 const requestFieldTree = computed(() => {
@@ -223,7 +203,7 @@ const requestFieldTree = computed(() => {
   if (!api || !api.requestDataSchema) {
     return [];
   }
-  return filterSchema(api.requestDataSchema.params, true);
+  return cloneDeep(api.requestDataSchema.params);
 });
 
 const responseFieldTree = computed(() => {
@@ -232,36 +212,55 @@ const responseFieldTree = computed(() => {
   if (!api || !api.responseDataSchema) {
     return [];
   }
-  return filterSchema(api.responseDataSchema.params, true);
+  return cloneDeep(api.responseDataSchema.params);
 });
 
-const requestFieldMap = computed<Map<string, AhAPIField>>(() => {
-  const map = new Map<string, AhAPIField>();
-  treeForEach(requestFieldTree.value, (field: AhAPIField) => {
-    map.set(field.id, field);
+const requestFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
+  const map = new Map<string, APIHelper.Schema>();
+  treeForEach(requestFieldTree.value, (schema: APIHelper.Schema) => {
+    map.set(schema.id, schema);
   });
   return map;
 });
 
-const responseFieldMap = computed<Map<string, AhAPIField>>(() => {
-  const map = new Map<string, AhAPIField>();
-  treeForEach(responseFieldTree.value, (field: AhAPIField) => {
-    map.set(field.id, field);
+const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
+  const map = new Map<string, APIHelper.Schema>();
+  treeForEach(responseFieldTree.value, (schema: APIHelper.Schema) => {
+    map.set(schema.id, schema);
   });
   return map;
 });
 
-function filterChildren(fieldList: AhAPIField[], checkIds: string[] = []) {
+function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
+  const val = cloneDeep(ids);
+  const schemaList: APIHelper.SchemaList = [];
+  while (val.length > 0) {
+    const id = val.shift();
+    let row = cloneDeep(record.get(id as string));
+    if (row) {
+      row = { ...row };
+      row.params = filterChildren(row.params, val);
+      schemaList.push(cloneDeep(row));
+    }
+  }
+  return schemaList;
+}
+
+function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = []) {
   if (checkIds.length === 0) {
     return [];
   }
-  return fieldList.filter((field) => {
-    const index = checkIds.indexOf(field.id);
+  return schemaList.filter((schema) => {
+    const index = checkIds.indexOf(schema.id);
+    // 该节点的基本数据类型
+    if (!schema.keyName && schema.type !== 'object' && schema.type !== 'array') {
+      return true;
+    }
     if (index === -1) {
       return false;
     }
     checkIds.splice(index, 1);
-    filterChildren(field.params, checkIds);
+    schema.params = filterChildren(schema.params, checkIds);
     return true;
   })
 }

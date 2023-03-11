@@ -9,6 +9,7 @@ export function generateMap(
   options: {
     onlyMap?: boolean;
     paramType: 'request' | 'response';
+    startSpace?: ''
   }
 ) {
   if (!schema) {
@@ -25,7 +26,15 @@ export function generateMap(
   let formatted = format(prefixCode + code);
 
   if (options?.onlyMap === true) {
-    formatted = formatted.replace(new RegExp('^' + prefixCode), '');
+    formatted = formatted.replace(new RegExp('^' + prefixCode), '').trim();
+    if (formatted.endsWith(';')) {
+      formatted = formatted.slice(0, formatted.length - 1);
+    }
+  }
+
+  // 开始空格键处理
+  if (options.startSpace?.length) {
+    formatted = formatted.split('\n').map((line: string, index: number) => index === 0 ? line : `${options.startSpace}${line}`).join('\n');
   }
 
   return formatted;

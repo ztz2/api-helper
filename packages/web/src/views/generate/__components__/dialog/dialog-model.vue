@@ -1,5 +1,5 @@
 <template>
-  <ah-dialog
+  <apih-dialog
       ref="dialogRef"
       width="100%"
       cancel-text="返回"
@@ -10,7 +10,7 @@
       <a-row :gutter="12">
         <a-col v-for="(code, index) of codeList" :span="24 / codeList.length" :key="index">
           <div style="height: calc(100vh - 140px)">
-            <ah-code :code="code"></ah-code>
+            <apih-code :code="code"></apih-code>
           </div>
         </a-col>
       </a-row>
@@ -18,7 +18,7 @@
     <template #footer>
       <a-button type="primary" @click="handleGen(true)">生成</a-button>
     </template>
-  </ah-dialog>
+  </apih-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -27,14 +27,13 @@ import {
   nextTick,
   defineExpose,
 } from 'vue';
+import { omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 
-import { useModelTemplate } from '@/store';
 import Form from '../form/form-model.vue';
+import { useModelTemplate } from '@/store';
 import renderTemplate from '@/utils/renderTemplate';
-import AhDialog from '@/components/ah-dialog/index.vue';
 import { AhAPI, AhModule, AhProject } from '@/core/interface';
-import { omit } from 'lodash';
 import { RenderModelConfig } from '@/views/generate/interface';
 
 type OpenDataType = {
@@ -73,19 +72,17 @@ async function handleGen(showMsg = false) {
   if (!template) {
     return Message.error('请选择模板');
   }
+  console.log(data);
   codeList.value = renderTemplate(template, {
-    project: openData.value.project,
-    categoryList: openData.value.categoryList,
     api: data.api,
-    apiList: openData.value.apiList,
-    requestFields: data.requestFields,
-    responseFields: data.responseFields,
+    requestDataSchemaList: data.requestDataSchemaList,
+    responseDataSchemaList: data.responseDataSchemaList,
   }, omit(data, [
     'api',
-    'requestFields',
-    'requestFieldIds',
-    'responseFields',
-    'responseFieldIds'
+    'requestDataSchemaList',
+    'requestDataSchemaIdList',
+    'responseDataSchemaList',
+    'responseDataSchemaIdList'
   ]) as RenderModelConfig);
   if (showMsg === true) {
     Message.success('已生成');

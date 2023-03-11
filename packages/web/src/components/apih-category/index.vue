@@ -1,6 +1,6 @@
 <template>
-  <div class="ah-module">
-    <div class="ah-module-search">
+  <div class="apih-category">
+    <div class="apih-category-search">
       <a-input-search
         v-model="searchValue"
         @search="handleSearch"
@@ -9,18 +9,18 @@
         search-button
       />
     </div>
-    <div class="ah-module-body">
+    <div class="apih-category-body">
       <div
           v-for="module of data"
           :key="module.id"
           :class="{
-            'ah-module-item--active': checkSelectedSomeApi(module)
+            'apih-category-item--active': checkSelectedSomeApi(module)
           }"
           @click="handleSelectModule(module)"
-          class="ah-module-item"
+          class="apih-category-item"
       >
-        <div class="ah-module-item__label">
-          <div class="ah-module-item__label-text">
+        <div class="apih-category-item__label">
+          <div class="apih-category-item__label-text">
             <span>{{module.name}}</span>
             <span>
             <a-tag
@@ -33,14 +33,14 @@
             </a-tag>
           </span>
           </div>
-          <div @click.stop class="ah-module-item__handle user-select-none">
+          <div @click.stop class="apih-category-item__handle user-select-none">
             <div
                 v-if="module.apiList.length > 0"
                 @click="handleExpand(module)"
                 :class="{
-              'ah-module-item__handle-expand--active': currentExpandedKeys.includes(module.id)
+              'apih-category-item__handle-expand--active': currentExpandedKeys.includes(module.id)
             }"
-                class="ah-module-item__handle-expand"
+                class="apih-category-item__handle-expand"
             >
               <icon-down />
             </div>
@@ -49,17 +49,17 @@
         <div
             v-show="currentExpandedKeys.includes(module.id)"
             @click.stop
-            class="ah-module-item__content"
+            class="apih-category-item__content"
         >
           <div
               v-for="subModule of module.apiList"
               :key="subModule.id"
               :class="{
-            'ah-module-item-sub--active': currentSelectedKeys.includes(subModule.id)
+            'apih-category-item-sub--active': currentSelectedKeys.includes(subModule.id)
           }"
-              class="ah-module-item-sub"
+              class="apih-category-item-sub"
           >
-            <div @click="handleSelectModuleSub(subModule)" class="ah-module-item-sub__label">
+            <div @click="handleSelectModuleSub(subModule)" class="apih-category-item-sub__label">
               {{ subModule.summary ? subModule.summary : subModule.field }}
             </div>
           </div>
@@ -72,13 +72,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'ah-module'
+  name: 'apih-category'
 })
 </script>
 <script setup lang="ts">
 import { ref, PropType, defineProps, watch } from 'vue';
-import { Module } from './interface';
-import { AhModule, AhAPI } from '@/core/interface';
+import { APIHelper } from '@api-helper/core';
 
 const emit = defineEmits([
     'update:selectedKeys',
@@ -86,7 +85,7 @@ const emit = defineEmits([
 ]);
 const props = defineProps({
   data: {
-    type: Array as PropType<Array<AhModule>>,
+    type: Array as PropType<Array<APIHelper.Category>>,
     default: () => []
   },
   selectedKeys: {
@@ -111,13 +110,13 @@ watch(() => currentSelectedKeys.value, (val) => emit('update:selectedKeys', val)
 function clearSelectedKeys() {
   currentSelectedKeys.value.splice(0, currentSelectedKeys.value.length);
 }
-function checkSelectedAll(module: Module) {
+function checkSelectedAll(module: APIHelper.Category) {
   return module.apiList.every((itm) => currentSelectedKeys.value.includes(itm.id));
 }
-function checkSelectedSomeApi(module: Module) {
+function checkSelectedSomeApi(module: APIHelper.Category) {
   return module.apiList.some((itm) => currentSelectedKeys.value.includes(itm.id));
 }
-function selectedApiNum(module: Module) {
+function selectedApiNum(module: APIHelper.Category) {
   return module.apiList.reduce((preValue, itm) => {
     if (currentSelectedKeys.value.includes(itm.id)) {
       preValue++;
@@ -128,7 +127,7 @@ function selectedApiNum(module: Module) {
 function handleSearch() {
   console.log('搜索', searchValue.value);
 }
-function handleExpand(module: Module, add = false) {
+function handleExpand(module: APIHelper.Category, add = false) {
   const index = currentExpandedKeys.value.indexOf(module.id);
   if (add) {
     index === -1 && currentExpandedKeys.value.push(module.id);
@@ -140,7 +139,7 @@ function handleExpand(module: Module, add = false) {
     currentExpandedKeys.value.splice(index, 1);
   }
 }
-function handleSelectModule(module: Module) {
+function handleSelectModule(module: APIHelper.Category) {
   const isSelectedAll = checkSelectedAll(module);
   // 全选了，进行取消
   if (isSelectedAll) {
@@ -153,7 +152,7 @@ function handleSelectModule(module: Module) {
   });
   handleExpand(module, true);
 }
-function handleSelectModuleSub(module: Module) {
+function handleSelectModuleSub(module: APIHelper.Category) {
   const index = currentSelectedKeys.value?.indexOf(module.id) ?? -1;
   if (index === -1) {
     currentSelectedKeys.value.push(module.id);
@@ -164,7 +163,7 @@ function handleSelectModuleSub(module: Module) {
 </script>
 
 <style lang="scss">
-.ah-module{
+.apih-category{
   $background--active: rgb(44, 44, 45);
   width: 100%;
   height: 100%;
@@ -177,25 +176,25 @@ function handleSelectModuleSub(module: Module) {
   &, >* {
     box-sizing: border-box;
   }
-  @at-root .ah-module-search{
+  @at-root .apih-category-search{
     position: absolute;
     top: 8px;
     left: 8px;
     right: 8px;
   }
-  @at-root .ah-module-body{
+  @at-root .apih-category-body{
     flex-grow: 1;
     overflow: auto;
     margin-top: 44px;
-    @at-root .ah-module-item__label-notice{
+    @at-root .apih-category-item__label-notice{
       font-size: 10px;
       border-radius: 50%;
     }
-    @at-root .ah-module-item__label{
+    @at-root .apih-category-item__label{
       font-size: 16px;
       position: relative;
       padding-right: 34px!important;
-      @at-root .ah-module-item__label-text{
+      @at-root .apih-category-item__label-text{
         display: flex;
         >:nth-child(1){
           overflow: hidden;
@@ -206,12 +205,12 @@ function handleSelectModuleSub(module: Module) {
           margin-left: 4px;
         }
       }
-      @at-root .ah-module-item__handle {
+      @at-root .apih-category-item__handle {
         position: absolute;
         right: 0;
         top: 50%;
         transform: translateY(-50%);
-        @at-root .ah-module-item__handle-expand{
+        @at-root .apih-category-item__handle-expand{
           width: 30px;
           height: 30px;
           display: flex;
@@ -219,26 +218,26 @@ function handleSelectModuleSub(module: Module) {
           justify-content: center;
           transition: .25s;
         }
-        @at-root .ah-module-item__handle-expand--active{
+        @at-root .apih-category-item__handle-expand--active{
           transform: rotate(180deg);
         }
       }
     }
-    @at-root .ah-module-item--active >.ah-module-item__label{
+    @at-root .apih-category-item--active >.apih-category-item__label{
       color: rgb(22,93,255);
     }
-    @at-root .ah-module-item-sub--active > .ah-module-item-sub__label{
+    @at-root .apih-category-item-sub--active > .apih-category-item-sub__label{
       color: #fff;
       background-color: $background--active;
     }
-    @at-root .ah-module-item-sub__label{
+    @at-root .apih-category-item-sub__label{
       &:before{
         content: '';
         display: inline-block;
         width: 14px;
       }
     }
-    @at-root .ah-module-item__label, .ah-module-item-sub__label{
+    @at-root .apih-category-item__label, .apih-category-item-sub__label{
       height: 40px;
       padding: 0 12px;
       margin-bottom: 4px;

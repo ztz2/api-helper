@@ -20,8 +20,8 @@
   import { useProject } from '@/store';
   import { getSwaggerDocs } from '@/api';
   import Form from '../form/form-cu.vue';
-  import Dialog from '@/components/ah-dialog/index.vue';
-  import { OpenData, OpenConfig } from '@/components/ah-dialog/interface';
+  import Dialog from '@/components/apih-dialog/index.vue';
+  import { OpenData, OpenConfig } from '@/components/apih-dialog/interface';
   import { APIHelper } from '@api-helper/core';
   import { pick } from 'lodash';
   import { IProject } from '@/store/project/interface';

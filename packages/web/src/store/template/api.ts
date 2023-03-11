@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import apiTemplateList from '@/core/template/api';
+import templateList from '@/constants/template/api';
 import { ITemplate, ITemplateClassify } from '@/store/template/interface';
 
 const useApiTemplate = defineStore('api-template', {
@@ -7,7 +7,7 @@ const useApiTemplate = defineStore('api-template', {
   state: (): {
     templateList: Array<ITemplateClassify>,
   } => ({
-    templateList: apiTemplateList
+    templateList: templateList
   }),
   getters: {
     templateMap(state): Map<string, ITemplate> {

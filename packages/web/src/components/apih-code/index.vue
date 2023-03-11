@@ -1,11 +1,11 @@
 <template>
-  <div class="ah-code">
-    <div class="ah-code__handle">
+  <div class="apih-code">
+    <div class="apih-code__handle">
       <a-tooltip :content="text">
         <icon-copy :size="30" @click="copy" />
       </a-tooltip>
     </div>
-    <div class="ah-code__content">
+    <div class="apih-code__content">
       <highlightjs :code="code" autodetect />
     </div>
   </div>
@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 export default defineComponent({
-  name: 'ah-code'
+  name: 'apih-code'
 })
 </script>
 <script setup lang="ts">
@@ -69,12 +69,12 @@ onBeforeMount(() => {
 </script>
 
 <style lang="scss">
-.ah-code{
+.apih-code{
   position: relative;
   height: 100%;
   overflow: auto;
   display: flex;
-  @at-root .ah-code__handle{
+  @at-root .apih-code__handle{
     position: absolute;
     right: 10px;
     top: 10px;
@@ -86,7 +86,7 @@ onBeforeMount(() => {
       }
     }
   }
-  @at-root .ah-code__content{
+  @at-root .apih-code__content{
     flex-grow: 1;
     display: flex;
     > pre{

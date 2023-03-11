@@ -4,7 +4,7 @@
     <template v-else>
       <a-spin tip="加载中..." style="width: 100%" :loading="loading">
         <div :style="{width: `${gap}px`}" class="generate-left-side">
-          <ah-menu
+          <ApihCategory
             :data="ahProject.categoryList"
             v-model:selected-keys="selectedKeys"
             style="height: calc(100vh - 106px)"
@@ -86,27 +86,17 @@
                           </div>
                         </template>
                         <div>
-                          123321
+                          <apih-code :code="renderAPIFunc(api)"></apih-code>
                         </div>
                       </a-collapse-item>
-<!--                      <a-collapse-item key="3-2">-->
-<!--                        <template #header>-->
-<!--                          <div>-->
-<!--                            {{renderTemplate()}}-->
-<!--                          </div>-->
-<!--                        </template>-->
-<!--                        <div>-->
-<!--                          具体内容-->
-<!--                        </div>-->
-<!--                      </a-collapse-item>-->
-                      <a-collapse-item key="3-3">
+                      <a-collapse-item v-for="(code, codeIdx) of renderMap(api)" :key="`3-3${codeIdx}`">
                         <template #header>
                           <div>
-                            接口响应参数
+                            {{codeIdx === 0 ? '请求参数' : '响应数据'}}
                           </div>
                         </template>
                         <div>
-                          具体内容
+                          <apih-code :code="code"></apih-code>
                         </div>
                       </a-collapse-item>
                     </a-collapse>
@@ -138,15 +128,23 @@ import {
   onMounted,
 } from 'vue';
 import { useRoute } from 'vue-router';
-
-import { useApiConfig, useGenerateAllApiConfig, useModelConfig, useModelTemplate, useProject } from '@/store';
+import { APIHelper } from '@api-helper/core';
+import {
+  useProject,
+  useApiConfig,
+  useModelConfig,
+  useGenerateAllApiConfig,
+} from '@/store';
 import { getSwaggerDocs } from '@/api';
-import AhMenu from '@/components/ah-menu/index.vue';
-import { IProject } from '@/store/project/interface';
-import { AhModule, AhProject } from '@/core/interface';
-import DialogAPI from './__components__/dialog/dialog-api.vue';
-import DialogModel from './__components__/dialog/dialog-model.vue';
+
+import { AhProject } from '@/core/interface';
 import renderTemplate from '@/utils/renderTemplate';
+import { IProject } from '@/store/project/interface';
+import DialogAPI from './__components__/dialog/dialog-api.vue';
+import ApihCategory from '@/components/apih-category/index.vue';
+import DialogModel from './__components__/dialog/dialog-model.vue';
+import apiFuncTemplate from '@/constants/template/api/default';
+import mapTemplate from '@/constants/template/model/javascript/map';
 
 const gap = ref(320);
 const loading = ref(true);
@@ -154,30 +152,28 @@ const dialogAPIRef = ref();
 const dialogModelRef = ref();
 const route = useRoute();
 const projectStore = useProject();
+const isEmpty = computed(() => !project);
 const { toggleApiConfig } = useApiConfig();
 const { toggleModelConfig } = useModelConfig();
 const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
-const modelTemplateMap = useModelTemplate().templateMap;
-const isEmpty = computed(() => !project);
-const modelTemplate = computed(() => modelTemplateMap.get('ff'))
 
 const project = computed<IProject>(() => {
   const id = route.query.id;
   return projectStore.data.find((itm) => itm.id === id) as IProject;
 });
-const ahProject = ref<AhProject>(new AhProject());
+const ahProject = ref<APIHelper.Document>(new AhProject() as any);
 const selectedKeys = ref<string[]>([]);
-const selectedAhModule = computed<Array<AhModule>>(() => {
-  const categoryList = [...ahProject.value.categoryList] as Array<AhModule>;
+const selectedAhModule = computed<Array<APIHelper.Category>>(() => {
+  const categoryList = [...ahProject.value.categoryList] as Array<APIHelper.Category>;
   return categoryList.map((module) => {
     module = { ... module };
     module.apiList = module.apiList.filter((api) => selectedKeys.value.includes(api.id));
     return module.apiList.length > 0 ? module : null;
-  }).filter((t) => t) as Array<AhModule>;
+  }).filter((t) => t) as Array<APIHelper.Category>;
 });
-const selectApiList = computed<AhModule['apiList']>(() => {
-  const res = [] as AhModule['apiList'];
-  const modules =  selectedAhModule.value as Array<AhModule>;
+const selectApiList = computed<APIHelper.Category['apiList']>(() => {
+  const res = [] as APIHelper.Category['apiList'];
+  const modules =  selectedAhModule.value as Array<APIHelper.Category>;
   for (let i = 0; i < modules.length; i++) {
     for (let j = 0; j < modules[i].apiList.length; j++) {
       res.push(modules[i].apiList[j]);
@@ -186,12 +182,30 @@ const selectApiList = computed<AhModule['apiList']>(() => {
   return res;
 });
 
+function renderMap(api: APIHelper.API): string[] {
+  return renderTemplate(mapTemplate, {
+    api,
+    requestDataSchemaList: api.requestDataSchema ? api.requestDataSchema.params : [],
+    responseDataSchemaList: api.responseDataSchema ? api.responseDataSchema.params : [],
+  }, {
+    onlyMap: true
+  } as any);
+}
+
+function renderAPIFunc(api: APIHelper.API) {
+  return renderTemplate(apiFuncTemplate, {
+    apiList: [api]
+  }, {
+    onlyApiFunc: true
+  } as any)[0] ?? '';
+}
+
 onMounted(async () => {
   if (project.value) {
     try {
       loading.value = true;
       const res: any = await getSwaggerDocs(project.value);
-      ahProject.value = res?.[0] as AhProject;
+      ahProject.value = res?.[0] as APIHelper.Document;
       toggleApiConfig(project.value.id);
       toggleModelConfig(project.value.id);
       toggleGenerateAllApiConfig(project.value.id);
