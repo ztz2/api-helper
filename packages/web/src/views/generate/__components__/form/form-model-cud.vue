@@ -40,10 +40,9 @@
                 </a-col>
                 <a-col :span="24">
                   <a-form-item
-                      :rules="[{ required: true, message: '必填项' }]"
-                      :validate-trigger="['change', 'input']"
-                      field="tplId"
-                      style="margin-bottom: 0"
+                    :rules="[{ required: true, message: '必填项' }]"
+                    :validate-trigger="['change', 'input']"
+                    field="tplId"
                   >
                     <template #label>
                       <a-space>
@@ -53,6 +52,17 @@
                       </a-space>
                     </template>
                     <a-select v-model="formModel.tplId" :options="templateList"></a-select>
+                  </a-form-item>
+                </a-col>
+                <a-col :span="24">
+                  <a-form-item
+                      :rules="[{ required: true, message: '必填项' }]"
+                      :validate-trigger="['change', 'input']"
+                      field="tplId"
+                      label="响应数据 dataKey"
+                      style="margin-bottom: 0"
+                  >
+                    <a-input v-model="formModel.dataKey" :max-length="64"></a-input>
                   </a-form-item>
                 </a-col>
               </a-row>
@@ -131,10 +141,10 @@ import {
   toRef,
   computed,
   PropType,
-  defineExpose
+  defineExpose, toRefs
 } from 'vue';
 import { cloneDeep } from 'lodash';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper, getSchema } from '@api-helper/core';
 
 import { treeForEach } from '@/utils/tree';
 import { useForm } from '@/hooks/use-form';
@@ -147,6 +157,7 @@ type FormModelType = FormModel;
 
 class FormModel extends RenderModelConfig {
   tplId = '';
+  dataKey = '';
   api = {} as APIHelper.API;
   requestDataSchemaList = [] as APIHelper.SchemaList
   requestDataSchemaIdList = [] as string[]
@@ -171,7 +182,7 @@ const props = defineProps({
   }
 });
 
-const { modelConfig, updateModelConfig } = useModelConfig();
+const { modelConfig, updateModelConfig } = toRefs(useModelConfig());
 
 const {
   formRef,
@@ -189,7 +200,7 @@ const {
 } = useForm<FormModelType>({
   ...new Template(),
   ...new FormModel(),
-  ...modelConfig,
+  ...modelConfig.value,
 }, {
   watchFormModel: toRef(props, 'data') as any
 });
@@ -222,7 +233,7 @@ watch(() => formModel.value.apiId, (val) => {
 }, { deep: true });
 
 watch(() => formModel.value, (val) => {
-  updateModelConfig(val);
+  updateModelConfig.value(val);
 }, { deep: true });
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {
@@ -248,7 +259,12 @@ const responseFieldTree = computed(() => {
   if (!api || !api.responseDataSchema) {
     return [];
   }
-  return cloneDeep(api.responseDataSchema.params);
+  const dataKey = formModel.value.dataKey;
+  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
+  if (dataKey) {
+    schema = getSchema(schema, dataKey);
+  }
+  return schema?.params ?? [];
 });
 
 const requestFieldMap = computed<Map<string, APIHelper.Schema>>(() => {

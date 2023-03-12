@@ -111,7 +111,7 @@ const gutter = ref(15);
 const dialogAPICudRef = ref();
 const apiTemplateStore = useApiTemplate();
 const { templateMap, templateList } = toRefs(apiTemplateStore);
-const { apiConfig, updateApiConfig } = useApiConfig();
+const { apiConfig, updateApiConfig } = toRefs(useApiConfig());
 
 const {
   formModel,
@@ -125,7 +125,7 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel
-} = useForm<FormModelType>(apiConfig, {
+} = useForm<FormModelType>(apiConfig.value, {
   watchFormModel: toRef(props, 'data')
 });
 const options = ref({
@@ -140,7 +140,7 @@ const options = ref({
 });
 
 watch(() => formModel.value, (val) => {
-  updateApiConfig(val);
+  updateApiConfig.value(val);
 }, { deep: true });
 
 function handleAdd() {

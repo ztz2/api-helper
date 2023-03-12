@@ -128,10 +128,10 @@ export default defineComponent({
 import {
   ref,
   computed,
-  onMounted,
+  onMounted, toRefs,
 } from 'vue';
 import { useRoute } from 'vue-router';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper, getSchema } from '@api-helper/core';
 import {
   useProject,
   useApiConfig,
@@ -148,6 +148,7 @@ import ApihCategory from '@/components/apih-category/index.vue';
 import DialogModel from './__components__/dialog/dialog-model.vue';
 import apiFuncTemplate from '@/constants/template/api/default';
 import mapTemplate from '@/constants/template/model/javascript/map';
+import { cloneDeep } from 'lodash';
 
 const gap = ref(320);
 const loading = ref(true);
@@ -157,9 +158,8 @@ const route = useRoute();
 const projectStore = useProject();
 const isEmpty = computed(() => !project);
 const { toggleApiConfig } = useApiConfig();
-const { toggleModelConfig } = useModelConfig();
+const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
 const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
-
 const project = computed<IProject>(() => {
   const id = route.query.id;
   return projectStore.data.find((itm) => itm.id === id) as IProject;
@@ -186,10 +186,16 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
 });
 
 function renderMap(api: APIHelper.API): string[] {
+  const dataKey = modelConfig.value?.dataKey ?? '';
+  let responseDataSchema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
+  if (dataKey) {
+    responseDataSchema = getSchema(responseDataSchema, dataKey);
+  }
+  const responseDataSchemaList = responseDataSchema?.params ?? [];
   return renderTemplate(mapTemplate, {
     api,
     requestDataSchemaList: api.requestDataSchema ? api.requestDataSchema.params : [],
-    responseDataSchemaList: api.responseDataSchema ? api.responseDataSchema.params : [],
+    responseDataSchemaList: responseDataSchemaList as APIHelper.SchemaList,
   }, {
     onlyMap: true
   } as any);
@@ -210,7 +216,7 @@ onMounted(async () => {
       const res: any = await getSwaggerDocs(project.value);
       ahProject.value = res?.[0] as APIHelper.Document;
       toggleApiConfig(project.value.id);
-      toggleModelConfig(project.value.id);
+      toggleModelConfig.value(project.value.id);
       toggleGenerateAllApiConfig(project.value.id);
     } finally {
       loading.value = false;

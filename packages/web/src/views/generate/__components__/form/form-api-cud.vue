@@ -69,6 +69,7 @@ import {
   toRef,
   watch,
   isRef,
+  toRefs,
   PropType,
   isReactive,
   defineExpose,
@@ -77,6 +78,7 @@ import {
 import { useForm } from '@/hooks/use-form';
 import { Template } from '@/store/template/interface';
 import { RenderAPIConfig } from '@/views/generate/interface';
+import { useApiConfig } from '@/store';
 
 type FormModelType = Template;
 
@@ -93,7 +95,7 @@ const props = defineProps({
 });
 
 const gutter = ref(15);
-
+const { apiConfig, updateApiConfig } = toRefs(useApiConfig());
 const {
   formModel,
   formRules,
@@ -108,6 +110,7 @@ const {
   getReactiveFormModel
 } = useForm<FormModelType>({
   ...new RenderAPIConfig(),
+  ...apiConfig.value,
   ...new Template(),
 }, {
   watchFormModel: toRef(props, 'data')
@@ -123,6 +126,10 @@ const options = ref({
     { label: '否', value: false }
   ],
 });
+
+watch(() => formModel.value, (val) => {
+  updateApiConfig.value(val as unknown as RenderAPIConfig);
+}, { deep: true });
 
 defineExpose({
   validate,
