@@ -1,4 +1,4 @@
-import { COMMON_HEAD } from './javascript/common';
+import { COMMON_HEAD } from './common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({ value: 'interface_Y4AIsXBlcKRXjU95av0Cx',  label: 'interface', content: `${COMMON_HEAD}

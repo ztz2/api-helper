@@ -1,7 +1,7 @@
-import { COMMON_HEAD } from './common';
+import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
-export default new Template({ value: '对象_UI8QKroW6B3Kfq_fNsRhY', label: '对象', content: `${COMMON_HEAD}
+export default new Template({ value: '对象_UI8QKroW6B3Kfq_fNsRhY', label: '对象', default: true, content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;

@@ -7,16 +7,22 @@ export interface ITemplate {
   value: string;
   // 模板内容
   content: string;
+  // 默认的内置模板
+  default: boolean;
 }
 
 export class Template implements ITemplate {
-  value;
-  label;
-  content;
-  constructor(params: ITemplate) {
-    this.label = params.label;
-    this.content = params.content;
-    this.value = params.value ? params.value : nanoid();
+  value = '';
+  label = '';
+  content = '';
+  default = false;
+  constructor(params?: ITemplate) {
+    if (params) {
+      this.label = params.label ?? '';
+      this.content = params.content ?? '';
+      this.default = params.default ?? false;
+      this.value = params.value ?? nanoid();
+    }
   }
 }
 
@@ -32,8 +38,8 @@ export class TemplateClassify implements ITemplateClassify{
   label;
   isGroup = true;
   options;
-  constructor(label: string, options: Array<ITemplate>) {
+  constructor(label: string, options?: Array<ITemplate>) {
     this.label = label;
-    this.options = options;
+    this.options = options ?? [];
   }
 }

@@ -2,7 +2,7 @@
   <div class="apih-code">
     <div class="apih-code__handle">
       <a-tooltip :content="text">
-        <icon-copy :size="30" @click="copy" />
+        <icon-copy :size="30" style="color: #fff" @click="copy" />
       </a-tooltip>
     </div>
     <div class="apih-code__content">
@@ -74,6 +74,7 @@ onBeforeMount(() => {
   height: 100%;
   overflow: auto;
   display: flex;
+  border-radius: 5px;
   @at-root .apih-code__handle{
     position: absolute;
     right: 10px;

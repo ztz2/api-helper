@@ -1,94 +1,107 @@
 <template>
-  <a-form
-    ref="formRef"
-    :model="formModel"
-    :rules="formRules"
-    layout="vertical"
-    auto-label-width
-  >
-    <a-tabs class="a-tabs--simplify" default-active-key="1">
-      <a-tab-pane key="1" title="配置选择">
-        <!--  基础配置  -->
-        <a-row :gutter="gutter">
-          <a-divider orientation="left"><span class="font-size-16">基础配置</span></a-divider>
-          <a-col :span="24">
-            <a-form-item
-                :rules="[{ required: true, message: '必填项' }]"
-                :validate-trigger="['change', 'input']"
-                label="API"
-                field="apiId"
-            >
-              <a-select v-model="formModel.apiId" :options="options.categoryList"></a-select>
-            </a-form-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-item
-              :rules="[{ required: true, message: '必填项' }]"
-              :validate-trigger="['change', 'input']"
-              label="模板"
-              field="tplId"
-            >
-              <a-select v-model="formModel.tplId" :options="templateList"></a-select>
-            </a-form-item>
-          </a-col>
-        </a-row>
-        <!--  Input 输入框属性配置  -->
-        <a-row style="margin-top: 6px" :gutter="30">
-          <a-divider orientation="left"><span class="font-size-16">Input 输入框属性配置</span></a-divider>
-          <a-col :span="12">
-            <a-space>
-              <div>maxlength</div>
-              <div>
-                <a-form-item field="maxlength" no-style>
-                  <a-input-number v-model="formModel.maxlength" allow-clear hide-button />
+  <div>
+    <a-form
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        layout="vertical"
+        auto-label-width
+    >
+      <a-tabs class="a-tabs--simplify" default-active-key="1">
+        <a-tab-pane key="1" title="配置选择">
+          <!--  基础配置  -->
+          <a-card title="基础配置">
+            <a-row :gutter="gutter">
+              <a-col :span="24">
+                <a-form-item
+                    :rules="[{ required: true, message: '必填项' }]"
+                    :validate-trigger="['change', 'input']"
+                    label="API"
+                    field="apiId"
+                >
+                  <a-select v-model="formModel.apiId" :options="options.categoryList"></a-select>
                 </a-form-item>
-              </div>
-            </a-space>
-          </a-col>
-          <a-col :span="12">
-            <div style="margin-top: 4px">
-              <a-form-item field="placeholder" no-style>
-                <a-checkbox v-model="formModel.placeholder">生成placeholder</a-checkbox>
-              </a-form-item>
-            </div>
-          </a-col>
-        </a-row>
-        <!--  其他配置  -->
-        <a-row :gutter="gutter" style="margin-top: 26px">
-          <a-divider orientation="left"><span class="font-size-16">其他配置</span></a-divider>
-          <a-space :size="2" class="a-space--shim" direction="vertical">
-            <div><a-checkbox v-model="formModel.crud">生成CURD</a-checkbox></div>
-            <div><a-checkbox v-model="formModel.grid">格栅布局</a-checkbox></div>
-            <div><a-checkbox v-model="formModel.generateLabel">Form表单项生成label</a-checkbox></div>
-          </a-space>
-        </a-row>
-      </a-tab-pane>
-      <a-tab-pane key="2" title="字段选择">
-        <a-row :gutter="5" style="width: 100%">
-          <a-col :span="12">
-            <a-card style="width: 100%">
-              <template #title>
-                <div class="text-center">请求数据字段</div>
-              </template>
-              <div style="width: 100%; height: calc(100vh - 277px)">
-                <ApihSchemaTree v-model:value="formModel.requestDataSchemaIdList" :data="requestFieldTree" />
-              </div>
-            </a-card>
-          </a-col>
-          <a-col :span="12">
-            <a-card style="width: 100%">
-              <template #title>
-                <div class="text-center">响应数据字段</div>
-              </template>
-              <div style="width: 100%; height: calc(100vh - 277px)">
-                <ApihSchemaTree v-model:value="formModel.responseDataSchemaIdList" :data="responseFieldTree" />
-              </div>
-            </a-card>
-          </a-col>
-        </a-row>
-      </a-tab-pane>
-    </a-tabs>
-  </a-form>
+              </a-col>
+              <a-col :span="24">
+                <a-form-item
+                    :rules="[{ required: true, message: '必填项' }]"
+                    :validate-trigger="['change', 'input']"
+                    field="tplId"
+                    style="margin-bottom: 0"
+                >
+                  <template #label>
+                    <a-space>
+                      <span>模板</span>
+                      <div><a-button size="mini" @click.prevent="handleAdd">新增模板</a-button></div>
+                      <div><a-button size="mini" :disabled="!formModel.tplId" @click.prevent="handleEdit" >编辑模板</a-button></div>
+                    </a-space>
+                  </template>
+                  <a-select v-model="formModel.tplId" :options="templateList"></a-select>
+                </a-form-item>
+              </a-col>
+            </a-row>
+          </a-card>
+          <!--  Input 输入框属性配置  -->
+          <a-card title="Input 输入框属性配置">
+            <a-row style="margin-top: 6px" :gutter="30">
+              <a-col :span="12">
+                <a-space>
+                  <div>maxlength</div>
+                  <div>
+                    <a-form-item field="maxlength" no-style>
+                      <a-input-number v-model="formModel.maxlength" allow-clear hide-button />
+                    </a-form-item>
+                  </div>
+                </a-space>
+              </a-col>
+              <a-col :span="12">
+                <div style="margin-top: 4px">
+                  <a-form-item field="placeholder" no-style>
+                    <a-checkbox v-model="formModel.placeholder">生成placeholder</a-checkbox>
+                  </a-form-item>
+                </div>
+              </a-col>
+            </a-row>
+          </a-card>
+          <!--  其他配置  -->
+          <a-card title="其他配置">
+            <a-row :gutter="gutter">
+              <a-space :size="2" class="a-space--shim" direction="vertical">
+                <div><a-checkbox v-model="formModel.crud">生成CURD</a-checkbox></div>
+                <div><a-checkbox v-model="formModel.grid">格栅布局</a-checkbox></div>
+                <div><a-checkbox v-model="formModel.generateLabel">Form表单项生成label</a-checkbox></div>
+              </a-space>
+            </a-row>
+          </a-card>
+        </a-tab-pane>
+        <a-tab-pane key="2" title="字段选择">
+          <a-row :gutter="5">
+            <a-col :span="12">
+              <a-card style="width: 100%">
+                <template #title>
+                  <div class="text-center">请求数据字段</div>
+                </template>
+                <div style="width: 100%; height: calc(100vh - 277px)">
+                  <ApihSchemaTree v-model:value="formModel.requestDataSchemaIdList" :data="requestFieldTree" />
+                </div>
+              </a-card>
+            </a-col>
+            <a-col :span="12">
+              <a-card style="width: 100%">
+                <template #title>
+                  <div class="text-center">响应数据字段</div>
+                </template>
+                <div style="width: 100%; height: calc(100vh - 277px)">
+                  <ApihSchemaTree v-model:value="formModel.responseDataSchemaIdList" :data="responseFieldTree" />
+                </div>
+              </a-card>
+            </a-col>
+          </a-row>
+        </a-tab-pane>
+      </a-tabs>
+    </a-form>
+    <DialogModelCud ref="dialogModelCudRef" @success="handleSuccess" />
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -96,19 +109,25 @@ import { SelectOptionGroup } from '@arco-design/web-vue';
 import {
   ref,
   watch,
+  toRef,
+  toRefs,
   computed,
   PropType,
   defineExpose,
+  defineEmits,
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 
+import { modalConfirm } from '@/utils';
 import { treeForEach } from '@/utils/tree';
 import { useForm } from '@/hooks/use-form';
-import { AhProject } from '@/core/interface';
+import { Template } from '@/store/template/interface';
 import { useModelConfig, useModelTemplate } from '@/store';
 import { RenderModelConfig } from '@/views/generate/interface';
+import DialogModelCud from '../dialog/dialog-model-cud.vue';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
+import emptyTemplate from '@/constants/template/model/empty';
 
 type FormModelType = FormModel;
 
@@ -123,11 +142,12 @@ class FormModel extends RenderModelConfig {
 
 const span = ref(12);
 const gutter = ref(15);
+const dialogModelCudRef = ref();
+const emit = defineEmits(['save-template']);
 const props = defineProps({
   data: {
     type: Object as PropType<{
-      project: AhProject,
-      categoryList: Array<APIHelper.Category>
+      categoryList: APIHelper.CategoryList,
     }>,
     default: () => ({})
   },
@@ -139,6 +159,8 @@ const props = defineProps({
 });
 
 const { modelConfig, updateModelConfig } = useModelConfig();
+const modelTemplateStore = useModelTemplate();
+const { templateList, templateMap } = toRefs(modelTemplateStore);
 
 const {
   formRef,
@@ -156,12 +178,13 @@ const {
 } = useForm<FormModelType>({
   ...new FormModel(),
   ...modelConfig,
+}, {
+  watchFormModel: toRef(props, 'data') as any
 });
 
 const options = ref({
   categoryList: [] as Array<SelectOptionGroup>
 });
-const { templateList } = useModelTemplate();
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
 
@@ -263,6 +286,35 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
     schema.params = filterChildren(schema.params, checkIds);
     return true;
   })
+}
+
+
+function handleAdd() {
+  dialogModelCudRef.value?.open({ type: 'ADD' }, {
+    ...formModel.value,
+    ...emptyTemplate
+  });
+}
+
+async function handleEdit() {
+  let tplModel = cloneDeep(templateMap.value.get(formModel.value.tplId));
+  if (tplModel) {
+    if (tplModel.default) {
+      await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
+      tplModel.label = tplModel.label + ' - 副本';
+      tplModel.value = '';
+      tplModel.default = false;
+    }
+  }
+  dialogModelCudRef.value?.open({ type: 'EDIT' }, {
+    ...formModel.value,
+    ...tplModel
+  });
+}
+
+function handleSuccess(val: string) {
+  formModel.value.tplId = val;
+  emit('save-template');
 }
 
 defineExpose({

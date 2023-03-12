@@ -1,7 +1,7 @@
 import { COMMON_HEAD } from './common';
 import { Template } from '@/store/template/interface';
 
-export default new Template({ value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', content: `${COMMON_HEAD}
+export default new Template({ value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', default: true, content: `${COMMON_HEAD}
 let apiList = params.apiList;
 
 config.typingList = [];

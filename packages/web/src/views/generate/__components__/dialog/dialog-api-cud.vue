@@ -4,8 +4,8 @@
     width="100%"
     cancel-text="返回"
     hide-ok
+    :span="[16, 8]"
     :form-component="Form"
-    @save-template="handleGen(false)"
   >
     <template #default>
       <a-row :gutter="12">
@@ -17,7 +17,8 @@
       </a-row>
     </template>
     <template #footer>
-      <a-button type="primary" @click="handleGen(true)">生成</a-button>
+      <a-button type="primary" @click="handleGen(true)">测试</a-button>
+      <a-button type="primary" @click="handleSave(true)">保存</a-button>
     </template>
   </apih-dialog>
 </template>
@@ -25,26 +26,27 @@
 <script lang="ts" setup>
 import {
   ref,
-  toRefs,
   nextTick,
-  defineExpose
+  defineExpose,
+  defineEmits,
 } from 'vue';
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
-import Form from '../form/form-api.vue';
+import Form from '../form/form-api-cud.vue';
 import { useApiTemplate } from '@/store';
 import renderTemplate from '@/utils/renderTemplate';
 import { OpenConfig } from '@/components/apih-dialog/interface';
-import emptyTemplate from '@/constants/template/api/empty';
+import { DOCUMENT } from '@/constants/mock';
 
 type OpenDataType = {
   apiList: Array<APIHelper.API>
 };
 
+const emit = defineEmits(['success']);
 const dialogRef = ref();
 const codeList = ref<Array<string>>([]);
-const { templateMap } = toRefs(useApiTemplate());
+const { save } = useApiTemplate();
 
 const openData = ref<OpenDataType>();
 
@@ -61,22 +63,21 @@ function open(config: OpenConfig, data?: OpenDataType) {
 }
 
 async function handleGen(showMsg = false) {
+  const data = await dialogRef.value.getFormRef().getFormModel();
+  codeList.value = renderTemplate(data, {
+    apiList: DOCUMENT.categoryList[0].apiList
+  }, data);
+  if (showMsg === true) {
+    Message.success('已生成');
+  }
+}
+
+async function handleSave() {
   const data = await dialogRef.value.getFormRef().validate();
-  let template = templateMap.value.get(data.tplId);
-  let isEmptyTemplate = false;
-  if (!template) {
-    isEmptyTemplate = true;
-    template = { ...emptyTemplate };
-    Message.error('请重新选择模板');
-  }
-  if (openData.value) {
-    codeList.value = renderTemplate(template, {
-      apiList: openData.value.apiList
-    }, data);
-    if (!isEmptyTemplate && showMsg === true) {
-      Message.success('已生成');
-    }
-  }
+  const id = save(data);
+  close();
+  Message.success('保存成功');
+  emit('success', id);
 }
 
 defineExpose({

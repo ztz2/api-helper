@@ -1,85 +1,98 @@
 <template>
-  <a-form
-    ref="formRef"
-    :model="formModel"
-    :rules="formRules"
-    layout="vertical"
-    auto-label-width
-  >
-    <!------------------  基础配置  ------------------>
-    <a-row :gutter="gutter">
-      <a-divider orientation="left">
-        <span class="font-size-16">基础配置</span>
-      </a-divider>
-      <a-col :span="24">
-        <a-form-item
-          label="模板选择"
-          field="tplId"
-          :rules="[{ required: true, message: '必填项' }]"
-          :validate-trigger="['change', 'input']"
-        >
-          <a-select
-            v-model="formModel.tplId"
-            :value-key="'id'"
-            :options="templateList"
-          />
-        </a-form-item>
-      </a-col>
-    </a-row>
-    <!------------------  代码约束配置  ------------------>
-    <a-row :gutter="gutter">
-      <a-divider orientation="left">
-        <span class="font-size-16">代码约束配置</span>
-      </a-divider>
-      <a-col :span="24">
-        <a-form-item
-          label="代码类型"
-          field="codeType"
-          :rules="[{ required: true, message: '必填项' }]"
-          :validate-trigger="['change', 'input']"
-        >
-          <a-radio-group v-model="formModel.codeType" :options="options.codeType" />
-        </a-form-item>
-      </a-col>
-    </a-row>
-    <!------------------  生成内容配置  ------------------>
-    <a-row :gutter="gutter">
-      <a-divider orientation="left">
-        <span class="font-size-16">生成内容配置</span>
-      </a-divider>
-      <a-col :span="24">
-        <a-form-item
-          label="只生成API函数"
-          field="onlyApiFunc"
-          :rules="[{ required: true, message: '必填项' }]"
-          :validate-trigger="['change', 'input']"
-        >
-          <a-radio-group v-model="formModel.onlyApiFunc" :options="options.boolean" />
-        </a-form-item>
-      </a-col>
-      <a-col v-if="!formModel.onlyApiFunc" :span="24">
-        <a-form-item label="API函数头部代码" field="headCodeText">
-          <a-textarea v-model="formModel.headCodeText" :max-length="512"></a-textarea>
-        </a-form-item>
-      </a-col>
-    </a-row>
-  </a-form>
+  <div>
+    <a-form
+        ref="formRef"
+        :model="formModel"
+        :rules="formRules"
+        layout="vertical"
+        auto-label-width
+    >
+      <!------------------  基础配置  ------------------>
+      <a-card title="基础配置">
+        <a-row :gutter="gutter">
+          <a-col :span="24">
+            <a-form-item
+                label="模板选择"
+                field="tplId"
+                style="margin-bottom: 0"
+                :rules="[{ required: true, message: '必填项' }]"
+                :validate-trigger="['change', 'input']"
+            >
+              <template #label>
+                <a-space>
+                  <span>模板</span>
+                  <div><a-button size="mini" @click.prevent="handleAdd">新增模板</a-button></div>
+                  <div><a-button size="mini" :disabled="!formModel.tplId" @click.prevent="handleEdit" >编辑模板</a-button></div>
+                </a-space>
+              </template>
+              <a-select
+                v-model="formModel.tplId"
+                value-key="id"
+                :options="templateList"
+              />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-card>
+      <!------------------  生成内容配置  ------------------>
+      <a-card title="生成内容配置">
+        <a-row :gutter="gutter">
+          <a-col :span="24">
+            <a-form-item
+                label="代码类型"
+                field="codeType"
+                :rules="[{ required: true, message: '必填项' }]"
+                :validate-trigger="['change', 'input']"
+            >
+              <a-radio-group v-model="formModel.codeType" :options="options.codeType" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-item
+                label="只生成API函数"
+                field="onlyApiFunc"
+                style="margin-bottom: 0"
+                :rules="[{ required: true, message: '必填项' }]"
+                :validate-trigger="['change', 'input']"
+            >
+              <a-radio-group v-model="formModel.onlyApiFunc" :options="options.boolean" />
+            </a-form-item>
+          </a-col>
+          <a-col v-if="!formModel.onlyApiFunc" style="margin-top: 20px" :span="24">
+            <a-form-item label="API函数头部代码" field="headCodeText" style="margin-bottom: 0">
+              <a-textarea v-model="formModel.headCodeText" :max-length="512"></a-textarea>
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-card>
+    </a-form>
+    <DialogAPICud ref="dialogAPICudRef" @success="handleSuccess" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import {
   ref,
   toRef,
-  PropType,
+  watch,
   isRef,
+  toRefs,
+  PropType,
   isReactive,
-  defineExpose, computed, watch
+  defineExpose, defineEmits
 } from 'vue';
-import { useApiConfig, useApiTemplate } from '@/store';
+import { cloneDeep } from 'lodash';
 import { useForm } from '@/hooks/use-form';
+import { useApiConfig, useApiTemplate } from '@/store';
 import { RenderAPIConfig } from '@/views/generate/interface';
+import DialogAPICud from '../dialog/dialog-api-cud.vue';
+import { Template } from '@/store/template/interface';
+import emptyTemplate from '@/constants/template/api/empty';
+import { modalConfirm } from '@/utils';
 
 type FormModelType = RenderAPIConfig;
+
+const emit = defineEmits(['save-template']);
 
 const props = defineProps({
   data: {
@@ -94,7 +107,9 @@ const props = defineProps({
 });
 
 const gutter = ref(15);
-const { templateList } = useApiTemplate();
+const dialogAPICudRef = ref();
+const apiTemplateStore = useApiTemplate();
+const { templateMap, templateList } = toRefs(apiTemplateStore);
 const { apiConfig, updateApiConfig } = useApiConfig();
 
 const {
@@ -126,6 +141,34 @@ const options = ref({
 watch(() => formModel.value, (val) => {
   updateApiConfig(val);
 }, { deep: true });
+
+function handleAdd() {
+  dialogAPICudRef.value?.open({ type: 'ADD' }, {
+    ...formModel.value,
+    ...emptyTemplate
+  });
+}
+
+async function handleEdit() {
+  let tplModel = cloneDeep(templateMap.value.get(formModel.value.tplId));
+  if (tplModel) {
+    if (tplModel.default) {
+      await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
+      tplModel.label = tplModel.label + ' - 副本';
+      tplModel.value = '';
+      tplModel.default = false;
+    }
+  }
+  dialogAPICudRef.value?.open({ type: 'EDIT' }, {
+    ...formModel.value,
+    ...tplModel
+  });
+}
+
+function handleSuccess(val: string) {
+  formModel.value.tplId = val;
+  emit('save-template');
+}
 
 defineExpose({
   validate,

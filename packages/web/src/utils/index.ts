@@ -2,6 +2,7 @@ import { isRef } from 'vue';
 import { cloneDeep } from 'lodash';
 import { Modal } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core';
+import { ModalConfig } from '@arco-design/web-vue/es/modal/interface';
 
 export const checkType = (value: any, target: string) =>
     Object.prototype.toString.call(value) === `[object ${target}]`;
@@ -55,4 +56,30 @@ export function getMethodRgbaColor(method: HttpMethod = 'GET', alpha = 1) {
 
 export function isBasicDataTypeSchema(schema: APIHelper.Schema): boolean {
   return !schema.keyName && schema.type !== 'array' && schema.type !== 'object';
+}
+
+export function modalConfirm(modalConfig: ModalConfig | string) {
+  return new Promise((resolve, reject) => {
+    const defaultConfig = {
+      title: '提示',
+      simple: false
+    };
+
+    const config = typeof modalConfig === 'string' ? {
+      content: modalConfig
+    } : modalConfig;
+
+    Modal.open({
+      ...defaultConfig,
+      ...config,
+      onOk: () => {
+        config?.onOk?.();
+        resolve(true);
+      },
+      onClose() {
+        config?.onClose?.();
+        reject();
+      }
+    });
+  });
 }

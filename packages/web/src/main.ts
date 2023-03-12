@@ -5,7 +5,7 @@ import { Message } from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
 
 import hljs from 'highlight.js/lib/core';
-import 'highlight.js/styles/vs2015.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 import hljsVuePlugin from '@highlightjs/vue-plugin';
 import css from 'highlight.js/lib/languages/css';

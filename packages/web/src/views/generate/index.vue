@@ -22,9 +22,7 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogAPIRef.open({
-                  project: ahProject,
-                  categoryList: selectedAhModule,
+                @click="dialogAPIRef.open({ type: 'ADD' }, {
                   apiList: selectApiList
                 })"
               >
@@ -33,8 +31,7 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogModelRef.open({
-                  project: ahProject,
+                @click="dialogModelRef.open({ type: 'ADD' }, {
                   categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"

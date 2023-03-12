@@ -52,6 +52,10 @@
       cancelButtonProps: {
         type: Object,
         default: () => ({})
+      },
+      span: {
+        type: Array,
+        default: () => [24]
       }
     },
     emits: ['success'],
@@ -294,6 +298,15 @@
           return sort1 - sort2;
         });
 
+        let span1 = props.span[0];
+        let span2 = props.span[1];
+
+        // 没有设置默认值，重置成默认
+        if (slots.default && props.span?.length === 1) {
+          span1 = 8;
+          span2 = 16;
+        }
+
         return (
           <>
             <DialogComp.value
@@ -305,12 +318,14 @@
               v-slots={{
                 footer: () => <>{renderFooterVNode}</>
               }}
+              class="apih-dialog"
             >
               <div>
                 <a-spin size={32} loading={loading.value} style="width: 100%">
                   <a-row gutter={12}>
-                    <a-col span={slots.default ? 8 : 24}>
+                    <a-col span={span1}>
                       <formComponent
+                        {...attrs}
                         ref={(v: unknown) =>
                           (formRef.value = v as FormComponentInstance)
                         }
@@ -318,7 +333,7 @@
                         data={openData.value}
                       />
                     </a-col>
-                    { slots.default && <a-col span={16}>{ slots.default() }</a-col> }
+                    { slots.default && <a-col span={span2}>{ slots.default() }</a-col> }
                   </a-row>
                 </a-spin>
               </div>
@@ -330,4 +345,10 @@
   });
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.apih-dialog{
+  .arco-drawer-body{
+    background-color: #eee;
+  }
+}
+</style>

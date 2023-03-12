@@ -1,3 +1,13 @@
 .arco-card{
-    box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 5px!important;
+  //border: none!important;
+  //box-shadow: 0px 0px 6px 0px #fff;
+  & ~ * {
+    margin-top: 12px;
+  }
+}
+.arco-tabs-nav{
+  border-radius: 5px;
+  background-color: #fff;
 }

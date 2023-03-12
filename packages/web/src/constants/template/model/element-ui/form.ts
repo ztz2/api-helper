@@ -1,7 +1,7 @@
-import { COMMON_HEAD } from './common';
+import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
-export default new Template({ value: 'class_we3f6Os29uufxfo234322', label: 'Form 表单', content: `${COMMON_HEAD}
+export default new Template({ value: 'class_we3f6Os29uufxfo234322', label: 'Form 表单', default: true, content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
