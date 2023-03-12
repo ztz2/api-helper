@@ -22,7 +22,10 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogAPIRef.open({ type: 'ADD' }, {
+                @click="dialogAPIRef.open({
+                  type: 'ADD',
+                  title: '生成(API函数代码)'
+                }, {
                   apiList: selectApiList
                 })"
               >
@@ -31,7 +34,10 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogModelRef.open({ type: 'ADD' }, {
+                @click="dialogModelRef.open({
+                  type: 'ADD',
+                  title: '生成(表单代码)'
+                }, {
                   categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"

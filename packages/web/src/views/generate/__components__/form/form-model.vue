@@ -105,7 +105,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SelectOptionGroup } from '@arco-design/web-vue';
+import { Message, SelectOptionGroup } from '@arco-design/web-vue';
 import {
   ref,
   watch,
@@ -290,7 +290,10 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
 
 
 function handleAdd() {
-  dialogModelCudRef.value?.open({ type: 'ADD' }, {
+  dialogModelCudRef.value?.open({
+    type: 'ADD',
+    title: '新增模板'
+  }, {
     ...formModel.value,
     ...emptyTemplate
   });
@@ -298,15 +301,19 @@ function handleAdd() {
 
 async function handleEdit() {
   let tplModel = cloneDeep(templateMap.value.get(formModel.value.tplId));
-  if (tplModel) {
-    if (tplModel.default) {
-      await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-      tplModel.label = tplModel.label + ' - 副本';
-      tplModel.value = '';
-      tplModel.default = false;
-    }
+  if (!tplModel) {
+    return Message.error('请重新选择模板');
   }
-  dialogModelCudRef.value?.open({ type: 'EDIT' }, {
+  if (tplModel.default) {
+    await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
+    tplModel.label = tplModel.label + ' - 副本';
+    tplModel.value = '';
+    tplModel.default = false;
+  }
+  dialogModelCudRef.value?.open({
+    type: 'EDIT',
+    title: '修改模板'
+  }, {
     ...formModel.value,
     ...tplModel
   });
