@@ -18,7 +18,7 @@
     </template>
     <template #footer>
       <a-button type="primary" @click="handleGen(true)">测试</a-button>
-      <a-button type="primary" @click="handleSave(true)">保存</a-button>
+      <a-button type="primary" @click="handleSave">保存</a-button>
     </template>
   </apih-dialog>
 </template>

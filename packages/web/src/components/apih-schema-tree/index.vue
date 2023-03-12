@@ -59,7 +59,6 @@ import {
   watch,
   computed,
   PropType,
-  defineComponent,
 } from 'vue';
 import { treeMap } from '@/utils/tree';
 import { pascalCase } from 'change-case';

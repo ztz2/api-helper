@@ -132,11 +132,11 @@ const options = ref({
   codeType: [
     { label: 'Typescript', value: 'typescript' },
     { label: 'Javascript', value: 'javascript' },
-  ],
+  ] as any,
   boolean: [
     { label: '是', value: true },
     { label: '否', value: false }
-  ],
+  ] as any,
 });
 
 watch(() => formModel.value, (val) => {

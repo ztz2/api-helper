@@ -13,7 +13,6 @@ declare module '@vue/runtime-core' {
     ACol: typeof import('@arco-design/web-vue')['Col']
     ACollapse: typeof import('@arco-design/web-vue')['Collapse']
     ACollapseItem: typeof import('@arco-design/web-vue')['CollapseItem']
-    ADivider: typeof import('@arco-design/web-vue')['Divider']
     AEmpty: typeof import('@arco-design/web-vue')['Empty']
     AForm: typeof import('@arco-design/web-vue')['Form']
     AFormItem: typeof import('@arco-design/web-vue')['FormItem']

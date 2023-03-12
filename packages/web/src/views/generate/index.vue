@@ -77,7 +77,7 @@
                     <template #header>
                       <a-space>
                         <a-tag>{{api.method.toUpperCase()}}</a-tag>
-                        <span>{{api.url}}</span>
+                        <span>{{api.path}}</span>
                         <small><strong>{{api.summary}}</strong></small>
                       </a-space>
                     </template>
@@ -127,8 +127,9 @@ export default defineComponent({
 <script lang="ts" setup>
 import {
   ref,
+  toRefs,
   computed,
-  onMounted, toRefs,
+  onMounted
 } from 'vue';
 import { useRoute } from 'vue-router';
 import { APIHelper, getSchema } from '@api-helper/core';

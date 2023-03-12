@@ -80,7 +80,7 @@ import { Template } from '@/store/template/interface';
 import { RenderAPIConfig } from '@/views/generate/interface';
 import { useApiConfig } from '@/store';
 
-type FormModelType = Template;
+type FormModelType = Template & RenderAPIConfig;
 
 const props = defineProps({
   data: {
@@ -120,11 +120,11 @@ const options = ref({
   codeType: [
     { label: 'Typescript', value: 'typescript' },
     { label: 'Javascript', value: 'javascript' },
-  ],
+  ] as any,
   boolean: [
     { label: '是', value: true },
     { label: '否', value: false }
-  ],
+  ] as any,
 });
 
 watch(() => formModel.value, (val) => {

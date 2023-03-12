@@ -66,9 +66,9 @@
     defineExpose,
   } from 'vue';
   import { useForm } from '@/hooks/use-form';
-  import { Project, IProject } from '@/store/project/interface';
+  import { Project } from '@/store/project/interface';
 
-  type FormModelType = IProject;
+  type FormModelType = Project;
 
   const span = ref(12);
   const gutter = ref(15);

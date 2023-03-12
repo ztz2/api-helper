@@ -56,7 +56,7 @@ const projectStore = useProject();
 
 const selectedKeys = ref<Array<string>>([]);
 const tableData = computed(() => projectStore.data);
-const rowSelection = reactive({
+const rowSelection = reactive<any>({
   type: 'checkbox',
   showCheckedAll: true,
   onlyCurrent: true,

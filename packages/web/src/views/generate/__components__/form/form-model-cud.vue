@@ -158,6 +158,9 @@ type FormModelType = FormModel;
 class FormModel extends RenderModelConfig {
   tplId = '';
   dataKey = '';
+  label = '';
+  value = '';
+  content = '';
   api = {} as APIHelper.API;
   requestDataSchemaList = [] as APIHelper.SchemaList
   requestDataSchemaIdList = [] as string[]

@@ -52,15 +52,15 @@
             class="apih-category-item__content"
         >
           <div
-              v-for="subModule of module.apiList"
-              :key="subModule.id"
+              v-for="api of module.apiList"
+              :key="api.id"
               :class="{
-            'apih-category-item-sub--active': currentSelectedKeys.includes(subModule.id)
+            'apih-category-item-sub--active': currentSelectedKeys.includes(api.id)
           }"
               class="apih-category-item-sub"
           >
-            <div @click="handleSelectModuleSub(subModule)" class="apih-category-item-sub__label">
-              {{ subModule.summary ? subModule.summary : subModule.field }}
+            <div @click="handleSelectAPI(api)" class="apih-category-item-sub__label">
+              {{ api.summary ? api.summary : api.description }}
             </div>
           </div>
         </div>
@@ -152,10 +152,10 @@ function handleSelectModule(module: APIHelper.Category) {
   });
   handleExpand(module, true);
 }
-function handleSelectModuleSub(module: APIHelper.Category) {
-  const index = currentSelectedKeys.value?.indexOf(module.id) ?? -1;
+function handleSelectAPI(api: APIHelper.API) {
+  const index = currentSelectedKeys.value?.indexOf(api.id) ?? -1;
   if (index === -1) {
-    currentSelectedKeys.value.push(module.id);
+    currentSelectedKeys.value.push(api.id);
   } else {
     currentSelectedKeys.value.splice(index, 1);
   }
