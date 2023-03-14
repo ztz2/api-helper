@@ -1,13 +1,16 @@
 <template>
   <div class="apih-category">
     <div class="apih-category-search">
-      <a-input-search
-        v-model="searchValue"
-        @search="handleSearch"
-        style="width: 100%"
-        placeholder="模块名称、路径"
-        search-button
-      />
+      <a-tooltip content="TODO，该功能还在开发中...">
+        <a-input-search
+          v-model="searchValue"
+          @search="handleSearch"
+          style="width: 100%"
+          placeholder="模块名称、路径"
+          search-button
+          disabled
+        />
+      </a-tooltip>
     </div>
     <div class="apih-category-body">
       <div

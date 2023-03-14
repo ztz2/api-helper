@@ -1,87 +1,8 @@
 export const COMMON_HEAD = `/**
-// 项目
-export class Project {
-  id = nanoid();
-  title = '';
-  description = '';
-  version = '';
-  openapiVersion = '';
-  basePath = '';
-  host = '';
-  categoryList = [];
-}
-
-// 项目下面的模块
-export class AhModule {
-  id = nanoid();
-  name = '';
-  description = '';
-  apiList = [] as Array<AhAPI>;
-}
-
-// 模块下的API接口
-export class AhAPI {
-  id = nanoid();
-  url = '';
-  method = '';
-  contentType = [];
-  description = '';
-  summary = '';
-  requestFields = [];
-  responseFields = [];
-}
-
-// API接口数据字段
-export class AhAPIField {
-  id = nanoid();
-  field = '';
-  // 数据类型
-  type = [] as Array<string>;
-  childrenType = [] as Array<string>;
-  children = [] as Array<AhAPIField>;
-  enum = [];
-  // body | query | param
-  in = '';
-  required = false;
-  title = '';
-  description = '';
-}
-
-export class RenderAPIConfig {
-  // 模板ID
-  tplId = '';
-
-  // 代码类型
-  codeType = 'typescript';
-
-  // 请求参数类型约束
-  requestDataConstraint = true;
-
-  // 响应参数类型约束
-  responseDataConstraint = true;
-
-  // 只生成API函数
-  onlyApiFunc = false;
-
-  // 函数命名是否需要baseUrl
-  generateNameByBasePath = true;
-
-  // 头部代码
-  headCodeText = \`import request from '@/utils/request';\n\`;
-
-  // 是否生成分号
-  semi = true;
-
-  // 重复请求
-  duplicateRequest = false;
-}
-
  * @description 渲染函数
  * @param params { object }
- * @param params.project { Project }  项目对象
- * @param params.categoryList { Array<AhModule> } 选择的项目下的模块 
- * @param config.apiList { Array<AhAPI> } 选择的API集合
- * @param config { RenderAPIConfig } 配置对象 
+ * @param config.apiList { Array<APIHelper.API> } 选择的API集合
+ * @param config { RenderAPIConfig } 配置对象
  * @return [] { Array<string> } 返回数组，里面每一项字符串都是一个模板
  */
 function renderTemplate (params, config) {
