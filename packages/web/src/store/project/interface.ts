@@ -1,3 +1,6 @@
+import { nanoid } from 'nanoid';
+import { APIHelper } from '@api-helper/core';
+
 export interface IProject {
   id: string;
   // 项目名称
@@ -21,17 +24,42 @@ export interface IProject {
 
 export class Project implements IProject {
   id = '';
+
   title = '';
+
   url = 'http://localhost:3210/app/swagger/test';
+
   type = 'swagger';
+
   authToken = '';
+
   auth = {
     username: '',
-    password: ''
+    password: '',
   }
+
   constructor(id?: string) {
     if (typeof id === 'string') {
       this.id = id;
     }
   }
+}
+
+// 项目
+export class APIHDocument implements APIHelper.Document {
+  id = nanoid();
+
+  title = '';
+
+  description = '';
+
+  version = '';
+
+  openapiVersion = '';
+
+  basePath = '';
+
+  host = '';
+
+  categoryList = [];
 }

@@ -26,25 +26,23 @@
 <script lang="ts" setup>
 import {
   ref,
-  toRefs,
   nextTick,
   defineExpose,
   defineEmits,
 } from 'vue';
 import { omit } from 'lodash';
+import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
 import { useModelTemplate } from '@/store';
-import Form from '../form/form-model-cud.vue';
-import renderTemplate from '@/utils/renderTemplate';
-import { AhProject } from '@/core/interface';
+import renderTemplate from '@/utils/render-template';
 import { RenderModelConfig } from '@/views/generate/interface';
 import { OpenConfig } from '@/components/apih-dialog/interface';
-import { APIHelper } from '@api-helper/core';
+import Form from '../form/form-model-cud.vue';
 
 type OpenDataType = {
-  project: AhProject,
-  apiList: Array<APIHelper.API>
+  categoryList: APIHelper.CategoryList
+  apiList: APIHelper.APIList
 };
 
 const emit = defineEmits(['success']);
@@ -63,7 +61,7 @@ function open(config: OpenConfig, data?: OpenDataType) {
   openData.value = data;
   nextTick(() => {
     dialogRef.value.getFormRef().setFormModel({
-      apiId: data?.apiList?.[0]?.id ?? ''
+      apiId: data?.apiList?.[0]?.id ?? '',
     });
     handleGen();
   });
@@ -80,7 +78,7 @@ async function handleGen(showMsg = false) {
     'requestDataSchemaList',
     'requestDataSchemaIdList',
     'responseDataSchemaList',
-    'responseDataSchemaIdList'
+    'responseDataSchemaIdList',
   ]) as RenderModelConfig);
   if (showMsg === true) {
     Message.success('已生成');
@@ -97,8 +95,8 @@ async function handleSave() {
 
 defineExpose({
   open,
-  close
-})
+  close,
+});
 </script>
 <style lang="scss">
 

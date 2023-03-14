@@ -1,20 +1,20 @@
 <script lang="tsx">
-  import {
-    ref,
-    Ref,
-    watch,
-    computed,
-    PropType,
-    useSlots,
-    Component,
-    WatchStopHandle,
-    defineComponent,
-    ComponentPublicInstance,
-  } from 'vue';
-  import { merge } from 'lodash';
-  import { nanoid } from 'nanoid';
-  import { Drawer, Message, Modal } from '@arco-design/web-vue';
-  import { OpenData, OpenConfig } from './interface';
+import {
+  ref,
+  Ref,
+  watch,
+  computed,
+  PropType,
+  useSlots,
+  Component,
+  WatchStopHandle,
+  defineComponent,
+  ComponentPublicInstance,
+} from 'vue';
+import { merge } from 'lodash';
+import { nanoid } from 'nanoid';
+import { Drawer, Message, Modal } from '@arco-design/web-vue';
+import { OpenData, OpenConfig } from './interface';
 
   type FormComponentInstance = ComponentPublicInstance & {
     resetFields?(): void;
@@ -22,180 +22,179 @@
     getReactiveFormModel?(): undefined | Ref<Recordable>;
   };
 
-  export default defineComponent({
-    props: {
-      drawer: {
-        type: Boolean,
-        default: true
-      },
-      formComponent: {
-        required: true,
-        // Vue组件
-        type: Object as PropType<Component>
-      },
-      api: {
-        type: Function as PropType<(data: any) => Promise<unknown>>
-      },
-      detailApi: {
-        type: Function as PropType<(data: any) => Promise<unknown>>
-      },
-      width: String,
-      successMsg: String,
-      hideOk: Boolean,
-      hideCancel: Boolean,
-      okText: String,
-      cancelText: String,
-      okButtonProps: {
-        type: Object,
-        default: () => ({})
-      },
-      cancelButtonProps: {
-        type: Object,
-        default: () => ({})
-      },
-      span: {
-        type: Array,
-        default: () => [24]
-      }
+export default defineComponent({
+  props: {
+    drawer: {
+      type: Boolean,
+      default: true,
     },
-    emits: ['success'],
-    setup(props, { attrs, expose, emit }) {
-      const formRef = ref<FormComponentInstance | undefined>();
-      const formModel = ref<Recordable>({});
-      const loadingOk = ref(false);
-      const loadingDetail = ref(false);
-      const currentVisible = ref(false);
-      const openData = ref<Recordable>({});
-      const openType = ref('ADD');
-      const title = ref('');
+    formComponent: {
+      required: true,
+      // Vue组件
+      type: Object as PropType<Component>,
+    },
+    api: {
+      type: Function as PropType<(data: any) => Promise<unknown>>,
+    },
+    detailApi: {
+      type: Function as PropType<(data: any) => Promise<unknown>>,
+    },
+    width: String,
+    successMsg: String,
+    hideOk: Boolean,
+    hideCancel: Boolean,
+    okText: String,
+    cancelText: String,
+    okButtonProps: {
+      type: Object,
+      default: () => ({}),
+    },
+    cancelButtonProps: {
+      type: Object,
+      default: () => ({}),
+    },
+    span: {
+      type: Array,
+      default: () => [24],
+    },
+  },
+  emits: ['success'],
+  setup(props, { attrs, expose, emit }) {
+    const formRef = ref<FormComponentInstance | undefined>();
+    const formModel = ref<Recordable>({});
+    const loadingOk = ref(false);
+    const loadingDetail = ref(false);
+    const currentVisible = ref(false);
+    const openData = ref<Recordable>({});
+    const openType = ref('ADD');
+    const title = ref('');
 
-      const slots = useSlots();
-      const DialogComp = computed(() => (props.drawer ? Drawer : Modal));
-      const loading = computed(() => loadingDetail.value || loadingOk.value);
+    const slots = useSlots();
+    const DialogComp = computed(() => (props.drawer ? Drawer : Modal));
+    const loading = computed(() => loadingDetail.value || loadingOk.value);
 
-      watch(
-        () => openData.value,
-        (val) => {
-          formModel.value = val;
-        },
-        { immediate: true }
-      );
+    watch(
+      () => openData.value,
+      (val) => {
+        formModel.value = val;
+      },
+      { immediate: true },
+    );
 
-      let fmWatcher: WatchStopHandle | undefined;
-      watch(
-        () => formRef.value,
-        () => {
-          if (formRef.value) {
-            const fm = formRef.value?.getReactiveFormModel?.();
-            if (fm) {
-              fmWatcher && fmWatcher();
-              fmWatcher = watch(
-                () => fm.value,
-                (val) => {
-                  formModel.value = val;
-                },
-                { immediate: true }
-              );
-            } else {
-              formModel.value = openData.value;
-            }
+    let fmWatcher: WatchStopHandle | undefined;
+    watch(
+      () => formRef.value,
+      () => {
+        if (formRef.value) {
+          const fm = formRef.value?.getReactiveFormModel?.();
+          if (fm) {
+            fmWatcher && fmWatcher();
+            fmWatcher = watch(
+              () => fm.value,
+              (val) => {
+                formModel.value = val;
+              },
+              { immediate: true },
+            );
+          } else {
+            formModel.value = openData.value;
           }
-        },
+        }
+      },
+      {
+        immediate: true,
+      },
+    );
+
+    let openUid: string;
+    async function open(config: OpenConfig, data?: OpenData) {
+      const uid = nanoid();
+      currentVisible.value = true;
+      openUid = uid;
+      config = merge(
         {
-          immediate: true
-        }
+          type: 'ADD',
+          resetForm: true,
+        },
+        config,
       );
+      data = data ?? {};
 
-      let openUid: string;
-      async function open(config: OpenConfig, data?: OpenData) {
-        const uid = nanoid();
-        currentVisible.value = true;
-        openUid = uid;
-        config = merge(
-          {
-            type: 'ADD',
-            resetForm: true
-          },
-          config
-        );
-        data = data ?? {};
+      // 重置一些状态
+      loadingOk.value = false;
+      if (config.resetForm === true) {
+        formRef.value?.resetFields && formRef.value?.resetFields?.();
+      }
 
-        // 重置一些状态
-        loadingOk.value = false;
-        if (config.resetForm === true) {
-          formRef.value?.resetFields && formRef.value?.resetFields?.();
-        }
-
-        if ('title' in config) {
-          title.value = config.title as string;
-        } else {
-          title.value =
-            config.type === 'ADD'
-              ? '新增'
-              : config.type === 'EDIT'
-              ? '编辑'
-              : config.type === 'DETAIL'
+      if ('title' in config) {
+        title.value = config.title as string;
+      } else {
+        title.value = config.type === 'ADD'
+          ? '新增'
+          : config.type === 'EDIT'
+            ? '编辑'
+            : config.type === 'DETAIL'
               ? '详情'
               : '';
-        }
+      }
 
-        if (typeof props.detailApi === 'function') {
+      if (typeof props.detailApi === 'function') {
+        try {
+          loadingDetail.value = true;
+          const recordOpenUid = uid;
+          const res = (await props.detailApi(
+              data as Recordable,
+          )) as Recordable;
+          if (recordOpenUid === openUid) {
+            openData.value = res;
+            openType.value = config.type as string;
+          }
+        } finally {
+          loadingDetail.value = false;
+        }
+      } else {
+        loadingDetail.value = false;
+        openData.value = data as Recordable;
+        openType.value = config.type as string;
+      }
+    }
+
+    async function handleOk() {
+      if (formRef.value?.validate) {
+        const data = await formRef.value?.validate?.();
+        const recordOpenUid = openUid;
+        if (typeof props.api === 'function') {
           try {
-            loadingDetail.value = true;
-            const recordOpenUid = uid;
-            const res = (await props.detailApi(
-              data as Recordable
-            )) as Recordable;
+            loadingOk.value = true;
+            const res = await props.api(data);
             if (recordOpenUid === openUid) {
-              openData.value = res;
-              openType.value = config.type as string;
+              currentVisible.value = false;
+              // 重置表单
+              formRef.value?.resetFields
+                  && (await formRef.value?.resetFields?.());
+              if (props.successMsg) {
+                Message.success(props.successMsg);
+              }
+              emit('success', res);
             }
           } finally {
-            loadingDetail.value = false;
+            if (recordOpenUid === openUid) {
+              loadingOk.value = false;
+            }
           }
         } else {
-          loadingDetail.value = false;
-          openData.value = data as Recordable;
-          openType.value = config.type as string;
+          currentVisible.value = false;
         }
       }
+    }
 
-      async function handleOk() {
-        if (formRef.value?.validate) {
-          const data = await formRef.value?.validate?.();
-          const recordOpenUid = openUid;
-          if (typeof props.api === 'function') {
-            try {
-              loadingOk.value = true;
-              const res = await props.api(data);
-              if (recordOpenUid === openUid) {
-                currentVisible.value = false;
-                // 重置表单
-                formRef.value?.resetFields &&
-                  (await formRef.value?.resetFields?.());
-                if (props.successMsg) {
-                  Message.success(props.successMsg);
-                }
-                emit('success', res);
-              }
-            } finally {
-              if (recordOpenUid === openUid) {
-                loadingOk.value = false;
-              }
-            }
-          } else {
-            currentVisible.value = false;
-          }
-        }
-      }
+    function close() {
+      currentVisible.value = false;
+    }
 
-      function close() {
-        currentVisible.value = false;
-      }
-
-      function handleCancel() {
-        close();
-      }
+    function handleCancel() {
+      close();
+    }
       type ExecAsyncTaskConfig = {
         // 异步执行函数
         executor: () => Promise<unknown>;
@@ -222,18 +221,15 @@
       async function execAsyncTask(
         executor: Function | ExecAsyncTaskConfig,
         completeCallback?: Function,
-        finallyCallback?: Function
+        finallyCallback?: Function,
       ) {
-        const executorFunc =
-          typeof executor === 'function' ? executor : executor.executor;
-        const completeCallbackFunc =
-          typeof completeCallback === 'function'
-            ? completeCallback
-            : typeof executor !== 'function' && executor.completeCallback;
-        const finallyCallbackFunc =
-          typeof finallyCallback === 'function'
-            ? finallyCallback
-            : typeof executor !== 'function' && executor.finallyCallback;
+        const executorFunc = typeof executor === 'function' ? executor : executor.executor;
+        const completeCallbackFunc = typeof completeCallback === 'function'
+          ? completeCallback
+          : typeof executor !== 'function' && executor.completeCallback;
+        const finallyCallbackFunc = typeof finallyCallback === 'function'
+          ? finallyCallback
+          : typeof executor !== 'function' && executor.finallyCallback;
         try {
           const recordOpenUid = openUid;
           await executorFunc();
@@ -252,18 +248,17 @@
         open,
         close,
         getFormRef,
-        execAsyncTask
+        execAsyncTask,
       });
 
       return () => {
         const formComponent = props.formComponent as Component;
-        const footerVNode =
-          slots.footer?.({
-            loading: loadingOk.value,
-            disabled: loading.value,
-            data: formModel.value,
-            record: formModel.value
-          }) ?? [];
+        const footerVNode = slots.footer?.({
+          loading: loadingOk.value,
+          disabled: loading.value,
+          data: formModel.value,
+          record: formModel.value,
+        }) ?? [];
         if (!props.hideOk) {
           footerVNode.unshift(
             <a-button
@@ -275,7 +270,7 @@
               {...props.okButtonProps}
             >
               {props.okText ? props.okText : '确定'}
-            </a-button>
+            </a-button>,
           );
         }
         if (!props.hideCancel) {
@@ -286,13 +281,13 @@
               {...props.cancelButtonProps}
             >
               {props.cancelText ? props.cancelText : '取消'}
-            </a-button>
+            </a-button>,
           );
         }
 
         const renderFooterVNode = footerVNode.sort((a, b) => {
-          const tpl1 = Number(a.props?.['data-sort'] ?? a.props?.['dataSort']);
-          const tpl2 = Number(b.props?.['data-sort'] ?? b.props?.['dataSort']);
+          const tpl1 = Number(a.props?.['data-sort'] ?? a.props?.dataSort);
+          const tpl2 = Number(b.props?.['data-sort'] ?? b.props?.dataSort);
           const sort1 = Number.isNaN(tpl1) ? 0 : tpl1;
           const sort2 = Number.isNaN(tpl2) ? 0 : tpl2;
           return sort1 - sort2;
@@ -316,7 +311,7 @@
               visible={currentVisible.value}
               onCancel={() => (currentVisible.value = false)}
               v-slots={{
-                footer: () => <>{renderFooterVNode}</>
+                footer: () => <>{renderFooterVNode}</>,
               }}
               class="apih-dialog"
             >
@@ -326,8 +321,7 @@
                     <a-col span={span1}>
                       <formComponent
                         {...attrs}
-                        ref={(v: unknown) =>
-                          (formRef.value = v as FormComponentInstance)
+                        ref={(v: unknown) => (formRef.value = v as FormComponentInstance)
                         }
                         type={openType.value}
                         data={openData.value}
@@ -341,8 +335,8 @@
           </>
         );
       };
-    }
-  });
+  },
+});
 </script>
 
 <style lang="scss">

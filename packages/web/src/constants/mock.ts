@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { APIHelper } from '@api-helper/core';
 
 export const DOCUMENT = {

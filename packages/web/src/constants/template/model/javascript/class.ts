@@ -1,7 +1,8 @@
-import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
+import { COMMON_HEAD } from '../common';
 
-export default new Template({ value: 'class_el2h7OwE9uumxpo6ZCX0s', label: 'class', default: true, content: `${COMMON_HEAD}
+export default new Template({
+  value: 'class_el2h7OwE9uumxpo6ZCX0s', label: 'class', default: true, content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
@@ -27,4 +28,5 @@ export default new Template({ value: 'class_el2h7OwE9uumxpo6ZCX0s', label: 'clas
   result.push(tpl2);
 
   return result;
-};`});
+};`,
+});

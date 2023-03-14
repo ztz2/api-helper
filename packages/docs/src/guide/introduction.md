@@ -21,5 +21,6 @@ footer: false
 - <strong style="color:var(--vt-c-green);">[ √ ]</strong> 自定义解析
 - <strong style="color:var(--vt-c-green);">[ √ ]</strong> 解析本地文件
 - <strong style="color:var(--vt-c-green);">[ √ ]</strong> 多项目
-- <strong style="color:var(--vt-c-red);">[ x ]</strong> 解析 yapi（规划中）
-- <strong style="color:var(--vt-c-red);">[ x ]</strong> 模板生成（规划中）
+- <strong style="color:var(--vt-c-green);">[ √ ]</strong> 模板生成
+- <strong style="color:var(--vt-c-green);">[ √ ]</strong> 自定义模板
+- <strong style="color:var(--vt-c-red);">[ x ]</strong> 解析 yapi（进行中）

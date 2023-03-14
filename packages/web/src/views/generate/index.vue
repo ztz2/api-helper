@@ -119,6 +119,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
   name: 'generate',
 });
@@ -129,10 +130,13 @@ import {
   ref,
   toRefs,
   computed,
-  onMounted
+  onMounted,
 } from 'vue';
+import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
-import { APIHelper, getSchema } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core';
+// @ts-ignore
+import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
 import {
   useProject,
   useApiConfig,
@@ -141,15 +145,13 @@ import {
 } from '@/store';
 import { getSwaggerDocs } from '@/api';
 
-import { AhProject } from '@/core/interface';
-import renderTemplate from '@/utils/renderTemplate';
-import { IProject } from '@/store/project/interface';
-import DialogAPI from './__components__/dialog/dialog-api.vue';
+import renderTemplate from '@/utils/render-template';
+import { IProject, APIHDocument } from '@/store/project/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
-import DialogModel from './__components__/dialog/dialog-model.vue';
 import apiFuncTemplate from '@/constants/template/api/default';
 import mapTemplate from '@/constants/template/model/javascript/map';
-import { cloneDeep } from 'lodash';
+import DialogModel from './__components__/dialog/dialog-model.vue';
+import DialogAPI from './__components__/dialog/dialog-api.vue';
 
 const gap = ref(320);
 const loading = ref(true);
@@ -157,27 +159,27 @@ const dialogAPIRef = ref();
 const dialogModelRef = ref();
 const route = useRoute();
 const projectStore = useProject();
-const isEmpty = computed(() => !project);
+const isEmpty = computed(() => !project.value);
 const { toggleApiConfig } = useApiConfig();
 const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
 const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
 const project = computed<IProject>(() => {
-  const id = route.query.id;
+  const { id } = route.query;
   return projectStore.data.find((itm) => itm.id === id) as IProject;
 });
-const ahProject = ref<APIHelper.Document>(new AhProject() as any);
+const ahProject = ref<APIHelper.Document>(new APIHDocument());
 const selectedKeys = ref<string[]>([]);
 const selectedAhModule = computed<Array<APIHelper.Category>>(() => {
   const categoryList = [...ahProject.value.categoryList] as Array<APIHelper.Category>;
   return categoryList.map((module) => {
-    module = { ... module };
+    module = { ...module };
     module.apiList = module.apiList.filter((api) => selectedKeys.value.includes(api.id));
     return module.apiList.length > 0 ? module : null;
   }).filter((t) => t) as Array<APIHelper.Category>;
 });
 const selectApiList = computed<APIHelper.Category['apiList']>(() => {
   const res = [] as APIHelper.Category['apiList'];
-  const modules =  selectedAhModule.value as Array<APIHelper.Category>;
+  const modules = selectedAhModule.value as Array<APIHelper.Category>;
   for (let i = 0; i < modules.length; i++) {
     for (let j = 0; j < modules[i].apiList.length; j++) {
       res.push(modules[i].apiList[j]);
@@ -198,15 +200,15 @@ function renderMap(api: APIHelper.API): string[] {
     requestDataSchemaList: api.requestDataSchema ? api.requestDataSchema.params : [],
     responseDataSchemaList: responseDataSchemaList as APIHelper.SchemaList,
   }, {
-    onlyMap: true
+    onlyMap: true,
   } as any);
 }
 
 function renderAPIFunc(api: APIHelper.API) {
   return renderTemplate(apiFuncTemplate, {
-    apiList: [api]
+    apiList: [api],
   }, {
-    onlyApiFunc: true
+    onlyApiFunc: true,
   } as any)[0] ?? '';
 }
 
@@ -223,7 +225,7 @@ onMounted(async () => {
       loading.value = false;
     }
   }
-})
+});
 </script>
 <style lang="scss">
 @import "../../style/variable.scss";

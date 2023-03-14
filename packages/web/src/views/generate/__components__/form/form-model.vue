@@ -121,11 +121,14 @@ import {
   toRefs,
   computed,
   PropType,
+  defineProps,
   defineExpose,
   defineEmits,
 } from 'vue';
 import { cloneDeep } from 'lodash';
-import { APIHelper, getSchema } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core';
+// @ts-ignore
+import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
 
 import { modalConfirm } from '@/utils';
 import { treeForEach } from '@/utils/tree';
@@ -133,22 +136,31 @@ import { useForm } from '@/hooks/use-form';
 import { Template } from '@/store/template/interface';
 import { useModelConfig, useModelTemplate } from '@/store';
 import { RenderModelConfig } from '@/views/generate/interface';
-import DialogModelCud from '../dialog/dialog-model-cud.vue';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 import emptyTemplate from '@/constants/template/model/empty';
+import DialogModelCud from '../dialog/dialog-model-cud.vue';
 
 type FormModelType = FormModel;
 
 class FormModel extends RenderModelConfig {
   tplId = '';
+
   dataKey = '';
+
   label = '';
+
   value = '';
+
   content = '';
+
   api = {} as APIHelper.API;
+
   requestDataSchemaList = [] as APIHelper.SchemaList
+
   requestDataSchemaIdList = [] as string[]
+
   responseDataSchemaList = [] as APIHelper.SchemaList
+
   responseDataSchemaIdList = [] as string[]
 }
 
@@ -161,13 +173,13 @@ const props = defineProps({
     type: Object as PropType<{
       categoryList: APIHelper.CategoryList,
     }>,
-    default: () => ({})
+    default: () => ({}),
   },
   // ADD = '新增', EDIT = '修改'
   type: {
     type: String as PropType<'ADD' | 'EDIT' | 'DETAIL'>,
-    default: 'ADD'
-  }
+    default: 'ADD',
+  },
 });
 
 const { modelConfig, updateModelConfig } = toRefs(useModelConfig());
@@ -186,16 +198,16 @@ const {
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
+  getReactiveFormModel,
 } = useForm<FormModelType>({
   ...new FormModel(),
   ...modelConfig.value,
 }, {
-  watchFormModel: toRef(props, 'data') as any
+  watchFormModel: toRef(props, 'data') as any,
 });
 
 const options = ref({
-  categoryList: [] as Array<SelectOptionGroup>
+  categoryList: [] as Array<SelectOptionGroup>,
 });
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
@@ -210,9 +222,9 @@ watch(() => props.data.categoryList, (categoryList) => {
       apiMap.value.set(api.id, api);
       return {
         value: api.id,
-        label: api.summary
+        label: api.summary,
       };
-    }) ?? []
+    }) ?? [],
   })) ?? [];
 }, { immediate: true });
 
@@ -233,7 +245,7 @@ watch(() => formModel.value.responseDataSchemaIdList, (val) => {
 }, { deep: true });
 
 const requestFieldTree = computed(() => {
-  const apiId = formModel.value.apiId;
+  const { apiId } = formModel.value;
   const api = apiMap.value.get(apiId);
   if (!api || !api.requestDataSchema) {
     return [];
@@ -242,12 +254,12 @@ const requestFieldTree = computed(() => {
 });
 
 const responseFieldTree = computed(() => {
-  const apiId = formModel.value.apiId;
+  const { apiId } = formModel.value;
   const api = apiMap.value.get(apiId);
   if (!api || !api.responseDataSchema) {
     return [];
   }
-  const dataKey = formModel.value.dataKey;
+  const { dataKey } = formModel.value;
   let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     schema = getSchema(schema, dataKey);
@@ -302,37 +314,36 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
     checkIds.splice(index, 1);
     schema.params = filterChildren(schema.params, checkIds);
     return true;
-  })
+  });
 }
-
 
 function handleAdd() {
   dialogModelCudRef.value?.open({
     type: 'ADD',
-    title: '新增模板'
+    title: '新增模板',
   }, {
     ...formModel.value,
-    ...emptyTemplate
+    ...emptyTemplate,
   });
 }
 
 async function handleEdit() {
-  let tplModel = cloneDeep(templateMap.value.get(formModel.value.tplId));
+  const tplModel = cloneDeep(templateMap.value.get(formModel.value.tplId));
   if (!tplModel) {
     return Message.error('请重新选择模板');
   }
   if (tplModel.default) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label = tplModel.label + ' - 副本';
+    tplModel.label += ' - 副本';
     tplModel.value = '';
     tplModel.default = false;
   }
   dialogModelCudRef.value?.open({
     type: 'EDIT',
-    title: '修改模板'
+    title: '修改模板',
   }, {
     ...formModel.value,
-    ...tplModel
+    ...tplModel,
   });
 }
 
@@ -349,8 +360,8 @@ defineExpose({
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
-})
+  getReactiveFormModel,
+});
 </script>
 <style lang="scss" scoped>
 

@@ -32,18 +32,17 @@ import {
 import { omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 
-import Form from '../form/form-model.vue';
 import { useModelTemplate } from '@/store';
-import renderTemplate from '@/utils/renderTemplate';
-import { AhAPI, AhModule, AhProject } from '@/core/interface';
+import renderTemplate from '@/utils/render-template';
 import { RenderModelConfig } from '@/views/generate/interface';
 import { OpenConfig } from '@/components/apih-dialog/interface';
 import emptyTemplate from '@/constants/template/model/empty';
+import { APIHelper } from '@api-helper/core';
+import Form from '../form/form-model.vue';
 
 type OpenDataType = {
-  project: AhProject,
-  categoryList: Array<AhModule>
-  apiList: Array<AhAPI>
+  categoryList: APIHelper.CategoryList
+  apiList: APIHelper.APIList
 };
 
 const dialogRef = ref();
@@ -61,7 +60,7 @@ function open(config: OpenConfig, data?: OpenDataType) {
   openData.value = data;
   nextTick(() => {
     dialogRef.value.getFormRef().setFormModel({
-      apiId: data?.apiList?.[0]?.id ?? ''
+      apiId: data?.apiList?.[0]?.id ?? '',
     });
     handleGen();
   });
@@ -85,7 +84,7 @@ async function handleGen(showMsg = false) {
     'requestDataSchemaList',
     'requestDataSchemaIdList',
     'responseDataSchemaList',
-    'responseDataSchemaIdList'
+    'responseDataSchemaIdList',
   ]) as RenderModelConfig);
   if (!isEmptyTemplate && showMsg === true) {
     Message.success('已生成');
@@ -94,8 +93,8 @@ async function handleGen(showMsg = false) {
 
 defineExpose({
   open,
-  close
-})
+  close,
+});
 </script>
 <style lang="scss">
 

@@ -139,12 +139,16 @@ import {
   ref,
   watch,
   toRef,
+  toRefs,
   computed,
   PropType,
-  defineExpose, toRefs
+  defineProps,
+  defineExpose,
 } from 'vue';
 import { cloneDeep } from 'lodash';
-import { APIHelper, getSchema } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core';
+// @ts-ignore
+import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
 
 import { treeForEach } from '@/utils/tree';
 import { useForm } from '@/hooks/use-form';
@@ -153,20 +157,28 @@ import { useModelConfig, useModelTemplate } from '@/store';
 import { RenderModelConfig } from '@/views/generate/interface';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 
-type FormModelType = FormModel;
-
 class FormModel extends RenderModelConfig {
   tplId = '';
+
   dataKey = '';
+
   label = '';
+
   value = '';
+
   content = '';
+
   api = {} as APIHelper.API;
+
   requestDataSchemaList = [] as APIHelper.SchemaList
+
   requestDataSchemaIdList = [] as string[]
+
   responseDataSchemaList = [] as APIHelper.SchemaList
+
   responseDataSchemaIdList = [] as string[]
 }
+type FormModelType = FormModel;
 
 const span = ref(12);
 const gutter = ref(15);
@@ -176,13 +188,13 @@ const props = defineProps({
     type: Object as PropType<{
       categoryList: APIHelper.CategoryList,
     }>,
-    default: () => ({})
+    default: () => ({}),
   },
   // ADD = '新增', EDIT = '修改'
   type: {
     type: String as PropType<'ADD' | 'EDIT' | 'DETAIL'>,
-    default: 'ADD'
-  }
+    default: 'ADD',
+  },
 });
 
 const { modelConfig, updateModelConfig } = toRefs(useModelConfig());
@@ -199,17 +211,17 @@ const {
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
+  getReactiveFormModel,
 } = useForm<FormModelType>({
   ...new Template(),
   ...new FormModel(),
   ...modelConfig.value,
 }, {
-  watchFormModel: toRef(props, 'data') as any
+  watchFormModel: toRef(props, 'data') as any,
 });
 
 const options = ref({
-  categoryList: [] as Array<SelectOptionGroup>
+  categoryList: [] as Array<SelectOptionGroup>,
 });
 const { templateList } = useModelTemplate();
 
@@ -225,9 +237,9 @@ watch(() => props.data.categoryList, (categoryList) => {
       apiMap.value.set(api.id, api);
       return {
         value: api.id,
-        label: api.summary
+        label: api.summary,
       };
-    }) ?? []
+    }) ?? [],
   })) ?? [];
 }, { immediate: true });
 
@@ -248,7 +260,7 @@ watch(() => formModel.value.responseDataSchemaIdList, (val) => {
 }, { deep: true });
 
 const requestFieldTree = computed(() => {
-  const apiId = formModel.value.apiId;
+  const { apiId } = formModel.value;
   const api = apiMap.value.get(apiId);
   if (!api || !api.requestDataSchema) {
     return [];
@@ -257,12 +269,12 @@ const requestFieldTree = computed(() => {
 });
 
 const responseFieldTree = computed(() => {
-  const apiId = formModel.value.apiId;
+  const { apiId } = formModel.value;
   const api = apiMap.value.get(apiId);
   if (!api || !api.responseDataSchema) {
     return [];
   }
-  const dataKey = formModel.value.dataKey;
+  const { dataKey } = formModel.value;
   let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     schema = getSchema(schema, dataKey);
@@ -317,7 +329,7 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
     checkIds.splice(index, 1);
     schema.params = filterChildren(schema.params, checkIds);
     return true;
-  })
+  });
 }
 
 defineExpose({
@@ -328,8 +340,8 @@ defineExpose({
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
-})
+  getReactiveFormModel,
+});
 </script>
 <style lang="scss" scoped>
 

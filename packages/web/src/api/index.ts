@@ -4,7 +4,7 @@ import { SECRET_KEY } from '@/constants';
 import { IProject } from '@/store/project/interface';
 import { APIHelper } from '@api-helper/core';
 
-export async function getSwaggerDocs(data: IProject): Promise<Array<APIHelper.Document>>{
+export async function getSwaggerDocs(data: IProject): Promise<Array<APIHelper.Document>> {
   if (data?.auth?.password) {
     data.auth.password = aes.encrypt(data.auth.password, SECRET_KEY);
   }

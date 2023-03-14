@@ -1,7 +1,6 @@
-
 export const COMMON_HEAD = `/**
 // 项目
-export class AhProject {
+export class Project {
   id = nanoid();
   title = '';
   description = '';
@@ -79,13 +78,13 @@ export class RenderAPIConfig {
 
  * @description 渲染函数
  * @param params { object }
- * @param config.project { AhProject } 项目对象
+ * @param config.project { Project } 项目对象
  * @param params.categoryList { Array<AhModule> }  选择的项目下的模块
- * @param params.api { Array<AhAPI> } 选择的API 
- * @param params.apiList { Array<AhAPI> } 选择的模块下的API 
- * @param params.requestFields { Array<AhAPIField> } 选择的请求数据字段集合 
- * @param params.responseFields { Array<AhAPIField> } 选择的响应数据字段集合 
- * @param config { RenderModelConfig } 配置对象 
+ * @param params.api { Array<AhAPI> } 选择的API
+ * @param params.apiList { Array<AhAPI> } 选择的模块下的API
+ * @param params.requestFields { Array<AhAPIField> } 选择的请求数据字段集合
+ * @param params.responseFields { Array<AhAPIField> } 选择的响应数据字段集合
+ * @param config { RenderModelConfig } 配置对象
  * @return [] { Array<string> } 返回数组，里面每一项字符串都是一个模板
  */
 function renderTemplate (params, config) {

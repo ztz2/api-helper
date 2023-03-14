@@ -17,7 +17,7 @@ export {
   useModelTemplate,
   useApiConfig,
   useModelConfig,
-  useGenerateAllApiConfig
+  useGenerateAllApiConfig,
 };
 
 export default pinia;

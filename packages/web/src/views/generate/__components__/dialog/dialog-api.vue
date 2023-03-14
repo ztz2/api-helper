@@ -27,16 +27,16 @@ import {
   ref,
   toRefs,
   nextTick,
-  defineExpose
+  defineExpose,
 } from 'vue';
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
-import Form from '../form/form-api.vue';
 import { useApiTemplate } from '@/store';
-import renderTemplate from '@/utils/renderTemplate';
+import renderTemplate from '@/utils/render-template';
 import { OpenConfig } from '@/components/apih-dialog/interface';
 import emptyTemplate from '@/constants/template/api/empty';
+import Form from '../form/form-api.vue';
 
 type OpenDataType = {
   apiList: Array<APIHelper.API>
@@ -71,7 +71,7 @@ async function handleGen(showMsg = false) {
   }
   if (openData.value) {
     codeList.value = renderTemplate(template, {
-      apiList: openData.value.apiList
+      apiList: openData.value.apiList,
     }, data);
     if (!isEmptyTemplate && showMsg === true) {
       Message.success('已生成');
@@ -81,8 +81,8 @@ async function handleGen(showMsg = false) {
 
 defineExpose({
   open,
-  close
-})
+  close,
+});
 </script>
 <style lang="scss">
 

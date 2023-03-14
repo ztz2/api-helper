@@ -6,7 +6,7 @@ import {
   Template,
   TemplateClassify,
   ITemplate,
-  ITemplateClassify
+  ITemplateClassify,
 } from '@/store/template/interface';
 import templateList from '@/constants/template/model';
 
@@ -15,13 +15,13 @@ const useModelTemplate = defineStore('model-template', {
   state: (): {
     templateList: Array<ITemplateClassify>,
   } => ({
-    templateList: templateList
+    templateList,
   }),
   getters: {
     templateMap(state): Map<string, ITemplate> {
-      const templateList = state.templateList;
+      const { templateList } = state;
       const templateMap = new Map();
-      for (let j = 0; j < templateList.length; j++ ) {
+      for (let j = 0; j < templateList.length; j++) {
         for (let i = 0; i < templateList[j].options.length; i++) {
           const itm = templateList[j].options[i];
           templateMap.set(itm.value, itm);
@@ -47,8 +47,8 @@ const useModelTemplate = defineStore('model-template', {
         this.templateList.push(templateClassify);
       }
       return value.value;
-    }
-  }
+    },
+  },
 });
 
 export default useModelTemplate;

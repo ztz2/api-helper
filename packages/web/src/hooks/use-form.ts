@@ -23,7 +23,7 @@ export function useForm<T extends object>(
   // 默认的表单模型数据
   defaultFormModel: T,
   // 可选的配置项，详情参考类型：UseFormConfig
-  config?: UseFormConfig<T>
+  config?: UseFormConfig<T>,
 ) {
   const currentConfig = merge(
     {
@@ -32,9 +32,9 @@ export function useForm<T extends object>(
       watchFormModelDeep: false,
       watchFormModelImmediate: false,
 
-      validateFailMsg: '请完善表单数据'
+      validateFailMsg: '请完善表单数据',
     },
-    config ?? {}
+    config ?? {},
   ) as Required<UseFormConfig<T>>;
 
   const formRef = ref();
@@ -56,13 +56,13 @@ export function useForm<T extends object>(
 
   function clearValidate(field: string | string[]) {
     formRef.value?.clearValidate?.(
-      typeof field === 'string' || Array.isArray(field) ? field : undefined
+      typeof field === 'string' || Array.isArray(field) ? field : undefined,
     );
   }
 
   function resetFields(field: string | string[]) {
     formRef.value?.resetFields?.(
-      typeof field === 'string' || Array.isArray(field) ? field : undefined
+      typeof field === 'string' || Array.isArray(field) ? field : undefined,
     );
   }
 
@@ -79,7 +79,7 @@ export function useForm<T extends object>(
 
   async function validateField(field: string | string[]) {
     const error = await formRef.value?.validateField?.(field);
-    return error ? error : undefined;
+    return error || undefined;
   }
 
   async function setFields(data: Recordable) {
@@ -95,8 +95,8 @@ export function useForm<T extends object>(
       },
       {
         deep: currentConfig.watchFormModelDeep,
-        immediate: currentConfig.watchFormModelImmediate
-      }
+        immediate: currentConfig.watchFormModelImmediate,
+      },
     );
   }
 
@@ -112,6 +112,6 @@ export function useForm<T extends object>(
     getFormModel,
     setFormModel,
     clearValidate,
-    getReactiveFormModel
+    getReactiveFormModel,
   };
 }

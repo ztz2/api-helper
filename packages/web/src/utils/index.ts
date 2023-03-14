@@ -1,17 +1,16 @@
 import { isRef } from 'vue';
 import { cloneDeep } from 'lodash';
-import { Modal } from '@arco-design/web-vue';
+import { Modal, ModalConfig } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core';
-import { ModalConfig } from '@arco-design/web-vue/es/modal/interface';
 
-export const checkType = (value: any, target: string) =>
-    Object.prototype.toString.call(value) === `[object ${target}]`;
+export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
 
 export function assignDeep<T>(
   target: T,
   ...copyItemList: Array<{ [propName: string]: any }>
 ): T {
   copyItemList.forEach((obj) => {
+    // eslint-disable-next-line no-restricted-syntax
     for (const [k, v] of Object.entries(cloneDeep(obj))) {
       if (isRef(target)) {
         // @ts-ignore
@@ -32,7 +31,7 @@ export function confirm(content: string, fn: () => void, title = '提示') {
     simple: false,
     onOk: () => {
       fn();
-    }
+    },
   });
 }
 
@@ -48,10 +47,10 @@ export function getMethodRgbaColor(method: HttpMethod = 'GET', alpha = 1) {
     HEAD: 'rgb(183, 29, 232)',
     CONNECT: 'rgb(255, 87, 34)',
     TRACE: 'rgb(120, 22, 255)',
-    PATCH: 'rgb(134, 144, 156)'
-  }
+    PATCH: 'rgb(134, 144, 156)',
+  };
   const value = color[upc] ? color[upc] : emptyColor;
-  return value.slice(0, value.length - 1) + `, ${alpha})`;
+  return `${value.slice(0, value.length - 1)}, ${alpha})`;
 }
 
 export function isBasicDataTypeSchema(schema: APIHelper.Schema): boolean {
@@ -62,11 +61,11 @@ export function modalConfirm(modalConfig: ModalConfig | string) {
   return new Promise((resolve, reject) => {
     const defaultConfig = {
       title: '提示',
-      simple: false
+      simple: false,
     };
 
     const config = typeof modalConfig === 'string' ? {
-      content: modalConfig
+      content: modalConfig,
     } : modalConfig;
 
     Modal.open({
@@ -79,7 +78,7 @@ export function modalConfirm(modalConfig: ModalConfig | string) {
       onClose() {
         config?.onClose?.();
         reject();
-      }
+      },
     });
   });
 }

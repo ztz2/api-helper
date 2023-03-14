@@ -5,25 +5,27 @@
         <a
           href="/"
           class="app-header__label"
-          @mouseenter="linkColor='rgb(22,93,255)'"
-          @mouseleave="linkColor='rgba(0,0,0,.8509803922)'"
+          @mouseenter="linkColor='var(--vt-c-primary)'"
+          @mouseleave="linkColor='var(--vt-c-text-1)'"
         >
           <apih-logo :color="linkColor" />
           <span style="margin-left: 4px">API HELPER</span>
         </a>
       </div>
       <div class="app-header__right">
-        <a href="https://github.com/ztz2/api-helper" target="_blank">
-          <icon-github :size="24" />
-        </a>
+        <a-space :size="20">
+          <a href="https://apih.andou.live" target="_blank">文档</a>
+          <a href="https://apih.andou.live/config/cli.html" target="_blank">CLI</a>
+          <a href="https://github.com/ztz2/api-helper" target="_blank">
+            <icon-github :size="24" />
+          </a>
+        </a-space>
       </div>
     </div>
     <div class="app-content">
       <router-view/>
     </div>
-    <div class="app-footer">
-
-    </div>
+    <div class="app-footer"></div>
   </div>
 </template>
 
@@ -46,8 +48,7 @@
     display: flex;
     align-items: center;
     @at-root .app-header__label{
-      color: $link-color;
-      transition: color .25s;
+      color: var(--vt-c-text-1);
       font-size: 18px;
       font-weight: 600;
       text-decoration: none;
@@ -58,9 +59,9 @@
         transition: color .25s;
       }
       &:hover{
-        color: $link-color--active;
+        color: var(--vt-c-primary);
         >svg{
-          color: $link-color--active!important;
+          color: var(--vt-c-primary)!important;
         }
       }
     }

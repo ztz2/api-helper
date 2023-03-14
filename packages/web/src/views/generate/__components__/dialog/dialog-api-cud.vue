@@ -33,11 +33,11 @@ import {
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
-import Form from '../form/form-api-cud.vue';
 import { useApiTemplate } from '@/store';
-import renderTemplate from '@/utils/renderTemplate';
+import renderTemplate from '@/utils/render-template';
 import { OpenConfig } from '@/components/apih-dialog/interface';
 import { DOCUMENT } from '@/constants/mock';
+import Form from '../form/form-api-cud.vue';
 
 type OpenDataType = {
   apiList: Array<APIHelper.API>
@@ -65,7 +65,7 @@ function open(config: OpenConfig, data?: OpenDataType) {
 async function handleGen(showMsg = false) {
   const data = await dialogRef.value.getFormRef().getFormModel();
   codeList.value = renderTemplate(data, {
-    apiList: DOCUMENT.categoryList[0].apiList
+    apiList: DOCUMENT.categoryList[0].apiList,
   }, data);
   if (showMsg === true) {
     Message.success('已生成');
@@ -82,8 +82,8 @@ async function handleSave() {
 
 defineExpose({
   open,
-  close
-})
+  close,
+});
 </script>
 <style lang="scss">
 

@@ -13,7 +13,7 @@ const useModelConfig = defineStore('model-config', {
   } => ({
     projectId: '',
     modelConfigMap: {},
-    modelConfig: new RenderModelConfig()
+    modelConfig: new RenderModelConfig(),
   }),
   actions: {
     toggleModelConfig(id: string) {
@@ -27,8 +27,8 @@ const useModelConfig = defineStore('model-config', {
       value = { ...omit(pick(value, Object.keys(new RenderModelConfig())), ['apiId']) } as RenderModelConfig;
       value.apiId = '';
       this.modelConfig = value;
-      this.modelConfigMap[this.projectId] =  value;
-    }
+      this.modelConfigMap[this.projectId] = value;
+    },
   },
 });
 

@@ -13,9 +13,13 @@ export interface ITemplate {
 
 export class Template implements ITemplate {
   value = '';
+
   label = '';
+
   content = '';
+
   default = false;
+
   constructor(params?: ITemplate) {
     if (params) {
       this.label = params.label ?? '';
@@ -33,11 +37,15 @@ export interface ITemplateClassify {
   options: Array<ITemplate>;
 }
 
-export class TemplateClassify implements ITemplateClassify{
+export class TemplateClassify implements ITemplateClassify {
   id = nanoid();
+
   label;
+
   isGroup = true;
+
   options;
+
   constructor(label: string, options?: Array<ITemplate>) {
     this.label = label;
     this.options = options ?? [];

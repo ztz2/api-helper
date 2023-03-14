@@ -49,8 +49,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
-  name: 'apih-schema-tree'
+  name: 'apih-schema-tree',
 });
 </script>
 <script lang="ts" setup>
@@ -59,6 +60,8 @@ import {
   watch,
   computed,
   PropType,
+  defineEmits,
+  defineProps,
 } from 'vue';
 import { treeMap } from '@/utils/tree';
 import { pascalCase } from 'change-case';
@@ -70,20 +73,20 @@ const props = defineProps({
   data: Array,
   value: {
     type: Array as PropType<Array<string>>,
-    default: () => []
+    default: () => [],
   },
   valueKey: {
     type: String,
-    default: 'id'
+    default: 'id',
   },
   labelKey: {
     type: String,
-    default: 'keyName'
+    default: 'keyName',
   },
   childrenKey: {
     type: String,
-    default: 'params'
-  }
+    default: 'params',
+  },
 });
 
 const checkedKeys = ref<Array<string>>([]);
@@ -92,21 +95,19 @@ const expandedKeys = ref<Array<string>>([]);
 watch(() => props.value, () => checkedKeys.value = props.value, { deep: true });
 watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true });
 
-const treeData = computed(() => {
-  return treeMap(props.data, (node: Recordable) => {
-    if (isBasicDataTypeSchema(node as APIHelper.Schema)) {
-      return null;
-    }
-    node = {
-      ...node,
-      key: node[props.valueKey],
-      title: node[props.labelKey],
-      children: node[props.childrenKey],
-      isObjectNode: isObjectNode(node)
-    };
-    return node;
-  }, props.childrenKey);
-});
+const treeData = computed(() => treeMap(props.data, (node: Recordable) => {
+  if (isBasicDataTypeSchema(node as APIHelper.Schema)) {
+    return null;
+  }
+  node = {
+    ...node,
+    key: node[props.valueKey],
+    title: node[props.labelKey],
+    children: node[props.childrenKey],
+    isObjectNode: isObjectNode(node),
+  };
+  return node;
+}, props.childrenKey));
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
   const children = isChildren ? node : node[props.childrenKey];
@@ -145,7 +146,7 @@ function isObjectNode(node: Recordable): boolean {
 function getLabel(node: Recordable) {
   // 如果是Object或者Array类型，会显示数据类型
   if (node?.isObjectNode) {
-    return '数据格式(' + pascalCase(node.type) + ')';
+    return `数据格式(${pascalCase(node.type)})`;
   }
   return node[props.labelKey];
 }

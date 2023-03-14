@@ -15,6 +15,6 @@ export function useAsyncTasks() {
   };
   return {
     loading,
-    execAsyncTasks
+    execAsyncTasks,
   };
 }

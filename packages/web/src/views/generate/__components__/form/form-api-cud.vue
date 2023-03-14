@@ -71,6 +71,7 @@ import {
   isRef,
   toRefs,
   PropType,
+  defineProps,
   isReactive,
   defineExpose,
 } from 'vue';
@@ -85,13 +86,13 @@ type FormModelType = Template & RenderAPIConfig;
 const props = defineProps({
   data: {
     type: Object as PropType<FormModelType>,
-    default: () => ({})
+    default: () => ({}),
   },
   // ADD = '新增', EDIT = '修改'
   type: {
     type: String as PropType<'ADD' | 'EDIT' | 'DETAIL'>,
-    default: 'ADD'
-  }
+    default: 'ADD',
+  },
 });
 
 const gutter = ref(15);
@@ -107,13 +108,13 @@ const {
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
+  getReactiveFormModel,
 } = useForm<FormModelType>({
   ...new RenderAPIConfig(),
   ...apiConfig.value,
   ...new Template(),
 }, {
-  watchFormModel: toRef(props, 'data')
+  watchFormModel: toRef(props, 'data'),
 });
 
 const options = ref({
@@ -123,7 +124,7 @@ const options = ref({
   ] as any,
   boolean: [
     { label: '是', value: true },
-    { label: '否', value: false }
+    { label: '否', value: false },
   ] as any,
 });
 
@@ -139,8 +140,8 @@ defineExpose({
   getFormModel,
   setFormModel,
   clearValidate,
-  getReactiveFormModel
-})
+  getReactiveFormModel,
+});
 </script>
 <style lang="scss" scoped>
 

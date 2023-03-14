@@ -13,19 +13,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
-  name: 'apih-code'
-})
+  name: 'apih-code',
+});
 </script>
 <script setup lang="ts">
 import useClipboard from 'vue-clipboard3';
-import {ref, defineProps, computed, onBeforeMount} from 'vue';
+import {
+  ref, defineProps, computed, onBeforeMount,
+} from 'vue';
 
 const props = defineProps({
   code: {
     type: String,
-    default: ''
-  }
+    default: '',
+  },
 });
 
 const { toClipboard } = useClipboard();
@@ -63,9 +66,9 @@ function switchTextStatus(status = 0) {
 
 onBeforeMount(() => {
   if (switchTextStatusTimer) {
-    clearTimeout(switchTextStatusTimer)
+    clearTimeout(switchTextStatusTimer);
   }
-})
+});
 </script>
 
 <style lang="scss">

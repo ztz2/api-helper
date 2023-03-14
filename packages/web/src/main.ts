@@ -1,8 +1,9 @@
 import { createApp } from 'vue';
 
 import '@arco-design/web-vue/dist/arco.css';
-import { Message } from '@arco-design/web-vue';
+import ArcoVue, { Message } from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
+import '@arco-design/web-vue/dist/arco.css';
 
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/atom-one-dark.css';
@@ -19,8 +20,9 @@ import typescript from 'highlight.js/lib/languages/typescript';
 
 import store from './store';
 import router from './router';
-import './style/index.scss'
-import App from './App.vue'
+import './style/index.scss';
+import App from './App.vue';
+import components from './components';
 
 hljs.registerLanguage('css', css);
 hljs.registerLanguage('scss', scss);
@@ -35,4 +37,11 @@ const app = createApp(App);
 
 Message._context = app._context;
 
-app.use(ArcoVueIcon).use(hljsVuePlugin).use(store).use(router).mount('#app')
+app
+  .use(ArcoVue)
+  .use(ArcoVueIcon)
+  .use(hljsVuePlugin)
+  .use(components)
+  .use(store)
+  .use(router)
+  .mount('#app');

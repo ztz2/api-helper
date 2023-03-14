@@ -1,12 +1,17 @@
 @import "variable";
 @import "reset-arco";
+@import "theme.css";
+
+body{
+  color: var(--vt-c-text-2);
+}
 
 a{
-  color: $link-color;
+  color: var(--vt-c-text-1);
   text-decoration: none;
   transition: color .25s;
-  &:hover{
-    color: $link-color--active;
+  &:hover, &:active{
+    color: var(--vt-c-primary);
   }
 }
 .user-select-none{

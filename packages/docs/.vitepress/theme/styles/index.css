@@ -20,3 +20,20 @@
   content: 'API Helper';
   font-weight: 600;
 }
+
+a:hover, a:active{
+  color: #FF5722!important;
+}
+.DocSearch-Button:hover .DocSearch-Button-Key, .DocSearch-Button:hover .DocSearch-Button-Key:first-child:after{
+  border-color: #FF5722!important;
+  color: #FF5722!important;
+}
+.link.active .link-text{
+  color: #FF5722!important;
+}
+.vt-doc a{
+  color: #FF5722!important;
+}
+.title{
+  color: #FF5722!important;
+}

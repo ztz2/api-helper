@@ -13,7 +13,7 @@ const useApiConfig = defineStore('api-config', {
   } => ({
     projectId: '',
     apiConfigMap: {},
-    apiConfig: new RenderAPIConfig()
+    apiConfig: new RenderAPIConfig(),
   }),
   actions: {
     toggleApiConfig(id: string) {
@@ -26,7 +26,7 @@ const useApiConfig = defineStore('api-config', {
     updateApiConfig(value: RenderAPIConfig) {
       this.apiConfig = value;
       this.apiConfigMap[this.projectId] = pick(value, Object.keys(new RenderAPIConfig())) as RenderAPIConfig;
-    }
+    },
   },
 });
 

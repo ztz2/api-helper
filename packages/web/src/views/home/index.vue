@@ -40,16 +40,17 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
-  name: 'home'
+  name: 'home',
 });
 </script>
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue';
 import { useProject } from '@/store';
-import DialogCU from './__components__/dialog/dialog-cu.vue';
 import { Project } from '@/store/project/interface';
 import { confirm } from '@/utils';
+import DialogCU from './__components__/dialog/dialog-cu.vue';
 
 const dialogCU = ref();
 const projectStore = useProject();

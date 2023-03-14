@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import SiteMap from './SiteMap.vue';
-import Swagger2Typescript from './Swagger2Typescript.vue';
 // import NewsLetter from './NewsLetter.vue'
 import { load, data, base } from './sponsors'
 import SponsorsGroup from './SponsorsGroup.vue'
@@ -77,8 +76,23 @@ onMounted(async () => {
   </section>
 
   <section id="sponsors">
-    <h2>Swagger To Typescript</h2>
-    <Swagger2Typescript />
+    <h2>生成API，interface代码</h2>
+    <img alt="" src="../assets/api-code.png" />
+  </section>
+
+  <section id="sponsors">
+    <h2>生成JS对象代码</h2>
+    <img alt="" src="../assets/map-code.png" />
+  </section>
+
+  <section id="sponsors">
+    <h2>生成JS类代码</h2>
+    <img alt="" src="../assets/class-code.png" />
+  </section>
+
+  <section id="sponsors">
+    <h2>生成表单模板代码</h2>
+    <img alt="" src="../assets/form-code.png" />
   </section>
 
   <SiteMap />

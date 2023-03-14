@@ -7,14 +7,14 @@ const useProject = defineStore('project', {
   state: (): {
     data: Array<IProject>
   } => ({
-    data: []
+    data: [],
   }),
 
   actions: {
     save(value: Project) {
       const index = this.data.findIndex((itm) => itm.id === value.id);
       if (index !== -1) {
-        this.data.splice(index, 1, value)
+        this.data.splice(index, 1, value);
       } else {
         if (!value.id) {
           value.id = nanoid();
@@ -29,8 +29,8 @@ const useProject = defineStore('project', {
         const index = this.data.findIndex((itm) => itm.id === id);
         index !== -1 && this.data.splice(index, 1);
       }
-    }
-  }
+    },
+  },
 });
 
 export default useProject;

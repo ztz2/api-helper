@@ -1,7 +1,8 @@
-import { COMMON_HEAD } from './common';
 import { Template } from '@/store/template/interface';
+import { COMMON_HEAD } from './common';
 
-export default new Template({ value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', default: true, content: `${COMMON_HEAD}
+export default new Template({
+  value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', default: true, content: `${COMMON_HEAD}
 let apiList = params.apiList;
 
 config.typingList = [];
@@ -43,4 +44,5 @@ if (importApiCodeWrap.length) {
 }
 
 return [apiCode, importApiCode].filter(Boolean);
-};`});
+};`,
+});

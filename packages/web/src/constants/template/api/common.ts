@@ -1,6 +1,6 @@
 export const COMMON_HEAD = `/**
 // 项目
-export class AhProject {
+export class Project {
   id = nanoid();
   title = '';
   description = '';
@@ -78,7 +78,7 @@ export class RenderAPIConfig {
 
  * @description 渲染函数
  * @param params { object }
- * @param params.project { AhProject }  项目对象
+ * @param params.project { Project }  项目对象
  * @param params.categoryList { Array<AhModule> } 选择的项目下的模块 
  * @param config.apiList { Array<AhAPI> } 选择的API集合
  * @param config { RenderAPIConfig } 配置对象 

@@ -7,11 +7,11 @@ import { headerPlugin } from './headerMdPlugin'
 
 const nav: ThemeConfig['nav'] = [
   { text: '指南', link: '/guide/introduction', activeMatch: `^/guide/introduction/`},
-  { text: 'CLI', link: '/guide/config/cli', activeMatch: `^/guide/config/cli/`}
+  { text: 'CLI', link: '/config/cli', activeMatch: `^/config/cli/`}
 ]
 
 export const sidebar: ThemeConfig['sidebar'] = {
-  '/guide/': [
+  '/guide': [
     {
       text: '准备开始',
       items: [
@@ -25,13 +25,21 @@ export const sidebar: ThemeConfig['sidebar'] = {
     {
       text: '配置',
       items: [
-        {
-          text: 'CLI',
-          link: '/guide/config/cli'
-        }
+        { text: 'CLI', link: '/config/cli' },
+        { text: '模板功能', link: '/config/template' },
       ]
     }
   ],
+  '/config': [
+    {
+      text: '配置',
+      items: [
+        { text: 'CLI', link: '/config/cli' },
+        { text: '模板功能', link: '/config/template' },
+      ]
+    }
+  ],
+
   // '/examples/': [
   //   {
   //     text: 'Basic',

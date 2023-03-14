@@ -47,10 +47,10 @@ export class RenderAPIConfig {
   generateNameByBasePath = true;
 
   // 头部代码
-  headCodeText = `import request from '@/utils/request';\n`;
+  headCodeText = 'import request from \'@/utils/request\';\n';
 }
 
-export class GenerateAllApiConfig extends RenderAPIConfig{
+export class GenerateAllApiConfig extends RenderAPIConfig {
   // API模板ID
   apiTplId = 'API_gAHoEYCIUVnAlqIifY9S5';
 

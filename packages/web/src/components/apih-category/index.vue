@@ -71,31 +71,34 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+
 export default defineComponent({
-  name: 'apih-category'
-})
+  name: 'apih-category',
+});
 </script>
 <script setup lang="ts">
-import { ref, PropType, defineProps, watch } from 'vue';
+import {
+  ref, PropType, defineProps, defineEmits, watch,
+} from 'vue';
 import { APIHelper } from '@api-helper/core';
 
 const emit = defineEmits([
-    'update:selectedKeys',
-    'update:expandedKeys',
+  'update:selectedKeys',
+  'update:expandedKeys',
 ]);
 const props = defineProps({
   data: {
     type: Array as PropType<Array<APIHelper.Category>>,
-    default: () => []
+    default: () => [],
   },
   selectedKeys: {
     type: Array as PropType<Array<string>>,
-    default: () => []
+    default: () => [],
   },
   expandedKeys: {
     type: Array as PropType<Array<string>>,
-    default: () => []
-  }
+    default: () => [],
+  },
 });
 
 const searchValue = ref('');
@@ -122,7 +125,7 @@ function selectedApiNum(module: APIHelper.Category) {
       preValue++;
     }
     return preValue;
-  }, 0)
+  }, 0);
 }
 function handleSearch() {
   console.log('搜索', searchValue.value);

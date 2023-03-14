@@ -2,7 +2,6 @@ import { pick } from 'lodash';
 import { defineStore } from 'pinia';
 import { GenerateAllApiConfig } from '@/views/generate/interface';
 
-
 const useGenerateAllApiConfig = defineStore('generate-all-api-config', {
   persist: true,
   state: (): {
@@ -14,7 +13,7 @@ const useGenerateAllApiConfig = defineStore('generate-all-api-config', {
   } => ({
     projectId: '',
     generateAllApiConfigMap: {},
-    generateAllApiConfig: new GenerateAllApiConfig()
+    generateAllApiConfig: new GenerateAllApiConfig(),
   }),
   actions: {
     toggleGenerateAllApiConfig(id: string) {
@@ -27,7 +26,7 @@ const useGenerateAllApiConfig = defineStore('generate-all-api-config', {
     updateGenerateAllApiConfig(value: GenerateAllApiConfig) {
       this.generateAllApiConfig = value;
       this.generateAllApiConfigMap[this.projectId] = pick(value, Object.keys(new GenerateAllApiConfig())) as GenerateAllApiConfig;
-    }
+    },
   },
 });
 
