@@ -1,6 +1,12 @@
 {
   "name": "@api-helper/web",
   "version": "0.0.1",
+  "author": {
+    "name": "ztz2",
+    "email": "448941273@qq.com",
+    "url": "https://github.com/ztz2"
+  },
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",

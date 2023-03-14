@@ -2,8 +2,12 @@
   "name": "@api-helper/server",
   "version": "0.0.1",
   "description": "",
-  "author": "",
-  "license": "UNLICENSED",
+  "author": {
+    "name": "ztz2",
+    "email": "448941273@qq.com",
+    "url": "https://github.com/ztz2"
+  },
+  "license": "MIT",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
@@ -19,8 +23,8 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@api-helper/cli": "workspace:^",
-    "@api-helper/core": "workspace:^",
+    "@api-helper/cli": "^0.2.0",
+    "@api-helper/core": "^0.2.2",
     "@apidevtools/swagger-parser": "^10.1.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",

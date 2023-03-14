@@ -4,6 +4,11 @@
   "engines": {
     "node": ">=14.0.0"
   },
+  "author": {
+    "name": "ztz2",
+    "email": "448941273@qq.com",
+    "url": "https://github.com/ztz2"
+  },
   "scripts": {
     "dev": "vitepress",
     "build": "vitepress build",
