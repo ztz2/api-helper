@@ -174,8 +174,8 @@ importers:
 
   packages/server:
     specifiers:
-      '@api-helper/cli': workspace:^
-      '@api-helper/core': workspace:^
+      '@api-helper/cli': ^0.2.0
+      '@api-helper/core': ^0.2.2
       '@apidevtools/swagger-parser': ^10.1.0
       '@nestjs/cli': ^9.0.0
       '@nestjs/common': ^9.0.0
@@ -287,6 +287,7 @@ importers:
       change-case: ^4.1.2
       clipboard: ^2.0.11
       codemirror: ^6.0.1
+      compression-webpack-plugin: ^10.0.0
       core-js: ^3.8.3
       crypto-js: ^4.1.1
       eslint: ^7.32.0
@@ -362,6 +363,7 @@ importers:
       '@vue/test-utils': 2.3.1_vue@3.2.47
       '@vue/vue3-jest': 27.0.0_fylul2wvb4oqnre6m7e44ao4oq
       babel-jest: 27.5.1
+      compression-webpack-plugin: 10.0.0
       eslint: 7.32.0
       eslint-plugin-import: 2.27.5_lpoet4woefdgt5yazgwydy42la
       eslint-plugin-vue: 8.7.1_eslint@7.32.0
@@ -5412,7 +5414,7 @@ packages:
       ajv:
         optional: true
     dependencies:
-      ajv: 8.11.0
+      ajv: 8.12.0
     dev: true
 
   /ajv-keywords/3.5.2_ajv@6.12.6:
@@ -6806,6 +6808,16 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
+    dev: true
+
+  /compression-webpack-plugin/10.0.0:
+    resolution: {integrity: sha512-wLXLIBwpul/ALcm7Aj+69X0pYT3BYt6DdPn3qrgBIh9YejV9Bju9ShhlAsjujLyWMo6SAweFIWaUoFmXZNuNrg==}
+    engines: {node: '>= 14.15.0'}
+    peerDependencies:
+      webpack: ^5.1.0
+    dependencies:
+      schema-utils: 4.0.0
+      serialize-javascript: 6.0.1
     dev: true
 
   /compression/1.7.4:
