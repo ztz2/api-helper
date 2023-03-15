@@ -80,7 +80,7 @@
   }
   @at-root .app-content{
     padding: 20px;
-    background: $root-background;
+    //background: $root-background;
   }
 }
 </style>

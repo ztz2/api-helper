@@ -44,10 +44,14 @@ export class TemplateClassify implements ITemplateClassify {
 
   isGroup = true;
 
-  options;
+  options = [] as ITemplate[];
 
-  constructor(label: string, options?: Array<ITemplate>) {
+  constructor(label: string, options?: Array<ITemplate> | string) {
     this.label = label;
-    this.options = options ?? [];
+    if (typeof options === 'string') {
+      this.id = options;
+    } else if (Array.isArray(options)) {
+      this.options = options;
+    }
   }
 }

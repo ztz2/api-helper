@@ -9,6 +9,7 @@ import {
   ITemplateClassify,
 } from '@/store/template/interface';
 import templateList from '@/constants/template/api';
+import { API_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const useApiTemplate = defineStore('api-template', {
   persist: false,
@@ -42,7 +43,7 @@ const useApiTemplate = defineStore('api-template', {
         if (!value.value) {
           value.value = nanoid();
         }
-        const templateClassify = this.templateList.find((item) => item.label === '自定义') ?? new TemplateClassify('自定义');
+        const templateClassify = this.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID) ?? new TemplateClassify('自定义', API_CUSTOM_TEMPLATE_ID);
         templateClassify.options.push(pick(value, Object.keys(new Template())) as ITemplate);
         this.templateList.push(templateClassify);
       }

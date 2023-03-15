@@ -16,7 +16,7 @@
         >
           <div
               class="generate-handle"
-              :style="{width: `calc(100vw - ${gap + 80}px)`}"
+              :style="{width: `calc(100vw - ${gap + 60}px)`}"
           >
             <a-space>
               <a-button
@@ -44,10 +44,41 @@
               >
                 生成(表单代码)
               </a-button>
+              <a-button
+                :disabled="selectApiList.length === 0"
+                @click="dialogModelRef.open({
+                  type: 'ADD',
+                  title: '生成(表单代码)'
+                }, {
+                  categoryList: selectedAhModule,
+                  apiList: selectApiList
+                })"
+              >
+                导出自定义模板
+              </a-button>
+              <a-button
+                :disabled="selectApiList.length === 0"
+                @click="dialogModelRef.open({
+                  type: 'ADD',
+                  title: '生成(表单代码)'
+                }, {
+                  categoryList: selectedAhModule,
+                  apiList: selectApiList
+                })"
+              >
+                导入自定义模板
+              </a-button>
             </a-space>
           </div>
-          <div class="generate-content" style="height: 2000px">
+          <div class="generate-content">
+            <a-empty v-if="selectedAhModule.length === 0" style="margin-top: 20px">
+              <template #image>
+                <icon-face-smile-fill />
+              </template>
+              请先左边的API
+            </a-empty>
             <a-collapse
+              v-else
               class="generate-collapse"
               expand-icon-position="right"
               :default-active-key="[0]"
@@ -77,7 +108,9 @@
                     <template #header>
                       <a-space>
                         <a-tag>{{api.method.toUpperCase()}}</a-tag>
-                        <span>{{api.path}}</span>
+                        <a-tooltip content="点击复制接口路径">
+                          <span @click.stop="handleCopyPath(api.path)">{{api.path}}</span>
+                        </a-tooltip>
                         <small><strong>{{api.summary}}</strong></small>
                       </a-space>
                     </template>
@@ -134,7 +167,11 @@ import {
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
+import useClipboard from 'vue-clipboard3';
 import { APIHelper } from '@api-helper/core';
+import { Message } from '@arco-design/web-vue';
+import { nanoid } from 'nanoid';
+
 // @ts-ignore
 import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
 import {
@@ -153,12 +190,15 @@ import mapTemplate from '@/constants/template/model/javascript/map';
 import DialogModel from './__components__/dialog/dialog-model.vue';
 import DialogAPI from './__components__/dialog/dialog-api.vue';
 
+console.log(nanoid());
+console.log(nanoid());
 const gap = ref(320);
 const loading = ref(true);
 const dialogAPIRef = ref();
 const dialogModelRef = ref();
 const route = useRoute();
 const projectStore = useProject();
+const { toClipboard } = useClipboard();
 const isEmpty = computed(() => !project.value);
 const { toggleApiConfig } = useApiConfig();
 const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
@@ -212,6 +252,11 @@ function renderAPIFunc(api: APIHelper.API) {
   } as any)[0] ?? '';
 }
 
+function handleCopyPath(path: string) {
+  toClipboard(path);
+  Message.success('已复制到剪切板');
+}
+
 onMounted(async () => {
   if (project.value) {
     try {
@@ -248,7 +293,7 @@ $fixed-x: 20px;
       top: 66px;
       right: $fixed-x;
       padding-top: 20px;
-      background: $root-background;
+      //background: $root-background;
     }
   }
   @at-root .generate-collapse{
