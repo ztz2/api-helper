@@ -12,7 +12,7 @@ import templateList from '@/constants/template/model';
 import { MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const useModelTemplate = defineStore('model-template', {
-  persist: false,
+  persist: true,
   state: (): {
     templateList: Array<ITemplateClassify>,
   } => ({
@@ -29,6 +29,10 @@ const useModelTemplate = defineStore('model-template', {
         }
       }
       return templateMap;
+    },
+    customTemplateList(state): ITemplate[] {
+      const row = state.templateList.find((item) => item.id === MODEL_CUSTOM_TEMPLATE_ID);
+      return row?.options ?? [];
     },
   },
   actions: {

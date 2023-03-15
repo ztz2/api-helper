@@ -12,7 +12,7 @@ import templateList from '@/constants/template/api';
 import { API_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const useApiTemplate = defineStore('api-template', {
-  persist: false,
+  persist: true,
   state: (): {
     templateList: Array<ITemplateClassify>,
   } => ({
@@ -29,6 +29,10 @@ const useApiTemplate = defineStore('api-template', {
         }
       }
       return templateMap;
+    },
+    customTemplateList(state): ITemplate[] {
+      const row = state.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID);
+      return row?.options ?? [];
     },
   },
   actions: {

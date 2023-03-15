@@ -29,6 +29,16 @@
   </div>
 </template>
 
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { useCheckUpdateTemplate } from '@/hooks/use-check-update-template';
+import AhLogo from '@/components/apih-logo/index.vue';
+
+const linkColor = ref('rgba(0,0,0,.8509803922)');
+
+useCheckUpdateTemplate();
+</script>
+
 <style lang="scss">
 @import "./style/variable.scss";
 
@@ -84,11 +94,3 @@
   }
 }
 </style>
-
-<script lang="ts" setup>
-import { ref } from 'vue';
-import AhLogo from '@/components/apih-logo/index.vue';
-import { nanoid } from 'nanoid';
-
-const linkColor = ref('rgba(0,0,0,.8509803922)');
-</script>

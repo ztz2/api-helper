@@ -45,25 +45,15 @@
                 生成(表单代码)
               </a-button>
               <a-button
-                :disabled="selectApiList.length === 0"
-                @click="dialogModelRef.open({
-                  type: 'ADD',
-                  title: '生成(表单代码)'
-                }, {
-                  categoryList: selectedAhModule,
-                  apiList: selectApiList
-                })"
+                :disabled="apiTemplateStore.customTemplateList.length === 0 && modelTemplateStore.customTemplateList.length === 0"
+                @click="handleExport"
               >
                 导出自定义模板
               </a-button>
               <a-button
-                :disabled="selectApiList.length === 0"
-                @click="dialogModelRef.open({
+                @click="dialogImportRef.open({
                   type: 'ADD',
-                  title: '生成(表单代码)'
-                }, {
-                  categoryList: selectedAhModule,
-                  apiList: selectApiList
+                  title: '导入自定义模板'
                 })"
               >
                 导入自定义模板
@@ -148,6 +138,7 @@
 
   <DialogAPI ref="dialogAPIRef" />
   <DialogModel ref="dialogModelRef" />
+  <DialogImport ref="dialogImportRef" />
 </template>
 
 <script lang="ts">
@@ -161,6 +152,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import {
   ref,
+  toRaw,
   toRefs,
   computed,
   onMounted,
@@ -170,7 +162,6 @@ import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
-import { nanoid } from 'nanoid';
 
 // @ts-ignore
 import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
@@ -178,31 +169,42 @@ import {
   useProject,
   useApiConfig,
   useModelConfig,
-  useGenerateAllApiConfig,
+  useGenerateAllApiConfig, useApiTemplate, useModelTemplate,
 } from '@/store';
+import {
+  API_CUSTOM_TEMPLATE_ID,
+  MODEL_CUSTOM_TEMPLATE_ID,
+} from '@/constants';
+import { modalConfirm } from '@/utils';
 import { getSwaggerDocs } from '@/api';
-
 import renderTemplate from '@/utils/render-template';
 import { IProject, APIHDocument } from '@/store/project/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
 import apiFuncTemplate from '@/constants/template/api/default';
 import mapTemplate from '@/constants/template/model/javascript/map';
-import DialogModel from './__components__/dialog/dialog-model.vue';
-import DialogAPI from './__components__/dialog/dialog-api.vue';
 
-console.log(nanoid());
-console.log(nanoid());
+import DialogAPI from './__components__/dialog/dialog-api.vue';
+import DialogModel from './__components__/dialog/dialog-model.vue';
+import DialogImport from './__components__/dialog/dialog-import.vue';
+
+const route = useRoute();
+
+const projectStore = useProject();
+const apiTemplateStore = useApiTemplate();
+const modelTemplateStore = useModelTemplate();
+
+const { toClipboard } = useClipboard();
+const { toggleApiConfig } = useApiConfig();
+const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
+const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
+
 const gap = ref(320);
 const loading = ref(true);
 const dialogAPIRef = ref();
 const dialogModelRef = ref();
-const route = useRoute();
-const projectStore = useProject();
-const { toClipboard } = useClipboard();
+const dialogImportRef = ref();
 const isEmpty = computed(() => !project.value);
-const { toggleApiConfig } = useApiConfig();
-const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
-const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
+
 const project = computed<IProject>(() => {
   const { id } = route.query;
   return projectStore.data.find((itm) => itm.id === id) as IProject;
@@ -255,6 +257,27 @@ function renderAPIFunc(api: APIHelper.API) {
 function handleCopyPath(path: string) {
   toClipboard(path);
   Message.success('已复制到剪切板');
+}
+
+async function handleExport() {
+  await modalConfirm('确认要导出全部自定义模板吗？');
+  const dataMap: Recordable = {};
+  if (apiTemplateStore.customTemplateList.length > 0) {
+    dataMap[API_CUSTOM_TEMPLATE_ID] = apiTemplateStore.customTemplateList;
+  }
+  if (modelTemplateStore.customTemplateList.length > 0) {
+    dataMap[MODEL_CUSTOM_TEMPLATE_ID] = modelTemplateStore.customTemplateList;
+  }
+  const exportContent = JSON.stringify(dataMap);
+  const eleLink = document.createElement('a');
+  eleLink.download = '自定义模板.json';
+  eleLink.style.display = 'none';
+  eleLink.style.position = 'fixed';
+  const blob = new Blob([exportContent]);
+  eleLink.href = URL.createObjectURL(blob);
+  document.body.appendChild(eleLink);
+  eleLink.click();
+  document.body.removeChild(eleLink);
 }
 
 onMounted(async () => {
