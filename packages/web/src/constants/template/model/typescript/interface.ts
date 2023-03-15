@@ -12,7 +12,7 @@ export default new Template({
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
-    tpl1 = utils.apih.generateClass({
+    tpl1 = utils.apih.generateInterface({
       type: 'object',
       params: requestDataSchemaList
     }, api, {
