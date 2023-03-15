@@ -5,6 +5,7 @@
         v-model="searchValue"
         @search="handleSearch"
         @blur="handleBlur"
+        @keydown.enter="handleSearch"
         style="width: 100%"
         placeholder="模块或接口名称、路径"
         search-button
