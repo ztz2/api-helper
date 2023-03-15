@@ -314,9 +314,8 @@ $fixed-x: 20px;
       position: fixed;
       z-index: 10;
       top: 66px;
-      right: $fixed-x;
-      padding-top: 20px;
-      //background: $root-background;
+      padding: 20px 0 10px 0;
+      background: #fff;
     }
   }
   @at-root .generate-collapse{
