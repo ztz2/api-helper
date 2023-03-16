@@ -1,73 +1,46 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
+<h1
+    style="background: -webkit-linear-gradient(315deg, rgb(255,87,34) 0%, #fee140 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent"
+>
+    <a href="https://github.com/ztz2/api-helper" target="_blank">
+        API Helper
+    </a>
+</h1>
+<p>
+    <a href="https://www.npmjs.com/org/api-helper">
+        <img src="https://img.shields.io/npm/l/@api-helper/core" alt="Package License" />
+    </a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+`API Helper` 简称 `apih` ，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具，
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+> 一个用于构建 Web API 、代码模板的多功能工具库
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 💪 基于Typescript构建
+- ⚙️ 单元测试
+- 📦 本地部署
+- 🔌 Extensible
 
-## Installation
 
-```bash
-$ yarn install
-```
+> API生成特点
+- 支持多个API项目（依赖多个API项目，一次性生成API）
+- 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
+- 请求参数兼容（对象和数组参数的兼容）
 
-## Running the app
+## 文档
+[文档链接](https://apih.andou.live)
 
-```bash
-# development
-$ yarn run start
+## 展示
+<p><img src="../docs/.vitepress/theme/assets/api-code.png" /></p>
+<p><img src="../docs/.vitepress/theme/assets/map-code.png" /></p>
+<p><img src="../docs/.vitepress/theme/assets/class-code.png" /></p>
+<p><img src="../docs/.vitepress/theme/assets/form-code.png" /></p>
 
-# watch mode
-$ yarn run start:dev
+## 许可
 
-# production mode
-$ yarn run start:prod
-```
+[MIT](https://opensource.org/licenses/MIT)
 
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
