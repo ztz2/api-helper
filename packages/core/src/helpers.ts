@@ -48,7 +48,7 @@ export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyNa
   return t;
 }
 
-export type RequestFunctionConfig<T extends object, R> = {
+export type RequestFunctionConfig = {
   // 请求路径，可以看做是URL
   path: string;
   // HTTP请求方法
@@ -59,11 +59,11 @@ export type RequestFunctionConfig<T extends object, R> = {
   // 是否包含表单数据
   hasFormData: boolean;
   // 原始数据对象
-  rowData: T;
+  rowData: unknown;
   // 和上面不兼容冲突的额外数据。
   // 例子上面数据是URL参数，用对象表示 { username: 'ztz2' }，不巧的是，还有body参数Array<string>类型，此时对象和数组不能合并到一起，body数据将会提取到 extraData 中
   // 所有当 rowExtraData 存在值的时候，说明参数不能兼容到一个对象中，建议重新设计接口参数，确保能符合JSON规范
-  rowExtraData?: R;
+  rowExtraData?: unknown;
 }
 export function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
   path: string;
@@ -74,8 +74,8 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
   // URL参数字段集合
   queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
-}): RequestFunctionConfig<T, R> {
-  const requestFunctionConfig: RequestFunctionConfig<T, R> = {
+}): RequestFunctionConfig {
+  const requestFunctionConfig = {
     data: null,
     rowData: data,
     rowExtraData: extraData,
