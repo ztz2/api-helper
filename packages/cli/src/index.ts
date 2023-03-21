@@ -8,6 +8,7 @@ const {
   outputFile
 } = require('fs-extra');
 import { CLI } from './cli';
+import { Config } from './types';
 
 export * from './types';
 
@@ -31,6 +32,10 @@ TSNode.register({
     allowSyntheticDefaultImports: true
   }
 });
+
+export function defineConfig(config: Config | Config[]) {
+  return Array.isArray(config) ? config : [config];
+}
 
 async function init() {
   const answers = await prompts([{
@@ -62,13 +67,11 @@ async function init() {
 
   const isTS = answers.codeType.endsWith('.ts');
 
-  let code: string;
-  if (isTS) {
-    code =
+  const code =
 `import { join } from 'path';
-import { Config } from '@api-helper/cli';
+import { defineConfig } from '@api-helper/cli';
 
-const APIH_CONFIG: Config = {
+export default defineConfig({
   documentServers: [
     {
       // 文档地址
@@ -88,40 +91,8 @@ const APIH_CONFIG: Config = {
     // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
     filename: 'index.ts',
   }
-};
-
-export default APIH_CONFIG;
+});
 `
-  } else {
-code =
-`import { join } from 'path';
-
-const APIH_CONFIG = {
-  documentServers: [
-    {
-      // 文档地址
-      url: 'https://petstore.swagger.io/v2/swagger.json',
-      // 文档类型，默认可以解析 swagger 和 yapi，其他文档 custom 类型，需要自行实现 onParseDocument 钩子函数
-      type: 'swagger',
-      // 获取数据的key，body[dataKey]
-      dataKey: ''
-    }
-  ],
-  // 请求函数文件路径
-  requestFunctionFilePath: 'src/utils/request',
-  // 输出信息
-  output: {
-    // 输出路径
-    path: join(__dirname, 'src/api'),
-    // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
-    filename: 'index.js',
-  }
-};
-
-export default APIH_CONFIG;
-`
-}
-
   try {
     await outputFile(join(process.cwd(), answers.codeType), code);
     consola.success('已生成配置文件');

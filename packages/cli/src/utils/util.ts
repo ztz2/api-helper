@@ -20,3 +20,7 @@ export function getNormalizedRelativePath(from: string, to: string) {
     .replace(/^(?=[^.])/, './')
     .replace(/\.(ts|js)x?$/i, '')
 }
+
+export function checkType(value: any, target: string) {
+  return Object.prototype.toString.call(value) === `[object ${target}]`;
+}
