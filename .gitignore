@@ -40,3 +40,4 @@ lerna-debug.log*
 !.README.md
 
 packages/core/tests/resources/swaggerApi.json
+packages/cli/tests/__folder__
