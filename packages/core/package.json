@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/core",
-  "version": "0.2.9",
+  "version": "0.2.11",
   "description": "compile swagger to typescript typings",
   "main": "index.js",
   "module": "es/index.js",

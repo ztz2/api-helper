@@ -7,7 +7,7 @@ exports[`CLI测试-API代码生成 代码生成-JS: 代码生成-JS 1`] = `
 /** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
 
 // prettier-ignore
-import { processRequestFunctionConfig } from '@api-helper/core';
+import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 // prettier-ignore
 import request from '../utils/request';
 
@@ -453,7 +453,7 @@ exports[`CLI测试-API代码生成 代码生成-ts: 代码生成-ts 1`] = `
 import {
   RequestFunctionRestArgsType,
   processRequestFunctionConfig,
-} from '@api-helper/core';
+} from '@api-helper/core/es/lib/helpers';
 // @ts-ignore
 // prettier-ignore
 import request from '../utils/request';
