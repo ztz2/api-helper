@@ -14,7 +14,7 @@
     </a>
 </p>
 
-`API Helper` 简称 `apih` ，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具。
+`API Helper` 简称 `apih` ，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具，
 
 
 > 一个用于构建 Web API 、代码模板的多功能工具库

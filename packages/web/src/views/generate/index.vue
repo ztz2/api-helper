@@ -164,7 +164,7 @@ import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
 // @ts-ignore
-import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
+import { getSchema } from '@api-helper/core/api-helper-core.js';
 import {
   useProject,
   useApiConfig,

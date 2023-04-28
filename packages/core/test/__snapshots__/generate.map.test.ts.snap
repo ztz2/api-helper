@@ -23,8 +23,7 @@ exports[`生成 Map 对象测试 OpenAPI-2.0生成Map对象测试: OpenAPI-2.0�
   ],
   // { boolean }
   complete: false
-};
-"
+}"
 `;
 
 exports[`生成 Map 对象测试 OpenAPI-3.0生成Map对象测试: OpenAPI-3.00生成Map对象测试 1`] = `

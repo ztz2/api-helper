@@ -1,6 +1,6 @@
 {
   "name": "api-helper-monorepo",
-  "private": false,
+  "version": "0.0.1",
   "workspaces": [
     "packages/*"
   ],
@@ -22,7 +22,6 @@
   "dependencies": {
     "koa": "^2.14.1"
   },
-  "version": "0.0.1",
   "description": "api helper",
   "main": "dist/index.js",
   "repository": {

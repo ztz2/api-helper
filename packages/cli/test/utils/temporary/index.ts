@@ -4,7 +4,7 @@ import {
   writeFile,
   ensureFile,
 } from 'fs-extra';
-import { toUnixPath } from '../../../src/utils/util';
+import { toUnixPath } from '../../../src/lib/utils/util';
 
 export async function temporaryFile(content: string = '', config?: { extension?: string }) {
   config = config ? config: {};

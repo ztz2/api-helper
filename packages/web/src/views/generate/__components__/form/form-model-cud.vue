@@ -148,7 +148,7 @@ import {
 import { cloneDeep } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 // @ts-ignore
-import { getSchema } from '@api-helper/core/dist/apih-core-web.js';
+import { getSchema } from '@api-helper/core/api-helper-core.js';
 
 import { treeForEach } from '@/utils/tree';
 import { useForm } from '@/hooks/use-form';

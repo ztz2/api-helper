@@ -5,7 +5,7 @@
   ],
   "compilerOptions": {
     "declaration": true,
-    "target": "ES5",
+    "target": "ES3",
     "module": "CommonJS",
     "outDir": "./",
     "declarationDir": "./"
