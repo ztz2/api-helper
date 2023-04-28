@@ -1,18 +1,20 @@
 {
+  "env": {
+    "jest": true,
+    "browser": true,
+    "node": true
+  },
   "extends": [
     "eslint:recommended"
   ],
   "globals": {
-    "require": true,
-    "console": true,
-    "__dirname": true
+    "require": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
     "project": [
-      "./tsconfig.json",
-      "./.prettierrc.js"
+      "./tsconfig.lint.json"
     ],
     "sourceType": "module"
   },

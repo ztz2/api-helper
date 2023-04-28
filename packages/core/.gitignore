@@ -1,5 +1,46 @@
-node_modules
+# compiled output
+dist/
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS
 .DS_Store
-*.log*
-.tmp*
-*_cache
+
+# Tests
+/coverage
+/.nyc_output
+
+# IDEs and editors
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+.idea/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+.changeset/*
+!.config.json
+!.pre.json
+!.README.md
+
+es
+lib
+typing
+index.js
+index.html

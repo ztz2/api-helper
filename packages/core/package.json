@@ -1,29 +1,37 @@
 {
   "name": "@api-helper/core",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "compile swagger to typescript typings",
-  "typings": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "browser": "dist/dist/apih-core-web.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "module": "es/index.js",
+  "browser": "api-helper-core.min.js",
+  "types": "typing/index.d.ts",
+  "typings": "typing/index.d.ts",
   "files": [
-    "dist",
+    "es",
+    "lib",
+    "typing",
+    "index.js",
+    "api-helper-core.js",
+    "api-helper-core.min.js",
     "README.md"
   ],
   "engines": {
     "node": ">=12.0.0"
   },
   "scripts": {
-    "build": "jest && npm run lint && npm run clean && npm run build:browser && npm run build:server",
-    "build2": "npm run clean && npm run build:browser && npm run build:server",
-    "build:server": "tsc -d",
-    "build:browser": "browserify src/index.ts -s jstt -p tsify > dist/apih-core-web.js",
-    "clean": "shx rm -rf dist && mkdir dist",
-    "lint": "eslint src/*.ts tests/*.ts",
+    "build": "npm run build:typing && npm run build:es && npm run build:node && npm run build:web && npm run build:web-terser",
+    "build:es": "tsc --project ./tsconfig.es.json",
+    "build:node": "tsc --project ./tsconfig.node.json",
+    "build:typing": "tsc --project ./tsconfig.typing.json",
+    "build:web": "rollup --config rollup.config.web.js",
+    "build:web-terser": "rollup --config rollup.config.web.terser.js",
+    "clean": "shx rm -rf typing && shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf api-helper-core.js && shx rm -rf api-helper-core.min.js",
+    "lint": "eslint src/*.ts test/*.ts",
     "tdd": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",
     "test": "npm run pre-test && jest",
-    "pre-test": "npm run clean && npm run build:server",
+    "test:only": "jest",
+    "pre-test": "npm run clean && npm run build",
     "watch": "tsc -w",
     "watch:test": "jest -w"
   },
@@ -69,6 +77,12 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/runtime": "^7.13.10",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
+    "@rollup/plugin-typescript": "^11.1.0",
     "@types/fs-extra": "^5.0.4",
     "@types/jest": "29.2.4",
     "@types/json-schema": "^7.0.11",
@@ -80,22 +94,18 @@
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.0.0",
     "babel-jest": "^29.4.3",
-    "browserify": "^17.0.0",
-    "browserify-shim": "^3.8.16",
+    "concurrently": "^8.0.1",
     "consola": "^2.3.0",
     "eslint": "^7.32.0",
     "jest": "^29.4.3",
     "lint-staged": "^10",
     "openapi-types": "^12.1.0",
-    "ts-jest": "29.0.3"
-  },
-  "browserify": {
-    "transform": [
-      "browserify-shim"
-    ]
-  },
-  "browserify-shim": {
-    "prettier": "global:prettier"
+    "rollup": "^3.21.0",
+    "shx": "^0.3.4",
+    "ts-jest": "29.0.3",
+    "tsify": "^5.0.4",
+    "tslib": "^2.5.0",
+    "typescript": "^4.4.4"
   },
   "publishConfig": {
     "access": "public",

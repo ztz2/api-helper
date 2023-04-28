@@ -1,29 +1,26 @@
 {
   "include": [
-    "src/**/*.vue",
-    "src/**/*.ts",
-    "src/**/*.js",
-    "src/**/*.tsx",
     "global.d.ts",
-    ".prettierrc.js"
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.js"
   ],
   "compilerOptions": {
     "strict": true,
-    "target": "ES5",
-    "module": "CommonJS",
     "moduleResolution": "node",
-    "declaration": true,
+    "declaration": false,
+    "isolatedModules": true,
     "removeComments": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "newLine": "LF",
     "allowJs": true,
+    "checkJs": false,
     "preserveSymlinks": true,
     "skipLibCheck": true,
-    "jsx": "preserve",
     "lib": ["ESNext", "DOM"],
-    "outDir": "./dist",
     "plugins": [
       {
         "name": "typescript-snapshots-plugin",

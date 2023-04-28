@@ -1,0 +1,222 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
+"/**
+ * @描述 Place an order for a pet
+ * @请求信息 [ POST ] /v2/store/order
+ */
+export function v2StoreOrderByPost(
+  data: IV2StoreOrderRequestByPost,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<IV2StoreOrderResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreOrderByPost.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreOrderByPost.requestConfig = {
+  path: '/v2/store/order',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @请求信息 [ GET ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByGet(
+  data: IV2StoreOrderOrderIdRequestByGet,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<IV2StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreOrderOrderIdByGet.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByGet.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @请求信息 [ DELETE ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByDelete(
+  data: IV2StoreOrderOrderIdRequestByDelete,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreOrderOrderIdResponseTypeByDelete>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreOrderOrderIdByDelete.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'delete',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
+ * @请求信息 [ GET ] /v2/store/inventory
+ */
+export function v2StoreInventoryByGet(
+  data: V2StoreInventoryRequestTypeByGet,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<IV2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreInventoryByGet.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+"
+`;
+
+exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3.0生成接口函数测试 1`] = `
+"/**
+ * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
+ * @请求信息 [ GET ] /api/v3/store/inventory
+ */
+export function apiV3StoreInventoryByGet(
+  data: ApiV3StoreInventoryRequestTypeByGet,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<ApiV3StoreInventoryResponseTypeByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      apiV3StoreInventoryByGet.requestConfig
+    ),
+    ...args
+  );
+}
+apiV3StoreInventoryByGet.requestConfig = {
+  path: '/api/v3/store/inventory',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Place an order for a pet、Place a new order in the store
+ * @请求信息 [ POST ] /api/v3/store/order
+ */
+export function apiV3StoreOrderByPost(
+  data: IApiV3StoreOrderRequestByPost,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<ApiV3StoreOrderResponseTypeByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      apiV3StoreOrderByPost.requestConfig
+    ),
+    ...args
+  );
+}
+apiV3StoreOrderByPost.requestConfig = {
+  path: '/api/v3/store/order',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [
+    'id',
+    'petId',
+    'quantity',
+    'shipDate',
+    'status',
+    'complete'
+  ]
+};
+
+/**
+ * @描述 Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @请求信息 [ GET ] /api/v3/store/order/{orderId}
+ */
+export function apiV3StoreOrderOrderIdByGet(
+  data: IApiV3StoreOrderOrderIdRequestByGet,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<ApiV3StoreOrderOrderIdResponseTypeByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      apiV3StoreOrderOrderIdByGet.requestConfig
+    ),
+    ...args
+  );
+}
+apiV3StoreOrderOrderIdByGet.requestConfig = {
+  path: '/api/v3/store/order/{orderId}',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @请求信息 [ DELETE ] /api/v3/store/order/{orderId}
+ */
+export function apiV3StoreOrderOrderIdByDelete(
+  data: IApiV3StoreOrderOrderIdRequestByDelete,
+  extraData: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<ApiV3StoreOrderOrderIdResponseTypeByDelete>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      apiV3StoreOrderOrderIdByDelete.requestConfig
+    ),
+    ...args
+  );
+}
+apiV3StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/api/v3/store/order/{orderId}',
+  method: 'delete',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+"
+`;
