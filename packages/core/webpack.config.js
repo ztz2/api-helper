@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const packageJSON = require('./package.json');
 
 module.exports = {
   mode: 'production',
@@ -10,6 +11,12 @@ module.exports = {
     path: resolve(__dirname, ''),
     library: 'apiHelperCore',
     libraryTarget: 'umd',
+    environment: {
+      // 关闭输出头部代码使用const关键字
+      const: false,
+      // 关闭输出头部代码使用箭头函数
+      arrowFunction: false
+    }
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
@@ -34,10 +41,7 @@ module.exports = {
         test: /\.m?js$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env']
-          }
+          loader: 'babel-loader'
         }
       }
     ],
@@ -52,6 +56,11 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.BannerPlugin(
+      `${packageJSON.name} v${packageJSON.version}
+(c) 2023-present ${packageJSON.author.name}
+Released under the MIT License.`
+    ),
     new webpack.DefinePlugin({
       process: {
         env: {
