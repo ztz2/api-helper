@@ -34,10 +34,10 @@
 [文档链接](https://apih.andou.live)
 
 ## 展示
-<p><img src="../docs/.vitepress/theme/assets/api-code.png" /></p>
-<p><img src="../docs/.vitepress/theme/assets/map-code.png" /></p>
-<p><img src="../docs/.vitepress/theme/assets/class-code.png" /></p>
-<p><img src="../docs/.vitepress/theme/assets/form-code.png" /></p>
+<p><img src="../docs/src/images/api-code.png" /></p>
+<p><img src="../docs/src/images/map-code.png" /></p>
+<p><img src="../docs/src/images/class-code.png" /></p>
+<p><img src="../docs/src/images/form-code.png" /></p>
 
 ## 许可
 
