@@ -31,7 +31,7 @@ export type ApiV3PetResponseTypeByPut = any;
  */
 export function apiV3PetByPut(
   data: IApiV3PetRequestByPut,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetResponseTypeByPut>(
@@ -84,7 +84,7 @@ export type ApiV3PetResponseTypeByPost = any;
  */
 export function apiV3PetByPost(
   data: IApiV3PetRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetResponseTypeByPost>(
@@ -126,7 +126,7 @@ export type ApiV3PetFindByStatusResponseTypeByGet = any;
  */
 export function apiV3PetFindByStatusByGet(
   data: IApiV3PetFindByStatusRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetFindByStatusResponseTypeByGet>(
@@ -165,7 +165,7 @@ export type ApiV3PetFindByTagsResponseTypeByGet = any;
  */
 export function apiV3PetFindByTagsByGet(
   data: IApiV3PetFindByTagsRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetFindByTagsResponseTypeByGet>(
@@ -204,7 +204,7 @@ export type ApiV3PetPetIdResponseTypeByGet = any;
  */
 export function apiV3PetPetIdByGet(
   data: IApiV3PetPetIdRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetPetIdResponseTypeByGet>(
@@ -247,7 +247,7 @@ export type ApiV3PetPetIdResponseTypeByPost = any;
  */
 export function apiV3PetPetIdByPost(
   data: IApiV3PetPetIdRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetPetIdResponseTypeByPost>(
@@ -286,7 +286,7 @@ export type ApiV3PetPetIdResponseTypeByDelete = any;
  */
 export function apiV3PetPetIdByDelete(
   data: IApiV3PetPetIdRequestByDelete,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetPetIdResponseTypeByDelete>(
@@ -327,7 +327,7 @@ export type ApiV3PetPetIdUploadImageResponseTypeByPost = any;
  */
 export function apiV3PetPetIdUploadImageByPost(
   data: IApiV3PetPetIdUploadImageRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3PetPetIdUploadImageResponseTypeByPost>(
@@ -363,7 +363,7 @@ export type ApiV3StoreInventoryResponseTypeByGet = any;
  */
 export function apiV3StoreInventoryByGet(
   data: ApiV3StoreInventoryRequestTypeByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreInventoryResponseTypeByGet>(
@@ -407,7 +407,7 @@ export type ApiV3StoreOrderResponseTypeByPost = any;
  */
 export function apiV3StoreOrderByPost(
   data: IApiV3StoreOrderRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderResponseTypeByPost>(
@@ -453,7 +453,7 @@ export type ApiV3StoreOrderOrderIdResponseTypeByGet = any;
  */
 export function apiV3StoreOrderOrderIdByGet(
   data: IApiV3StoreOrderOrderIdRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderOrderIdResponseTypeByGet>(
@@ -492,7 +492,7 @@ export type ApiV3StoreOrderOrderIdResponseTypeByDelete = any;
  */
 export function apiV3StoreOrderOrderIdByDelete(
   data: IApiV3StoreOrderOrderIdRequestByDelete,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderOrderIdResponseTypeByDelete>(
@@ -538,7 +538,7 @@ export type ApiV3UserResponseTypeByPost = any;
  */
 export function apiV3UserByPost(
   data: IApiV3UserRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserResponseTypeByPost>(
@@ -598,7 +598,7 @@ export type ApiV3UserCreateWithListResponseTypeByPost = any;
  */
 export function apiV3UserCreateWithListByPost(
   data: ApiV3UserCreateWithListRequestTypeByPost,
-  extraData: ApiV3UserCreateWithListRequestTypeExtraDataByPost,
+  extraData?: ApiV3UserCreateWithListRequestTypeExtraDataByPost,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserCreateWithListResponseTypeByPost>(
@@ -639,7 +639,7 @@ export type ApiV3UserLoginResponseTypeByGet = any;
  */
 export function apiV3UserLoginByGet(
   data: IApiV3UserLoginRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserLoginResponseTypeByGet>(
@@ -675,7 +675,7 @@ export type ApiV3UserLogoutResponseTypeByGet = any;
  */
 export function apiV3UserLogoutByGet(
   data: ApiV3UserLogoutRequestTypeByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserLogoutResponseTypeByGet>(
@@ -714,7 +714,7 @@ export type ApiV3UserUsernameResponseTypeByGet = any;
  */
 export function apiV3UserUsernameByGet(
   data: IApiV3UserUsernameRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserUsernameResponseTypeByGet>(
@@ -762,7 +762,7 @@ export type ApiV3UserUsernameResponseTypeByPut = any;
  */
 export function apiV3UserUsernameByPut(
   data: IApiV3UserUsernameRequestByPut,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserUsernameResponseTypeByPut>(
@@ -810,7 +810,7 @@ export type ApiV3UserUsernameResponseTypeByDelete = any;
  */
 export function apiV3UserUsernameByDelete(
   data: IApiV3UserUsernameRequestByDelete,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3UserUsernameResponseTypeByDelete>(

@@ -51,7 +51,7 @@ export function generateRequestFunc(api: APIHelper.API, options?: GenerateReques
 
   const code = template.render(
     `{{if commentCode}}{{commentCode}}
-{{/if}}export function {{requestFunctionName}}(data{{if isTypescript}}: {{requestDataInterfaceName}}{{/if}}, extraData{{if isTypescript}}: {{if api.requestExtraDataSchema}}{{requestExtraDataInterfaceName}}{{else}}unknown{{/if}}{{/if}}, ...args{{if isTypescript}}: CurrentRequestFunctionRestArgsType{{/if}}) {
+{{/if}}export function {{requestFunctionName}}(data{{if isTypescript}}: {{requestDataInterfaceName}}{{/if}}, extraData{{if isTypescript}}?: {{if api.requestExtraDataSchema}}{{requestExtraDataInterfaceName}}{{else}}unknown{{/if}}{{/if}}, ...args{{if isTypescript}}: CurrentRequestFunctionRestArgsType{{/if}}) {
   return request{{if isTypescript}}<{{responseDataInterfaceName}}>{{/if}}(
     processRequestFunctionConfig(data, extraData, {{requestFunctionName}}.requestConfig),
     ...args

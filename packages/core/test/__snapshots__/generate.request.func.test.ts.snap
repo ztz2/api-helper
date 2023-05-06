@@ -7,7 +7,7 @@ exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2
  */
 export function v2StoreOrderByPost(
   data: IV2StoreOrderRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderResponseByPost>(
@@ -33,7 +33,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export function v2StoreOrderOrderIdByGet(
   data: IV2StoreOrderOrderIdRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderOrderIdResponseByGet>(
@@ -59,7 +59,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export function v2StoreOrderOrderIdByDelete(
   data: IV2StoreOrderOrderIdRequestByDelete,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2StoreOrderOrderIdResponseTypeByDelete>(
@@ -85,7 +85,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  */
 export function v2StoreInventoryByGet(
   data: V2StoreInventoryRequestTypeByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreInventoryResponseByGet>(
@@ -114,7 +114,7 @@ exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3
  */
 export function apiV3StoreInventoryByGet(
   data: ApiV3StoreInventoryRequestTypeByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreInventoryResponseTypeByGet>(
@@ -140,7 +140,7 @@ apiV3StoreInventoryByGet.requestConfig = {
  */
 export function apiV3StoreOrderByPost(
   data: IApiV3StoreOrderRequestByPost,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderResponseTypeByPost>(
@@ -173,7 +173,7 @@ apiV3StoreOrderByPost.requestConfig = {
  */
 export function apiV3StoreOrderOrderIdByGet(
   data: IApiV3StoreOrderOrderIdRequestByGet,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderOrderIdResponseTypeByGet>(
@@ -199,7 +199,7 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
  */
 export function apiV3StoreOrderOrderIdByDelete(
   data: IApiV3StoreOrderOrderIdRequestByDelete,
-  extraData: unknown,
+  extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<ApiV3StoreOrderOrderIdResponseTypeByDelete>(
