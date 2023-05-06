@@ -77,22 +77,22 @@ onMounted(async () => {
 
   <section id="sponsors">
     <h2>生成API，interface代码</h2>
-    <img alt="" src="../assets/api-code.png" />
+    <img alt="" src="/images/api-code.png" />
   </section>
 
   <section id="sponsors">
     <h2>生成JS对象代码</h2>
-    <img alt="" src="../assets/map-code.png" />
+    <img alt="" src="/images/map-code.png" />
   </section>
 
   <section id="sponsors">
     <h2>生成JS类代码</h2>
-    <img alt="" src="../assets/class-code.png" />
+    <img alt="" src="/images/class-code.png" />
   </section>
 
   <section id="sponsors">
     <h2>生成表单模板代码</h2>
-    <img alt="" src="../assets/form-code.png" />
+    <img alt="" src="/images/form-code.png" />
   </section>
 
   <SiteMap />

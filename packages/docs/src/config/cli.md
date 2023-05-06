@@ -1,6 +1,6 @@
 # 生成API代码
 解析API文档，生成整个项目的API请求代码，TS类型。
-![API代码](img/api-code.png)
+![API代码](/images/api-code.png)
 
 ## 安装
 ### 安装core包
