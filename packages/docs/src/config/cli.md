@@ -20,11 +20,16 @@ pnpm install @api-helper/cli --save-dev
 import axios from 'axios';
 import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 
-export default async function request(payload: RequestFunctionConfig) {
-  return await axios({
-    method: payload.method,
-    url: payload.path,
-    data: payload.data,
+export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
+  return new Promise((resolve, reject) => {
+    axios({
+      method: config.method,
+      url: config.path,
+      data: config.data,
+    }).then((res) => {
+      // 响应数据处理...
+      resolve(res as unknown as T);
+    }).catch((e) => reject(e));
   });
 }
 ```
