@@ -1,31 +1,27 @@
 {
   "name": "@api-helper/cli",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
-  "main": "index.js",
-  "module": "es/index.js",
-  "types": "es/index.d.ts",
-  "typings": "index.d.ts",
+  "bin": {
+    "apih": "bin/index.js"
+  },
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "typings": "lib/index.d.ts",
   "files": [
-    "es",
+    "bin",
     "lib",
-    "index.js",
-    "index.d.ts",
-    "api-helper-cli.js",
     "README.md"
   ],
-  "bin": {
-    "apih": "index.js"
-  },
   "engines": {
     "node": ">=13.0.0"
   },
   "scripts": {
-    "build": "jest && npm run lint && npm run clean && npm run build:es && npm run build:node",
-    "build:es": "tsc --project ./tsconfig.es.json",
+    "build": "jest && npm run lint && npm run clean && npm run build:node",
     "build:node": "tsc --project ./tsconfig.node.json",
-    "clean": "shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf index.d.js",
-    "lint": "eslint src/*.ts",
+    "clean": "shx rm -rf bin && shx rm -rf lib",
+    "lint": "eslint src/**/*.ts",
     "cwt": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",
     "test": "npm run pre-test && jest",
     "test:only": "jest",
@@ -59,6 +55,7 @@
     "@babel/runtime": "^7.13.10",
     "@types/json-schema": "^7.0.9",
     "axios": "^1.3.2",
+    "cac": "^6.7.14",
     "consola": "^2.3.0",
     "fs-extra": "^7.0.1",
     "https-browserify": "^1.0.0",
@@ -95,7 +92,7 @@
     "ts-loader": "^9.4.2",
     "tsify": "^5.0.4",
     "tslib": "^2.5.0",
-    "typescript": "^4.4.4",
+    "typescript": "^4.5.5",
     "webpack": "^5.81.0",
     "webpack-cli": "^5.0.2"
   },

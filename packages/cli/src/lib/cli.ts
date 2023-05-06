@@ -11,6 +11,7 @@ import { APIHelper } from '@api-helper/core/typing/lib/types';
 import { generateAllApi } from '@api-helper/core/lib/generate';
 import { ParserOpenAPI } from '@api-helper/core/lib/parser';
 
+
 import {
   Config,
   DocumentParsedList,
@@ -33,24 +34,26 @@ export class CLI{
     this.configFilePath = configFilePath;
   }
   async run() {
-    const config = await this.getConfigFile();
-    let len = config.length;
-    for (let i = 0; i < config.length; i++) {
-      const c = config[i];
-      let spinner = len > 1 ? ora(`正在处理，第${i + 1}项...`).start() : null;
-      try {
-        await this.checkOutputPathExisted(c);
-        await this.checkRequestFunctionFileExisted(c);
-        const documentResourceList = await this.fetchSourceDocumentList(c);
-        const parsedDocumentList = await this.parserSourceDocument(c, documentResourceList);
-        const chooseDocumentList = await this.chooseDocument(c, parsedDocumentList);
-        const code = await this.genCode(c, chooseDocumentList);
-        await this.output(c, code);
-        spinner && spinner.succeed();
-      } catch {
-        spinner && spinner.fail(`第${i}项生成失败`);
+    try {
+      const config = await this.getConfigFile();
+      let len = config.length;
+      for (let i = 0; i < config.length; i++) {
+        const c = config[i];
+        let spinner = len > 1 ? ora(`正在处理，第${i + 1}项...`).start() : null;
+        try {
+          await this.checkOutputPathExisted(c);
+          await this.checkRequestFunctionFileExisted(c);
+          const documentResourceList = await this.fetchSourceDocumentList(c);
+          const parsedDocumentList = await this.parserSourceDocument(c, documentResourceList);
+          const chooseDocumentList = await this.chooseDocument(c, parsedDocumentList);
+          const code = await this.genCode(c, chooseDocumentList);
+          await this.output(c, code);
+          spinner && spinner.succeed();
+        } catch {
+          spinner && spinner.fail(`第${i}项生成失败`);
+        }
       }
-    }
+    } catch {}
   }
 
   // 1. 获取配置文件
@@ -60,29 +63,22 @@ export class CLI{
     const spinner = ora(oraText).start();
     let config: Config[] = [];
 
-    if (configFilePath) {
+    const files = [configFilePath, 'apih.config.ts', 'apih.config.js'];
+
+    for (let i = 0; i < files.length; i++) {
       try {
-        await stat(configFilePath);
-        const c = require(configFilePath).default;
+        const f = files[i];
+        if (!f) {
+          continue;
+        }
+        const path = i === 0 ? f : join(process.cwd(), `./${f}`);
+        await stat(path);
+        const c = require(path)?.default;
         if (c) {
           config = Array.isArray(c) ? c : [c];
+          break
         }
       } catch {}
-    }
-
-    if (!this.config) {
-      const f = ['apih.config.ts', 'apih.config.js'];
-      for (let i = 0; i < f.length; i++) {
-        try {
-          const path = join(process.cwd(), `./${f[i]}`);
-          await stat(path);
-          const c = require(path)?.default;
-          if (c) {
-            config = Array.isArray(c) ? c : [c];
-            break
-          }
-        } catch {}
-      }
     }
 
     if (config && config.length > 0) {
@@ -307,6 +303,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
     }
   }
 }
+
 CLI.init = async function () {
   const answers = await prompts([{
     type: 'select',
@@ -334,8 +331,6 @@ CLI.init = async function () {
       return;
     }
   } catch {}
-
-  const isTS = answers.codeType.endsWith('.ts');
 
   const code =
     `import { join } from 'path';

@@ -7,6 +7,7 @@
   ],
   "compilerOptions": {
     "strict": true,
+    "target": "ES2015",
     "moduleResolution": "node",
     "declaration": false,
     "isolatedModules": true,
@@ -19,7 +20,7 @@
     "checkJs": false,
     "preserveSymlinks": true,
     "skipLibCheck": true,
-    "lib": ["ESNext", "DOM"],
+    "lib": ["ESNext", "DOM", "ES2015"],
     "plugins": [
       {
         "name": "typescript-snapshots-plugin",

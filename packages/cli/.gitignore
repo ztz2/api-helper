@@ -39,6 +39,7 @@ lerna-debug.log*
 !.pre.json
 !.README.md
 
+/bin
 /es
 /lib
 /typing

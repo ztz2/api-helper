@@ -1,8 +1,9 @@
-import { join } from 'path';
 import { readFile } from 'fs-extra';
 
-import { run } from '../src';
+import { run } from '../src/lib';
 import { temporaryFile } from './utils/temporary';
+
+const CLI_PATH = '../../src/lib';
 
 describe('CLI测试-API代码生成', () => {
   // test('生成 Javascript 配置文件', async () => {
@@ -19,9 +20,9 @@ describe('CLI测试-API代码生成', () => {
     const outputFullPath = outputTemporaryFile.fullPath;
     const outputFileName = outputTemporaryFile.fileName;
 
-    const configTemporaryFile = await temporaryFile(`
-import { join } from 'path';
-import { defineConfig } from '../../src';
+    const configTemporaryFile = await temporaryFile(
+      `import { join } from 'path';
+import { defineConfig } from '${CLI_PATH}';
 
 export default defineConfig({
   documentServers: [{
@@ -38,14 +39,13 @@ export default defineConfig({
     const configFullPath = configTemporaryFile.fullPath;
     const configClear = configTemporaryFile.clear;
 
-    await run('', configFullPath);
+    await run(null, configFullPath);
     const code = await readFile(outputFullPath, 'utf-8');
     expect(code).toMatchSnapshot('代码生成-ts');
 
     await outputClear();
     await configClear();
   });
-
   test('代码生成-JS', async () => {
 
     const outputTemporaryFile = await temporaryFile('', {
@@ -58,7 +58,7 @@ export default defineConfig({
 
     const configTemporaryFile = await temporaryFile(`
 import { join } from 'path';
-import { defineConfig } from '../../src';
+import { defineConfig } from '${CLI_PATH}';
 
 export default defineConfig({
   documentServers: [{
@@ -75,7 +75,7 @@ export default defineConfig({
     const configFullPath = configTemporaryFile.fullPath;
     const configClear = configTemporaryFile.clear;
 
-    await run('', configFullPath);
+    await run(null, configFullPath);
     const code = await readFile(outputFullPath, 'utf-8');
     expect(code).toMatchSnapshot('代码生成-JS');
 
