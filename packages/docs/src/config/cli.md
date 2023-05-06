@@ -30,7 +30,7 @@ export default async function request(payload: RequestFunctionConfig) {
 ```
 
 ### 步骤二
-终端输入`apih init`初始化生成配置文件，
+终端输入`apih init`初始化生成配置文件
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>apih init</span></code></pre></div>
 
 该命令用于生成配置文件，根据项目情况生成Typescript配置文件或者Javascript配置文件。
