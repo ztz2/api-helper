@@ -7,25 +7,22 @@ import { headerPlugin } from './headerMdPlugin'
 
 const nav: ThemeConfig['nav'] = [
   { text: '指南', link: '/guide/introduction', activeMatch: `^/guide/introduction/`},
-  { text: 'CLI', link: '/config/cli', activeMatch: `^/config/cli/`}
+  { text: '生成API', link: '/config/cli', activeMatch: `^/config/cli/`},
+  { text: '生成模板代码', link: '/config/template', activeMatch: `^/config/cli/`}
 ]
 
 const sidebarConfig = [
   {
     text: '准备开始',
     items: [
-      { text: '指南', link: '/guide/introduction' },
-      {
-        text: '快速开始',
-        link: '/guide/quick-start'
-      }
+      { text: '指南', link: '/guide/introduction' }
     ]
   },
   {
     text: '配置',
     items: [
-      { text: 'CLI', link: '/config/cli' },
-      { text: '模板功能', link: '/config/template' },
+      { text: '生成API', link: '/config/cli' },
+      { text: '生成模板代码', link: '/config/template' },
     ]
   }
 ]

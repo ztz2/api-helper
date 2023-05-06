@@ -1,10 +1,12 @@
-# 模板功能配置说明 {#模板功能配置说明}
+# 模板功能配置说明
 
 * 模板功能的应用场景在于，重复性的表单或者表格页面，根据接口生成统一的代码模板。
 * 模板功能是基于 @api-helper/core 实现，在 @api-helper/web + @api-helper/server 中应用。
 可以直接访问[在线版本](https://web-apih.andou.live)。
 
-## 本地部署模板功能应用 {#本地部署模板功能应用}
+![表单模板代码](img/form-code.png)
+
+## 本地部署模板服务
 * 鼠标左键双击运行 `run-template-server.bat` 文件，当终端出现以下信息，代表启动成功。
 * 浏览器输出 `http://localhost:3210` 即可访问。
 ```shell

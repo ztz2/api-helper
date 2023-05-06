@@ -1,4 +1,74 @@
-# CLI配置说明 {#CLI配置说明}
+# 生成API代码
+解析API文档，生成整个项目的API请求代码，TS类型。
+![API代码](img/api-code.png)
+
+## 安装
+### 安装core包
+```shell
+pnpm install @api-helper/core
+```
+### 安装CLI包
+```shell
+pnpm install @api-helper/cli --save-dev
+```
+
+## 开始
+### 步骤一
+定义 `request.ts` 请求工具，用于统一管理请求。
+以 `axios` 为例，作为请求库。
+```typescript
+import axios from 'axios';
+import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+
+export default async function request(payload: RequestFunctionConfig) {
+  return await axios({
+    method: payload.method,
+    url: payload.path,
+    data: payload.data,
+  });
+}
+```
+
+### 步骤二
+终端输入`apih init`初始化生成配置文件，
+<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>apih init</span></code></pre></div>
+
+该命令用于生成配置文件，根据项目情况生成Typescript配置文件或者Javascript配置文件。
+
+<div class="language-sh">
+<pre><code>
+<span style="color:#A6ACCD;">请选择配置文件类型? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">TypeScript</span> / JavaScript</span></span>
+<span style="color:var(--vt-c-blue);">(*)</span> <span style="color:#A6ACCD;">TypeScript（apih.config.ts）</span>
+<span style="color:var(--vt-c-blue);">( )</span> <span style="color:#A6ACCD;">JavaScript（apih.config.js）</span>
+<span></span>
+<span style="color:#A6ACCD;">配置文件已经生成：...</span>
+<span style="color:#A6ACCD;">Done.</span>
+</code></pre>
+</div>
+
+### 步骤三
+然后将`request.ts`的路径，配置到的`requestFunctionFilePath`中。
+最后终端输入`apih`即可生成文档全部API。
+<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">apih</span></span></code></pre></div>
+
+在生成API过程中，会看见每一步的工作过程，可以根据提示，查看配置是否有异常。
+
+<div class="language-sh"><pre><code>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测apih.config.(ts|js)配置文件是否存在</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测输出目录是否正确</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测 request 函数文件路径是否正确</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">通过 config.serverURL 获取文档</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">解析文档</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">生成代码</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">删除旧文件</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">输出文件</span></span>
+<span class="line"></span>
+<span style="color:#A6ACCD;">API已经生成：...</span>
+<span style="color:#A6ACCD;">Done.</span>
+</code></pre></div>
+
+
+## Config 对象文档说明
 ```typescript
 import { defineConfig, Config } from '@api-helper/cli';
 ```

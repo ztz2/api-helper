@@ -22,7 +22,7 @@ onMounted(async () => {
     </p>
     <p class="actions">
       <a class="get-started" href="/guide/introduction.html">
-        快速开始
+        指南
         <svg
           class="icon"
           xmlns="http://www.w3.org/2000/svg"

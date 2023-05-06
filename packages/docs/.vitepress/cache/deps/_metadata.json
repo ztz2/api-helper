@@ -1,23 +1,23 @@
 {
-  "hash": "3bd04a9a",
-  "browserHash": "ecbeea2b",
+  "hash": "6971c914",
+  "browserHash": "0992880e",
   "optimized": {
     "gsap": {
-      "src": "../../../../../node_modules/.pnpm/gsap@3.11.4/node_modules/gsap/index.js",
+      "src": "../../../../../node_modules/.pnpm/gsap@3.9.0/node_modules/gsap/index.js",
       "file": "gsap.js",
-      "fileHash": "8ed0c2a3",
+      "fileHash": "312d3448",
       "needsInterop": false
     },
     "dynamics.js": {
       "src": "../../../../../node_modules/.pnpm/dynamics.js@1.1.5/node_modules/dynamics.js/lib/dynamics.js",
       "file": "dynamics__js.js",
-      "fileHash": "575d6e98",
+      "fileHash": "712a26af",
       "needsInterop": true
     },
     "vue": {
-      "src": "../../../../../node_modules/.pnpm/vue@3.2.47/node_modules/vue/dist/vue.runtime.esm-bundler.js",
+      "src": "../../../../../node_modules/.pnpm/vue@3.2.45/node_modules/vue/dist/vue.runtime.esm-bundler.js",
       "file": "vue.js",
-      "fileHash": "6bc88b50",
+      "fileHash": "0513a189",
       "needsInterop": false
     }
   },
