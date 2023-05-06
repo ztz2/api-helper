@@ -23,7 +23,7 @@
     "build:es": "tsc --project ./tsconfig.es.json",
     "build:node": "tsc --project ./tsconfig.node.json",
     "build:web": "webpack",
-    "clean": "shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf index.d.js && shx rm -rf api-helper-core.js",
+    "clean": "shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf index.d.ts && shx rm -rf api-helper-core.js",
     "lint": "eslint src/*.ts",
     "cwt": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",
     "test": "npm run pre-test && jest",
