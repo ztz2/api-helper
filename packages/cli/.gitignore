@@ -40,6 +40,7 @@ lerna-debug.log*
 !.README.md
 
 /bin
+/test/__folder__
 /es
 /lib
 /typing
