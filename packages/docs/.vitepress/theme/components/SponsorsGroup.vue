@@ -67,13 +67,13 @@ function track(interest?: boolean) {
         <img v-else :src="`${base}/images/${img}`" :alt="name" />
       </a>
     </template>
-    <a
-      v-if="placement !== 'page' && tier !== 'special'"
-      href="/sponsor/"
-      class="sponsor-item action"
-      @click="track(true)"
-      >Your logo</a
-    >
+<!--    <a-->
+<!--      v-if="placement !== 'page' && tier !== 'special'"-->
+<!--      href="/sponsor/"-->
+<!--      class="sponsor-item action"-->
+<!--      @click="track(true)"-->
+<!--      >Your logo</a-->
+<!--    >-->
   </div>
 </template>
 

@@ -45,7 +45,8 @@ export default defineConfigWithTheme<ThemeConfig>({
   srcDir: 'src',
   srcExclude: ['tutorial/**/description.md'],
   scrollOffset: 'header',
-
+  outDir: path.resolve(__dirname, '../dist'),
+  cacheDir: path.resolve(__dirname, '../.cache'),
   head: [
     ['meta', { name: 'theme-color', content: '#3c8772' }],
     ['meta', { name: 'twitter:site', content: '@api-helper' }],

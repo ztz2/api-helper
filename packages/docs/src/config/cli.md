@@ -79,7 +79,7 @@ import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
-## `documentServers` {#documentServers}
+## `documentServers`
 :::warning 必填项
 :::
 
@@ -95,13 +95,13 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 * `documentServers.events.onGenerateInterfaceName`  自定义生成接口名称
 * `documentServers.events.onParseDocument`  自定义解析接口文档
 
-## `requestFunctionFilePath` {#requestFunctionFilePath}
+## `requestFunctionFilePath`
 :::warning 必填项
 :::
 
 request函数文件路径
 
-## `output` {#output}
+## `output`
 :::warning 必填项
 :::
 
