@@ -10,7 +10,6 @@
   "files": [
     "bin",
     "lib",
-    "typing.d.ts",
     "README.md"
   ],
   "engines": {
