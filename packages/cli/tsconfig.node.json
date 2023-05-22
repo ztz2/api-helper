@@ -4,7 +4,7 @@
     "src/**/*.test.ts"
   ],
   "compilerOptions": {
-    "declaration": false,
+    "declaration": true,
     "target": "ES2015",
     "module": "CommonJS",
     "outDir": "./",
