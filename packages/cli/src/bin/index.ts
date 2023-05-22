@@ -1,53 +1,47 @@
-// #!/usr/bin/env node
-import { cac } from 'cac';
-import * as TSNode from 'ts-node';
+#!/usr/bin/env node
+import { Command } from 'commander';
 
-import { run } from '../lib';
+import { run } from '@/lib';
+import log from '@/lib/tools/log';
+import { loadModule } from '@/lib/tools/util';
 
-TSNode.register({
-  skipProject: true,
-  transpileOnly: true,
-  compilerOptions: {
-    strict: false,
-    allowJs: true,
-    lib: ['es2017'],
-    target: 'es2017',
-    module: 'commonjs',
-    moduleResolution: 'node',
-    declaration: false,
-    importHelpers: false,
-    removeComments: false,
-    esModuleInterop: true,
-    allowSyntheticDefaultImports: true
-  }
-});
 
-const cli = cac('apih');
+const program = new Command();
+const { version } = loadModule('package.json', false) as Recordable;
 
-// global options
-interface GlobalCLIOptions {
-  c?: string
-  init?: boolean | string
-  help?: string | boolean
-}
+// root指令
+program
+  .version(version)
+  .description('API生成工具')
+  .option('-D, --debug', '调试模式')
+  .option('-c, --config <string>', '配置文件')
+  .action(async function (options: { config: string }) {
+    const { config } = options;
+    if (config) {
+      log.verbose('-c --config ', String(config));
+    }
+    await run('root', config);
+  });
 
-// API生成
-cli
-.command('[root]', 'API生成') // default command
-.option('--c', `使用自定义配置文件路径`)
-.option('--help', `查看帮助信息`)
-.action(async (root: string, options: GlobalCLIOptions) => {
-  if (options.help != null) {
-    return run('help');
-  }
-  await run(null, options.c);
-});
+// 帮助信息
+program.addHelpText('after', `
+详细命令说明:
+初始化配置文件: apih init
+生成代码: apih
+生成代码(指定配置文件): apih -c 路径/配置文件.ts
+查看帮助: apih -h
+
+# GitHub
+https://github.com/ztz2/api-helper
+`);
 
 // 初始化配置
-cli
-  .command('init', '初始化配置')
-  .action(async () => {
+program
+  .command('init')
+  .description('初始化配置')
+  .option('-D, --debug', '调试模式')
+  .action(async function () {
     await run('init');
   });
 
-cli.parse();
+program.parse();

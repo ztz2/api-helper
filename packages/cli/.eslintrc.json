@@ -8,7 +8,8 @@
     "eslint:recommended"
   ],
   "globals": {
-    "require": true
+    "require": true,
+    "Recordable": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -20,6 +21,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "semi": "error",
     "@typescript-eslint/adjacent-overload-signatures": "error",
     "sort-imports-es6-autofix/sort-imports-es6": 0,
     "@typescript-eslint/ban-types": ["error", {
@@ -33,7 +35,7 @@
     "no-array-constructor": "off",
     "@typescript-eslint/no-array-constructor": "error",
     "no-empty-function": "off",
-    "@typescript-eslint/no-empty-function": "error",
+    "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": "error",
     "@typescript-eslint/no-inferrable-types": "error",
     "@typescript-eslint/no-misused-new": "error",

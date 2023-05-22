@@ -1,34 +1,36 @@
 import ora from 'ora';
-import { join } from 'path';
+import path, { join } from 'path';
+import fg from 'fast-glob';
 import {
   stat,
   remove,
   ensureDir,
   outputFile
 } from 'fs-extra';
-
-import { APIHelper } from '@api-helper/core/typing/lib/types';
+import { APIHelper } from '@api-helper/core';
 import { generateAllApi } from '@api-helper/core/lib/generate';
 import { ParserOpenAPI } from '@api-helper/core/lib/parser';
-
 
 import {
   Config,
   DocumentParsedList,
   DocumentResourceList
-} from './types';
+} from '@/lib';
 
 import { getDocument } from './server';
-import { getNormalizedRelativePath } from './utils/util';
+import {
+  loadModule,
+  toUnixPath,
+  getNormalizedRelativePath,
+} from '../tools/util';
+import { EXTENSION } from '@/lib/service/const';
+import log from '@/lib/tools/log';
 
 const prompts = require('prompts');
-const consola = require('consola');
 
-export class CLI{
+class Service{
   static init: () => void;
-  static help: () => void;
 
-  private config: Config[] | null = null;
   private configFilePath?: string;
   constructor(configFilePath?: string) {
     this.configFilePath = configFilePath;
@@ -59,37 +61,32 @@ export class CLI{
   // 1. 获取配置文件
   private async getConfigFile() {
     const { configFilePath } = this;
-    const oraText = '读取 apih.config.(ts|js) 配置文件';
+    const oraText = '读取 apih.config.(ts|js|cjs|mjs) 配置文件';
     const spinner = ora(oraText).start();
-    let config: Config[] = [];
 
-    const files = [configFilePath, 'apih.config.ts', 'apih.config.js'];
-
-    for (let i = 0; i < files.length; i++) {
-      try {
-        const f = files[i];
-        if (!f) {
-          continue;
-        }
-        const path = i === 0 ? f : join(process.cwd(), `./${f}`);
-        await stat(path);
-        const c = require(path)?.default;
-        if (c) {
-          config = Array.isArray(c) ? c : [c];
-          break
-        }
-      } catch {}
+    // 有配置文件
+    if (configFilePath) {
+      const c = await loadModule(configFilePath);
+      if (c) {
+        spinner.succeed();
+        return Array.isArray(c) ? c : [c];
+      }
     }
 
-    if (config && config.length > 0) {
-      spinner.succeed();
-    } else {
-      const failText = oraText + '【失败：配置文件不存在，程序即将退出】';
-      spinner.fail(failText);
-      return Promise.reject(failText);
+    // 没有从根目录寻找
+    const files = await fg(['apih.config.(ts|js|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
+    if (files.length) {
+      const c = await loadModule(files[0]);
+      if (c) {
+        spinner.succeed();
+        return Array.isArray(c) ? c : [c];
+      }
     }
 
-    return config;
+    const failText = oraText + '【失败：配置文件不存在，程序即将退出】';
+    spinner.fail(failText);
+
+    process.exit(1);
   }
 
   // 2. 检测输出目录是否存在
@@ -100,7 +97,7 @@ export class CLI{
       await ensureDir(config.output.path);
       spinner.succeed();
     } catch {
-      const failText = oraText + '【失败：输出不存在】';
+      const failText = oraText + '【失败：输出不存在，重新即将退出】';
       spinner.fail(failText);
       return Promise.reject(failText);
     }
@@ -111,36 +108,22 @@ export class CLI{
     const oraText = '检测 request 请求函数文件';
     const spinner = ora(oraText).start();
 
-    const requestFunctionFilePath = config.requestFunctionFilePath;
-    let hasRequestFile = false;
-    let requestFileSuffixName = ['.ts', '.js', '.tsx', '.jsx'];
-    // 有后缀名，直接根据路径获取
-    if (requestFileSuffixName.includes(requestFunctionFilePath)) {
-      try {
-        await stat(config.requestFunctionFilePath);
-        hasRequestFile = true;
-        spinner.succeed();
-      } catch {}
-    }
+    let requestFunctionFilePath = config.requestFunctionFilePath;
 
-    // 根据内置默认后缀名规则获取
-    if (!hasRequestFile) {
-      for (let i = 0; i < requestFileSuffixName.length; i++) {
-        try {
-          await stat(config.requestFunctionFilePath + requestFileSuffixName[i]);
-          hasRequestFile = true;
-          spinner.succeed();
-          break;
-        } catch {}
-      }
+    if (EXTENSION.every((ext) => !requestFunctionFilePath.endsWith(ext))) {
+      requestFunctionFilePath += `.(${EXTENSION.map((ext) => ext.slice(1)).join('|')})`;
     }
-
-    if (!hasRequestFile){
-      const failText = oraText + '【失败：没有获取到request文件，请检查目录是否正确】';
+    const files = await fg([toUnixPath(requestFunctionFilePath)], {
+      cwd: process.cwd(),
+      absolute: true
+    });
+    if (files.length > 0){
+      spinner.succeed();
+    } else {
+      const failText = oraText + '【失败：没有获取到request文件】';
       spinner.fail(failText);
       return Promise.reject(failText);
     }
-
   }
 
   // 4. 获取源文档
@@ -220,7 +203,7 @@ export class CLI{
 
     if (result.length === 0) {
       const failText = '没有选择任何项目文档';
-      consola.error(failText);
+      log.error('提示', failText);
       return Promise.reject(failText);
     }
 
@@ -295,7 +278,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
     try {
       await outputFile(outputFilename, code);
       spinner.succeed();
-      consola.success('Done. 代码生成成功');
+      log.info('提示', 'Done. 代码生成成功');
     } catch {
       const failText = oraText + '【失败】';
       spinner.fail(failText);
@@ -304,7 +287,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
   }
 }
 
-CLI.init = async function () {
+Service.init = async function () {
   const answers = await prompts([{
     type: 'select',
     name: 'codeType',
@@ -333,7 +316,7 @@ CLI.init = async function () {
   } catch {}
 
   const code =
-    `import { join } from 'path';
+    `import { resolve } from 'path';
 import { defineConfig } from '@api-helper/cli';
 
 export default defineConfig({
@@ -352,7 +335,7 @@ export default defineConfig({
   // 输出信息
   output: {
     // 输出路径
-    path: join(__dirname, 'src/api'),
+    path: resolve(process.cwd(), 'src/api'),
     // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
     filename: 'index.ts',
   }
@@ -360,21 +343,10 @@ export default defineConfig({
 `
   try {
     await outputFile(join(process.cwd(), answers.codeType), code);
-    consola.success('已生成配置文件');
+    log.info('提示', '已生成配置文件');
   } catch (e) {
-    return consola.fatal('配置文件生成失败');
+    return log.error('提示', '配置文件生成失败');
   }
 }
-CLI.help = async function () {
-  consola.info(
-    `
-# 用法
-初始化配置文件: apih init
-生成代码: ytt
-生成代码(指定配置文件): ytt -c 路径/配置文件.ts
-查看帮助: ytt help
 
-# GitHub
-https://github.com/ztz2/api-helper
-`)
-}
+export default Service;

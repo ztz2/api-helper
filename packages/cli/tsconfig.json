@@ -1,5 +1,6 @@
 {
   "include": [
+    "global.d.ts",
     "src/**/*.ts"
   ],
   "exclude": [
@@ -7,9 +8,14 @@
   ],
   "compilerOptions": {
     "strict": true,
-    "target": "ES2015",
     "moduleResolution": "node",
     "declaration": false,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"]
+    },
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "removeComments": false,
     "esModuleInterop": true,
@@ -20,7 +26,8 @@
     "checkJs": false,
     "preserveSymlinks": true,
     "skipLibCheck": true,
-    "lib": ["ESNext", "DOM", "ES2015"],
+    "lib": ["ESNext", "DOM"],
+    "module": "commonjs",
     "plugins": [
       {
         "name": "typescript-snapshots-plugin",

@@ -3,10 +3,9 @@ import { OpenAPI } from 'openapi-types';
 import { AxiosRequestConfig } from 'axios';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
 
-import { request } from './utils';
-import { Config, DocumentResourceList } from './types';
-
-const consola = require('consola');
+import request from '../tools/request';
+import { Config, DocumentResourceList } from '@/lib';
+import log from '@/lib/tools/log';
 
 type RequestParams = {
   serverURL: string;
@@ -49,7 +48,7 @@ export async function getDocument(documentServers: Config['documentServers']): P
         result.push({ ...c, resourceDocumentList });
         break;
       default:
-        consola.error(`错误的类型申明 documentServers[${i}].type -> ${c.type}`);
+        log.error('documentServers', `错误的类型申明 documentServers[${i}].type -> ${c.type}`);
     }
   }
   return result;

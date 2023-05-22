@@ -34,14 +34,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-.changeset/*
-!.config.json
-!.pre.json
-!.README.md
-
 /bin
-/test/__folder__
-/es
 /lib
-/typing
-index.js
+/typing.d.ts

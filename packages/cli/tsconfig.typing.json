@@ -4,9 +4,10 @@
     "src/**/*.test.ts"
   ],
   "compilerOptions": {
-    "declaration": false,
-    "target": "ES2015",
-    "module": "CommonJS",
     "outDir": "./",
+    "outFile": "./typing.d.ts",
+    "declaration": true,
+    "isolatedModules": false,
+    "emitDeclarationOnly": true,
   }
 }
