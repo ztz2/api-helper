@@ -1,9 +1,12 @@
 {
   "include": [
     "global.d.ts",
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
   ],
   "exclude": [
+    "node_modules",
     "src/**/*.js"
   ],
   "compilerOptions": {
@@ -21,6 +24,7 @@
     "preserveSymlinks": true,
     "skipLibCheck": true,
     "lib": ["ESNext", "DOM"],
+    "module": "ES2015",
     "plugins": [
       {
         "name": "typescript-snapshots-plugin",
