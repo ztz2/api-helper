@@ -5,7 +5,8 @@
     "node": true
   },
   "extends": [
-    "eslint:recommended"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "globals": {
     "require": true
@@ -13,10 +14,8 @@
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2020,
-    "project": [
-      "./tsconfig.lint.json"
-    ],
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": ["./tsconfig.lint.json"]
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
