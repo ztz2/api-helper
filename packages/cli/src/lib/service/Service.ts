@@ -293,8 +293,8 @@ Service.init = async function () {
     name: 'codeType',
     message: '请选择配置文件类型？',
     choices: [
-      { title: 'TypeScript（apih.config.ts）', value: 'apih.config.ts' },
       { title: 'JavaScript（apih.config.js）', value: 'apih.config.js' },
+      { title: 'TypeScript（apih.config.ts）', value: 'apih.config.ts' }
     ],
   }]);
 
