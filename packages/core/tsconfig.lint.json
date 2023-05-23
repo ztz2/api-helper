@@ -1,12 +1,10 @@
 {
-  "extends": "./tsconfig.es.json",
+  "extends": "./tsconfig.json",
   "include": [
+    "global.d.ts",
     "src/**/*.ts",
     "test/**/*.ts",
-  ],
-  "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext", "DOM"]
-  },
-  "exclude": []
+    "jest.config.js",
+    "babel.config.js",
+  ]
 }
