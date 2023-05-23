@@ -1,6 +1,6 @@
 import { JSONSchema4 } from 'json-schema';
 import { APIHelper } from '@api-helper/core';
-import { GenerateInterfaceName } from '@api-helper/core/typing/lib/generate/generate-interface';
+import { GenerateInterfaceName } from '@api-helper/core/lib/generate/generate-interface';
 
 export type Config = {
   documentServers: Array<{
