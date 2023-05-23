@@ -1,8 +1,10 @@
 {
-  "extends": "./tsconfig.node.json",
+  "extends": "./tsconfig.json",
   "include": [
+    "global.d.ts",
     "src/**/*.ts",
     "test/**/*.ts",
-  ],
-  "exclude": []
+    "jest.config.js",
+    "babel.config.js",
+  ]
 }
