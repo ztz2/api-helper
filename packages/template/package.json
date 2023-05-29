@@ -1,0 +1,100 @@
+{
+  "name": "@api-helper/template",
+  "version": "0.0.4",
+  "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
+  "module": "es/index.js",
+  "browser": "api-helper-template.js",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "files": [
+    "es",
+    "lib",
+    "index.js",
+    "index.d.ts",
+    "api-helper-template.js",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "jest && npm run lint && npm run clean && npm run build:es && npm run build:node && npm run build:web",
+    "build:es": "tsc --project ./tsconfig.es.json && tsc-alias -p tsconfig.es.alias.json",
+    "build:node": "tsc --project ./tsconfig.node.json && tsc-alias -p tsconfig.node.alias.json",
+    "build:web": "webpack -c ./webpack.config.js",
+    "clean": "shx rm -rf es && shx rm -rf lib",
+    "lint": "eslint src/**/*.ts",
+    "test": "jest",
+    "test:update": "npm run test -- -u"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ztz2/api-helper.git"
+  },
+  "keywords": [
+    "api",
+    "json",
+    "yapi",
+    "share",
+    "schema",
+    "typing",
+    "codegen",
+    "swagger",
+    "openapi",
+    "compile",
+    "transpile",
+    "interface",
+    "api-helper",
+    "typescript"
+  ],
+  "author": {
+    "name": "ztz2",
+    "email": "448941273@qq.com",
+    "url": "https://github.com/ztz2"
+  },
+  "bugs": {
+    "url": "https://github.com/ztz2/api-helper/issues"
+  },
+  "homepage": "https://github.com/ztz2/api-helper#readme",
+  "dependencies": {
+    "@api-helper/core": "workspace:^",
+    "buffer": "^6.0.3",
+    "change-case": "^4.1.2",
+    "https-browserify": "^1.0.0",
+    "lodash-es": "^4.17.21",
+    "stream-http": "^3.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-typescript": "^7.21.5",
+    "@types/fs-extra": "^5.0.4",
+    "@types/jest": "29.2.4",
+    "@types/lodash-es": "^4.17.7",
+    "@types/node": "^20.2.1",
+    "@types/prettier": "^2.6.1",
+    "@typescript-eslint/eslint-plugin": "^5.54.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "babel-jest": "^29.4.3",
+    "babel-loader": "^9.1.2",
+    "consola": "^2.15.3",
+    "eslint": "^7.32.0",
+    "fs-extra": "^7.0.1",
+    "jest": "^29.4.3",
+    "lint-staged": "^10",
+    "shx": "^0.3.4",
+    "terser-webpack-plugin": "^5.3.7",
+    "ts-jest": "29.0.3",
+    "ts-loader": "^9.4.2",
+    "tsc-alias": "^1.8.6",
+    "tsconfig-paths-jest": "^0.0.1",
+    "typescript": "^4.4.4",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "license": "MIT"
+}
