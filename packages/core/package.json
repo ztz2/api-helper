@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/core",
-  "version": "1.0.2",
+  "version": "1.0.9",
   "description": "compile swagger to typescript typings",
   "module": "es/index.js",
   "browser": "api-helper-core.js",
@@ -15,20 +15,18 @@
     "README.md"
   ],
   "engines": {
-    "node": ">=13.0.0"
+    "node": ">=14.0.0"
   },
   "scripts": {
     "build": "jest && npm run lint && npm run clean && npm run build:es && npm run build:node && npm run build:web",
-    "build:es": "tsc --project ./tsconfig.es.json",
-    "build:node": "tsc --project ./tsconfig.node.json",
-    "build:web": "webpack",
+    "build:es": "tsc --project ./tsconfig.es.json && tsc-alias -p tsconfig.es.alias.json\"",
+    "build:node": "tsc --project ./tsconfig.node.json && tsc-alias -p tsconfig.node.alias.json",
+    "build:web": "webpack -c ./webpack.config.js",
     "clean": "shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf index.d.ts && shx rm -rf api-helper-core.js",
     "lint": "eslint src/*.ts",
     "cwt": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",
-    "test": "npm run pre-test && jest",
-    "test:only": "jest",
-    "test:update": "npm run test:only -- -u",
-    "pre-test": "npm run clean && npm run build:es",
+    "test": "jest",
+    "test:update": "npm run test -- -u",
     "watch": "tsc -w",
     "watch:test": "jest -w"
   },
@@ -62,13 +60,11 @@
   },
   "homepage": "https://github.com/ztz2/api-helper#readme",
   "dependencies": {
-    "@apidevtools/swagger-parser": "^10.1.0",
-    "@babel/runtime": "^7.13.10",
-    "art-template": "^4.13.2",
+    "bundle-shims": "^0.0.1",
     "change-case": "^3.0.2",
     "lodash": "^4.17.21",
     "qs": "^6.11.0",
-    "shx": "^0.3.4",
+    "url": "^0.11.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -79,7 +75,7 @@
     "@types/fs-extra": "^5.0.4",
     "@types/jest": "29.2.4",
     "@types/json-schema": "^7.0.11",
-    "@types/lodash": "^4.14.191",
+    "@types/lodash": "^4.14.195",
     "@types/node": "^10.12.10",
     "@types/prettier": "^2.6.1",
     "@types/qs": "^6.9.7",
@@ -99,11 +95,12 @@
     "terser-webpack-plugin": "^5.3.7",
     "ts-jest": "29.0.3",
     "ts-loader": "^9.4.2",
-    "tsify": "^5.0.4",
-    "tslib": "^2.5.0",
+    "tsc-alias": "^1.8.6",
+    "tsconfig-paths-jest": "^0.0.1",
     "typescript": "^4.4.4",
     "webpack": "^5.81.0",
-    "webpack-cli": "^5.0.2"
+    "webpack-cli": "^5.0.2",
+    "webpack-sources": "^3.2.3"
   },
   "publishConfig": {
     "access": "public",
