@@ -12,13 +12,13 @@ const isTS = config.codeType === 'typescript';
 apiList = apiList.forEach((api) => {
   const p = [];
   p.push(
-    utils.apih.generateRequestFunc(api, {
+    utils.apihTemplate.renderRequestFunction(api, {
       codeType: config.codeType
     })
   );
   apiCodeWrap.push(p.join(''));
 
-  importApiCodeWrap.push(' ' + utils.apih.generateRequestFunctionName(api));
+  importApiCodeWrap.push(' ' + utils.apihTemplate.renderRequestFunctionName(api));
 });
 
 let apiCode = '';
@@ -28,7 +28,7 @@ if (config.onlyApiFunc === false) {
   if (config.headCodeText) {
     apiCode = config.headCodeText;
   }
-  apiCode += \`import { processRequestFunctionConfig\${isTS ? ', RequestFunctionRestArgsType' : ''} } from '@api-helper/core';\\n\\n\`;
+  apiCode += \`import { processRequestFunctionConfig\${isTS ? ', RequestFunctionRestArgsType' : ''} } from '@api-helper/core/es';\\n\\n\`;
   if (isTS) {
     apiCode += "type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;\\n\\n"
   }

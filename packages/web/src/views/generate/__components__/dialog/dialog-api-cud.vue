@@ -30,7 +30,7 @@ import {
   defineExpose,
   defineEmits,
 } from 'vue';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 import { Message } from '@arco-design/web-vue';
 
 import { useApiTemplate } from '@/store';

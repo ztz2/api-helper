@@ -1,7 +1,7 @@
 import { isRef } from 'vue';
 import { cloneDeep } from 'lodash';
 import { Modal, ModalConfig } from '@arco-design/web-vue';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 
 export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
 

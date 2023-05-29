@@ -39,7 +39,7 @@ export default new Template({
   export default {
     data() {
       return {
-        form: \${utils.apih.generateMap(schemaList, api, { paramType: 'request', onlyMap: true, startSpace: '        ' }).trim()},
+        form: \${utils.apihTemplate.renderObject(schemaList, api, { paramType: 'request', onlyMap: true, startSpace: '        ' }).trim()},
         rules: \${['{', schemaList.filter((item) => item.rules.required).map(function(item) {
             return \`          \${item.keyName}: [
             { required: true, message: \${item.type === 'array' ? "'必选项'" : "'必填项'"}, trigger: 'change' }

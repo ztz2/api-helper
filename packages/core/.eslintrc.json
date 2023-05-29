@@ -9,7 +9,8 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "globals": {
-    "require": true
+    "require": true,
+    "window": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -41,6 +42,7 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/type-annotation-spacing": "error",
+    "@typescript-eslint/no-var-requires": 0,
     "no-var": "error",
     "no-empty": 0,
     "prefer-const": "error",

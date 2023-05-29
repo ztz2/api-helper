@@ -1,6 +1,6 @@
 import { JSONSchema4 } from 'json-schema';
 import { APIHelper } from '@api-helper/core';
-import { GenerateInterfaceName } from '@api-helper/core/lib/generate/generate-interface';
+import { renderInterfaceName } from '@api-helper/template';
 
 export type Config = {
   documentServers: Array<{
@@ -20,7 +20,7 @@ export type Config = {
     // 执行过程的回调
     events?: {
       // 生成接口名称
-      onGenerateInterfaceName?: GenerateInterfaceName;
+      onRenderInterfaceName?: typeof renderInterfaceName;
       // 解析接口文档
       onParseDocument?(resourceDocumentList: Array<unknown>): APIHelper.Document[];
     };

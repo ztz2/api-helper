@@ -1,11 +1,12 @@
 import * as _ from 'lodash';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 import { Message } from '@arco-design/web-vue';
 
 // @ts-ignore
 import artTemplate from 'art-template/lib/template-web.js';
 import { ITemplate } from '@/store/template/interface';
 import { RenderAPIConfig as RAC, RenderModelConfig as RMC } from '@/views/generate/interface';
-import { APIHelper } from '@api-helper/core';
+
 import * as uts from './render-template-utils';
 
 artTemplate.defaults.escape = false;

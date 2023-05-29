@@ -31,13 +31,13 @@ import {
 } from 'vue';
 import { omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
-
+import { APIHelper } from '@api-helper/core/es/lib/types';
 import { useModelTemplate } from '@/store';
 import renderTemplate from '@/utils/render-template';
 import { RenderModelConfig } from '@/views/generate/interface';
 import { OpenConfig } from '@/components/apih-dialog/interface';
 import emptyTemplate from '@/constants/template/model/empty';
-import { APIHelper } from '@api-helper/core';
+
 import Form from '../form/form-model.vue';
 
 type OpenDataType = {

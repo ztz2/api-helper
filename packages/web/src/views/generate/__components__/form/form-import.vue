@@ -36,8 +36,8 @@ import {
   defineExpose,
   defineEmits,
 } from 'vue';
-import { useForm } from '@/hooks/use-form';
 import { Message } from '@arco-design/web-vue';
+import { useForm } from '@/hooks/use-form';
 
 type FormModelType = { fileList: File[] };
 

@@ -1,8 +1,8 @@
 import path, { dirname, relative } from 'path';
 import fs from 'node:fs';
-import esbuild, { BuildOptions, BuildResult } from 'esbuild';
 import { merge } from 'lodash';
 import tmp, { FileOptions } from 'tmp';
+import esbuild, { BuildOptions, BuildResult } from 'esbuild';
 
 export function resolve(p = '') {
   const args = Array.from(arguments) as unknown as string[];

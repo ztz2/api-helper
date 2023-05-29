@@ -1,23 +1,41 @@
-import * as generate from './lib/generate';
-import * as Parser from './lib/parser';
-import * as utils from './lib/utils';
-import * as helpers from './lib/helpers';
+import type {
+  FormDataItem,
+  RequestFunctionConfig,
+  RequestFunctionRestArgsType,
+} from './lib/helpers';
 
 import type {
-  ReturnType,
-  TSType,
   APIHelper,
-  ChangeCase
+  ReturnType,
 } from './lib/types';
 
-export {
-  ReturnType,
-  TSType,
-  APIHelper,
-  ChangeCase,
+import * as utils from './lib/utils';
+import ParserOpenAPI from './lib/parser/parser-open-api';
 
-  generate,
-  Parser,
+import {
+  getSchema,
+  processRequestFunctionConfig
+} from './lib/helpers';
+
+if (typeof window === 'object' && window != null && !window.process) {
+  window.process = {
+    cwd: function () {
+      return ''
+    }
+  } as never;
+}
+
+export type {
+  APIHelper,
+  ReturnType,
+  FormDataItem,
+  RequestFunctionConfig,
+  RequestFunctionRestArgsType
+}
+
+export {
   utils,
-  helpers
+  getSchema,
+  ParserOpenAPI,
+  processRequestFunctionConfig
 }

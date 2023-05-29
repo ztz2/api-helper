@@ -9,7 +9,7 @@ export default new Template({
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
-    tpl1 = utils.apih.generateMap(requestDataSchemaList, api, {
+    tpl1 = utils.apihTemplate.renderObject(requestDataSchemaList, api, {
       paramType: 'request',
       onlyMap: config.onlyMap
     });
@@ -20,7 +20,7 @@ export default new Template({
 
   // 响应数据
   if (responseDataSchemaList.length > 0) {
-    tpl2 = utils.apih.generateMap(responseDataSchemaList, api, {
+    tpl2 = utils.apihTemplate.renderObject(responseDataSchemaList, api, {
       paramType: 'response',
       onlyMap: config.onlyMap
     });

@@ -1,7 +1,7 @@
 import { join } from 'path';
 
 import { readJsonFile } from './utils/file';
-import { ParserOpenAPI } from '../src/lib/parser';
+import { ParserOpenAPI } from '../';
 
 describe('parser', () => {
   test('OpenAPI-2.0文档解析转换测试', async () => {

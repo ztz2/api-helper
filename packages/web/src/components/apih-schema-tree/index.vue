@@ -63,10 +63,11 @@ import {
   defineEmits,
   defineProps,
 } from 'vue';
-import { treeMap } from '@/utils/tree';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 import { pascalCase } from 'change-case';
+import { treeMap } from '@/utils/tree';
+
 import { isBasicDataTypeSchema } from '@/utils';
-import { APIHelper } from '@api-helper/core';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({

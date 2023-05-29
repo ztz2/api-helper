@@ -92,7 +92,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 * `documentServers.auth.password`  访问文档可能需要认证信息，http auth验证方式
 * `documentServers.authToken`  访问文档可能需要认证信息，通过使用token访问
 * `documentServers.events`  执行过程的回调事件
-* `documentServers.events.onGenerateInterfaceName`  自定义生成接口名称
+* `documentServers.events.onRenderInterfaceName`  自定义生成接口名称
 * `documentServers.events.onParseDocument`  自定义解析接口文档
 
 ## `requestFunctionFilePath`

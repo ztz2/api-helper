@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { APIHelper } from '../types';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 export function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;

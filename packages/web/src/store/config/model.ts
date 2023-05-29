@@ -1,6 +1,6 @@
+import { omit, pick } from 'lodash';
 import { defineStore } from 'pinia';
 import { RenderModelConfig } from '@/views/generate/interface';
-import { omit, pick } from 'lodash';
 
 const useModelConfig = defineStore('model-config', {
   persist: true,

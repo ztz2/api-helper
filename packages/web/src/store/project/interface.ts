@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 
 export interface IProject {
   id: string;

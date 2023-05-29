@@ -6,8 +6,7 @@
     "src/**/*.vue"
   ],
   "exclude": [
-    "node_modules",
-    "src/**/*.js"
+    "node_modules"
   ],
   "compilerOptions": {
     "strict": true,
@@ -25,6 +24,11 @@
     "skipLibCheck": true,
     "lib": ["ESNext", "DOM"],
     "module": "ES2015",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@root/*": ["./*"]
+    },
     "plugins": [
       {
         "name": "typescript-snapshots-plugin",

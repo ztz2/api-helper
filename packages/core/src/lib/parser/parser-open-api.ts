@@ -1,20 +1,19 @@
-import { isPlainObject } from 'lodash';
 import { OpenAPI } from 'openapi-types';
 import { JSONSchema4 } from 'json-schema';
+import isPlainObject from 'lodash/isPlainObject';
+import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
+
+import { APIHelper } from '../types';
 
 import {
-  TSType,
-  APIHelper,
-} from '../types';
-import {
+  TS_TYPE,
   COMMENT_END_CODE,
   COMMENT_START_CODE,
-  LINE_FEED_CODE
+  LINE_FEED_CODE,
 } from '../constant';
+
 import { checkType, randomId } from '../utils/util';
 import { validateOpenAPIDocument, validateSchema } from '../utils/validator';
-
-const SwaggerParser = require('@apidevtools/swagger-parser');
 
 export default class ParserOpenAPI {
   private autoGenerateId = true;
@@ -34,6 +33,7 @@ export default class ParserOpenAPI {
             openAPIDocumentList.push(openAPIDocument);
           }
         } catch (e) {
+          console.log(e);
           // TODO 等待记录失败日志
           console.log();
         }
@@ -353,7 +353,7 @@ export default class ParserOpenAPI {
 
     const typeValue = (typeMap[type] ?? type) as APIHelper.SchemaType;
 
-    return TSType.includes(typeValue) ? typeValue : 'unknown';
+    return TS_TYPE.includes(typeValue) ? typeValue : 'unknown';
   }
 
   // 处理参数兼容，如果不兼容，返回schema，作为参数body

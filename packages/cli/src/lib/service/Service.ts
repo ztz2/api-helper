@@ -1,5 +1,5 @@
 import ora from 'ora';
-import path, { join } from 'path';
+import { join } from 'path';
 import fg from 'fast-glob';
 import {
   stat,
@@ -7,9 +7,11 @@ import {
   ensureDir,
   outputFile
 } from 'fs-extra';
-import { APIHelper } from '@api-helper/core';
-import { generateAllApi } from '@api-helper/core/lib/generate';
-import { ParserOpenAPI } from '@api-helper/core/lib/parser';
+import {
+  APIHelper,
+  ParserOpenAPI
+} from '@api-helper/core';
+import { renderAllApi } from '@api-helper/template';
 
 import {
   Config,
@@ -254,7 +256,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
     // 生成代码
     const spinner = ora(oraText).start();
     for (const d of documentList) {
-      code.push(generateAllApi(d, {
+      code.push(renderAllApi(d, {
         codeType: isTS ? 'typescript' : 'javascript'
       }));
     }

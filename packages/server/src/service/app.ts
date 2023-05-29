@@ -9,8 +9,8 @@ import { Injectable } from '@nestjs/common';
 // const mockSwaggerApi = require('../mock/swaggerApi.json');
 // const {} = require();
 
-import { getDocument } from '@api-helper/cli/dist/server';
 import { APIHelper, ParserOpenAPI } from '@api-helper/core';
+import { getDocument } from '@api-helper/cli/lib/service/server';
 
 @Injectable()
 export class AppService {

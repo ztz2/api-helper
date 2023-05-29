@@ -9,7 +9,7 @@ export default new Template({
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
-    tpl1 = utils.apih.generateClass(requestDataSchemaList, api, {
+    tpl1 = utils.apihTemplate.renderClass(requestDataSchemaList, api, {
       paramType: 'request'
     });
   } else {
@@ -19,7 +19,7 @@ export default new Template({
 
   // 响应数据
   if (responseDataSchemaList.length > 0) {
-    tpl2 = utils.apih.generateClass(responseDataSchemaList, api, {
+    tpl2 = utils.apihTemplate.renderClass(responseDataSchemaList, api, {
       paramType: 'response'
     });
   } else {

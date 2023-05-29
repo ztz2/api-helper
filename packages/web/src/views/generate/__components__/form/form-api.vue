@@ -84,13 +84,14 @@ import {
   defineEmits,
 } from 'vue';
 import { cloneDeep } from 'lodash';
+import { Message } from '@arco-design/web-vue';
 import { useForm } from '@/hooks/use-form';
 import { useApiConfig, useApiTemplate } from '@/store';
 import { RenderAPIConfig } from '@/views/generate/interface';
 import { Template } from '@/store/template/interface';
 import emptyTemplate from '@/constants/template/api/empty';
 import { modalConfirm } from '@/utils';
-import { Message } from '@arco-design/web-vue';
+
 import DialogAPICud from '../dialog/dialog-api-cud.vue';
 
 type FormModelType = RenderAPIConfig;

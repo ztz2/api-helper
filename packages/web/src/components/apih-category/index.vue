@@ -85,7 +85,7 @@ export default defineComponent({
 import {
   ref, PropType, defineProps, defineEmits, watch,
 } from 'vue';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 
 const emit = defineEmits([
   'update:selectedKeys',

@@ -160,11 +160,10 @@ import {
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
-import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
+import { APIHelper } from '@api-helper/core/es/lib/types';
+import { getSchema } from '@api-helper/core/es/lib/helpers';
 
-// @ts-ignore
-import { getSchema } from '@api-helper/core/api-helper-core.js';
 import {
   useProject,
   useApiConfig,

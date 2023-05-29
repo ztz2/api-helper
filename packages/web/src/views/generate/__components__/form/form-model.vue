@@ -126,9 +126,8 @@ import {
   defineEmits,
 } from 'vue';
 import { cloneDeep } from 'lodash';
-import { APIHelper } from '@api-helper/core';
-// @ts-ignore
-import { getSchema } from '@api-helper/core/api-helper-core.js';
+import { APIHelper } from '@api-helper/core/es/lib/types';
+import { getSchema } from '@api-helper/core/es/lib/helpers';
 
 import { modalConfirm } from '@/utils';
 import { treeForEach } from '@/utils/tree';

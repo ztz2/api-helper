@@ -31,7 +31,7 @@ import {
   defineEmits,
 } from 'vue';
 import { omit } from 'lodash';
-import { APIHelper } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 import { Message } from '@arco-design/web-vue';
 
 import { useModelTemplate } from '@/store';

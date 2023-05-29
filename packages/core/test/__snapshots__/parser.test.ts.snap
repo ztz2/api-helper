@@ -1,57 +1,57 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转换测试 1`] = `
-{
+Object {
   "basePath": "/v2",
-  "categoryList": [
-    {
-      "apiList": [
-        {
+  "categoryList": Array [
+    Object {
+      "apiList": Array [
+        Object {
           "description": "",
-          "formDataKeyNameList": [
+          "formDataKeyNameList": Array [
             "additionalMetadata",
             "file",
           ],
           "id": "",
           "method": "post",
           "path": "/v2/pet/{petId}/uploadImage",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet to update",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Additional data to pass to server",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "additionalMetadata",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "file to upload",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "file",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -61,50 +61,50 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "code",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "type",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "message",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -112,164 +112,164 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "uploads an image",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/v2/pet",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "category",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "pet status in the store",
-                "enum": [
+                "enum": Array [
                   "available",
                   "pending",
                   "sold",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -282,164 +282,164 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Add a new pet to the store",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "put",
           "path": "/v2/pet",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "category",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "pet status in the store",
-                "enum": [
+                "enum": Array [
                   "available",
                   "pending",
                   "sold",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -452,25 +452,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Update an existing pet",
         },
-        {
+        Object {
           "description": "Multiple status values can be provided with comma separated strings",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/pet/findByStatus",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "status",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Status values that need to be considered for filter",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -480,180 +480,180 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "category",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": true,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": true,
                     },
                     "title": "",
                     "type": "array",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "tags",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [
-                          {
+                        "params": Array [
+                          Object {
                             "description": "",
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "id",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "number",
                           },
-                          {
+                          Object {
                             "description": "",
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "name",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "string",
                           },
                         ],
-                        "rules": {
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "object",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "array",
                   },
-                  {
+                  Object {
                     "description": "pet status in the store",
-                    "enum": [
+                    "enum": Array [
                       "available",
                       "pending",
                       "sold",
                     ],
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "status",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -661,25 +661,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Finds Pets by status",
         },
-        {
+        Object {
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/pet/findByTags",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "tags",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Tags to filter by",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -689,180 +689,180 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "category",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": true,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": true,
                     },
                     "title": "",
                     "type": "array",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "tags",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [
-                          {
+                        "params": Array [
+                          Object {
                             "description": "",
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "id",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "number",
                           },
-                          {
+                          Object {
                             "description": "",
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "name",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "string",
                           },
                         ],
-                        "rules": {
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "object",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "array",
                   },
-                  {
+                  Object {
                     "description": "pet status in the store",
-                    "enum": [
+                    "enum": Array [
                       "available",
                       "pending",
                       "sold",
                     ],
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "status",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -870,25 +870,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Finds Pets by tags",
         },
-        {
+        Object {
           "description": "Returns a single pet",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet to return",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -898,167 +898,167 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "category",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "pet status in the store",
-                "enum": [
+                "enum": Array [
                   "available",
                   "pending",
                   "sold",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -1066,52 +1066,52 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Find pet by ID",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [
+          "formDataKeyNameList": Array [
             "name",
             "status",
           ],
           "id": "",
           "method": "post",
           "path": "/v2/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet that needs to be updated",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Updated name of the pet",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Updated status of the pet",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -1124,25 +1124,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Updates a pet in the store with form data",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/v2/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Pet id to delete",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -1160,146 +1160,146 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "pet",
     },
-    {
-      "apiList": [
-        {
+    Object {
+      "apiList": Array [
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/v2/store/order",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Status",
-                "enum": [
+                "enum": Array [
                   "placed",
                   "approved",
                   "delivered",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Tag",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tag",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "Order Tag Child",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [
-                          {
+                        "params": Array [
+                          Object {
                             "description": "",
-                            "enum": [
+                            "enum": Array [
                               "error",
                               "waring",
                               "info",
                             ],
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "string",
                           },
                         ],
-                        "rules": {
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "object",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "array",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "complete",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -1309,147 +1309,147 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Status",
-                "enum": [
+                "enum": Array [
                   "placed",
                   "approved",
                   "delivered",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Tag",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tag",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "Order Tag Child",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [
-                          {
+                        "params": Array [
+                          Object {
                             "description": "",
-                            "enum": [
+                            "enum": Array [
                               "error",
                               "waring",
                               "info",
                             ],
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "string",
                           },
                         ],
-                        "rules": {
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "object",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "array",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "complete",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "boolean",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -1457,25 +1457,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Place an order for a pet",
         },
-        {
+        Object {
           "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/store/order/{orderId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "orderId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet that needs to be fetched",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -1485,147 +1485,147 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Status",
-                "enum": [
+                "enum": Array [
                   "placed",
                   "approved",
                   "delivered",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Tag",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tag",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "Order Tag Child",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "",
-                        "params": [
-                          {
+                        "params": Array [
+                          Object {
                             "description": "",
-                            "enum": [
+                            "enum": Array [
                               "error",
                               "waring",
                               "info",
                             ],
-                            "examples": [],
+                            "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
-                            "params": [],
-                            "rules": {
+                            "params": Array [],
+                            "rules": Object {
                               "required": false,
                             },
                             "title": "",
                             "type": "string",
                           },
                         ],
-                        "rules": {
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "object",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "array",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "complete",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "boolean",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -1633,25 +1633,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Find purchase order by ID",
         },
-        {
+        Object {
           "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/v2/store/order/{orderId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "orderId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of the order that needs to be deleted",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -1664,23 +1664,23 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Delete purchase order by ID",
         },
-        {
+        Object {
           "description": "Returns a map of status codes to quantities",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/store/inventory",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [],
-            "rules": {
+            "params": Array [],
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -1693,54 +1693,54 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "store",
     },
-    {
-      "apiList": [
-        {
+    Object {
+      "apiList": Array [
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/v2/user/createWithArray",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "userId",
           ],
-          "queryStringKeyNameList": [
+          "queryStringKeyNameList": Array [
             "userName",
             "password",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "List of user object",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "The password for login in clear text",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "The name that needs to be fetched. Use user1 for testing. ",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -1753,38 +1753,38 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Creates list of users with given input array",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/v2/user/createWithList",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
           "summary": "Creates list of users with given input array",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username1",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The name that needs to be fetched. Use user1 for testing. ",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username1",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -1794,110 +1794,110 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "email",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "phone",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "User Status",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -1905,109 +1905,109 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Get user by user name",
         },
-        {
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "put",
           "path": "/v2/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "name that need to be updated",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "email",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "phone",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "User Status",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2020,25 +2020,25 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Updated user",
         },
-        {
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/v2/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username1",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The name that needs to be deleted",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username1",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -2051,38 +2051,38 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Delete user",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/user/login",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "username",
             "password",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The user name for login",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "The password for login in clear text",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -2092,13 +2092,13 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "type": "object",
           },
           "requestExtraDataSchema": null,
-          "responseDataSchema": {
+          "responseDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [],
-            "rules": {
+            "params": Array [],
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -2106,120 +2106,120 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
           },
           "summary": "Logs user into the system",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/v2/user/logout",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
           "summary": "Logs out current logged in user session",
         },
-        {
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/v2/user",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "email",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "phone",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "User Status",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2237,8 +2237,8 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "user",
     },
-    {
-      "apiList": [],
+    Object {
+      "apiList": Array [],
       "description": "没有设置分组的接口集合",
       "id": "",
       "name": "未知分组",
@@ -2253,19 +2253,19 @@ exports[`parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档解析转�
 `;
 
 exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转换测试 1`] = `
-{
+Object {
   "basePath": "/api/v3",
-  "categoryList": [
-    {
-      "apiList": [
-        {
+  "categoryList": Array [
+    Object {
+      "apiList": Array [
+        Object {
           "description": "Update an existing pet by Id",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "put",
           "path": "/api/v3/pet",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "id",
             "name",
             "category",
@@ -2273,156 +2273,156 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "tags",
             "status",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "category",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "pet status in the store",
-                "enum": [
+                "enum": Array [
                   "available",
                   "pending",
                   "sold",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2435,14 +2435,14 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Update an existing pet",
         },
-        {
+        Object {
           "description": "Add a new pet to the store",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/pet",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "id",
             "name",
             "category",
@@ -2450,156 +2450,156 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "tags",
             "status",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "category",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "name",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
-                    "params": [
-                      {
+                    "params": Array [
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "id",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "number",
                       },
-                      {
+                      Object {
                         "description": "",
-                        "examples": [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "name",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "required": false,
                         },
                         "title": "",
                         "type": "string",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "array",
               },
-              {
+              Object {
                 "description": "pet status in the store",
-                "enum": [
+                "enum": Array [
                   "available",
                   "pending",
                   "sold",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2612,25 +2612,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Add a new pet to the store",
         },
-        {
+        Object {
           "description": "Multiple status values can be provided with comma separated strings",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/pet/findByStatus",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "status",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Status values that need to be considered for filter",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2643,25 +2643,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Finds Pets by status",
         },
-        {
+        Object {
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/pet/findByTags",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "tags",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Tags to filter by",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "tags",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2674,25 +2674,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Finds Pets by tags",
         },
-        {
+        Object {
           "description": "Returns a single pet",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet to return",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -2705,52 +2705,52 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Find pet by ID",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [
+          "queryStringKeyNameList": Array [
             "name",
             "status",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet that needs to be updated",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Name of pet that needs to be updated",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "name",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Status of pet that needs to be updated",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2763,25 +2763,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Updates a pet in the store with form data",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/api/v3/pet/{petId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "Pet id to delete",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -2794,39 +2794,39 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Deletes a pet",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/pet/{petId}/uploadImage",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "petId",
           ],
-          "queryStringKeyNameList": [
+          "queryStringKeyNameList": Array [
             "additionalMetadata",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of pet to update",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Additional Metadata",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "additionalMetadata",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2844,29 +2844,29 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "pet",
     },
-    {
-      "apiList": [
-        {
+    Object {
+      "apiList": Array [
+        Object {
           "description": "Returns a map of status codes to quantities",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/store/inventory",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
           "summary": "Returns pet inventories by status",
         },
-        {
+        Object {
           "description": "Place a new order in the store",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/store/order",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "id",
             "petId",
             "quantity",
@@ -2874,80 +2874,80 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "status",
             "complete",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "petId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "Order Status",
-                "enum": [
+                "enum": Array [
                   "placed",
                   "approved",
                   "delivered",
                 ],
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "status",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "complete",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -2960,25 +2960,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Place an order for a pet",
         },
-        {
+        Object {
           "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/store/order/{orderId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "orderId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of order that needs to be fetched",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -2991,25 +2991,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Find purchase order by ID",
         },
-        {
+        Object {
           "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/api/v3/store/order/{orderId}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "orderId",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "ID of the order that needs to be deleted",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -3027,16 +3027,16 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "store",
     },
-    {
-      "apiList": [
-        {
+    Object {
+      "apiList": Array [
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/user",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "id",
             "username",
             "firstName",
@@ -3046,99 +3046,99 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "phone",
             "userStatus",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "email",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "phone",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "User Status",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -3151,132 +3151,132 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Create user",
         },
-        {
+        Object {
           "description": "Creates list of users with given input array",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "post",
           "path": "/api/v3/user/createWithList",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
-          "requestExtraDataSchema": {
+          "requestExtraDataSchema": Object {
             "description": "",
-            "examples": [],
+            "examples": Array [],
             "id": "",
             "keyName": "",
-            "params": [
-              {
+            "params": Array [
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "",
-                "params": [
-                  {
+                "params": Array [
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "id",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "username",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "firstName",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "lastName",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "email",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "password",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "phone",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "string",
                   },
-                  {
+                  Object {
                     "description": "User Status",
-                    "examples": [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "userStatus",
-                    "params": [],
-                    "rules": {
+                    "params": Array [],
+                    "rules": Object {
                       "required": false,
                     },
                     "title": "",
                     "type": "number",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "object",
               },
             ],
-            "rules": {
+            "rules": Object {
               "required": false,
             },
             "title": "",
@@ -3285,38 +3285,38 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Creates list of users with given input array",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/user/login",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [
             "username",
             "password",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The user name for login",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "The password for login in clear text",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -3329,38 +3329,38 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Logs user into the system",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/user/logout",
-          "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [],
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
           "summary": "Logs out current logged in user session",
         },
-        {
+        Object {
           "description": "",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "get",
           "path": "/api/v3/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username1",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The name that needs to be fetched. Use user1 for testing. ",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username1",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -3373,16 +3373,16 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Get user by user name",
         },
-        {
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "put",
           "path": "/api/v3/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username1",
           ],
-          "queryStringKeyNameList": [
+          "queryStringKeyNameList": Array [
             "id",
             "username",
             "firstName",
@@ -3392,111 +3392,111 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
             "phone",
             "userStatus",
           ],
-          "requestDataSchema": {
-            "params": [
-              {
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "name that need to be deleted",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username1",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "id",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "number",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "email",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "password",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "phone",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
                 "type": "string",
               },
-              {
+              Object {
                 "description": "User Status",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": false,
                 },
                 "title": "",
@@ -3509,25 +3509,25 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
           "responseDataSchema": null,
           "summary": "Update user",
         },
-        {
+        Object {
           "description": "This can only be done by the logged in user.",
-          "formDataKeyNameList": [],
+          "formDataKeyNameList": Array [],
           "id": "",
           "method": "delete",
           "path": "/api/v3/user/{username}",
-          "pathParamKeyNameList": [
+          "pathParamKeyNameList": Array [
             "username",
           ],
-          "queryStringKeyNameList": [],
-          "requestDataSchema": {
-            "params": [
-              {
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": Object {
+            "params": Array [
+              Object {
                 "description": "The name that needs to be deleted",
-                "examples": [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "username",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "required": true,
                 },
                 "title": "",
@@ -3545,8 +3545,8 @@ exports[`parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档解析转�
       "id": "",
       "name": "user",
     },
-    {
-      "apiList": [],
+    Object {
+      "apiList": Array [],
       "description": "没有设置分组的接口集合",
       "id": "",
       "name": "未知分组",
