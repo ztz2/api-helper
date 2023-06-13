@@ -3,13 +3,8 @@
 ![API代码](/images/api-code.png)
 
 ## 安装
-### 安装core包
 ```shell
-pnpm install @api-helper/core
-```
-### 安装CLI包
-```shell
-pnpm install @api-helper/cli --save-dev
+pnpm install @api-helper/cli @api-helper/core
 ```
 
 ## 开始
