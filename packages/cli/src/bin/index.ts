@@ -1,13 +1,14 @@
 #!/usr/bin/env node
+import path from 'path';
 import { Command } from 'commander';
 
 import { run } from '@/lib';
 import log from '@/lib/tools/log';
 import { loadModule } from '@/lib/tools/util';
 
-
 const program = new Command();
-const { version } = loadModule('package.json', false) as Recordable;
+
+const { version } = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), false) as Recordable;
 
 // root指令
 program
