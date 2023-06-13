@@ -93,12 +93,17 @@ export default class ParserOpenAPI {
         for (let w = 0; w < methodMapEntries.length; w++) {
           const method = methodMapEntries[w][0];
           const apiMap: any = methodMapEntries[w][1];
+          // fix: basePath为/，导致//
+          let mergePath = path;
+          if (!(apiDocument.basePath === '/' && path.startsWith('/'))) {
+            mergePath = apiDocument.basePath + path;
+          }
           // 接口
           const api: APIHelper.API = {
             id: this.generateId(),
             summary: this.filterDesc(apiMap.summary),
             description: this.filterDesc(apiMap.description),
-            path: apiDocument.basePath + path,
+            path: mergePath,
             method,
             formDataKeyNameList: [],
             pathParamKeyNameList: [],
