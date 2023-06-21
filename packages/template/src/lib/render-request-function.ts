@@ -1,4 +1,5 @@
 import * as changeCase from 'change-case';
+import { getSchema } from '@api-helper/core/lib/helpers';
 import template from '@/lib/template';
 import { ChangeCase } from '@/lib/types';
 import formatCode from '@/lib/utils/prettier';
@@ -9,6 +10,7 @@ export function renderRequestFunction(
   api: APIHelper.API,
   options?: {
     codeType: 'typescript' | 'javascript';
+    responseDataKey?: string;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
   }
@@ -18,8 +20,12 @@ export function renderRequestFunction(
   }
 
   const codeType = options?.codeType || 'typescript';
+  const responseDataKey = options?.responseDataKey;
+
   const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
+
+  const responseDataSchema = options?.responseDataKey ? getSchema(api.responseDataSchema, responseDataKey) : api.responseDataSchema;
 
   const templateTenderParams = {
     api,
@@ -31,7 +37,7 @@ export function renderRequestFunction(
     requestFunctionName: onRenderRequestFunctionName(api, { changeCase }),
     requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema as APIHelper.Schema, api, { paramType: 'request', changeCase }),
     requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema as APIHelper.Schema, api, { paramType: 'request', isExtraData: true, changeCase }),
-    responseDataInterfaceName: onRenderInterfaceName(api.responseDataSchema as APIHelper.Schema, api, { paramType: 'response', changeCase }),
+    responseDataInterfaceName: onRenderInterfaceName(responseDataSchema as APIHelper.Schema, api, { paramType: 'response', changeCase }),
   };
 
   const code = template.render(

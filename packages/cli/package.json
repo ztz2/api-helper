@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/cli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "bin": {
     "apih": "bin/index.js"

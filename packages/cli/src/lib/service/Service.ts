@@ -30,6 +30,10 @@ import log from '@/lib/tools/log';
 
 const prompts = require('prompts');
 
+type ChooseDocument = {
+  documentList: APIHelper.Document[],
+} & Partial<DocumentResourceList[number]>;
+
 class Service{
   static init: () => void;
 
@@ -48,8 +52,8 @@ class Service{
           await this.checkOutputPathExisted(c);
           await this.checkRequestFunctionFileExisted(c);
           const documentResourceList = await this.fetchSourceDocumentList(c);
-          const parsedDocumentList = await this.parserSourceDocument(c, documentResourceList);
-          const chooseDocumentList = await this.chooseDocument(c, parsedDocumentList);
+          const parsedDocumentList = await this.parserSourceDocument(documentResourceList);
+          const chooseDocumentList = await this.chooseDocument(parsedDocumentList);
           const code = await this.genCode(c, chooseDocumentList);
           await this.output(c, code);
           spinner && spinner.succeed();
@@ -144,7 +148,7 @@ class Service{
   }
 
   // 5. 解析文档
-  private async parserSourceDocument(config: Config, documentResourceList: DocumentResourceList): Promise<DocumentParsedList> {
+  private async parserSourceDocument(documentResourceList: DocumentResourceList): Promise<DocumentParsedList> {
     const oraText = '解析文档';
 
     const documentList: DocumentParsedList = [];
@@ -181,18 +185,18 @@ class Service{
   }
 
   // 6. 选择项目文档
-  private async chooseDocument (config: Config, documentParsedList: DocumentParsedList): Promise<APIHelper.Document[]> {
-    let result: APIHelper.Document[] = [];
+  private async chooseDocument (documentParsedList: DocumentParsedList): Promise<DocumentParsedList> {
     const choicesDocumentListOptions: { title: string; value: string }[] = [];
+
     documentParsedList.forEach((d) => {
       d.documentList.forEach((item) => {
-        result.push(item);
         choicesDocumentListOptions.push({
           title: `${item.title}【${d.url}】`,
           value: item.id
         });
       });
     });
+
     if (choicesDocumentListOptions.length > 1) {
       const answers = await prompts([{
         type: 'multiselect',
@@ -200,24 +204,31 @@ class Service{
         message: '当前存在多个项目文档，请选择项目文档？',
         choices: choicesDocumentListOptions,
       }]);
-      result = result.filter((p) => answers.documentList.includes(p.id));
+      if (answers.documentList.length === 0) {
+        const failText = '没有选择任何项目文档';
+        log.error('提示', failText);
+        return Promise.reject(failText);
+      }
+      documentParsedList = documentParsedList.filter((d) => {
+        d.documentList = d.documentList.filter((item) => answers.documentList.includes(item.id));
+        return d.documentList.length > 0;
+      });
     }
 
-    if (result.length === 0) {
+    if (documentParsedList.length === 0) {
       const failText = '没有选择任何项目文档';
       log.error('提示', failText);
       return Promise.reject(failText);
     }
 
-    return result;
+    return documentParsedList;
   }
 
   // 7. 生成代码
-  private async genCode(config: Config, documentList: APIHelper.Document[]): Promise<string> {
+  private async genCode(config: Config, documentParsedList: DocumentParsedList): Promise<string> {
     const oraText = '生成代码';
     const outputFilename = join(config.output.path, config.output.filename);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
-
 
     const code = [];
     if (isTS) {
@@ -255,10 +266,17 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
 
     // 生成代码
     const spinner = ora(oraText).start();
-    for (const d of documentList) {
-      code.push(renderAllApi(d, {
-        codeType: isTS ? 'typescript' : 'javascript'
-      }));
+    for (const { dataKey, documentList } of documentParsedList) {
+      for (const d of documentList) {
+        let str = renderAllApi(d, {
+          codeType: isTS ? 'typescript' : 'javascript',
+          responseDataKey: dataKey,
+        });
+        if (!str.endsWith('\n')) {
+          str += '\n';
+        }
+        code.push(str);
+      }
     }
     spinner.succeed();
 

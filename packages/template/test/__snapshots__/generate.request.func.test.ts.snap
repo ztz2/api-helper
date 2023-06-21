@@ -88,7 +88,7 @@ export function v2StoreInventoryByGet(
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<IV2StoreInventoryResponseByGet>(
+  return request<V2StoreInventoryResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,

@@ -15,6 +15,7 @@ export function renderAllApi(
     return '';
   }
   const codeType = options?.codeType || 'typescript';
+  const responseDataKey = options?.responseDataKey;
   const isTS = codeType === 'typescript';
 
   const categoryList: APIHelper.CategoryList = apiDocument.categoryList;
@@ -28,10 +29,7 @@ export function renderAllApi(
   for (const api of allApi) {
     const p: string[] = [];
     if (isTS) {
-      const responseDataSchema = options?.responseDataKey ? getSchema(api.responseDataSchema, options.responseDataKey) : api.responseDataSchema;
-      if (responseDataSchema) {
-        responseDataSchema.keyName = '';
-      }
+      const responseDataSchema = options?.responseDataKey ? getSchema(api.responseDataSchema, responseDataKey) : api.responseDataSchema;
       // 1. 生成interface-请求数据
       p.push(renderInterface(api.requestDataSchema, api, { paramType: 'request' }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
@@ -40,7 +38,7 @@ export function renderAllApi(
       p.push(renderInterface(responseDataSchema, api, { paramType: 'response' }));
     }
     // 3. 生成请求函数
-    p.push(renderRequestFunction(api, { codeType }));
+    p.push(renderRequestFunction(api, { codeType, responseDataKey }));
 
     code.push(p.join(''));
   }

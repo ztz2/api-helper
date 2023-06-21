@@ -528,7 +528,7 @@ export type V2StoreInventoryRequestTypeByGet = any;
  * @描述 【响应数据接口定义】Returns pet inventories by status、Returns a map of status codes to quantities】
  * @请求头 GET /v2/store/inventory
  */
-export interface IV2StoreInventoryResponseByGet {}
+export type V2StoreInventoryResponseTypeByGet = any;
 /**
  * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
  * @请求信息 [ GET ] /v2/store/inventory
@@ -538,7 +538,7 @@ export function v2StoreInventoryByGet(
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<IV2StoreInventoryResponseByGet>(
+  return request<V2StoreInventoryResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
@@ -776,7 +776,7 @@ export interface IV2UserLoginRequestByGet {
  * @描述 【响应数据类型定义】Logs user into the system】
  * @请求头 GET /v2/user/login
  */
-export type V2UserLoginResponseByGet = string;
+export type V2UserLoginResponseTypeByGet = string;
 /**
  * @描述 Logs user into the system
  * @请求信息 [ GET ] /v2/user/login
@@ -786,7 +786,7 @@ export function v2UserLoginByGet(
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<V2UserLoginResponseByGet>(
+  return request<V2UserLoginResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,

@@ -13,16 +13,17 @@ export function renderInterface(
     onRenderInterfaceName?: typeof renderInterfaceName;
   }) {
   const { isExtraData, paramType, hasComment, } = options;
-  const keyword = (schema && schema.type === 'object') ? 'export interface ' : 'export type ';
+  const keyword = checkInterface(schema) ? 'export interface ' : 'export type ';
   const onRenderInterfaceName = options?.onRenderInterfaceName ? options.onRenderInterfaceName : renderInterfaceName;
-  const commentCode = hasComment !== false ? renderInterfaceComment(schema, api, paramType, isExtraData) : ''
+  const commentCode = hasComment !== false ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
   let interfaceName = onRenderInterfaceName(schema, api, {
     isExtraData,
     paramType,
     changeCase
   });
 
-  if (!schema) {
+  // 前置处理
+  if (!schema || isEmptyObject(schema)) {
     // 不兼容的数据，不显示类型
     if (isExtraData) {
       return '';
@@ -31,6 +32,10 @@ export function renderInterface(
       commentCode,
       `${keyword} ${interfaceName} = any;`
     ].filter(Boolean).join('\n');
+  }
+
+  if (paramType === 'response') {
+    schema.keyName = '';
   }
 
   let code = renderInterfaceDeepObject(schema);
@@ -64,12 +69,16 @@ export function renderInterfaceName (
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }): string {
-  let name = schema?.type === 'object' ? 'I' : '';
+  const isInterface = checkInterface(schema);
+
+  let name = isInterface ? 'I' : '';
+
   name += api.path;
+
   if (options.paramType) {
     name += ` ${options.paramType}`;
   }
-  if (!schema || schema?.type === 'array') {
+  if (!isInterface) {
     name += 'Type';
   }
   if (options.isExtraData) {
@@ -103,6 +112,7 @@ function renderInterfaceDeepObject(
   if (memo.has(schema)) {
     return memo.get(schema) as string;
   }
+
   const { type } = schema;
   const bannerComment = [];
   if (schema.description) {
@@ -116,6 +126,17 @@ function renderInterfaceDeepObject(
     bannerComment.push(text);
   }
   const bannerCommentText = bannerComment.length > 0 ? `\n// ${  bannerComment.join('')}` : '';
+
+  if (isEmptyObject(schema)) {
+    return [
+      bannerCommentText,
+      schema.keyName ? `${schema.keyName}: ` : '',
+      '{',
+        '[propName: string]: any',
+      '}',
+    ].filter(Boolean).join('\n');
+  }
+
   let code = '';
   switch (type) {
     // 对象类型
@@ -154,4 +175,14 @@ function renderInterfaceDeepObject(
 
   memo.set(schema, code);
   return code;
+}
+
+export function checkInterface(schema: APIHelper.Schema | null) {
+  let isType = !schema || schema?.type === 'array' || isEmptyObject(schema);
+  let hasKey = schema?.params?.some((s) => s.keyName);
+  return !isType && hasKey;
+}
+
+function isEmptyObject(schema: APIHelper.Schema) {
+  return schema?.type === 'object' && schema?.params?.length === 0;
 }
