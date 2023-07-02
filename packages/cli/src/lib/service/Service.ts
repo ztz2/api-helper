@@ -134,7 +134,7 @@ class Service{
 
   // 4. 获取源文档
   private async fetchSourceDocumentList(config: Config): Promise<DocumentResourceList> {
-    const oraText = '请求 config.serverURL 获取文档';
+    const oraText = '请求 config.url 获取文档';
     const spinner = ora(oraText).start();
     try {
       const documentResourceList = await getDocument(config.documentServers);

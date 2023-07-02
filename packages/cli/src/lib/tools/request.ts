@@ -1,11 +1,17 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 const request = axios.create({
   timeout: 30000,
 });
 
 request.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    const config: AxiosRequestConfig & Recordable = response.config;
+    if (response.data.errcode) {
+      return Promise.reject(response.data.errmsg);
+    }
+    return config.dataKey ? response.data[config.dataKey] : response.data;
+  },
   (error) => Promise.reject(error),
 );
 

@@ -7,7 +7,7 @@ const tempDir = os.tmpdir();
 module.exports = {
   globals: {},
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   transform: {
     '^.+\.(jsx|tsx|ts|js|cjs|html)$': 'ts-jest',
   },
