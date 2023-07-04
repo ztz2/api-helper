@@ -29,14 +29,14 @@ module.exports = defineConfig({
       return args;
     });
     if (process.env.NODE_ENV === 'production') {
-      config.plugin('CompressionPlugin').use(CompressionPlugin, {
+      config.plugin('CompressionPlugin').use(CompressionPlugin, [{
         // 匹配规格
         test: /\.js$|\.html$|\.css$|\.png$/,
         // 文件超过多大进行压缩
         threshold: 10240,
         // 是否删除源文件（建议不删除）
         deleteOriginalAssets: false,
-      });
+      }]);
     }
   },
 });

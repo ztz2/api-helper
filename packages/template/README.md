@@ -14,7 +14,7 @@
     </a>
 </p>
 
-`API Helper Core` 内置的一些模版包，包含 Interface 类 对象等模版。
+`API Helper Template` 内置的一些模版包，包含 Interface 类 对象等模版。
 
 ## 许可
 

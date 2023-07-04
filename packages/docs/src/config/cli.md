@@ -1,5 +1,11 @@
 # 生成API代码
 解析API文档，生成整个项目的API请求代码，请求参数响应数据TS类型申明。
+
+> API生成特点
+- 支持多个API项目（依赖多个API项目，一次性生成API）
+- 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
+- 请求参数兼容（对象和数组参数的兼容）
+
 ![API代码](/images/api-code.png)
 
 ## 安装
@@ -47,8 +53,10 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 </div>
 
 ### 步骤三
-然后将`request.ts`的路径，配置到的`requestFunctionFilePath`中。
-最后终端输入`apih`即可生成文档全部API。
+将刚才创建的`request.ts`的文件路径，配置到的`requestFunctionFilePath`中。根据项目情况，修改接口文档地址`documentServers.url`。
+
+### 步骤四
+最后终端输入`apih`命令即可生成文档全部API。
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">apih</span></span></code></pre></div>
 
 在生成API过程中，会看见每一步的工作过程，可以根据提示，查看配置是否有异常。
@@ -74,20 +82,6 @@ import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
-## `documentServers`
-:::warning 必填项
-:::
-
-访问swagger文档服务地址集合，源JSON文档配置资源【或者文档html地址，会解析出全部项目（仅支持Swagger2.0）】
-具体配置参考下面代码例子以及注释说明
-* `documentServers.url`  <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档地址
-* `documentServers.type`  <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】，需要自行实现 onParseDocument 钩子函数
-* `documentServers.dataKey`  获取数据的key，body[dataKey]
-* `documentServers.auth.username`  访问文档可能需要认证信息，http auth验证方式
-* `documentServers.auth.password`  访问文档可能需要认证信息，http auth验证方式
-* `documentServers.authToken`  访问文档可能需要认证信息，通过使用token访问
-* `documentServers.events`  执行过程的回调事件
-* `documentServers.events.onRenderInterfaceName`  自定义生成接口名称
 
 ## `requestFunctionFilePath`
 :::warning 必填项
@@ -103,3 +97,20 @@ request函数文件路径
 
 * `output.path` 文件输出路径
 * `output.filename` 输出文件名称，会根据文件后缀名(.ts|.js)判断是生成TS文件还是JS文件。
+
+## `documentServers`
+:::warning 必填项
+:::
+接口文档服务相关配置。
+* `documentServers.url` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
+* `documentServers.type` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+* `documentServers.dataKey` 获取响应数据的key，body[dataKey]
+* `documentServers.auth.username` 用户名，访问文档可能需要认证信息，http auth验证方式
+* `documentServers.auth.password` 密码，访问文档可能需要认证信息，http auth验证方式
+* `documentServers.authToken` token验证，访问文档可能需要认证信息，yapi需要
+* `documentServers.events`  执行过程的回调事件
+* `documentServers.events.onRenderInterfaceName` 自定义生成接口名称
+
+
+## `parserPlugins`
+文档解析插件，当项目文档不是swagger和yapi，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。

@@ -31,13 +31,10 @@ windows环境，可以双击运行 `run-template-server.bat` 即可。下面是�
 ### 步骤3
 启动服务，进入server包下，输入命令：`pnpm run start:prod`。服务器端会将浏览器web包下dist目录作为静态资源入口，服务启动之后，就能直接访问服务。
 
-
 ![](../docs/src/public/images/map-code.png)
 ![](../docs/src/public/images/class-code.png)
 ![](../docs/src/public/images/form-code.png)
 
 ## 许可
 
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
+[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)

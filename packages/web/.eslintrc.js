@@ -34,6 +34,7 @@ module.exports = {
     'consistent-return': 0,
     'no-nested-ternary': 0,
     'default-param-last': 0,
+    'linebreak-style': [0, 'error', 'window'],
     'no-underscore-dangle': 0,
     'max-classes-per-file': 0,
     'no-use-before-define': 0,
