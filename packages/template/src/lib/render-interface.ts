@@ -43,10 +43,7 @@ export function renderInterface(
   // 移除多余换行符
   code = code.replace(/\n\n/gim, '\n');
 
-  const emptyInterfaceName = !interfaceName;
-  if (emptyInterfaceName) {
-    interfaceName = 'DEFAULT_INTERFACE_NAME';
-  }
+  // 开始组合
   interfaceName = keyword + interfaceName;
   if (schema.type !== 'object') {
     interfaceName += ' = ';
@@ -57,7 +54,7 @@ export function renderInterface(
   });
   return [
     commentCode,
-    emptyInterfaceName ? formatted.replace(interfaceName, '') : formatted
+    formatted
   ].filter(Boolean).join('\n');
 }
 
@@ -113,6 +110,8 @@ function renderInterfaceDeepObject(
     return memo.get(schema) as string;
   }
 
+  memo.set(schema, 'null');
+
   const { type } = schema;
   const bannerComment = [];
   if (schema.description) {
@@ -152,11 +151,13 @@ function renderInterfaceDeepObject(
       break;
     // 数据类型
     case 'array':
+      let child = schema.params.map((item) => renderInterfaceDeepObject(item, memo)).join(' | ');
+      child = child || 'any';
       code = [
         bannerCommentText,
         schema.keyName ? `${schema.keyName}: ` : '',
         // 类型遍历
-        `Array<${schema.params.map((item) => renderInterfaceDeepObject(item, memo)).join(' | ')  }>`,
+        `Array<${child}>`,
       ].filter(Boolean).join('\n');
       break;
     // 其他非引用类型
@@ -173,7 +174,6 @@ function renderInterfaceDeepObject(
       }
   }
 
-  memo.set(schema, code);
   return code;
 }
 

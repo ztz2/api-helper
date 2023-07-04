@@ -15,7 +15,7 @@
 [Nest] 12916  - 2023/03/14 17:40:08     LOG [RoutesResolver] AppController {/}: +8ms
 [Nest] 12916  - 2023/03/14 17:40:08     LOG [RouterExplorer] Mapped {/, GET} route +2ms
 [Nest] 12916  - 2023/03/14 17:40:08     LOG [RouterExplorer] Mapped {/app/swagger/test, GET} route +1ms
-[Nest] 12916  - 2023/03/14 17:40:08     LOG [RouterExplorer] Mapped {/app/swagger/docs, POST} route +1ms
+[Nest] 12916  - 2023/03/14 17:40:08     LOG [RouterExplorer] Mapped {/app/docs, POST} route +1ms
 [Nest] 12916  - 2023/03/14 17:40:08     LOG [NestApplication] Nest application successfully started +2ms
 启动成功：http://localhost:3210
 ```

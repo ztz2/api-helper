@@ -25,11 +25,11 @@
 
 ## 文档
 ### 生成前端请求接口函数和TS类型申明
-生成代码展示，[查看这里文档](./packages/cli/README.md)
+API生成代码展示，[查看这里文档](./packages/cli/README.md)
 ![](./packages/docs/src/public/images/api-code.png)
 
 ### 基于API的代码生成器
-生成代码展示，本地部署服务，[查看这里文档](./packages/server/README.md)
+代码生成器，生成代码展示，该功能需本地部署服务，[查看这里文档](./packages/server/README.md)
 ![](./packages/docs/src/public/images/map-code.png)
 ![](./packages/docs/src/public/images/class-code.png)
 ![](./packages/docs/src/public/images/form-code.png)

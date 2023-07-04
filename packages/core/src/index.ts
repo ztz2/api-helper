@@ -10,7 +10,8 @@ import type {
 } from './lib/types';
 
 import * as utils from './lib/utils';
-import ParserOpenAPI from './lib/parser/parser-open-api';
+import ParserYapi from './lib/parser/parser-yapi';
+import ParserSwagger from './lib/parser/parser-swagger';
 
 import {
   getSchema,
@@ -36,6 +37,7 @@ export type {
 export {
   utils,
   getSchema,
-  ParserOpenAPI,
+  ParserYapi,
+  ParserSwagger,
   processRequestFunctionConfig
 }

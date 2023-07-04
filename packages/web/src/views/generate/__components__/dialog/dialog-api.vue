@@ -39,6 +39,7 @@ import emptyTemplate from '@/constants/template/api/empty';
 import Form from '../form/form-api.vue';
 
 type OpenDataType = {
+  project: Recordable,
   apiList: Array<APIHelper.API>
 };
 
@@ -72,7 +73,10 @@ async function handleGen(showMsg = false) {
   if (openData.value) {
     codeList.value = renderTemplate(template, {
       apiList: openData.value.apiList,
-    }, data);
+    }, {
+      ...(openData.value?.project ?? {}),
+      ...data,
+    });
     if (!isEmptyTemplate && showMsg === true) {
       Message.success('已生成');
     }

@@ -5,9 +5,9 @@ export interface IProject {
   id: string;
   // 项目名称
   title: string;
-  // 文档类型（也可以是本地文档JSON文件路径），默认可以解析 swagger
+  // 文档类型，默认可以解析 swagger
   type: 'swagger' | 'yapi' | string;
-  // 文档地址
+  // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
   url?: string;
   // yapi Token
   token?: string;
@@ -37,6 +37,8 @@ export class Project implements IProject {
     username: '',
     password: '',
   }
+
+  dataKey = '';
 
   constructor(id?: string) {
     if (typeof id === 'string') {

@@ -13,3 +13,6 @@ export const TS_TYPE: APIHelper.SchemaType[] = [
   'any',
   'unknown',
 ];
+
+export const UNKNOWN_GROUP_NAME = '未知分组';
+export const UNKNOWN_GROUP_DESC = '未设置分组的接口集合';

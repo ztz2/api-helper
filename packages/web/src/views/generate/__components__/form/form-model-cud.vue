@@ -54,17 +54,6 @@
                     <a-select v-model="formModel.tplId" :options="templateList"></a-select>
                   </a-form-item>
                 </a-col>
-                <a-col :span="24">
-                  <a-form-item
-                      :rules="[{ required: true, message: '必填项' }]"
-                      :validate-trigger="['change', 'input']"
-                      field="tplId"
-                      label="响应数据 dataKey"
-                      style="margin-bottom: 0"
-                  >
-                    <a-input v-model="formModel.dataKey" :max-length="64"></a-input>
-                  </a-form-item>
-                </a-col>
               </a-row>
             </a-card>
             <!--  Input 输入框属性配置  -->
@@ -146,20 +135,20 @@ import {
   defineExpose,
 } from 'vue';
 import { cloneDeep } from 'lodash';
+import { useRoute } from 'vue-router';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 
 import { treeForEach } from '@/utils/tree';
 import { useForm } from '@/hooks/use-form';
 import { Template } from '@/store/template/interface';
-import { useModelConfig, useModelTemplate } from '@/store';
+import { useModelConfig, useModelTemplate, useProject } from '@/store';
 import { RenderModelConfig } from '@/views/generate/interface';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
+import { IProject } from '@/store/project/interface';
 
 class FormModel extends RenderModelConfig {
   tplId = '';
-
-  dataKey = '';
 
   label = '';
 
@@ -195,7 +184,9 @@ const props = defineProps({
     default: 'ADD',
   },
 });
+const route = useRoute();
 
+const projectStore = useProject();
 const { modelConfig, updateModelConfig } = toRefs(useModelConfig());
 
 const {
@@ -225,6 +216,10 @@ const options = ref({
 const { templateList } = useModelTemplate();
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
+const project = computed<IProject>(() => {
+  const { id } = route.query;
+  return projectStore.data.find((itm) => itm.id === id) as IProject;
+});
 
 watch(() => props.data.categoryList, (categoryList) => {
   apiMap.value.clear();
@@ -273,7 +268,7 @@ const responseFieldTree = computed(() => {
   if (!api || !api.responseDataSchema) {
     return [];
   }
-  const { dataKey } = formModel.value;
+  const { dataKey } = project.value;
   let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     schema = getSchema(schema, dataKey);

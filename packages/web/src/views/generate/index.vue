@@ -26,6 +26,7 @@
                   type: 'ADD',
                   title: '生成(API函数代码)'
                 }, {
+                  project,
                   apiList: selectApiList
                 })"
               >
@@ -38,6 +39,7 @@
                   type: 'ADD',
                   title: '生成(表单代码)'
                 }, {
+                   project,
                   categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"
@@ -175,7 +177,7 @@ import {
   MODEL_CUSTOM_TEMPLATE_ID,
 } from '@/constants';
 import { modalConfirm } from '@/utils';
-import { getSwaggerDocs } from '@/api';
+import { getDocs } from '@/api';
 import renderTemplate from '@/utils/render-template';
 import { IProject, APIHDocument } from '@/store/project/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
@@ -230,7 +232,7 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
 });
 
 function renderMap(api: APIHelper.API): string[] {
-  const dataKey = modelConfig.value?.dataKey ?? '';
+  const dataKey = project.value?.dataKey ?? '';
   let responseDataSchema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     responseDataSchema = getSchema(responseDataSchema, dataKey);
@@ -283,7 +285,7 @@ onMounted(async () => {
   if (project.value) {
     try {
       loading.value = true;
-      const res: any = await getSwaggerDocs(project.value);
+      const res: any = await getDocs(project.value);
       ahProject.value = res?.[0] as APIHelper.Document;
       toggleApiConfig(project.value.id);
       toggleModelConfig.value(project.value.id);

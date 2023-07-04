@@ -41,6 +41,7 @@ import emptyTemplate from '@/constants/template/model/empty';
 import Form from '../form/form-model.vue';
 
 type OpenDataType = {
+  project: Recordable
   categoryList: APIHelper.CategoryList
   apiList: APIHelper.APIList
 };

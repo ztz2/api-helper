@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/core",
-  "version": "2.0.1",
+  "version": "2.1.1",
   "description": "compile swagger to typescript typings",
   "module": "es/index.js",
   "browser": "api-helper-core.js",
@@ -19,16 +19,13 @@
   },
   "scripts": {
     "build": "jest && npm run lint && npm run clean && npm run build:es && npm run build:node && npm run build:web",
-    "build:es": "tsc --project ./tsconfig.es.json && tsc-alias -p tsconfig.es.alias.json\"",
+    "build:es": "tsc --project ./tsconfig.es.json && tsc-alias -p tsconfig.es.alias.json",
     "build:node": "tsc --project ./tsconfig.node.json && tsc-alias -p tsconfig.node.alias.json",
     "build:web": "webpack -c ./webpack.config.js",
     "clean": "shx rm -rf es && shx rm -rf lib && shx rm -rf index.js && shx rm -rf index.d.ts && shx rm -rf api-helper-core.js",
     "lint": "eslint src/*.ts",
-    "cwt": "concurrently -r -p '' -k 'npm run watch' 'npm run watch:test'",
     "test": "jest",
-    "test:update": "npm run test -- -u",
-    "watch": "tsc -w",
-    "watch:test": "jest -w"
+    "test:update": "npm run test -- -u"
   },
   "repository": {
     "type": "git",
@@ -60,7 +57,7 @@
   },
   "homepage": "https://github.com/ztz2/api-helper#readme",
   "dependencies": {
-    "bundle-shims": "^0.0.1",
+    "bundle-shims": "^0.0.3",
     "change-case": "^3.0.2",
     "lodash": "^4.17.21",
     "qs": "^6.11.0",

@@ -33,6 +33,9 @@ function renderClassDeepObject(
   if (memo.has(schemaList)) {
     return memo.get(schemaList) as string;
   }
+
+  memo.set(schemaList, 'null');
+
   const codeWrap: string[] = [];
   const prefix = parentSchema?.type === 'array' ? '[\n' : '{\n';
   const postfix = parentSchema?.type === 'array' ? '\n]' : '\n}';
@@ -79,8 +82,6 @@ function renderClassDeepObject(
       `${parentSchema.keyName}: ${code}`
     ].join('\n');
   }
-
-  memo.set(schemaList, code);
 
   return code;
 }

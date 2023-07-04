@@ -24,9 +24,9 @@ export class AppController {
   //   return Result.success(res);
   // }
 
-  @Post('/app/swagger/docs')
-  async getSwaggerDocs(@Body() body: any) {
-    const res = await this.appService.getSwaggerDocs(body);
+  @Post('/app/docs')
+  async getDocs(@Body() body: any) {
+    const res = await this.appService.getDocs(body);
     if (res.length === 0) {
       return Result.fail('没有找到可以生成swagger配置文件');
     }

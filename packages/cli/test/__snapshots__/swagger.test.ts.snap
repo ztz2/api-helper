@@ -1,7 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`生成全部API函数 OpenAPI-2.0生成全部API函数: OpenAPI-2.0生成全部API函数 1`] = `
-"/**
+exports[`swagger文档 基于swagger，生成 typescript api 代码: 生成 typescript api 代码 1`] = `
+"/* tslint:disable */
+/* eslint-disable */
+/* prettier-ignore-start */
+
+/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+
+// @ts-ignore
+// prettier-ignore
+import {
+  RequestFunctionRestArgsType,
+  processRequestFunctionConfig,
+} from '@api-helper/core/es/lib/helpers';
+// @ts-ignore
+// prettier-ignore
+import request from './request';
+// @ts-ignore
+// prettier-ignore
+type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
+
+/**
  * @描述 【请求数据接口定义】uploads an image】
  * @请求头 POST /v2/pet/{petId}/uploadImage
  */
@@ -883,146 +902,91 @@ v2UserByPost.requestConfig = {
 "
 `;
 
-exports[`生成全部API函数 OpenAPI-3.0生成全部API函数: OpenAPI-3.0生成全部API函数 1`] = `
-"/**
- * @描述 【请求数据接口定义】Update an existing pet、Update an existing pet by Id】
- * @请求头 PUT /api/v3/pet
- */
-export interface IApiV3PetRequestByPut {
-  id?: number;
-  name: string;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @描述 【响应数据类型定义】Update an existing pet、Update an existing pet by Id】
- * @请求头 PUT /api/v3/pet
- */
-export type ApiV3PetResponseTypeByPut = any;
-/**
- * @描述 Update an existing pet、Update an existing pet by Id
- * @请求信息 [ PUT ] /api/v3/pet
- */
-export function apiV3PetByPut(
-  data: IApiV3PetRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetResponseTypeByPut>(
-    processRequestFunctionConfig(data, extraData, apiV3PetByPut.requestConfig),
-    ...args
-  );
-}
-apiV3PetByPut.requestConfig = {
-  path: '/api/v3/pet',
-  method: 'put',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [
-    'id',
-    'name',
-    'category',
-    'photoUrls',
-    'tags',
-    'status'
-  ]
-};
+exports[`swagger文档 生成 javascript api 代码: 基于swagger，生成 typescript api 代码 1`] = `
+"/* eslint-disable */
+/* prettier-ignore-start */
+
+/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+
+// prettier-ignore
+import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+// prettier-ignore
+import request from './request';
 
 /**
- * @描述 【请求数据接口定义】Add a new pet to the store、Add a new pet to the store】
- * @请求头 POST /api/v3/pet
+ * @描述 uploads an image
+ * @请求信息 [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface IApiV3PetRequestByPost {
-  id?: number;
-  name: string;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @描述 【响应数据类型定义】Add a new pet to the store、Add a new pet to the store】
- * @请求头 POST /api/v3/pet
- */
-export type ApiV3PetResponseTypeByPost = any;
-/**
- * @描述 Add a new pet to the store、Add a new pet to the store
- * @请求信息 [ POST ] /api/v3/pet
- */
-export function apiV3PetByPost(
-  data: IApiV3PetRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, apiV3PetByPost.requestConfig),
-    ...args
-  );
-}
-apiV3PetByPost.requestConfig = {
-  path: '/api/v3/pet',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [
-    'id',
-    'name',
-    'category',
-    'photoUrls',
-    'tags',
-    'status'
-  ]
-};
-
-/**
- * @描述 【请求数据接口定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
- * @请求头 GET /api/v3/pet/findByStatus
- */
-export interface IApiV3PetFindByStatusRequestByGet {
-  // Status values that need to be considered for filter
-  status?: string;
-}
-/**
- * @描述 【响应数据类型定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
- * @请求头 GET /api/v3/pet/findByStatus
- */
-export type ApiV3PetFindByStatusResponseTypeByGet = any;
-/**
- * @描述 Finds Pets by status、Multiple status values can be provided with comma separated strings
- * @请求信息 [ GET ] /api/v3/pet/findByStatus
- */
-export function apiV3PetFindByStatusByGet(
-  data: IApiV3PetFindByStatusRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetFindByStatusResponseTypeByGet>(
+export function v2PetPetIdUploadImageByPost(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetFindByStatusByGet.requestConfig
+      v2PetPetIdUploadImageByPost.requestConfig
     ),
     ...args
   );
 }
-apiV3PetFindByStatusByGet.requestConfig = {
-  path: '/api/v3/pet/findByStatus',
+v2PetPetIdUploadImageByPost.requestConfig = {
+  path: '/v2/pet/{petId}/uploadImage',
+  method: 'post',
+  formDataKeyNameList: ['additionalMetadata', 'file'],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Add a new pet to the store
+ * @请求信息 [ POST ] /v2/pet
+ */
+export function v2PetByPost(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig),
+    ...args
+  );
+}
+v2PetByPost.requestConfig = {
+  path: '/v2/pet',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Update an existing pet
+ * @请求信息 [ PUT ] /v2/pet
+ */
+export function v2PetByPut(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig),
+    ...args
+  );
+}
+v2PetByPut.requestConfig = {
+  path: '/v2/pet',
+  method: 'put',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @请求信息 [ GET ] /v2/pet/findByStatus
+ */
+export function v2PetFindByStatusByGet(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2PetFindByStatusByGet.requestConfig
+    ),
+    ...args
+  );
+}
+v2PetFindByStatusByGet.requestConfig = {
+  path: '/v2/pet/findByStatus',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -1030,38 +994,21 @@ apiV3PetFindByStatusByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
- * @请求头 GET /api/v3/pet/findByTags
- */
-export interface IApiV3PetFindByTagsRequestByGet {
-  // Tags to filter by
-  tags?: string;
-}
-/**
- * @描述 【响应数据类型定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
- * @请求头 GET /api/v3/pet/findByTags
- */
-export type ApiV3PetFindByTagsResponseTypeByGet = any;
-/**
  * @描述 Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @请求信息 [ GET ] /api/v3/pet/findByTags
+ * @请求信息 [ GET ] /v2/pet/findByTags
  */
-export function apiV3PetFindByTagsByGet(
-  data: IApiV3PetFindByTagsRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetFindByTagsResponseTypeByGet>(
+export function v2PetFindByTagsByGet(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetFindByTagsByGet.requestConfig
+      v2PetFindByTagsByGet.requestConfig
     ),
     ...args
   );
 }
-apiV3PetFindByTagsByGet.requestConfig = {
-  path: '/api/v3/pet/findByTags',
+v2PetFindByTagsByGet.requestConfig = {
+  path: '/v2/pet/findByTags',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -1069,120 +1016,65 @@ apiV3PetFindByTagsByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】Find pet by ID、Returns a single pet】
- * @请求头 GET /api/v3/pet/{petId}
- */
-export interface IApiV3PetPetIdRequestByGet {
-  // ID of pet to return
-  petId: string;
-}
-/**
- * @描述 【响应数据类型定义】Find pet by ID、Returns a single pet】
- * @请求头 GET /api/v3/pet/{petId}
- */
-export type ApiV3PetPetIdResponseTypeByGet = any;
-/**
  * @描述 Find pet by ID、Returns a single pet
- * @请求信息 [ GET ] /api/v3/pet/{petId}
+ * @请求信息 [ GET ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByGet(
-  data: IApiV3PetPetIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdResponseTypeByGet>(
+export function v2PetPetIdByGet(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetPetIdByGet.requestConfig
+      v2PetPetIdByGet.requestConfig
     ),
     ...args
   );
 }
-apiV3PetPetIdByGet.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByGet.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: []
 };
 
-/**
- * @描述 【请求数据接口定义】Updates a pet in the store with form data】
- * @请求头 POST /api/v3/pet/{petId}
- */
-export interface IApiV3PetPetIdRequestByPost {
-  // ID of pet that needs to be updated
-  petId: string;
-  // Name of pet that needs to be updated
-  name?: string;
-  // Status of pet that needs to be updated
-  status?: string;
-}
-/**
- * @描述 【响应数据类型定义】Updates a pet in the store with form data】
- * @请求头 POST /api/v3/pet/{petId}
- */
-export type ApiV3PetPetIdResponseTypeByPost = any;
 /**
  * @描述 Updates a pet in the store with form data
- * @请求信息 [ POST ] /api/v3/pet/{petId}
+ * @请求信息 [ POST ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByPost(
-  data: IApiV3PetPetIdRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdResponseTypeByPost>(
+export function v2PetPetIdByPost(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetPetIdByPost.requestConfig
+      v2PetPetIdByPost.requestConfig
     ),
     ...args
   );
 }
-apiV3PetPetIdByPost.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByPost.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'post',
-  formDataKeyNameList: [],
+  formDataKeyNameList: ['name', 'status'],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: ['name', 'status']
+  queryStringKeyNameList: []
 };
 
-/**
- * @描述 【请求数据接口定义】Deletes a pet】
- * @请求头 DELETE /api/v3/pet/{petId}
- */
-export interface IApiV3PetPetIdRequestByDelete {
-  // Pet id to delete
-  petId: string;
-}
-/**
- * @描述 【响应数据类型定义】Deletes a pet】
- * @请求头 DELETE /api/v3/pet/{petId}
- */
-export type ApiV3PetPetIdResponseTypeByDelete = any;
 /**
  * @描述 Deletes a pet
- * @请求信息 [ DELETE ] /api/v3/pet/{petId}
+ * @请求信息 [ DELETE ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByDelete(
-  data: IApiV3PetPetIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdResponseTypeByDelete>(
+export function v2PetPetIdByDelete(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetPetIdByDelete.requestConfig
+      v2PetPetIdByDelete.requestConfig
     ),
     ...args
   );
 }
-apiV3PetPetIdByDelete.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByDelete.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
@@ -1190,76 +1082,87 @@ apiV3PetPetIdByDelete.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】uploads an image】
- * @请求头 POST /api/v3/pet/{petId}/uploadImage
+ * @描述 Place an order for a pet
+ * @请求信息 [ POST ] /v2/store/order
  */
-export interface IApiV3PetPetIdUploadImageRequestByPost {
-  // ID of pet to update
-  petId: string;
-  // Additional Metadata
-  additionalMetadata?: string;
-}
-/**
- * @描述 【响应数据类型定义】uploads an image】
- * @请求头 POST /api/v3/pet/{petId}/uploadImage
- */
-export type ApiV3PetPetIdUploadImageResponseTypeByPost = any;
-/**
- * @描述 uploads an image
- * @请求信息 [ POST ] /api/v3/pet/{petId}/uploadImage
- */
-export function apiV3PetPetIdUploadImageByPost(
-  data: IApiV3PetPetIdUploadImageRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdUploadImageResponseTypeByPost>(
+export function v2StoreOrderByPost(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3PetPetIdUploadImageByPost.requestConfig
+      v2StoreOrderByPost.requestConfig
     ),
     ...args
   );
 }
-apiV3PetPetIdUploadImageByPost.requestConfig = {
-  path: '/api/v3/pet/{petId}/uploadImage',
+v2StoreOrderByPost.requestConfig = {
+  path: '/v2/store/order',
   method: 'post',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: ['additionalMetadata']
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据类型定义】Returns pet inventories by status、Returns a map of status codes to quantities】
- * @请求头 GET /api/v3/store/inventory
+ * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @请求信息 [ GET ] /v2/store/order/{orderId}
  */
-export type ApiV3StoreInventoryRequestTypeByGet = any;
+export function v2StoreOrderOrderIdByGet(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreOrderOrderIdByGet.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByGet.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+
 /**
- * @描述 【响应数据类型定义】Returns pet inventories by status、Returns a map of status codes to quantities】
- * @请求头 GET /api/v3/store/inventory
+ * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @请求信息 [ DELETE ] /v2/store/order/{orderId}
  */
-export type ApiV3StoreInventoryResponseTypeByGet = any;
+export function v2StoreOrderOrderIdByDelete(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2StoreOrderOrderIdByDelete.requestConfig
+    ),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'delete',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: []
+};
+
 /**
  * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
- * @请求信息 [ GET ] /api/v3/store/inventory
+ * @请求信息 [ GET ] /v2/store/inventory
  */
-export function apiV3StoreInventoryByGet(
-  data: ApiV3StoreInventoryRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreInventoryResponseTypeByGet>(
+export function v2StoreInventoryByGet(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3StoreInventoryByGet.requestConfig
+      v2StoreInventoryByGet.requestConfig
     ),
     ...args
   );
 }
-apiV3StoreInventoryByGet.requestConfig = {
-  path: '/api/v3/store/inventory',
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -1267,270 +1170,131 @@ apiV3StoreInventoryByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】Place an order for a pet、Place a new order in the store】
- * @请求头 POST /api/v3/store/order
+ * @描述 Creates list of users with given input array
+ * @请求信息 [ POST ] /v2/user/createWithArray
  */
-export interface IApiV3StoreOrderRequestByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
-  // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
-}
-/**
- * @描述 【响应数据类型定义】Place an order for a pet、Place a new order in the store】
- * @请求头 POST /api/v3/store/order
- */
-export type ApiV3StoreOrderResponseTypeByPost = any;
-/**
- * @描述 Place an order for a pet、Place a new order in the store
- * @请求信息 [ POST ] /api/v3/store/order
- */
-export function apiV3StoreOrderByPost(
-  data: IApiV3StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreOrderResponseTypeByPost>(
+export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3StoreOrderByPost.requestConfig
+      v2UserCreateWithArrayByPost.requestConfig
     ),
     ...args
   );
 }
-apiV3StoreOrderByPost.requestConfig = {
-  path: '/api/v3/store/order',
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [
-    'id',
-    'petId',
-    'quantity',
-    'shipDate',
-    'status',
-    'complete'
-  ]
-};
-
-/**
- * @描述 【请求数据接口定义】Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.】
- * @请求头 GET /api/v3/store/order/{orderId}
- */
-export interface IApiV3StoreOrderOrderIdRequestByGet {
-  // ID of order that needs to be fetched
-  orderId: string;
-}
-/**
- * @描述 【响应数据类型定义】Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.】
- * @请求头 GET /api/v3/store/order/{orderId}
- */
-export type ApiV3StoreOrderOrderIdResponseTypeByGet = any;
-/**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
- * @请求信息 [ GET ] /api/v3/store/order/{orderId}
- */
-export function apiV3StoreOrderOrderIdByGet(
-  data: IApiV3StoreOrderOrderIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreOrderOrderIdResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3StoreOrderOrderIdByGet.requestConfig
-    ),
-    ...args
-  );
-}
-apiV3StoreOrderOrderIdByGet.requestConfig = {
-  path: '/api/v3/store/order/{orderId}',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors】
- * @请求头 DELETE /api/v3/store/order/{orderId}
+ * @描述 Creates list of users with given input array
+ * @请求信息 [ POST ] /v2/user/createWithList
  */
-export interface IApiV3StoreOrderOrderIdRequestByDelete {
-  // ID of the order that needs to be deleted
-  orderId: string;
-}
-/**
- * @描述 【响应数据类型定义】Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors】
- * @请求头 DELETE /api/v3/store/order/{orderId}
- */
-export type ApiV3StoreOrderOrderIdResponseTypeByDelete = any;
-/**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
- * @请求信息 [ DELETE ] /api/v3/store/order/{orderId}
- */
-export function apiV3StoreOrderOrderIdByDelete(
-  data: IApiV3StoreOrderOrderIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreOrderOrderIdResponseTypeByDelete>(
+export function v2UserCreateWithListByPost(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3StoreOrderOrderIdByDelete.requestConfig
+      v2UserCreateWithListByPost.requestConfig
     ),
     ...args
   );
 }
-apiV3StoreOrderOrderIdByDelete.requestConfig = {
-  path: '/api/v3/store/order/{orderId}',
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Get user by user name
+ * @请求信息 [ GET ] /v2/user/{username}
+ */
+export function v2UserUsernameByGet(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2UserUsernameByGet.requestConfig
+    ),
+    ...args
+  );
+}
+v2UserUsernameByGet.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Updated user、This can only be done by the logged in user.
+ * @请求信息 [ PUT ] /v2/user/{username}
+ */
+export function v2UserUsernameByPut(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2UserUsernameByPut.requestConfig
+    ),
+    ...args
+  );
+}
+v2UserUsernameByPut.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'put',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 Delete user、This can only be done by the logged in user.
+ * @请求信息 [ DELETE ] /v2/user/{username}
+ */
+export function v2UserUsernameByDelete(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      v2UserUsernameByDelete.requestConfig
+    ),
+    ...args
+  );
+}
+v2UserUsernameByDelete.requestConfig = {
+  path: '/v2/user/{username}',
   method: 'delete',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
+  pathParamKeyNameList: ['username'],
   queryStringKeyNameList: []
 };
 
-/**
- * @描述 【请求数据接口定义】Create user、This can only be done by the logged in user.】
- * @请求头 POST /api/v3/user
- */
-export interface IApiV3UserRequestByPost {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
-}
-/**
- * @描述 【响应数据类型定义】Create user、This can only be done by the logged in user.】
- * @请求头 POST /api/v3/user
- */
-export type ApiV3UserResponseTypeByPost = any;
-/**
- * @描述 Create user、This can only be done by the logged in user.
- * @请求信息 [ POST ] /api/v3/user
- */
-export function apiV3UserByPost(
-  data: IApiV3UserRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3UserByPost.requestConfig
-    ),
-    ...args
-  );
-}
-apiV3UserByPost.requestConfig = {
-  path: '/api/v3/user',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [
-    'id',
-    'username',
-    'firstName',
-    'lastName',
-    'email',
-    'password',
-    'phone',
-    'userStatus'
-  ]
-};
-
-/**
- * @描述 【请求数据类型定义】Creates list of users with given input array、Creates list of users with given input array】
- * @请求头 POST /api/v3/user/createWithList
- */
-export type ApiV3UserCreateWithListRequestTypeByPost = Array<{
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
-}>;
-/**
- * @描述 【响应数据类型定义】Creates list of users with given input array、Creates list of users with given input array】
- * @请求头 POST /api/v3/user/createWithList
- */
-export type ApiV3UserCreateWithListResponseTypeByPost = any;
-/**
- * @描述 Creates list of users with given input array、Creates list of users with given input array
- * @请求信息 [ POST ] /api/v3/user/createWithList
- */
-export function apiV3UserCreateWithListByPost(
-  data: ApiV3UserCreateWithListRequestTypeByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserCreateWithListResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3UserCreateWithListByPost.requestConfig
-    ),
-    ...args
-  );
-}
-apiV3UserCreateWithListByPost.requestConfig = {
-  path: '/api/v3/user/createWithList',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Logs user into the system】
- * @请求头 GET /api/v3/user/login
- */
-export interface IApiV3UserLoginRequestByGet {
-  // The user name for login
-  username?: string;
-  // The password for login in clear text
-  password?: string;
-}
-/**
- * @描述 【响应数据类型定义】Logs user into the system】
- * @请求头 GET /api/v3/user/login
- */
-export type ApiV3UserLoginResponseTypeByGet = any;
 /**
  * @描述 Logs user into the system
- * @请求信息 [ GET ] /api/v3/user/login
+ * @请求信息 [ GET ] /v2/user/login
  */
-export function apiV3UserLoginByGet(
-  data: IApiV3UserLoginRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserLoginResponseTypeByGet>(
+export function v2UserLoginByGet(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3UserLoginByGet.requestConfig
+      v2UserLoginByGet.requestConfig
     ),
     ...args
   );
 }
-apiV3UserLoginByGet.requestConfig = {
-  path: '/api/v3/user/login',
+v2UserLoginByGet.requestConfig = {
+  path: '/v2/user/login',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -1538,35 +1302,21 @@ apiV3UserLoginByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据类型定义】Logs out current logged in user session】
- * @请求头 GET /api/v3/user/logout
- */
-export type ApiV3UserLogoutRequestTypeByGet = any;
-/**
- * @描述 【响应数据类型定义】Logs out current logged in user session】
- * @请求头 GET /api/v3/user/logout
- */
-export type ApiV3UserLogoutResponseTypeByGet = any;
-/**
  * @描述 Logs out current logged in user session
- * @请求信息 [ GET ] /api/v3/user/logout
+ * @请求信息 [ GET ] /v2/user/logout
  */
-export function apiV3UserLogoutByGet(
-  data: ApiV3UserLogoutRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserLogoutResponseTypeByGet>(
+export function v2UserLogoutByGet(data, extraData, ...args) {
+  return request(
     processRequestFunctionConfig(
       data,
       extraData,
-      apiV3UserLogoutByGet.requestConfig
+      v2UserLogoutByGet.requestConfig
     ),
     ...args
   );
 }
-apiV3UserLogoutByGet.requestConfig = {
-  path: '/api/v3/user/logout',
+v2UserLogoutByGet.requestConfig = {
+  path: '/v2/user/logout',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -1574,137 +1324,20 @@ apiV3UserLogoutByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】Get user by user name】
- * @请求头 GET /api/v3/user/{username}
+ * @描述 Create user、This can only be done by the logged in user.
+ * @请求信息 [ POST ] /v2/user
  */
-export interface IApiV3UserUsernameRequestByGet {
-  // The name that needs to be fetched. Use user1 for testing.
-  username1: string;
-}
-/**
- * @描述 【响应数据类型定义】Get user by user name】
- * @请求头 GET /api/v3/user/{username}
- */
-export type ApiV3UserUsernameResponseTypeByGet = any;
-/**
- * @描述 Get user by user name
- * @请求信息 [ GET ] /api/v3/user/{username}
- */
-export function apiV3UserUsernameByGet(
-  data: IApiV3UserUsernameRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserUsernameResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3UserUsernameByGet.requestConfig
-    ),
+export function v2UserByPost(data, extraData, ...args) {
+  return request(
+    processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig),
     ...args
   );
 }
-apiV3UserUsernameByGet.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'get',
+v2UserByPost.requestConfig = {
+  path: '/v2/user',
+  method: 'post',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Update user、This can only be done by the logged in user.】
- * @请求头 PUT /api/v3/user/{username}
- */
-export interface IApiV3UserUsernameRequestByPut {
-  // name that need to be deleted
-  username1: string;
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
-}
-/**
- * @描述 【响应数据类型定义】Update user、This can only be done by the logged in user.】
- * @请求头 PUT /api/v3/user/{username}
- */
-export type ApiV3UserUsernameResponseTypeByPut = any;
-/**
- * @描述 Update user、This can only be done by the logged in user.
- * @请求信息 [ PUT ] /api/v3/user/{username}
- */
-export function apiV3UserUsernameByPut(
-  data: IApiV3UserUsernameRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserUsernameResponseTypeByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3UserUsernameByPut.requestConfig
-    ),
-    ...args
-  );
-}
-apiV3UserUsernameByPut.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'put',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
-  queryStringKeyNameList: [
-    'id',
-    'username',
-    'firstName',
-    'lastName',
-    'email',
-    'password',
-    'phone',
-    'userStatus'
-  ]
-};
-
-/**
- * @描述 【请求数据接口定义】Delete user、This can only be done by the logged in user.】
- * @请求头 DELETE /api/v3/user/{username}
- */
-export interface IApiV3UserUsernameRequestByDelete {
-  // The name that needs to be deleted
-  username: string;
-}
-/**
- * @描述 【响应数据类型定义】Delete user、This can only be done by the logged in user.】
- * @请求头 DELETE /api/v3/user/{username}
- */
-export type ApiV3UserUsernameResponseTypeByDelete = any;
-/**
- * @描述 Delete user、This can only be done by the logged in user.
- * @请求信息 [ DELETE ] /api/v3/user/{username}
- */
-export function apiV3UserUsernameByDelete(
-  data: IApiV3UserUsernameRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserUsernameResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3UserUsernameByDelete.requestConfig
-    ),
-    ...args
-  );
-}
-apiV3UserUsernameByDelete.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'delete',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
+  pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 "

@@ -28,9 +28,6 @@ export class RenderModelConfig {
 
   // 只生成对象
   onlyMap = false;
-
-  // 响应数据Key
-  dataKey = '';
 }
 
 export class RenderAPIConfig {

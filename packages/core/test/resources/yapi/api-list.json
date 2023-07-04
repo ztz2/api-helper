@@ -1,0 +1,61 @@
+[
+  {
+    "edit_uid": 0,
+    "status": "undone",
+    "api_opened": false,
+    "tag": [
+      "pet"
+    ],
+    "_id": 969390,
+    "method": "POST",
+    "title": "Add a new pet to the store",
+    "path": "/pet",
+    "project_id": 16095,
+    "catid": 302328,
+    "uid": 28300,
+    "add_time": 1688298350,
+    "content": {
+      "query_path": {
+        "path": "/pet",
+        "params": []
+      },
+      "edit_uid": 0,
+      "status": "undone",
+      "type": "static",
+      "req_body_is_json_schema": true,
+      "res_body_is_json_schema": true,
+      "api_opened": false,
+      "index": 0,
+      "tag": [
+        "pet"
+      ],
+      "_id": 969390,
+      "method": "POST",
+      "title": "Add a new pet to the store",
+      "desc": "",
+      "path": "/pet",
+      "req_params": [],
+      "req_body_form": [],
+      "req_headers": [
+        {
+          "required": "1",
+          "_id": "64a1636e09b47100098e8baf",
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "req_query": [],
+      "req_body_type": "json",
+      "res_body_type": "raw",
+      "res_body": "Invalid input",
+      "req_body_other": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"name\",\n    \"photoUrls\"\n  ],\n  \"properties\": {\n    \"id\": {\n      \"type\": \"integer\",\n      \"format\": \"int64\"\n    },\n    \"category\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"id\": {\n          \"type\": \"integer\",\n          \"format\": \"int64\"\n        },\n        \"name\": {\n          \"type\": \"string\"\n        }\n      },\n      \"xml\": {\n        \"name\": \"Category\"\n      },\n      \"$$ref\": \"#/definitions/Category\"\n    },\n    \"name\": {\n      \"type\": \"string\",\n      \"example\": \"doggie\"\n    },\n    \"photoUrls\": {\n      \"type\": \"array\",\n      \"xml\": {\n        \"wrapped\": true\n      },\n      \"items\": {\n        \"type\": \"string\",\n        \"xml\": {\n          \"name\": \"photoUrl\"\n        }\n      }\n    },\n    \"tags\": {\n      \"type\": \"array\",\n      \"xml\": {\n        \"wrapped\": true\n      },\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"integer\",\n            \"format\": \"int64\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          }\n        },\n        \"xml\": {\n          \"name\": \"Tag\"\n        },\n        \"$$ref\": \"#/definitions/Tag\"\n      }\n    },\n    \"status\": {\n      \"type\": \"string\",\n      \"description\": \"pet status in the store\",\n      \"enum\": [\n        \"available\",\n        \"pending\",\n        \"sold\"\n      ]\n    }\n  },\n  \"xml\": {\n    \"name\": \"Pet\"\n  },\n  \"$$ref\": \"#/definitions/Pet\"\n}",
+      "project_id": 16095,
+      "catid": 302328,
+      "uid": 28300,
+      "add_time": 1688298350,
+      "up_time": 1688298350,
+      "__v": 0,
+      "username": "448941273"
+    }
+  }
+]

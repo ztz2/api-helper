@@ -1,0 +1,28 @@
+{
+  "switch_notice": true,
+  "is_mock_open": false,
+  "strice": false,
+  "is_json5": false,
+  "_id": 16095,
+  "name": "智慧商城",
+  "basepath": "/v2",
+  "project_type": "private",
+  "uid": 28300,
+  "group_id": 28320,
+  "icon": "code-o",
+  "color": "yellow",
+  "add_time": 1677733471,
+  "up_time": 1688298352,
+  "env": [
+    {
+      "header": [],
+      "global": [],
+      "_id": "64002e5fa94e01c05c1a3e1c",
+      "name": "local",
+      "domain": "http://127.0.0.1"
+    }
+  ],
+  "tag": [],
+  "cat": [],
+  "role": false
+}

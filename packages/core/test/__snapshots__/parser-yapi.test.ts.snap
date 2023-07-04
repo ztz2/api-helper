@@ -1,0 +1,199 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解析转换测试 1`] = `
+[
+  {
+    "basePath": "/v2",
+    "categoryList": [
+      {
+        "apiList": [
+          {
+            "description": "",
+            "formDataKeyNameList": [],
+            "id": "",
+            "method": "POST",
+            "path": "/v2/pet",
+            "pathParamKeyNameList": [],
+            "queryStringKeyNameList": [],
+            "requestDataSchema": {
+              "params": [
+                {
+                  "description": "",
+                  "examples": [],
+                  "id": "",
+                  "keyName": "id",
+                  "params": [],
+                  "rules": {
+                    "required": false,
+                  },
+                  "title": "",
+                  "type": "number",
+                },
+                {
+                  "description": "",
+                  "examples": [],
+                  "id": "",
+                  "keyName": "category",
+                  "params": [
+                    {
+                      "description": "",
+                      "examples": [],
+                      "id": "",
+                      "keyName": "id",
+                      "params": [],
+                      "rules": {
+                        "required": false,
+                      },
+                      "title": "",
+                      "type": "number",
+                    },
+                    {
+                      "description": "",
+                      "examples": [],
+                      "id": "",
+                      "keyName": "name",
+                      "params": [],
+                      "rules": {
+                        "required": false,
+                      },
+                      "title": "",
+                      "type": "string",
+                    },
+                  ],
+                  "rules": {
+                    "required": false,
+                  },
+                  "title": "",
+                  "type": "object",
+                },
+                {
+                  "description": "",
+                  "examples": [],
+                  "id": "",
+                  "keyName": "name",
+                  "params": [],
+                  "rules": {
+                    "required": true,
+                  },
+                  "title": "",
+                  "type": "string",
+                },
+                {
+                  "description": "",
+                  "examples": [],
+                  "id": "",
+                  "keyName": "photoUrls",
+                  "params": [
+                    {
+                      "description": "",
+                      "examples": [],
+                      "id": "",
+                      "keyName": "",
+                      "params": [],
+                      "rules": {
+                        "required": false,
+                      },
+                      "title": "",
+                      "type": "string",
+                    },
+                  ],
+                  "rules": {
+                    "required": true,
+                  },
+                  "title": "",
+                  "type": "array",
+                },
+                {
+                  "description": "",
+                  "examples": [],
+                  "id": "",
+                  "keyName": "tags",
+                  "params": [
+                    {
+                      "description": "",
+                      "examples": [],
+                      "id": "",
+                      "keyName": "",
+                      "params": [
+                        {
+                          "description": "",
+                          "examples": [],
+                          "id": "",
+                          "keyName": "id",
+                          "params": [],
+                          "rules": {
+                            "required": false,
+                          },
+                          "title": "",
+                          "type": "number",
+                        },
+                        {
+                          "description": "",
+                          "examples": [],
+                          "id": "",
+                          "keyName": "name",
+                          "params": [],
+                          "rules": {
+                            "required": false,
+                          },
+                          "title": "",
+                          "type": "string",
+                        },
+                      ],
+                      "rules": {
+                        "required": false,
+                      },
+                      "title": "",
+                      "type": "object",
+                    },
+                  ],
+                  "rules": {
+                    "required": false,
+                  },
+                  "title": "",
+                  "type": "array",
+                },
+                {
+                  "description": "pet status in the store",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold",
+                  ],
+                  "examples": [],
+                  "id": "",
+                  "keyName": "status",
+                  "params": [],
+                  "rules": {
+                    "required": false,
+                  },
+                  "title": "",
+                  "type": "string",
+                },
+              ],
+              "type": "object",
+            },
+            "requestExtraDataSchema": null,
+            "responseDataSchema": null,
+            "summary": "Add a new pet to the store",
+          },
+        ],
+        "description": "Everything about your Pets",
+        "id": "",
+        "name": "pet",
+      },
+      {
+        "apiList": [],
+        "description": "未设置分组的接口集合",
+        "id": "",
+        "name": "未知分组",
+      },
+    ],
+    "description": "",
+    "id": "",
+    "openapiVersion": "2.0",
+    "title": "智慧商城",
+    "version": "last",
+  },
+]
+`;

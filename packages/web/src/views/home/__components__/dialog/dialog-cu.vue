@@ -21,7 +21,7 @@ import {
 import { Message } from '@arco-design/web-vue';
 
 import { useProject } from '@/store';
-import { getSwaggerDocs } from '@/api';
+import { getDocs } from '@/api';
 import Dialog from '@/components/apih-dialog/index.vue';
 import { OpenData, OpenConfig } from '@/components/apih-dialog/interface';
 import Form from '../form/form-cu.vue';
@@ -49,8 +49,9 @@ async function handleSave(publishFlag = false) {
     async executor() {
       loadingSave.value = true;
       const data = await dialogRef.value.getFormRef().validate();
-      const documentList = await getSwaggerDocs(data);
+      const documentList = await getDocs(data);
       for (const item of documentList) {
+        delete item.id;
         projectStore.save(pick({ ...data, ...item }, Object.keys(data)) as any);
       }
     },

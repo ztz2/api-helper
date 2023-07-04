@@ -1,5 +1,5 @@
 # 生成API代码
-解析API文档，生成整个项目的API请求代码，TS类型。
+解析API文档，生成整个项目的API请求代码，请求参数响应数据TS类型申明。
 ![API代码](/images/api-code.png)
 
 ## 安装
@@ -10,7 +10,7 @@ pnpm install @api-helper/cli @api-helper/core
 ## 开始
 ### 步骤一
 定义 `request.ts` 请求工具，用于统一管理请求。
-以 `axios` 为例，作为请求库。
+以 `axios` 为例，作为统一请求工具。
 ```typescript
 import axios from 'axios';
 import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
@@ -30,7 +30,7 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 ```
 
 ### 步骤二
-终端输入`apih init`初始化生成配置文件
+初始化配置文件，终端输入`apih init`命令。
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>apih init</span></code></pre></div>
 
 该命令用于生成配置文件，根据项目情况生成Typescript配置文件或者Javascript配置文件。
@@ -81,14 +81,13 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 访问swagger文档服务地址集合，源JSON文档配置资源【或者文档html地址，会解析出全部项目（仅支持Swagger2.0）】
 具体配置参考下面代码例子以及注释说明
 * `documentServers.url`  <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档地址
-* `documentServers.type`  <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型（也可以是本地文档JSON文件路径），默认可以解析 swagger ，其他文档 custom 类型，需要自行实现 onParseDocument 钩子函数
+* `documentServers.type`  <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】，需要自行实现 onParseDocument 钩子函数
 * `documentServers.dataKey`  获取数据的key，body[dataKey]
 * `documentServers.auth.username`  访问文档可能需要认证信息，http auth验证方式
 * `documentServers.auth.password`  访问文档可能需要认证信息，http auth验证方式
 * `documentServers.authToken`  访问文档可能需要认证信息，通过使用token访问
 * `documentServers.events`  执行过程的回调事件
 * `documentServers.events.onRenderInterfaceName`  自定义生成接口名称
-* `documentServers.events.onParseDocument`  自定义解析接口文档
 
 ## `requestFunctionFilePath`
 :::warning 必填项

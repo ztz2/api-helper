@@ -25,13 +25,16 @@ export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyNa
     return null;
   }
   let t: APIHelper.Schema = schema;
+  let runCount = 0;
+  const len = pathList.length;
   try {
     while (pathList.length) {
       const p = pathList.shift();
       for (let i = 0; i < t.params.length; i++) {
         const s = t.params[i];
-        if (s.keyName === p || i === Number(p)) {
+        if (s.keyName === p) {
           t = s;
+          runCount++;
           break;
         }
         if (i === t.params.length - 1) {
@@ -42,10 +45,17 @@ export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyNa
   } catch {
     return null;
   }
+
   if (clearKeyName) {
+    t = { ...t };
     t.keyName = '';
   }
-  return t;
+
+  if (runCount === len) {
+    return t;
+  }
+
+  return null;
 }
 
 export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;

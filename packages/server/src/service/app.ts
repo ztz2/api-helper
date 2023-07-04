@@ -9,8 +9,10 @@ import { Injectable } from '@nestjs/common';
 // const mockSwaggerApi = require('../mock/swaggerApi.json');
 // const {} = require();
 
-import { APIHelper, ParserOpenAPI } from '@api-helper/core';
-import { getDocument } from '@api-helper/cli/lib/service/server';
+import { APIHelper } from '@api-helper/core';
+import { documentServersRunParserPlugins } from '@api-helper/cli/lib/tools/util';
+import ParserYapiPlugin from '@api-helper/cli/lib/service/parser-plugins/parser-yapi-plugin';
+import ParserSwaggerPlugin from '@api-helper/cli/lib/service/parser-plugins/parser-swagger-plugin';
 
 @Injectable()
 export class AppService {
@@ -33,17 +35,18 @@ export class AppService {
   //   return '123';
   // }
 
-  async getSwaggerDocs(body: any): Promise<APIHelper.Document[]> {
-    const documentResourceList = await getDocument([body]);
-    let documentList: APIHelper.Document[] = [];
-    for (const d of documentResourceList) {
-      if (d.type === 'swagger') {
-        const p = await new ParserOpenAPI().parser(d.resourceDocumentList);
-        documentList = [...documentList, ...p];
-      } else if (d.type === 'yapi') {
-        // TODO 等待解析yapi文档
-      }
+  async getDocs(body: any): Promise<APIHelper.Document[]> {
+    const documentServers = [body];
+    const documentServersRunResult = await documentServersRunParserPlugins(
+      documentServers,
+      [new ParserYapiPlugin(), new ParserSwaggerPlugin()],
+    );
+    const result = [];
+    for (const {
+      parsedDocumentList,
+    } of documentServersRunResult.parserPluginRunResult) {
+      [].push.apply(result, parsedDocumentList);
     }
-    return documentList;
+    return result;
   }
 }

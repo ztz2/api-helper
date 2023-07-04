@@ -11,6 +11,13 @@ const importApiCodeWrap = [];
 const isTS = config.codeType === 'typescript';
 apiList = apiList.forEach((api) => {
   const p = [];
+  if (isTS) {
+    const responseDataSchema = config.dataKey ? utils.apihTemplate.getSchema(api.responseDataSchema, config.dataKey) : api.responseDataSchema;
+
+    p.push(utils.apihTemplate.renderInterface(api.requestDataSchema, api, { paramType: 'request' }));
+    p.push(utils.apihTemplate.renderInterface(api.requestExtraDataSchema, api, { paramType: 'request', isExtraData: true }));
+    p.push(utils.apihTemplate.renderInterface(responseDataSchema, api, { paramType: 'response' }));
+  }
   p.push(
     utils.apihTemplate.renderRequestFunction(api, {
       codeType: config.codeType

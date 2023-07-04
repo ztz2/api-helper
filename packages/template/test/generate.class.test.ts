@@ -1,6 +1,7 @@
 import { join } from 'path';
-import { APIHelper, ParserOpenAPI,  } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core';
 import { filterSchema } from '@api-helper/core/es/lib/utils/util';
+import ParserSwagger from '@api-helper/core/es/lib/parser/parser-swagger';
 
 import { readJsonFile } from './utils/file';
 import { renderClass } from '../src/lib/render-class';
@@ -8,7 +9,7 @@ import { renderClass } from '../src/lib/render-class';
 describe('生成 Class 类测试', () => {
   test('OpenAPI-2.0生成 Class 类测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0.json'));
-    const openAPIDocumentList = await new ParserOpenAPI(false).parser([openAPIDocumentJSON]);
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[0];
@@ -23,7 +24,7 @@ describe('生成 Class 类测试', () => {
 
   test('OpenAPI-3.0生成 Class 类测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-3.0.json'));
-    const openAPIDocumentList = await new ParserOpenAPI(false).parser([openAPIDocumentJSON]);
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[1];

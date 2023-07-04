@@ -10,7 +10,7 @@ export function renderRequestFunction(
   api: APIHelper.API,
   options?: {
     codeType: 'typescript' | 'javascript';
-    responseDataKey?: string;
+    dataKey?: string | undefined;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
   }
@@ -20,12 +20,12 @@ export function renderRequestFunction(
   }
 
   const codeType = options?.codeType || 'typescript';
-  const responseDataKey = options?.responseDataKey;
+  const dataKey = options?.dataKey;
 
   const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
 
-  const responseDataSchema = options?.responseDataKey ? getSchema(api.responseDataSchema, responseDataKey) : api.responseDataSchema;
+  const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
 
   const templateTenderParams = {
     api,

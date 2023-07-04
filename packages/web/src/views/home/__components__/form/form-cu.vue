@@ -21,6 +21,14 @@
         </a-col>
         <a-col :span="24">
           <a-form-item
+            label="响应数据 dataKey"
+            field="dataKey"
+          >
+            <a-input v-model="formModel.dataKey" :max-length="32" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <a-form-item
               label="文档类型"
               field="type"
               :rules="[{ required: true, message: '必填项' }]"
@@ -109,8 +117,8 @@ const {
 
 const options = ref({
   type: [
-    { label: 'Swagger', value: 'swagger' },
-    { label: 'YAPI', value: 'yapi' },
+    { label: 'swagger', value: 'swagger' },
+    { label: 'yapi', value: 'yapi' },
   ],
 });
 
