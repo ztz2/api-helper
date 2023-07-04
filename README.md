@@ -29,7 +29,7 @@
 ![](./packages/docs/src/public/images/api-code.png)
 
 ### 基于API的代码生成器
-生成代码展示，[查看这里文档](./server/README.md)
+生成代码展示，本地部署服务，[查看这里文档](./server/README.md)
 ![](./packages/docs/src/public/images/map-code.png)
 ![](./packages/docs/src/public/images/class-code.png)
 ![](./packages/docs/src/public/images/form-code.png)
