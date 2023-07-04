@@ -23,17 +23,10 @@
 - 📦 本地部署
 - 🔌 Extensible
 
-
-> API生成特点
-- 支持多个API项目（依赖多个API项目，一次性生成API）
-- 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
-- 请求参数兼容（对象和数组参数的兼容）
-
 ## 文档
 ### 生成前端请求接口函数和TS类型申明
 生成代码展示，[查看这里文档](./cli/README.md)
 ![](./packages/docs/src/public/images/api-code.png)
-## 展示
 
 ### 基于API的代码生成器
 生成代码展示，[查看这里文档](./server/README.md)
