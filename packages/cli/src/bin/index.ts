@@ -21,7 +21,7 @@ program
     if (config) {
       log.verbose('-c --config ', String(config));
     }
-    await run('root', config);
+    await run(null, config);
   });
 
 // 帮助信息

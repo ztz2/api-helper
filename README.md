@@ -14,8 +14,7 @@
     </a>
 </p>
 
-`API Helper` 简称 `apih` ，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具。
-
+`API Helper`，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具。
 
 > 一个用于构建 Web API 、代码模板的多功能工具库
 
@@ -31,16 +30,18 @@
 - 请求参数兼容（对象和数组参数的兼容）
 
 ## 文档
-[文档链接](https://apih.andou.live)
-
+### 生成前端请求接口函数和TS类型申明
+生成代码展示，[查看这里文档](./cli/README.md)
+![](./packages/docs/src/public/images/api-code.png)
 ## 展示
-<p><img src="./packages/docs/src/public/images/api-code.png" /></p>
-<p><img src="./packages/docs/src/public/images/map-code.png" /></p>
-<p><img src="./packages/docs/src/public/images/class-code.png" /></p>
-<p><img src="./packages/docs/src/public/images/form-code.png" /></p>
+
+### 基于API的代码生成器
+生成代码展示，[查看这里文档](./server/README.md)
+![](./packages/docs/src/public/images/map-code.png)
+![](./packages/docs/src/public/images/class-code.png)
+![](./packages/docs/src/public/images/form-code.png)
 
 ## 许可
-
 [MIT](https://opensource.org/licenses/MIT)
 
 Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)

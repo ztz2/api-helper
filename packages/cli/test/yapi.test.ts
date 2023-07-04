@@ -1,12 +1,12 @@
 import { readFile } from 'fs-extra';
 import { join, resolve } from 'path';
 
-import { run } from '@root/src/lib';
-import { createTempFile } from '@root/src/lib/tools/util';
+import { run } from '../src/lib';
+import { createTempFile } from '../src/lib/tools/util';
 
-describe('Service', () => {
+describe('yapi文档', () => {
 
-  test('生成 typescript api 代码', async () => {
+  test('基于yapi，生成 typescript api 代码', async () => {
     const configFile = createTempFile(`
 import { resolve } from 'path';
 export default {
@@ -14,7 +14,7 @@ export default {
     {
       url: 'https://yapi.pro',
       type: 'yapi',
-      authToken: '2e7e8af1073feb9e629a743884529ddc7b6e67a1decaa52e28757f24739fab28',
+      authToken: '7f41d29403ca222d88d74ef631e8905aa529d7aeeee42a80a12dbece872d8519',
       dataKey: ''
     }
   ],
@@ -24,8 +24,8 @@ export default {
     filename: 'api.ts',
   }
 };`);
-    await run('root', configFile);
+    await run(null, configFile);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
-    expect(code.toString()).toMatchSnapshot('生成 typescript api 代码');
+    expect(code.toString()).toMatchSnapshot('基于yapi，生成 typescript api 代码');
   });
 });

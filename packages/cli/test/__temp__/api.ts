@@ -58,7 +58,7 @@ export function v2PetPetIdUploadImageByPost(
 }
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: ['additionalMetadata', 'file'],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: []
@@ -104,7 +104,7 @@ export function v2PetByPost(
 }
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
@@ -150,14 +150,14 @@ export function v2PetByPut(
 }
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
-  method: 'put',
+  method: 'PUT',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
+ * @描述 【请求数据接口定义】Finds Pets by status】
  * @请求头 GET /v2/pet/findByStatus
  */
 export interface IV2PetFindByStatusRequestByGet {
@@ -165,7 +165,7 @@ export interface IV2PetFindByStatusRequestByGet {
   status: string;
 }
 /**
- * @描述 【响应数据类型定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
+ * @描述 【响应数据类型定义】Finds Pets by status】
  * @请求头 GET /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseTypeByGet = Array<{
@@ -184,7 +184,7 @@ export type V2PetFindByStatusResponseTypeByGet = Array<{
   status?: 'available' | 'pending' | 'sold';
 }>;
 /**
- * @描述 Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @描述 Finds Pets by status
  * @请求信息 [ GET ] /v2/pet/findByStatus
  */
 export function v2PetFindByStatusByGet(
@@ -203,14 +203,14 @@ export function v2PetFindByStatusByGet(
 }
 v2PetFindByStatusByGet.requestConfig = {
   path: '/v2/pet/findByStatus',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['status']
 };
 
 /**
- * @描述 【请求数据接口定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
+ * @描述 【请求数据接口定义】Finds Pets by tags】
  * @请求头 GET /v2/pet/findByTags
  */
 export interface IV2PetFindByTagsRequestByGet {
@@ -218,7 +218,7 @@ export interface IV2PetFindByTagsRequestByGet {
   tags: string;
 }
 /**
- * @描述 【响应数据类型定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
+ * @描述 【响应数据类型定义】Finds Pets by tags】
  * @请求头 GET /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseTypeByGet = Array<{
@@ -237,7 +237,7 @@ export type V2PetFindByTagsResponseTypeByGet = Array<{
   status?: 'available' | 'pending' | 'sold';
 }>;
 /**
- * @描述 Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @描述 Finds Pets by tags
  * @请求信息 [ GET ] /v2/pet/findByTags
  */
 export function v2PetFindByTagsByGet(
@@ -256,14 +256,14 @@ export function v2PetFindByTagsByGet(
 }
 v2PetFindByTagsByGet.requestConfig = {
   path: '/v2/pet/findByTags',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['tags']
 };
 
 /**
- * @描述 【请求数据接口定义】Find pet by ID、Returns a single pet】
+ * @描述 【请求数据接口定义】Find pet by ID】
  * @请求头 GET /v2/pet/{petId}
  */
 export interface IV2PetPetIdRequestByGet {
@@ -271,7 +271,7 @@ export interface IV2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @描述 【响应数据接口定义】Find pet by ID、Returns a single pet】
+ * @描述 【响应数据接口定义】Find pet by ID】
  * @请求头 GET /v2/pet/{petId}
  */
 export interface IV2PetPetIdResponseByGet {
@@ -290,7 +290,7 @@ export interface IV2PetPetIdResponseByGet {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @描述 Find pet by ID、Returns a single pet
+ * @描述 Find pet by ID
  * @请求信息 [ GET ] /v2/pet/{petId}
  */
 export function v2PetPetIdByGet(
@@ -309,7 +309,7 @@ export function v2PetPetIdByGet(
 }
 v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: []
@@ -352,7 +352,7 @@ export function v2PetPetIdByPost(
 }
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: ['name', 'status'],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: []
@@ -391,7 +391,7 @@ export function v2PetPetIdByDelete(
 }
 v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'delete',
+  method: 'DELETE',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: []
@@ -408,6 +408,13 @@ export interface IV2StoreOrderRequestByPost {
   shipDate?: string;
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName?: 'error' | 'waring' | 'info';
+    }>
+  >;
   complete?: boolean;
 }
 /**
@@ -421,6 +428,13 @@ export interface IV2StoreOrderResponseByPost {
   shipDate?: string;
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName?: 'error' | 'waring' | 'info';
+    }>
+  >;
   complete?: boolean;
 }
 /**
@@ -443,14 +457,14 @@ export function v2StoreOrderByPost(
 }
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions】
+ * @描述 【请求数据接口定义】Find purchase order by ID】
  * @请求头 GET /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdRequestByGet {
@@ -458,7 +472,7 @@ export interface IV2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @描述 【响应数据接口定义】Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions】
+ * @描述 【响应数据接口定义】Find purchase order by ID】
  * @请求头 GET /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdResponseByGet {
@@ -468,10 +482,17 @@ export interface IV2StoreOrderOrderIdResponseByGet {
   shipDate?: string;
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName?: 'error' | 'waring' | 'info';
+    }>
+  >;
   complete?: boolean;
 }
 /**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @描述 Find purchase order by ID
  * @请求信息 [ GET ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByGet(
@@ -490,14 +511,14 @@ export function v2StoreOrderOrderIdByGet(
 }
 v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors】
+ * @描述 【请求数据接口定义】Delete purchase order by ID】
  * @请求头 DELETE /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdRequestByDelete {
@@ -505,12 +526,12 @@ export interface IV2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @描述 【响应数据类型定义】Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors】
+ * @描述 【响应数据类型定义】Delete purchase order by ID】
  * @请求头 DELETE /v2/store/order/{orderId}
  */
 export type V2StoreOrderOrderIdResponseTypeByDelete = any;
 /**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @描述 Delete purchase order by ID
  * @请求信息 [ DELETE ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByDelete(
@@ -529,24 +550,24 @@ export function v2StoreOrderOrderIdByDelete(
 }
 v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'delete',
+  method: 'DELETE',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据类型定义】Returns pet inventories by status、Returns a map of status codes to quantities】
+ * @描述 【请求数据类型定义】Returns pet inventories by status】
  * @请求头 GET /v2/store/inventory
  */
 export type V2StoreInventoryRequestTypeByGet = any;
 /**
- * @描述 【响应数据接口定义】Returns pet inventories by status、Returns a map of status codes to quantities】
+ * @描述 【响应数据接口定义】Returns pet inventories by status】
  * @请求头 GET /v2/store/inventory
  */
-export interface IV2StoreInventoryResponseByGet {}
+export type V2StoreInventoryResponseTypeByGet = any;
 /**
- * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
+ * @描述 Returns pet inventories by status
  * @请求信息 [ GET ] /v2/store/inventory
  */
 export function v2StoreInventoryByGet(
@@ -554,7 +575,7 @@ export function v2StoreInventoryByGet(
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<IV2StoreInventoryResponseByGet>(
+  return request<V2StoreInventoryResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
@@ -565,17 +586,24 @@ export function v2StoreInventoryByGet(
 }
 v2StoreInventoryByGet.requestConfig = {
   path: '/v2/store/inventory',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据类型定义】Creates list of users with given input array】
+ * @描述 【请求数据接口定义】Creates list of users with given input array】
  * @请求头 POST /v2/user/createWithArray
  */
-export type V2UserCreateWithArrayRequestTypeByPost = any;
+export interface IV2UserCreateWithArrayRequestByPost {
+  // The name that needs to be fetched. Use user1 for testing.
+  userId: string;
+  // List of user object
+  userName: string;
+  // The password for login in clear text
+  password: string;
+}
 /**
  * @描述 【响应数据类型定义】Creates list of users with given input array】
  * @请求头 POST /v2/user/createWithArray
@@ -586,7 +614,7 @@ export type V2UserCreateWithArrayResponseTypeByPost = any;
  * @请求信息 [ POST ] /v2/user/createWithArray
  */
 export function v2UserCreateWithArrayByPost(
-  data: V2UserCreateWithArrayRequestTypeByPost,
+  data: IV2UserCreateWithArrayRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
@@ -601,17 +629,27 @@ export function v2UserCreateWithArrayByPost(
 }
 v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  pathParamKeyNameList: ['userId'],
+  queryStringKeyNameList: ['userName', 'password']
 };
 
 /**
  * @描述 【请求数据类型定义】Creates list of users with given input array】
  * @请求头 POST /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestTypeByPost = any;
+export type V2UserCreateWithListRequestTypeByPost = Array<{
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}>;
 /**
  * @描述 【响应数据类型定义】Creates list of users with given input array】
  * @请求头 POST /v2/user/createWithList
@@ -637,7 +675,7 @@ export function v2UserCreateWithListByPost(
 }
 v2UserCreateWithListByPost.requestConfig = {
   path: '/v2/user/createWithList',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
@@ -649,6 +687,7 @@ v2UserCreateWithListByPost.requestConfig = {
  */
 export interface IV2UserUsernameRequestByGet {
   // The name that needs to be fetched. Use user1 for testing.
+  username1: string;
   username: string;
 }
 /**
@@ -686,14 +725,14 @@ export function v2UserUsernameByGet(
 }
 v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
+  pathParamKeyNameList: ['username1', 'username'],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Updated user、This can only be done by the logged in user.】
+ * @描述 【请求数据接口定义】Updated user】
  * @请求头 PUT /v2/user/{username}
  */
 export interface IV2UserUsernameRequestByPut {
@@ -709,12 +748,12 @@ export interface IV2UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @描述 【响应数据类型定义】Updated user、This can only be done by the logged in user.】
+ * @描述 【响应数据类型定义】Updated user】
  * @请求头 PUT /v2/user/{username}
  */
 export type V2UserUsernameResponseTypeByPut = any;
 /**
- * @描述 Updated user、This can only be done by the logged in user.
+ * @描述 Updated user
  * @请求信息 [ PUT ] /v2/user/{username}
  */
 export function v2UserUsernameByPut(
@@ -733,27 +772,28 @@ export function v2UserUsernameByPut(
 }
 v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'put',
+  method: 'PUT',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Delete user、This can only be done by the logged in user.】
+ * @描述 【请求数据接口定义】Delete user】
  * @请求头 DELETE /v2/user/{username}
  */
 export interface IV2UserUsernameRequestByDelete {
   // The name that needs to be deleted
+  username1: string;
   username: string;
 }
 /**
- * @描述 【响应数据类型定义】Delete user、This can only be done by the logged in user.】
+ * @描述 【响应数据类型定义】Delete user】
  * @请求头 DELETE /v2/user/{username}
  */
 export type V2UserUsernameResponseTypeByDelete = any;
 /**
- * @描述 Delete user、This can only be done by the logged in user.
+ * @描述 Delete user
  * @请求信息 [ DELETE ] /v2/user/{username}
  */
 export function v2UserUsernameByDelete(
@@ -772,9 +812,9 @@ export function v2UserUsernameByDelete(
 }
 v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'delete',
+  method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
+  pathParamKeyNameList: ['username1', 'username'],
   queryStringKeyNameList: []
 };
 
@@ -792,7 +832,7 @@ export interface IV2UserLoginRequestByGet {
  * @描述 【响应数据类型定义】Logs user into the system】
  * @请求头 GET /v2/user/login
  */
-export type V2UserLoginResponseByGet = string;
+export type V2UserLoginResponseTypeByGet = string;
 /**
  * @描述 Logs user into the system
  * @请求信息 [ GET ] /v2/user/login
@@ -802,7 +842,7 @@ export function v2UserLoginByGet(
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<V2UserLoginResponseByGet>(
+  return request<V2UserLoginResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
@@ -813,7 +853,7 @@ export function v2UserLoginByGet(
 }
 v2UserLoginByGet.requestConfig = {
   path: '/v2/user/login',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['username', 'password']
@@ -849,14 +889,14 @@ export function v2UserLogoutByGet(
 }
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Create user、This can only be done by the logged in user.】
+ * @描述 【请求数据接口定义】Create user】
  * @请求头 POST /v2/user
  */
 export interface IV2UserRequestByPost {
@@ -871,12 +911,12 @@ export interface IV2UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @描述 【响应数据类型定义】Create user、This can only be done by the logged in user.】
+ * @描述 【响应数据类型定义】Create user】
  * @请求头 POST /v2/user
  */
 export type V2UserResponseTypeByPost = any;
 /**
- * @描述 Create user、This can only be done by the logged in user.
+ * @描述 Create user
  * @请求信息 [ POST ] /v2/user
  */
 export function v2UserByPost(
@@ -891,7 +931,7 @@ export function v2UserByPost(
 }
 v2UserByPost.requestConfig = {
   path: '/v2/user',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []

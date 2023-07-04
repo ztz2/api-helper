@@ -1,14 +1,25 @@
-import { JSONSchema4 } from 'json-schema';
 import { APIHelper } from '@api-helper/core';
 import { renderInterfaceName } from '@api-helper/template';
 
+export type ParserPluginRunResult = Array<{
+  documentServer: Config['documentServers'][number];
+  parsedDocumentList: Array<APIHelper.Document>;
+}>
+
+export abstract class AbstractParserPlugin {
+  abstract name: string;
+  abstract run(documentServers: Config['documentServers']): Promise<ParserPluginRunResult>;
+}
+
 export type Config = {
+  // 自定义解析插件
+  parserPlugins?: AbstractParserPlugin[],
   documentServers: Array<{
-    // 文档地址
+    // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
     url: string;
-    // 文档类型（也可以是本地文档JSON文件路径），默认可以解析 swagger ，其他文档 custom 类型，需要自行实现 onParseDocument 钩子函数
-    type: 'swagger' | 'yapi' | 'custom';
-    // 获取数据的key，body[dataKey]
+    // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+    type: 'swagger' | 'yapi';
+    // 获取响应数据的key，body[dataKey]
     dataKey?: string;
     // 访问文档可能需要认证信息，http auth验证方式
     auth?: {
@@ -21,8 +32,6 @@ export type Config = {
     events?: {
       // 生成接口名称
       onRenderInterfaceName?: typeof renderInterfaceName;
-      // 解析接口文档
-      onParseDocument?(resourceDocumentList: Array<unknown>): APIHelper.Document[];
     };
   }>,
   // 请求函数文件路径
@@ -35,11 +44,3 @@ export type Config = {
     filename: string;
   }
 }
-
-export type DocumentResourceList = Array<{
-  resourceDocumentList: Array<JSONSchema4 | any>
-} & Config['documentServers'][number]>
-
-export type DocumentParsedList = Array<{
-  documentList: Array<APIHelper.Document>
-} & Config['documentServers'][number]>

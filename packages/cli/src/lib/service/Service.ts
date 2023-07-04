@@ -7,55 +7,58 @@ import {
   ensureDir,
   outputFile
 } from 'fs-extra';
-import {
-  APIHelper,
-  ParserOpenAPI
-} from '@api-helper/core';
 import { renderAllApi } from '@api-helper/template';
 
-import {
-  Config,
-  DocumentParsedList,
-  DocumentResourceList
-} from '@/lib';
-
-import { getDocument } from './server';
+import log from '@/lib/tools/log';
 import {
   loadModule,
   toUnixPath,
-  getNormalizedRelativePath,
+  getNormalizedRelativePath, documentServersRunParserPlugins,
 } from '../tools/util';
+import {
+  AbstractParserPlugin,
+  ParserPluginRunResult,
+} from '@/lib/types';
+import { Config } from '@/lib';
 import { EXTENSION } from '@/lib/service/const';
-import log from '@/lib/tools/log';
+import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
+import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
+
+type DocumentServers = Config['documentServers'];
 
 const prompts = require('prompts');
 
-type ChooseDocument = {
-  documentList: APIHelper.Document[],
-} & Partial<DocumentResourceList[number]>;
-
 class Service{
   static init: () => void;
-
+  private parserPlugins: AbstractParserPlugin[] = [
+    new ParserYapiPlugin(),
+    new ParserSwaggerPlugin(),
+  ];
   private configFilePath?: string;
   constructor(configFilePath?: string) {
     this.configFilePath = configFilePath;
   }
+
   async run() {
     try {
-      const config = await this.getConfigFile();
-      let len = config.length;
-      for (let i = 0; i < config.length; i++) {
-        const c = config[i];
+      const configList = await this.getConfigFile();
+      const len = configList.length;
+
+      // 添加解析插件
+      this.injectParserPlugins(configList);
+
+      for (let i = 0; i < configList.length; i++) {
+        const config = configList[i];
         let spinner = len > 1 ? ora(`正在处理，第${i + 1}项...`).start() : null;
         try {
-          await this.checkOutputPathExisted(c);
-          await this.checkRequestFunctionFileExisted(c);
-          const documentResourceList = await this.fetchSourceDocumentList(c);
-          const parsedDocumentList = await this.parserSourceDocument(documentResourceList);
-          const chooseDocumentList = await this.chooseDocument(parsedDocumentList);
-          const code = await this.genCode(c, chooseDocumentList);
-          await this.output(c, code);
+          await this.checkOutputPathExisted(config);
+          await this.checkRequestFunctionFileExisted(config);
+
+          const parserPluginRunResult = await this.parserDocument(config.documentServers);
+          const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
+          const code = await this.genCode(config, chooseDocumentList);
+          await this.output(config, code);
+
           spinner && spinner.succeed();
         } catch {
           spinner && spinner.fail(`第${i}项生成失败`);
@@ -64,8 +67,30 @@ class Service{
     } catch {}
   }
 
+  private injectParserPlugins(configList: Config[]) {
+    for (const config of configList) {
+      const parserPlugins = config?.parserPlugins ?? [];
+      for (const parserPlugin of parserPlugins) {
+        const parserPluginMap = this.getParserPluginMap();
+        if (parserPluginMap.has(parserPlugin.name)) {
+          log.warn('提示', `${parserPlugin.name}插件已经存在.`);
+          continue;
+        }
+        this.parserPlugins.push(parserPlugin);
+      }
+    }
+  }
+
+  private getParserPluginMap() {
+    const map = new Map();
+    for (const parserPlugin of this.parserPlugins) {
+      map.set(parserPlugin.name, parserPlugin);
+    }
+    return map;
+  }
+
   // 1. 获取配置文件
-  private async getConfigFile() {
+  private async getConfigFile(): Promise<Config[]> {
     const { configFilePath } = this;
     const oraText = '读取 apih.config.(ts|js|cjs|mjs) 配置文件';
     const spinner = ora(oraText).start();
@@ -132,66 +157,20 @@ class Service{
     }
   }
 
-  // 4. 获取源文档
-  private async fetchSourceDocumentList(config: Config): Promise<DocumentResourceList> {
-    const oraText = '请求 config.url 获取文档';
-    const spinner = ora(oraText).start();
-    try {
-      const documentResourceList = await getDocument(config.documentServers);
-      spinner.succeed();
-      return documentResourceList;
-    } catch {
-      const failText = oraText + '【失败】';
-      spinner.fail(failText);
-      return Promise.reject(failText);
-    }
+  // 4. 文档获取与解析
+  private async parserDocument(documentServers: DocumentServers): Promise<ParserPluginRunResult> {
+    const result = await documentServersRunParserPlugins(documentServers, this.parserPlugins);
+    return result.parserPluginRunResult;
   }
 
-  // 5. 解析文档
-  private async parserSourceDocument(documentResourceList: DocumentResourceList): Promise<DocumentParsedList> {
-    const oraText = '解析文档';
-
-    const documentList: DocumentParsedList = [];
-    const spinner = ora(oraText).start();
-    try {
-      for (const d of documentResourceList) {
-        const row: Config['documentServers'][number] = { ...d };
-        if ('resourceDocumentList' in row) {
-          // @ts-ignore
-          delete row.resourceDocumentList;
-        }
-        if (d.events?.onParseDocument) {
-          documentList.push({
-            ...row,
-            documentList: d.events?.onParseDocument(d.resourceDocumentList)
-          });
-        } else if (d.type === 'swagger') {
-          documentList.push({
-            ...row,
-            documentList: await new ParserOpenAPI().parser(d.resourceDocumentList)
-          });
-        } else if (d.type === 'yapi') {
-          // TODO 等待解析yapi文档
-        }
-      }
-
-      spinner.succeed();
-      return documentList;
-    } catch {
-      const failText = oraText + '【失败】';
-      spinner.fail(failText);
-      return Promise.reject(failText);
-    }
-  }
-
-  // 6. 选择项目文档
-  private async chooseDocument (documentParsedList: DocumentParsedList): Promise<DocumentParsedList> {
+  // 5. 选择项目文档
+  private async chooseDocument (parserPluginRunResult: ParserPluginRunResult): Promise<ParserPluginRunResult> {
     const choicesDocumentListOptions: { title: string; value: string }[] = [];
 
-    documentParsedList.forEach((d) => {
-      d.documentList.forEach((item) => {
+    parserPluginRunResult.forEach((d) => {
+      d.parsedDocumentList.forEach((item) => {
         choicesDocumentListOptions.push({
-          title: `${item.title}【${d.url}】`,
+          title: `${item.title}【${d.documentServer.url}】`,
           value: item.id
         });
       });
@@ -209,23 +188,23 @@ class Service{
         log.error('提示', failText);
         return Promise.reject(failText);
       }
-      documentParsedList = documentParsedList.filter((d) => {
-        d.documentList = d.documentList.filter((item) => answers.documentList.includes(item.id));
-        return d.documentList.length > 0;
+      parserPluginRunResult = parserPluginRunResult.filter((d) => {
+        d.parsedDocumentList = d.parsedDocumentList.filter((item) => answers.documentList.includes(item.id));
+        return d.parsedDocumentList.length > 0;
       });
     }
 
-    if (documentParsedList.length === 0) {
+    if (parserPluginRunResult.length === 0) {
       const failText = '没有选择任何项目文档';
       log.error('提示', failText);
       return Promise.reject(failText);
     }
 
-    return documentParsedList;
+    return parserPluginRunResult;
   }
 
-  // 7. 生成代码
-  private async genCode(config: Config, documentParsedList: DocumentParsedList): Promise<string> {
+  // 6. 生成代码
+  private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<string> {
     const oraText = '生成代码';
     const outputFilename = join(config.output.path, config.output.filename);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
@@ -266,16 +245,21 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
 
     // 生成代码
     const spinner = ora(oraText).start();
-    for (const { dataKey, documentList } of documentParsedList) {
-      for (const d of documentList) {
-        let str = renderAllApi(d, {
-          codeType: isTS ? 'typescript' : 'javascript',
-          responseDataKey: dataKey,
-        });
-        if (!str.endsWith('\n')) {
-          str += '\n';
+    for (const item of parserPluginRunResult) {
+      const { documentServer: { dataKey }, parsedDocumentList } = item;
+      for (const d of parsedDocumentList) {
+        try {
+          let str = renderAllApi(d, {
+            codeType: isTS ? 'typescript' : 'javascript',
+            dataKey: dataKey,
+          });
+          if (!str.endsWith('\n')) {
+            str += '\n';
+          }
+          code.push(str);
+        } catch (e) {
+          console.log(e);
         }
-        code.push(str);
       }
     }
     spinner.succeed();
@@ -283,7 +267,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
     return code.filter(Boolean).join('\n');
   }
 
-  // 8. output
+  // 7. 输出
   private async output(config: Config, code: string) {
     const oraText = '输出文件';
     const outputFilename = join(config.output.path, config.output.filename);
@@ -342,9 +326,9 @@ import { defineConfig } from '@api-helper/cli';
 export default defineConfig({
   documentServers: [
     {
-      // 文档地址
+      // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
       url: 'https://petstore.swagger.io/v2/swagger.json',
-      // 文档类型，默认可以解析 swagger 和 yapi，其他文档 custom 类型，需要自行实现 onParseDocument 钩子函数
+      // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
       type: 'swagger',
       // 获取数据的key，body[dataKey]
       dataKey: ''

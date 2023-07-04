@@ -14,30 +14,7 @@
     </a>
 </p>
 
-`API Helper` 简称 `apih` ，帮助开发者生成interface、类、对象、form表单模板等各种代码的工具，
-
-
-> 一个用于构建 Web API 、代码模板的多功能工具库
-
-- 💪 基于Typescript构建
-- ⚙️ 单元测试
-- 📦 本地部署
-- 🔌 Extensible
-
-
-> API生成特点
-- 支持多个API项目（依赖多个API项目，一次性生成API）
-- 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
-- 请求参数兼容（对象和数组参数的兼容）
-
-## 文档
-[文档链接](https://apih.andou.live)
-
-## 展示
-<p><img src="../docs/src/public/images/api-code.png" /></p>
-<p><img src="../docs/src/public/images/map-code.png" /></p>
-<p><img src="../docs/src/public/images/class-code.png" /></p>
-<p><img src="../docs/src/public/images/form-code.png" /></p>
+`API Helper Core` 核心包，包含对swagger和yapi的解析。
 
 ## 许可
 

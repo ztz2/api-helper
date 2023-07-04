@@ -1,20 +1,20 @@
 import {
   Config,
-  DocumentResourceList,
-  DocumentParsedList,
+  ParserPluginRunResult,
+  AbstractParserPlugin,
 } from './types';
 import Service from '@/lib/service/Service';
 
-export type { Config, DocumentResourceList, DocumentParsedList };
+export type { Config, ParserPluginRunResult, AbstractParserPlugin };
 
 export function defineConfig(config: Config | Config[]): Config[] {
   return Array.isArray(config) ? config : [config];
 }
 
-export async function run(cmd: 'init' | 'root', configFilePath?: string) {
+export async function run(cmd: 'init' | null = null, configFilePath?: string) {
   switch (cmd) {
     case 'init':
-      await Service.init();
+      Service.init();
       break;
     default:
       await new Service(configFilePath).run();

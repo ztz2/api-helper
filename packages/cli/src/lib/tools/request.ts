@@ -1,9 +1,16 @@
+import https from 'https';
 import axios, { AxiosRequestConfig } from 'axios';
 
 const request = axios.create({
   timeout: 30000,
 });
 
+request.interceptors.request.use((config) => {
+  config.httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+  });
+  return config;
+});
 request.interceptors.response.use(
   (response) => {
     const config: AxiosRequestConfig & Recordable = response.config;

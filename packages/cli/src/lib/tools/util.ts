@@ -1,16 +1,38 @@
-import path, { dirname, relative } from 'path';
+import qs from 'qs';
+import ora from 'ora';
+import {
+  join,
+  dirname,
+  relative,
+  isAbsolute,
+  resolve as pathResolve,
+} from 'path';
 import fs from 'node:fs';
 import { merge } from 'lodash';
 import tmp, { FileOptions } from 'tmp';
+import {AxiosRequestConfig} from 'axios';
 import esbuild, { BuildOptions, BuildResult } from 'esbuild';
+
+import { AbstractParserPlugin, Config, ParserPluginRunResult } from '@/lib';
+import log from '@/lib/tools/log';
+
+type DocumentServers = Config['documentServers'];
+type DocumentServer = DocumentServers[number];
 
 export function resolve(p = '') {
   const args = Array.from(arguments) as unknown as string[];
-  if (path.isAbsolute(p)) {
-    return path.join.apply(null, args);
+  if (isAbsolute(p)) {
+    return join.apply(null, args);
   }
   args.unshift(process.cwd());
-  return path.resolve.apply(null, args);
+  return pathResolve.apply(null, args);
+}
+
+export function pathMerge(b = '', p = '') {
+  if (b.endsWith('/') && p.startsWith('/')) {
+    p = p.slice(1);
+  }
+  return b + p;
 }
 
 /**
@@ -42,7 +64,7 @@ export function checkType<T>(value: T, target: string) {
  * @return {T} 模块默认返回的内容
  */
 export function loadModule<T>(file: string, isAsync = true): Promise<T> | T {
-  file = path.isAbsolute(file) ? file : resolve(file);
+  file = isAbsolute(file) ? file : resolve(file);
   try {
     fs.accessSync(file, fs.constants.F_OK);
   } catch (e) {
@@ -89,7 +111,7 @@ export function loadModule<T>(file: string, isAsync = true): Promise<T> | T {
  * @return {string} unix 风格的路径
  */
 export function toUnixPath(path: string) {
-  return path.replace(/[/\\]+/g, '/')
+  return path.replace(/[/\\]+/g, '/');
 }
 
 /**
@@ -102,4 +124,107 @@ export function getNormalizedRelativePath(from: string, to: string) {
   return toUnixPath(relative(dirname(from), to))
     .replace(/^(?=[^.])/, './')
     .replace(/\.(ts|js)x?$/i, '')
+}
+
+export function processRequestConfig(documentServer: DocumentServer, options?: {
+  path?: string,
+  method?: string,
+  dataKey?: string,
+  queryParams?: Recordable
+} & AxiosRequestConfig): AxiosRequestConfig {
+  const { auth, authToken } = documentServer;
+  const path = options?.path ?? '';
+  const method = options?.method ?? 'get';
+  const queryParams = options?.queryParams ?? {};
+  const requestConfig: AxiosRequestConfig & Recordable = {
+    ...options,
+    url: pathMerge(documentServer.url, path),
+    method,
+  };
+
+  // 有密码
+  if (auth?.username && auth?.password) {
+    requestConfig.auth = {
+      username: auth?.username,
+      password: auth?.password
+    };
+  }
+
+  // 有token
+  if (authToken) {
+    queryParams.token = authToken;
+    requestConfig.headers = { token: authToken };
+  }
+
+  // URL参数
+  const queryParamsStr = qs.stringify(queryParams);
+  if (queryParamsStr) {
+    requestConfig.url += `?${queryParamsStr}`;
+  }
+
+  return requestConfig;
+}
+
+export async function documentServersRunParserPlugins(documentServers: DocumentServers, parserPlugins: AbstractParserPlugin[]): Promise<{
+  noParserPluginNames: string[],
+  parserPluginRunResult: ParserPluginRunResult
+}> {
+  const parserPluginMap = new Map();
+  for (const parserPlugin of parserPlugins) {
+    parserPluginMap.set(parserPlugin.name, parserPlugin);
+  }
+
+  const result = {
+    noParserPluginNames: [] as string[],
+    parserPluginRunResult: [] as ParserPluginRunResult,
+  };
+
+  const execParserPluginMap = new Map();
+  const oraText = '文档获取与解析';
+  const spinner = ora(oraText).start();
+  for (const documentServer of documentServers) {
+    if (!documentServer.url) {
+      log.error('提示', `documentServers.url 不可为空!`);
+      continue;
+    }
+
+    if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
+      result.noParserPluginNames.push(documentServer.type);
+      continue;
+    }
+
+    // 默认使用 swagger 解析
+    const parserPlugin = !documentServer.type ? parserPluginMap.get('swagger') : parserPluginMap.get(documentServer.type);
+
+    if (execParserPluginMap.has(parserPlugin)) {
+      execParserPluginMap.get(parserPlugin).push(documentServer);
+    } else {
+      execParserPluginMap.set(parserPlugin, [documentServer]);
+    }
+  }
+
+  const tasks = [];
+  for (const [parserPlugin, _documentServers] of execParserPluginMap) {
+    tasks.push(
+      parserPlugin.run(_documentServers).then((res: ParserPluginRunResult) => {
+        [].push.apply(result.parserPluginRunResult, res as any);
+      })
+    );
+  }
+  try {
+    await Promise.all(tasks);
+  } catch {}
+
+  if (result.noParserPluginNames.length > 0) {
+    log.error('提示', `文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
+  }
+
+  if (result.parserPluginRunResult.length === 0) {
+    const failText = oraText + '【程序终止，没有获取或者解析出文档】';
+    spinner.fail(failText);
+    return Promise.reject(failText);
+  }
+
+  spinner.succeed();
+  return result;
 }
