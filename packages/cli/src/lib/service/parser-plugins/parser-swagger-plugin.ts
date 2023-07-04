@@ -37,25 +37,34 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
           if (validateOpenAPIDocument(openAPIDocument as any)) {
             openAPIDocumentList.push(openAPIDocument);
           } else {
-            // 根据 swagger-resources 获取全部。
             const origin = originRgx[1];
-            const swaggerResources: OpenAPI.Parameter = await request({
+            // 获取v2下默认的文档
+            const openAPIDocument: OpenAPI.Document = await request({
               ...requestConfig,
-              url: `${origin}/swagger-resources`,
+              url: `${origin}/v2/api-docs`,
             });
-            if (Array.isArray(swaggerResources)) {
-              // 自动获取V2版本文档
-              for (const sr of swaggerResources) {
-                try {
-                  const url = origin + sr.url;
-                  const openapiDocument: any = (await request({
-                    ...requestConfig,
-                    url,
-                  })) as OpenAPI.Document;
-                  if (validateOpenAPIDocument(openapiDocument)) {
-                    openAPIDocumentList.push(openapiDocument);
-                  }
-                } catch {}
+            if (validateOpenAPIDocument(openAPIDocument as any)) {
+              openAPIDocumentList.push(openAPIDocument);
+            } else {
+              // 兜底：根据 swagger-resources 获取全部。
+              const swaggerResources: OpenAPI.Parameter = await request({
+                ...requestConfig,
+                url: `${origin}/swagger-resources`,
+              });
+              if (Array.isArray(swaggerResources)) {
+                // 自动获取V2版本文档
+                for (const sr of swaggerResources) {
+                  try {
+                    const url = origin + sr.url;
+                    const openapiDocument: any = (await request({
+                      ...requestConfig,
+                      url,
+                    })) as OpenAPI.Document;
+                    if (validateOpenAPIDocument(openapiDocument)) {
+                      openAPIDocumentList.push(openapiDocument);
+                    }
+                  } catch {}
+                }
               }
             }
           }

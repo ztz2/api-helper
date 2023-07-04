@@ -3,7 +3,16 @@ import { JSONSchema4 } from 'json-schema';
 
 type Rule = (schema: OpenAPI.Document) => boolean | void
 const rules = new Map<string, Rule>();
-rules.set('必须包含 paths 属性', (document) => 'paths' in document);
+rules.set('必须包含 paths 属性', (document) => {
+  try {
+    if ('paths' in document) {
+      return true
+    }
+    // 可能不是对象类型
+  } catch {
+    return false;
+  }
+});
 export function validateOpenAPIDocument(document: OpenAPI.Document): boolean {
   const errors: string[] = []
   rules.forEach((rule, errorMeg) => {
