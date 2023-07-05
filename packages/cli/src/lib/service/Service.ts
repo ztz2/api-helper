@@ -49,11 +49,11 @@ class Service{
     this.injectParserPlugins(configList);
 
     for (let i = 0; i < configList.length; i++) {
-      const config = configList[i];
-      if (len > 1) {
-        console.log(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
-      }
       try {
+        const config = configList[i];
+        if (len > 1) {
+          console.log(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
+        }
         await this.checkOutputPathExisted(config);
         await this.checkRequestFunctionFileExisted(config);
 
@@ -64,9 +64,7 @@ class Service{
         const code = await this.genCode(config, chooseDocumentList);
 
         await this.output(config, code);
-      } catch {
-        log.error('提示', `第${i}项生成失败`);
-      }
+      } catch {}
     }
   }
 

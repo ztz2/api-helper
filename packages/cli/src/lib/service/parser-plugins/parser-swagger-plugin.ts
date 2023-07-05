@@ -50,7 +50,7 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
 }
 
 async function getDocument(documentServer: DocumentServers[number]): Promise<Array<OpenAPI.Document>> {
-  const serverUrlText = `【${documentServer.url}】`;
+  const serverUrlText = /^http/.test(documentServer.url) ? `【${documentServer.url}】` : '';
   const requestConfig: AxiosRequestConfig = processRequestConfig(documentServer);
   const openAPIDocumentList: Array<OpenAPI.Document> = [];
 
