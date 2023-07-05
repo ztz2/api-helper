@@ -1,19 +1,21 @@
 import ora from 'ora';
-import { join } from 'path';
 import fg from 'fast-glob';
+import { join } from 'path';
 import {
   stat,
   remove,
   ensureDir,
   outputFile
 } from 'fs-extra';
+
 import { renderAllApi } from '@api-helper/template';
 
 import log from '@/lib/tools/log';
 import {
   loadModule,
   toUnixPath,
-  getNormalizedRelativePath, documentServersRunParserPlugins,
+  getNormalizedRelativePath,
+  documentServersRunParserPlugins,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
@@ -40,31 +42,32 @@ class Service{
   }
 
   async run() {
-    try {
-      const configList = await this.getConfigFile();
-      const len = configList.length;
+    const configList = await this.getConfigFile();
+    const len = configList.length;
 
-      // 添加解析插件
-      this.injectParserPlugins(configList);
+    // 添加解析插件
+    this.injectParserPlugins(configList);
 
-      for (let i = 0; i < configList.length; i++) {
-        const config = configList[i];
-        let spinner = len > 1 ? ora(`正在处理，第${i + 1}项...`).start() : null;
-        try {
-          await this.checkOutputPathExisted(config);
-          await this.checkRequestFunctionFileExisted(config);
-
-          const parserPluginRunResult = await this.parserDocument(config.documentServers);
-          const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
-          const code = await this.genCode(config, chooseDocumentList);
-          await this.output(config, code);
-
-          spinner && spinner.succeed();
-        } catch {
-          spinner && spinner.fail(`第${i}项生成失败`);
-        }
+    for (let i = 0; i < configList.length; i++) {
+      const config = configList[i];
+      if (len > 1) {
+        console.log(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
       }
-    } catch {}
+      try {
+        await this.checkOutputPathExisted(config);
+        await this.checkRequestFunctionFileExisted(config);
+
+        const parserPluginRunResult = await this.parserDocument(config.documentServers);
+
+        const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
+
+        const code = await this.genCode(config, chooseDocumentList);
+
+        await this.output(config, code);
+      } catch {
+        log.error('提示', `第${i}项生成失败`);
+      }
+    }
   }
 
   private injectParserPlugins(configList: Config[]) {
@@ -165,13 +168,14 @@ class Service{
 
   // 5. 选择项目文档
   private async chooseDocument (parserPluginRunResult: ParserPluginRunResult): Promise<ParserPluginRunResult> {
-    const choicesDocumentListOptions: { title: string; value: string }[] = [];
+    const choicesDocumentListOptions: { title: string; value: string; selected: boolean; }[] = [];
 
     parserPluginRunResult.forEach((d) => {
       d.parsedDocumentList.forEach((item) => {
         choicesDocumentListOptions.push({
           title: `${item.title}【${d.documentServer.url}】`,
-          value: item.id
+          value: item.id,
+          selected: true,
         });
       });
     });
@@ -180,7 +184,7 @@ class Service{
       const answers = await prompts([{
         type: 'multiselect',
         name: 'documentList',
-        message: '当前存在多个项目文档，请选择项目文档？',
+        message: '配置中存在多个项目，请选择项目文档(默认全部)',
         choices: choicesDocumentListOptions,
       }]);
       if (answers.documentList.length === 0) {
@@ -205,7 +209,7 @@ class Service{
 
   // 6. 生成代码
   private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<string> {
-    const oraText = '生成代码';
+    const oraText = `代码生成`;
     const outputFilename = join(config.output.path, config.output.filename);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
 
@@ -269,7 +273,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
 
   // 7. 输出
   private async output(config: Config, code: string) {
-    const oraText = '输出文件';
+    const oraText = `文件输出`;
     const outputFilename = join(config.output.path, config.output.filename);
     const spinner = ora(oraText).start();
 
@@ -282,7 +286,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
     try {
       await outputFile(outputFilename, code);
       spinner.succeed();
-      log.info('提示', 'Done. 代码生成成功');
+      log.info('提示', `Done. 代码生成成功`);
     } catch {
       const failText = oraText + '【失败】';
       spinner.fail(failText);

@@ -14,6 +14,9 @@ rules.set('必须包含 paths 属性', (document) => {
   }
 });
 export function validateOpenAPIDocument(document: OpenAPI.Document): boolean {
+  if (!document) {
+    return false;
+  }
   const errors: string[] = []
   rules.forEach((rule, errorMeg) => {
     const res = rule(document);

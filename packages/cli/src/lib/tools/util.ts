@@ -228,3 +228,22 @@ export async function documentServersRunParserPlugins(documentServers: DocumentS
   spinner.succeed();
   return result;
 }
+
+export function getErrorMessage(error: string | Error & { msg?: string }, prefix = '', postfix = ''): string {
+  function mergeMessage<T>(msg: T) {
+    return msg ? `${prefix}${msg}${postfix}` : '';
+  }
+  if (!error) {
+    return '';
+  }
+  if (typeof error === 'string') {
+    return mergeMessage(error);
+  }
+  if (error?.message) {
+    return mergeMessage(error.message);
+  }
+  if (error?.msg) {
+    return mergeMessage(error.msg);
+  }
+  return '';
+}

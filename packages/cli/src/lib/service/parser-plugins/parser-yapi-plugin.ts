@@ -1,9 +1,10 @@
+import to from 'await-to-js';
 import { ParserYapi } from '@api-helper/core';
 
 import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
-import { processRequestConfig } from '@/lib/tools/util';
+import { processRequestConfig, getErrorMessage } from '@/lib/tools/util';
 import { AbstractParserPlugin, ParserPluginRunResult } from '@/lib/types';
 
 type DocumentServers = Config['documentServers'];
@@ -25,30 +26,52 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
 
     const dsTasks = [];
     for (const documentServer of documentServers) {
+      const errorServerText = `【${documentServer.url}】`;
       dsTasks.push((async () => {
         // 获取项目基本信息
-        const projectInfo: Recordable = await fetchProjectInfo(documentServer);
+        const projectInfo: Recordable = await fetchProjectInfo(documentServer).catch((e) => {
+          log.error('提示', `获取项目基本信息失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          return Promise.reject(e);
+        });
 
         const projectId = projectInfo._id;
 
         // 获取所有分类
-        const categoryList = await fetchMenuList(documentServer, { projectId });
+        const categoryList = await fetchMenuList(documentServer, { projectId }).catch((e) => {
+          log.error('提示', `获取菜单列表失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          return Promise.reject(e);
+        });
 
         // 获取所有接口
-        const apiList = await fetchApiList(documentServer, { projectId });
+        const apiList = await fetchApiList(documentServer, { projectId }).catch((e) => {
+          log.error('提示', `获取接口列表数据失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          return Promise.reject(e);
+        });
+
+        if (apiList.length === 0) {
+          return Promise.reject(`项目接口为空${errorServerText}`);
+        }
 
         // 获取所有接口的详情
         const tasks = [];
+        const errorApi = [];
         for (const api of apiList) {
           tasks.push(
             fetchApiDetail(documentServer, { id: api._id }).then((res) => {
               api.content = res;
+            }).catch((e) => {
+              errorApi.push([api, e]);
+              return Promise.reject(e);
             })
           );
         }
-        try {
-          await Promise.all(tasks);
-        } catch {}
+
+        await to(Promise.all(tasks));
+
+        if (errorApi.length === apiList.length) {
+          log.verbose('error', `接口详情获取失败${errorServerText}`);
+          return Promise.reject(`接口详情获取失败${errorServerText}`);
+        }
 
         const parsedDocumentList = await new ParserYapi({
           projectInfo: projectInfo as any,
@@ -56,28 +79,25 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
           apiList,
         }).parser();
 
-        if (parsedDocumentList?.length > 0) {
-          result.push({
-            documentServer,
-            parsedDocumentList
-          });
+        if (parsedDocumentList.length === 0) {
+          log.error('提示', `${documentServer.url} 解析yapi配置失败${errorServerText}`);
         }
+
+        result.push({
+          documentServer,
+          parsedDocumentList
+        });
       })());
     }
 
-    try {
-      await Promise.all(dsTasks);
-    } finally {}
+    await to(Promise.all(dsTasks));
 
     return result;
   }
 }
 
 function fetchProjectInfo(documentServer: DocumentServer) {
-  return request(processRequestConfig(documentServer, { path: PROJECT_API, dataKey: 'data' })).catch((e) => {
-    log.error('提示', e as string);
-    return Promise.reject(e);
-  })
+  return request(processRequestConfig(documentServer, { path: PROJECT_API, dataKey: 'data' }));
 }
 
 function fetchMenuList(documentServer: DocumentServer, params: Recordable) {
@@ -87,10 +107,7 @@ function fetchMenuList(documentServer: DocumentServer, params: Recordable) {
     queryParams: {
       project_id: params.projectId
     },
-  })).catch((e) => {
-    log.error('提示', e as string);
-    return Promise.reject(e);
-  })
+  }));
 }
 
 function fetchApiList(documentServer: DocumentServer, params: Recordable) {
@@ -104,10 +121,7 @@ function fetchApiList(documentServer: DocumentServer, params: Recordable) {
     },
   })).then((res) => {
     return (res as Recordable)?.list ?? [];
-  }).catch((e) => {
-    log.error('提示', e as string);
-    return Promise.reject(e);
-  })
+  });
 }
 
 function fetchApiDetail(documentServer: DocumentServer, params: Recordable) {
@@ -117,8 +131,5 @@ function fetchApiDetail(documentServer: DocumentServer, params: Recordable) {
     queryParams: {
       id: params.id,
     },
-  })).catch((e) => {
-    log.error('提示', e as string);
-    return Promise.reject(e);
-  })
+  }));
 }
