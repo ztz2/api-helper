@@ -1,15 +1,23 @@
 import to from 'await-to-js';
-import { readJsonSync } from 'fs-extra';
 import { OpenAPI } from 'openapi-types';
-import { AxiosRequestConfig } from 'axios';
+import { readJsonSync } from 'fs-extra';
 import { ParserSwagger } from '@api-helper/core';
+import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
+
+import {
+  AbstractParserPlugin,
+  ParserPluginRunResult,
+} from '@/lib/types';
+import {
+  checkType,
+  getErrorMessage,
+  processRequestConfig,
+} from '@/lib/tools/util';
 
 import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
-import { AbstractParserPlugin, ParserPluginRunResult } from '@/lib/types';
-import { checkType, getErrorMessage, processRequestConfig } from '@/lib/tools/util';
 
 type DocumentServers = Config['documentServers'];
 
@@ -50,15 +58,14 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
 }
 
 async function getDocument(documentServer: DocumentServers[number]): Promise<Array<OpenAPI.Document>> {
-  const serverUrlText = /^http/.test(documentServer.url) ? `【${documentServer.url}】` : '';
-  const requestConfig: AxiosRequestConfig = processRequestConfig(documentServer);
-  const openAPIDocumentList: Array<OpenAPI.Document> = [];
 
-  const originRgx = /^(http(s?):\/\/.*?)($|\/)/.exec(String(documentServer.url));
-  const origin = originRgx?.[1];
+  const requestConfig = processRequestConfig(documentServer);
+  const openAPIDocumentList: Array<OpenAPI.Document> = [];
+  const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
+  const serverUrlText = isHttp ? `【${documentServer.url}】` : '';
 
   // 本地文件，尝试读取本地文件
-  if (!originRgx) {
+  if (!isHttp) {
     let json
     try {
       json = readJsonSync(documentServer.url) ?? [];
@@ -87,11 +94,12 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
     }
   } catch {}
 
+  const { origin } = requestConfig;
   // 获取域名，拼接v2版本的默认文档路径获取配置
   try {
     const openAPIDocument = await request<unknown, OpenAPI.Document>({
       ...requestConfig,
-      url: `${origin}/v2/api-docs`,
+      url: mergeUrl(origin, '/v2/api-docs', requestConfig.qs),
     });
     if (openAPIDocument && validateOpenAPIDocument(openAPIDocument as any)) {
       openAPIDocumentList.push(openAPIDocument);
@@ -102,14 +110,14 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
   // 兜底：根据 swagger-resources 获取全部。
   const [, swaggerResources] = await to<OpenAPI.Parameter>(request({
     ...requestConfig,
-    url: `${origin}/swagger-resources`,
+    url: mergeUrl(origin, '/swagger-resources', requestConfig.qs),
   }));
   const tasks = [];
   if (Array.isArray(swaggerResources)) {
     for (const sr of swaggerResources) {
       tasks.push(to(request<unknown, OpenAPI.Document>({
         ...requestConfig,
-        url: origin + sr.url,
+        url: mergeUrl(origin, sr.url, requestConfig.qs),
       }).then((openapiDocument) => {
         if (validateOpenAPIDocument(openapiDocument as any)) {
           openAPIDocumentList.push(openapiDocument);

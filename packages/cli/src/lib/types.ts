@@ -1,3 +1,4 @@
+import { AxiosHeaders } from 'axios';
 import { APIHelper } from '@api-helper/core';
 import { renderInterfaceName } from '@api-helper/template';
 
@@ -12,13 +13,11 @@ export abstract class AbstractParserPlugin {
 }
 
 export type Config = {
-  // 自定义解析插件
-  parserPlugins?: AbstractParserPlugin[],
   documentServers: Array<{
     // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
     url: string;
     // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
-    type: 'swagger' | 'yapi';
+    type: 'swagger' | 'yapi' | string;
     // 获取响应数据的key，body[dataKey]
     dataKey?: string;
     // 访问文档可能需要认证信息，http auth验证方式
@@ -28,6 +27,8 @@ export type Config = {
     };
     // 访问文档可能需要认证信息，通过使用token访问
     authToken?: '';
+    // 自定义一些请求头
+    headers?: AxiosHeaders,
     // 执行过程的回调
     events?: {
       // 生成接口名称
@@ -42,5 +43,7 @@ export type Config = {
     path: string;
     // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
     filename: string;
-  }
+  },
+  // 解析扩展插件
+  parserPlugins?: AbstractParserPlugin[],
 }

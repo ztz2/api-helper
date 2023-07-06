@@ -9,8 +9,10 @@ import {
 } from 'path';
 import fs from 'node:fs';
 import { merge } from 'lodash';
+import { URL } from 'node:url';
 import tmp, { FileOptions } from 'tmp';
-import {AxiosRequestConfig} from 'axios';
+import { AxiosRequestConfig } from 'axios';
+import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import esbuild, { BuildOptions, BuildResult } from 'esbuild';
 
 import { AbstractParserPlugin, Config, ParserPluginRunResult } from '@/lib';
@@ -26,13 +28,6 @@ export function resolve(p = '') {
   }
   args.unshift(process.cwd());
   return pathResolve.apply(null, args);
-}
-
-export function pathMerge(b = '', p = '') {
-  if (b.endsWith('/') && p.startsWith('/')) {
-    p = p.slice(1);
-  }
-  return b + p;
 }
 
 /**
@@ -131,15 +126,21 @@ export function processRequestConfig(documentServer: DocumentServer, options?: {
   method?: string,
   dataKey?: string,
   queryParams?: Recordable
-} & AxiosRequestConfig): AxiosRequestConfig {
+} & AxiosRequestConfig): AxiosRequestConfig & { qs: string; origin: string; } {
   const { auth, authToken } = documentServer;
+  const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
   const path = options?.path ?? '';
   const method = options?.method ?? 'get';
-  const queryParams = options?.queryParams ?? {};
-  const requestConfig: AxiosRequestConfig & Recordable = {
+  const urlInfo = (isHttp ? new URL(documentServer.url) : {}) as URL;
+  const origin = urlInfo?.origin ?? '';
+  const queryParams = isHttp ? Object.assign(qs.parse(documentServer.url?.split?.('?')?.[1] || ''), options?.queryParams ?? {}) : {};
+  const requestConfig = {
     ...options,
-    url: pathMerge(documentServer.url, path),
     method,
+    headers: documentServer?.headers ?? {},
+    url: mergeUrl(origin, path),
+    qs: '',
+    origin
   };
 
   // 有密码
@@ -153,13 +154,14 @@ export function processRequestConfig(documentServer: DocumentServer, options?: {
   // 有token
   if (authToken) {
     queryParams.token = authToken;
-    requestConfig.headers = { token: authToken };
   }
 
   // URL参数
   const queryParamsStr = qs.stringify(queryParams);
   if (queryParamsStr) {
-    requestConfig.url += `?${queryParamsStr}`;
+    const qs = `?${queryParamsStr}`;
+    requestConfig.url += qs;
+    requestConfig.qs = qs;
   }
 
   return requestConfig;

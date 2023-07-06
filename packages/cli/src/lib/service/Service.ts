@@ -7,7 +7,6 @@ import {
   ensureDir,
   outputFile
 } from 'fs-extra';
-
 import { renderAllApi } from '@api-helper/template';
 
 import log from '@/lib/tools/log';

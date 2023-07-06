@@ -1,18 +1,18 @@
-import {JSONSchema4} from 'json-schema';
+import { JSONSchema4 } from 'json-schema';
 
 import {
+  randomId,
+  mergeUrl,
   filterDesc,
   filterKeyName,
-  mergePath,
   parserSchema,
   processRequestSchema,
-  randomId,
 } from '../utils/util';
 import {
   UNKNOWN_GROUP_DESC,
   UNKNOWN_GROUP_NAME,
-} from "@/lib/constant";
-import {APIHelper} from '../types';
+} from '@/lib/constant';
+import { APIHelper } from '../types';
 import { validateSchema } from '../utils/validator';
 
 type ParserYapiParams = {
@@ -196,7 +196,7 @@ export default class ParserYapi {
         id: this.generateId(),
         summary: filterDesc(apiMap.title),
         description: filterDesc(apiMap.markdown),
-        path: mergePath(project.basePath, apiMap.path),
+        path: mergeUrl(project.basePath, apiMap.path),
         method: apiMap.method,
         formDataKeyNameList: [],
         pathParamKeyNameList: [],
@@ -226,7 +226,7 @@ export default class ParserYapi {
       // const req_headers = apiContent.req_headers;
       // Headers parameters
       // for (const p of req_headers) {
-      //   //swagger has consumes proprety, so skip proprety "Content-Type"
+      //   // swagger has consumes proprety, so skip proprety 'Content-Type'
       //   if (p.name === 'Content-Type') {
       //     continue;
       //   }

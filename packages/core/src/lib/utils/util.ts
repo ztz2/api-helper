@@ -1,3 +1,4 @@
+import qs from 'qs';
 import { JSONSchema4 } from 'json-schema';
 import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
@@ -54,11 +55,32 @@ export function filterSchema(schemaList: APIHelper.Schema[], deepClone = false):
   return schemaList;
 }
 
-export function mergePath(p1 = '', p2 = '') {
-  if (p1.endsWith('/') && p2.startsWith('/')) {
-    p2 = p2.slice(1);
+export function mergeUrl(...args: string[]) {
+  let queryParams = {};
+  let url = args.reduce((value: string, itm: string) => {
+    if (value.includes('?')) {
+      const sp = value.split('?');
+      value = sp[0];
+      queryParams = Object.assign({}, queryParams, qs.parse(sp[1]));
+    }
+    if (itm.includes('?')) {
+      const sp = itm.split('?');
+      itm = sp[0];
+      queryParams = Object.assign({}, queryParams, qs.parse(sp[1]));
+    }
+    if (value.endsWith('/') && itm.startsWith('/')) {
+      itm = itm.slice(1);
+    }
+    return value + itm;
+  }, '');
+
+  // URL参数
+  let queryParamsStr = qs.stringify(queryParams);
+  if (queryParamsStr) {
+    queryParamsStr = `?${queryParamsStr}`;
   }
-  return p1 + p2;
+
+  return `${url}${queryParamsStr}`;
 }
 
 export function filterDesc(value = ''): string {

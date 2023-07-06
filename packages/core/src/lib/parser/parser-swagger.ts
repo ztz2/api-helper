@@ -6,22 +6,22 @@ import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
 import { APIHelper } from '../types';
 
 import {
+  randomId,
+  mergeUrl,
   checkType,
   filterDesc,
   filterKeyName,
-  mergePath,
   parserSchema,
   processRequestSchema,
-  randomId,
 } from '../utils/util';
-import {
-  validateOpenAPIDocument,
-  validateSchema,
-} from '../utils/validator';
 import {
   UNKNOWN_GROUP_DESC,
   UNKNOWN_GROUP_NAME,
 } from '../constant';
+import {
+  validateSchema,
+  validateOpenAPIDocument,
+} from '../utils/validator';
 
 export default class ParserSwagger {
   private autoGenerateId = true;
@@ -104,7 +104,7 @@ export default class ParserSwagger {
           const method = methodMapEntries[w][0];
           const apiMap: any = methodMapEntries[w][1];
           // fix: basePath为/，导致//
-          const mPath = mergePath(apiDocument.basePath, path);
+          const mPath = mergeUrl(apiDocument.basePath, path);
           // 接口
           const api: APIHelper.API = {
             id: this.generateId(),
