@@ -19,9 +19,9 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 
 /**
  * @描述 【请求数据接口定义】普通body请求-put】
- * @请求头 PUT http://127.0.0.1:17812/body/bodyPut
+ * @请求头 PUT /body/bodyPut
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyPutRequestByPut {
+export interface IBodyBodyPutRequestByPut {
   // 随机名称
   random?: string;
   // 文件名称
@@ -33,9 +33,9 @@ export interface Ihttp_127_0_0_1_17812BodyBodyPutRequestByPut {
 }
 /**
  * @描述 【响应数据接口定义】普通body请求-put】
- * @请求头 PUT http://127.0.0.1:17812/body/bodyPut
+ * @请求头 PUT /body/bodyPut
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyPutResponseByPut {
+export interface IBodyBodyPutResponseByPut {
   // 文件对象
   // 随机名称
   random?: string;
@@ -48,24 +48,24 @@ export interface Ihttp_127_0_0_1_17812BodyBodyPutResponseByPut {
 }
 /**
  * @描述 普通body请求-put
- * @请求信息 [ PUT ] http://127.0.0.1:17812/body/bodyPut
+ * @请求信息 [ PUT ] /body/bodyPut
  */
-export function http_127_0_0_1_17812BodyBodyPutByPut(
-  data: Ihttp_127_0_0_1_17812BodyBodyPutRequestByPut,
+export function bodyBodyPutByPut(
+  data: IBodyBodyPutRequestByPut,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812BodyBodyPutResponseByPut>(
+  return request<IBodyBodyPutResponseByPut>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812BodyBodyPutByPut.requestConfig
+      bodyBodyPutByPut.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812BodyBodyPutByPut.requestConfig = {
-  path: 'http://127.0.0.1:17812/body/bodyPut',
+bodyBodyPutByPut.requestConfig = {
+  path: '/body/bodyPut',
   method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -74,17 +74,17 @@ http_127_0_0_1_17812BodyBodyPutByPut.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】body请求】
- * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body
+ * @请求头 POST /user/{deviceId}/body
  */
-export interface Ihttp_127_0_0_1_17812UserDeviceIdBodyRequestByPost {
+export interface IUserDeviceIdBodyRequestByPost {
   // 设备id
   deviceId: string;
 }
 /**
  * @描述 【响应数据接口定义】body请求】
- * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body
+ * @请求头 POST /user/{deviceId}/body
  */
-export interface Ihttp_127_0_0_1_17812UserDeviceIdBodyResponseByPost {
+export interface IUserDeviceIdBodyResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
   id?: string;
@@ -100,24 +100,24 @@ export interface Ihttp_127_0_0_1_17812UserDeviceIdBodyResponseByPost {
 }
 /**
  * @描述 body请求
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/{deviceId}/body
+ * @请求信息 [ POST ] /user/{deviceId}/body
  */
-export function http_127_0_0_1_17812UserDeviceIdBodyByPost(
-  data: Ihttp_127_0_0_1_17812UserDeviceIdBodyRequestByPost,
+export function userDeviceIdBodyByPost(
+  data: IUserDeviceIdBodyRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserDeviceIdBodyResponseByPost>(
+  return request<IUserDeviceIdBodyResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserDeviceIdBodyByPost.requestConfig
+      userDeviceIdBodyByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserDeviceIdBodyByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/{deviceId}/body',
+userDeviceIdBodyByPost.requestConfig = {
+  path: '/user/{deviceId}/body',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['deviceId'],
@@ -126,9 +126,9 @@ http_127_0_0_1_17812UserDeviceIdBodyByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】body请求1】
- * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body1
+ * @请求头 POST /user/{deviceId}/body1
  */
-export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1RequestByPost {
+export interface IUserDeviceIdBody1RequestByPost {
   // 设备id
   deviceId: string;
   // 主键id（注解id-title）
@@ -145,9 +145,9 @@ export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1RequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】body请求1】
- * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body1
+ * @请求头 POST /user/{deviceId}/body1
  */
-export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1ResponseByPost {
+export interface IUserDeviceIdBody1ResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
   id?: string;
@@ -163,24 +163,24 @@ export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1ResponseByPost {
 }
 /**
  * @描述 body请求1
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/{deviceId}/body1
+ * @请求信息 [ POST ] /user/{deviceId}/body1
  */
-export function http_127_0_0_1_17812UserDeviceIdBody1ByPost(
-  data: Ihttp_127_0_0_1_17812UserDeviceIdBody1RequestByPost,
+export function userDeviceIdBody1ByPost(
+  data: IUserDeviceIdBody1RequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserDeviceIdBody1ResponseByPost>(
+  return request<IUserDeviceIdBody1ResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserDeviceIdBody1ByPost.requestConfig
+      userDeviceIdBody1ByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserDeviceIdBody1ByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/{deviceId}/body1',
+userDeviceIdBody1ByPost.requestConfig = {
+  path: '/user/{deviceId}/body1',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['deviceId'],
@@ -189,9 +189,9 @@ http_127_0_0_1_17812UserDeviceIdBody1ByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】json参数查询1】
- * @请求头 POST http://127.0.0.1:17812/user/getRequest1
+ * @请求头 POST /user/getRequest1
  */
-export interface Ihttp_127_0_0_1_17812UserGetRequest1RequestByPost {
+export interface IUserGetRequest1RequestByPost {
   cade: string;
   // 主键id（注解id-title）
   id?: string;
@@ -207,9 +207,9 @@ export interface Ihttp_127_0_0_1_17812UserGetRequest1RequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】json参数查询1】
- * @请求头 POST http://127.0.0.1:17812/user/getRequest1
+ * @请求头 POST /user/getRequest1
  */
-export interface Ihttp_127_0_0_1_17812UserGetRequest1ResponseByPost {
+export interface IUserGetRequest1ResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
   id?: string;
@@ -225,24 +225,24 @@ export interface Ihttp_127_0_0_1_17812UserGetRequest1ResponseByPost {
 }
 /**
  * @描述 json参数查询1
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/getRequest1
+ * @请求信息 [ POST ] /user/getRequest1
  */
-export function http_127_0_0_1_17812UserGetRequest1ByPost(
-  data: Ihttp_127_0_0_1_17812UserGetRequest1RequestByPost,
+export function userGetRequest1ByPost(
+  data: IUserGetRequest1RequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserGetRequest1ResponseByPost>(
+  return request<IUserGetRequest1ResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserGetRequest1ByPost.requestConfig
+      userGetRequest1ByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserGetRequest1ByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/getRequest1',
+userGetRequest1ByPost.requestConfig = {
+  path: '/user/getRequest1',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -251,9 +251,9 @@ http_127_0_0_1_17812UserGetRequest1ByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】创建用户-createOne、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOne
+ * @请求头 POST /user/createOne
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOneRequestByPost {
+export interface IUserCreateOneRequestByPost {
   // 主键id
   id?: string;
   // 名称
@@ -261,9 +261,9 @@ export interface Ihttp_127_0_0_1_17812UserCreateOneRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】创建用户-createOne、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOne
+ * @请求头 POST /user/createOne
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOneResponseByPost {
+export interface IUserCreateOneResponseByPost {
   // 主键id
   id?: string;
   // 名称
@@ -271,24 +271,24 @@ export interface Ihttp_127_0_0_1_17812UserCreateOneResponseByPost {
 }
 /**
  * @描述 创建用户-createOne、根据姓名创建用户1
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOne
+ * @请求信息 [ POST ] /user/createOne
  */
-export function http_127_0_0_1_17812UserCreateOneByPost(
-  data: Ihttp_127_0_0_1_17812UserCreateOneRequestByPost,
+export function userCreateOneByPost(
+  data: IUserCreateOneRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserCreateOneResponseByPost>(
+  return request<IUserCreateOneResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserCreateOneByPost.requestConfig
+      userCreateOneByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserCreateOneByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/createOne',
+userCreateOneByPost.requestConfig = {
+  path: '/user/createOne',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -297,9 +297,9 @@ http_127_0_0_1_17812UserCreateOneByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】创建用户-Schema、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOneSchema
+ * @请求头 POST /user/createOneSchema
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaRequestByPost {
+export interface IUserCreateOneSchemaRequestByPost {
   // 主键id（注解id-title）
   id?: string;
   // 名称
@@ -314,9 +314,9 @@ export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】创建用户-Schema、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOneSchema
+ * @请求头 POST /user/createOneSchema
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaResponseByPost {
+export interface IUserCreateOneSchemaResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
   id?: string;
@@ -332,24 +332,24 @@ export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaResponseByPost {
 }
 /**
  * @描述 创建用户-Schema、根据姓名创建用户1
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOneSchema
+ * @请求信息 [ POST ] /user/createOneSchema
  */
-export function http_127_0_0_1_17812UserCreateOneSchemaByPost(
-  data: Ihttp_127_0_0_1_17812UserCreateOneSchemaRequestByPost,
+export function userCreateOneSchemaByPost(
+  data: IUserCreateOneSchemaRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserCreateOneSchemaResponseByPost>(
+  return request<IUserCreateOneSchemaResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserCreateOneSchemaByPost.requestConfig
+      userCreateOneSchemaByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserCreateOneSchemaByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/createOneSchema',
+userCreateOneSchemaByPost.requestConfig = {
+  path: '/user/createOneSchema',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -358,17 +358,17 @@ http_127_0_0_1_17812UserCreateOneSchemaByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】创建用户1、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOne1
+ * @请求头 POST /user/createOne1
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOne1RequestByPost {
+export interface IUserCreateOne1RequestByPost {
   id?: string;
   name?: string;
 }
 /**
  * @描述 【响应数据接口定义】创建用户1、根据姓名创建用户1】
- * @请求头 POST http://127.0.0.1:17812/user/createOne1
+ * @请求头 POST /user/createOne1
  */
-export interface Ihttp_127_0_0_1_17812UserCreateOne1ResponseByPost {
+export interface IUserCreateOne1ResponseByPost {
   // 主键id
   id?: string;
   // 名称
@@ -376,24 +376,24 @@ export interface Ihttp_127_0_0_1_17812UserCreateOne1ResponseByPost {
 }
 /**
  * @描述 创建用户1、根据姓名创建用户1
- * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOne1
+ * @请求信息 [ POST ] /user/createOne1
  */
-export function http_127_0_0_1_17812UserCreateOne1ByPost(
-  data: Ihttp_127_0_0_1_17812UserCreateOne1RequestByPost,
+export function userCreateOne1ByPost(
+  data: IUserCreateOne1RequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserCreateOne1ResponseByPost>(
+  return request<IUserCreateOne1ResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserCreateOne1ByPost.requestConfig
+      userCreateOne1ByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserCreateOne1ByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/createOne1',
+userCreateOne1ByPost.requestConfig = {
+  path: '/user/createOne1',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -402,16 +402,16 @@ http_127_0_0_1_17812UserCreateOne1ByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
- * @请求头 POST http://127.0.0.1:17812/file/upload
+ * @请求头 POST /file/upload
  */
-export interface Ihttp_127_0_0_1_17812FileUploadRequestByPost {
+export interface IFileUploadRequestByPost {
   file: string;
 }
 /**
  * @描述 【响应数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
- * @请求头 POST http://127.0.0.1:17812/file/upload
+ * @请求头 POST /file/upload
  */
-export interface Ihttp_127_0_0_1_17812FileUploadResponseByPost {
+export interface IFileUploadResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -424,24 +424,24 @@ export interface Ihttp_127_0_0_1_17812FileUploadResponseByPost {
 }
 /**
  * @描述 单纯文件上传、单纯文件上传，无任何参数
- * @请求信息 [ POST ] http://127.0.0.1:17812/file/upload
+ * @请求信息 [ POST ] /file/upload
  */
-export function http_127_0_0_1_17812FileUploadByPost(
-  data: Ihttp_127_0_0_1_17812FileUploadRequestByPost,
+export function fileUploadByPost(
+  data: IFileUploadRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812FileUploadResponseByPost>(
+  return request<IFileUploadResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812FileUploadByPost.requestConfig
+      fileUploadByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812FileUploadByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/file/upload',
+fileUploadByPost.requestConfig = {
+  path: '/file/upload',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -450,9 +450,9 @@ http_127_0_0_1_17812FileUploadByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】文件上传-带参数】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParam
+ * @请求头 POST /file/uploadParam
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamRequestByPost {
+export interface IFileUploadParamRequestByPost {
   // 文件名称
   name: string;
   // 文件
@@ -460,9 +460,9 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】文件上传-带参数】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParam
+ * @请求头 POST /file/uploadParam
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamResponseByPost {
+export interface IFileUploadParamResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -475,24 +475,24 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamResponseByPost {
 }
 /**
  * @描述 文件上传-带参数
- * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParam
+ * @请求信息 [ POST ] /file/uploadParam
  */
-export function http_127_0_0_1_17812FileUploadParamByPost(
-  data: Ihttp_127_0_0_1_17812FileUploadParamRequestByPost,
+export function fileUploadParamByPost(
+  data: IFileUploadParamRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812FileUploadParamResponseByPost>(
+  return request<IFileUploadParamResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812FileUploadParamByPost.requestConfig
+      fileUploadParamByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812FileUploadParamByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/file/uploadParam',
+fileUploadParamByPost.requestConfig = {
+  path: '/file/uploadParam',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -501,9 +501,9 @@ http_127_0_0_1_17812FileUploadParamByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】文件上传-带参数Header】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParamHeader
+ * @请求头 POST /file/uploadParamHeader
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderRequestByPost {
+export interface IFileUploadParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 文件
@@ -511,9 +511,9 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】文件上传-带参数Header】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParamHeader
+ * @请求头 POST /file/uploadParamHeader
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderResponseByPost {
+export interface IFileUploadParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -526,24 +526,24 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderResponseByPost {
 }
 /**
  * @描述 文件上传-带参数Header
- * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParamHeader
+ * @请求信息 [ POST ] /file/uploadParamHeader
  */
-export function http_127_0_0_1_17812FileUploadParamHeaderByPost(
-  data: Ihttp_127_0_0_1_17812FileUploadParamHeaderRequestByPost,
+export function fileUploadParamHeaderByPost(
+  data: IFileUploadParamHeaderRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812FileUploadParamHeaderResponseByPost>(
+  return request<IFileUploadParamHeaderResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812FileUploadParamHeaderByPost.requestConfig
+      fileUploadParamHeaderByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812FileUploadParamHeaderByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/file/uploadParamHeader',
+fileUploadParamHeaderByPost.requestConfig = {
+  path: '/file/uploadParamHeader',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -552,9 +552,9 @@ http_127_0_0_1_17812FileUploadParamHeaderByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】文件上传-带参数Path】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParam/{id}
+ * @请求头 POST /file/uploadParam/{id}
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamIdRequestByPost {
+export interface IFileUploadParamIdRequestByPost {
   // 文件id
   id: string;
   // 文件名称
@@ -564,9 +564,9 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamIdRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】文件上传-带参数Path】
- * @请求头 POST http://127.0.0.1:17812/file/uploadParam/{id}
+ * @请求头 POST /file/uploadParam/{id}
  */
-export interface Ihttp_127_0_0_1_17812FileUploadParamIdResponseByPost {
+export interface IFileUploadParamIdResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -579,24 +579,24 @@ export interface Ihttp_127_0_0_1_17812FileUploadParamIdResponseByPost {
 }
 /**
  * @描述 文件上传-带参数Path
- * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParam/{id}
+ * @请求信息 [ POST ] /file/uploadParam/{id}
  */
-export function http_127_0_0_1_17812FileUploadParamIdByPost(
-  data: Ihttp_127_0_0_1_17812FileUploadParamIdRequestByPost,
+export function fileUploadParamIdByPost(
+  data: IFileUploadParamIdRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812FileUploadParamIdResponseByPost>(
+  return request<IFileUploadParamIdResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812FileUploadParamIdByPost.requestConfig
+      fileUploadParamIdByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812FileUploadParamIdByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/file/uploadParam/{id}',
+fileUploadParamIdByPost.requestConfig = {
+  path: '/file/uploadParam/{id}',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['id'],
@@ -605,47 +605,46 @@ http_127_0_0_1_17812FileUploadParamIdByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】多文件上传】
- * @请求头 POST http://127.0.0.1:17812/file/uploadBatch
+ * @请求头 POST /file/uploadBatch
  */
-export interface Ihttp_127_0_0_1_17812FileUploadBatchRequestByPost {
+export interface IFileUploadBatchRequestByPost {
   files: Array<string>;
 }
 /**
  * @描述 【响应数据类型定义】多文件上传】
- * @请求头 POST http://127.0.0.1:17812/file/uploadBatch
+ * @请求头 POST /file/uploadBatch
  */
-export type Http_127_0_0_1_17812FileUploadBatchResponseTypeByPost =
-  Array<// 文件对象
-  {
-    // 随机名称
-    random?: string;
-    // 文件名称
-    name?: string;
-    // 文件大小
-    size?: number;
-    // 是否上传成功
-    success?: boolean;
-  }>;
+export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
+{
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}>;
 /**
  * @描述 多文件上传
- * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadBatch
+ * @请求信息 [ POST ] /file/uploadBatch
  */
-export function http_127_0_0_1_17812FileUploadBatchByPost(
-  data: Ihttp_127_0_0_1_17812FileUploadBatchRequestByPost,
+export function fileUploadBatchByPost(
+  data: IFileUploadBatchRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Http_127_0_0_1_17812FileUploadBatchResponseTypeByPost>(
+  return request<FileUploadBatchResponseTypeByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812FileUploadBatchByPost.requestConfig
+      fileUploadBatchByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812FileUploadBatchByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/file/uploadBatch',
+fileUploadBatchByPost.requestConfig = {
+  path: '/file/uploadBatch',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -654,9 +653,9 @@ http_127_0_0_1_17812FileUploadBatchByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】普通body请求】
- * @请求头 POST http://127.0.0.1:17812/body/body
+ * @请求头 POST /body/body
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyRequestByPost {
+export interface IBodyBodyRequestByPost {
   // 随机名称
   random?: string;
   // 文件名称
@@ -668,9 +667,9 @@ export interface Ihttp_127_0_0_1_17812BodyBodyRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】普通body请求】
- * @请求头 POST http://127.0.0.1:17812/body/body
+ * @请求头 POST /body/body
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyResponseByPost {
+export interface IBodyBodyResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -683,24 +682,20 @@ export interface Ihttp_127_0_0_1_17812BodyBodyResponseByPost {
 }
 /**
  * @描述 普通body请求
- * @请求信息 [ POST ] http://127.0.0.1:17812/body/body
+ * @请求信息 [ POST ] /body/body
  */
-export function http_127_0_0_1_17812BodyBodyByPost(
-  data: Ihttp_127_0_0_1_17812BodyBodyRequestByPost,
+export function bodyBodyByPost(
+  data: IBodyBodyRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812BodyBodyResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      http_127_0_0_1_17812BodyBodyByPost.requestConfig
-    ),
+  return request<IBodyBodyResponseByPost>(
+    processRequestFunctionConfig(data, extraData, bodyBodyByPost.requestConfig),
     ...args
   );
 }
-http_127_0_0_1_17812BodyBodyByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/body/body',
+bodyBodyByPost.requestConfig = {
+  path: '/body/body',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -709,9 +704,9 @@ http_127_0_0_1_17812BodyBodyByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】普通body请求+Param】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParam
+ * @请求头 POST /body/bodyParam
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamRequestByPost {
+export interface IBodyBodyParamRequestByPost {
   name: string;
   // 随机名称
   random?: string;
@@ -722,9 +717,9 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】普通body请求+Param】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParam
+ * @请求头 POST /body/bodyParam
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamResponseByPost {
+export interface IBodyBodyParamResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -737,24 +732,24 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamResponseByPost {
 }
 /**
  * @描述 普通body请求+Param
- * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParam
+ * @请求信息 [ POST ] /body/bodyParam
  */
-export function http_127_0_0_1_17812BodyBodyParamByPost(
-  data: Ihttp_127_0_0_1_17812BodyBodyParamRequestByPost,
+export function bodyBodyParamByPost(
+  data: IBodyBodyParamRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812BodyBodyParamResponseByPost>(
+  return request<IBodyBodyParamResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812BodyBodyParamByPost.requestConfig
+      bodyBodyParamByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812BodyBodyParamByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/body/bodyParam',
+bodyBodyParamByPost.requestConfig = {
+  path: '/body/bodyParam',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -763,9 +758,9 @@ http_127_0_0_1_17812BodyBodyParamByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】普通body请求+Param+Header】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeader
+ * @请求头 POST /body/bodyParamHeader
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderRequestByPost {
+export interface IBodyBodyParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 随机名称
@@ -777,9 +772,9 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】普通body请求+Param+Header】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeader
+ * @请求头 POST /body/bodyParamHeader
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderResponseByPost {
+export interface IBodyBodyParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -792,24 +787,24 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderResponseByPost {
 }
 /**
  * @描述 普通body请求+Param+Header
- * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParamHeader
+ * @请求信息 [ POST ] /body/bodyParamHeader
  */
-export function http_127_0_0_1_17812BodyBodyParamHeaderByPost(
-  data: Ihttp_127_0_0_1_17812BodyBodyParamHeaderRequestByPost,
+export function bodyBodyParamHeaderByPost(
+  data: IBodyBodyParamHeaderRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812BodyBodyParamHeaderResponseByPost>(
+  return request<IBodyBodyParamHeaderResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812BodyBodyParamHeaderByPost.requestConfig
+      bodyBodyParamHeaderByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812BodyBodyParamHeaderByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/body/bodyParamHeader',
+bodyBodyParamHeaderByPost.requestConfig = {
+  path: '/body/bodyParamHeader',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -818,9 +813,9 @@ http_127_0_0_1_17812BodyBodyParamHeaderByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】普通body请求+Param+Header+Path】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ * @请求头 POST /body/bodyParamHeaderPath/{id}
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdRequestByPost {
+export interface IBodyBodyParamHeaderPathIdRequestByPost {
   // 文件id
   id: string;
   // 文件名称
@@ -834,9 +829,9 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdRequestByPost {
 }
 /**
  * @描述 【响应数据接口定义】普通body请求+Param+Header+Path】
- * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ * @请求头 POST /body/bodyParamHeaderPath/{id}
  */
-export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdResponseByPost {
+export interface IBodyBodyParamHeaderPathIdResponseByPost {
   // 文件对象
   // 随机名称
   random?: string;
@@ -849,24 +844,24 @@ export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdResponseByPost {
 }
 /**
  * @描述 普通body请求+Param+Header+Path
- * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ * @请求信息 [ POST ] /body/bodyParamHeaderPath/{id}
  */
-export function http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost(
-  data: Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdRequestByPost,
+export function bodyBodyParamHeaderPathIdByPost(
+  data: IBodyBodyParamHeaderPathIdRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdResponseByPost>(
+  return request<IBodyBodyParamHeaderPathIdResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost.requestConfig
+      bodyBodyParamHeaderPathIdByPost.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost.requestConfig = {
-  path: 'http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}',
+bodyBodyParamHeaderPathIdByPost.requestConfig = {
+  path: '/body/bodyParamHeaderPath/{id}',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['id'],
@@ -875,9 +870,9 @@ http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】json参数查询】
- * @请求头 GET http://127.0.0.1:17812/user/getRequest
+ * @请求头 GET /user/getRequest
  */
-export interface Ihttp_127_0_0_1_17812UserGetRequestRequestByGet {
+export interface IUserGetRequestRequestByGet {
   userSchema: {
     // 主键id（注解id-title）
     id?: string;
@@ -895,9 +890,9 @@ export interface Ihttp_127_0_0_1_17812UserGetRequestRequestByGet {
 }
 /**
  * @描述 【响应数据接口定义】json参数查询】
- * @请求头 GET http://127.0.0.1:17812/user/getRequest
+ * @请求头 GET /user/getRequest
  */
-export interface Ihttp_127_0_0_1_17812UserGetRequestResponseByGet {
+export interface IUserGetRequestResponseByGet {
   // 用户信息
   // 主键id（注解id-title）
   id?: string;
@@ -913,24 +908,24 @@ export interface Ihttp_127_0_0_1_17812UserGetRequestResponseByGet {
 }
 /**
  * @描述 json参数查询
- * @请求信息 [ GET ] http://127.0.0.1:17812/user/getRequest
+ * @请求信息 [ GET ] /user/getRequest
  */
-export function http_127_0_0_1_17812UserGetRequestByGet(
-  data: Ihttp_127_0_0_1_17812UserGetRequestRequestByGet,
+export function userGetRequestByGet(
+  data: IUserGetRequestRequestByGet,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Ihttp_127_0_0_1_17812UserGetRequestResponseByGet>(
+  return request<IUserGetRequestResponseByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserGetRequestByGet.requestConfig
+      userGetRequestByGet.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserGetRequestByGet.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/getRequest',
+userGetRequestByGet.requestConfig = {
+  path: '/user/getRequest',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
@@ -939,36 +934,36 @@ http_127_0_0_1_17812UserGetRequestByGet.requestConfig = {
 
 /**
  * @描述 【请求数据接口定义】创建用户、根据姓名创建用户】
- * @请求头 GET http://127.0.0.1:17812/user/create
+ * @请求头 GET /user/create
  */
-export interface Ihttp_127_0_0_1_17812UserCreateRequestByGet {
+export interface IUserCreateRequestByGet {
   name: string;
 }
 /**
  * @描述 【响应数据类型定义】创建用户、根据姓名创建用户】
- * @请求头 GET http://127.0.0.1:17812/user/create
+ * @请求头 GET /user/create
  */
-export type Http_127_0_0_1_17812UserCreateResponseTypeByGet = string;
+export type UserCreateResponseTypeByGet = string;
 /**
  * @描述 创建用户、根据姓名创建用户
- * @请求信息 [ GET ] http://127.0.0.1:17812/user/create
+ * @请求信息 [ GET ] /user/create
  */
-export function http_127_0_0_1_17812UserCreateByGet(
-  data: Ihttp_127_0_0_1_17812UserCreateRequestByGet,
+export function userCreateByGet(
+  data: IUserCreateRequestByGet,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<Http_127_0_0_1_17812UserCreateResponseTypeByGet>(
+  return request<UserCreateResponseTypeByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
-      http_127_0_0_1_17812UserCreateByGet.requestConfig
+      userCreateByGet.requestConfig
     ),
     ...args
   );
 }
-http_127_0_0_1_17812UserCreateByGet.requestConfig = {
-  path: 'http://127.0.0.1:17812/user/create',
+userCreateByGet.requestConfig = {
+  path: '/user/create',
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],

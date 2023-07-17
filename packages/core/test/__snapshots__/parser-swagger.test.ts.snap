@@ -2276,7 +2276,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "put",
-          "path": "http://127.0.0.1:17812/body/bodyPut",
+          "path": "/body/bodyPut",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -2401,7 +2401,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/{deviceId}/body",
+          "path": "/user/{deviceId}/body",
           "pathParamKeyNameList": [
             "deviceId",
           ],
@@ -2505,7 +2505,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/{deviceId}/body1",
+          "path": "/user/{deviceId}/body1",
           "pathParamKeyNameList": [
             "deviceId",
           ],
@@ -2670,7 +2670,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/getRequest1",
+          "path": "/user/getRequest1",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "cade",
@@ -2835,7 +2835,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/createOne",
+          "path": "/user/createOne",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -2912,7 +2912,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/createOneSchema",
+          "path": "/user/createOneSchema",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -3063,7 +3063,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/user/createOne1",
+          "path": "/user/createOne1",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "id",
@@ -3143,7 +3143,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/file/upload",
+          "path": "/file/upload",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -3232,7 +3232,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/file/uploadParam",
+          "path": "/file/uploadParam",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "name",
@@ -3335,7 +3335,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/file/uploadParamHeader",
+          "path": "/file/uploadParamHeader",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "name",
@@ -3438,7 +3438,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/file/uploadParam/{id}",
+          "path": "/file/uploadParam/{id}",
           "pathParamKeyNameList": [
             "id",
           ],
@@ -3555,7 +3555,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/file/uploadBatch",
+          "path": "/file/uploadBatch",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -3670,7 +3670,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/body/body",
+          "path": "/body/body",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
@@ -3795,7 +3795,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/body/bodyParam",
+          "path": "/body/bodyParam",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "name",
@@ -3922,7 +3922,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/body/bodyParamHeader",
+          "path": "/body/bodyParamHeader",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "name",
@@ -4049,7 +4049,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "post",
-          "path": "http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}",
+          "path": "/body/bodyParamHeaderPath/{id}",
           "pathParamKeyNameList": [
             "id",
           ],
@@ -4190,7 +4190,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "get",
-          "path": "http://127.0.0.1:17812/user/getRequest",
+          "path": "/user/getRequest",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "userSchema",
@@ -4369,7 +4369,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "formDataKeyNameList": [],
           "id": "",
           "method": "get",
-          "path": "http://127.0.0.1:17812/user/create",
+          "path": "/user/create",
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [
             "name",

@@ -6,13 +6,14 @@ import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
 import { APIHelper } from '../types';
 
 import {
+  isHttp,
   randomId,
   mergeUrl,
   checkType,
   filterDesc,
   filterKeyName,
   parserSchema,
-  processRequestSchema, transformType,
+  processRequestSchema,
 } from '../utils/util';
 import {
   UNKNOWN_GROUP_DESC,
@@ -104,7 +105,7 @@ export default class ParserSwagger {
           const method = methodMapEntries[w][0];
           const apiMap: any = methodMapEntries[w][1];
           // fix: basePath为/，导致//
-          const mPath = mergeUrl(apiDocument.basePath, path);
+          const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
           // 接口
           const api: APIHelper.API = {
             id: this.generateId(),

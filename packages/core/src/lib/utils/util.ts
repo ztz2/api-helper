@@ -16,6 +16,10 @@ export function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;
 }
 
+export function isHttp<T>(value: T) {
+  return /^(http(s?):\/\/.*?)($|\/)/.test(String(value));
+}
+
 export function filterEmpty(value: any) {
   return (value !== '' && value != null) ? value : '';
 }

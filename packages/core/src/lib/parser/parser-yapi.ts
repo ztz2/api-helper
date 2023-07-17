@@ -6,7 +6,7 @@ import {
   filterDesc,
   filterKeyName,
   parserSchema,
-  processRequestSchema,
+  processRequestSchema, isHttp,
 } from '../utils/util';
 import {
   UNKNOWN_GROUP_DESC,
@@ -196,7 +196,7 @@ export default class ParserYapi {
         id: this.generateId(),
         summary: filterDesc(apiMap.title),
         description: filterDesc(apiMap.markdown),
-        path: mergeUrl(project.basePath, apiMap.path),
+        path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
         method: apiMap.method,
         formDataKeyNameList: [],
         pathParamKeyNameList: [],
