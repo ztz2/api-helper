@@ -1,4 +1,4 @@
-export const EXTENSION = [
+export const EXTENSIONS = [
   '.ts',
   '.js',
   '.cjs',

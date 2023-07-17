@@ -9,8 +9,8 @@ import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 import request from './request';
 
 /**
- * @描述 uploads an image
- * @请求信息 [ POST ] /v2/pet/{petId}/uploadImage
+ * @description uploads an image
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export function v2PetPetIdUploadImageByPost(data, extraData, ...args) {
   return request(
@@ -31,8 +31,8 @@ v2PetPetIdUploadImageByPost.requestConfig = {
 };
 
 /**
- * @描述 Add a new pet to the store
- * @请求信息 [ POST ] /v2/pet
+ * @description Add a new pet to the store
+ * @url [ POST ] /v2/pet
  */
 export function v2PetByPost(data, extraData, ...args) {
   return request(
@@ -49,8 +49,8 @@ v2PetByPost.requestConfig = {
 };
 
 /**
- * @描述 Update an existing pet
- * @请求信息 [ PUT ] /v2/pet
+ * @description Update an existing pet
+ * @url [ PUT ] /v2/pet
  */
 export function v2PetByPut(data, extraData, ...args) {
   return request(
@@ -67,8 +67,8 @@ v2PetByPut.requestConfig = {
 };
 
 /**
- * @描述 Finds Pets by status、Multiple status values can be provided with comma separated strings
- * @请求信息 [ GET ] /v2/pet/findByStatus
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @url [ GET ] /v2/pet/findByStatus
  */
 export function v2PetFindByStatusByGet(data, extraData, ...args) {
   return request(
@@ -89,8 +89,8 @@ v2PetFindByStatusByGet.requestConfig = {
 };
 
 /**
- * @描述 Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @请求信息 [ GET ] /v2/pet/findByTags
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @url [ GET ] /v2/pet/findByTags
  */
 export function v2PetFindByTagsByGet(data, extraData, ...args) {
   return request(
@@ -111,8 +111,8 @@ v2PetFindByTagsByGet.requestConfig = {
 };
 
 /**
- * @描述 Find pet by ID、Returns a single pet
- * @请求信息 [ GET ] /v2/pet/{petId}
+ * @description Find pet by ID、Returns a single pet
+ * @url [ GET ] /v2/pet/{petId}
  */
 export function v2PetPetIdByGet(data, extraData, ...args) {
   return request(
@@ -133,8 +133,8 @@ v2PetPetIdByGet.requestConfig = {
 };
 
 /**
- * @描述 Updates a pet in the store with form data
- * @请求信息 [ POST ] /v2/pet/{petId}
+ * @description Updates a pet in the store with form data
+ * @url [ POST ] /v2/pet/{petId}
  */
 export function v2PetPetIdByPost(data, extraData, ...args) {
   return request(
@@ -155,8 +155,8 @@ v2PetPetIdByPost.requestConfig = {
 };
 
 /**
- * @描述 Deletes a pet
- * @请求信息 [ DELETE ] /v2/pet/{petId}
+ * @description Deletes a pet
+ * @url [ DELETE ] /v2/pet/{petId}
  */
 export function v2PetPetIdByDelete(data, extraData, ...args) {
   return request(
@@ -177,8 +177,8 @@ v2PetPetIdByDelete.requestConfig = {
 };
 
 /**
- * @描述 Place an order for a pet
- * @请求信息 [ POST ] /v2/store/order
+ * @description Place an order for a pet
+ * @url [ POST ] /v2/store/order
  */
 export function v2StoreOrderByPost(data, extraData, ...args) {
   return request(
@@ -199,8 +199,8 @@ v2StoreOrderByPost.requestConfig = {
 };
 
 /**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
- * @请求信息 [ GET ] /v2/store/order/{orderId}
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @url [ GET ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByGet(data, extraData, ...args) {
   return request(
@@ -221,8 +221,8 @@ v2StoreOrderOrderIdByGet.requestConfig = {
 };
 
 /**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
- * @请求信息 [ DELETE ] /v2/store/order/{orderId}
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByDelete(data, extraData, ...args) {
   return request(
@@ -243,8 +243,8 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
 };
 
 /**
- * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
- * @请求信息 [ GET ] /v2/store/inventory
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
  */
 export function v2StoreInventoryByGet(data, extraData, ...args) {
   return request(
@@ -265,8 +265,8 @@ v2StoreInventoryByGet.requestConfig = {
 };
 
 /**
- * @描述 Creates list of users with given input array
- * @请求信息 [ POST ] /v2/user/createWithArray
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
  */
 export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
   return request(
@@ -287,8 +287,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
 };
 
 /**
- * @描述 Creates list of users with given input array
- * @请求信息 [ POST ] /v2/user/createWithList
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
  */
 export function v2UserCreateWithListByPost(data, extraData, ...args) {
   return request(
@@ -309,8 +309,8 @@ v2UserCreateWithListByPost.requestConfig = {
 };
 
 /**
- * @描述 Get user by user name
- * @请求信息 [ GET ] /v2/user/{username}
+ * @description Get user by user name
+ * @url [ GET ] /v2/user/{username}
  */
 export function v2UserUsernameByGet(data, extraData, ...args) {
   return request(
@@ -331,8 +331,8 @@ v2UserUsernameByGet.requestConfig = {
 };
 
 /**
- * @描述 Updated user、This can only be done by the logged in user.
- * @请求信息 [ PUT ] /v2/user/{username}
+ * @description Updated user、This can only be done by the logged in user.
+ * @url [ PUT ] /v2/user/{username}
  */
 export function v2UserUsernameByPut(data, extraData, ...args) {
   return request(
@@ -353,8 +353,8 @@ v2UserUsernameByPut.requestConfig = {
 };
 
 /**
- * @描述 Delete user、This can only be done by the logged in user.
- * @请求信息 [ DELETE ] /v2/user/{username}
+ * @description Delete user、This can only be done by the logged in user.
+ * @url [ DELETE ] /v2/user/{username}
  */
 export function v2UserUsernameByDelete(data, extraData, ...args) {
   return request(
@@ -375,8 +375,8 @@ v2UserUsernameByDelete.requestConfig = {
 };
 
 /**
- * @描述 Logs user into the system
- * @请求信息 [ GET ] /v2/user/login
+ * @description Logs user into the system
+ * @url [ GET ] /v2/user/login
  */
 export function v2UserLoginByGet(data, extraData, ...args) {
   return request(
@@ -397,8 +397,8 @@ v2UserLoginByGet.requestConfig = {
 };
 
 /**
- * @描述 Logs out current logged in user session
- * @请求信息 [ GET ] /v2/user/logout
+ * @description Logs out current logged in user session
+ * @url [ GET ] /v2/user/logout
  */
 export function v2UserLogoutByGet(data, extraData, ...args) {
   return request(
@@ -419,8 +419,8 @@ v2UserLogoutByGet.requestConfig = {
 };
 
 /**
- * @描述 Create user、This can only be done by the logged in user.
- * @请求信息 [ POST ] /v2/user
+ * @description Create user、This can only be done by the logged in user.
+ * @url [ POST ] /v2/user
  */
 export function v2UserByPost(data, extraData, ...args) {
   return request(

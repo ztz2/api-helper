@@ -1,18 +1,22 @@
 import ora from 'ora';
 import fg from 'fast-glob';
-import { join } from 'path';
+import {
+  join,
+  isAbsolute,
+} from 'path';
 import {
   stat,
   remove,
-  ensureDir,
+  ensureFile,
   outputFile
 } from 'fs-extra';
 import { renderAllApi } from '@api-helper/template';
 
 import log from '@/lib/tools/log';
 import {
+  resolve,
   loadModule,
-  toUnixPath,
+  getExtensionName,
   getNormalizedRelativePath,
   documentServersRunParserPlugins,
 } from '../tools/util';
@@ -21,7 +25,7 @@ import {
   ParserPluginRunResult,
 } from '@/lib/types';
 import { Config } from '@/lib';
-import { EXTENSION } from '@/lib/service/const';
+import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
 import * as process from "process";
@@ -29,6 +33,8 @@ import * as process from "process";
 type DocumentServers = Config['documentServers'];
 
 const prompts = require('prompts');
+
+let outputDiscardWarn = false;
 
 class Service{
   static init: () => void;
@@ -93,7 +99,7 @@ class Service{
   // 1. 获取配置文件
   private async getConfigFile(): Promise<Config[]> {
     const { configFilePath } = this;
-    const oraText = '读取 apih.config.(ts|js|cjs|mjs) 配置文件';
+    const oraText = '读取 apih.config.(js|ts) 配置文件';
     const spinner = ora(oraText).start();
 
     // 有配置文件
@@ -106,7 +112,7 @@ class Service{
     }
 
     // 没有从根目录寻找
-    const files = await fg(['apih.config.(ts|js|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
+    const files = await fg(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
     if (files.length) {
       const c = await loadModule(files[0]);
       if (c) {
@@ -125,8 +131,18 @@ class Service{
   private async checkOutputPathExisted(config: Config) {
     const oraText = '检测输出目录';
     const spinner = ora(oraText).start();
+    const outputFilename = getOutputFilePath(config);
+
+    // 使用旧版配置，警告提示该配置已经废弃
+    if ('output' in config) {
+      if (!outputDiscardWarn) {
+        outputDiscardWarn = true;
+        log.warn('提示', 'documentServers.output配置已经废弃，请使用documentServers.outputFilePath');
+      }
+    }
+
     try {
-      await ensureDir(config.output.path);
+      await ensureFile(outputFilename);
       spinner.succeed();
     } catch {
       const failText = oraText + '【失败：输出不存在，重新即将退出】';
@@ -139,19 +155,12 @@ class Service{
   private async checkRequestFunctionFileExisted(config: Config) {
     const oraText = '检测 request 请求函数文件';
     const spinner = ora(oraText).start();
+    const requestFunctionFilePath = getRequestFunctionFilePath(config);
 
-    let requestFunctionFilePath = config.requestFunctionFilePath;
-
-    if (EXTENSION.every((ext) => !requestFunctionFilePath.endsWith(ext))) {
-      requestFunctionFilePath += `.(${EXTENSION.map((ext) => ext.slice(1)).join('|')})`;
-    }
-    const files = await fg([toUnixPath(requestFunctionFilePath)], {
-      cwd: process.cwd(),
-      absolute: true
-    });
-    if (files.length > 0){
+    try {
+      await ensureFile(requestFunctionFilePath);
       spinner.succeed();
-    } else {
+    } catch {
       const failText = oraText + '【失败：没有获取到request文件】';
       spinner.fail(failText);
       return Promise.reject(failText);
@@ -214,8 +223,17 @@ class Service{
   // 6. 生成代码
   private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<string> {
     const oraText = `代码生成`;
-    const outputFilename = join(config.output.path, config.output.filename);
+    const outputFilename = getOutputFilePath(config);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
+    let requestFilePath = getNormalizedRelativePath(outputFilename, getRequestFunctionFilePath(config));
+
+    // 移除request文件后缀名
+    for (const extension of EXTENSIONS) {
+      if (requestFilePath.endsWith(extension)) {
+        requestFilePath = requestFilePath.slice(0, requestFilePath.length - extension.length);
+        break;
+      }
+    }
 
     const code = [];
     if (isTS) {
@@ -233,7 +251,7 @@ import {
 } from '@api-helper/core/es/lib/helpers';
 // @ts-ignore
 // prettier-ignore
-import request from '${getNormalizedRelativePath(outputFilename, config.requestFunctionFilePath)}';
+import request from '${requestFilePath}';
 // @ts-ignore
 // prettier-ignore
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
@@ -247,7 +265,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 // prettier-ignore
-import request from '${getNormalizedRelativePath(outputFilename, config.requestFunctionFilePath)}';
+import request from '${requestFilePath}';
 `);
     }
 
@@ -278,7 +296,7 @@ import request from '${getNormalizedRelativePath(outputFilename, config.requestF
   // 7. 输出
   private async output(config: Config, code: string) {
     const oraText = `文件输出`;
-    const outputFilename = join(config.output.path, config.output.filename);
+    const outputFilename = getOutputFilePath(config);
     const spinner = ora(oraText).start();
 
     // 删除源文件
@@ -314,6 +332,9 @@ Service.init = async function () {
     return;
   }
 
+  const isTS = answers.codeType?.endsWith('ts') || answers.codeType?.endsWith('tsx');
+  const extensionName = isTS ? '.ts' : '.js';
+
   // 检测文件是否已经存在
   try {
     await stat(join(process.cwd(), answers.codeType));
@@ -328,10 +349,14 @@ Service.init = async function () {
   } catch {}
 
   const code =
-    `import { resolve } from 'path';
-import { defineConfig } from '@api-helper/cli';
+    `import { defineConfig } from '@api-helper/cli';
 
 export default defineConfig({
+  // 输出文件路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
+  outputFilePath: 'src/api/index${extensionName}',
+  // 接口请求函数文件路径
+  requestFunctionFilePath: 'src/utils/request${extensionName}',
+  // 接口文档服务配置
   documentServers: [
     {
       // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
@@ -339,18 +364,9 @@ export default defineConfig({
       // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
       type: 'swagger',
       // 获取数据的key，body[dataKey]
-      dataKey: ''
-    }
+      dataKey: '',
+    },
   ],
-  // 请求函数文件路径
-  requestFunctionFilePath: 'src/utils/request',
-  // 输出信息
-  output: {
-    // 输出路径
-    path: resolve(process.cwd(), 'src/api'),
-    // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
-    filename: 'index.ts',
-  }
 });
 `
   try {
@@ -359,6 +375,34 @@ export default defineConfig({
   } catch (e) {
     return log.error('提示', '配置文件生成失败');
   }
+}
+
+function getOutputFilePath(config: Config & { output?: { path: string; filename: string; } }): string {
+  // 兼容旧版的配置路径
+  if (config.output) {
+    if (isAbsolute(config.output.filename)) {
+      return config.output.filename;
+    }
+    if (isAbsolute(config.output.path)) {
+      join(config.output.path, config.output.filename);
+    }
+    return join(resolve(config.output.path), config.output.filename);
+  }
+  if (isAbsolute(config.outputFilePath)) {
+    return config.outputFilePath;
+  }
+  return resolve(config.outputFilePath);
+}
+
+function getRequestFunctionFilePath(config: Config & { output?: { path: string; filename: string; } }): string {
+  const outputFilename = getOutputFilePath(config);
+  const extensionName = getExtensionName(outputFilename);
+  let requestFunctionFilePath = isAbsolute(config.requestFunctionFilePath) ? config.requestFunctionFilePath : resolve(config.requestFunctionFilePath);
+  // 兼容旧版配置
+  if (['src/utils/request', 'src/tools/request'].includes(requestFunctionFilePath)) {
+    requestFunctionFilePath += extensionName;
+  }
+  return requestFunctionFilePath;
 }
 
 export default Service;

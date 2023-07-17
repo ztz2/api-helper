@@ -18,8 +18,8 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @描述 【请求数据接口定义】普通body请求-put】
- * @请求头 PUT /body/bodyPut
+ * @description 普通body请求-put【请求数据类型定义】
+ * @url [ PUT ] /body/bodyPut
  */
 export interface IBodyBodyPutRequestByPut {
   // 随机名称
@@ -32,8 +32,8 @@ export interface IBodyBodyPutRequestByPut {
   success?: boolean;
 }
 /**
- * @描述 【响应数据接口定义】普通body请求-put】
- * @请求头 PUT /body/bodyPut
+ * @description 普通body请求-put【响应数据类型定义】
+ * @url [ PUT ] /body/bodyPut
  */
 export interface IBodyBodyPutResponseByPut {
   // 文件对象
@@ -47,8 +47,8 @@ export interface IBodyBodyPutResponseByPut {
   success?: boolean;
 }
 /**
- * @描述 普通body请求-put
- * @请求信息 [ PUT ] /body/bodyPut
+ * @description 普通body请求-put
+ * @url [ PUT ] /body/bodyPut
  */
 export function bodyBodyPutByPut(
   data: IBodyBodyPutRequestByPut,
@@ -73,16 +73,16 @@ bodyBodyPutByPut.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】body请求】
- * @请求头 POST /user/{deviceId}/body
+ * @description body请求【请求数据类型定义】
+ * @url [ POST ] /user/{deviceId}/body
  */
 export interface IUserDeviceIdBodyRequestByPost {
   // 设备id
   deviceId: string;
 }
 /**
- * @描述 【响应数据接口定义】body请求】
- * @请求头 POST /user/{deviceId}/body
+ * @description body请求【响应数据类型定义】
+ * @url [ POST ] /user/{deviceId}/body
  */
 export interface IUserDeviceIdBodyResponseByPost {
   // 用户信息
@@ -99,8 +99,8 @@ export interface IUserDeviceIdBodyResponseByPost {
   };
 }
 /**
- * @描述 body请求
- * @请求信息 [ POST ] /user/{deviceId}/body
+ * @description body请求
+ * @url [ POST ] /user/{deviceId}/body
  */
 export function userDeviceIdBodyByPost(
   data: IUserDeviceIdBodyRequestByPost,
@@ -125,8 +125,8 @@ userDeviceIdBodyByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】body请求1】
- * @请求头 POST /user/{deviceId}/body1
+ * @description body请求1【请求数据类型定义】
+ * @url [ POST ] /user/{deviceId}/body1
  */
 export interface IUserDeviceIdBody1RequestByPost {
   // 设备id
@@ -144,8 +144,8 @@ export interface IUserDeviceIdBody1RequestByPost {
   };
 }
 /**
- * @描述 【响应数据接口定义】body请求1】
- * @请求头 POST /user/{deviceId}/body1
+ * @description body请求1【响应数据类型定义】
+ * @url [ POST ] /user/{deviceId}/body1
  */
 export interface IUserDeviceIdBody1ResponseByPost {
   // 用户信息
@@ -162,8 +162,8 @@ export interface IUserDeviceIdBody1ResponseByPost {
   };
 }
 /**
- * @描述 body请求1
- * @请求信息 [ POST ] /user/{deviceId}/body1
+ * @description body请求1
+ * @url [ POST ] /user/{deviceId}/body1
  */
 export function userDeviceIdBody1ByPost(
   data: IUserDeviceIdBody1RequestByPost,
@@ -188,8 +188,8 @@ userDeviceIdBody1ByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】json参数查询1】
- * @请求头 POST /user/getRequest1
+ * @description json参数查询1【请求数据类型定义】
+ * @url [ POST ] /user/getRequest1
  */
 export interface IUserGetRequest1RequestByPost {
   cade: string;
@@ -206,8 +206,8 @@ export interface IUserGetRequest1RequestByPost {
   };
 }
 /**
- * @描述 【响应数据接口定义】json参数查询1】
- * @请求头 POST /user/getRequest1
+ * @description json参数查询1【响应数据类型定义】
+ * @url [ POST ] /user/getRequest1
  */
 export interface IUserGetRequest1ResponseByPost {
   // 用户信息
@@ -224,8 +224,8 @@ export interface IUserGetRequest1ResponseByPost {
   };
 }
 /**
- * @描述 json参数查询1
- * @请求信息 [ POST ] /user/getRequest1
+ * @description json参数查询1
+ * @url [ POST ] /user/getRequest1
  */
 export function userGetRequest1ByPost(
   data: IUserGetRequest1RequestByPost,
@@ -250,8 +250,8 @@ userGetRequest1ByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】创建用户-createOne、根据姓名创建用户1】
- * @请求头 POST /user/createOne
+ * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
+ * @url [ POST ] /user/createOne
  */
 export interface IUserCreateOneRequestByPost {
   // 主键id
@@ -260,8 +260,8 @@ export interface IUserCreateOneRequestByPost {
   name?: string;
 }
 /**
- * @描述 【响应数据接口定义】创建用户-createOne、根据姓名创建用户1】
- * @请求头 POST /user/createOne
+ * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
+ * @url [ POST ] /user/createOne
  */
 export interface IUserCreateOneResponseByPost {
   // 主键id
@@ -270,8 +270,8 @@ export interface IUserCreateOneResponseByPost {
   name?: string;
 }
 /**
- * @描述 创建用户-createOne、根据姓名创建用户1
- * @请求信息 [ POST ] /user/createOne
+ * @description 创建用户-createOne、根据姓名创建用户1
+ * @url [ POST ] /user/createOne
  */
 export function userCreateOneByPost(
   data: IUserCreateOneRequestByPost,
@@ -296,8 +296,8 @@ userCreateOneByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】创建用户-Schema、根据姓名创建用户1】
- * @请求头 POST /user/createOneSchema
+ * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
+ * @url [ POST ] /user/createOneSchema
  */
 export interface IUserCreateOneSchemaRequestByPost {
   // 主键id（注解id-title）
@@ -313,8 +313,8 @@ export interface IUserCreateOneSchemaRequestByPost {
   };
 }
 /**
- * @描述 【响应数据接口定义】创建用户-Schema、根据姓名创建用户1】
- * @请求头 POST /user/createOneSchema
+ * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
+ * @url [ POST ] /user/createOneSchema
  */
 export interface IUserCreateOneSchemaResponseByPost {
   // 用户信息
@@ -331,8 +331,8 @@ export interface IUserCreateOneSchemaResponseByPost {
   };
 }
 /**
- * @描述 创建用户-Schema、根据姓名创建用户1
- * @请求信息 [ POST ] /user/createOneSchema
+ * @description 创建用户-Schema、根据姓名创建用户1
+ * @url [ POST ] /user/createOneSchema
  */
 export function userCreateOneSchemaByPost(
   data: IUserCreateOneSchemaRequestByPost,
@@ -357,16 +357,16 @@ userCreateOneSchemaByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】创建用户1、根据姓名创建用户1】
- * @请求头 POST /user/createOne1
+ * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
+ * @url [ POST ] /user/createOne1
  */
 export interface IUserCreateOne1RequestByPost {
   id?: string;
   name?: string;
 }
 /**
- * @描述 【响应数据接口定义】创建用户1、根据姓名创建用户1】
- * @请求头 POST /user/createOne1
+ * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
+ * @url [ POST ] /user/createOne1
  */
 export interface IUserCreateOne1ResponseByPost {
   // 主键id
@@ -375,8 +375,8 @@ export interface IUserCreateOne1ResponseByPost {
   name?: string;
 }
 /**
- * @描述 创建用户1、根据姓名创建用户1
- * @请求信息 [ POST ] /user/createOne1
+ * @description 创建用户1、根据姓名创建用户1
+ * @url [ POST ] /user/createOne1
  */
 export function userCreateOne1ByPost(
   data: IUserCreateOne1RequestByPost,
@@ -401,15 +401,15 @@ userCreateOne1ByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
- * @请求头 POST /file/upload
+ * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
+ * @url [ POST ] /file/upload
  */
 export interface IFileUploadRequestByPost {
   file: string;
 }
 /**
- * @描述 【响应数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
- * @请求头 POST /file/upload
+ * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
+ * @url [ POST ] /file/upload
  */
 export interface IFileUploadResponseByPost {
   // 文件对象
@@ -423,8 +423,8 @@ export interface IFileUploadResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 单纯文件上传、单纯文件上传，无任何参数
- * @请求信息 [ POST ] /file/upload
+ * @description 单纯文件上传、单纯文件上传，无任何参数
+ * @url [ POST ] /file/upload
  */
 export function fileUploadByPost(
   data: IFileUploadRequestByPost,
@@ -449,8 +449,8 @@ fileUploadByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】文件上传-带参数】
- * @请求头 POST /file/uploadParam
+ * @description 文件上传-带参数【请求数据类型定义】
+ * @url [ POST ] /file/uploadParam
  */
 export interface IFileUploadParamRequestByPost {
   // 文件名称
@@ -459,8 +459,8 @@ export interface IFileUploadParamRequestByPost {
   file: string;
 }
 /**
- * @描述 【响应数据接口定义】文件上传-带参数】
- * @请求头 POST /file/uploadParam
+ * @description 文件上传-带参数【响应数据类型定义】
+ * @url [ POST ] /file/uploadParam
  */
 export interface IFileUploadParamResponseByPost {
   // 文件对象
@@ -474,8 +474,8 @@ export interface IFileUploadParamResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 文件上传-带参数
- * @请求信息 [ POST ] /file/uploadParam
+ * @description 文件上传-带参数
+ * @url [ POST ] /file/uploadParam
  */
 export function fileUploadParamByPost(
   data: IFileUploadParamRequestByPost,
@@ -500,8 +500,8 @@ fileUploadParamByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】文件上传-带参数Header】
- * @请求头 POST /file/uploadParamHeader
+ * @description 文件上传-带参数Header【请求数据类型定义】
+ * @url [ POST ] /file/uploadParamHeader
  */
 export interface IFileUploadParamHeaderRequestByPost {
   // 文件名称
@@ -510,8 +510,8 @@ export interface IFileUploadParamHeaderRequestByPost {
   file: string;
 }
 /**
- * @描述 【响应数据接口定义】文件上传-带参数Header】
- * @请求头 POST /file/uploadParamHeader
+ * @description 文件上传-带参数Header【响应数据类型定义】
+ * @url [ POST ] /file/uploadParamHeader
  */
 export interface IFileUploadParamHeaderResponseByPost {
   // 文件对象
@@ -525,8 +525,8 @@ export interface IFileUploadParamHeaderResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 文件上传-带参数Header
- * @请求信息 [ POST ] /file/uploadParamHeader
+ * @description 文件上传-带参数Header
+ * @url [ POST ] /file/uploadParamHeader
  */
 export function fileUploadParamHeaderByPost(
   data: IFileUploadParamHeaderRequestByPost,
@@ -551,8 +551,8 @@ fileUploadParamHeaderByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】文件上传-带参数Path】
- * @请求头 POST /file/uploadParam/{id}
+ * @description 文件上传-带参数Path【请求数据类型定义】
+ * @url [ POST ] /file/uploadParam/{id}
  */
 export interface IFileUploadParamIdRequestByPost {
   // 文件id
@@ -563,8 +563,8 @@ export interface IFileUploadParamIdRequestByPost {
   file: string;
 }
 /**
- * @描述 【响应数据接口定义】文件上传-带参数Path】
- * @请求头 POST /file/uploadParam/{id}
+ * @description 文件上传-带参数Path【响应数据类型定义】
+ * @url [ POST ] /file/uploadParam/{id}
  */
 export interface IFileUploadParamIdResponseByPost {
   // 文件对象
@@ -578,8 +578,8 @@ export interface IFileUploadParamIdResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 文件上传-带参数Path
- * @请求信息 [ POST ] /file/uploadParam/{id}
+ * @description 文件上传-带参数Path
+ * @url [ POST ] /file/uploadParam/{id}
  */
 export function fileUploadParamIdByPost(
   data: IFileUploadParamIdRequestByPost,
@@ -604,15 +604,15 @@ fileUploadParamIdByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】多文件上传】
- * @请求头 POST /file/uploadBatch
+ * @description 多文件上传【请求数据类型定义】
+ * @url [ POST ] /file/uploadBatch
  */
 export interface IFileUploadBatchRequestByPost {
   files: Array<string>;
 }
 /**
- * @描述 【响应数据类型定义】多文件上传】
- * @请求头 POST /file/uploadBatch
+ * @description 多文件上传【响应数据类型定义】
+ * @url [ POST ] /file/uploadBatch
  */
 export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
 {
@@ -626,8 +626,8 @@ export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
   success?: boolean;
 }>;
 /**
- * @描述 多文件上传
- * @请求信息 [ POST ] /file/uploadBatch
+ * @description 多文件上传
+ * @url [ POST ] /file/uploadBatch
  */
 export function fileUploadBatchByPost(
   data: IFileUploadBatchRequestByPost,
@@ -652,8 +652,8 @@ fileUploadBatchByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】普通body请求】
- * @请求头 POST /body/body
+ * @description 普通body请求【请求数据类型定义】
+ * @url [ POST ] /body/body
  */
 export interface IBodyBodyRequestByPost {
   // 随机名称
@@ -666,8 +666,8 @@ export interface IBodyBodyRequestByPost {
   success?: boolean;
 }
 /**
- * @描述 【响应数据接口定义】普通body请求】
- * @请求头 POST /body/body
+ * @description 普通body请求【响应数据类型定义】
+ * @url [ POST ] /body/body
  */
 export interface IBodyBodyResponseByPost {
   // 文件对象
@@ -681,8 +681,8 @@ export interface IBodyBodyResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 普通body请求
- * @请求信息 [ POST ] /body/body
+ * @description 普通body请求
+ * @url [ POST ] /body/body
  */
 export function bodyBodyByPost(
   data: IBodyBodyRequestByPost,
@@ -703,8 +703,8 @@ bodyBodyByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】普通body请求+Param】
- * @请求头 POST /body/bodyParam
+ * @description 普通body请求+Param【请求数据类型定义】
+ * @url [ POST ] /body/bodyParam
  */
 export interface IBodyBodyParamRequestByPost {
   name: string;
@@ -716,8 +716,8 @@ export interface IBodyBodyParamRequestByPost {
   success?: boolean;
 }
 /**
- * @描述 【响应数据接口定义】普通body请求+Param】
- * @请求头 POST /body/bodyParam
+ * @description 普通body请求+Param【响应数据类型定义】
+ * @url [ POST ] /body/bodyParam
  */
 export interface IBodyBodyParamResponseByPost {
   // 文件对象
@@ -731,8 +731,8 @@ export interface IBodyBodyParamResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 普通body请求+Param
- * @请求信息 [ POST ] /body/bodyParam
+ * @description 普通body请求+Param
+ * @url [ POST ] /body/bodyParam
  */
 export function bodyBodyParamByPost(
   data: IBodyBodyParamRequestByPost,
@@ -757,8 +757,8 @@ bodyBodyParamByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】普通body请求+Param+Header】
- * @请求头 POST /body/bodyParamHeader
+ * @description 普通body请求+Param+Header【请求数据类型定义】
+ * @url [ POST ] /body/bodyParamHeader
  */
 export interface IBodyBodyParamHeaderRequestByPost {
   // 文件名称
@@ -771,8 +771,8 @@ export interface IBodyBodyParamHeaderRequestByPost {
   success?: boolean;
 }
 /**
- * @描述 【响应数据接口定义】普通body请求+Param+Header】
- * @请求头 POST /body/bodyParamHeader
+ * @description 普通body请求+Param+Header【响应数据类型定义】
+ * @url [ POST ] /body/bodyParamHeader
  */
 export interface IBodyBodyParamHeaderResponseByPost {
   // 文件对象
@@ -786,8 +786,8 @@ export interface IBodyBodyParamHeaderResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 普通body请求+Param+Header
- * @请求信息 [ POST ] /body/bodyParamHeader
+ * @description 普通body请求+Param+Header
+ * @url [ POST ] /body/bodyParamHeader
  */
 export function bodyBodyParamHeaderByPost(
   data: IBodyBodyParamHeaderRequestByPost,
@@ -812,8 +812,8 @@ bodyBodyParamHeaderByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】普通body请求+Param+Header+Path】
- * @请求头 POST /body/bodyParamHeaderPath/{id}
+ * @description 普通body请求+Param+Header+Path【请求数据类型定义】
+ * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
 export interface IBodyBodyParamHeaderPathIdRequestByPost {
   // 文件id
@@ -828,8 +828,8 @@ export interface IBodyBodyParamHeaderPathIdRequestByPost {
   success?: boolean;
 }
 /**
- * @描述 【响应数据接口定义】普通body请求+Param+Header+Path】
- * @请求头 POST /body/bodyParamHeaderPath/{id}
+ * @description 普通body请求+Param+Header+Path【响应数据类型定义】
+ * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
 export interface IBodyBodyParamHeaderPathIdResponseByPost {
   // 文件对象
@@ -843,8 +843,8 @@ export interface IBodyBodyParamHeaderPathIdResponseByPost {
   success?: boolean;
 }
 /**
- * @描述 普通body请求+Param+Header+Path
- * @请求信息 [ POST ] /body/bodyParamHeaderPath/{id}
+ * @description 普通body请求+Param+Header+Path
+ * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
 export function bodyBodyParamHeaderPathIdByPost(
   data: IBodyBodyParamHeaderPathIdRequestByPost,
@@ -869,8 +869,8 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】json参数查询】
- * @请求头 GET /user/getRequest
+ * @description json参数查询【请求数据类型定义】
+ * @url [ GET ] /user/getRequest
  */
 export interface IUserGetRequestRequestByGet {
   userSchema: {
@@ -889,8 +889,8 @@ export interface IUserGetRequestRequestByGet {
   cade: string;
 }
 /**
- * @描述 【响应数据接口定义】json参数查询】
- * @请求头 GET /user/getRequest
+ * @description json参数查询【响应数据类型定义】
+ * @url [ GET ] /user/getRequest
  */
 export interface IUserGetRequestResponseByGet {
   // 用户信息
@@ -907,8 +907,8 @@ export interface IUserGetRequestResponseByGet {
   };
 }
 /**
- * @描述 json参数查询
- * @请求信息 [ GET ] /user/getRequest
+ * @description json参数查询
+ * @url [ GET ] /user/getRequest
  */
 export function userGetRequestByGet(
   data: IUserGetRequestRequestByGet,
@@ -933,20 +933,20 @@ userGetRequestByGet.requestConfig = {
 };
 
 /**
- * @描述 【请求数据接口定义】创建用户、根据姓名创建用户】
- * @请求头 GET /user/create
+ * @description 创建用户、根据姓名创建用户【请求数据类型定义】
+ * @url [ GET ] /user/create
  */
 export interface IUserCreateRequestByGet {
   name: string;
 }
 /**
- * @描述 【响应数据类型定义】创建用户、根据姓名创建用户】
- * @请求头 GET /user/create
+ * @description 创建用户、根据姓名创建用户【响应数据类型定义】
+ * @url [ GET ] /user/create
  */
 export type UserCreateResponseTypeByGet = string;
 /**
- * @描述 创建用户、根据姓名创建用户
- * @请求信息 [ GET ] /user/create
+ * @description 创建用户、根据姓名创建用户
+ * @url [ GET ] /user/create
  */
 export function userCreateByGet(
   data: IUserCreateRequestByGet,

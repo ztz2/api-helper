@@ -13,6 +13,11 @@ export abstract class AbstractParserPlugin {
 }
 
 export type Config = {
+  // 代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
+  outputFilePath: string;
+  // request请求工具函数文件路径。
+  requestFunctionFilePath: string;
+  // 接口文档服务配置
   documentServers: Array<{
     // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
     url: string;
@@ -35,15 +40,6 @@ export type Config = {
       onRenderInterfaceName?: typeof renderInterfaceName;
     };
   }>,
-  // 请求函数文件路径
-  requestFunctionFilePath: string;
-  // 输出信息
-  output: {
-    // 输出路径
-    path: string;
-    // 输出文件名称，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
-    filename: string;
-  },
   // 解析扩展插件
   parserPlugins?: AbstractParserPlugin[],
 }

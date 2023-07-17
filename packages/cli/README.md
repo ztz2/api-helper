@@ -32,7 +32,7 @@ pnpm install @api-helper/cli @api-helper/core
 快速开始，只需要4步即可。
 
 ### 步骤一
-定义 `request.ts` 请求工具，用于统一管理请求。
+定义 `request.ts` 接口请求函数。
 以 `axios` 为例，作为统一请求工具。
 ```typescript
 import axios from 'axios';
@@ -67,16 +67,14 @@ import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
+* outputFilePath 【必填项】
+  * 代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
 
-* requestFunctionFilePath 【必填项】request请求工具函数文件路径。
-
-* output 【必填项】
-文件输出配置对象
-  * `output.path` 文件输出路径
-  * `output.filename` 输出文件名称，会根据文件后缀名(.ts|.js)判断是生成TS文件还是JS文件。
+* requestFunctionFilePath 【必填项】
+  * 接口请求函数文件路径。
 
 * documentServers
-接口文档服务相关配置。
+  接口文档服务配置。
   * `documentServers.url` 【必填项】文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
   * `documentServers.type` 【必填项】文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
   * `documentServers.dataKey` 获取响应数据的key，body[dataKey]
@@ -91,6 +89,4 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 ## 许可
 
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
+[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)

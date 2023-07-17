@@ -31,6 +31,13 @@ export function resolve(p = '') {
   return pathResolve.apply(null, args);
 }
 
+export function getExtensionName (name: string) {
+  if (!name.includes('.')) {
+    return '';
+  }
+  return name.substring(name.lastIndexOf('.'));
+}
+
 /**
  * @description 创建临时文件
  * @param content {string} 文件内容
