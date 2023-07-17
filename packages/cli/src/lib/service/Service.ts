@@ -166,15 +166,21 @@ class Service{
 
   // 5. 选择项目文档
   private async chooseDocument (parserPluginRunResult: ParserPluginRunResult): Promise<ParserPluginRunResult> {
-    const choicesDocumentListOptions: { title: string; value: string; selected: boolean; }[] = [];
+    const choicesDocumentListOptions: Recordable[] = [];
 
-    parserPluginRunResult.forEach((d) => {
+    parserPluginRunResult.forEach((d, idx) => {
       d.parsedDocumentList.forEach((item) => {
-        choicesDocumentListOptions.push({
-          title: `${item.title}【${d.documentServer.url}】`,
+        const choice: Recordable = {
+          title: item.title,
+          description: d.documentServer.url,
           value: item.id,
           selected: true,
-        });
+        }
+        if (!choice.title) {
+          choice.title = `[${idx}]${d.documentServer.url}`;
+          delete choice.description;
+        }
+        choicesDocumentListOptions.push(choice);
       });
     });
 
@@ -299,8 +305,8 @@ Service.init = async function () {
     name: 'codeType',
     message: '请选择配置文件类型？',
     choices: [
-      { title: 'JavaScript', value: 'apih.config.mjs' },
-      { title: 'TypeScript', value: 'apih.config.ts' }
+      { title: 'JavaScript', description: 'apih.config.js', value: 'apih.config.js' },
+      { title: 'TypeScript', description: 'apih.config.ts', value: 'apih.config.ts' }
     ],
   }]);
 
