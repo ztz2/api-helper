@@ -82,26 +82,23 @@ import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
+## `outputFilePath`
+:::warning 必填项
+:::
+
+代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
+
 
 ## `requestFunctionFilePath`
 :::warning 必填项
 :::
 
-request函数文件路径
-
-## `output`
-:::warning 必填项
-:::
-
-文件输出配置对象
-
-* `output.path` 文件输出路径
-* `output.filename` 输出文件名称，会根据文件后缀名(.ts|.js)判断是生成TS文件还是JS文件。
+接口请求函数文件路径。
 
 ## `documentServers`
 :::warning 必填项
 :::
-接口文档服务相关配置。
+接口文档服务配置。
 * `documentServers.url` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
 * `documentServers.type` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
 * `documentServers.dataKey` 获取响应数据的key，body[dataKey]
@@ -110,7 +107,6 @@ request函数文件路径
 * `documentServers.authToken` token验证，访问文档可能需要认证信息，yapi需要
 * `documentServers.events`  执行过程的回调事件
 * `documentServers.events.onRenderInterfaceName` 自定义生成接口名称
-
 
 ## `parserPlugins`
 文档解析插件，当项目文档不是swagger和yapi，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。
