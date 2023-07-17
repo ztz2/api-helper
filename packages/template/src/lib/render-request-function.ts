@@ -76,8 +76,8 @@ function renderRequestFunctionComment(api: APIHelper.API) {
   };
   return template.render(
 `/**
-   * @描述{{if apiDescription}} {{apiDescription}}{{else}} 无{{/if}}
-{{if api.docURL}}   * @接口文档 {{api.docURL}}
-{{/if}}   * @请求信息 [ {{api.method.toUpperCase()}} ] {{api.path}}
+   * @description{{if apiDescription}} {{apiDescription}}{{else}} 无{{/if}}
+{{if api.docURL}}   * @doc {{api.docURL}}
+{{/if}}   * @url [ {{api.method.toUpperCase()}} ] {{api.path}}
    */`, templateTenderParams);
 }

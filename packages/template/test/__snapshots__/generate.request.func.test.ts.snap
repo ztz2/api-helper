@@ -2,8 +2,8 @@
 
 exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
 "/**
- * @描述 Place an order for a pet
- * @请求信息 [ POST ] /v2/store/order
+ * @description Place an order for a pet
+ * @url [ POST ] /v2/store/order
  */
 export function v2StoreOrderByPost(
   data: IV2StoreOrderRequestByPost,
@@ -28,8 +28,8 @@ v2StoreOrderByPost.requestConfig = {
 };
 
 /**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
- * @请求信息 [ GET ] /v2/store/order/{orderId}
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @url [ GET ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByGet(
   data: IV2StoreOrderOrderIdRequestByGet,
@@ -54,8 +54,8 @@ v2StoreOrderOrderIdByGet.requestConfig = {
 };
 
 /**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
- * @请求信息 [ DELETE ] /v2/store/order/{orderId}
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByDelete(
   data: IV2StoreOrderOrderIdRequestByDelete,
@@ -80,8 +80,8 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
 };
 
 /**
- * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
- * @请求信息 [ GET ] /v2/store/inventory
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
  */
 export function v2StoreInventoryByGet(
   data: V2StoreInventoryRequestTypeByGet,
@@ -109,8 +109,8 @@ v2StoreInventoryByGet.requestConfig = {
 
 exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3.0生成接口函数测试 1`] = `
 "/**
- * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
- * @请求信息 [ GET ] /api/v3/store/inventory
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /api/v3/store/inventory
  */
 export function apiV3StoreInventoryByGet(
   data: ApiV3StoreInventoryRequestTypeByGet,
@@ -135,15 +135,15 @@ apiV3StoreInventoryByGet.requestConfig = {
 };
 
 /**
- * @描述 Place an order for a pet、Place a new order in the store
- * @请求信息 [ POST ] /api/v3/store/order
+ * @description Place an order for a pet、Place a new order in the store
+ * @url [ POST ] /api/v3/store/order
  */
 export function apiV3StoreOrderByPost(
   data: IApiV3StoreOrderRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3StoreOrderResponseTypeByPost>(
+  return request<IApiV3StoreOrderResponseByPost>(
     processRequestFunctionConfig(
       data,
       extraData,
@@ -168,15 +168,15 @@ apiV3StoreOrderByPost.requestConfig = {
 };
 
 /**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
- * @请求信息 [ GET ] /api/v3/store/order/{orderId}
+ * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @url [ GET ] /api/v3/store/order/{orderId}
  */
 export function apiV3StoreOrderOrderIdByGet(
   data: IApiV3StoreOrderOrderIdRequestByGet,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3StoreOrderOrderIdResponseTypeByGet>(
+  return request<IApiV3StoreOrderOrderIdResponseByGet>(
     processRequestFunctionConfig(
       data,
       extraData,
@@ -194,8 +194,8 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
 };
 
 /**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
- * @请求信息 [ DELETE ] /api/v3/store/order/{orderId}
+ * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @url [ DELETE ] /api/v3/store/order/{orderId}
  */
 export function apiV3StoreOrderOrderIdByDelete(
   data: IApiV3StoreOrderOrderIdRequestByDelete,

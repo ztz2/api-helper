@@ -93,8 +93,8 @@ function renderInterfaceComment(
 ) {
   const commentText =
 `/**
- * @描述 【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}${schema?.type === 'object' ? '接口定义' : '类型定义'}】${[api.summary, api.description].filter(Boolean).join('、')}】
- * @请求头 ${api.method.toUpperCase()} ${api.path}
+ * @description ${[api.summary, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】
+ * @url [ ${api.method.toUpperCase()} ] ${api.path}
  */`;
   return commentText;
 }

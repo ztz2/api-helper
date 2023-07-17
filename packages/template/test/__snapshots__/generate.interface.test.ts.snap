@@ -2,8 +2,8 @@
 
 exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "/**
- * @描述 【请求数据接口定义】Place an order for a pet】
- * @请求头 POST /v2/store/order
+ * @description Place an order for a pet【请求数据类型定义】
+ * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderRequestByPost {
   id?: number;
@@ -26,8 +26,8 @@ export interface IV2StoreOrderRequestByPost {
 
 exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0生成 interface 测试 1`] = `
 "/**
- * @描述 【响应数据接口定义】Place an order for a pet、Place a new order in the store】
- * @请求头 POST /api/v3/store/order
+ * @description Place an order for a pet、Place a new order in the store【响应数据类型定义】
+ * @url [ POST ] /api/v3/store/order
  */
 export interface IApiV3StoreOrderResponseByPost {
   id?: number;
