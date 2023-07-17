@@ -292,7 +292,7 @@ export function processRequestSchema(
     });
     requestSchemaRecord.push(requestJSONSchemaSource);
     options?.callback?.(parsedSchema);
-    return null;
+    return parsedSchema;
   }
 
   // 类型不同

@@ -8,6 +8,7 @@ import {
   resolve as pathResolve,
 } from 'path';
 import fs from 'node:fs';
+import parse from 'url-parse';
 import { merge } from 'lodash';
 import { URL } from 'node:url';
 import tmp, { FileOptions } from 'tmp';
@@ -131,15 +132,16 @@ export function processRequestConfig(documentServer: DocumentServer, options?: {
   const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
   const path = options?.path ?? '';
   const method = options?.method ?? 'get';
-  const urlInfo = (isHttp ? new URL(documentServer.url) : {}) as URL;
+  const urlInfo = (isHttp ? parse(documentServer.url): {}) as Recordable;
   const origin = urlInfo?.origin ?? '';
-  const queryParams = isHttp ? Object.assign(qs.parse(documentServer.url?.split?.('?')?.[1] || ''), options?.queryParams ?? {}) : {};
+  const queryParams = isHttp ? Object.assign(qs.parse(urlInfo?.query?.slice(1) || ''), options?.queryParams ?? {}) : {};
   const requestConfig = {
     ...options,
     method,
     headers: documentServer?.headers ?? {},
     url: mergeUrl(origin, path),
     qs: '',
+    documentServerUrl: documentServer.url,
     origin
   };
 

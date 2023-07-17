@@ -18,881 +18,959 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @描述 【请求数据接口定义】uploads an image】
- * @请求头 POST /v2/pet/{petId}/uploadImage
+ * @描述 【请求数据接口定义】普通body请求-put】
+ * @请求头 PUT http://127.0.0.1:17812/body/bodyPut
  */
-export interface IV2PetPetIdUploadImageRequestByPost {
-  // ID of pet to update
-  petId: string;
-  // Additional data to pass to server
-  additionalMetadata?: string;
-  // file to upload
-  file?: string;
-}
-/**
- * @描述 【响应数据接口定义】uploads an image】
- * @请求头 POST /v2/pet/{petId}/uploadImage
- */
-export interface IV2PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
-}
-/**
- * @描述 uploads an image
- * @请求信息 [ POST ] /v2/pet/{petId}/uploadImage
- */
-export function v2PetPetIdUploadImageByPost(
-  data: IV2PetPetIdUploadImageRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2PetPetIdUploadImageResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdUploadImageByPost.requestConfig
-    ),
-    ...args
-  );
-}
-v2PetPetIdUploadImageByPost.requestConfig = {
-  path: '/v2/pet/{petId}/uploadImage',
-  method: 'post',
-  formDataKeyNameList: ['additionalMetadata', 'file'],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Add a new pet to the store】
- * @请求头 POST /v2/pet
- */
-export interface IV2PetRequestByPost {
-  id?: number;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  name: string;
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @描述 【响应数据类型定义】Add a new pet to the store】
- * @请求头 POST /v2/pet
- */
-export type V2PetResponseTypeByPost = any;
-/**
- * @描述 Add a new pet to the store
- * @请求信息 [ POST ] /v2/pet
- */
-export function v2PetByPost(
-  data: IV2PetRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig),
-    ...args
-  );
-}
-v2PetByPost.requestConfig = {
-  path: '/v2/pet',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Update an existing pet】
- * @请求头 PUT /v2/pet
- */
-export interface IV2PetRequestByPut {
-  id?: number;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  name: string;
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @描述 【响应数据类型定义】Update an existing pet】
- * @请求头 PUT /v2/pet
- */
-export type V2PetResponseTypeByPut = any;
-/**
- * @描述 Update an existing pet
- * @请求信息 [ PUT ] /v2/pet
- */
-export function v2PetByPut(
-  data: IV2PetRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetResponseTypeByPut>(
-    processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig),
-    ...args
-  );
-}
-v2PetByPut.requestConfig = {
-  path: '/v2/pet',
-  method: 'put',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
- * @请求头 GET /v2/pet/findByStatus
- */
-export interface IV2PetFindByStatusRequestByGet {
-  // Status values that need to be considered for filter
-  status: string;
-}
-/**
- * @描述 【响应数据类型定义】Finds Pets by status、Multiple status values can be provided with comma separated strings】
- * @请求头 GET /v2/pet/findByStatus
- */
-export type V2PetFindByStatusResponseTypeByGet = Array<{
-  id?: number;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  name: string;
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}>;
-/**
- * @描述 Finds Pets by status、Multiple status values can be provided with comma separated strings
- * @请求信息 [ GET ] /v2/pet/findByStatus
- */
-export function v2PetFindByStatusByGet(
-  data: IV2PetFindByStatusRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetFindByStatusResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByStatusByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2PetFindByStatusByGet.requestConfig = {
-  path: '/v2/pet/findByStatus',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['status']
-};
-
-/**
- * @描述 【请求数据接口定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
- * @请求头 GET /v2/pet/findByTags
- */
-export interface IV2PetFindByTagsRequestByGet {
-  // Tags to filter by
-  tags: string;
-}
-/**
- * @描述 【响应数据类型定义】Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.】
- * @请求头 GET /v2/pet/findByTags
- */
-export type V2PetFindByTagsResponseTypeByGet = Array<{
-  id?: number;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  name: string;
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}>;
-/**
- * @描述 Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @请求信息 [ GET ] /v2/pet/findByTags
- */
-export function v2PetFindByTagsByGet(
-  data: IV2PetFindByTagsRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetFindByTagsResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByTagsByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2PetFindByTagsByGet.requestConfig = {
-  path: '/v2/pet/findByTags',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['tags']
-};
-
-/**
- * @描述 【请求数据接口定义】Find pet by ID、Returns a single pet】
- * @请求头 GET /v2/pet/{petId}
- */
-export interface IV2PetPetIdRequestByGet {
-  // ID of pet to return
-  petId: string;
-}
-/**
- * @描述 【响应数据接口定义】Find pet by ID、Returns a single pet】
- * @请求头 GET /v2/pet/{petId}
- */
-export interface IV2PetPetIdResponseByGet {
-  id?: number;
-  category: {
-    id?: number;
-    name?: string;
-  };
-  name: string;
-  photoUrls: Array<string>;
-  tags: Array<{
-    id?: number;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @描述 Find pet by ID、Returns a single pet
- * @请求信息 [ GET ] /v2/pet/{petId}
- */
-export function v2PetPetIdByGet(
-  data: IV2PetPetIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2PetPetIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2PetPetIdByGet.requestConfig = {
-  path: '/v2/pet/{petId}',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Updates a pet in the store with form data】
- * @请求头 POST /v2/pet/{petId}
- */
-export interface IV2PetPetIdRequestByPost {
-  // ID of pet that needs to be updated
-  petId: string;
-  // Updated name of the pet
+export interface Ihttp_127_0_0_1_17812BodyBodyPutRequestByPut {
+  // 随机名称
+  random?: string;
+  // 文件名称
   name?: string;
-  // Updated status of the pet
-  status?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
 }
 /**
- * @描述 【响应数据类型定义】Updates a pet in the store with form data】
- * @请求头 POST /v2/pet/{petId}
+ * @描述 【响应数据接口定义】普通body请求-put】
+ * @请求头 PUT http://127.0.0.1:17812/body/bodyPut
  */
-export type V2PetPetIdResponseTypeByPost = any;
+export interface Ihttp_127_0_0_1_17812BodyBodyPutResponseByPut {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
 /**
- * @描述 Updates a pet in the store with form data
- * @请求信息 [ POST ] /v2/pet/{petId}
+ * @描述 普通body请求-put
+ * @请求信息 [ PUT ] http://127.0.0.1:17812/body/bodyPut
  */
-export function v2PetPetIdByPost(
-  data: IV2PetPetIdRequestByPost,
+export function http_127_0_0_1_17812BodyBodyPutByPut(
+  data: Ihttp_127_0_0_1_17812BodyBodyPutRequestByPut,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<V2PetPetIdResponseTypeByPost>(
+  return request<Ihttp_127_0_0_1_17812BodyBodyPutResponseByPut>(
     processRequestFunctionConfig(
       data,
       extraData,
-      v2PetPetIdByPost.requestConfig
+      http_127_0_0_1_17812BodyBodyPutByPut.requestConfig
     ),
     ...args
   );
 }
-v2PetPetIdByPost.requestConfig = {
-  path: '/v2/pet/{petId}',
-  method: 'post',
-  formDataKeyNameList: ['name', 'status'],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Deletes a pet】
- * @请求头 DELETE /v2/pet/{petId}
- */
-export interface IV2PetPetIdRequestByDelete {
-  // Pet id to delete
-  petId: string;
-}
-/**
- * @描述 【响应数据类型定义】Deletes a pet】
- * @请求头 DELETE /v2/pet/{petId}
- */
-export type V2PetPetIdResponseTypeByDelete = any;
-/**
- * @描述 Deletes a pet
- * @请求信息 [ DELETE ] /v2/pet/{petId}
- */
-export function v2PetPetIdByDelete(
-  data: IV2PetPetIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetPetIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByDelete.requestConfig
-    ),
-    ...args
-  );
-}
-v2PetPetIdByDelete.requestConfig = {
-  path: '/v2/pet/{petId}',
-  method: 'delete',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Place an order for a pet】
- * @请求头 POST /v2/store/order
- */
-export interface IV2StoreOrderRequestByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
-  // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
-}
-/**
- * @描述 【响应数据接口定义】Place an order for a pet】
- * @请求头 POST /v2/store/order
- */
-export interface IV2StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
-  // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
-}
-/**
- * @描述 Place an order for a pet
- * @请求信息 [ POST ] /v2/store/order
- */
-export function v2StoreOrderByPost(
-  data: IV2StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2StoreOrderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
-    ...args
-  );
-}
-v2StoreOrderByPost.requestConfig = {
-  path: '/v2/store/order',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions】
- * @请求头 GET /v2/store/order/{orderId}
- */
-export interface IV2StoreOrderOrderIdRequestByGet {
-  // ID of pet that needs to be fetched
-  orderId: string;
-}
-/**
- * @描述 【响应数据接口定义】Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions】
- * @请求头 GET /v2/store/order/{orderId}
- */
-export interface IV2StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
-  // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
-}
-/**
- * @描述 Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
- * @请求信息 [ GET ] /v2/store/order/{orderId}
- */
-export function v2StoreOrderOrderIdByGet(
-  data: IV2StoreOrderOrderIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2StoreOrderOrderIdByGet.requestConfig = {
-  path: '/v2/store/order/{orderId}',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors】
- * @请求头 DELETE /v2/store/order/{orderId}
- */
-export interface IV2StoreOrderOrderIdRequestByDelete {
-  // ID of the order that needs to be deleted
-  orderId: string;
-}
-/**
- * @描述 【响应数据类型定义】Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors】
- * @请求头 DELETE /v2/store/order/{orderId}
- */
-export type V2StoreOrderOrderIdResponseTypeByDelete = any;
-/**
- * @描述 Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
- * @请求信息 [ DELETE ] /v2/store/order/{orderId}
- */
-export function v2StoreOrderOrderIdByDelete(
-  data: IV2StoreOrderOrderIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2StoreOrderOrderIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
-    ...args
-  );
-}
-v2StoreOrderOrderIdByDelete.requestConfig = {
-  path: '/v2/store/order/{orderId}',
-  method: 'delete',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据类型定义】Returns pet inventories by status、Returns a map of status codes to quantities】
- * @请求头 GET /v2/store/inventory
- */
-export type V2StoreInventoryRequestTypeByGet = any;
-/**
- * @描述 【响应数据接口定义】Returns pet inventories by status、Returns a map of status codes to quantities】
- * @请求头 GET /v2/store/inventory
- */
-export type V2StoreInventoryResponseTypeByGet = any;
-/**
- * @描述 Returns pet inventories by status、Returns a map of status codes to quantities
- * @请求信息 [ GET ] /v2/store/inventory
- */
-export function v2StoreInventoryByGet(
-  data: V2StoreInventoryRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2StoreInventoryResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2StoreInventoryByGet.requestConfig = {
-  path: '/v2/store/inventory',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据类型定义】Creates list of users with given input array】
- * @请求头 POST /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayRequestTypeByPost = any;
-/**
- * @描述 【响应数据类型定义】Creates list of users with given input array】
- * @请求头 POST /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayResponseTypeByPost = any;
-/**
- * @描述 Creates list of users with given input array
- * @请求信息 [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(
-  data: V2UserCreateWithArrayRequestTypeByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserCreateWithArrayResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithArrayByPost.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据类型定义】Creates list of users with given input array】
- * @请求头 POST /v2/user/createWithList
- */
-export type V2UserCreateWithListRequestTypeByPost = any;
-/**
- * @描述 【响应数据类型定义】Creates list of users with given input array】
- * @请求头 POST /v2/user/createWithList
- */
-export type V2UserCreateWithListResponseTypeByPost = any;
-/**
- * @描述 Creates list of users with given input array
- * @请求信息 [ POST ] /v2/user/createWithList
- */
-export function v2UserCreateWithListByPost(
-  data: V2UserCreateWithListRequestTypeByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserCreateWithListResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithListByPost.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserCreateWithListByPost.requestConfig = {
-  path: '/v2/user/createWithList',
-  method: 'post',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Get user by user name】
- * @请求头 GET /v2/user/{username}
- */
-export interface IV2UserUsernameRequestByGet {
-  // The name that needs to be fetched. Use user1 for testing.
-  username: string;
-}
-/**
- * @描述 【响应数据接口定义】Get user by user name】
- * @请求头 GET /v2/user/{username}
- */
-export interface IV2UserUsernameResponseByGet {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
-}
-/**
- * @描述 Get user by user name
- * @请求信息 [ GET ] /v2/user/{username}
- */
-export function v2UserUsernameByGet(
-  data: IV2UserUsernameRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2UserUsernameResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserUsernameByGet.requestConfig = {
-  path: '/v2/user/{username}',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Updated user、This can only be done by the logged in user.】
- * @请求头 PUT /v2/user/{username}
- */
-export interface IV2UserUsernameRequestByPut {
-  // name that need to be updated
-  username: string;
-  id?: number;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
-}
-/**
- * @描述 【响应数据类型定义】Updated user、This can only be done by the logged in user.】
- * @请求头 PUT /v2/user/{username}
- */
-export type V2UserUsernameResponseTypeByPut = any;
-/**
- * @描述 Updated user、This can only be done by the logged in user.
- * @请求信息 [ PUT ] /v2/user/{username}
- */
-export function v2UserUsernameByPut(
-  data: IV2UserUsernameRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserUsernameResponseTypeByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByPut.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserUsernameByPut.requestConfig = {
-  path: '/v2/user/{username}',
+http_127_0_0_1_17812BodyBodyPutByPut.requestConfig = {
+  path: 'http://127.0.0.1:17812/body/bodyPut',
   method: 'put',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Delete user、This can only be done by the logged in user.】
- * @请求头 DELETE /v2/user/{username}
- */
-export interface IV2UserUsernameRequestByDelete {
-  // The name that needs to be deleted
-  username: string;
-}
-/**
- * @描述 【响应数据类型定义】Delete user、This can only be done by the logged in user.】
- * @请求头 DELETE /v2/user/{username}
- */
-export type V2UserUsernameResponseTypeByDelete = any;
-/**
- * @描述 Delete user、This can only be done by the logged in user.
- * @请求信息 [ DELETE ] /v2/user/{username}
- */
-export function v2UserUsernameByDelete(
-  data: IV2UserUsernameRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserUsernameResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByDelete.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserUsernameByDelete.requestConfig = {
-  path: '/v2/user/{username}',
-  method: 'delete',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
-};
-
-/**
- * @描述 【请求数据接口定义】Logs user into the system】
- * @请求头 GET /v2/user/login
- */
-export interface IV2UserLoginRequestByGet {
-  // The user name for login
-  username: string;
-  // The password for login in clear text
-  password: string;
-}
-/**
- * @描述 【响应数据类型定义】Logs user into the system】
- * @请求头 GET /v2/user/login
- */
-export type V2UserLoginResponseTypeByGet = string;
-/**
- * @描述 Logs user into the system
- * @请求信息 [ GET ] /v2/user/login
- */
-export function v2UserLoginByGet(
-  data: IV2UserLoginRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserLoginResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLoginByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserLoginByGet.requestConfig = {
-  path: '/v2/user/login',
-  method: 'get',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['username', 'password']
-};
-
-/**
- * @描述 【请求数据类型定义】Logs out current logged in user session】
- * @请求头 GET /v2/user/logout
- */
-export type V2UserLogoutRequestTypeByGet = any;
-/**
- * @描述 【响应数据类型定义】Logs out current logged in user session】
- * @请求头 GET /v2/user/logout
- */
-export type V2UserLogoutResponseTypeByGet = any;
-/**
- * @描述 Logs out current logged in user session
- * @请求信息 [ GET ] /v2/user/logout
- */
-export function v2UserLogoutByGet(
-  data: V2UserLogoutRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserLogoutResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLogoutByGet.requestConfig
-    ),
-    ...args
-  );
-}
-v2UserLogoutByGet.requestConfig = {
-  path: '/v2/user/logout',
-  method: 'get',
-  formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
 };
 
 /**
- * @描述 【请求数据接口定义】Create user、This can only be done by the logged in user.】
- * @请求头 POST /v2/user
+ * @描述 【请求数据接口定义】body请求】
+ * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body
  */
-export interface IV2UserRequestByPost {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
-  // User Status
-  userStatus?: number;
+export interface Ihttp_127_0_0_1_17812UserDeviceIdBodyRequestByPost {
+  // 设备id
+  deviceId: string;
 }
 /**
- * @描述 【响应数据类型定义】Create user、This can only be done by the logged in user.】
- * @请求头 POST /v2/user
+ * @描述 【响应数据接口定义】body请求】
+ * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body
  */
-export type V2UserResponseTypeByPost = any;
+export interface Ihttp_127_0_0_1_17812UserDeviceIdBodyResponseByPost {
+  // 用户信息
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
 /**
- * @描述 Create user、This can only be done by the logged in user.
- * @请求信息 [ POST ] /v2/user
+ * @描述 body请求
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/{deviceId}/body
  */
-export function v2UserByPost(
-  data: IV2UserRequestByPost,
+export function http_127_0_0_1_17812UserDeviceIdBodyByPost(
+  data: Ihttp_127_0_0_1_17812UserDeviceIdBodyRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<V2UserResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig),
+  return request<Ihttp_127_0_0_1_17812UserDeviceIdBodyResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserDeviceIdBodyByPost.requestConfig
+    ),
     ...args
   );
 }
-v2UserByPost.requestConfig = {
-  path: '/v2/user',
+http_127_0_0_1_17812UserDeviceIdBodyByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/{deviceId}/body',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['deviceId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】body请求1】
+ * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body1
+ */
+export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1RequestByPost {
+  // 设备id
+  deviceId: string;
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 【响应数据接口定义】body请求1】
+ * @请求头 POST http://127.0.0.1:17812/user/{deviceId}/body1
+ */
+export interface Ihttp_127_0_0_1_17812UserDeviceIdBody1ResponseByPost {
+  // 用户信息
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 body请求1
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/{deviceId}/body1
+ */
+export function http_127_0_0_1_17812UserDeviceIdBody1ByPost(
+  data: Ihttp_127_0_0_1_17812UserDeviceIdBody1RequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserDeviceIdBody1ResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserDeviceIdBody1ByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserDeviceIdBody1ByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/{deviceId}/body1',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['deviceId'],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】json参数查询1】
+ * @请求头 POST http://127.0.0.1:17812/user/getRequest1
+ */
+export interface Ihttp_127_0_0_1_17812UserGetRequest1RequestByPost {
+  cade: string;
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 【响应数据接口定义】json参数查询1】
+ * @请求头 POST http://127.0.0.1:17812/user/getRequest1
+ */
+export interface Ihttp_127_0_0_1_17812UserGetRequest1ResponseByPost {
+  // 用户信息
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 json参数查询1
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/getRequest1
+ */
+export function http_127_0_0_1_17812UserGetRequest1ByPost(
+  data: Ihttp_127_0_0_1_17812UserGetRequest1RequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserGetRequest1ResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserGetRequest1ByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserGetRequest1ByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/getRequest1',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['cade']
+};
+
+/**
+ * @描述 【请求数据接口定义】创建用户-createOne、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOne
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOneRequestByPost {
+  // 主键id
+  id?: string;
+  // 名称
+  name?: string;
+}
+/**
+ * @描述 【响应数据接口定义】创建用户-createOne、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOne
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOneResponseByPost {
+  // 主键id
+  id?: string;
+  // 名称
+  name?: string;
+}
+/**
+ * @描述 创建用户-createOne、根据姓名创建用户1
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOne
+ */
+export function http_127_0_0_1_17812UserCreateOneByPost(
+  data: Ihttp_127_0_0_1_17812UserCreateOneRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserCreateOneResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserCreateOneByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserCreateOneByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/createOne',
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】创建用户-Schema、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOneSchema
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaRequestByPost {
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 【响应数据接口定义】创建用户-Schema、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOneSchema
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOneSchemaResponseByPost {
+  // 用户信息
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 创建用户-Schema、根据姓名创建用户1
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOneSchema
+ */
+export function http_127_0_0_1_17812UserCreateOneSchemaByPost(
+  data: Ihttp_127_0_0_1_17812UserCreateOneSchemaRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserCreateOneSchemaResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserCreateOneSchemaByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserCreateOneSchemaByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/createOneSchema',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】创建用户1、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOne1
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOne1RequestByPost {
+  id?: string;
+  name?: string;
+}
+/**
+ * @描述 【响应数据接口定义】创建用户1、根据姓名创建用户1】
+ * @请求头 POST http://127.0.0.1:17812/user/createOne1
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateOne1ResponseByPost {
+  // 主键id
+  id?: string;
+  // 名称
+  name?: string;
+}
+/**
+ * @描述 创建用户1、根据姓名创建用户1
+ * @请求信息 [ POST ] http://127.0.0.1:17812/user/createOne1
+ */
+export function http_127_0_0_1_17812UserCreateOne1ByPost(
+  data: Ihttp_127_0_0_1_17812UserCreateOne1RequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserCreateOne1ResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserCreateOne1ByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserCreateOne1ByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/createOne1',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['id', 'name']
+};
+
+/**
+ * @描述 【请求数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
+ * @请求头 POST http://127.0.0.1:17812/file/upload
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadRequestByPost {
+  file: string;
+}
+/**
+ * @描述 【响应数据接口定义】单纯文件上传、单纯文件上传，无任何参数】
+ * @请求头 POST http://127.0.0.1:17812/file/upload
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 单纯文件上传、单纯文件上传，无任何参数
+ * @请求信息 [ POST ] http://127.0.0.1:17812/file/upload
+ */
+export function http_127_0_0_1_17812FileUploadByPost(
+  data: Ihttp_127_0_0_1_17812FileUploadRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812FileUploadResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812FileUploadByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812FileUploadByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/file/upload',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】文件上传-带参数】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParam
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamRequestByPost {
+  // 文件名称
+  name: string;
+  // 文件
+  file: string;
+}
+/**
+ * @描述 【响应数据接口定义】文件上传-带参数】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParam
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 文件上传-带参数
+ * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParam
+ */
+export function http_127_0_0_1_17812FileUploadParamByPost(
+  data: Ihttp_127_0_0_1_17812FileUploadParamRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812FileUploadParamResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812FileUploadParamByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812FileUploadParamByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/file/uploadParam',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】文件上传-带参数Header】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParamHeader
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderRequestByPost {
+  // 文件名称
+  name: string;
+  // 文件
+  file: string;
+}
+/**
+ * @描述 【响应数据接口定义】文件上传-带参数Header】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParamHeader
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamHeaderResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 文件上传-带参数Header
+ * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParamHeader
+ */
+export function http_127_0_0_1_17812FileUploadParamHeaderByPost(
+  data: Ihttp_127_0_0_1_17812FileUploadParamHeaderRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812FileUploadParamHeaderResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812FileUploadParamHeaderByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812FileUploadParamHeaderByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/file/uploadParamHeader',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】文件上传-带参数Path】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParam/{id}
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamIdRequestByPost {
+  // 文件id
+  id: string;
+  // 文件名称
+  name: string;
+  // 文件
+  file: string;
+}
+/**
+ * @描述 【响应数据接口定义】文件上传-带参数Path】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadParam/{id}
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadParamIdResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 文件上传-带参数Path
+ * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadParam/{id}
+ */
+export function http_127_0_0_1_17812FileUploadParamIdByPost(
+  data: Ihttp_127_0_0_1_17812FileUploadParamIdRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812FileUploadParamIdResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812FileUploadParamIdByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812FileUploadParamIdByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/file/uploadParam/{id}',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['id'],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】多文件上传】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadBatch
+ */
+export interface Ihttp_127_0_0_1_17812FileUploadBatchRequestByPost {
+  files: Array<string>;
+}
+/**
+ * @描述 【响应数据类型定义】多文件上传】
+ * @请求头 POST http://127.0.0.1:17812/file/uploadBatch
+ */
+export type Http_127_0_0_1_17812FileUploadBatchResponseTypeByPost =
+  Array<// 文件对象
+  {
+    // 随机名称
+    random?: string;
+    // 文件名称
+    name?: string;
+    // 文件大小
+    size?: number;
+    // 是否上传成功
+    success?: boolean;
+  }>;
+/**
+ * @描述 多文件上传
+ * @请求信息 [ POST ] http://127.0.0.1:17812/file/uploadBatch
+ */
+export function http_127_0_0_1_17812FileUploadBatchByPost(
+  data: Ihttp_127_0_0_1_17812FileUploadBatchRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Http_127_0_0_1_17812FileUploadBatchResponseTypeByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812FileUploadBatchByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812FileUploadBatchByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/file/uploadBatch',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】普通body请求】
+ * @请求头 POST http://127.0.0.1:17812/body/body
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyRequestByPost {
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 【响应数据接口定义】普通body请求】
+ * @请求头 POST http://127.0.0.1:17812/body/body
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 普通body请求
+ * @请求信息 [ POST ] http://127.0.0.1:17812/body/body
+ */
+export function http_127_0_0_1_17812BodyBodyByPost(
+  data: Ihttp_127_0_0_1_17812BodyBodyRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812BodyBodyResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812BodyBodyByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812BodyBodyByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/body/body',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: []
+};
+
+/**
+ * @描述 【请求数据接口定义】普通body请求+Param】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParam
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamRequestByPost {
+  name: string;
+  // 随机名称
+  random?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 【响应数据接口定义】普通body请求+Param】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParam
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 普通body请求+Param
+ * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParam
+ */
+export function http_127_0_0_1_17812BodyBodyParamByPost(
+  data: Ihttp_127_0_0_1_17812BodyBodyParamRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812BodyBodyParamResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812BodyBodyParamByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812BodyBodyParamByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/body/bodyParam',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】普通body请求+Param+Header】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeader
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderRequestByPost {
+  // 文件名称
+  name: string;
+  // 随机名称
+  random?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 【响应数据接口定义】普通body请求+Param+Header】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeader
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 普通body请求+Param+Header
+ * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParamHeader
+ */
+export function http_127_0_0_1_17812BodyBodyParamHeaderByPost(
+  data: Ihttp_127_0_0_1_17812BodyBodyParamHeaderRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812BodyBodyParamHeaderResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812BodyBodyParamHeaderByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812BodyBodyParamHeaderByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/body/bodyParamHeader',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】普通body请求+Param+Header+Path】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdRequestByPost {
+  // 文件id
+  id: string;
+  // 文件名称
+  name: string;
+  // 随机名称
+  random?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 【响应数据接口定义】普通body请求+Param+Header+Path】
+ * @请求头 POST http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ */
+export interface Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdResponseByPost {
+  // 文件对象
+  // 随机名称
+  random?: string;
+  // 文件名称
+  name?: string;
+  // 文件大小
+  size?: number;
+  // 是否上传成功
+  success?: boolean;
+}
+/**
+ * @描述 普通body请求+Param+Header+Path
+ * @请求信息 [ POST ] http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}
+ */
+export function http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost(
+  data: Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812BodyBodyParamHeaderPathIdResponseByPost>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812BodyBodyParamHeaderPathIdByPost.requestConfig = {
+  path: 'http://127.0.0.1:17812/body/bodyParamHeaderPath/{id}',
+  method: 'post',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['id'],
+  queryStringKeyNameList: ['name']
+};
+
+/**
+ * @描述 【请求数据接口定义】json参数查询】
+ * @请求头 GET http://127.0.0.1:17812/user/getRequest
+ */
+export interface Ihttp_127_0_0_1_17812UserGetRequestRequestByGet {
+  userSchema: {
+    // 主键id（注解id-title）
+    id?: string;
+    // 名称
+    name?: string;
+    // Part信息
+    partSchema: {
+      // part部分id
+      id?: string;
+      // part部分名称
+      name?: string;
+    };
+  };
+  cade: string;
+}
+/**
+ * @描述 【响应数据接口定义】json参数查询】
+ * @请求头 GET http://127.0.0.1:17812/user/getRequest
+ */
+export interface Ihttp_127_0_0_1_17812UserGetRequestResponseByGet {
+  // 用户信息
+  // 主键id（注解id-title）
+  id?: string;
+  // 名称
+  name?: string;
+  // Part信息
+  partSchema: {
+    // part部分id
+    id?: string;
+    // part部分名称
+    name?: string;
+  };
+}
+/**
+ * @描述 json参数查询
+ * @请求信息 [ GET ] http://127.0.0.1:17812/user/getRequest
+ */
+export function http_127_0_0_1_17812UserGetRequestByGet(
+  data: Ihttp_127_0_0_1_17812UserGetRequestRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Ihttp_127_0_0_1_17812UserGetRequestResponseByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserGetRequestByGet.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserGetRequestByGet.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/getRequest',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['userSchema', 'cade']
+};
+
+/**
+ * @描述 【请求数据接口定义】创建用户、根据姓名创建用户】
+ * @请求头 GET http://127.0.0.1:17812/user/create
+ */
+export interface Ihttp_127_0_0_1_17812UserCreateRequestByGet {
+  name: string;
+}
+/**
+ * @描述 【响应数据类型定义】创建用户、根据姓名创建用户】
+ * @请求头 GET http://127.0.0.1:17812/user/create
+ */
+export type Http_127_0_0_1_17812UserCreateResponseTypeByGet = string;
+/**
+ * @描述 创建用户、根据姓名创建用户
+ * @请求信息 [ GET ] http://127.0.0.1:17812/user/create
+ */
+export function http_127_0_0_1_17812UserCreateByGet(
+  data: Ihttp_127_0_0_1_17812UserCreateRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<Http_127_0_0_1_17812UserCreateResponseTypeByGet>(
+    processRequestFunctionConfig(
+      data,
+      extraData,
+      http_127_0_0_1_17812UserCreateByGet.requestConfig
+    ),
+    ...args
+  );
+}
+http_127_0_0_1_17812UserCreateByGet.requestConfig = {
+  path: 'http://127.0.0.1:17812/user/create',
+  method: 'get',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['name']
 };

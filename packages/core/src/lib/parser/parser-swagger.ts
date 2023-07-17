@@ -12,7 +12,7 @@ import {
   filterDesc,
   filterKeyName,
   parserSchema,
-  processRequestSchema,
+  processRequestSchema, transformType,
 } from '../utils/util';
 import {
   UNKNOWN_GROUP_DESC,
@@ -140,19 +140,42 @@ export default class ParserSwagger {
                 if (requestKeyNameMemo.includes(keyName)) {
                   continue;
                 }
-                // 字段
-                const scm: APIHelper.Schema = {
+                let scm = {
                   examples: [],
                   id: this.generateId(),
                   title: '',
                   description: '',
-                  keyName,
                   type: 'string',
+                  keyName,
                   params: [],
                   rules: {
                     required: false
                   }
-                };
+                } as APIHelper.Schema;
+
+                // fix: url参数也是一个对象问题.
+                if (parameter.schema) {
+                  const parsedSchema = parserSchema(
+                    parameter.schema,
+                    undefined,
+                    undefined,
+                    undefined,
+                    {
+                      autoGenerateId: this.autoGenerateId
+                    }
+                  );
+                  if (parsedSchema) {
+                    scm = parsedSchema;
+                    if (!scm.type) {
+                      // @ts-ignore
+                      scm.type = 'string';
+                      // @ts-ignore
+                      scm.params = [];
+                    }
+                  }
+                }
+                scm.id = this.generateId();
+                scm.keyName = keyName;
 
                 // 路径参数
                 if (parameter.in === 'path') {
@@ -201,11 +224,13 @@ export default class ParserSwagger {
             }
           );
 
-          // Body 为 json参数
+          // 请求 Body 为 json参数
+          const requestSchemaSource = apiMap.requestBody?.content?.['application/json']?.schema
+            ?? apiMap.requestBody?.content?.['text/json']?.schema;
           requestExtraDataSchema = processRequestSchema(
             requestDataSchema,
             requestSchemaRecord,
-            apiMap.requestBody?.content?.['application/json']?.schema,
+            requestSchemaSource,
             undefined,
             {
               autoGenerateId: this.autoGenerateId,
@@ -219,11 +244,26 @@ export default class ParserSwagger {
           } else {
             api.requestExtraDataSchema = requestExtraDataSchema;
           }
+
+          // 请求参数根对象属性去重
+          if (api.requestDataSchema?.params) {
+            const requestDataSchemaMemo: string[] = [];
+            api.requestDataSchema.params = api.requestDataSchema.params.filter((s) => {
+              if (!s.keyName) {
+                return true;
+              }
+              const hasKeyName = requestDataSchemaMemo.includes(s.keyName);
+              requestDataSchemaMemo.push(s.keyName);
+              return !hasKeyName;
+            });
+          }
           /****************** 处理请求参数--结束 ******************/
 
           /****************** 处理响应参数--开始 ******************/
-
-          const responsesSchemaSource = apiMap.responses?.['200']?.schema;
+          const responsesSchemaSource = apiMap.responses?.['200']?.schema
+            ?? apiMap.responses?.['200']?.content?.['application/json']?.schema
+            ?? apiMap.responses?.['200']?.content?.['text/json']?.schema
+            ?? apiMap.responses?.['200']?.content?.['*/*']?.schema;
           if (validateSchema(responsesSchemaSource)) {
             api.responseDataSchema = parserSchema(
               responsesSchemaSource,
@@ -238,7 +278,6 @@ export default class ParserSwagger {
               api.responseDataSchema.keyName = '';
             }
           }
-
           /****************** 处理响应参数--开始 ******************/
 
           // 将该API添加到所依赖的模块中

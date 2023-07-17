@@ -53,13 +53,13 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 ```
 
 ### 步骤二
-初始化配置文件，终端输入`apih init`命令。
+初始化配置文件，终端输入`npx apih init`命令。
 
 ### 步骤三
 将刚才创建的`request.ts`的文件路径，配置到的`requestFunctionFilePath`中。根据项目情况，修改接口文档地址`documentServers.url`。
 
 ### 步骤四
-最后终端输入`apih`命令即可生成文档全部API。
+最后终端输入`npx apih`命令即可生成文档全部API。
 
 ## Config 对象文档说明
 ```typescript

@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/cli",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "bin": {
     "apih": "bin/index.js"
@@ -22,7 +22,7 @@
     "clean": "shx rm -rf bin && shx rm -rf lib",
     "lint": "eslint src/**/*.ts",
     "test": "jest",
-    "test:update": "npm run test:only -- -u"
+    "test:update": "npm run test -- -u"
   },
   "repository": {
     "type": "git",
@@ -71,7 +71,8 @@
     "prompts": "^2.4.2",
     "qs": "^6.11.0",
     "shx": "^0.3.4",
-    "tmp": "^0.2.1"
+    "tmp": "^0.2.1",
+    "url-parse": "^1.5.10"
   },
   "devDependencies": {
     "@types/fs-extra": "^5.0.4",
@@ -83,6 +84,7 @@
     "@types/prompts": "^1.2.0",
     "@types/qs": "^6.9.7",
     "@types/tmp": "^0.2.3",
+    "@types/url-parse": "^1.4.8",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^7.32.0",

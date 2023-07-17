@@ -36,16 +36,16 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 ```
 
 ### 步骤二
-初始化配置文件，终端输入`apih init`命令。
-<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>apih init</span></code></pre></div>
+初始化配置文件，终端输入`npx apih init`命令。
+<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>npx apih init</span></code></pre></div>
 
 该命令用于生成配置文件，根据项目情况生成Typescript配置文件或者Javascript配置文件。
 
 <div class="language-sh">
 <pre><code>
 <span style="color:#A6ACCD;">请选择配置文件类型? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">TypeScript</span> / JavaScript</span></span>
-<span style="color:var(--vt-c-blue);">(*)</span> <span style="color:#A6ACCD;">TypeScript（apih.config.ts）</span>
-<span style="color:var(--vt-c-blue);">( )</span> <span style="color:#A6ACCD;">JavaScript（apih.config.js）</span>
+<span style="color:var(--vt-c-blue);">(*)</span> <span style="color:#A6ACCD;">TypeScript（apih.config.mjs）</span>
+<span style="color:var(--vt-c-blue);">( )</span> <span style="color:#A6ACCD;">JavaScript（apih.config.ts）</span>
 <span></span>
 <span style="color:#A6ACCD;">配置文件已经生成：...</span>
 <span style="color:#A6ACCD;">Done.</span>
@@ -56,8 +56,8 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 将刚才创建的`request.ts`的文件路径，配置到的`requestFunctionFilePath`中。根据项目情况，修改接口文档地址`documentServers.url`。
 
 ### 步骤四
-最后终端输入`apih`命令即可生成文档全部API。
-<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">apih</span></span></code></pre></div>
+最后终端输入`npx apih`命令即可生成文档全部API。
+<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">npx apih</span></span></code></pre></div>
 
 在生成API过程中，会看见每一步的工作过程，可以根据提示，查看配置是否有异常。
 

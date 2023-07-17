@@ -1,4 +1,5 @@
 import to from 'await-to-js';
+import parse from 'url-parse';
 import { OpenAPI } from 'openapi-types';
 import { readJsonSync } from 'fs-extra';
 import { ParserSwagger } from '@api-helper/core';
@@ -18,6 +19,7 @@ import {
 import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
+
 
 type DocumentServers = Config['documentServers'];
 
@@ -58,7 +60,6 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
 }
 
 async function getDocument(documentServer: DocumentServers[number]): Promise<Array<OpenAPI.Document>> {
-
   const requestConfig = processRequestConfig(documentServer);
   const openAPIDocumentList: Array<OpenAPI.Document> = [];
   const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
@@ -95,6 +96,8 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
   } catch {}
 
   const { origin } = requestConfig;
+
+  /* swagger-ui v2处理 */
   // 获取域名，拼接v2版本的默认文档路径获取配置
   try {
     const openAPIDocument = await request<unknown, OpenAPI.Document>({
@@ -107,15 +110,15 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
     }
   } catch {}
 
-  // 兜底：根据 swagger-resources 获取全部。
-  const [, swaggerResources] = await to<OpenAPI.Parameter>(request({
+  // 根据 swagger-resources 获取全部。
+  const [, swagger2Resources] = await to<OpenAPI.Parameter>(request({
     ...requestConfig,
     url: mergeUrl(origin, '/swagger-resources', requestConfig.qs),
   }));
-  const tasks = [];
-  if (Array.isArray(swaggerResources)) {
-    for (const sr of swaggerResources) {
-      tasks.push(to(request<unknown, OpenAPI.Document>({
+  if (Array.isArray(swagger2Resources)) {
+    const tasks2 = [];
+    for (const sr of swagger2Resources) {
+      tasks2.push(to(request<unknown, OpenAPI.Document>({
         ...requestConfig,
         url: mergeUrl(origin, sr.url, requestConfig.qs),
       }).then((openapiDocument) => {
@@ -124,9 +127,43 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
         }
       })));
     }
+    await to(Promise.all(tasks2));
+  }
+  if (openAPIDocumentList.length > 0) {
+    return openAPIDocumentList;
   }
 
-  await to(Promise.all(tasks));
-
+  /* swagger-ui v3处理 */
+  const urlInfo = (isHttp ? parse(documentServer.url): {}) as Recordable;
+  const serverPath = (urlInfo?.pathname?.split('/') ?? []).filter(Boolean);
+  const serverHash = (urlInfo.hash?.slice(1)?.split('/') ?? []).filter(Boolean);
+  const selectDoc = decodeURIComponent(serverHash[0] ?? '');
+  if (serverPath[serverPath.length - 1] === 'doc.html' || serverPath[serverPath.length - 1] === 'swagger-ui.html') {
+    serverPath.pop();
+  }
+  const resourcesPath = [...serverPath, 'data', 'openapi.json'];
+  const serverUrl = mergeUrl(origin, '/', resourcesPath.join('/'), requestConfig.qs);
+  const [, swagger3Resources] = await to<OpenAPI.Parameter>(request({
+    ...requestConfig,
+    url: serverUrl,
+  }));
+  if (Array.isArray(swagger3Resources)) {
+    const tasks3 = [];
+    let swagger3ResourcesFilter = swagger3Resources.filter((itm: Recordable) => selectDoc && itm?.name === selectDoc);
+    if (swagger3ResourcesFilter.length === 0) {
+      swagger3ResourcesFilter = swagger3Resources;
+    }
+    for (const sr of swagger3ResourcesFilter) {
+      tasks3.push(to(request<unknown, OpenAPI.Document>({
+        ...requestConfig,
+        url: mergeUrl(origin, '/', serverPath.join('/'), sr.url, requestConfig.qs),
+      }).then((openapiDocument) => {
+        if (validateOpenAPIDocument(openapiDocument as any)) {
+          openAPIDocumentList.push(openapiDocument);
+        }
+      })));
+    }
+    await to(Promise.all(tasks3));
+  }
   return openAPIDocumentList;
 }
