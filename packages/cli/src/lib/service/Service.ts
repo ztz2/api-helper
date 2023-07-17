@@ -24,6 +24,7 @@ import { Config } from '@/lib';
 import { EXTENSION } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
+import * as process from "process";
 
 type DocumentServers = Config['documentServers'];
 
@@ -298,8 +299,8 @@ Service.init = async function () {
     name: 'codeType',
     message: '请选择配置文件类型？',
     choices: [
-      { title: 'JavaScript（apih.config.js）', value: 'apih.config.js' },
-      { title: 'TypeScript（apih.config.ts）', value: 'apih.config.ts' }
+      { title: 'JavaScript', value: 'apih.config.mjs' },
+      { title: 'TypeScript', value: 'apih.config.ts' }
     ],
   }]);
 
