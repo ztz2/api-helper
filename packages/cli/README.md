@@ -92,7 +92,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 #### documentServers
   * 是否必须：<font color=#ff5722>是</font>
-  * 数据类型：Array<Object>
+  * 数据类型：Array<object>
   * 说明：
     接口文档服务配置。
 
@@ -118,7 +118,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 #### documentServers.auth
   * 是否必须：否
-  * 数据类型：Object
+  * 数据类型：object
   * 默认值：{}
   * 说明：
     访问文档可能需要认证信息，http auth验证方式
@@ -146,7 +146,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 #### documentServers.events
   * 是否必须：否
-  * 数据类型：Object
+  * 数据类型：object
   * 默认值：{}
   * 说明：
     执行过程的事件回调。
@@ -167,7 +167,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 #### parserPlugins
   * 是否必须：否
-  * 数据类型：Array<AbstractParserPlugin>
+  * 数据类型：Array&lt;AbstractParserPlugin&gt;
   * 默认值：[]
   * 说明：
     文档解析插件，当documentServers.type不是'swagger'和'yapi'，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。
