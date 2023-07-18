@@ -25,18 +25,40 @@
 
 ## 安装
 ```shell
-pnpm install @api-helper/cli @api-helper/core
+pnpm install @api-helper/core @api-helper/cli
 ```
 
 ## 开始
-快速开始，只需要3步即可。
+快速开始，只需要两步步即可。
 
 ### 步骤一
-初始化配置文件，终端输入`npx apih init`命令。初始化完成后，将项目的**接口文档访问地址**填写到`documentServers.url`中。
+初始化配置文件，终端输入`npx apih init`命令。初始化完成后，会自动创建`apih.config.(ts|js)`配置文件和`src/api/request.(ts|js)`统一接口请求文件。
+* 在生成的`apih.config.(ts|js)`配置文件中找到`documentServers.url`属性，填写**项目文档地址**。
+```javascript
+import { join } from 'path';
+import { defineConfig } from '@api-helper/cli';
 
-### 步骤二
-定义 `request.ts` 统一接口请求函数文件，并把该**文件路径**，填写到`requestFunctionFilePath`中。
-下面以 `axios` 包为例，作为统一请求工具。
+export default defineConfig({
+  // 输出信息
+  outputFilePath: 'src/api/index.ts',
+  // 请求函数文件路径
+  requestFunctionFilePath: 'src/tools/request.ts',
+  // 响应数据所有字段设置成必有属性
+  requiredResponseField: true,
+  // 接口文档服务配置
+  documentServers: [
+    {
+      // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
+      url: 'http://需要填写的项目文档地址',
+      // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+      type: 'swagger',
+      // 获取数据的key，body[dataKey]
+      dataKey: '',
+    },
+  ],
+});
+```
+* 统一接口请求实现，可以简单参考下面的以 `axios` 库例子。
 ```typescript
 import axios from 'axios';
 import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
@@ -50,13 +72,16 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
     }).then((res) => {
       // 响应数据处理...
       resolve(res as unknown as T);
-    }).catch((e) => reject(e));
+    }).catch((error) => {
+        // 异常处理，500，301 等
+        return reject(error);
+    });
   });
 }
 ```
 
-### 步骤三
-最后终端输入`npx apih`命令即可生成文档全部API。
+### 步骤二
+终端输入`npx apih`命令执行接口生成，即可生成文档全部API。
 
 ## Config 对象文档说明
 ```typescript
