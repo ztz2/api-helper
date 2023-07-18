@@ -10,15 +10,18 @@ import {
 import fs from 'node:fs';
 import parse from 'url-parse';
 import { merge } from 'lodash';
-import { URL } from 'node:url';
 import tmp, { FileOptions } from 'tmp';
 import { AxiosRequestConfig } from 'axios';
 import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import esbuild, { BuildOptions, BuildResult } from 'esbuild';
 
-import { AbstractParserPlugin, Config, ParserPluginRunResult } from '@/lib';
+import {
+  Config,
+  AbstractParserPlugin,
+  ParserPluginRunResult,
+} from '@/lib';
 import log from '@/lib/tools/log';
-import {ParserPluginOptions} from "@/lib/types";
+import { ParserPluginOptions } from "@/lib/types";
 
 type DocumentServers = Config['documentServers'];
 type DocumentServer = DocumentServers[number];

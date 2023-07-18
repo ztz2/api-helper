@@ -19,13 +19,15 @@ export type Config = {
   outputFilePath: string;
   // request请求工具函数文件路径。
   requestFunctionFilePath: string;
+  // 是否只生成接口请求数据和返回数据的 TypeScript 类型，是则请求文件和请求函数都不会生成。
+  onlyTyping?: boolean;
   // 请求数据所有字段设置成必有属性，默认: false
   requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true
   requiredResponseField?: boolean;
   // 接口文档服务配置
   documentServers: Array<{
-    // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
+    // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
     url: string;
     // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
     type: 'swagger' | 'yapi' | string;

@@ -8,7 +8,7 @@ import {
   stat,
   remove,
   ensureFile,
-  outputFile
+  outputFile,
 } from 'fs-extra';
 import { renderAllApi } from '@api-helper/template';
 
@@ -60,7 +60,6 @@ class Service{
           console.log(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
         }
         await this.checkOutputPathExisted(config);
-        await this.checkRequestFunctionFileExisted(config);
 
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
@@ -150,23 +149,7 @@ class Service{
     }
   }
 
-  // 3. 检测request函数是否存在
-  private async checkRequestFunctionFileExisted(config: Config) {
-    const oraText = '检测 request 请求函数文件';
-    const spinner = ora(oraText).start();
-    const requestFunctionFilePath = getRequestFunctionFilePath(config);
-
-    try {
-      await ensureFile(requestFunctionFilePath);
-      spinner.succeed();
-    } catch {
-      const failText = oraText + '【失败：没有获取到request文件】';
-      spinner.fail(failText);
-      return Promise.reject(failText);
-    }
-  }
-
-  // 4. 文档获取与解析
+  // 3. 文档获取与解析
   private async parserDocument(documentServers: DocumentServers, config: Config): Promise<ParserPluginRunResult> {
     const result = await documentServersRunParserPlugins(documentServers, this.parserPlugins, config);
     return result.parserPluginRunResult;
@@ -224,7 +207,7 @@ class Service{
     const oraText = `代码生成`;
     const outputFilename = getOutputFilePath(config);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
-    let requestFilePath = getNormalizedRelativePath(outputFilename, getRequestFunctionFilePath(config));
+    let requestFilePath = getNormalizedRelativePath(outputFilename, await getRequestFunctionFilePath(config));
 
     // 移除request文件后缀名
     for (const extension of EXTENSIONS) {
@@ -326,16 +309,16 @@ Service.init = async function () {
     message: '请选择配置文件类型？',
     choices: [
       { title: 'JavaScript', description: 'apih.config.js', value: 'apih.config.js' },
-      { title: 'TypeScript', description: 'apih.config.ts', value: 'apih.config.ts' }
+      { title: 'TypeScript', description: 'apih.config.ts', value: 'apih.config.ts' },
     ],
   }]);
+
 
   if (!answers.codeType) {
     return;
   }
 
-  const isTS = answers.codeType?.endsWith('ts') || answers.codeType?.endsWith('tsx');
-  const extensionName = isTS ? '.ts' : '.js';
+  await getRequestFunctionFilePath({ outputFilePath: 'src/api/index.ts' } as any);
 
   // 检测文件是否已经存在
   try {
@@ -355,16 +338,16 @@ Service.init = async function () {
 
 export default defineConfig({
   // 输出文件路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件
-  outputFilePath: 'src/api/index${extensionName}',
+  outputFilePath: 'src/api/index.ts',
   // 接口请求函数文件路径
-  requestFunctionFilePath: 'src/utils/request${extensionName}',
+  requestFunctionFilePath: 'src/api/request.ts',
   // 响应数据所有字段设置成必有属性
   requiredResponseField: true,
   // 接口文档服务配置
   documentServers: [
     {
       // 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
-      url: 'https://petstore.swagger.io/v2/swagger.json',
+      url: 'http://需要填写的项目文档地址',
       // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
       type: 'swagger',
       // 获取数据的key，body[dataKey]
@@ -381,7 +364,7 @@ export default defineConfig({
   }
 }
 
-function getOutputFilePath(config: Config & { output?: { path: string; filename: string; } }): string {
+function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): string {
   // 兼容旧版的配置路径
   if (config.output) {
     if (isAbsolute(config.output.filename)) {
@@ -398,13 +381,52 @@ function getOutputFilePath(config: Config & { output?: { path: string; filename:
   return resolve(config.outputFilePath);
 }
 
-function getRequestFunctionFilePath(config: Config & { output?: { path: string; filename: string; } }): string {
+async function getRequestFunctionFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): Promise<string> {
   const outputFilename = getOutputFilePath(config);
   const extensionName = getExtensionName(outputFilename);
-  let requestFunctionFilePath = isAbsolute(config.requestFunctionFilePath) ? config.requestFunctionFilePath : resolve(config.requestFunctionFilePath);
+  const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
+  config.requestFunctionFilePath = config.requestFunctionFilePath ? config.requestFunctionFilePath : `src/api/request.${isTS?'ts':'js'}`;
+  let requestFunctionFilePath = config.requestFunctionFilePath;
   // 兼容旧版配置
   if (['src/utils/request', 'src/tools/request'].includes(requestFunctionFilePath)) {
     requestFunctionFilePath += extensionName;
+  }
+  requestFunctionFilePath = resolve(requestFunctionFilePath);
+
+  try { // 路径可以访问，文件已经创建，直接返回
+    await stat(resolve(requestFunctionFilePath));
+    return requestFunctionFilePath;
+  } catch {}
+  try {  // 不可访问，重新创建文件
+    await outputFile(requestFunctionFilePath,
+      isTS ? `import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+
+export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const { method, data, path } = config;
+    console.log(path, method, data);
+    // TODO待实现具体request请求逻辑...
+    // 先用异步模拟request请求逻辑，具体实现再删除
+    setTimeout(() => {
+      resolve({} as unknown as T);
+    }, 1500);
+  });
+}
+`: `export default async function request(config) {
+  return new Promise((resolve, reject) => {
+    const { method, data, path } = config;
+    console.log(path, method, data);
+    // TODO待实现具体request请求逻辑...
+    // 先用异步模拟request请求逻辑，具体实现再删除
+    setTimeout(() => {
+      resolve({});
+    }, 1500);
+  });
+}
+`)
+  } catch {
+    log.error('提示', `统一请求文件创建失败：${requestFunctionFilePath}`);
+    process.exit(1);
   }
   return requestFunctionFilePath;
 }
