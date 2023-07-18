@@ -5,7 +5,10 @@ import { run } from '../src/lib';
 import { createTempFile } from '../src/lib/tools/util';
 
 describe('swagger文档', () => {
-
+  /**
+   // 是否只生成接口请求数据和返回数据的 TypeScript 类型，是则请求文件和请求函数都不会生成。
+   onlyTyping?: boolean;
+   */
   test('基于swagger2.0，生成 typescript api 代码', async () => {
     const configFile = createTempFile(`
 import { resolve } from 'path';

@@ -19,8 +19,6 @@ export type Config = {
   outputFilePath: string;
   // request请求工具函数文件路径。
   requestFunctionFilePath: string;
-  // 是否只生成接口请求数据和返回数据的 TypeScript 类型，是则请求文件和请求函数都不会生成。
-  onlyTyping?: boolean;
   // 请求数据所有字段设置成必有属性，默认: false
   requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true

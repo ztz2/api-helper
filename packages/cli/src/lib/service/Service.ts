@@ -6,8 +6,6 @@ import {
 } from 'path';
 import {
   stat,
-  remove,
-  ensureFile,
   outputFile,
 } from 'fs-extra';
 import { renderAllApi } from '@api-helper/template';
@@ -18,7 +16,7 @@ import {
   loadModule,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins,
+  documentServersRunParserPlugins, getErrorMessage,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
@@ -59,8 +57,6 @@ class Service{
         if (len > 1) {
           console.log(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
         }
-        await this.checkOutputPathExisted(config);
-
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
         const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
@@ -125,37 +121,13 @@ class Service{
     process.exit(1);
   }
 
-  // 2. 检测输出目录是否存在
-  private async checkOutputPathExisted(config: Config) {
-    const oraText = '检测输出目录';
-    const spinner = ora(oraText).start();
-    const outputFilename = getOutputFilePath(config);
-
-    // 使用旧版配置，警告提示该配置已经废弃
-    if ('output' in config) {
-      if (!outputDiscardWarn) {
-        outputDiscardWarn = true;
-        log.warn('提示', 'documentServers.output配置已经废弃，请使用documentServers.outputFilePath');
-      }
-    }
-
-    try {
-      await ensureFile(outputFilename);
-      spinner.succeed();
-    } catch {
-      const failText = oraText + '【失败：输出不存在，重新即将退出】';
-      spinner.fail(failText);
-      return Promise.reject(failText);
-    }
-  }
-
-  // 3. 文档获取与解析
+  // 2. 文档获取与解析
   private async parserDocument(documentServers: DocumentServers, config: Config): Promise<ParserPluginRunResult> {
     const result = await documentServersRunParserPlugins(documentServers, this.parserPlugins, config);
     return result.parserPluginRunResult;
   }
 
-  // 5. 选择项目文档
+  // 3. 选择项目文档
   private async chooseDocument (parserPluginRunResult: ParserPluginRunResult): Promise<ParserPluginRunResult> {
     const choicesDocumentListOptions: Recordable[] = [];
 
@@ -202,7 +174,7 @@ class Service{
     return parserPluginRunResult;
   }
 
-  // 6. 生成代码
+  // 4. 生成代码
   private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<string> {
     const oraText = `代码生成`;
     const outputFilename = getOutputFilePath(config);
@@ -278,24 +250,19 @@ import request from '${requestFilePath}';
     return code.filter(Boolean).join('\n');
   }
 
-  // 7. 输出
+  // 5. 输出
   private async output(config: Config, code: string) {
     const oraText = `文件输出`;
-    const outputFilename = getOutputFilePath(config);
+    const outputFilename = getOutputFilePath(config, true);
     const spinner = ora(oraText).start();
-
-    // 删除源文件
-    try {
-      await remove(outputFilename);
-    } catch {}
 
     // 输出
     try {
       await outputFile(outputFilename, code);
       spinner.succeed();
       log.info('提示', `Done. 代码生成成功`);
-    } catch {
-      const failText = oraText + '【失败】';
+    } catch (error) {
+      const failText = oraText + `【失败：${getErrorMessage(error as Error)}】`;
       spinner.fail(failText);
       return Promise.reject(failText);
     }
@@ -364,9 +331,16 @@ export default defineConfig({
   }
 }
 
-function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): string {
+function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }, showDiscardWarn = false): string {
   // 兼容旧版的配置路径
   if (config.output) {
+    // 使用旧版配置，警告提示该配置已经废弃
+    if (showDiscardWarn) {
+      if (!outputDiscardWarn) {
+        outputDiscardWarn = true;
+        log.warn('提示', 'documentServers.output配置已经废弃，请使用documentServers.outputFilePath');
+      }
+    }
     if (isAbsolute(config.output.filename)) {
       return config.output.filename;
     }
