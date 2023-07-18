@@ -86,12 +86,9 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 在生成API过程中，会看见每一步的工作过程，可以根据提示，查看配置是否有异常。
 
 <div class="language-sh"><pre><code>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测apih.config.(ts|js)配置文件是否存在</span></span>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测输出目录是否正确</span></span>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">通过 config.serverURL 获取文档</span></span>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">解析文档</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">读取 apih.config.(js|ts) 配置文件</span></span>
+<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">文档获取与解析</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">生成代码</span></span>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">删除旧文件</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">输出文件</span></span>
 <span class="line"></span>
 <span style="color:#A6ACCD;">Done. 代码生成成功</span>
