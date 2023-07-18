@@ -18,9 +18,9 @@ export interface IV2PetPetIdUploadImageRequestByPost {
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface IV2PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
+  code: number;
+  type: string;
+  message: string;
 }
 /**
  * @description uploads an image
@@ -153,19 +153,19 @@ export interface IV2PetFindByStatusRequestByGet {
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -206,19 +206,19 @@ export interface IV2PetFindByTagsRequestByGet {
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -259,19 +259,19 @@ export interface IV2PetPetIdRequestByGet {
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdResponseByGet {
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -399,13 +399,13 @@ export interface IV2StoreOrderRequestByPost {
  * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Place an order for a pet
@@ -446,13 +446,13 @@ export interface IV2StoreOrderOrderIdRequestByGet {
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
@@ -640,15 +640,15 @@ export interface IV2UserUsernameRequestByGet {
  * @url [ GET ] /v2/user/{username}
  */
 export interface IV2UserUsernameResponseByGet {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
+  userStatus: number;
 }
 /**
  * @description Get user by user name
@@ -905,13 +905,13 @@ export interface IBodyBodyPutRequestByPut {
 export interface IBodyBodyPutResponseByPut {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求-put
@@ -954,15 +954,15 @@ export interface IUserDeviceIdBodyRequestByPost {
 export interface IUserDeviceIdBodyResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -1017,15 +1017,15 @@ export interface IUserDeviceIdBody1RequestByPost {
 export interface IUserDeviceIdBody1ResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -1079,15 +1079,15 @@ export interface IUserGetRequest1RequestByPost {
 export interface IUserGetRequest1ResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -1132,9 +1132,9 @@ export interface IUserCreateOneRequestByPost {
  */
 export interface IUserCreateOneResponseByPost {
   // 主键id
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
 }
 /**
  * @description 创建用户-createOne、根据姓名创建用户1
@@ -1186,15 +1186,15 @@ export interface IUserCreateOneSchemaRequestByPost {
 export interface IUserCreateOneSchemaResponseByPost {
   // 用户信息
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -1237,9 +1237,9 @@ export interface IUserCreateOne1RequestByPost {
  */
 export interface IUserCreateOne1ResponseByPost {
   // 主键id
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
 }
 /**
  * @description 创建用户1、根据姓名创建用户1
@@ -1281,13 +1281,13 @@ export interface IFileUploadRequestByPost {
 export interface IFileUploadResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数
@@ -1332,13 +1332,13 @@ export interface IFileUploadParamRequestByPost {
 export interface IFileUploadParamResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 文件上传-带参数
@@ -1383,13 +1383,13 @@ export interface IFileUploadParamHeaderRequestByPost {
 export interface IFileUploadParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 文件上传-带参数Header
@@ -1436,13 +1436,13 @@ export interface IFileUploadParamIdRequestByPost {
 export interface IFileUploadParamIdResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 文件上传-带参数Path
@@ -1484,13 +1484,13 @@ export interface IFileUploadBatchRequestByPost {
 export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
 {
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }>;
 /**
  * @description 多文件上传
@@ -1539,13 +1539,13 @@ export interface IBodyBodyRequestByPost {
 export interface IBodyBodyResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求
@@ -1589,13 +1589,13 @@ export interface IBodyBodyParamRequestByPost {
 export interface IBodyBodyParamResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param
@@ -1644,13 +1644,13 @@ export interface IBodyBodyParamHeaderRequestByPost {
 export interface IBodyBodyParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param+Header
@@ -1701,13 +1701,13 @@ export interface IBodyBodyParamHeaderPathIdRequestByPost {
 export interface IBodyBodyParamHeaderPathIdResponseByPost {
   // 文件对象
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param+Header+Path
@@ -1762,15 +1762,15 @@ export interface IUserGetRequestRequestByGet {
 export interface IUserGetRequestResponseByGet {
   // 用户信息
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -1864,19 +1864,19 @@ export interface IApiV3PetRequestByPut {
  * @url [ PUT ] /api/v3/pet
  */
 export interface IApiV3PetResponseByPut {
-  id?: number;
+  id: number;
   name: string;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Update an existing pet、Update an existing pet by Id
@@ -1931,19 +1931,19 @@ export interface IApiV3PetRequestByPost {
  * @url [ POST ] /api/v3/pet
  */
 export interface IApiV3PetResponseByPost {
-  id?: number;
+  id: number;
   name: string;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Add a new pet to the store、Add a new pet to the store
@@ -1987,19 +1987,19 @@ export interface IApiV3PetFindByStatusRequestByGet {
  * @url [ GET ] /api/v3/pet/findByStatus
  */
 export type ApiV3PetFindByStatusResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   name: string;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -2040,19 +2040,19 @@ export interface IApiV3PetFindByTagsRequestByGet {
  * @url [ GET ] /api/v3/pet/findByTags
  */
 export type ApiV3PetFindByTagsResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   name: string;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -2093,19 +2093,19 @@ export interface IApiV3PetPetIdRequestByGet {
  * @url [ GET ] /api/v3/pet/{petId}
  */
 export interface IApiV3PetPetIdResponseByGet {
-  id?: number;
+  id: number;
   name: string;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -2230,9 +2230,9 @@ export interface IApiV3PetPetIdUploadImageRequestByPost {
  * @url [ POST ] /api/v3/pet/{petId}/uploadImage
  */
 export interface IApiV3PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
+  code: number;
+  type: string;
+  message: string;
 }
 /**
  * @description uploads an image
@@ -2314,13 +2314,13 @@ export interface IApiV3StoreOrderRequestByPost {
  * @url [ POST ] /api/v3/store/order
  */
 export interface IApiV3StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Place an order for a pet、Place a new order in the store
@@ -2368,13 +2368,13 @@ export interface IApiV3StoreOrderOrderIdRequestByGet {
  * @url [ GET ] /api/v3/store/order/{orderId}
  */
 export interface IApiV3StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
@@ -2516,15 +2516,15 @@ export type ApiV3UserCreateWithListRequestTypeByPost = Array<{
  * @url [ POST ] /api/v3/user/createWithList
  */
 export interface IApiV3UserCreateWithListResponseByPost {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
+  userStatus: number;
 }
 /**
  * @description Creates list of users with given input array、Creates list of users with given input array
@@ -2642,15 +2642,15 @@ export interface IApiV3UserUsernameRequestByGet {
  * @url [ GET ] /api/v3/user/{username}
  */
 export interface IApiV3UserUsernameResponseByGet {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
+  userStatus: number;
 }
 /**
  * @description Get user by user name

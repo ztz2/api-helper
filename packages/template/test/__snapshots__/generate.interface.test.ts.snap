@@ -6,20 +6,20 @@ exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0
  * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderRequestByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
+  status: 'placed' | 'approved' | 'delivered';
   // Order Tag
   tag: Array<
     // Order Tag Child
     Array<{
-      tagName?: 'error' | 'waring' | 'info';
+      tagName: 'error' | 'waring' | 'info';
     }>
   >;
-  complete?: boolean;
+  complete: boolean;
 }
 "
 `;
