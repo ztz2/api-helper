@@ -14,9 +14,50 @@ pnpm install @api-helper/cli @api-helper/core
 ```
 
 ## 开始
+快速开始，只需要两步即可。
+
 ### 步骤一
-定义 `request.ts` 请求工具，用于统一管理请求。
-以 `axios` 为例，作为统一请求工具。
+初始化配置文件，终端输入`npx apih init`命令。
+<div class="language-sh">
+<pre>
+<code>
+<span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>npx apih init</span>
+<span style="color:#A6ACCD;">请选择配置文件类型? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">JavaScript</span> / TypeScript</span></span>
+<span style="color:var(--vt-c-blue);">(*)</span> <span style="color:#A6ACCD;">JavaScript（apih.config.js）</span>
+<span style="color:var(--vt-c-blue);">( )</span> <span style="color:#A6ACCD;">TypeScript（apih.config.ts）</span>
+<span></span>
+<span style="color:#A6ACCD;">Done. 配置文件已经生成</span>
+</code>
+</pre>
+</div>
+
+初始化完成后，会自动创建`apih.config.(ts|js)`配置文件和`src/api/request.(ts|js)`统一接口请求文件。
+* 在生成的`apih.config.(ts|js)`配置文件中找到`documentServers.url`属性，填写**项目文档地址**。
+```javascript
+import { join } from 'path';
+import { defineConfig } from '@api-helper/cli';
+
+export default defineConfig({
+  // 输出信息
+  outputFilePath: 'src/api/index.ts',
+  // 请求函数文件路径
+  requestFunctionFilePath: 'src/tools/request.ts',
+  // 响应数据所有字段设置成必有属性
+  requiredResponseField: true,
+  // 接口文档服务配置
+  documentServers: [
+    {
+      // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
+      url: 'http://需要填写的项目文档地址',
+      // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+      type: 'swagger',
+      // 获取数据的key，body[dataKey]
+      dataKey: '',
+    },
+  ],
+});
+```
+* 统一接口请求实现，可以简单参考下面的以 `axios` 库例子。
 ```typescript
 import axios from 'axios';
 import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
@@ -30,33 +71,16 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
     }).then((res) => {
       // 响应数据处理...
       resolve(res as unknown as T);
-    }).catch((e) => reject(e));
+    }).catch((error) => {
+        // 异常处理，500，301 等
+        return reject(error);
+    });
   });
 }
 ```
 
 ### 步骤二
-初始化配置文件，终端输入`npx apih init`命令。
-<div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;"></span>npx apih init</span></code></pre></div>
-
-该命令用于生成配置文件，根据项目情况生成Typescript配置文件或者Javascript配置文件。
-
-<div class="language-sh">
-<pre><code>
-<span style="color:#A6ACCD;">请选择配置文件类型? <span style="color:#888;">… <span style="color:#89DDFF;text-decoration:underline">TypeScript</span> / JavaScript</span></span>
-<span style="color:var(--vt-c-blue);">(*)</span> <span style="color:#A6ACCD;">TypeScript（apih.config.mjs）</span>
-<span style="color:var(--vt-c-blue);">( )</span> <span style="color:#A6ACCD;">JavaScript（apih.config.ts）</span>
-<span></span>
-<span style="color:#A6ACCD;">配置文件已经生成：...</span>
-<span style="color:#A6ACCD;">Done.</span>
-</code></pre>
-</div>
-
-### 步骤三
-将刚才创建的`request.ts`的文件路径，配置到的`requestFunctionFilePath`中。根据项目情况，修改接口文档地址`documentServers.url`。
-
-### 步骤四
-最后终端输入`npx apih`命令即可生成文档全部API。
+终端输入`npx apih`命令执行接口生成，即可生成文档全部API。
 <div class="language-sh"><pre><code><span class="line"><span style="color:var(--vt-c-green);">&gt;</span> <span style="color:#A6ACCD;">npx apih</span></span></code></pre></div>
 
 在生成API过程中，会看见每一步的工作过程，可以根据提示，查看配置是否有异常。
@@ -64,15 +88,13 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 <div class="language-sh"><pre><code>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测apih.config.(ts|js)配置文件是否存在</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测输出目录是否正确</span></span>
-<span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">检测 request 函数文件路径是否正确</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">通过 config.serverURL 获取文档</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">解析文档</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">生成代码</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">删除旧文件</span></span>
 <span class="line"><span style="color:var(--vt-c-green);">√ </span><span style="color:#A6ACCD;">输出文件</span></span>
 <span class="line"></span>
-<span style="color:#A6ACCD;">API已经生成：...</span>
-<span style="color:#A6ACCD;">Done.</span>
+<span style="color:#A6ACCD;">Done. 代码生成成功</span>
 </code></pre></div>
 
 ## Config 对象文档说明
