@@ -75,38 +75,116 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
 <span style="color:#A6ACCD;">Done.</span>
 </code></pre></div>
 
-
 ## Config 对象文档说明
 ```typescript
 import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
-## `outputFilePath`
-:::warning 必填项
-:::
+### outputFilePath
+* 是否必须：<font color=#ff5722>**是**</font>
+* 数据类型：string
+* 说明：
+  代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
 
-代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
+### requestFunctionFilePath
+* 是否必须：<font color=#ff5722>**是**</font>
+* 数据类型：string
+* 说明：
+  接口请求函数文件路径。
 
+### requiredRequestField
+* 是否必须：否
+* 数据类型：boolean
+* 默认值：false
+* 说明：
+  请求数据所有字段设置成必有属性。
 
-## `requestFunctionFilePath`
-:::warning 必填项
-:::
+### requiredResponseField
+* 是否必须：否
+* 数据类型：boolean
+* 默认值：true
+* 说明：
+  响应数据所有字段设置成必有属性。
 
-接口请求函数文件路径。
+### documentServers
+* 是否必须：<font color=#ff5722>**是**</font>
+* 数据类型：Array&lt;object&gt;
+* 说明：
+  接口文档服务配置。
 
-## `documentServers`
-:::warning 必填项
-:::
-接口文档服务配置。
-* `documentServers.url` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档地址【当下面的type为swagger类型时，可以读取本地文件，这里就是一个本地文件路径】
-* `documentServers.type` <strong style="color:var(--vt-c-yellow-dark);">[ 必填项 ]</strong> 文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
-* `documentServers.dataKey` 获取响应数据的key，body[dataKey]
-* `documentServers.auth.username` 用户名，访问文档可能需要认证信息，http auth验证方式
-* `documentServers.auth.password` 密码，访问文档可能需要认证信息，http auth验证方式
-* `documentServers.authToken` token验证，访问文档可能需要认证信息，yapi需要
-* `documentServers.events`  执行过程的回调事件
-* `documentServers.events.onRenderInterfaceName` 自定义生成接口名称
+### documentServers.url
+* 是否必须：<font color=#ff5722>**是**</font>
+* 数据类型：string
+* 说明：
+  文档地址【当documentServers.type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
 
-## `parserPlugins`
-文档解析插件，当项目文档不是swagger和yapi，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。
+### documentServers.type
+* 是否必须：<font color=#ff5722>**是**</font>
+* 数据类型：'swagger' | 'yapi' | string
+* 默认值：'swagger'
+* 说明：
+  文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'。【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+
+### documentServers.dataKey
+* 是否必须：否
+* 数据类型：string
+* 默认值：''
+* 说明：
+  获取响应数据的key，body[dataKey]。
+
+### documentServers.auth
+* 是否必须：否
+* 数据类型：object
+* 默认值：{}
+* 说明：
+  访问文档可能需要认证信息，http auth验证方式
+
+### documentServers.auth.username
+* 是否必须：否
+* 数据类型：string
+* 默认值：''
+* 说明：
+  用户名。
+
+### documentServers.auth.password
+* 是否必须：否
+* 数据类型：string
+* 默认值：''
+* 说明：
+  密码。
+
+### documentServers.authToken
+* 是否必须：否
+* 数据类型：string
+* 默认值：''
+* 说明：
+  token验证，访问文档可能需要认证信息，yapi使用的该认证方式。
+
+### documentServers.events
+* 是否必须：否
+* 数据类型：object
+* 默认值：{}
+* 说明：
+  执行过程的事件回调。
+
+### documentServers.events.onRenderInterfaceName
+* 是否必须：否
+* 数据类型：(schema: APIHelper.Schema | null, api: APIHelper.API, options: { isExtraData?: boolean; paramType: 'request' | 'response'; changeCase: ChangeCase; }): string) => string
+* 默认值：内置规则
+* 说明：
+  当生成interface名称时候的事件回调，可用于自定义生成接口名称。
+
+### documentServers.events.onRenderRequestFunctionName
+* 是否必须：否
+* 数据类型：(api: APIHelper.API, options?: { changeCase: ChangeCase }): string) => string
+* 默认值：内置规则
+* 说明：
+  当生成API函数名称时候的事件回调，可用于自定义生成接口名称。
+
+### parserPlugins
+* 是否必须：否
+* 数据类型：Array&lt;AbstractParserPlugin&gt;
+* 默认值：[]
+* 说明：
+  文档解析插件，当documentServers.type不是'swagger'和'yapi'，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。
