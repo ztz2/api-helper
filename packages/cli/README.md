@@ -92,7 +92,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 #### documentServers
   * 是否必须：<font color=#ff5722>是</font>
-  * 数据类型：Array<object>
+  * 数据类型：Array&lt;object&gt;
   * 说明：
     接口文档服务配置。
 
