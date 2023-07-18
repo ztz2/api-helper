@@ -37,9 +37,9 @@ export interface IV2PetPetIdUploadImageRequestByPost {
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface IV2PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
+  code: number;
+  type: string;
+  message: string;
 }
 /**
  * @description uploads an image
@@ -172,19 +172,19 @@ export interface IV2PetFindByStatusRequestByGet {
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by status
@@ -225,19 +225,19 @@ export interface IV2PetFindByTagsRequestByGet {
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseTypeByGet = Array<{
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by tags
@@ -278,19 +278,19 @@ export interface IV2PetPetIdRequestByGet {
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdResponseByGet {
-  id?: number;
+  id: number;
   category: {
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id?: number;
-    name?: string;
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Find pet by ID
@@ -425,20 +425,20 @@ export interface IV2StoreOrderRequestByPost {
  * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
+  status: 'placed' | 'approved' | 'delivered';
   // Order Tag
   tag: Array<
     // Order Tag Child
     Array<{
-      tagName?: 'error' | 'waring' | 'info';
+      tagName: 'error' | 'waring' | 'info';
     }>
   >;
-  complete?: boolean;
+  complete: boolean;
 }
 /**
  * @description Place an order for a pet
@@ -479,20 +479,20 @@ export interface IV2StoreOrderOrderIdRequestByGet {
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
+  status: 'placed' | 'approved' | 'delivered';
   // Order Tag
   tag: Array<
     // Order Tag Child
     Array<{
-      tagName?: 'error' | 'waring' | 'info';
+      tagName: 'error' | 'waring' | 'info';
     }>
   >;
-  complete?: boolean;
+  complete: boolean;
 }
 /**
  * @description Find purchase order by ID
@@ -698,15 +698,15 @@ export interface IV2UserUsernameRequestByGet {
  * @url [ GET ] /v2/user/{username}
  */
 export interface IV2UserUsernameResponseByGet {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
+  userStatus: number;
 }
 /**
  * @description Get user by user name

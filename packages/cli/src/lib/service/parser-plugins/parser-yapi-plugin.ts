@@ -5,7 +5,7 @@ import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
 import { processRequestConfig, getErrorMessage } from '@/lib/tools/util';
-import { AbstractParserPlugin, ParserPluginRunResult } from '@/lib/types';
+import {AbstractParserPlugin, ParserPluginOptions, ParserPluginRunResult} from '@/lib/types';
 
 type DocumentServers = Config['documentServers'];
 type DocumentServer = DocumentServers[number];
@@ -17,7 +17,7 @@ const API_DETAIL = '/api/interface/get';
 
 export default class ParserYapiPlugin implements AbstractParserPlugin {
   name = 'yapi';
-  async run(documentServers: DocumentServers){
+  async run(documentServers: DocumentServers, options: ParserPluginOptions = {}){
     const result: ParserPluginRunResult = [];
 
     if (documentServers.length === 0) {
@@ -74,9 +74,10 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         }
 
         const parsedDocumentList = await new ParserYapi({
+          ...options,
+          apiList,
           projectInfo: projectInfo as any,
           categoryList: categoryList as any,
-          apiList,
         }).parser();
 
         if (parsedDocumentList.length === 0) {

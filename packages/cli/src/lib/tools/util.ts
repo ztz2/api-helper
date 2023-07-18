@@ -18,6 +18,7 @@ import esbuild, { BuildOptions, BuildResult } from 'esbuild';
 
 import { AbstractParserPlugin, Config, ParserPluginRunResult } from '@/lib';
 import log from '@/lib/tools/log';
+import {ParserPluginOptions} from "@/lib/types";
 
 type DocumentServers = Config['documentServers'];
 type DocumentServer = DocumentServers[number];
@@ -176,7 +177,11 @@ export function processRequestConfig(documentServer: DocumentServer, options?: {
   return requestConfig;
 }
 
-export async function documentServersRunParserPlugins(documentServers: DocumentServers, parserPlugins: AbstractParserPlugin[]): Promise<{
+export async function documentServersRunParserPlugins(
+  documentServers: DocumentServers,
+  parserPlugins: AbstractParserPlugin[],
+  options: ParserPluginOptions = {},
+): Promise<{
   noParserPluginNames: string[],
   parserPluginRunResult: ParserPluginRunResult
 }> {
@@ -217,7 +222,7 @@ export async function documentServersRunParserPlugins(documentServers: DocumentS
   const tasks = [];
   for (const [parserPlugin, _documentServers] of execParserPluginMap) {
     tasks.push(
-      parserPlugin.run(_documentServers).then((res: ParserPluginRunResult) => {
+      parserPlugin.run(_documentServers, options).then((res: ParserPluginRunResult) => {
         [].push.apply(result.parserPluginRunResult, res as any);
       })
     );

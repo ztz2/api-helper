@@ -19,7 +19,11 @@ describe('swagger-parser', () => {
   });
   test('OpenAPI-3.0.1文档解析转换测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-3.0.1.json'));
-    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocumentList = await new ParserSwagger({
+      autoGenerateId: false,
+      requiredRequestField: true,
+      requiredResponseField: false,
+    }).parser([openAPIDocumentJSON]);
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('OpenAPI-3.1文档解析转换测试');
   });

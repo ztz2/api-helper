@@ -1,34 +1,44 @@
-import { OpenAPI } from 'openapi-types';
-import { JSONSchema4 } from 'json-schema';
+import {OpenAPI} from 'openapi-types';
+import {JSONSchema4} from 'json-schema';
 // @ts-ignore
 import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
 
-import { APIHelper } from '../types';
+import {APIHelper} from '../types';
 
 import {
   isHttp,
-  randomId,
   mergeUrl,
+  randomId,
   checkType,
   filterDesc,
-  filterKeyName,
   parserSchema,
+  filterKeyName,
   processRequestSchema,
+  processRequestSchemaPipeline,
+  processResponseSchemaPipeline,
 } from '../utils/util';
-import {
-  UNKNOWN_GROUP_DESC,
-  UNKNOWN_GROUP_NAME,
-} from '../constant';
-import {
-  validateSchema,
-  validateOpenAPIDocument,
-} from '../utils/validator';
+import {UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME,} from '../constant';
+import {validateOpenAPIDocument, validateSchema,} from '../utils/validator';
 
 export default class ParserSwagger {
   private autoGenerateId = true;
+  // 请求数据所有字段设置成必有属性，默认: false
+  private requiredRequestField?: boolean;
+  // 响应数据所有字段设置成必有属性，默认：true
+  private requiredResponseField?: boolean;
 
-  constructor(autoGenerateId = true) {
-    this.autoGenerateId = autoGenerateId;
+  constructor(options?: {
+    autoGenerateId?: boolean;
+    requiredResponseField?: boolean;
+    requiredRequestField?: boolean;
+  } | boolean) {
+    this.autoGenerateId = typeof options === 'boolean' ? options : typeof options?.autoGenerateId === 'boolean' ? options?.autoGenerateId : true;
+    const currentOptions = Object.assign({
+      requiredResponseField: true,
+      requiredRequestField: false,
+    }, checkType(options, 'Object') ? options : {});
+    this.requiredRequestField = currentOptions.requiredRequestField;
+    this.requiredResponseField = currentOptions.requiredResponseField;
   }
 
   async parser(documentList: Array<OpenAPI.Document>): Promise<Array<APIHelper.Document>> {
@@ -162,7 +172,7 @@ export default class ParserSwagger {
                     undefined,
                     undefined,
                     {
-                      autoGenerateId: this.autoGenerateId
+                      autoGenerateId: this.autoGenerateId,
                     }
                   );
                   if (parsedSchema) {
@@ -200,7 +210,9 @@ export default class ParserSwagger {
                   requestSchemaRecord,
                   parameter.schema,
                   requestKeyNameMemo,
-                  { autoGenerateId: this.autoGenerateId }
+                  {
+                    autoGenerateId: this.autoGenerateId,
+                  }
                 );
               } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                 // header 和 cookie信息，暂无特殊处理
@@ -238,26 +250,7 @@ export default class ParserSwagger {
             }
           );
 
-          if (requestDataSchema.params.length === 0) {
-            api.requestDataSchema = requestExtraDataSchema;
-          } else if (requestDataSchema.params.length > 0) {
-            api.requestDataSchema = requestDataSchema;
-          } else {
-            api.requestExtraDataSchema = requestExtraDataSchema;
-          }
-
-          // 请求参数根对象属性去重
-          if (api.requestDataSchema?.params) {
-            const requestDataSchemaMemo: string[] = [];
-            api.requestDataSchema.params = api.requestDataSchema.params.filter((s) => {
-              if (!s.keyName) {
-                return true;
-              }
-              const hasKeyName = requestDataSchemaMemo.includes(s.keyName);
-              requestDataSchemaMemo.push(s.keyName);
-              return !hasKeyName;
-            });
-          }
+          processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
           /****************** 处理请求参数--结束 ******************/
 
           /****************** 处理响应参数--开始 ******************/
@@ -279,7 +272,8 @@ export default class ParserSwagger {
               api.responseDataSchema.keyName = '';
             }
           }
-          /****************** 处理响应参数--开始 ******************/
+          processResponseSchemaPipeline(api, this);
+          /****************** 处理响应参数--结束 ******************/
 
           // 将该API添加到所依赖的模块中
           for (const tagName of apiMap.tags) {

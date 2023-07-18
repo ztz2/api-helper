@@ -23,13 +23,13 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
  */
 export interface IBodyBodyPutRequestByPut {
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求-put【响应数据类型定义】
@@ -132,15 +132,15 @@ export interface IUserDeviceIdBody1RequestByPost {
   // 设备id
   deviceId: string;
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -194,15 +194,15 @@ userDeviceIdBody1ByPost.requestConfig = {
 export interface IUserGetRequest1RequestByPost {
   cade: string;
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -255,9 +255,9 @@ userGetRequest1ByPost.requestConfig = {
  */
 export interface IUserCreateOneRequestByPost {
   // 主键id
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
 }
 /**
  * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
@@ -301,15 +301,15 @@ userCreateOneByPost.requestConfig = {
  */
 export interface IUserCreateOneSchemaRequestByPost {
   // 主键id（注解id-title）
-  id?: string;
+  id: string;
   // 名称
-  name?: string;
+  name: string;
   // Part信息
   partSchema: {
     // part部分id
-    id?: string;
+    id: string;
     // part部分名称
-    name?: string;
+    name: string;
   };
 }
 /**
@@ -361,8 +361,8 @@ userCreateOneSchemaByPost.requestConfig = {
  * @url [ POST ] /user/createOne1
  */
 export interface IUserCreateOne1RequestByPost {
-  id?: string;
-  name?: string;
+  id: string;
+  name: string;
 }
 /**
  * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
@@ -657,13 +657,13 @@ fileUploadBatchByPost.requestConfig = {
  */
 export interface IBodyBodyRequestByPost {
   // 随机名称
-  random?: string;
+  random: string;
   // 文件名称
-  name?: string;
+  name: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求【响应数据类型定义】
@@ -709,11 +709,11 @@ bodyBodyByPost.requestConfig = {
 export interface IBodyBodyParamRequestByPost {
   name: string;
   // 随机名称
-  random?: string;
+  random: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param【响应数据类型定义】
@@ -764,11 +764,11 @@ export interface IBodyBodyParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 随机名称
-  random?: string;
+  random: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param+Header【响应数据类型定义】
@@ -821,11 +821,11 @@ export interface IBodyBodyParamHeaderPathIdRequestByPost {
   // 文件名称
   name: string;
   // 随机名称
-  random?: string;
+  random: string;
   // 文件大小
-  size?: number;
+  size: number;
   // 是否上传成功
-  success?: boolean;
+  success: boolean;
 }
 /**
  * @description 普通body请求+Param+Header+Path【响应数据类型定义】
@@ -875,15 +875,15 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
 export interface IUserGetRequestRequestByGet {
   userSchema: {
     // 主键id（注解id-title）
-    id?: string;
+    id: string;
     // 名称
-    name?: string;
+    name: string;
     // Part信息
     partSchema: {
       // part部分id
-      id?: string;
+      id: string;
       // part部分名称
-      name?: string;
+      name: string;
     };
   };
   cade: string;

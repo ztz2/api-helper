@@ -28,7 +28,6 @@ import { Config } from '@/lib';
 import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
-import * as process from "process";
 
 type DocumentServers = Config['documentServers'];
 
@@ -63,7 +62,7 @@ class Service{
         await this.checkOutputPathExisted(config);
         await this.checkRequestFunctionFileExisted(config);
 
-        const parserPluginRunResult = await this.parserDocument(config.documentServers);
+        const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
         const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
 
@@ -168,8 +167,8 @@ class Service{
   }
 
   // 4. 文档获取与解析
-  private async parserDocument(documentServers: DocumentServers): Promise<ParserPluginRunResult> {
-    const result = await documentServersRunParserPlugins(documentServers, this.parserPlugins);
+  private async parserDocument(documentServers: DocumentServers, config: Config): Promise<ParserPluginRunResult> {
+    const result = await documentServersRunParserPlugins(documentServers, this.parserPlugins, config);
     return result.parserPluginRunResult;
   }
 
@@ -272,12 +271,15 @@ import request from '${requestFilePath}';
     // 生成代码
     const spinner = ora(oraText).start();
     for (const item of parserPluginRunResult) {
-      const { documentServer: { dataKey }, parsedDocumentList } = item;
+      const { documentServer, parsedDocumentList } = item;
+      const { dataKey } = documentServer;
       for (const d of parsedDocumentList) {
         try {
           let str = renderAllApi(d, {
             codeType: isTS ? 'typescript' : 'javascript',
             dataKey: dataKey,
+            onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
+            onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
           });
           if (!str.endsWith('\n')) {
             str += '\n';
@@ -356,6 +358,8 @@ export default defineConfig({
   outputFilePath: 'src/api/index${extensionName}',
   // 接口请求函数文件路径
   requestFunctionFilePath: 'src/utils/request${extensionName}',
+  // 响应数据所有字段设置成必有属性
+  requiredResponseField: true,
   // 接口文档服务配置
   documentServers: [
     {

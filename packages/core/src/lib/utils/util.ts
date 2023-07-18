@@ -138,8 +138,10 @@ export function parserSchema(
   parentSchema: JSONSchema4 = {},
   keyName = '',
   memo: Map<JSONSchema4, null> = new Map(),
-  options = {
-    autoGenerateId: true,
+  options: {
+    autoGenerateId: boolean;
+  } = {
+    autoGenerateId: true
   }
 ): APIHelper.Schema | null {
   if (!schema) {
@@ -253,11 +255,7 @@ export function parserSchema(
         if (schema.uniqueItems != null) arrayRules.uniqueItems = schema.uniqueItems;
         break;
     }
-  } catch (e) {
-    console.log(schema);
-    console.log(memo);
-    console.log(e);
-  }
+  } catch (e) {}
 
   return resultSchema;
 }
@@ -306,4 +304,76 @@ export function processRequestSchema(
   }
 
   return null;
+}
+
+export function uniqueRequestDataRootSchema(api: APIHelper.API) {
+  if (api.requestDataSchema?.params) {
+    const requestDataSchemaMemo: string[] = [];
+    api.requestDataSchema.params = api.requestDataSchema.params.filter((s) => {
+      if (!s.keyName) {
+        return true;
+      }
+      const hasKeyName = requestDataSchemaMemo.includes(s.keyName);
+      requestDataSchemaMemo.push(s.keyName);
+      return !hasKeyName;
+    });
+  }
+  return api;
+}
+
+export function deepAddSchemaRules(schema: null | APIHelper.Schema | APIHelper.Schema[], rules: Recordable = {}) {
+  schema = schema == null ? [] : Array.isArray(schema) ? schema : [schema];
+  if (Object.keys(rules).length === 0) {
+    return undefined;
+  }
+  const memo: APIHelper.Schema[] = [];
+  const deepLoop = (s: APIHelper.Schema[]) => {
+    for (const itm of s) {
+      if (!itm || memo.includes(itm)) {
+        continue;
+      }
+      memo.push(itm);
+      itm.rules = Object.assign({}, itm.rules, rules);
+      deepLoop(itm.params);
+    }
+  }
+  deepLoop(schema);
+}
+
+// 请求数据通用处理
+export function processRequestSchemaPipeline(
+  api: APIHelper.API,
+  requestDataSchema: APIHelper.Schema,
+  requestExtraDataSchema: APIHelper.Schema | null,
+  options: Recordable
+) {
+  if (requestDataSchema.params.length === 0) {
+    api.requestDataSchema = requestExtraDataSchema;
+  } else if (requestDataSchema.params.length > 0) {
+    api.requestDataSchema = requestDataSchema;
+  } else {
+    api.requestExtraDataSchema = requestExtraDataSchema;
+  }
+
+  // 请求数据根对象属性去重
+  uniqueRequestDataRootSchema(api);
+  // 请求数据规则处理
+  if (options.requiredRequestField) {
+    deepAddSchemaRules(api.requestDataSchema, {
+      required: true
+    });
+    deepAddSchemaRules(api.requestExtraDataSchema, {
+      required: true
+    });
+  }
+  return api;
+}
+
+// 响应数据通用处理
+export function processResponseSchemaPipeline(api: APIHelper.API, options: Recordable) {
+  if (options.requiredResponseField) {
+    deepAddSchemaRules(api.responseDataSchema, {
+      required: true
+    });
+  }
 }

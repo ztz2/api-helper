@@ -55,6 +55,8 @@ export default {
     const configFile = createTempFile(`
 import { resolve } from 'path';
 export default {
+  requiredRequestField: true,
+  requiredResponseField: false,
   documentServers: [
     {
       url: 'https://doc.xiaominfo.com/demo/doc.html',

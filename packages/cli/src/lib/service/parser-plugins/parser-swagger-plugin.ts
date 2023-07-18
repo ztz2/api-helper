@@ -7,6 +7,8 @@ import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
 
 import {
+  DocumentServers,
+  ParserPluginOptions,
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib/types';
@@ -16,16 +18,12 @@ import {
   processRequestConfig,
 } from '@/lib/tools/util';
 
-import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
 
-
-type DocumentServers = Config['documentServers'];
-
 export default class ParserSwaggerPlugin implements AbstractParserPlugin {
   name = 'swagger';
-  async run(documentServers: DocumentServers){
+  async run(documentServers: DocumentServers, options: ParserPluginOptions = {}){
     const result: ParserPluginRunResult = [];
 
     if (documentServers.length === 0) {
@@ -41,7 +39,7 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
           log.error('提示', `没有获取到swagger配置文档${serverUrlText}`);
           return;
         }
-        const parsedDocumentList = await new ParserSwagger().parser(openAPIDocumentList as any);
+        const parsedDocumentList = await new ParserSwagger(options).parser(openAPIDocumentList as any);
         if (parsedDocumentList.length === 0) {
           log.error('提示', `解析swagger配置失败${serverUrlText}`);
           return;

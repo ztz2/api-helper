@@ -1,12 +1,15 @@
 import { JSONSchema4 } from 'json-schema';
 
 import {
+  isHttp,
   randomId,
   mergeUrl,
   filterDesc,
-  filterKeyName,
   parserSchema,
-  processRequestSchema, isHttp,
+  filterKeyName,
+  processRequestSchema,
+  processRequestSchemaPipeline,
+  processResponseSchemaPipeline,
 } from '../utils/util';
 import {
   UNKNOWN_GROUP_DESC,
@@ -17,6 +20,10 @@ import { validateSchema } from '../utils/validator';
 
 type ParserYapiParams = {
   autoGenerateId?: boolean;
+  // 请求数据所有字段设置成必有属性，默认: false
+  requiredRequestField?: boolean;
+  // 响应数据所有字段设置成必有属性，默认：true
+  requiredResponseField?: boolean;
   projectInfo: {
     'switch_notice': boolean,
     'is_mock_open': boolean,
@@ -125,11 +132,19 @@ type ParserYapiParams = {
 
 export default class ParserYapi {
   private autoGenerateId = true;
+  // 请求数据所有字段设置成必有属性，默认: false
+  private requiredRequestField?: boolean;
+  // 响应数据所有字段设置成必有属性，默认：true
+  private requiredResponseField?: boolean;
+
   private projectInfo: ParserYapiParams['projectInfo'];
   private categoryList: ParserYapiParams['categoryList'];
   private apiList: ParserYapiParams['apiList'];
 
   constructor(params: ParserYapiParams) {
+    this.requiredRequestField = params.requiredRequestField;
+    this.requiredResponseField = params.requiredResponseField ?? true;
+
     this.projectInfo = params.projectInfo;
     this.categoryList = params.categoryList;
     this.apiList = params.apiList;
@@ -342,7 +357,9 @@ export default class ParserYapi {
                   requestSchemaRecord,
                   jsonParam,
                   requestKeyNameMemo,
-                  { autoGenerateId: this.autoGenerateId }
+                  {
+                    autoGenerateId: this.autoGenerateId
+                  }
                 );
               }
             }finally{}
@@ -375,14 +392,7 @@ export default class ParserYapi {
           break;
         }
       }
-
-      if (requestDataSchema.params.length === 0) {
-        api.requestDataSchema = requestExtraDataSchema;
-      } else if (requestDataSchema.params.length > 0) {
-        api.requestDataSchema = requestDataSchema;
-      } else {
-        api.requestExtraDataSchema = requestExtraDataSchema;
-      }
+      processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
       /****************** 请求参数处理-结束 ******************/
 
       /****************** 响应参数处理-结束 ******************/
@@ -405,6 +415,7 @@ export default class ParserYapi {
           }
         }
       } finally {}
+      processResponseSchemaPipeline(api, this);
       /****************** 响应参数处理-结束 ******************/
 
       // 将该API添加到所依赖的模块中
