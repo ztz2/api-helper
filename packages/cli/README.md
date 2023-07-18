@@ -65,13 +65,13 @@ import { defineConfig, Config } from '@api-helper/cli';
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
 #### outputFilePath
-  * 是否必须：<font color=#ff5722>是</font>
+  * 是否必须：<font color=#ff5722>**是**</font>
   * 数据类型：string
   * 说明：
 代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
 
 #### requestFunctionFilePath
-  * 是否必须：<font color=#ff5722>是</font>
+  * 是否必须：<font color=#ff5722>**是**</font>
   * 数据类型：string
   * 说明：
     接口请求函数文件路径。
@@ -91,19 +91,19 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
     响应数据所有字段设置成必有属性。
 
 #### documentServers
-  * 是否必须：<font color=#ff5722>是</font>
+  * 是否必须：<font color=#ff5722>**是**</font>
   * 数据类型：Array&lt;object&gt;
   * 说明：
     接口文档服务配置。
 
 #### documentServers.url
-  * 是否必须：<font color=#ff5722>是</font>
+  * 是否必须：<font color=#ff5722>**是**</font>
   * 数据类型：string
   * 说明：
     文档地址【当documentServers.type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
 
 #### documentServers.type
-  * 是否必须：<font color=#ff5722>是</font>
+  * 是否必须：<font color=#ff5722>**是**</font>
   * 数据类型：'swagger' | 'yapi' | string
   * 默认值：'swagger'
   * 说明：
