@@ -1,8 +1,13 @@
 import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
+import { DEFAULT_SELECT_MODEL_TPL_ID } from '@/constants';
 
 export default new Template({
-  value: '对象_UI8QKroW6B3Kfq_fNsRhY', label: '对象', default: true, content: `${COMMON_HEAD}
+  label: '对象',
+  value: DEFAULT_SELECT_MODEL_TPL_ID,
+  formatCodeExtension: '.js',
+  builtIn: true,
+  content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;

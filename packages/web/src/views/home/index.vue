@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-space>
-      <a-button @click="dialogCU.open({ type: 'ADD' })" type="primary">添加</a-button>
+      <a-button @click="dialogCURef.open({ type: 'ADD' })" type="primary">添加</a-button>
       <a-button
         :disabled="selectedKeys.length === 0"
         @click="handleDelete(selectedKeys)"
@@ -27,7 +27,7 @@
         <a-table-column title="操作" :width="200">
           <template #cell="{ record }">
             <a-space>
-              <a-button @click="dialogCU.open({ type: 'EDIT' }, record)" size="mini">编辑</a-button>
+              <a-button @click="dialogCURef.open({ type: 'EDIT', formComponentProps: { data: record } })" size="mini">编辑</a-button>
               <a-button @click="handleDelete(record)" type="primary" status="danger" size="mini">删除</a-button>
               <a-button size="mini" :href="`/#/generate?id=${record.id}`" type="primary">生成</a-button>
             </a-space>
@@ -36,7 +36,7 @@
       </template>
     </a-table>
   </div>
-  <DialogCU ref="dialogCU" />
+  <DialogCU ref="dialogCURef" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -46,13 +46,18 @@ export default defineComponent({
 });
 </script>
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue';
+import {
+  ref,
+  computed,
+  reactive,
+} from 'vue';
+
+import { confirm } from '@/utils';
 import { useProject } from '@/store';
 import { Project } from '@/store/project/interface';
-import { confirm } from '@/utils';
 import DialogCU from './__components__/dialog/dialog-cu.vue';
 
-const dialogCU = ref();
+const dialogCURef = ref();
 const projectStore = useProject();
 
 const selectedKeys = ref<Array<string>>([]);

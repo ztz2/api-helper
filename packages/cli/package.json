@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/cli",
-  "version": "2.1.14",
+  "version": "2.1.16",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "bin": {
     "apih": "bin/index.js"
@@ -68,6 +68,7 @@
     "minimist": "^1.2.8",
     "npmlog": "^7.0.1",
     "ora": "^3.4.0",
+    "prettier": "^2.8.4",
     "prompts": "^2.4.2",
     "qs": "^6.11.0",
     "shx": "^0.3.4",

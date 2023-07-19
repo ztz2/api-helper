@@ -1,8 +1,9 @@
 import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from './common';
 
-export default new Template({
-  value: 'class_werh7OwE9uumxpo6ZCmhr', label: '空模板', default: true, content: `${COMMON_HEAD}
+export default function genEmptyModelTemplate() {
+  return new Template({
+    content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
@@ -26,4 +27,5 @@ export default new Template({
     return result;
 }
 `,
-});
+  });
+}

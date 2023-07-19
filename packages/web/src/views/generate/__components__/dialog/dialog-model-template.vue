@@ -4,8 +4,8 @@
       width="100%"
       cancel-text="返回"
       hide-ok
+      :span="[16, 8]"
       :form-component="Form"
-      @save-template="handleGen(false)"
   >
     <template #default>
       <a-spin
@@ -16,14 +16,15 @@
         <a-row :gutter="12">
           <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
             <div style="height: calc(100vh - 140px)">
-              <apih-code :code="code"></apih-code>
+              <apih-code :code="code" />
             </div>
           </a-col>
         </a-row>
       </a-spin>
     </template>
     <template #footer>
-      <a-button type="primary" :loading="loading" @click="handleGen(true)">生成</a-button>
+      <a-button type="primary" @click="handleGen(true)">测试</a-button>
+      <a-button type="primary" @click="handleSave">保存</a-button>
     </template>
   </apih-dialog>
 </template>
@@ -31,37 +32,27 @@
 <script lang="ts" setup>
 import {
   ref,
-  toRefs,
-  computed,
   nextTick,
+  computed,
+  defineEmits,
   defineExpose,
 } from 'vue';
-import { merge, omit } from 'lodash';
+import { omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
-import { APIHelper } from '@api-helper/core/es/lib/types';
 
-import Form from '../form/form-model/index.vue';
+import Form from '../form/form-model-template';
 import renderTemplate from '@/utils/render-template';
 import { useProject, useModelTemplate } from '@/store';
-import { FormModel } from '../form/form-model/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
-type OpenDataType = {
-  categoryList: APIHelper.CategoryList
-  apiList: APIHelper.APIList
-};
+const emit = defineEmits(['success']);
 
+const { save } = useModelTemplate();
 const { currentProject } = useProject();
-const { templateMap } = toRefs(useModelTemplate());
 
 const dialogRef = ref();
 const loading = ref(false);
 const codeList = ref<Array<string>>([]);
-
-const dialogOpenData = ref<OpenDataType>({
-  categoryList: [],
-  apiList: [],
-});
 
 const currentCodeList = computed(() => {
   if (codeList.value.length > 0) {
@@ -74,34 +65,23 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DialogOpenConfig, data: OpenDataType) {
-  config = merge(config, {
-    formComponentProps: {
-      categoryList: data.categoryList,
-      data: new FormModel({
-        apiId: data?.apiList?.[0]?.id ?? '',
-      }),
-    },
-  });
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
-  dialogOpenData.value.categoryList = data.categoryList;
-  dialogOpenData.value.apiList = data.apiList;
-
   nextTick(() => {
     handleGen();
   });
 }
 
 async function handleGen(showMsg = false) {
-  const data = await dialogRef.value.getFormRef().validate();
-  const template = templateMap.value.get(currentProject.modelTplId);
-  if (!template) {
-    Message.error('请重新选择模板');
+  const data = await dialogRef.value.getFormRef().getFormModel();
+  if (!data.content) {
+    codeList.value = [''];
     return;
   }
+  console.log('data: ', data);
   loading.value = true;
   try {
-    codeList.value = await renderTemplate(template, {
+    codeList.value = await renderTemplate(data, {
       api: data.api,
       requestDataSchemaList: data.requestDataSchemaList,
       responseDataSchemaList: data.responseDataSchemaList,
@@ -122,6 +102,14 @@ async function handleGen(showMsg = false) {
   } finally {
     loading.value = false;
   }
+}
+
+async function handleSave() {
+  const data = await dialogRef.value.getFormRef().validate();
+  const id = save(data);
+  close();
+  Message.success('保存成功');
+  emit('success', id);
 }
 
 defineExpose({

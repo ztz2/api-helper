@@ -2,7 +2,11 @@ import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  value: 'class_w234fswefewfxs123sdfe', label: 'Table 表格', default: true, content: `${COMMON_HEAD}
+  label: 'Table 表格',
+  value: 'class_w234fswefewfxs123sdfe',
+  formatCodeExtension: '.vue',
+  builtIn: true,
+  content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;

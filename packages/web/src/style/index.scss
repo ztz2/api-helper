@@ -61,3 +61,15 @@ a{
   border-radius: 5px;
   overflow: hidden;
 }
+
+.ztz-spin{
+  position: relative;
+  display: block;
+  min-height: 200px;
+ .arco-spin-mask-icon{
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

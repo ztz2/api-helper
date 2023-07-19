@@ -37,7 +37,8 @@ import {
   defineEmits,
 } from 'vue';
 import { Message } from '@arco-design/web-vue';
-import { useForm } from '@/hooks/use-form';
+
+import useForm from '@/hooks/use-form';
 
 type FormModelType = { fileList: File[] };
 
@@ -62,7 +63,7 @@ const {
   formRules,
 
   validate,
-  validateField,
+  validateFields,
   setFields,
   resetFields,
   getFormModel,
@@ -93,7 +94,7 @@ defineExpose({
     formModel.value.fileList = formModel.value.fileList.map((item: Recordable) => item.file);
     return validate();
   },
-  validateField,
+  validateFields,
   setFields,
   resetFields,
   getFormModel,

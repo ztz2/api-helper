@@ -2,12 +2,12 @@ export const COMMON_HEAD = `/**
  * @description 渲染函数
  * @param params { object }
  * @param config.apiList { Array<APIHelper.API> } 选择的API集合
- * @param config { RenderAPIConfig } 配置对象
+ * @param config { Project } 配置对象
  * @return [] { Array<string> } 返回数组，里面每一项字符串都是一个模板
  */
 function renderTemplate (params, config) {
   // 模板引擎基于 art-template 使用，template 变量就是对art-template的引用，更多语法方法参考官方文档：https://github.com/aui/art-template
   // 函数中可以使用Lodash工具包所有功能，比如 cloneDeep，使用方式：lodash.cloneDeep
   const result = [];
-  config = Object.assign(new RenderAPIConfig(), utils.checkType(config, 'Object') ? config : {});
+  config = config || {};
 `;

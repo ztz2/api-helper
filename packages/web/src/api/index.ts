@@ -1,15 +1,24 @@
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { aes } from '@/utils/crypto';
-import request from '@/utils/request';
-import { SECRET_KEY } from '@/constants';
-import { IProject } from '@/store/project/interface';
+import { FormatCodeConfig } from '@api-helper/cli/lib/tools/format-code';
 
-export async function getDocs(data: IProject): Promise<Array<APIHelper.Document>> {
+import { aes } from '@/utils/crypto';
+import request from '@/api/request';
+import { SECRET_KEY } from '@/constants';
+import { Project } from '@/store/project/interface';
+
+export function getDocs(data: Project): Promise<Array<APIHelper.Document>> {
   if (data?.auth?.password) {
     data.auth.password = aes.encrypt(data.auth.password, SECRET_KEY);
   }
-  return (await request('/app/docs', {
+  return request<unknown, Array<APIHelper.Document>>('/app/docs', {
     method: 'post',
     data,
-  })) as unknown as Array<APIHelper.Document>;
+  });
+}
+
+export function fetchFormatCode(data: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
+  return request<any, string>('/app/formatCode', {
+    method: 'post',
+    data,
+  });
 }

@@ -1,25 +1,26 @@
 import type { Ref } from 'vue';
 import { ref, isRef, watch } from 'vue';
 import { cloneDeep, merge } from 'lodash';
-import { Message, FieldRule } from '@arco-design/web-vue';
+import { FieldRule } from '@arco-design/web-vue';
 
 import { assignDeep } from '@/utils';
+import message from '@/utils/message';
 
 type UseFormConfig<T> = {
+  // 如果在模态框中，显示状态的切换，如果影藏状态，自动执行重置表单
+  visible?: Ref<boolean>;
+
   // 表单校验规则
   rules?: { [propName: string]: Array<FieldRule> };
 
   // 外部传递过来的表单实体对象Ref，监听其变化，更新内部formModel，用于数据回显
   watchFormModel?: Ref<T>;
-  // 是否深度监听表单数据
-  watchFormModelDeep?: boolean;
-  // 是否立即监听表单数据
-  watchFormModelImmediate?: boolean;
 
   // validate函数执行，校验失败提示消息，null或者false不提示
   validateFailMsg?: string | null | undefined | false;
 };
-export function useForm<T extends object>(
+
+export default function useForm<T extends object>(
   // 默认的表单模型数据
   defaultFormModel: T,
   // 可选的配置项，详情参考类型：UseFormConfig
@@ -28,19 +29,19 @@ export function useForm<T extends object>(
   const currentConfig = merge(
     {
       rules: {},
-
-      watchFormModelDeep: false,
-      watchFormModelImmediate: false,
-
       validateFailMsg: '请完善表单数据',
     },
     config ?? {},
   ) as Required<UseFormConfig<T>>;
 
   const formRef = ref();
-  const formModel = ref<T>(defaultFormModel);
+  const formModel = ref<T>(getDefaultFormModel());
   const formRules = ref(currentConfig.rules);
-  const resourceFormModel = cloneDeep(defaultFormModel);
+
+  function getDefaultFormModel() { // @ts-ignore
+    // eslint-disable-next-line new-cap
+    return typeof defaultFormModel === 'function' ? new defaultFormModel() : defaultFormModel;
+  }
 
   function getReactiveFormModel() {
     return formModel;
@@ -50,35 +51,43 @@ export function useForm<T extends object>(
     return cloneDeep(formModel.value);
   }
 
-  function setFormModel(value: T) {
-    assignDeep(formModel, value);
+  function setFormModel(value: T, original = false) {
+    if (original) {
+      formModel.value = value as any;
+    } else {
+      assignDeep(formModel, value);
+    }
   }
 
-  function clearValidate(field: string | string[]) {
+  function clearValidate(field?: string | string[]) {
     formRef.value?.clearValidate?.(
       typeof field === 'string' || Array.isArray(field) ? field : undefined,
     );
   }
 
-  function resetFields(field: string | string[]) {
+  function resetFields(field?: string | string[], original = true) {
     formRef.value?.resetFields?.(
       typeof field === 'string' || Array.isArray(field) ? field : undefined,
     );
+    if (original) {
+      setFormModel(typeof defaultFormModel === 'function' ? getDefaultFormModel() : cloneDeep(defaultFormModel));
+    }
   }
 
   async function validate() {
     const error = await formRef.value?.validate?.();
     if (error) {
       if (currentConfig.validateFailMsg) {
-        Message.error(currentConfig.validateFailMsg as string);
+        message.error(currentConfig.validateFailMsg as string);
       }
       return Promise.reject(error);
     }
     return getFormModel();
   }
 
-  async function validateField(field: string | string[]) {
-    const error = await formRef.value?.validateField?.(field);
+  async function validateFields(field: string | string[]) {
+    field = Array.isArray(field) ? field : [field];
+    const error = await formRef.value?.validateFields?.(field);
     return error || undefined;
   }
 
@@ -88,14 +97,34 @@ export function useForm<T extends object>(
 
   // 外部传递过来的表单实体对象Ref，监听其变化，更新内部formModel，用于数据回显
   if (isRef(currentConfig?.watchFormModel)) {
+    let isFirst = true;
     watch(
       () => currentConfig.watchFormModel.value,
-      (val) => {
-        formModel.value = merge(cloneDeep(resourceFormModel), cloneDeep(val));
+      (val: any) => {
+        // 初次加载，必须有字段才会赋值
+        if (isFirst) {
+          isFirst = false;
+          if (Object.keys(val).length > 0) {
+            formModel.value = val;
+          }
+          return;
+        }
+        formModel.value = val;
       },
       {
-        deep: currentConfig.watchFormModelDeep,
-        immediate: currentConfig.watchFormModelImmediate,
+        immediate: true,
+      },
+    );
+  }
+
+  // 影藏模态框，自动重置表单
+  if (isRef(currentConfig?.visible)) {
+    watch(
+      () => currentConfig?.visible.value,
+      (val) => {
+        if (!val) {
+          resetFields();
+        }
       },
     );
   }
@@ -106,7 +135,7 @@ export function useForm<T extends object>(
     formRules,
 
     validate,
-    validateField,
+    validateFields,
     setFields,
     resetFields,
     getFormModel,

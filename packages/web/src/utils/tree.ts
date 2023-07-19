@@ -26,7 +26,7 @@ export function treeForEach(tree: any[] = [], cb: Function, children = 'children
         for (const item of treeData) {
       cb(item);
 
-      if (Array.isArray(item[children])) {
+      if (Array.isArray(item?.[children])) {
         DFS(item[children]);
       }
     }
@@ -41,7 +41,7 @@ export function treeForEach(tree: any[] = [], cb: Function, children = 'children
 
       cb(item);
       // @ts-ignore
-      if (Array.isArray(item[children])) { // @ts-ignore
+      if (Array.isArray(item?.[children])) { // @ts-ignore
         queen.push(...item[children]);
       }
     }

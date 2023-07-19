@@ -32,7 +32,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useCheckUpdateTemplate } from '@/hooks/use-check-update-template';
-import AhLogo from '@/components/apih-logo/index.vue';
 
 const linkColor = ref('rgba(0,0,0,.8509803922)');
 

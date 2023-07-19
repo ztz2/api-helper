@@ -5,25 +5,6 @@ import { APIHelper } from '@api-helper/core/es/lib/types';
 
 export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
 
-export function assignDeep<T>(
-  target: T,
-  ...copyItemList: Array<{ [propName: string]: any }>
-): T {
-  copyItemList.forEach((obj) => {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const [k, v] of Object.entries(cloneDeep(obj))) {
-      if (isRef(target)) {
-        // @ts-ignore
-        target.value[k] = v;
-      } else {
-        // @ts-ignore
-        target[k] = v;
-      }
-    }
-  });
-  return target;
-}
-
 export function confirm(content: string, fn: () => void, title = '提示') {
   Modal.open({
     title,
@@ -81,4 +62,44 @@ export function modalConfirm(modalConfig: ModalConfig | string) {
       },
     });
   });
+}
+
+export function getErrorMessage<T extends string | Error & { msg?: string }>(error: T, prefix = '', postfix = ''): string {
+  function mergeMessage<T>(msg: T) {
+    return msg ? `${prefix}${msg}${postfix}` : '';
+  }
+  if (!error) {
+    return '';
+  }
+  if (typeof error === 'string') {
+    return mergeMessage(error);
+  }
+  if (error?.message) {
+    return mergeMessage(error.message);
+  }
+  if (error?.msg) {
+    return mergeMessage(error.msg);
+  }
+  return '';
+}
+
+export function assignDeep<T>(
+  target: T,
+  ...copyItemList: Array<{ [propName: string]: any }>
+): T {
+  copyItemList.forEach((obj) => {
+    if (!checkType(obj, 'Object')) {
+      return;
+    }
+    for (const [k, v] of Object.entries(cloneDeep(obj))) {
+      if (isRef(target)) {
+        // @ts-ignore
+        target.value[k] = v;
+      } else {
+        // @ts-ignore
+        target[k] = v;
+      }
+    }
+  });
+  return target;
 }

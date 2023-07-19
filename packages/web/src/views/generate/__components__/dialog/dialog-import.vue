@@ -21,10 +21,10 @@ import {
 } from 'vue';
 import { Message } from '@arco-design/web-vue';
 
-import { useApiTemplate, useModelTemplate } from '@/store';
-import { OpenConfig } from '@/components/apih-dialog/interface';
-import { API_CUSTOM_TEMPLATE_ID, MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
 import Form from '../form/form-import.vue';
+import { useApiTemplate, useModelTemplate } from '@/store';
+import { DialogOpenConfig } from '@/components/apih-dialog/interface';
+import { API_CUSTOM_TEMPLATE_ID, MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const emit = defineEmits(['success']);
 const apiTemplateStore = useApiTemplate();
@@ -36,7 +36,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: OpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
 }
 

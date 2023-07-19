@@ -16,27 +16,31 @@
 <script setup lang="ts">
 import { pick } from 'lodash';
 import {
-  defineEmits, nextTick, defineExpose, ref,
+  ref,
+  nextTick,
+  defineEmits,
+  defineExpose,
 } from 'vue';
 import { Message } from '@arco-design/web-vue';
 
-import { useProject } from '@/store';
 import { getDocs } from '@/api';
-import Dialog from '@/components/apih-dialog/index.vue';
-import { OpenData, OpenConfig } from '@/components/apih-dialog/interface';
+import { useProject } from '@/store';
 import Form from '../form/form-cu.vue';
+import Dialog from '@/components/apih-dialog/index.vue';
+import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
 const emit = defineEmits(['success']);
 const projectStore = useProject();
+
 const dialogRef = ref();
-const type = ref('DETAIL');
+const dialogOpenType = ref('DETAIL');
 const loadingSave = ref(false);
 
-function open(config: OpenConfig, data?: OpenData) {
+function open(config: DialogOpenConfig) {
   loadingSave.value = false;
-  type.value = config.type;
+  dialogOpenType.value = config.type;
   nextTick(() => {
-    dialogRef.value?.open(config, data);
+    dialogRef.value?.open(config);
   });
 }
 
@@ -50,13 +54,13 @@ async function handleSave(publishFlag = false) {
       loadingSave.value = true;
       const data = await dialogRef.value.getFormRef().validate();
       const documentList = await getDocs(data);
-      for (const item of documentList) {
+      for (const item of documentList) { // @ts-ignore
         delete item.id;
         projectStore.save(pick({ ...data, ...item }, Object.keys(data)) as any);
       }
     },
     completeCallback() {
-      const text = type.value === 'ADD' ? '添加成功' : type.value === 'EDIT' ? '修改成功' : null;
+      const text = dialogOpenType.value === 'ADD' ? '添加成功' : dialogOpenType.value === 'EDIT' ? '修改成功' : null;
       text && Message.success(text);
       dialogRef.value.close();
       emit('success');

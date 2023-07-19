@@ -1,14 +1,19 @@
 import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from './common';
+import { DEFAULT_SELECT_API_TPL_ID } from '@/constants';
 
 export default new Template({
-  value: 'API_gAHoEYCIUVnAlqIifY9S5', label: 'API', default: true, content: `${COMMON_HEAD}
+  label: 'API',
+  value: DEFAULT_SELECT_API_TPL_ID,
+  formatCodeExtension: '.ts',
+  builtIn: true,
+  content: `${COMMON_HEAD}
 let apiList = params.apiList;
 
 config.typingList = [];
 const apiCodeWrap = [];
 const importApiCodeWrap = [];
-const isTS = config.codeType === 'typescript';
+const isTS = config.formatCodeExtension === 'typescript';
 apiList = apiList.forEach((api) => {
   const p = [];
   if (isTS) {
@@ -20,7 +25,7 @@ apiList = apiList.forEach((api) => {
   }
   p.push(
     utils.apihTemplate.renderRequestFunction(api, {
-      codeType: config.codeType
+      formatCodeExtension: config.formatCodeExtension
     })
   );
   apiCodeWrap.push(p.join(''));

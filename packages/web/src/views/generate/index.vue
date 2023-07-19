@@ -24,9 +24,8 @@
                 type="primary"
                 @click="dialogAPIRef.open({
                   type: 'ADD',
-                  title: '生成(API函数代码)'
+                  title: '生成(API函数代码)',
                 }, {
-                  project,
                   apiList: selectApiList
                 })"
               >
@@ -39,7 +38,6 @@
                   type: 'ADD',
                   title: '生成(表单代码)'
                 }, {
-                   project,
                   categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"
@@ -147,7 +145,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'generate',
+  name: 'generate-xe52f2',
 });
 </script>
 
@@ -168,9 +166,8 @@ import { getSchema } from '@api-helper/core/es/lib/helpers';
 
 import {
   useProject,
-  useApiConfig,
-  useModelConfig,
-  useGenerateAllApiConfig, useApiTemplate, useModelTemplate,
+  useApiTemplate,
+  useModelTemplate,
 } from '@/store';
 import {
   API_CUSTOM_TEMPLATE_ID,
@@ -179,9 +176,9 @@ import {
 import { modalConfirm } from '@/utils';
 import { getDocs } from '@/api';
 import renderTemplate from '@/utils/render-template';
-import { IProject, APIHDocument } from '@/store/project/interface';
-import ApihCategory from '@/components/apih-category/index.vue';
 import apiFuncTemplate from '@/constants/template/api/default';
+import ApihCategory from '@/components/apih-category/index.vue';
+import { Project, APIHDocument } from '@/store/project/interface';
 import mapTemplate from '@/constants/template/model/javascript/map';
 
 import DialogAPI from './__components__/dialog/dialog-api.vue';
@@ -195,9 +192,6 @@ const apiTemplateStore = useApiTemplate();
 const modelTemplateStore = useModelTemplate();
 
 const { toClipboard } = useClipboard();
-const { toggleApiConfig } = useApiConfig();
-const { modelConfig, toggleModelConfig } = toRefs(useModelConfig());
-const { toggleGenerateAllApiConfig } = useGenerateAllApiConfig();
 
 const gap = ref(320);
 const loading = ref(true);
@@ -206,9 +200,9 @@ const dialogModelRef = ref();
 const dialogImportRef = ref();
 const isEmpty = computed(() => !project.value);
 
-const project = computed<IProject>(() => {
+const project = computed<Project>(() => {
   const { id } = route.query;
-  return projectStore.data.find((itm) => itm.id === id) as IProject;
+  return projectStore.data.find((itm) => itm.id === id) as Project;
 });
 const ahProject = ref<APIHelper.Document>(new APIHDocument());
 const selectedKeys = ref<string[]>([]);
@@ -287,9 +281,6 @@ onMounted(async () => {
       loading.value = true;
       const res: any = await getDocs(project.value);
       ahProject.value = res?.[0] as APIHelper.Document;
-      toggleApiConfig(project.value.id);
-      toggleModelConfig.value(project.value.id);
-      toggleGenerateAllApiConfig(project.value.id);
     } finally {
       loading.value = false;
     }

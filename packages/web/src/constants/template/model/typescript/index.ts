@@ -1,6 +1,6 @@
-import { TemplateClassify } from '@/store/template/interface';
+import { TemplateCategory } from '@/store/template/interface';
 import interfaceTemplate from './interface';
 
-export default new TemplateClassify('Typescript', [
+export default new TemplateCategory('Typescript', [
   interfaceTemplate,
 ]);

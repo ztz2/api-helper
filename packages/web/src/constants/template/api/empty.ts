@@ -1,9 +1,10 @@
 import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from './common';
 
-export default new Template({
-  value: 'class_werh7OwE9uumxpo6ZCmhr', label: '空模板', default: true, content: `${COMMON_HEAD}
-  const apiList = params.apiList;
+export default function genEmptyApiTemplate() {
+  return new Template({
+    content: `${COMMON_HEAD}
+  const apiList = params.apiList;、
   const tpl1 =
   \`生成模板例子，这里获取请求API集合，根据这些API，可以生成想要的任何模板代码
   {{if apiList.length > 0}}
@@ -21,4 +22,5 @@ export default new Template({
   return result;
 }
 `,
-});
+  });
+}

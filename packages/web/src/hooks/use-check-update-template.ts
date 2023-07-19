@@ -1,11 +1,11 @@
 import { useApiTemplate, useModelTemplate } from '@/store';
 import apiTemplateList from '@/constants/template/api';
 import modelTemplateList from '@/constants/template/model';
-import { ITemplate, TemplateClassify } from '@/store/template/interface';
+import { Template, TemplateCategory } from '@/store/template/interface';
 
-function templateClassifyMap(source: TemplateClassify[]): { [id: string]: ITemplate } {
+function templateClassifyMap(source: TemplateCategory[]): { [id: string]: Template } {
   source = source ?? [];
-  const result: { [id: string]: ITemplate } = {};
+  const result: { [id: string]: Template } = {};
   for (const s of source) {
     for (const t of s.options) {
       result[t.value] = t;
@@ -13,7 +13,7 @@ function templateClassifyMap(source: TemplateClassify[]): { [id: string]: ITempl
   }
   return result;
 }
-function checkUpdate(source: TemplateClassify[], value: TemplateClassify[], save: Function) {
+function checkUpdate(source: TemplateCategory[], value: TemplateCategory[], save: Function) {
   const sMap = templateClassifyMap(source);
   const vMap = templateClassifyMap(value);
   for (const [id] of Object.entries(sMap)) {

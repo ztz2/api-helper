@@ -1,4 +1,5 @@
-import { Get, Post, Controller, Body } from '@nestjs/common';
+import { Get, Post, Body, Controller } from '@nestjs/common';
+import { formatCode, FormatCodeConfig } from '@api-helper/cli/lib';
 
 import { swagger20 } from '../mock/api';
 import { Result } from '../utils/result';
@@ -7,6 +8,11 @@ import { AppService } from '../service/app';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+  // @Get('/app/swagger/mock')
+  // async getMockData() {
+  //   const res = await this.appService.getMockData();
+  //   return Result.success(res);
+  // }
 
   @Get()
   async getHello() {
@@ -18,12 +24,6 @@ export class AppController {
     return swagger20;
   }
 
-  // @Get('/app/swagger/mock')
-  // async getMockData() {
-  //   const res = await this.appService.getMockData();
-  //   return Result.success(res);
-  // }
-
   @Post('/app/docs')
   async getDocs(@Body() body: any) {
     const res = await this.appService.getDocs(body);
@@ -31,5 +31,10 @@ export class AppController {
       return Result.fail('没有找到可以生成swagger配置文件');
     }
     return Result.success(res);
+  }
+
+  @Post('/app/formatCode')
+  async formatCode(@Body() body: FormatCodeConfig) {
+    return Result.success(await formatCode(body));
   }
 }

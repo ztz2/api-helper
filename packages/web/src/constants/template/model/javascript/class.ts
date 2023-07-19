@@ -2,7 +2,11 @@ import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  value: 'class_el2h7OwE9uumxpo6ZCX0s', label: 'class', default: true, content: `${COMMON_HEAD}
+  label: 'class',
+  value: 'class_el2h7OwE9uumxpo6ZCX0s',
+  formatCodeExtension: '.js',
+  builtIn: true,
+  content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;

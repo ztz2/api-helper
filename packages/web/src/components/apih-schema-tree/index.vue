@@ -65,7 +65,7 @@ import {
 } from 'vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { pascalCase } from 'change-case';
-import { treeMap } from '@/utils/tree';
+import { treeForEach, treeMap } from '@/utils/tree';
 
 import { isBasicDataTypeSchema } from '@/utils';
 
@@ -124,6 +124,13 @@ function handleSelectAll(node: Recordable, isChildren = false) {
     // 已经全选，进行取消全选
     if (isSelectedAll) {
       index !== -1 && checkedKeys.value.splice(index, 1);
+      // fix: 子节点也取消全选。
+      treeForEach([itm], (item: APIHelper.Schema) => { // @ts-ignore
+        const idx = checkedKeys.value.indexOf(item?.[props.valueKey]);
+        if (idx !== -1) {
+          checkedKeys.value.splice(idx, 1);
+        }
+      }, 'params');
     } else { // 非全选进行添加
       index === -1 && checkedKeys.value.push(itm[props.valueKey]);
     }

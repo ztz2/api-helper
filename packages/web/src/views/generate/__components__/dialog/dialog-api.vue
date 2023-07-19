@@ -3,21 +3,29 @@
     ref="dialogRef"
     width="100%"
     cancel-text="返回"
-    hide-ok
     :form-component="Form"
     @save-template="handleGen(false)"
+    hide-ok
   >
     <template #default>
-      <a-row :gutter="12">
-        <a-col v-for="(code, index) of codeList" :span="24 / codeList.length" :key="index">
-          <div style="height: calc(100vh - 140px)">
-            <apih-code :code="code" />
-          </div>
-        </a-col>
-      </a-row>
+      <a-card style="position: relative;">
+        <a-spin
+          tip="加载中..."
+          class="ztz-spin"
+          :loading="loading"
+        >
+          <a-row :gutter="12">
+            <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
+              <div style="height: calc(100vh - 140px)">
+                <apih-code :code="code" />
+              </div>
+            </a-col>
+          </a-row>
+        </a-spin>
+      </a-card>
     </template>
     <template #footer>
-      <a-button type="primary" @click="handleGen(true)">生成</a-button>
+      <a-button type="primary" :loading="loading" @click="handleGen(true)">生成</a-button>
     </template>
   </apih-dialog>
 </template>
@@ -27,35 +35,48 @@ import {
   ref,
   toRefs,
   nextTick,
+  computed,
   defineExpose,
 } from 'vue';
-import { APIHelper } from '@api-helper/core/es/lib/types';
 import { Message } from '@arco-design/web-vue';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 
-import { useApiTemplate } from '@/store';
-import renderTemplate from '@/utils/render-template';
-import { OpenConfig } from '@/components/apih-dialog/interface';
-import emptyTemplate from '@/constants/template/api/empty';
 import Form from '../form/form-api.vue';
+import { useProject, useApiTemplate } from '@/store';
+import renderTemplate from '@/utils/render-template';
+import { Template } from '@/store/template/interface';
+import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
 type OpenDataType = {
-  project: Recordable,
   apiList: Array<APIHelper.API>
 };
 
-const dialogRef = ref();
-const codeList = ref<Array<string>>([]);
+const { currentProject } = useProject();
 const { templateMap } = toRefs(useApiTemplate());
 
-const openData = ref<OpenDataType>();
+const dialogRef = ref();
+const loading = ref(false);
+const codeList = ref<Array<string>>([]);
+
+const dialogOpenData = ref<OpenDataType>({
+  apiList: [],
+});
+
+const currentCodeList = computed(() => {
+  if (codeList.value.length > 0) {
+    return codeList.value;
+  }
+  return [''];
+});
 
 function close() {
   dialogRef.value.close();
 }
 
-function open(config: OpenConfig, data?: OpenDataType) {
-  dialogRef.value.open(config, data);
-  openData.value = data;
+function open(config: DialogOpenConfig, payload: OpenDataType) {
+  dialogRef.value.open(config);
+  dialogOpenData.value.apiList = payload.apiList;
+  loading.value = false;
   nextTick(() => {
     handleGen();
   });
@@ -63,23 +84,24 @@ function open(config: OpenConfig, data?: OpenDataType) {
 
 async function handleGen(showMsg = false) {
   const data = await dialogRef.value.getFormRef().validate();
-  let template = templateMap.value.get(data.tplId);
-  let isEmptyTemplate = false;
+  const template = templateMap.value.get(data.apiTplId);
   if (!template) {
-    isEmptyTemplate = true;
-    template = { ...emptyTemplate };
     Message.error('请重新选择模板');
+    return;
   }
-  if (openData.value) {
-    codeList.value = renderTemplate(template, {
-      apiList: openData.value.apiList,
+  loading.value = true;
+  try {
+    codeList.value = await renderTemplate(template as Template, {
+      apiList: dialogOpenData.value.apiList,
     }, {
-      ...(openData.value?.project ?? {}),
+      ...currentProject,
       ...data,
     });
-    if (!isEmptyTemplate && showMsg === true) {
+    if (showMsg === true) {
       Message.success('已生成');
     }
+  } finally {
+    loading.value = false;
   }
 }
 
@@ -88,6 +110,3 @@ defineExpose({
   close,
 });
 </script>
-<style lang="scss">
-
-</style>

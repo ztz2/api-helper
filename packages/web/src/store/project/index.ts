@@ -1,11 +1,12 @@
 import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
-import { Project, IProject } from '@/store/project/interface';
+import { useRoute } from 'vue-router';
+import { Project } from '@/store/project/interface';
 
 const useProject = defineStore('project', {
   persist: true,
   state: (): {
-    data: Array<IProject>
+    data: Array<Project>
   } => ({
     data: [],
   }),
@@ -29,6 +30,15 @@ const useProject = defineStore('project', {
         const index = this.data.findIndex((itm) => itm.id === id);
         index !== -1 && this.data.splice(index, 1);
       }
+    },
+  },
+
+  getters: {
+    currentProject(state): Project {
+      const route = useRoute();
+      const { id } = route.query;
+      const p = state.data.find((itm) => itm.id === id);
+      return p ?? new Project();
     },
   },
 });

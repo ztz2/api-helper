@@ -50,7 +50,7 @@ export function getExtensionName (name: string) {
  */
 export function createTempFile(content?: string, options?: FileOptions): string {
   const currentOptions = merge({
-    prefix: 'temp-build',
+    prefix: 'temp.api.helper.cli',
     postfix: '.js'
   }, options);
   const { name } = tmp.fileSync(currentOptions);
@@ -248,7 +248,7 @@ export async function documentServersRunParserPlugins(
   return result;
 }
 
-export function getErrorMessage(error: string | Error & { msg?: string }, prefix = '', postfix = ''): string {
+export function getErrorMessage<T extends string | Error & { msg?: string }>(error: T, prefix = '', postfix = ''): string {
   function mergeMessage<T>(msg: T) {
     return msg ? `${prefix}${msg}${postfix}` : '';
   }

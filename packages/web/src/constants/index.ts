@@ -1,4 +1,7 @@
 export const SECRET_KEY = 'JK#3212%SFKKNSDSFSDKFJLJKLHJSDJUWSD';
 
-export const API_CUSTOM_TEMPLATE_ID = 'WVDZm3q0Zk71l48yWHj3p';
-export const MODEL_CUSTOM_TEMPLATE_ID = 'lnepSx4lYBBnk9GRNasJp';
+export const API_CUSTOM_TEMPLATE_ID = 'API自定义分组ID_WVDZm3q0Zk71l48yWHj3p';
+export const MODEL_CUSTOM_TEMPLATE_ID = '模型自定义分组ID_lnepSx4lYBBnk9GRNasJp';
+
+export const DEFAULT_SELECT_API_TPL_ID = 'API_gAHoEYCIUVnAlqIifY9S5';
+export const DEFAULT_SELECT_MODEL_TPL_ID = '对象_UI8QKroW6B3Kfq_fNsRhY';

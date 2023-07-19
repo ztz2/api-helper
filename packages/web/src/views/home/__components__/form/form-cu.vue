@@ -77,7 +77,7 @@ import {
   defineProps,
   defineExpose,
 } from 'vue';
-import { useForm } from '@/hooks/use-form';
+import useForm from '@/hooks/use-form';
 import { Project } from '@/store/project/interface';
 
 type FormModelType = Project;

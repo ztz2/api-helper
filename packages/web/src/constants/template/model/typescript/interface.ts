@@ -2,9 +2,10 @@ import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  value: 'interface_Y4AIsXBlcKRXjU95av0Cx',
   label: 'interface',
-  default: true,
+  value: 'interface_Y4AIsXBlcKRXjU95av0Cx',
+  formatCodeExtension: '.ts',
+  builtIn: true,
   content: `${COMMON_HEAD}
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;

@@ -1,52 +1,35 @@
 import { nanoid } from 'nanoid';
+import { FormatCodeConfig } from '@api-helper/cli/lib/tools/format-code';
 
-export interface ITemplate {
+export class Template {
   // 模板名称
-  label?: string;
-  // 唯一ID
-  value: string;
-  // 模板内容
-  content: string;
-  // 默认的内置模板
-  default: boolean;
-}
-
-export class Template implements ITemplate {
   value = '';
-
+  // 唯一ID
   label = '';
-
+  // 模板内容
   content = '';
-
-  default = false;
-
-  constructor(params?: ITemplate) {
+  // 是否为内置模版
+  builtIn = false;
+  // 格式化代码的文件后缀名
+  formatCodeExtension = '.ts' as FormatCodeConfig['formatCodeExtension'] | '';
+  constructor(params?: Partial<Template>) {
     if (params) {
       this.label = params.label ?? '';
-      this.content = params.content ?? '';
-      this.default = params.default ?? false;
       this.value = params.value ?? nanoid();
+      this.content = params.content ?? '';
+      this.builtIn = params.builtIn ?? false;
+      this.formatCodeExtension = params.formatCodeExtension ?? '.ts';
     }
   }
 }
 
-export interface ITemplateClassify {
-  id: string;
-  label: string;
-  isGroup: boolean;
-  options: Array<ITemplate>;
-}
-
-export class TemplateClassify implements ITemplateClassify {
+// 分组
+export class TemplateCategory {
   id = nanoid();
-
   label;
-
   isGroup = true;
-
-  options = [] as ITemplate[];
-
-  constructor(label: string, options?: Array<ITemplate> | string) {
+  options = [] as Array<Template>;
+  constructor(label: string, options?: Array<Template> | string) {
     this.label = label;
     if (typeof options === 'string') {
       this.id = options;
