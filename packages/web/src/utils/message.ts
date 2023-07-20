@@ -29,6 +29,7 @@ function _message(config: MessageConfig | string, type: ModelFuncType, onClick: 
     onClick: undefined as unknown,
     onClose: undefined as unknown,
     class: 'z-message',
+    'modal-class': 'z-message',
   };
 
   if (typeof config === 'function' || typeof config === 'string' || '__v_isVNode' in config) {

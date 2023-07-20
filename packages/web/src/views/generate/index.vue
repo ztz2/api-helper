@@ -2,7 +2,7 @@
   <div class="generate-container">
     <template v-if="isEmpty"><a-empty /></template>
     <template v-else>
-      <a-spin tip="加载中..." style="width: 100%" :loading="loading">
+      <a-spin tip="加载中..." class="loading-detail" :loading="loading">
         <div :style="{width: `${gap}px`}" class="generate-left-side">
           <ApihCategory
             :data="ahProject.categoryList"
@@ -353,6 +353,16 @@ $fixed-x: 20px;
     position: fixed;
     top: $fixed-y;
     left: $fixed-x;
+  }
+  @at-root .loading-detail{
+    width: 100%;
+    position: relative;
+    .arco-spin-mask{
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: calc(100vh - 106px);
+    }
   }
   @at-root .generate-body{
     position: relative;

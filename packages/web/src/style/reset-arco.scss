@@ -11,3 +11,10 @@
   border-radius: 5px;
   background-color: #fff;
 }
+
+.arco-modal{
+  position: absolute;
+  top: 50%!important;
+  left: 50%;
+  transform: translate(-50%, -100%);
+}
