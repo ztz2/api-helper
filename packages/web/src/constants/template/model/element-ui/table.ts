@@ -1,5 +1,5 @@
-import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
+import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: 'Table 表格',
@@ -10,6 +10,7 @@ export default new Template({
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
+
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
@@ -32,7 +33,7 @@ export default new Template({
       return \`    <el-table-column
       prop="\${item.keyName}"
       label="\${item.title?item.title:item.keyName}"
-      width="180">\`
+      width="180"/>\`
     });
     return \`<template>
   <el-table

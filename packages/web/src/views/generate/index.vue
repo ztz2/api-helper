@@ -16,6 +16,7 @@
         >
           <div
               class="generate-handle"
+              style="display: flex;justify-content: space-between;"
               :style="{width: `calc(100vw - ${gap + 60}px)`}"
           >
             <a-space>
@@ -57,6 +58,17 @@
                 })"
               >
                 导入自定义模板
+              </a-button>
+            </a-space>
+            <a-space style="margin-left: 14px">
+              <a-button
+                type="primary"
+                @click="dialogPrettierRef.open({
+                  type: 'EDIT',
+                  title: 'prettier配置',
+                })"
+              >
+                prettier配置
               </a-button>
             </a-space>
           </div>
@@ -115,14 +127,20 @@
                           <apih-code :code="renderAPIFunc(api)"></apih-code>
                         </div>
                       </a-collapse-item>
-                      <a-collapse-item v-for="(code, codeIdx) of renderMap(api)" :key="`3-3${codeIdx}`">
+                      <a-collapse-item :key="3-3-2">
                         <template #header>
-                          <div>
-                            {{codeIdx === 0 ? '请求参数' : '响应数据'}}
-                          </div>
+                          <div>请求参数</div>
                         </template>
                         <div>
-                          <apih-code :code="code"></apih-code>
+                          <apih-code :code="renderMap(api)"></apih-code>
+                        </div>
+                      </a-collapse-item>
+                      <a-collapse-item :key="3-3-3">
+                        <template #header>
+                          <div>响应数据</div>
+                        </template>
+                        <div>
+                          <apih-code :code="renderMap(api, true)"></apih-code>
                         </div>
                       </a-collapse-item>
                     </a-collapse>
@@ -139,6 +157,7 @@
   <DialogAPI ref="dialogAPIRef" />
   <DialogModel ref="dialogModelRef" />
   <DialogImport ref="dialogImportRef" />
+  <DialogPrettier ref="dialogPrettierRef" />
 </template>
 
 <script lang="ts">
@@ -173,17 +192,17 @@ import {
   API_CUSTOM_TEMPLATE_ID,
   MODEL_CUSTOM_TEMPLATE_ID,
 } from '@/constants';
-import { modalConfirm } from '@/utils';
 import { getDocs } from '@/api';
+import { modalConfirm } from '@/utils';
 import renderTemplate from '@/utils/render-template';
-import apiFuncTemplate from '@/constants/template/api/default';
+import { Template } from '@/store/template/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
 import { Project, APIHDocument } from '@/store/project/interface';
-import mapTemplate from '@/constants/template/model/javascript/map';
 
 import DialogAPI from './__components__/dialog/dialog-api.vue';
 import DialogModel from './__components__/dialog/dialog-model.vue';
 import DialogImport from './__components__/dialog/dialog-import.vue';
+import DialogPrettier from './__components__/dialog/dialog-prettier.vue';
 
 const route = useRoute();
 
@@ -198,6 +217,7 @@ const loading = ref(true);
 const dialogAPIRef = ref();
 const dialogModelRef = ref();
 const dialogImportRef = ref();
+const dialogPrettierRef = ref();
 const isEmpty = computed(() => !project.value);
 
 const project = computed<Project>(() => {
@@ -225,28 +245,64 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
   return res;
 });
 
-function renderMap(api: APIHelper.API): string[] {
-  const dataKey = project.value?.dataKey ?? '';
-  let responseDataSchema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
-  if (dataKey) {
-    responseDataSchema = getSchema(responseDataSchema, dataKey);
-  }
-  const responseDataSchemaList = responseDataSchema?.params ?? [];
-  return renderTemplate(mapTemplate, {
+const mapMemo: Map<string, string[]> = new Map<string, string[]>();
+async function renderMap(api: APIHelper.API, isResp = false) {
+  const params = {
     api,
-    requestDataSchemaList: api.requestDataSchema ? api.requestDataSchema.params : [],
-    responseDataSchemaList: responseDataSchemaList as APIHelper.SchemaList,
-  }, {
-    onlyMap: true,
-  } as any);
+    requestDataSchemaList: [] as APIHelper.SchemaList,
+    responseDataSchemaList: [] as APIHelper.SchemaList,
+  };
+  const record = mapMemo.get(api.id) ?? [];
+  const hasMemo = mapMemo.has(api.id);
+
+  if (isResp) {
+    if (record?.[1]) {
+      return record?.[1];
+    }
+    const dataKey = project.value?.dataKey ?? '';
+    let responseDataSchema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
+    if (dataKey) {
+      responseDataSchema = getSchema(responseDataSchema, dataKey);
+    }
+    params.responseDataSchemaList = responseDataSchema?.params ?? [];
+  } else {
+    if (record?.[0]) {
+      return record?.[0];
+    }
+    params.requestDataSchemaList = api.requestDataSchema ? api.requestDataSchema.params : [];
+  }
+
+  const res = await renderTemplate(modelTemplateStore.defaultModelTemplate, params, projectStore.currentProject);
+
+  let result = '';
+  if (isResp) {
+    record[1] = res?.[1] ?? '';
+    result = record[1] as string;
+  } else {
+    record[0] = res?.[0] ?? '';
+    result = record[0] as string;
+  }
+
+  if (!hasMemo) {
+    mapMemo.set(api.id, record);
+  }
+
+  return result;
 }
 
-function renderAPIFunc(api: APIHelper.API) {
-  return renderTemplate(apiFuncTemplate, {
+const apiMemo: Map<string, string> = new Map<string, string>();
+async function renderAPIFunc(api: APIHelper.API) {
+  if (apiMemo.has(api.id)) {
+    return apiMemo.get(api.id);
+  }
+  const result = (await renderTemplate(apiTemplateStore.defaultApiTemplate, {
     apiList: [api],
   }, {
+    ...projectStore.currentProject,
     onlyApiFunc: true,
-  } as any)[0] ?? '';
+  }))?.[0] ?? '';
+  apiMemo.set(api.id, result);
+  return result;
 }
 
 function handleCopyPath(path: string) {

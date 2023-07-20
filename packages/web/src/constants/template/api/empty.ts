@@ -1,5 +1,5 @@
-import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from './common';
+import { Template } from '@/store/template/interface';
 
 export default function genEmptyApiTemplate() {
   return new Template({
@@ -14,9 +14,9 @@ export default function genEmptyApiTemplate() {
         method：{{$value.method}}{{/each}}
   {{/if}}
   \`;
-  // 当一个模板定义好之后，使用 template.render 方法进行生成，并添加到result返回数组中
+  // 当一个模板定义好之后，使用 artTemplate.render 方法进行生成，并添加到result返回数组中
   // 当然可以生成多个模板，每次生成好之后，添加到result数组中即可
-  result.push(template.render(tpl1, { apiList, config }));
+  result.push(artTemplate.render(tpl1, { apiList, config }));
 
   // 返回生成好的模板
   return result;

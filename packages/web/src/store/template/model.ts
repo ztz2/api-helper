@@ -6,8 +6,12 @@ import {
   Template,
   TemplateCategory,
 } from '@/store/template/interface';
+import {
+  MODEL_CUSTOM_TEMPLATE_ID,
+  DEFAULT_SELECT_MODEL_TPL_ID,
+} from '@/constants';
+import { getTemplateList } from '@/utils';
 import templateList from '@/constants/template/model';
-import { MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const useModelTemplate = defineStore('model-template', {
   persist: true,
@@ -18,19 +22,24 @@ const useModelTemplate = defineStore('model-template', {
   }),
   getters: {
     templateMap(state): Map<string, Template> {
-      const { templateList } = state;
       const templateMap = new Map();
-      for (let j = 0; j < templateList.length; j++) {
-        for (let i = 0; i < templateList[j].options.length; i++) {
-          const itm = templateList[j].options[i];
-          templateMap.set(itm.value, itm);
-        }
-      }
+      getTemplateList(state.templateList).forEach((itm) => {
+        templateMap.set(itm.value, itm);
+      });
       return templateMap;
     },
     customTemplateList(state): Template[] {
       const row = state.templateList.find((item) => item.id === MODEL_CUSTOM_TEMPLATE_ID);
       return row?.options ?? [];
+    },
+    defaultModelTemplate(state): Template {
+      let result;
+      for (const itm of getTemplateList(state.templateList)) {
+        if (itm.value === DEFAULT_SELECT_MODEL_TPL_ID) {
+          result = itm;
+        }
+      }
+      return result as Template;
     },
   },
   actions: {

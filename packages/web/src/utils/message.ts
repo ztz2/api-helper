@@ -54,7 +54,7 @@ function _message(config: MessageConfig | string, type: ModelFuncType, onClick: 
 
     const { onClose: _onClose } = currentConfig;
 
-    currentConfig.onClose = function () {
+    currentConfig.onClose = function c() {
       closeTask();
       _onClose?.(1);
     } as any;

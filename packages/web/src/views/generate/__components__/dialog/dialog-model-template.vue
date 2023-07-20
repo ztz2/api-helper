@@ -3,9 +3,9 @@
       ref="dialogRef"
       width="100%"
       cancel-text="返回"
-      hide-ok
-      :span="[16, 8]"
+      :span="[14, 10]"
       :form-component="Form"
+      hide-ok
   >
     <template #default>
       <a-spin

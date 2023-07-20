@@ -2,21 +2,10 @@ import * as _ from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
-// @ts-ignore
-import artTemplate from 'art-template/lib/template-web.js';
-import { Template } from '@/store/template/interface';
-
+import _apih from './render-template-apih';
 import formatCode from '@/utils/format-code';
-import * as uts from './render-template-utils';
 import { Project } from '@/store/project/interface';
-
-artTemplate.defaults.escape = false;
-artTemplate.defaults.minimize = false;
-// 新增模板《》语法的界定符规则
-artTemplate.defaults.rules[2] = {
-  ...artTemplate.defaults.rules[1],
-  test: /《([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*》/,
-};
+import { Template } from '@/store/template/interface';
 
 export type RenderApiTemplateParams = {
   apiList: Array<APIHelper.API>
@@ -36,13 +25,13 @@ export default async function _renderTemplate(
   // 渲染配置
   config?: Project,
 ) {
-  console.log(2);
   let result: Array<string> = [];
   config = config ?? {} as any;
   try {
-    const utils = uts;
     const lodash = _;
-    const template = artTemplate;
+    const apih = _apih;
+    // eslint-disable-next-line prefer-destructuring
+    const artTemplate = apih.template.artTemplate;
     const exe = { renderTemplate: null };
 
     eval(
@@ -56,14 +45,28 @@ export default async function _renderTemplate(
 
     const { formatCodeExtension } = templateMap; // @ts-ignore
     const codeList = exe.renderTemplate(params, config) ?? [];
+    [].push.apply(result, codeList);
+
     if (formatCodeExtension) {
-      const formattedCodeList = (await formatCode(codeList.map((c: string) => ({
-        sourceCode: c,
-        formatCodeExtension,
-      })))) as [];
-      [].push.apply(result, formattedCodeList);
-    } else {
-      [].push.apply(result, codeList);
+      const filterCodeList: string[] = [];
+      const filterCodeListIdxMap: Record<string, number> = {};
+      for (let i = 0; i < codeList.length; i++) {
+        const itm = codeList[i];
+        if (itm && itm?.trim() !== '') {
+          filterCodeList.push(itm);
+          filterCodeListIdxMap[itm.length - 1] = i;
+        }
+      }
+      if (filterCodeList.length > 0) {
+        const formattedCodeList = (await formatCode(codeList.map((c: string) => ({
+          sourceCode: c,
+          formatCodeExtension,
+          prettierrcOptions: config?.prettierrcOptions,
+        })))) as [];
+        for (let i = 0; i < formattedCodeList.length; i++) {
+          result[filterCodeListIdxMap[i]] = formattedCodeList[i] ?? '';
+        }
+      }
     }
   } catch (e: any) {
     if (typeof e === 'string') {

@@ -3,9 +3,9 @@
     ref="dialogRef"
     width="100%"
     cancel-text="返回"
-    hide-ok
-    :span="[16, 8]"
+    :span="[14, 10]"
     :form-component="Form"
+    hide-ok
   >
     <template #default>
       <a-spin
@@ -13,7 +13,7 @@
         class="ztz-spin"
         :loading="loading"
       >
-        <a-row :gutter="12">
+        <a-row :gutter="15">
           <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
             <div style="height: calc(100vh - 140px)">
               <apih-code :code="code" />

@@ -2,6 +2,7 @@ import { isRef } from 'vue';
 import { cloneDeep } from 'lodash';
 import { Modal, ModalConfig } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { Template, TemplateCategory } from '@/store/template/interface';
 
 export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
 
@@ -102,4 +103,14 @@ export function assignDeep<T>(
     }
   });
   return target;
+}
+
+export function getTemplateList(templateList: Array<TemplateCategory>): Template[] {
+  const result = [];
+  for (let j = 0; j < templateList.length; j++) {
+    for (let i = 0; i < templateList[j].options.length; i++) {
+      result.push(templateList[j].options[i]);
+    }
+  }
+  return result;
 }

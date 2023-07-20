@@ -1,6 +1,6 @@
 <template>
-  <a-row :gutter="12">
-    <a-col :span="12">
+  <a-row :gutter="gutter">
+    <a-col :span="9">
       <a-form
           ref="formRef"
           :model="formModel"
@@ -32,6 +32,7 @@
                   value-key="id"
                   v-model="formModel.formatCodeExtension"
                   :options="options.formatCodeExtension"
+                  allow-clear
                 />
               </a-form-item>
             </a-col>
@@ -57,7 +58,7 @@
         </a-card>
       </a-form>
     </a-col>
-    <a-col :span="12">
+    <a-col :span="15">
       <apih-code-mirror v-model="formModel.content" />
     </a-col>
   </a-row>

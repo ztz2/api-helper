@@ -1,6 +1,11 @@
 import { nanoid } from 'nanoid';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { DEFAULT_SELECT_API_TPL_ID, DEFAULT_SELECT_MODEL_TPL_ID } from '@/constants';
+import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
+
+import {
+  DEFAULT_SELECT_API_TPL_ID,
+  DEFAULT_SELECT_MODEL_TPL_ID,
+} from '@/constants';
 
 export class Project {
   id = '';
@@ -37,6 +42,8 @@ export class Project {
   grid = false;
   // Form表单项是否生成label
   generateLabel = false;
+  // prettier配置对象
+  prettierrcOptions = new PrettierrcOptions();
   /** 以下属性是基于项目级别的通用配置项 - 结束 * */
   constructor(id?: string) {
     if (typeof id === 'string') {

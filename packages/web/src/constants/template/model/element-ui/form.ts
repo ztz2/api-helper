@@ -1,5 +1,5 @@
-import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
+import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: 'Form 表单',
@@ -10,6 +10,7 @@ export default new Template({
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
+
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
@@ -43,7 +44,7 @@ export default new Template({
   export default {
     data() {
       return {
-        form: \${utils.apihTemplate.renderObject(schemaList, api, { paramType: 'request', onlyMap: true, startSpace: '        ' }).trim()},
+        form: \${apih.template.renderObject(schemaList, api, { paramType: 'request', onlyMap: true, startSpace: '        ' }).trim()},
         rules: \${['{', schemaList.filter((item) => item.rules.required).map(function(item) {
             return \`          \${item.keyName}: [
             { required: true, message: \${item.type === 'array' ? "'必选项'" : "'必填项'"}, trigger: 'change' }

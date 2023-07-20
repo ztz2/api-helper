@@ -1,5 +1,5 @@
-import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
+import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: 'class',
@@ -10,10 +10,11 @@ export default new Template({
   const api = params.api;
   const requestDataSchemaList = params.requestDataSchemaList;
   const responseDataSchemaList = params.responseDataSchemaList;
+
   let tpl1, tpl2 = '';
   // 请求数据
   if (requestDataSchemaList.length > 0) {
-    tpl1 = utils.apihTemplate.renderClass(requestDataSchemaList, api, {
+    tpl1 = apih.template.renderClass(requestDataSchemaList, api, {
       paramType: 'request'
     });
   } else {
@@ -23,7 +24,7 @@ export default new Template({
 
   // 响应数据
   if (responseDataSchemaList.length > 0) {
-    tpl2 = utils.apihTemplate.renderClass(responseDataSchemaList, api, {
+    tpl2 = apih.template.renderClass(responseDataSchemaList, api, {
       paramType: 'response'
     });
   } else {
