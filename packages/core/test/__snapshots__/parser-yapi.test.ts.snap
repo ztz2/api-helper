@@ -1,170 +1,170 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解析转换测试 1`] = `
-[
-  {
+Array [
+  Object {
     "basePath": "/v2",
-    "categoryList": [
-      {
-        "apiList": [
-          {
+    "categoryList": Array [
+      Object {
+        "apiList": Array [
+          Object {
             "description": "",
-            "formDataKeyNameList": [],
+            "formDataKeyNameList": Array [],
             "id": "",
             "method": "POST",
             "path": "/v2/pet",
-            "pathParamKeyNameList": [],
-            "queryStringKeyNameList": [],
-            "requestDataSchema": {
-              "params": [
-                {
+            "pathParamKeyNameList": Array [],
+            "queryStringKeyNameList": Array [],
+            "requestDataSchema": Object {
+              "params": Array [
+                Object {
                   "description": "",
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "id",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
                   "type": "number",
                 },
-                {
+                Object {
                   "description": "",
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "category",
-                  "params": [
-                    {
+                  "params": Array [
+                    Object {
                       "description": "",
-                      "examples": [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "id",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "number",
                     },
-                    {
+                    Object {
                       "description": "",
-                      "examples": [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "name",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
                   "type": "object",
                 },
-                {
+                Object {
                   "description": "",
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "name",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
                   "type": "string",
                 },
-                {
+                Object {
                   "description": "",
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "photoUrls",
-                  "params": [
-                    {
+                  "params": Array [
+                    Object {
                       "description": "",
-                      "examples": [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
                   "type": "array",
                 },
-                {
+                Object {
                   "description": "",
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "tags",
-                  "params": [
-                    {
+                  "params": Array [
+                    Object {
                       "description": "",
-                      "examples": [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "",
-                      "params": [
-                        {
+                      "params": Array [
+                        Object {
                           "description": "",
-                          "examples": [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "id",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "required": false,
                           },
                           "title": "",
                           "type": "number",
                         },
-                        {
+                        Object {
                           "description": "",
-                          "examples": [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "name",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "required": false,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": {
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "object",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
                   "type": "array",
                 },
-                {
+                Object {
                   "description": "pet status in the store",
-                  "enum": [
+                  "enum": Array [
                     "available",
                     "pending",
                     "sold",
                   ],
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "status",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
@@ -182,8 +182,8 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
         "id": "",
         "name": "pet",
       },
-      {
-        "apiList": [],
+      Object {
+        "apiList": Array [],
         "description": "未设置分组的接口集合",
         "id": "",
         "name": "未知分组",

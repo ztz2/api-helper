@@ -1,7 +1,8 @@
 import * as changeCase from 'change-case';
 import { getSchema } from '@api-helper/core/lib/helpers';
-import template from '@/lib/template';
+
 import { ChangeCase } from '@/lib/types';
+import artTemplate from '@/lib/art-template';
 import formatCode from '@/lib/utils/prettier';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { renderInterfaceName } from '@/lib/render-interface';
@@ -40,7 +41,7 @@ export function renderRequestFunction(
     responseDataInterfaceName: onRenderInterfaceName(responseDataSchema as APIHelper.Schema, api, { paramType: 'response', changeCase }),
   };
 
-  const code = template.render(
+  const code = artTemplate.render(
     `{{if commentCode}}{{commentCode}}
 {{/if}}export function {{requestFunctionName}}(data{{if isTypescript}}: {{requestDataInterfaceName}}{{/if}}, extraData{{if isTypescript}}?: {{if api.requestExtraDataSchema}}{{requestExtraDataInterfaceName}}{{else}}unknown{{/if}}{{/if}}, ...args{{if isTypescript}}: CurrentRequestFunctionRestArgsType{{/if}}) {
   return request{{if isTypescript}}<{{responseDataInterfaceName}}>{{/if}}(
@@ -74,7 +75,7 @@ function renderRequestFunctionComment(api: APIHelper.API) {
     api,
     apiDescription: [api.summary, api.description].filter(Boolean).join('、')
   };
-  return template.render(
+  return artTemplate.render(
 `/**
    * @description{{if apiDescription}} {{apiDescription}}{{else}} 无{{/if}}
 {{if api.docURL}}   * @doc {{api.docURL}}

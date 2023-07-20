@@ -106,6 +106,10 @@ align-items: center;
 
 `,
       formatCodeExtension: '.vue',
+      prettierrcOptions: {
+        singleQuote: false,
+        semi: false,
+      }
     });
     expect(code.toString()).toMatchSnapshot('format.格式化Vue代码');
   });

@@ -1,7 +1,8 @@
 import * as changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import formatCode from '@/lib/utils/prettier';
+
 import { ChangeCase } from '@/lib/types';
+import formatCode from '@/lib/utils/prettier';
 
 export function renderInterface(
   schema: APIHelper.Schema | null,

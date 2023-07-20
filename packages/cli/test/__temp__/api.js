@@ -27,7 +27,7 @@ v2PetPetIdUploadImageByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: ['additionalMetadata', 'file'],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -45,7 +45,7 @@ v2PetByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -63,7 +63,7 @@ v2PetByPut.requestConfig = {
   method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -85,7 +85,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['status']
+  queryStringKeyNameList: ['status'],
 };
 
 /**
@@ -107,7 +107,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['tags']
+  queryStringKeyNameList: ['tags'],
 };
 
 /**
@@ -129,7 +129,7 @@ v2PetPetIdByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -151,7 +151,7 @@ v2PetPetIdByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: ['name', 'status'],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -173,7 +173,7 @@ v2PetPetIdByDelete.requestConfig = {
   method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -195,7 +195,7 @@ v2StoreOrderByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -217,7 +217,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -239,7 +239,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -261,7 +261,7 @@ v2StoreInventoryByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -283,7 +283,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -305,7 +305,7 @@ v2UserCreateWithListByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -327,7 +327,7 @@ v2UserUsernameByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -349,7 +349,7 @@ v2UserUsernameByPut.requestConfig = {
   method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -371,7 +371,7 @@ v2UserUsernameByDelete.requestConfig = {
   method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -393,7 +393,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['username', 'password']
+  queryStringKeyNameList: ['username', 'password'],
 };
 
 /**
@@ -415,7 +415,7 @@ v2UserLogoutByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -433,5 +433,5 @@ v2UserByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };

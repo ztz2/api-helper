@@ -22,7 +22,7 @@ import {
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib/types';
-import { Config } from '@/lib';
+import { Config, formatCode } from '@/lib';
 import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
@@ -247,7 +247,10 @@ import request from '${requestFilePath}';
     }
     spinner.succeed();
 
-    return code.filter(Boolean).join('\n');
+    return await formatCode({
+      sourceCode: code.filter(Boolean).join('\n'),
+      formatCodeExtension: isTS ? '.ts' : '.js',
+    }) as string;
   }
 
   // 5. 输出

@@ -1,5 +1,6 @@
-import { getSchema } from '@api-helper/core/lib/helpers';
 import { APIHelper } from '@api-helper/core/lib/types';
+import { getSchema } from '@api-helper/core/lib/helpers';
+
 import formatCode from '@/lib/utils/prettier';
 import { renderInterface, renderInterfaceName } from '@/lib/render-interface';
 import { renderRequestFunction, renderRequestFunctionName } from '@/lib/render-request-function';

@@ -69,7 +69,7 @@ bodyBodyPutByPut.requestConfig = {
   method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -121,7 +121,7 @@ userDeviceIdBodyByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['deviceId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -184,7 +184,7 @@ userDeviceIdBody1ByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['deviceId'],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -246,7 +246,7 @@ userGetRequest1ByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['cade']
+  queryStringKeyNameList: ['cade'],
 };
 
 /**
@@ -292,7 +292,7 @@ userCreateOneByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -353,7 +353,7 @@ userCreateOneSchemaByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -397,7 +397,7 @@ userCreateOne1ByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['id', 'name']
+  queryStringKeyNameList: ['id', 'name'],
 };
 
 /**
@@ -445,7 +445,7 @@ fileUploadByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -496,7 +496,7 @@ fileUploadParamByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -547,7 +547,7 @@ fileUploadParamHeaderByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -600,7 +600,7 @@ fileUploadParamIdByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['id'],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -648,7 +648,7 @@ fileUploadBatchByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -699,7 +699,7 @@ bodyBodyByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 };
 
 /**
@@ -753,7 +753,7 @@ bodyBodyParamByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -808,7 +808,7 @@ bodyBodyParamHeaderByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -865,7 +865,7 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['id'],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };
 
 /**
@@ -929,7 +929,7 @@ userGetRequestByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['userSchema', 'cade']
+  queryStringKeyNameList: ['userSchema', 'cade'],
 };
 
 /**
@@ -967,5 +967,5 @@ userCreateByGet.requestConfig = {
   method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name']
+  queryStringKeyNameList: ['name'],
 };

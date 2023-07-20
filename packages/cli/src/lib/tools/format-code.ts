@@ -1,8 +1,11 @@
 import to from 'await-to-js';
+import merge from 'lodash/merge';
+
 import cp from 'node:child_process';
-import { readFile, remove } from 'fs-extra';
+import { remove, readFile } from 'fs-extra';
 
 import {
+  checkType,
   createTempFile,
   getErrorMessage,
 } from '@/lib/tools/util';
@@ -13,11 +16,16 @@ import {
 } from '@/lib/constants';
 
 import log from '@/lib/tools/log';
+import PrettierrcOptions from './prettierrc-options';
+
+export type Prettierrc = string | Partial<PrettierrcOptions>;
 
 export type FormatCodeConfig = {
   sourceCode: string;
   formatCodeExtension: FormatCodeExtension;
+  prettierrcOptions?: Prettierrc;
 }
+
 export default async function formatCode(config: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
   if (Array.isArray(config)) {
     const codeList: string[] = [];
@@ -43,13 +51,20 @@ function format(config: FormatCodeConfig): Promise<string> {
       return resolve(errorText);
     }
 
+    const prettierrc = checkType(config.prettierrcOptions, 'Object') ?
+      config.prettierrcOptions :
+        checkType(config.prettierrcOptions, 'String') ? JSON.parse(config.prettierrcOptions as string) : {};
+    const prettierrcOptions = JSON.stringify(merge(new PrettierrcOptions(), prettierrc));
+
     const filepath = createTempFile(sourceCode, { postfix: formatCodeExtension });
-    const removeTempFile = async () => { await to(remove(filepath)); }
-    cp.exec(`npx prettier --write ${filepath}`, async (err) => {
+    const prettierrcFilePath = createTempFile(prettierrcOptions, { postfix: '.json' });
+
+    const clearTempFile = async () => { await Promise.all([to(remove(filepath)), to(remove(prettierrcFilePath))]); }
+    cp.exec(`npx prettier --write ${filepath} --config ${prettierrcFilePath}`, async (err) => {
       if (err) {
         const errorText = `@api-helper/cli/lib/tools/format.ts 格式化代码失败：${getErrorMessage(err as Error)}`;
         log.warn('提示', errorText);
-        await removeTempFile();
+        await clearTempFile();
         return resolve(errorText);
       }
       try {
@@ -60,7 +75,7 @@ function format(config: FormatCodeConfig): Promise<string> {
         log.warn('提示', errorText);
         return resolve(errorText);
       } finally {
-        await removeTempFile();
+        await clearTempFile();
       }
     });
   });

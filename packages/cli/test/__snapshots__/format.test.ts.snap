@@ -35,13 +35,13 @@ exports[`format 格式化Vue代码: format.格式化Vue代码 1`] = `
 </template>
 
 <script lang=\\"ts\\" setup>
-import { ref } from \\"vue\\";
-import { useCheckUpdateTemplate } from \\"@/hooks/use-check-update-template\\";
-import AhLogo from \\"@/components/apih-logo/index.vue\\";
+import { ref } from \\"vue\\"
+import { useCheckUpdateTemplate } from \\"@/hooks/use-check-update-template\\"
+import AhLogo from \\"@/components/apih-logo/index.vue\\"
 
-const linkColor = ref(\\"rgba(0,0,0,.8509803922)\\");
+const linkColor = ref(\\"rgba(0,0,0,.8509803922)\\")
 
-useCheckUpdateTemplate();
+useCheckUpdateTemplate()
 </script>
 
 <style lang=\\"scss\\">
