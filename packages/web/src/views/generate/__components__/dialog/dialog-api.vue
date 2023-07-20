@@ -88,7 +88,7 @@ async function handleGen(showMsg = false) {
     const data = await dialogRef.value.getFormRef().validate();
     const template = templateMap.value.get(data.apiTplId);
     if (!template) {
-      Message.error('请重新选择模板');
+      Message.error('该模板没有内容，请重新选择模板');
       return Promise.reject();
     }
     loading.value = true;

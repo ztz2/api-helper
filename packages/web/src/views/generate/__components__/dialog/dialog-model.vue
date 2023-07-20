@@ -1,11 +1,11 @@
 <template>
   <apih-dialog
-      ref="dialogRef"
-      width="100%"
-      cancel-text="返回"
-      hide-ok
-      :form-component="Form"
-      @exec-gen="handleGen"
+    ref="dialogRef"
+    width="100%"
+    cancel-text="返回"
+    hide-ok
+    :form-component="Form"
+    @exec-gen="handleGen"
   >
     <template #default>
       <a-spin
@@ -40,6 +40,7 @@ import { merge, omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
+import message from '@/utils/message';
 import Form from '../form/form-model/index.vue';
 import renderTemplate from '@/utils/render-template';
 import { useProject, useModelTemplate } from '@/store';
@@ -98,6 +99,7 @@ function handleGen(showMsg = false) {
     const data = await dialogRef.value.getFormRef().getFormModel();
     const template = templateMap.value.get(currentProject.modelTplId) as Template;
     if (!template.content) {
+      message.warn('该模板没有内容，请重新选择模板');
       return [''];
     }
     loading.value = true;

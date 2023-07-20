@@ -15,7 +15,7 @@ import {
   Drawer,
   Message,
 } from '@arco-design/web-vue';
-import { merge } from 'lodash';
+import { at, merge } from 'lodash';
 import { nanoid } from 'nanoid';
 
 import {
@@ -278,6 +278,7 @@ export default defineComponent({
                   <a-row gutter={12}>
                     <a-col span={span1}>
                       <formComponent
+                        {...attrs}
                         {...currentFormComponentProps.value}
                         ref={
                           (v: unknown) => (formRef.value = v as FormComponentInstance)
