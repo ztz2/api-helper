@@ -74,13 +74,13 @@ import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
-import { modalConfirm } from '@/utils';
+import { randomChar, modalConfirm } from '@/utils';
 import { useProject, useApiTemplate } from '@/store';
 import { Template } from '@/store/template/interface';
 import genEmptyApiTemplate from '@/constants/template/api/empty';
 import DialogAPITemplate from '../dialog/dialog-api-template.vue';
 
-const emit = defineEmits(['success']);
+const emit = defineEmits(['success', 'exec-gen']);
 
 const props = defineProps({
   data: {
@@ -135,7 +135,7 @@ async function handleEditTpl() {
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ' - 副本';
+    tplModel.label += ` - 副本${randomChar}`;
     tplModel.value = '';
     tplModel.builtIn = false;
   }
@@ -148,8 +148,9 @@ async function handleEditTpl() {
   });
 }
 
-function handleSuccess() {
-  emit('success');
+function handleSuccess(id: string) {
+  currentProject.apiTplId = id;
+  emit('exec-gen', id);
 }
 
 function getFormModel() {

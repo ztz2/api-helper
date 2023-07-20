@@ -1,114 +1,120 @@
 <template>
-  <a-row :gutter="gutter">
-    <a-col :span="9">
-      <a-form
+  <a-spin
+    tip="加载中..."
+    class="ztz-spin"
+    :loading="loading"
+  >
+    <a-row :gutter="gutter">
+      <a-col :span="9">
+        <a-form
           ref="formRef"
           :model="formModel"
           :rules="formRules"
           layout="vertical"
           auto-label-width
-      >
-        <a-tabs class="a-tabs--simplify" default-active-key="1">
-          <a-tab-pane key="1" title="配置选择">
-            <a-card title="基础信息">
-              <a-row :gutter="gutter">
-                <a-col :span="24">
-                  <a-form-item
+        >
+          <a-tabs class="a-tabs--simplify" default-active-key="1">
+            <a-tab-pane key="1" title="配置选择">
+              <a-card title="基础信息">
+                <a-row :gutter="gutter">
+                  <a-col :span="24">
+                    <a-form-item
                       label="模板名称"
                       field="label"
                       :rules="[{ required: true, message: '必填项' }]"
                       :validate-trigger="['change', 'input']"
-                  >
-                    <a-input v-model="formModel.label" :max-length="64" />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24">
-                  <a-form-item
-                    label="模版文件后缀名"
-                    field="formatCodeExtension"
-                    tooltip="代码生成之后，会根据配置的后缀名，调用 prettier 对生成的代码进行美化"
-                  >
-                    <a-select
-                      value-key="id"
-                      v-model="formModel.formatCodeExtension"
-                      :options="options.formatCodeExtension"
-                      allow-clear
-                    />
-                  </a-form-item>
-                </a-col>
-                <a-col :span="24">
-                  <a-form-item
-                    label="API"
-                    field="apiId"
-                  >
-                    <a-select v-model="baseInfo.apiId" :options="options.categoryList"></a-select>
-                  </a-form-item>
-                </a-col>
-              </a-row>
-            </a-card>
-            <!--  Input 输入框属性配置  -->
-            <a-card title="Input 输入框属性配置">
-              <a-row style="margin-top: 6px" :gutter="30">
-                <a-col :span="12">
-                  <a-space>
-                    <div>maxlength</div>
-                    <div>
-                      <a-form-item field="maxlength" no-style>
-                        <a-input-number v-model="currentProject.maxlength" allow-clear hide-button />
+                    >
+                      <a-input v-model="formModel.label" :max-length="64" />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="24">
+                    <a-form-item
+                      label="模版文件后缀名"
+                      field="formatCodeExtension"
+                      tooltip="代码生成之后，会根据配置的后缀名，调用 prettier 对生成的代码进行美化"
+                    >
+                      <a-select
+                        value-key="id"
+                        v-model="formModel.formatCodeExtension"
+                        :options="options.formatCodeExtension"
+                        allow-clear
+                      />
+                    </a-form-item>
+                  </a-col>
+                  <a-col :span="24">
+                    <a-form-item
+                      label="API"
+                      field="apiId"
+                    >
+                      <a-select v-model="baseInfo.apiId" :options="options.categoryList"></a-select>
+                    </a-form-item>
+                  </a-col>
+                </a-row>
+              </a-card>
+              <!--  Input 输入框属性配置  -->
+              <a-card title="Input 输入框属性配置">
+                <a-row style="margin-top: 6px" :gutter="30">
+                  <a-col :span="12">
+                    <a-space>
+                      <div>maxlength</div>
+                      <div>
+                        <a-form-item field="maxlength" no-style>
+                          <a-input-number v-model="currentProject.maxlength" allow-clear hide-button />
+                        </a-form-item>
+                      </div>
+                    </a-space>
+                  </a-col>
+                  <a-col :span="12">
+                    <div style="margin-top: 4px">
+                      <a-form-item field="placeholder" no-style>
+                        <a-checkbox v-model="currentProject.placeholder">是否生成placeholder</a-checkbox>
                       </a-form-item>
                     </div>
+                  </a-col>
+                </a-row>
+              </a-card>
+              <!--  其他配置  -->
+              <a-card title="其他配置">
+                <a-row :gutter="gutter">
+                  <a-space :size="2" class="a-space--shim" direction="vertical">
+                    <div><a-checkbox v-model="currentProject.grid">是否使用格栅布局</a-checkbox></div>
+                    <div><a-checkbox v-model="currentProject.generateLabel">Form表单项是否生成label</a-checkbox></div>
                   </a-space>
+                </a-row>
+              </a-card>
+            </a-tab-pane>
+            <a-tab-pane key="2" title="字段选择">
+              <a-row :gutter="5">
+                <a-col :span="12">
+                  <a-card style="width: 100%">
+                    <template #title>
+                      <div class="text-center">请求数据字段</div>
+                    </template>
+                    <div style="width: 100%; height: calc(100vh - 277px)">
+                      <ApihSchemaTree v-model:value="baseInfo.requestDataSchemaIdList" :data="requestFieldTree" />
+                    </div>
+                  </a-card>
                 </a-col>
                 <a-col :span="12">
-                  <div style="margin-top: 4px">
-                    <a-form-item field="placeholder" no-style>
-                      <a-checkbox v-model="currentProject.placeholder">是否生成placeholder</a-checkbox>
-                    </a-form-item>
-                  </div>
+                  <a-card style="width: 100%">
+                    <template #title>
+                      <div class="text-center">响应数据字段</div>
+                    </template>
+                    <div style="width: 100%; height: calc(100vh - 277px)">
+                      <ApihSchemaTree v-model:value="baseInfo.responseDataSchemaIdList" :data="responseFieldTree" />
+                    </div>
+                  </a-card>
                 </a-col>
               </a-row>
-            </a-card>
-            <!--  其他配置  -->
-            <a-card title="其他配置">
-              <a-row :gutter="gutter">
-                <a-space :size="2" class="a-space--shim" direction="vertical">
-                  <div><a-checkbox v-model="currentProject.grid">是否使用格栅布局</a-checkbox></div>
-                  <div><a-checkbox v-model="currentProject.generateLabel">Form表单项是否生成label</a-checkbox></div>
-                </a-space>
-              </a-row>
-            </a-card>
-          </a-tab-pane>
-          <a-tab-pane key="2" title="字段选择">
-            <a-row :gutter="5">
-              <a-col :span="12">
-                <a-card style="width: 100%">
-                  <template #title>
-                    <div class="text-center">请求数据字段</div>
-                  </template>
-                  <div style="width: 100%; height: calc(100vh - 277px)">
-                    <ApihSchemaTree v-model:value="baseInfo.requestDataSchemaIdList" :data="requestFieldTree" />
-                  </div>
-                </a-card>
-              </a-col>
-              <a-col :span="12">
-                <a-card style="width: 100%">
-                  <template #title>
-                    <div class="text-center">响应数据字段</div>
-                  </template>
-                  <div style="width: 100%; height: calc(100vh - 277px)">
-                    <ApihSchemaTree v-model:value="baseInfo.responseDataSchemaIdList" :data="responseFieldTree" />
-                  </div>
-                </a-card>
-              </a-col>
-            </a-row>
-          </a-tab-pane>
-        </a-tabs>
-      </a-form>
-    </a-col>
-    <a-col :span="15">
-      <apih-code-mirror v-model="formModel.content" />
-    </a-col>
-  </a-row>
+            </a-tab-pane>
+          </a-tabs>
+        </a-form>
+      </a-col>
+      <a-col :span="15">
+        <apih-code-mirror v-model="formModel.content" />
+      </a-col>
+    </a-row>
+  </a-spin>
 </template>
 
 <script lang="ts" setup>
@@ -134,6 +140,7 @@ import { useProject } from '@/store';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { DOCUMENT } from '@/constants/mock';
+import formatCode from '@/utils/format-code';
 import { Project } from '@/store/project/interface';
 import { Template } from '@/store/template/interface';
 import { FormModel } from '../form-model/interface';
@@ -154,7 +161,9 @@ const props = defineProps({
     type: String as PropType<'ADD' | 'EDIT' | 'DETAIL'>,
     default: 'ADD',
   },
+  visible: Boolean,
 });
+const loading = ref(false);
 const route = useRoute();
 const projectStore = useProject();
 const { currentProject } = projectStore;
@@ -191,6 +200,22 @@ const project = computed<Project>(() => {
   const { id } = route.query;
   return projectStore.data.find((itm) => itm.id === id) as Project;
 });
+
+// watch(() => props.data.content, (val) => {
+//   if (val) {
+//     loading.value = true;
+//     formatCode({
+//       sourceCode: val,
+//       formatCodeExtension: '.js',
+//     }).then((res) => {
+//       formModel.value.content = res as string;
+//     }).finally(() => {
+//       loading.value = false;
+//     });
+//   } else {
+//     loading.value = false;
+//   }
+// });
 
 watch(() => DOCUMENT.categoryList, (categoryList) => {
   apiMap.value.clear();

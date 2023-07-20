@@ -190,9 +190,10 @@ import {
 } from '@/store';
 import {
   API_CUSTOM_TEMPLATE_ID,
-  MODEL_CUSTOM_TEMPLATE_ID,
+  MODEL_CUSTOM_TEMPLATE_ID, SECRET_KEY,
 } from '@/constants';
 import { getDocs } from '@/api';
+import { aes } from '@/utils/crypto';
 import { modalConfirm } from '@/utils';
 import renderTemplate from '@/utils/render-template';
 import { Template } from '@/store/template/interface';
@@ -319,9 +320,9 @@ async function handleExport() {
   if (modelTemplateStore.customTemplateList.length > 0) {
     dataMap[MODEL_CUSTOM_TEMPLATE_ID] = modelTemplateStore.customTemplateList;
   }
-  const exportContent = JSON.stringify(dataMap);
+  const exportContent = aes.encrypt(JSON.stringify(dataMap), SECRET_KEY);
   const eleLink = document.createElement('a');
-  eleLink.download = '自定义模板.json';
+  eleLink.download = '自定义模板.txt';
   eleLink.style.display = 'none';
   eleLink.style.position = 'fixed';
   const blob = new Blob([exportContent]);
@@ -357,7 +358,7 @@ $fixed-x: 20px;
   @at-root .loading-detail{
     width: 100%;
     position: relative;
-    .arco-spin-mask{
+    >.arco-spin-mask{
       position: absolute;
       top: 0;
       width: 100%;

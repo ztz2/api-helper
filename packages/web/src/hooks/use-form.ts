@@ -38,9 +38,9 @@ export default function useForm<T extends object>(
   const formModel = ref<T>(getDefaultFormModel());
   const formRules = ref(currentConfig.rules);
 
-  function getDefaultFormModel() { // @ts-ignore
+  function getDefaultFormModel(): T { // @ts-ignore
     // eslint-disable-next-line new-cap
-    return typeof defaultFormModel === 'function' ? new defaultFormModel() : defaultFormModel;
+    return typeof defaultFormModel === 'function' ? new defaultFormModel() : cloneDeep(defaultFormModel);
   }
 
   function getReactiveFormModel() {
@@ -66,11 +66,12 @@ export default function useForm<T extends object>(
   }
 
   function resetFields(field?: string | string[], original = true) {
-    formRef.value?.resetFields?.(
-      typeof field === 'string' || Array.isArray(field) ? field : undefined,
-    );
     if (original) {
-      setFormModel(typeof defaultFormModel === 'function' ? getDefaultFormModel() : cloneDeep(defaultFormModel));
+      formModel.value = getDefaultFormModel();
+    } else {
+      formRef.value?.resetFields?.(
+        typeof field === 'string' || Array.isArray(field) ? field : undefined,
+      );
     }
   }
 

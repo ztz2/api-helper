@@ -50,9 +50,13 @@ const useApiTemplate = defineStore('api-template', {
       }
       // 新增
       value.value = value.value ? value.value : nanoid();
-      const templateClassify = this.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID) ?? new TemplateCategory('自定义', API_CUSTOM_TEMPLATE_ID);
+      let templateClassify = this.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID);
+      // 不存在，创建自定义分组
+      if (!templateClassify) {
+        templateClassify = new TemplateCategory('自定义', API_CUSTOM_TEMPLATE_ID);
+        this.templateList.push(templateClassify);
+      }
       templateClassify.options.push(pick(value, Object.keys(new Template())) as Template);
-      this.templateList.push(templateClassify);
       return value.value;
     },
   },

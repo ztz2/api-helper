@@ -1,36 +1,39 @@
 <template>
   <apih-dialog
-      ref="dialogRef"
-      width="30%"
-      cancel-text="返回"
-      hide-ok
-      :form-component="Form"
+    ref="dialogRef"
+    width="30%"
+    cancel-text="返回"
+    :form-component="Form"
+    hide-ok
   >
     <template #footer>
-      <a-button type="primary" @click="handleOk">确定</a-button>
+      <a-button type="primary" :loading="loading" @click="handleOk">确定</a-button>
     </template>
   </apih-dialog>
 </template>
 
 <script lang="ts" setup>
 import {
+  h,
   ref,
   nextTick,
-  defineExpose,
   defineEmits,
+  defineExpose,
 } from 'vue';
-import { Message } from '@arco-design/web-vue';
 
+import { aes } from '@/utils/crypto';
+import message from '@/utils/message';
 import Form from '../form/form-import.vue';
 import { useApiTemplate, useModelTemplate } from '@/store';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
-import { API_CUSTOM_TEMPLATE_ID, MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
+import { SECRET_KEY, API_CUSTOM_TEMPLATE_ID, MODEL_CUSTOM_TEMPLATE_ID } from '@/constants';
 
 const emit = defineEmits(['success']);
 const apiTemplateStore = useApiTemplate();
 const modelTemplateStore = useModelTemplate();
 
 const dialogRef = ref();
+const loading = ref(false);
 
 function close() {
   dialogRef.value.close();
@@ -38,6 +41,7 @@ function close() {
 
 function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
+  loading.value = false;
 }
 
 function textFileReader(file: File) {
@@ -52,41 +56,72 @@ function textFileReader(file: File) {
 }
 
 async function handleOk() {
-  const data = await dialogRef.value.getFormRef().validate();
-  const fileList = data?.fileList ?? [];
-  const errorFile: File[] = [];
-  const readerTextMap = new Map();
-  for (const file of fileList) {
-    try {
-      const codeText = await textFileReader(file);
-      readerTextMap.set(file, codeText);
-    } catch {
-      errorFile.push(file);
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().validate();
+    loading.value = true;
+    const fileList = data?.fileList ?? [];
+    const successNameList: string[] = [];
+    const errorFile: File[] = [];
+    const readerTextMap = new Map();
+    for (const item of fileList) {
+      const { file } = item;
+      try {
+        const codeText = aes.decrypt(await textFileReader(file) as string, SECRET_KEY);
+        readerTextMap.set(item, codeText);
+      } catch {
+        errorFile.push(item);
+      }
     }
-  }
 
-  let hasImport = false;
-  for (const [file, codeText] of readerTextMap) {
-    try {
-      const code: Recordable = JSON.parse(codeText);
-      const apiCustomTemplateList = code?.[API_CUSTOM_TEMPLATE_ID] ?? [];
-      const modelCustomTemplateList = code?.[MODEL_CUSTOM_TEMPLATE_ID] ?? [];
-      if (!hasImport) {
-        hasImport = apiCustomTemplateList.length > 0 || modelCustomTemplateList.length > 0;
+    let hasImport = false;
+    for (const [item, codeText] of readerTextMap) {
+      try {
+        const code: Recordable = JSON.parse(codeText);
+        const apiCustomTemplateList = code?.[API_CUSTOM_TEMPLATE_ID] ?? [];
+        const modelCustomTemplateList = code?.[MODEL_CUSTOM_TEMPLATE_ID] ?? [];
+        if (!hasImport) {
+          hasImport = apiCustomTemplateList.length > 0 || modelCustomTemplateList.length > 0;
+        }
+        for (const item of apiCustomTemplateList) {
+          apiTemplateStore.save(item);
+        }
+        for (const item of modelCustomTemplateList) {
+          modelTemplateStore.save(item);
+        }
+        successNameList.push(item.file.name);
+      } catch {
+        errorFile.push(item);
       }
-      for (const item of apiCustomTemplateList) {
-        apiTemplateStore.save(item);
-      }
-      for (const item of modelCustomTemplateList) {
-        modelTemplateStore.save(item);
-      }
-    } catch {
-      errorFile.push(file);
     }
-  }
-
-  Message.success('操作成功');
-  close();
+    return {
+      errorFile,
+      successNameList,
+    };
+  }).then((res: Recordable) => {
+    const { errorFile, successNameList } = res;
+    if (errorFile?.length > 0) {
+      errorFile.forEach((item: Recordable) => item.status = 'error');
+      dialogRef.value.getFormRef().setFormModel({
+        fileList: errorFile,
+      });
+    } else {
+      close();
+    }
+    let successText = successNameList.join('；');
+    successText = successText.length > 0 ? `导入成功: ${successText}` : '';
+    let errorText = errorFile.map((item: Recordable) => item.file.name).join('；');
+    errorText = errorText.length > 0 ? `导入失败: ${errorText}` : '';
+    message.info({
+      duration: 25000,
+      content: h(
+        'div',
+        { style: 'text-align:left;line-height:20px;' },
+        [successText, errorText].filter(Boolean).map((text: string) => h('div', text)),
+      ) as unknown as string,
+    });
+  }).finally(() => {
+    loading.value = false;
+  });
 }
 
 defineExpose({

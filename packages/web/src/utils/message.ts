@@ -1,8 +1,10 @@
+import { render } from 'vue';
 import { merge } from 'lodash';
 
 import { Message, MessageConfig } from '@arco-design/web-vue';
 
 import UniqueTask from '@/utils/unique-task';
+import { checkType } from '@/utils/index';
 
 type ModelFuncHook = null | undefined | Function;
 type ModelFuncType = 'success' | 'error' | 'info' | 'warning' | 'warn' | 'loading';
@@ -32,9 +34,11 @@ function _message(config: MessageConfig | string, type: ModelFuncType, onClick: 
     'modal-class': 'z-message',
   };
 
+  // config === 内容
   if (typeof config === 'function' || typeof config === 'string' || '__v_isVNode' in config) {
     mergeConfig.content = config;
-  } else if (Object.prototype.toString.call(config) === '[object Object]') {
+    // config === object
+  } else if (checkType(config, 'Object')) {
     mergeConfig = config as unknown as typeof mergeConfig;
   }
   if (typeof onClick === 'function') {
@@ -43,7 +47,8 @@ function _message(config: MessageConfig | string, type: ModelFuncType, onClick: 
   if (typeof onClose === 'function') {
     mergeConfig.onClose = onClose;
   }
-  const currentConfig = merge(defaultConfig, mergeConfig) as MessageConfig;
+
+  const currentConfig = merge({}, defaultConfig, mergeConfig) as MessageConfig;
 
   uniqueTask.dispatch(type, currentConfig.content, (closeTask: () => void) => {
     // 'success' | 'error' | 'info' | 'warning' | 'warn' | 'loading';

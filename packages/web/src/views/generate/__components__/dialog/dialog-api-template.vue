@@ -24,7 +24,7 @@
     </template>
     <template #footer>
       <a-button type="primary" :loading="loading" @click="handleGen(true)">测试</a-button>
-      <a-button type="primary" @click="handleSave">保存</a-button>
+      <a-button type="primary" :loading="loadingSave" @click="handleSave">保存</a-button>
     </template>
   </apih-dialog>
 </template>
@@ -44,6 +44,7 @@ import Form from '../form/form-api-template.vue';
 import { useApiTemplate, useProject } from '@/store';
 import renderTemplate from '@/utils/render-template';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
+import formatCode from '@/utils/format-code';
 
 const emit = defineEmits(['success']);
 
@@ -52,6 +53,7 @@ const { currentProject } = useProject();
 
 const dialogRef = ref();
 const loading = ref(false);
+const loadingSave = ref(false);
 const codeList = ref<Array<string>>([]);
 
 const currentCodeList = computed(() => {
@@ -67,41 +69,58 @@ function close() {
 
 function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
-  console.log(config);
+  loading.value = false;
+  loadingSave.value = false;
   nextTick(() => {
     handleGen();
   });
 }
 
 async function handleGen(showMsg = false) {
-  const data = await dialogRef.value.getFormRef().getFormModel();
-  if (!data.content) {
-    codeList.value = [''];
-    return;
-  }
-  loading.value = true;
-  try {
-    codeList.value = await renderTemplate(data, {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().getFormModel();
+    if (!data.content) {
+      return [''];
+    }
+    loading.value = true;
+    return await renderTemplate(data, {
       apiList: DOCUMENT.categoryList[0].apiList,
     }, {
       ...currentProject,
       ...data,
     });
+  }).then((res: unknown) => {
+    codeList.value = res as string[];
     if (showMsg === true) {
       Message.success('已生成');
     }
-  } finally {
+  }).finally(() => {
     loading.value = false;
-  }
+  });
 }
 
 async function handleSave() {
-  const data = await dialogRef.value.getFormRef().validate();
-  const id = save(data);
-  Message.success('保存成功');
-  emit('success', id);
-  console.log('保存1');
-  close();
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().validate();
+    loadingSave.value = true;
+    data.content = await formatCode({
+      sourceCode: data.content,
+      formatCodeExtension: '.js',
+    });
+    return {
+      id: save(data) as string,
+      content: data.content,
+    };
+  }).then((res: Recordable = {}) => {
+    dialogRef.value.getFormRef().setFormModel({
+      content: res.content,
+    });
+    Message.success('保存成功');
+    emit('success', res.id);
+    close();
+  }).finally(() => {
+    loadingSave.value = false;
+  });
 }
 
 defineExpose({

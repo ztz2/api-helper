@@ -23,10 +23,10 @@ import {
 import { merge, cloneDeep } from 'lodash';
 
 import { useProject } from '@/store';
+import message from '@/utils/message';
 import Form from '../form/form-prettier.vue';
 import { Template } from '@/store/template/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
-import message from '@/utils/message';
 
 const { currentProject } = useProject();
 

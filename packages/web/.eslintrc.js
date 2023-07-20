@@ -27,6 +27,8 @@ module.exports = {
     'no-plusplus': 0,
     'import/first': 0,
     'no-loop-func': 0,
+    'padded-blocks': 0,
+    'no-trailing-spaces': 0,
     'no-return-await': 0,
     'no-await-in-loop': 0,
     'no-return-assign': 0,

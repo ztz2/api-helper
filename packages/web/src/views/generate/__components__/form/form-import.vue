@@ -12,11 +12,18 @@
           label="模板文件"
           field="fileList"
           style="margin-bottom: 0"
-          :limit="1"
-          :rules="[{ validator: validateFileList }]"
+          :rules="[{ required: true, validator: validateFileList }]"
           :validate-trigger="['change', 'input']"
         >
-          <a-upload v-model:file-list="formModel.fileList" action="/" draggable :auto-upload="false" @change="handleChange" />
+          <a-upload
+            v-model:file-list="formModel.fileList"
+            accept=".txt"
+            :limit="4"
+            :auto-upload="false"
+            @change="handleChange"
+            draggable
+            multiple
+          />
         </a-form-item>
       </a-card>
     </a-form>
@@ -91,7 +98,6 @@ defineExpose({
       Message.error('请选择自定义模板文件');
       return Promise.reject('必选项');
     }
-    formModel.value.fileList = formModel.value.fileList.map((item: Recordable) => item.file);
     return validate();
   },
   validateFields,
@@ -104,5 +110,7 @@ defineExpose({
 });
 </script>
 <style lang="scss" scoped>
-
+::v-deep(.arco-upload-progress){
+  display: none;
+}
 </style>

@@ -14,7 +14,10 @@
         :loading="loading"
       >
         <a-row :gutter="12">
-          <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
+          <a-col
+            v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length"
+            :key="index"
+          >
             <div style="height: calc(100vh - 140px)">
               <apih-code :code="code" />
             </div>
@@ -23,8 +26,8 @@
       </a-spin>
     </template>
     <template #footer>
-      <a-button type="primary" @click="handleGen(true)">测试</a-button>
-      <a-button type="primary" @click="handleSave">保存</a-button>
+      <a-button type="primary" :loading="loading" @click="handleGen(true)">测试</a-button>
+      <a-button type="primary" :loading="loadingSave" @click="handleSave">保存</a-button>
     </template>
   </apih-dialog>
 </template>
@@ -35,13 +38,15 @@ import {
   nextTick,
   computed,
   defineEmits,
-  defineExpose,
+  defineExpose, toRefs,
 } from 'vue';
 import { omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 
+import formatCode from '@/utils/format-code';
 import Form from '../form/form-model-template';
 import renderTemplate from '@/utils/render-template';
+import { Template } from '@/store/template/interface';
 import { useProject, useModelTemplate } from '@/store';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
@@ -52,6 +57,7 @@ const { currentProject } = useProject();
 
 const dialogRef = ref();
 const loading = ref(false);
+const loadingSave = ref(false);
 const codeList = ref<Array<string>>([]);
 
 const currentCodeList = computed(() => {
@@ -67,21 +73,21 @@ function close() {
 
 function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
+  loading.value = false;
+  loadingSave.value = false;
   nextTick(() => {
     handleGen();
   });
 }
 
-async function handleGen(showMsg = false) {
-  const data = await dialogRef.value.getFormRef().getFormModel();
-  if (!data.content) {
-    codeList.value = [''];
-    return;
-  }
-  console.log('data: ', data);
-  loading.value = true;
-  try {
-    codeList.value = await renderTemplate(data, {
+function handleGen(showMsg = false) {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().getFormModel();
+    if (!data.content) {
+      return [''];
+    }
+    loading.value = true;
+    return await renderTemplate(data, {
       api: data.api,
       requestDataSchemaList: data.requestDataSchemaList,
       responseDataSchemaList: data.responseDataSchemaList,
@@ -96,20 +102,38 @@ async function handleGen(showMsg = false) {
         'responseDataSchemaIdList',
       ]),
     });
+  }).then((res: string[]) => {
+    codeList.value = res;
     if (showMsg === true) {
       Message.success('已生成');
     }
-  } finally {
+  }).finally(() => {
     loading.value = false;
-  }
+  });
 }
 
-async function handleSave() {
-  const data = await dialogRef.value.getFormRef().validate();
-  const id = save(data);
-  close();
-  Message.success('保存成功');
-  emit('success', id);
+function handleSave() {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().validate();
+    loadingSave.value = true;
+    data.content = await formatCode({
+      sourceCode: data.content,
+      formatCodeExtension: '.js',
+    });
+    return {
+      id: save(data) as string,
+      content: data.content,
+    };
+  }).then((res: Recordable = {}) => {
+    dialogRef.value.getFormRef().setFormModel({
+      content: res.content,
+    });
+    Message.success('保存成功');
+    emit('success', res.id);
+    close();
+  }).finally(() => {
+    loadingSave.value = false;
+  });
 }
 
 defineExpose({

@@ -1,4 +1,5 @@
 import { isRef } from 'vue';
+import md5 from 'crypto-js/md5';
 import { cloneDeep } from 'lodash';
 import { Modal, ModalConfig } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
@@ -113,4 +114,12 @@ export function getTemplateList(templateList: Array<TemplateCategory>): Template
     }
   }
   return result;
+}
+
+export const noop = () => undefined;
+
+export function randomChar(size = 4) {
+  const str = md5(Date.now().toString()).toString();
+  size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size) as unknown as string, 10);
+  return str.slice(str.length - size);
 }

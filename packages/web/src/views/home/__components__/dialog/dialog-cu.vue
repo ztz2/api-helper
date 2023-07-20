@@ -48,26 +48,26 @@ function close() {
   dialogRef.value?.close();
 }
 
-async function handleSave(publishFlag = false) {
-  dialogRef.value.execAsyncTask({
-    async executor() {
-      loadingSave.value = true;
-      const data = await dialogRef.value.getFormRef().validate();
-      const documentList = await getDocs(data);
-      for (const item of documentList) { // @ts-ignore
-        delete item.id;
-        projectStore.save(pick({ ...data, ...item }, Object.keys(data)) as any);
-      }
-    },
-    completeCallback() {
-      const text = dialogOpenType.value === 'ADD' ? '添加成功' : dialogOpenType.value === 'EDIT' ? '修改成功' : null;
-      text && Message.success(text);
-      dialogRef.value.close();
-      emit('success');
-    },
-    finallyCallback() {
-      loadingSave.value = false;
-    },
+async function handleSave() {
+  dialogRef.value.execAsyncTask(async () => {
+    loadingSave.value = true;
+    const data = await dialogRef.value.getFormRef().validate();
+    return {
+      data,
+      documentList: await getDocs(data),
+    };
+  }).then((res: Recordable) => {
+    const { data, documentList } = res;
+    for (const item of documentList) {
+      delete item.id;
+      projectStore.save(pick({ ...data, ...item }, Object.keys(data)) as any);
+    }
+    const text = dialogOpenType.value === 'ADD' ? '添加成功' : dialogOpenType.value === 'EDIT' ? '修改成功' : null;
+    text && Message.success(text);
+    dialogRef.value.close();
+    emit('success');
+  }).finally(() => {
+    loadingSave.value = false;
   });
 }
 

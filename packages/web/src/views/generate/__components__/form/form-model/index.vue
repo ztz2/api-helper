@@ -125,9 +125,9 @@ import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
 
 import useForm from '@/hooks/use-form';
-import { modalConfirm } from '@/utils';
 import { FormModel } from './interface';
 import { treeForEach } from '@/utils/tree';
+import { randomChar, modalConfirm } from '@/utils';
 import { Project } from '@/store/project/interface';
 import { Template } from '@/store/template/interface';
 import { useModelTemplate, useProject } from '@/store';
@@ -137,7 +137,7 @@ import DialogModelTemplate from '../../dialog/dialog-model-template.vue';
 
 type FormModelType = FormModel;
 
-const emit = defineEmits(['success']);
+const emit = defineEmits(['success', 'exec-gen']);
 const { currentProject } = useProject();
 
 const span = ref(12);
@@ -334,7 +334,7 @@ async function handleEditTpl() {
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ' - 副本';
+    tplModel.label += ` - 副本${randomChar()}`;
     tplModel.value = '';
     tplModel.builtIn = false;
   }
@@ -347,8 +347,9 @@ async function handleEditTpl() {
   });
 }
 
-function handleSuccess(val: string) {
-  emit('success');
+function handleSuccess(id: string) {
+  currentProject.modelTplId = id;
+  emit('exec-gen', id);
 }
 
 defineExpose({

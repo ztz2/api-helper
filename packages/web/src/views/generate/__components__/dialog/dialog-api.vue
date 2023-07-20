@@ -5,7 +5,7 @@
     cancel-text="返回"
     :span="[6, 18]"
     :form-component="Form"
-    @save-template="handleGen(false)"
+    @exec-gen="handleGen"
     hide-ok
   >
     <template #default>
@@ -84,26 +84,28 @@ function open(config: DialogOpenConfig, payload: OpenDataType) {
 }
 
 async function handleGen(showMsg = false) {
-  const data = await dialogRef.value.getFormRef().validate();
-  const template = templateMap.value.get(data.apiTplId);
-  if (!template) {
-    Message.error('请重新选择模板');
-    return;
-  }
-  loading.value = true;
-  try {
-    codeList.value = await renderTemplate(template as Template, {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().validate();
+    const template = templateMap.value.get(data.apiTplId);
+    if (!template) {
+      Message.error('请重新选择模板');
+      return Promise.reject();
+    }
+    loading.value = true;
+    return await renderTemplate(template as Template, {
       apiList: dialogOpenData.value.apiList,
     }, {
       ...currentProject,
       ...data,
     });
+  }).then((res: unknown) => {
+    codeList.value = res as string[];
     if (showMsg === true) {
       Message.success('已生成');
     }
-  } finally {
+  }).finally(() => {
     loading.value = false;
-  }
+  });
 }
 
 defineExpose({

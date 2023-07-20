@@ -5,7 +5,7 @@
       cancel-text="返回"
       hide-ok
       :form-component="Form"
-      @save-template="handleGen(false)"
+      @exec-gen="handleGen"
   >
     <template #default>
       <a-spin
@@ -45,6 +45,7 @@ import renderTemplate from '@/utils/render-template';
 import { useProject, useModelTemplate } from '@/store';
 import { FormModel } from '../form/form-model/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
+import { Template } from '@/store/template/interface';
 
 type OpenDataType = {
   categoryList: APIHelper.CategoryList
@@ -92,16 +93,15 @@ function open(config: DialogOpenConfig, data: OpenDataType) {
   });
 }
 
-async function handleGen(showMsg = false) {
-  const data = await dialogRef.value.getFormRef().validate();
-  const template = templateMap.value.get(currentProject.modelTplId);
-  if (!template) {
-    Message.error('请重新选择模板');
-    return;
-  }
-  loading.value = true;
-  try {
-    codeList.value = await renderTemplate(template, {
+function handleGen(showMsg = false) {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().getFormModel();
+    const template = templateMap.value.get(currentProject.modelTplId) as Template;
+    if (!template.content) {
+      return [''];
+    }
+    loading.value = true;
+    return await renderTemplate(template, {
       api: data.api,
       requestDataSchemaList: data.requestDataSchemaList,
       responseDataSchemaList: data.responseDataSchemaList,
@@ -116,12 +116,14 @@ async function handleGen(showMsg = false) {
         'responseDataSchemaIdList',
       ]),
     });
+  }).then((res: string[]) => {
+    codeList.value = res;
     if (showMsg === true) {
       Message.success('已生成');
     }
-  } finally {
+  }).finally(() => {
     loading.value = false;
-  }
+  });
 }
 
 defineExpose({

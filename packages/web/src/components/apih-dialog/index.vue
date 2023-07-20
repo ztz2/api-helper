@@ -23,6 +23,7 @@ import {
   DialogOpenConfig,
   FormComponentProps,
 } from './interface';
+import { noop } from '@/utils';
 
 type FormComponentInstance = ComponentPublicInstance & {
   validate?(): Promise<unknown>;
@@ -96,7 +97,7 @@ export default defineComponent({
 
       // 重置一些状态
       loadingOk.value = false;
-      if (config.resetForm === true) {
+      if (config.resetForm !== false) {
         formRef.value?.resetFields?.();
       }
 
@@ -149,51 +150,53 @@ export default defineComponent({
       }
     }
 
-    type ExecAsyncTaskConfig = {
-      // 异步执行函数
-      executor: () => Promise<unknown>;
-      // 执行成功&是当前打开的窗口情况下，执行的回调
-      completeCallback?: () => void;
-      // 成功和失败都会执行的回调
-      finallyCallback?: () => void;
-    };
     /*
-    async executor() {
+    dialogRef.value.execAsyncTask(async () => {
       // 执行异步任务
       loading.value = true;
-    },
-    completeCallback() {
+      // 返回需要操作组件异步数据
+      return 100;
+    }).then((res: unknown) => {
+      // // res 是executor上面执行的返回值
+      console.log(res); // -> 100
       // 执行完成关闭弹窗，emit成功事件
       dialogRef.value.close();
       emit('success');
-    },
-    finallyCallback() {
-    // 关闭loading状态
-    loading.value = false;
-    }
+    }).finally(() => {
+      // 关闭loading状态
+      loading.value = false;
+    });
     */
-    async function execAsyncTask(
-      executor: Function | ExecAsyncTaskConfig,
-      completeCallback?: Function,
-      finallyCallback?: Function,
-    ) {
-      const executorFunc = typeof executor === 'function' ? executor : executor.executor;
-      const completeCallbackFunc = typeof completeCallback === 'function'
-        ? completeCallback
-        : typeof executor !== 'function' && executor.completeCallback;
-      const finallyCallbackFunc = typeof finallyCallback === 'function'
-        ? finallyCallback
-        : typeof executor !== 'function' && executor.finallyCallback;
-      try {
-        const recordOpenUid = dialogOpenUid;
-        await executorFunc();
-        if (recordOpenUid === dialogOpenUid) {
-          completeCallbackFunc && completeCallbackFunc?.();
+    async function execAsyncTask<T>(
+      executor: () => Promise<T>,
+    ): Promise<T> {
+      const recordOpenUid = dialogOpenUid;
+      return new Promise((resolve, reject) => {
+        try {
+          const exec = executor();
+          if (exec instanceof Promise) {
+            exec.then((v) => {
+              resolve(v);
+            }).catch((err) => reject(err));
+            return;
+          }
+          resolve(exec as T);
+        } catch (e) {
+          reject(e);
         }
-      } finally {
-        finallyCallbackFunc && finallyCallbackFunc?.();
-      }
+      }).then((res) => {
+        if (recordOpenUid === dialogOpenUid) {
+          return res as T;
+        }
+        return new Promise(noop);
+      }).catch((err) => {
+        if (recordOpenUid === dialogOpenUid) {
+          return Promise.reject(err);
+        }
+        return new Promise(noop);
+      }) as Promise<T>;
     }
+
     function getFormRef() {
       return formRef.value;
     }

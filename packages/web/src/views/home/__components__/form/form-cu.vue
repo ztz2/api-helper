@@ -75,7 +75,7 @@ import {
   PropType,
   computed,
   defineProps,
-  defineExpose,
+  defineExpose, onMounted,
 } from 'vue';
 import useForm from '@/hooks/use-form';
 import { Project } from '@/store/project/interface';
@@ -95,6 +95,7 @@ const props = defineProps({
     default: 'ADD',
   },
 });
+
 const currentDisabled = computed(() => props.type === 'DETAIL');
 
 const {
@@ -104,7 +105,7 @@ const {
 
   // 以下对外暴露的方法
   validate,
-  validateField,
+  validateFields,
   setFields,
   resetFields,
   getFormModel,
@@ -124,7 +125,7 @@ const options = ref({
 
 defineExpose({
   validate,
-  validateField,
+  validateFields,
   setFields,
   resetFields,
   getFormModel,
