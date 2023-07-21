@@ -113,7 +113,15 @@
       <a-col :span="17">
         <a-row :gutter="gutter">
           <a-col :span="12">
-            <a-card title="编辑模版内容">
+            <a-card>
+              <template #title>
+                <a-space>
+                  <span>编辑模版内容</span>
+                  <apih-dialog-code-mirror
+                    v-model:value="formModel.content"
+                  />
+                </a-space>
+              </template>
               <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
             </a-card>
           </a-col>
