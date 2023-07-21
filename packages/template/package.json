@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/template",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "module": "es/index.js",
   "browser": "api-helper-template.js",

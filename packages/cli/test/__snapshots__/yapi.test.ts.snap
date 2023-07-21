@@ -23,7 +23,6 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 /**
  * @description uploads an image【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969388
-
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface IV2PetPetIdUploadImageRequestByPost {
@@ -37,7 +36,6 @@ export interface IV2PetPetIdUploadImageRequestByPost {
 /**
  * @description uploads an image【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969388
-
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface IV2PetPetIdUploadImageResponseByPost {
@@ -75,7 +73,6 @@ v2PetPetIdUploadImageByPost.requestConfig = {
 /**
  * @description Add a new pet to the store【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969390
-
  * @url [ POST ] /v2/pet
  */
 export interface IV2PetRequestByPost {
@@ -96,7 +93,6 @@ export interface IV2PetRequestByPost {
 /**
  * @description Add a new pet to the store【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969390
-
  * @url [ POST ] /v2/pet
  */
 export type V2PetResponseTypeByPost = any;
@@ -126,7 +122,6 @@ v2PetByPost.requestConfig = {
 /**
  * @description Update an existing pet【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969392
-
  * @url [ PUT ] /v2/pet
  */
 export interface IV2PetRequestByPut {
@@ -147,7 +142,6 @@ export interface IV2PetRequestByPut {
 /**
  * @description Update an existing pet【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969392
-
  * @url [ PUT ] /v2/pet
  */
 export type V2PetResponseTypeByPut = any;
@@ -177,7 +171,6 @@ v2PetByPut.requestConfig = {
 /**
  * @description Finds Pets by status【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969394
-
  * @url [ GET ] /v2/pet/findByStatus
  */
 export interface IV2PetFindByStatusRequestByGet {
@@ -187,7 +180,6 @@ export interface IV2PetFindByStatusRequestByGet {
 /**
  * @description Finds Pets by status【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969394
-
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseTypeByGet = Array<{
@@ -235,7 +227,6 @@ v2PetFindByStatusByGet.requestConfig = {
 /**
  * @description Finds Pets by tags【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969396
-
  * @url [ GET ] /v2/pet/findByTags
  */
 export interface IV2PetFindByTagsRequestByGet {
@@ -245,7 +236,6 @@ export interface IV2PetFindByTagsRequestByGet {
 /**
  * @description Finds Pets by tags【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969396
-
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseTypeByGet = Array<{
@@ -293,7 +283,6 @@ v2PetFindByTagsByGet.requestConfig = {
 /**
  * @description Find pet by ID【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969398
-
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdRequestByGet {
@@ -303,7 +292,6 @@ export interface IV2PetPetIdRequestByGet {
 /**
  * @description Find pet by ID【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969398
-
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdResponseByGet {
@@ -351,7 +339,6 @@ v2PetPetIdByGet.requestConfig = {
 /**
  * @description Updates a pet in the store with form data【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969400
-
  * @url [ POST ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdRequestByPost {
@@ -365,7 +352,6 @@ export interface IV2PetPetIdRequestByPost {
 /**
  * @description Updates a pet in the store with form data【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969400
-
  * @url [ POST ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseTypeByPost = any;
@@ -399,7 +385,6 @@ v2PetPetIdByPost.requestConfig = {
 /**
  * @description Deletes a pet【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969402
-
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export interface IV2PetPetIdRequestByDelete {
@@ -409,7 +394,6 @@ export interface IV2PetPetIdRequestByDelete {
 /**
  * @description Deletes a pet【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969402
-
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseTypeByDelete = any;
@@ -443,7 +427,6 @@ v2PetPetIdByDelete.requestConfig = {
 /**
  * @description Place an order for a pet【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969404
-
  * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderRequestByPost {
@@ -465,7 +448,6 @@ export interface IV2StoreOrderRequestByPost {
 /**
  * @description Place an order for a pet【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969404
-
  * @url [ POST ] /v2/store/order
  */
 export interface IV2StoreOrderResponseByPost {
@@ -514,7 +496,6 @@ v2StoreOrderByPost.requestConfig = {
 /**
  * @description Find purchase order by ID【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969406
-
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdRequestByGet {
@@ -524,7 +505,6 @@ export interface IV2StoreOrderOrderIdRequestByGet {
 /**
  * @description Find purchase order by ID【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969406
-
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdResponseByGet {
@@ -573,7 +553,6 @@ v2StoreOrderOrderIdByGet.requestConfig = {
 /**
  * @description Delete purchase order by ID【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969408
-
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export interface IV2StoreOrderOrderIdRequestByDelete {
@@ -583,7 +562,6 @@ export interface IV2StoreOrderOrderIdRequestByDelete {
 /**
  * @description Delete purchase order by ID【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969408
-
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export type V2StoreOrderOrderIdResponseTypeByDelete = any;
@@ -617,13 +595,12 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
 /**
  * @description Returns pet inventories by status【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969410
-
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestTypeByGet = any; /**
+export type V2StoreInventoryRequestTypeByGet = any;
+/**
  * @description Returns pet inventories by status【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969410
-
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryResponseTypeByGet = any;
@@ -657,7 +634,6 @@ v2StoreInventoryByGet.requestConfig = {
 /**
  * @description Creates list of users with given input array【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969412
-
  * @url [ POST ] /v2/user/createWithArray
  */
 export interface IV2UserCreateWithArrayRequestByPost {
@@ -671,7 +647,6 @@ export interface IV2UserCreateWithArrayRequestByPost {
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969412
-
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayResponseTypeByPost = any;
@@ -705,7 +680,6 @@ v2UserCreateWithArrayByPost.requestConfig = {
 /**
  * @description Creates list of users with given input array【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969414
-
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestTypeByPost = Array<{
@@ -722,7 +696,6 @@ export type V2UserCreateWithListRequestTypeByPost = Array<{
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969414
-
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListResponseTypeByPost = any;
@@ -756,7 +729,6 @@ v2UserCreateWithListByPost.requestConfig = {
 /**
  * @description Get user by user name【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969416
-
  * @url [ GET ] /v2/user/{username}
  */
 export interface IV2UserUsernameRequestByGet {
@@ -767,7 +739,6 @@ export interface IV2UserUsernameRequestByGet {
 /**
  * @description Get user by user name【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969416
-
  * @url [ GET ] /v2/user/{username}
  */
 export interface IV2UserUsernameResponseByGet {
@@ -811,7 +782,6 @@ v2UserUsernameByGet.requestConfig = {
 /**
  * @description Updated user【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969418
-
  * @url [ PUT ] /v2/user/{username}
  */
 export interface IV2UserUsernameRequestByPut {
@@ -829,7 +799,6 @@ export interface IV2UserUsernameRequestByPut {
 /**
  * @description Updated user【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969418
-
  * @url [ PUT ] /v2/user/{username}
  */
 export type V2UserUsernameResponseTypeByPut = any;
@@ -863,7 +832,6 @@ v2UserUsernameByPut.requestConfig = {
 /**
  * @description Delete user【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969420
-
  * @url [ DELETE ] /v2/user/{username}
  */
 export interface IV2UserUsernameRequestByDelete {
@@ -874,7 +842,6 @@ export interface IV2UserUsernameRequestByDelete {
 /**
  * @description Delete user【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969420
-
  * @url [ DELETE ] /v2/user/{username}
  */
 export type V2UserUsernameResponseTypeByDelete = any;
@@ -908,7 +875,6 @@ v2UserUsernameByDelete.requestConfig = {
 /**
  * @description Logs user into the system【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969422
-
  * @url [ GET ] /v2/user/login
  */
 export interface IV2UserLoginRequestByGet {
@@ -920,7 +886,6 @@ export interface IV2UserLoginRequestByGet {
 /**
  * @description Logs user into the system【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969422
-
  * @url [ GET ] /v2/user/login
  */
 export type V2UserLoginResponseTypeByGet = string;
@@ -954,13 +919,12 @@ v2UserLoginByGet.requestConfig = {
 /**
  * @description Logs out current logged in user session【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969424
-
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestTypeByGet = any; /**
+export type V2UserLogoutRequestTypeByGet = any;
+/**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969424
-
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutResponseTypeByGet = any;
@@ -994,7 +958,6 @@ v2UserLogoutByGet.requestConfig = {
 /**
  * @description Create user【请求数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969426
-
  * @url [ POST ] /v2/user
  */
 export interface IV2UserRequestByPost {
@@ -1011,7 +974,6 @@ export interface IV2UserRequestByPost {
 /**
  * @description Create user【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969426
-
  * @url [ POST ] /v2/user
  */
 export type V2UserResponseTypeByPost = any;
