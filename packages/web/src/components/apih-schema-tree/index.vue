@@ -71,7 +71,7 @@ import {
 } from 'vue';
 import {
   isSchemaObject,
-  isSchemaPrimitiveValue,
+  filterSchemaPrimitiveValue,
 } from '@api-helper/core/lib/utils/util';
 import { pascalCase } from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
@@ -80,7 +80,10 @@ import { treeForEach, treeMap } from '@/utils/tree';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
-  data: Array,
+  data: {
+    type: Array as PropType<Array<string> | APIHelper.SchemaList>,
+    default: () => [],
+  },
   value: {
     type: Array as PropType<Array<string>>,
     default: () => [],
@@ -105,18 +108,18 @@ const expandedKeys = ref<Array<string>>([]);
 watch(() => props.value, () => checkedKeys.value = props.value, { deep: true });
 watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true });
 
-const treeData = computed(() => treeMap(props.data, (node: Recordable) => {
-  if (isSchemaPrimitiveValue(node as APIHelper.Schema)) {
-    return null;
-  }
-  node.isSchemaObject = isSchemaObject(node as APIHelper.Schema);
-  return {
-    ...node,
-    key: node[props.valueKey],
-    title: node[props.labelKey],
-    children: node[props.childrenKey],
-  };
-}, props.childrenKey));
+const treeData = computed(() => {
+  const p1 = filterSchemaPrimitiveValue(props.data as APIHelper.SchemaList) as [];
+  return treeMap(p1, (node: Recordable) => {
+    node.isSchemaObject = isSchemaObject(node as APIHelper.Schema);
+    return {
+      ...node,
+      key: node[props.valueKey],
+      title: node[props.labelKey],
+      children: node[props.childrenKey],
+    };
+  }, props.childrenKey);
+});
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
   const children = isChildren ? node : node[props.childrenKey];

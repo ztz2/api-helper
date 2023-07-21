@@ -224,6 +224,7 @@ watch(() => formModel.value.apiId, (val) => {
       formModel.value.requestDataSchemaIdList.push(item.id as string);
     }
   });
+  console.log(api?.requestDataSchema?.params);
   // 全选根节点上数据
   treeForEach(api?.responseDataSchema?.params, (item: APIHelper.Schema) => {
     if (item?.id) {
