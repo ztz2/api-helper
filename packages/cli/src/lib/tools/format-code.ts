@@ -3,11 +3,11 @@ import merge from 'lodash/merge';
 
 import cp from 'node:child_process';
 import { remove, readFile } from 'fs-extra';
+import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import {
   checkType,
   createTempFile,
-  getErrorMessage,
 } from '@/lib/tools/util';
 
 import {

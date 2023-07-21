@@ -14,9 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const await_to_js_1 = __importDefault(require("await-to-js"));
 const core_1 = require("@api-helper/core");
+const util_1 = require("@api-helper/core/lib/utils/util");
 const log_1 = __importDefault(require("../../../lib/tools/log"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
-const util_1 = require("@api-helper/core/lib/utils/util");
 const util_2 = require("../../../lib/tools/util");
 const PROJECT_API = '/api/project/get';
 const MENU_API = '/api/interface/getCatMenu';
@@ -39,18 +39,18 @@ class ParserYapiPlugin {
                 dsTasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     // 获取项目基本信息
                     const projectInfo = yield fetchProjectInfo(documentServer).catch((e) => {
-                        log_1.default.error('提示', `获取项目基本信息失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取项目基本信息失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     const projectId = projectInfo._id;
                     // 获取所有分类
                     const categoryList = yield fetchMenuList(documentServer, { projectId }).catch((e) => {
-                        log_1.default.error('提示', `获取菜单列表失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取菜单列表失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     // 获取所有接口
                     const apiList = yield fetchApiList(documentServer, { projectId }).catch((e) => {
-                        log_1.default.error('提示', `获取接口列表数据失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取接口列表数据失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     if (apiList.length === 0) {

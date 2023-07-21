@@ -9,6 +9,7 @@ import {
   outputFile,
 } from 'fs-extra';
 import { renderAllApi } from '@api-helper/template';
+import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import log from '@/lib/tools/log';
 import {
@@ -16,7 +17,7 @@ import {
   loadModule,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins, getErrorMessage,
+  documentServersRunParserPlugins,
 } from '../tools/util';
 import {
   AbstractParserPlugin,

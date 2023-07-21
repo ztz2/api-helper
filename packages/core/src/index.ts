@@ -14,6 +14,7 @@ import ParserYapi from './lib/parser/parser-yapi';
 import ParserSwagger from './lib/parser/parser-swagger';
 import {
   isSchemaObject,
+  getErrorMessage,
   isSchemaPrimitiveValue,
   filterSchemaPrimitiveValue,
 } from './lib/utils/util';
@@ -45,6 +46,7 @@ export {
   ParserYapi,
   ParserSwagger,
   isSchemaObject,
+  getErrorMessage,
   isSchemaPrimitiveValue,
   filterSchemaPrimitiveValue,
   processRequestFunctionConfig

@@ -17,8 +17,9 @@ const fast_glob_1 = __importDefault(require("fast-glob"));
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const template_1 = require("@api-helper/template");
+const util_1 = require("@api-helper/core/lib/utils/util");
 const log_1 = __importDefault(require("../../lib/tools/log"));
-const util_1 = require("../tools/util");
+const util_2 = require("../tools/util");
 const lib_1 = require("../../lib");
 const const_1 = require("../../lib/service/const");
 const parser_yapi_plugin_1 = __importDefault(require("./parser-plugins/parser-yapi-plugin"));
@@ -83,7 +84,7 @@ class Service {
             const spinner = (0, ora_1.default)(oraText).start();
             // 有配置文件
             if (configFilePath) {
-                const c = yield (0, util_1.loadModule)(configFilePath);
+                const c = yield (0, util_2.loadModule)(configFilePath);
                 if (c) {
                     spinner.succeed();
                     return Array.isArray(c) ? c : [c];
@@ -92,7 +93,7 @@ class Service {
             // 没有从根目录寻找
             const files = yield (0, fast_glob_1.default)(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
             if (files.length) {
-                const c = yield (0, util_1.loadModule)(files[0]);
+                const c = yield (0, util_2.loadModule)(files[0]);
                 if (c) {
                     spinner.succeed();
                     return Array.isArray(c) ? c : [c];
@@ -106,7 +107,7 @@ class Service {
     // 2. 文档获取与解析
     parserDocument(documentServers, config) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield (0, util_1.documentServersRunParserPlugins)(documentServers, this.parserPlugins, config);
+            const result = yield (0, util_2.documentServersRunParserPlugins)(documentServers, this.parserPlugins, config);
             return result.parserPluginRunResult;
         });
     }
@@ -161,7 +162,7 @@ class Service {
             const oraText = `代码生成`;
             const outputFilename = getOutputFilePath(config);
             const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
-            let requestFilePath = (0, util_1.getNormalizedRelativePath)(outputFilename, yield getRequestFunctionFilePath(config));
+            let requestFilePath = (0, util_2.getNormalizedRelativePath)(outputFilename, yield getRequestFunctionFilePath(config));
             // 移除request文件后缀名
             for (const extension of const_1.EXTENSIONS) {
                 if (requestFilePath.endsWith(extension)) {
@@ -328,17 +329,17 @@ function getOutputFilePath(config, showDiscardWarn = false) {
         if ((0, path_1.isAbsolute)(config.output.path)) {
             (0, path_1.join)(config.output.path, config.output.filename);
         }
-        return (0, path_1.join)((0, util_1.resolve)(config.output.path), config.output.filename);
+        return (0, path_1.join)((0, util_2.resolve)(config.output.path), config.output.filename);
     }
     if ((0, path_1.isAbsolute)(config.outputFilePath)) {
         return config.outputFilePath;
     }
-    return (0, util_1.resolve)(config.outputFilePath);
+    return (0, util_2.resolve)(config.outputFilePath);
 }
 function getRequestFunctionFilePath(config) {
     return __awaiter(this, void 0, void 0, function* () {
         const outputFilename = getOutputFilePath(config);
-        const extensionName = (0, util_1.getExtensionName)(outputFilename);
+        const extensionName = (0, util_2.getExtensionName)(outputFilename);
         const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
         config.requestFunctionFilePath = config.requestFunctionFilePath ? config.requestFunctionFilePath : `src/api/request.${isTS ? 'ts' : 'js'}`;
         let requestFunctionFilePath = config.requestFunctionFilePath;
@@ -346,9 +347,9 @@ function getRequestFunctionFilePath(config) {
         if (['src/utils/request', 'src/tools/request'].includes(requestFunctionFilePath)) {
             requestFunctionFilePath += extensionName;
         }
-        requestFunctionFilePath = (0, util_1.resolve)(requestFunctionFilePath);
+        requestFunctionFilePath = (0, util_2.resolve)(requestFunctionFilePath);
         try { // 路径可以访问，文件已经创建，直接返回
-            yield (0, fs_extra_1.stat)((0, util_1.resolve)(requestFunctionFilePath));
+            yield (0, fs_extra_1.stat)((0, util_2.resolve)(requestFunctionFilePath));
             return requestFunctionFilePath;
         }
         catch (_a) { }

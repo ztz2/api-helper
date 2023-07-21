@@ -3,7 +3,7 @@ import parse from 'url-parse';
 import { OpenAPI } from 'openapi-types';
 import { readJsonSync } from 'fs-extra';
 import { ParserSwagger } from '@api-helper/core';
-import { mergeUrl } from '@api-helper/core/lib/utils/util';
+import { mergeUrl, getErrorMessage } from '@api-helper/core/lib/utils/util';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
 
 import {
@@ -14,7 +14,6 @@ import {
 } from '@/lib/types';
 import {
   checkType,
-  getErrorMessage,
   processRequestConfig,
 } from '@/lib/tools/util';
 

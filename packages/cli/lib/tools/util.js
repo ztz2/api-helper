@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessage = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.checkType = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
+exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.checkType = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
 const qs_1 = __importDefault(require("qs"));
 const ora_1 = __importDefault(require("ora"));
 const path_1 = require("path");
@@ -213,22 +213,3 @@ function documentServersRunParserPlugins(documentServers, parserPlugins, options
     });
 }
 exports.documentServersRunParserPlugins = documentServersRunParserPlugins;
-function getErrorMessage(error, prefix = '', postfix = '') {
-    function mergeMessage(msg) {
-        return msg ? `${prefix}${msg}${postfix}` : '';
-    }
-    if (!error) {
-        return '';
-    }
-    if (typeof error === 'string') {
-        return mergeMessage(error);
-    }
-    if (error === null || error === void 0 ? void 0 : error.message) {
-        return mergeMessage(error.message);
-    }
-    if (error === null || error === void 0 ? void 0 : error.msg) {
-        return mergeMessage(error.msg);
-    }
-    return '';
-}
-exports.getErrorMessage = getErrorMessage;

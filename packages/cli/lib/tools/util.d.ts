@@ -47,7 +47,4 @@ export declare function documentServersRunParserPlugins(documentServers: Documen
     noParserPluginNames: string[];
     parserPluginRunResult: ParserPluginRunResult;
 }>;
-export declare function getErrorMessage<T extends string | Error & {
-    msg?: string;
-}>(error: T, prefix?: string, postfix?: string): string;
 export {};

@@ -30,7 +30,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
+exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
 var qs_1 = __importDefault(require("qs"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
 var constant_1 = require("../constant");
@@ -471,3 +471,24 @@ function filterSchemaPrimitiveValue(schema) {
     return schemaList[0];
 }
 exports.filterSchemaPrimitiveValue = filterSchemaPrimitiveValue;
+function getErrorMessage(error, prefix, postfix) {
+    if (prefix === void 0) { prefix = ''; }
+    if (postfix === void 0) { postfix = ''; }
+    function mergeMessage(msg) {
+        return msg ? "".concat(prefix).concat(msg).concat(postfix) : '';
+    }
+    if (!error) {
+        return '';
+    }
+    if (typeof error === 'string') {
+        return mergeMessage(error);
+    }
+    if (error === null || error === void 0 ? void 0 : error.message) {
+        return mergeMessage(error.message);
+    }
+    if (error === null || error === void 0 ? void 0 : error.msg) {
+        return mergeMessage(error.msg);
+    }
+    return '';
+}
+exports.getErrorMessage = getErrorMessage;

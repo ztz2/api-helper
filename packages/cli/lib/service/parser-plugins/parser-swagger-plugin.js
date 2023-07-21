@@ -71,7 +71,7 @@ function getDocument(documentServer) {
                 json = (_a = (0, fs_extra_1.readJsonSync)(documentServer.url)) !== null && _a !== void 0 ? _a : [];
             }
             catch (e) {
-                const errorText = `swagger文件读取失败${(0, util_2.getErrorMessage)(e, ': ')}${serverUrlText}`;
+                const errorText = `swagger文件读取失败${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
                 log_1.default.error('提示', errorText);
                 return Promise.reject(errorText);
             }

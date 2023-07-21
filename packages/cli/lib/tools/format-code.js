@@ -16,7 +16,8 @@ const await_to_js_1 = __importDefault(require("await-to-js"));
 const merge_1 = __importDefault(require("lodash/merge"));
 const node_child_process_1 = __importDefault(require("node:child_process"));
 const fs_extra_1 = require("fs-extra");
-const util_1 = require("../../lib/tools/util");
+const util_1 = require("@api-helper/core/lib/utils/util");
+const util_2 = require("../../lib/tools/util");
 const constants_1 = require("../../lib/constants");
 const log_1 = __importDefault(require("../../lib/tools/log"));
 const prettierrc_options_1 = __importDefault(require("./prettierrc-options"));
@@ -46,12 +47,12 @@ function format(config) {
             log_1.default.warn('提示', errorText);
             return resolve(errorText);
         }
-        const prettierrc = (0, util_1.checkType)(config.prettierrcOptions, 'Object') ?
+        const prettierrc = (0, util_2.checkType)(config.prettierrcOptions, 'Object') ?
             config.prettierrcOptions :
-            (0, util_1.checkType)(config.prettierrcOptions, 'String') ? JSON.parse(config.prettierrcOptions) : {};
+            (0, util_2.checkType)(config.prettierrcOptions, 'String') ? JSON.parse(config.prettierrcOptions) : {};
         const prettierrcOptions = JSON.stringify((0, merge_1.default)(new prettierrc_options_1.default(), prettierrc));
-        const filepath = (0, util_1.createTempFile)(sourceCode, { postfix: formatCodeExtension });
-        const prettierrcFilePath = (0, util_1.createTempFile)(prettierrcOptions, { postfix: '.json' });
+        const filepath = (0, util_2.createTempFile)(sourceCode, { postfix: formatCodeExtension });
+        const prettierrcFilePath = (0, util_2.createTempFile)(prettierrcOptions, { postfix: '.json' });
         const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierrcFilePath))]); });
         node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierrcFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
             if (err) {

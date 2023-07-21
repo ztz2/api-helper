@@ -445,3 +445,23 @@ export function filterSchemaPrimitiveValue(schema) {
     }
     return schemaList[0];
 }
+export function getErrorMessage(error, prefix, postfix) {
+    if (prefix === void 0) { prefix = ''; }
+    if (postfix === void 0) { postfix = ''; }
+    function mergeMessage(msg) {
+        return msg ? "".concat(prefix).concat(msg).concat(postfix) : '';
+    }
+    if (!error) {
+        return '';
+    }
+    if (typeof error === 'string') {
+        return mergeMessage(error);
+    }
+    if (error === null || error === void 0 ? void 0 : error.message) {
+        return mergeMessage(error.message);
+    }
+    if (error === null || error === void 0 ? void 0 : error.msg) {
+        return mergeMessage(error.msg);
+    }
+    return '';
+}

@@ -3,6 +3,11 @@ import { OpenAPI } from 'openapi-types';
 export type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any;
 
 export declare namespace APIHelper {
+  type TemplateContent = {
+    title: string;
+    content: string;
+  };
+  type TemplateContentList = Array<TemplateContent>;
   type CategoryList = Array<Category>;
   type APIList = Array<API>;
   type SchemaList = Array<Schema>;

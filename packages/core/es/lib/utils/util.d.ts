@@ -38,3 +38,6 @@ export declare function isSchemaPrimitiveValue(schema: APIHelper.Schema | null):
  * @return APIHelper.Schema | APIHelper.SchemaList | null
  */
 export declare function filterSchemaPrimitiveValue(schema: APIHelper.Schema | APIHelper.SchemaList | null): APIHelper.Schema | APIHelper.SchemaList;
+export declare function getErrorMessage<T extends string | Error & {
+    msg?: string;
+}>(error: T, prefix?: string, postfix?: string): string;
