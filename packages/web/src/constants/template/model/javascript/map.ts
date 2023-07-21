@@ -9,9 +9,9 @@ export default new Template({
   builtIn: true,
   content: `${COMMON_HEAD}
   const api = params.api;
-  // 过滤空keyName
+  // 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
   const requestDataSchemaList = apih.core.filterSchemaPrimitiveValue(params.requestDataSchemaList);
-  // 过滤空keyName
+  // 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
   const responseDataSchemaList = apih.core.filterSchemaPrimitiveValue(params.responseDataSchemaList);
 
   let tpl1, tpl2 = '';
