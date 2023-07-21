@@ -236,22 +236,20 @@ watch(() => DOCUMENT.categoryList, (categoryList) => {
 // 模态框打开
 watch(() => props.visible, (v) => {
   if (v) {
-    nextTick(() => {
-      // 重置表单
-      baseInfo.value = new FormModel();
-      baseInfo.value.apiId = defaultApi.id;
-      // 全选根节点上数据
-      treeForEach(defaultApi?.requestDataSchema?.params, (item: APIHelper.Schema) => {
-        if (item?.id) {
-          baseInfo.value.requestDataSchemaIdList.push(item.id as string);
-        }
-      });
-      // 全选根节点上数据
-      treeForEach(defaultApi?.responseDataSchema?.params, (item: APIHelper.Schema) => {
-        if (item?.id) {
-          baseInfo.value.responseDataSchemaIdList.push(item.id as string);
-        }
-      });
+    // 重置表单
+    baseInfo.value = new FormModel();
+    baseInfo.value.apiId = defaultApi.id;
+    // 全选根节点上数据
+    treeForEach(defaultApi?.requestDataSchema?.params, (item: APIHelper.Schema) => {
+      if (item?.id) {
+        baseInfo.value.requestDataSchemaIdList.push(item.id as string);
+      }
+    });
+    // 全选根节点上数据
+    treeForEach(defaultApi?.responseDataSchema?.params, (item: APIHelper.Schema) => {
+      if (item?.id) {
+        baseInfo.value.responseDataSchemaIdList.push(item.id as string);
+      }
     });
   }
 }, { immediate: true });
