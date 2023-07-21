@@ -1,7 +1,6 @@
 const { defineConfig } = require('@vue/cli-service');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const CompressionPlugin = require('compression-webpack-plugin');
-const path = require('path');
 
 module.exports = defineConfig({
   transpileDependencies: true,
@@ -25,7 +24,7 @@ module.exports = defineConfig({
   },
   chainWebpack(config) {
     config.plugin('html').tap((args) => {
-      args[0].title = 'API Helper';
+      args[0].title = 'API Helper Template';
       return args;
     });
     if (process.env.NODE_ENV === 'production') {
