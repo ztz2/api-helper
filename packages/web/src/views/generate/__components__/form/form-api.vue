@@ -135,7 +135,7 @@ async function handleEditTpl() {
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ` - 副本${randomChar}`;
+    tplModel.label += ` - 副本${randomChar()}`;
     tplModel.value = '';
     tplModel.builtIn = false;
   }

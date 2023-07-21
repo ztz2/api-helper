@@ -5,7 +5,7 @@
     :loading="loading"
   >
     <a-row :gutter="gutter">
-      <a-col :span="9">
+      <a-col :span="7">
         <a-form
           ref="formRef"
           :model="formModel"
@@ -110,10 +110,25 @@
           </a-tabs>
         </a-form>
       </a-col>
-      <a-col :span="15">
-        <a-card title="编辑模版内容">
-          <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
-        </a-card>
+      <a-col :span="17">
+        <a-row :gutter="gutter">
+          <a-col :span="12">
+            <a-card title="编辑模版内容">
+              <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
+            </a-card>
+          </a-col>
+          <a-col :span="12">
+            <a-card title="预览编辑模版内容">
+              <a-spin
+                tip="加载中..."
+                class="ztz-spin"
+                :loading="loadingPreview"
+              >
+                <apih-code :code="templateContent" height="calc(100vh - 218px)"></apih-code>
+              </a-spin>
+            </a-card>
+          </a-col>
+        </a-row>
       </a-col>
     </a-row>
   </a-spin>
@@ -127,7 +142,7 @@ import {
   computed,
   PropType,
   defineProps,
-  defineExpose,
+  defineExpose, onBeforeUnmount, onMounted,
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
@@ -144,6 +159,7 @@ import { Project } from '@/store/project/interface';
 import { Template } from '@/store/template/interface';
 import { FormModel } from '../form-model/interface';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
+import formatCode from '@/utils/format-code';
 
 type FormModelType = Template;
 
@@ -163,6 +179,8 @@ const props = defineProps({
   visible: Boolean,
 });
 const loading = ref(false);
+const loadingPreview = ref(false);
+const templateContent = ref('');
 const route = useRoute();
 const projectStore = useProject();
 const { currentProject } = projectStore;
@@ -190,8 +208,9 @@ const options = ref({
   categoryList: [] as Array<SelectOptionGroup>,
 });
 
+const defaultApiTplId = DOCUMENT.categoryList?.[0].apiList?.[0]?.id ?? '';
 const baseInfo = ref(new FormModel({
-  apiId: DOCUMENT.categoryList?.[0].apiList?.[0]?.id ?? '',
+  apiId: defaultApiTplId,
 }));
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
@@ -200,85 +219,81 @@ const project = computed<Project>(() => {
   return projectStore.data.find((itm) => itm.id === id) as Project;
 });
 
-// 美化模板代码
-// watch(() => props.data.content, (val) => {
-//   if (val) {
-//     loading.value = true;
-//     formatCode({
-//       sourceCode: val,
-//       formatCodeExtension: '.js',
-//     }).then((res) => {
-//       formModel.value.content = res as string;
-//     }).finally(() => {
-//       loading.value = false;
-//     });
-//   } else {
-//     loading.value = false;
-//   }
-// });
-
-watch(() => DOCUMENT.categoryList, (categoryList) => {
-  apiMap.value.clear();
-  options.value.categoryList = categoryList?.map((module) => ({
-    id: module.id,
-    label: module.name,
-    isGroup: true,
-    options: module.apiList?.map((api) => {
-      apiMap.value.set(api.id, api);
-      return {
-        value: api.id,
-        label: api.label,
-      };
-    }) ?? [],
-  })) ?? [];
-}, { immediate: true });
-
-// 模态框打开
-watch(() => props.visible, (v) => {
-  if (v) {
-    resetSelectKey(true);
-  }
-}, { immediate: true });
-
-watch(() => baseInfo.value.apiId, (val) => {
-  baseInfo.value.api = apiMap.value.get(val) as APIHelper.API;
-  resetSelectKey();
-}, { immediate: true });
-
-watch(() => baseInfo.value.requestDataSchemaIdList, (val) => {
-  baseInfo.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
-}, { deep: true });
-
-watch(() => baseInfo.value.responseDataSchemaIdList, (val) => {
-  baseInfo.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
-}, { deep: true });
-
-function resetSelectKey(resetBaseInfo = false) {
-  const { api } = baseInfo.value;
-
-  // 重置表单
-  if (resetBaseInfo) {
-    baseInfo.value = new FormModel();
-    baseInfo.value.apiId = api.id;
-  }
-
-  baseInfo.value.requestDataSchemaIdList = [];
-  baseInfo.value.responseDataSchemaIdList = [];
-
-  // 全选根节点上数据
-  treeForEach(api?.requestDataSchema?.params, (item: APIHelper.Schema) => {
-    if (item?.id) {
-      baseInfo.value.requestDataSchemaIdList.push(item.id as string);
+let timer: number;
+onMounted(() => {
+  watch(() => formModel.value.content, (val) => {
+    if (!val || val.trim() === '') {
+      templateContent.value = val;
+    } else {
+      timer && clearTimeout(timer);
+      timer = setTimeout(async () => {
+        const v = formModel.value.content;
+        if (!v || v.trim() === '' || !formModel.value.formatCodeExtension) {
+          loadingPreview.value = false;
+          templateContent.value = v;
+          return;
+        }
+        loadingPreview.value = true;
+        const res = await formatCode({
+          sourceCode: v,
+          formatCodeExtension: '.js',
+        });
+        loadingPreview.value = false;
+        templateContent.value = res as string;
+      }, 1200) as unknown as number;
     }
-  });
-  const responseDataSchemaList = getResponseDataSchema()?.params ?? [];
-  // 全选根节点上数据
-  treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
-    if (item?.id) {
-      baseInfo.value.responseDataSchemaIdList.push(item.id as string);
-    }
-  });
-}
+  }, { immediate: true });
+
+  watch(() => DOCUMENT.categoryList, (categoryList) => {
+    apiMap.value.clear();
+    options.value.categoryList = categoryList?.map((module) => ({
+      id: module.id,
+      label: module.name,
+      isGroup: true,
+      options: module.apiList?.map((api) => {
+        apiMap.value.set(api.id, api);
+        return {
+          value: api.id,
+          label: api.label,
+        };
+      }) ?? [],
+    })) ?? [];
+  }, { immediate: true });
+
+  watch(() => baseInfo.value.apiId, (val) => {
+    baseInfo.value.api = apiMap.value.get(val) as APIHelper.API;
+    const { api } = baseInfo.value;
+
+    baseInfo.value.requestDataSchemaIdList = [];
+    baseInfo.value.responseDataSchemaIdList = [];
+
+    // 全选根节点上数据
+    treeForEach(api?.requestDataSchema?.params, (item: APIHelper.Schema) => {
+      if (item?.id) {
+        baseInfo.value.requestDataSchemaIdList.push(item.id as string);
+      }
+    });
+    const responseDataSchemaList = getResponseDataSchema()?.params ?? [];
+    // 全选根节点上数据
+    treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
+      if (item?.id) {
+        baseInfo.value.responseDataSchemaIdList.push(item.id as string);
+      }
+    });
+  }, { immediate: true });
+
+  watch(() => baseInfo.value.requestDataSchemaIdList, (val) => {
+    baseInfo.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
+  }, { deep: true, immediate: true });
+
+  watch(() => baseInfo.value.responseDataSchemaIdList, (val) => {
+    baseInfo.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
+  }, { deep: true, immediate: true });
+});
+
+onBeforeUnmount(() => {
+  timer && clearTimeout(timer);
+});
 
 const requestFieldTree = computed(() => {
   const { apiId } = baseInfo.value;

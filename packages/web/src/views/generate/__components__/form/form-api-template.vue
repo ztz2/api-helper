@@ -5,7 +5,7 @@
     :loading="loading"
   >
     <a-row :gutter="gutter">
-      <a-col :span="9">
+      <a-col :span="7">
         <a-form
           ref="formRef"
           :model="formModel"
@@ -63,12 +63,25 @@
           </a-card>
         </a-form>
       </a-col>
-      <a-col :span="15">
-        <div>
-          <a-card title="编辑模版内容">
-            <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
-          </a-card>
-        </div>
+      <a-col :span="17">
+        <a-row :gutter="gutter">
+          <a-col :span="12">
+            <a-card title="编辑模版内容">
+              <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
+            </a-card>
+          </a-col>
+          <a-col :span="12">
+            <a-card title="预览编辑模版内容">
+              <a-spin
+                tip="加载中..."
+                class="ztz-spin"
+                :loading="loadingPreview"
+              >
+                <apih-code :code="templateContent" height="calc(100vh - 218px)"></apih-code>
+              </a-spin>
+            </a-card>
+          </a-col>
+        </a-row>
       </a-col>
     </a-row>
   </a-spin>
@@ -79,11 +92,10 @@ import {
   ref,
   toRef,
   watch,
-  isRef,
-  toRefs,
   PropType,
   defineProps,
   defineExpose,
+  onBeforeUnmount,
 } from 'vue';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
@@ -109,6 +121,8 @@ const props = defineProps({
 const { currentProject } = useProject();
 
 const loading = ref(false);
+const loadingPreview = ref(false);
+const templateContent = ref('');
 const gutter = ref(15);
 const {
   formRef,
@@ -139,21 +153,32 @@ const options = ref({
   ] as any,
 });
 
-// watch(() => props.data.content, (val) => {
-//   if (val) {
-//     loading.value = true;
-//     formatCode({
-//       sourceCode: val,
-//       formatCodeExtension: '.js',
-//     }).then((res) => {
-//       formModel.value.content = res as string;
-//     }).finally(() => {
-//       loading.value = false;
-//     });
-//   } else {
-//     loading.value = false;
-//   }
-// });
+let timer: number;
+watch(() => formModel.value.content, (val) => {
+  if (!val || val.trim() === '') {
+    templateContent.value = val;
+  } else {
+    timer && clearTimeout(timer);
+    timer = setTimeout(async () => {
+      const v = formModel.value.content;
+      if (!v || v.trim() === '' || !formModel.value.formatCodeExtension) {
+        loadingPreview.value = false;
+        templateContent.value = v;
+        return;
+      }
+      const res = await formatCode({
+        sourceCode: v,
+        formatCodeExtension: formModel.value.formatCodeExtension,
+      });
+      loadingPreview.value = false;
+      templateContent.value = res as string;
+    }, 1200) as unknown as number;
+  }
+}, { immediate: true });
+
+onBeforeUnmount(() => {
+  timer && clearTimeout(timer);
+});
 
 defineExpose({
   validate,

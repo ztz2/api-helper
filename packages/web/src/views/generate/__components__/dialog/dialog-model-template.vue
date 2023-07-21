@@ -3,9 +3,10 @@
       ref="dialogRef"
       width="100%"
       cancel-text="返回"
-      :span="[14, 10]"
+      :span="[16, 8]"
       :form-component="Form"
       hide-ok
+      unique-form
   >
     <template #default>
       <a-spin
@@ -19,7 +20,7 @@
             :key="index"
           >
             <a-card :title="item.title">
-              <apih-code height="calc(100vh - 222px)" :code="item.content" />
+              <apih-code height="calc(100vh - 218px)" :code="item.content" />
             </a-card>
           </a-col>
         </a-row>

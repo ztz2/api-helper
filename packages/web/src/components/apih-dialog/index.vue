@@ -56,6 +56,8 @@ export default defineComponent({
       type: Array,
       default: () => [24],
     },
+    // 是否每次模态框变化，都重新创建Form组件
+    uniqueForm: Boolean,
   },
   emits: ['success'],
   setup(props, { attrs, expose, emit }) {
@@ -63,6 +65,7 @@ export default defineComponent({
 
     const formRef = ref<FormComponentInstance | undefined>();
     const title = ref('新增');
+    const dialogOpenUid = ref(nanoid());
     const loadingOk = ref(false);
     const currentVisible = ref(false);
     const dialogOpenType = ref('ADD');
@@ -83,10 +86,9 @@ export default defineComponent({
       currentVisible.value = false;
     }
 
-    let dialogOpenUid: string;
     async function open(config: DialogOpenConfig) {
       const uid = nanoid();
-      dialogOpenUid = uid;
+      dialogOpenUid.value = uid;
       config = merge(
         {
           type: 'ADD',
@@ -130,11 +132,11 @@ export default defineComponent({
         return;
       }
       const data = await formRef.value?.validate?.();
-      const recordOpenUid = dialogOpenUid;
+      const recordOpenUid = dialogOpenUid.value;
       try {
         loadingOk.value = true;
         const res = await props.api(data);
-        if (recordOpenUid === dialogOpenUid) {
+        if (recordOpenUid === dialogOpenUid.value) {
           currentVisible.value = false;
           // 重置表单
           formRef.value?.resetFields?.();
@@ -144,7 +146,7 @@ export default defineComponent({
           emit('success', res);
         }
       } finally {
-        if (recordOpenUid === dialogOpenUid) {
+        if (recordOpenUid === dialogOpenUid.value) {
           loadingOk.value = false;
         }
       }
@@ -170,7 +172,7 @@ export default defineComponent({
     async function execAsyncTask<T>(
       executor: () => Promise<T>,
     ): Promise<T> {
-      const recordOpenUid = dialogOpenUid;
+      const recordOpenUid = dialogOpenUid.value;
       return new Promise((resolve, reject) => {
         try {
           const exec = executor();
@@ -185,12 +187,12 @@ export default defineComponent({
           reject(e);
         }
       }).then((res) => {
-        if (recordOpenUid === dialogOpenUid) {
+        if (recordOpenUid === dialogOpenUid.value) {
           return res as T;
         }
         return new Promise(noop);
       }).catch((err) => {
-        if (recordOpenUid === dialogOpenUid) {
+        if (recordOpenUid === dialogOpenUid.value) {
           return Promise.reject(err);
         }
         return new Promise(noop);
@@ -285,6 +287,7 @@ export default defineComponent({
                         }
                         visible={currentVisible.value}
                         type={dialogOpenType.value}
+                        key={props.uniqueForm ? dialogOpenUid.value : undefined}
                       />
                     </a-col>
                     { slots.default && <a-col span={span2}>{ slots.default() }</a-col> }

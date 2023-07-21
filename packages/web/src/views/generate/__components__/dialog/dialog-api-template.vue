@@ -3,7 +3,7 @@
     ref="dialogRef"
     width="100%"
     cancel-text="返回"
-    :span="[14, 10]"
+    :span="[15, 9]"
     :form-component="Form"
     hide-ok
   >
