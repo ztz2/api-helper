@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { APIHelper } from '@api-helper/core';
-import { filterSchema } from '@api-helper/core/es/lib/utils/util';
 import ParserSwagger from '@api-helper/core/es/lib/parser/parser-swagger';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/es/lib/utils/util';
 
 import { readJsonFile } from './utils/file';
 import { renderClass } from '../src/lib/render-class';
@@ -13,7 +13,7 @@ describe('生成 Class 类测试', () => {
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[0];
-    const schemaList = filterSchema(api.responseDataSchema?.params ? (api.responseDataSchema.params as APIHelper.SchemaList) : []);
+    const schemaList = filterSchemaPrimitiveValue(api.responseDataSchema?.params ? (api.responseDataSchema.params as APIHelper.SchemaList) : []);
     const code = renderClass(schemaList, api, {
       paramType: 'request'
     });
@@ -28,7 +28,7 @@ describe('生成 Class 类测试', () => {
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[1];
-    const schemaList = filterSchema(api.requestDataSchema?.params ? (api.requestDataSchema.params as APIHelper.SchemaList) : []);
+    const schemaList = filterSchemaPrimitiveValue(api.requestDataSchema?.params ? (api.requestDataSchema.params as APIHelper.SchemaList) : []);
     const code = renderClass(schemaList, api, {
       paramType: 'response'
     });

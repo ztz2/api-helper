@@ -26,7 +26,6 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import qs from 'qs';
-import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
 import { TS_TYPE, LINE_FEED_CODE, COMMENT_END_CODE, COMMENT_START_CODE, } from '../constant';
 import { validateSchema } from './validator';
@@ -62,14 +61,6 @@ export function uuid() {
 }
 export function randomId() {
     return uuid();
-}
-// 过滤 keyName 为空的数据，并且合并 array<object>
-export function filterSchema(schemaList, deepClone) {
-    if (deepClone === void 0) { deepClone = false; }
-    if (deepClone) {
-        schemaList = cloneDeep(schemaList);
-    }
-    return schemaList;
 }
 export function mergeUrl() {
     var args = [];
@@ -383,4 +374,60 @@ export function processResponseSchemaPipeline(api, options) {
             required: true
         });
     }
+}
+//
+// 例子:  过滤后输出 -> [{ keyName: 'username', type: 'string' }]
+/**
+ * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
+ * @example 例子说明：
+    源数据：[
+            { keyName: '', type: 'string' },
+            { keyName: 'username', type: 'string' }
+          ]
+    过滤后：[
+            { keyName: 'username', type: 'string' }
+          ]
+ * @param schema { schema: APIHelper.Schema | APIHelper.SchemaList | null } schema对象
+ * @return APIHelper.Schema | APIHelper.SchemaList | null
+ */
+export function filterSchemaPrimitiveValue(schema) {
+    if (!schema) {
+        return schema;
+    }
+    var schemaList = Array.isArray(schema) ? schema : [schema];
+    var filter = function (scmList, memo) {
+        var e_3, _a;
+        var _b;
+        if (memo === void 0) { memo = new Map(); }
+        if (memo.has(scmList)) {
+            return memo.get(scmList);
+        }
+        var result = [];
+        memo.set(scmList, result);
+        try {
+            for (var scmList_1 = __values(scmList), scmList_1_1 = scmList_1.next(); !scmList_1_1.done; scmList_1_1 = scmList_1.next()) {
+                var scm = scmList_1_1.value;
+                if (!scm.keyName && scm.type !== 'array' && scm.type !== 'object') {
+                    continue;
+                }
+                if (((_b = scm.params) === null || _b === void 0 ? void 0 : _b.length) > 0) {
+                    scm.params = filter(scm.params, memo);
+                }
+                result.push(scm);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (scmList_1_1 && !scmList_1_1.done && (_a = scmList_1.return)) _a.call(scmList_1);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+        return result;
+    };
+    var res = filter(schemaList);
+    if (Array.isArray(schema)) {
+        return res;
+    }
+    return schemaList[0];
 }

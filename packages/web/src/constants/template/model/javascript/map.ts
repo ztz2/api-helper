@@ -9,8 +9,10 @@ export default new Template({
   builtIn: true,
   content: `${COMMON_HEAD}
   const api = params.api;
-  const requestDataSchemaList = params.requestDataSchemaList;
-  const responseDataSchemaList = params.responseDataSchemaList;
+  // 过滤空keyName
+  const requestDataSchemaList = apih.core.filterSchemaPrimitiveValue(params.requestDataSchemaList);
+  // 过滤空keyName
+  const responseDataSchemaList = apih.core.filterSchemaPrimitiveValue(params.responseDataSchemaList);
 
   let tpl1, tpl2 = '';
   // 请求数据

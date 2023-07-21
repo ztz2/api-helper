@@ -30,9 +30,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.filterSchema = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
+exports.filterSchemaPrimitiveValue = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
 var qs_1 = __importDefault(require("qs"));
-var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
 var constant_1 = require("../constant");
 var validator_1 = require("./validator");
@@ -76,15 +75,6 @@ function randomId() {
     return uuid();
 }
 exports.randomId = randomId;
-// 过滤 keyName 为空的数据，并且合并 array<object>
-function filterSchema(schemaList, deepClone) {
-    if (deepClone === void 0) { deepClone = false; }
-    if (deepClone) {
-        schemaList = (0, cloneDeep_1.default)(schemaList);
-    }
-    return schemaList;
-}
-exports.filterSchema = filterSchema;
 function mergeUrl() {
     var args = [];
     for (var _i = 0; _i < arguments.length; _i++) {
@@ -408,3 +398,60 @@ function processResponseSchemaPipeline(api, options) {
     }
 }
 exports.processResponseSchemaPipeline = processResponseSchemaPipeline;
+//
+// 例子:  过滤后输出 -> [{ keyName: 'username', type: 'string' }]
+/**
+ * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
+ * @example 例子说明：
+    源数据：[
+            { keyName: '', type: 'string' },
+            { keyName: 'username', type: 'string' }
+          ]
+    过滤后：[
+            { keyName: 'username', type: 'string' }
+          ]
+ * @param schema { schema: APIHelper.Schema | APIHelper.SchemaList | null } schema对象
+ * @return APIHelper.Schema | APIHelper.SchemaList | null
+ */
+function filterSchemaPrimitiveValue(schema) {
+    if (!schema) {
+        return schema;
+    }
+    var schemaList = Array.isArray(schema) ? schema : [schema];
+    var filter = function (scmList, memo) {
+        var e_3, _a;
+        var _b;
+        if (memo === void 0) { memo = new Map(); }
+        if (memo.has(scmList)) {
+            return memo.get(scmList);
+        }
+        var result = [];
+        memo.set(scmList, result);
+        try {
+            for (var scmList_1 = __values(scmList), scmList_1_1 = scmList_1.next(); !scmList_1_1.done; scmList_1_1 = scmList_1.next()) {
+                var scm = scmList_1_1.value;
+                if (!scm.keyName && scm.type !== 'array' && scm.type !== 'object') {
+                    continue;
+                }
+                if (((_b = scm.params) === null || _b === void 0 ? void 0 : _b.length) > 0) {
+                    scm.params = filter(scm.params, memo);
+                }
+                result.push(scm);
+            }
+        }
+        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        finally {
+            try {
+                if (scmList_1_1 && !scmList_1_1.done && (_a = scmList_1.return)) _a.call(scmList_1);
+            }
+            finally { if (e_3) throw e_3.error; }
+        }
+        return result;
+    };
+    var res = filter(schemaList);
+    if (Array.isArray(schema)) {
+        return res;
+    }
+    return schemaList[0];
+}
+exports.filterSchemaPrimitiveValue = filterSchemaPrimitiveValue;

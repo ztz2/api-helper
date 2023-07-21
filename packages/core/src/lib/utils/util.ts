@@ -1,6 +1,5 @@
 import qs from 'qs';
 import { JSONSchema4 } from 'json-schema';
-import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
 
 import { APIHelper } from '../types';
@@ -49,14 +48,6 @@ export function uuid() {
 
 export function randomId() {
   return uuid();
-}
-
-// 过滤 keyName 为空的数据，并且合并 array<object>
-export function filterSchema(schemaList: APIHelper.Schema[], deepClone = false): APIHelper.Schema[] {
-  if (deepClone) {
-    schemaList = cloneDeep(schemaList);
-  }
-  return schemaList;
 }
 
 export function mergeUrl(...args: string[]) {
@@ -321,13 +312,13 @@ export function uniqueRequestDataRootSchema(api: APIHelper.API) {
   return api;
 }
 
-export function deepAddSchemaRules(schema: null | APIHelper.Schema | APIHelper.Schema[], rules: Recordable = {}) {
+export function deepAddSchemaRules(schema: null | APIHelper.Schema | APIHelper.SchemaList, rules: Recordable = {}) {
   schema = schema == null ? [] : Array.isArray(schema) ? schema : [schema];
   if (Object.keys(rules).length === 0) {
     return undefined;
   }
-  const memo: APIHelper.Schema[] = [];
-  const deepLoop = (s: APIHelper.Schema[]) => {
+  const memo: APIHelper.SchemaList = [];
+  const deepLoop = (s: APIHelper.SchemaList) => {
     for (const itm of s) {
       if (!itm || memo.includes(itm)) {
         continue;
@@ -376,4 +367,46 @@ export function processResponseSchemaPipeline(api: APIHelper.API, options: Recor
       required: true
     });
   }
+}
+
+/**
+ * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
+ * @example 例子说明：
+    源数据：[
+            { keyName: '', type: 'string' },
+            { keyName: 'username', type: 'string' }
+          ]
+    过滤后：[
+            { keyName: 'username', type: 'string' }
+          ]
+ * @param schema { schema: APIHelper.Schema | APIHelper.SchemaList | null } schema对象
+ * @return APIHelper.Schema | APIHelper.SchemaList | null
+ */
+export function filterSchemaPrimitiveValue(schema: APIHelper.Schema | APIHelper.SchemaList | null): APIHelper.Schema | APIHelper.SchemaList {
+  if (!schema) {
+    return schema!;
+  }
+  const schemaList: Array<APIHelper.Schema> = Array.isArray(schema) ? schema : [schema];
+  const filter = (scmList: Array<APIHelper.Schema>, memo: Map<Array<APIHelper.Schema>, Array<APIHelper.Schema>> = new Map()) => {
+    if (memo.has(scmList)) {
+      return memo.get(scmList) as Array<APIHelper.Schema>;
+    }
+    const result: Array<APIHelper.Schema> = [];
+    memo.set(scmList, result);
+    for (const scm of scmList) {
+      if (!scm.keyName && scm.type !== 'array' && scm.type !== 'object') {
+        continue;
+      }
+      if (scm.params?.length > 0) {
+        scm.params = filter(scm.params, memo);
+      }
+      result.push(scm);
+    }
+    return result;
+  }
+  const res = filter(schemaList);
+  if (Array.isArray(schema)) {
+    return res;
+  }
+  return schemaList[0];
 }

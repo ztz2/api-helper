@@ -1,5 +1,6 @@
 import { camelCase } from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/es/lib/utils/util';
 
 import formatCode from '@/lib/utils/prettier';
 
@@ -12,6 +13,8 @@ export function renderObject(
     startSpace?: ''
   }
 ) {
+  schema = filterSchemaPrimitiveValue(schema);
+
   if (!schema) {
     return '';
   }
@@ -55,9 +58,6 @@ function renderObjectDeepObject(
   const postfix = parentSchema?.type === 'array' ? '\n]' : '\n}';
   for (const schema of schemaList) {
     const keyName = schema.keyName ?? '';
-    if (!keyName && schema.type !== 'array' && schema.type !== 'object') {
-      continue;
-    }
     const type = schema.type;
     const temporaryCode = [renderObjectComment(schema)];
     let v = "''";

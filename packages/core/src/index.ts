@@ -12,6 +12,7 @@ import type {
 import * as utils from './lib/utils';
 import ParserYapi from './lib/parser/parser-yapi';
 import ParserSwagger from './lib/parser/parser-swagger';
+import { filterSchemaPrimitiveValue } from './lib/utils/util';
 
 import {
   getSchema,
@@ -39,5 +40,6 @@ export {
   getSchema,
   ParserYapi,
   ParserSwagger,
+  filterSchemaPrimitiveValue,
   processRequestFunctionConfig
 }

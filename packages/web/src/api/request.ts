@@ -15,7 +15,7 @@ request.interceptors.response.use(
     return Promise.reject(data.message);
   },
   (error) => {
-    message.error('操作失败');
+    message.error('服务异常');
     return Promise.reject(error);
   },
 );
