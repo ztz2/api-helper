@@ -224,14 +224,14 @@ watch(() => formModel.value.apiId, (val) => {
       formModel.value.requestDataSchemaIdList.push(item.id as string);
     }
   });
-  console.log(api?.requestDataSchema?.params);
   // 全选根节点上数据
-  treeForEach(api?.responseDataSchema?.params, (item: APIHelper.Schema) => {
+  const responseDataSchemaList = getResponseDataSchema()?.params ?? [];
+  treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
     if (item?.id) {
       formModel.value.responseDataSchemaIdList.push(item.id as string);
     }
   });
-}, { deep: true });
+});
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {
   formModel.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
@@ -251,15 +251,9 @@ const requestFieldTree = computed(() => {
 });
 
 const responseFieldTree = computed(() => {
-  const { apiId } = formModel.value;
-  const api = apiMap.value.get(apiId);
-  if (!api || !api.responseDataSchema) {
+  const schema = getResponseDataSchema();
+  if (!schema) {
     return [];
-  }
-  const { dataKey } = project.value;
-  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
-  if (dataKey) {
-    schema = getSchema(schema, dataKey);
   }
   return schema?.params ?? [];
 });
@@ -279,6 +273,20 @@ const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   }, 'params');
   return map;
 });
+
+function getResponseDataSchema(): APIHelper.Schema | null {
+  const { apiId } = formModel.value;
+  const api = apiMap.value.get(apiId);
+  if (!api || !api.responseDataSchema) {
+    return null;
+  }
+  const { dataKey } = project.value;
+  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
+  if (dataKey) {
+    schema = getSchema(schema, dataKey);
+  }
+  return schema;
+}
 
 function validatorTpl(keyName: string, value: unknown, callback: Function) {
   if (!get(currentProject, keyName)) {

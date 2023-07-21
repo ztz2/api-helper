@@ -190,10 +190,10 @@ const options = ref({
   }))as any,
   categoryList: [] as Array<SelectOptionGroup>,
 });
-const defaultCategory = DOCUMENT.categoryList[0];
-const defaultApi = defaultCategory.apiList[0];
 
-const baseInfo = ref(new FormModel());
+const baseInfo = ref(new FormModel({
+  apiId: DOCUMENT.categoryList?.[0].apiList?.[0]?.id ?? '',
+}));
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
 const project = computed<Project>(() => {
@@ -201,6 +201,7 @@ const project = computed<Project>(() => {
   return projectStore.data.find((itm) => itm.id === id) as Project;
 });
 
+// 美化模板代码
 // watch(() => props.data.content, (val) => {
 //   if (val) {
 //     loading.value = true;
@@ -236,27 +237,14 @@ watch(() => DOCUMENT.categoryList, (categoryList) => {
 // 模态框打开
 watch(() => props.visible, (v) => {
   if (v) {
-    // 重置表单
-    baseInfo.value = new FormModel();
-    baseInfo.value.apiId = defaultApi.id;
-    // 全选根节点上数据
-    treeForEach(defaultApi?.requestDataSchema?.params, (item: APIHelper.Schema) => {
-      if (item?.id) {
-        baseInfo.value.requestDataSchemaIdList.push(item.id as string);
-      }
-    });
-    // 全选根节点上数据
-    treeForEach(defaultApi?.responseDataSchema?.params, (item: APIHelper.Schema) => {
-      if (item?.id) {
-        baseInfo.value.responseDataSchemaIdList.push(item.id as string);
-      }
-    });
+    resetSelectKey(true);
   }
 }, { immediate: true });
 
 watch(() => baseInfo.value.apiId, (val) => {
   baseInfo.value.api = apiMap.value.get(val) as APIHelper.API;
-}, { deep: true });
+  resetSelectKey();
+}, { immediate: true });
 
 watch(() => baseInfo.value.requestDataSchemaIdList, (val) => {
   baseInfo.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
@@ -265,6 +253,33 @@ watch(() => baseInfo.value.requestDataSchemaIdList, (val) => {
 watch(() => baseInfo.value.responseDataSchemaIdList, (val) => {
   baseInfo.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
 }, { deep: true });
+
+function resetSelectKey(resetBaseInfo = false) {
+  const { api } = baseInfo.value;
+
+  // 重置表单
+  if (resetBaseInfo) {
+    baseInfo.value = new FormModel();
+    baseInfo.value.apiId = api.id;
+  }
+
+  baseInfo.value.requestDataSchemaIdList = [];
+  baseInfo.value.responseDataSchemaIdList = [];
+
+  // 全选根节点上数据
+  treeForEach(api?.requestDataSchema?.params, (item: APIHelper.Schema) => {
+    if (item?.id) {
+      baseInfo.value.requestDataSchemaIdList.push(item.id as string);
+    }
+  });
+  const responseDataSchemaList = getResponseDataSchema()?.params ?? [];
+  // 全选根节点上数据
+  treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
+    if (item?.id) {
+      baseInfo.value.responseDataSchemaIdList.push(item.id as string);
+    }
+  });
+}
 
 const requestFieldTree = computed(() => {
   const { apiId } = baseInfo.value;
@@ -276,15 +291,9 @@ const requestFieldTree = computed(() => {
 });
 
 const responseFieldTree = computed(() => {
-  const { apiId } = baseInfo.value;
-  const api = apiMap.value.get(apiId);
-  if (!api || !api.responseDataSchema) {
+  const schema = getResponseDataSchema();
+  if (!schema) {
     return [];
-  }
-  const { dataKey } = project.value;
-  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
-  if (dataKey) {
-    schema = getSchema(schema, dataKey);
   }
   return schema?.params ?? [];
 });
@@ -304,6 +313,21 @@ const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   }, 'params');
   return map;
 });
+
+function getResponseDataSchema(): APIHelper.Schema | null {
+  const { apiId } = baseInfo.value;
+  const api = apiMap.value.get(apiId);
+  if (!api || !api.responseDataSchema) {
+    return null;
+  }
+  // const { dataKey } = project.value;
+  const dataKey = 'data';
+  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
+  if (dataKey) {
+    schema = getSchema(schema, dataKey);
+  }
+  return schema;
+}
 
 function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
   const val = cloneDeep(ids);
