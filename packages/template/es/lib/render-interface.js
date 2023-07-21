@@ -18,7 +18,7 @@ export function renderInterface(schema, api, options) {
         }
         return [
             commentCode,
-            "".concat(keyword, " ").concat(interfaceName, " = any;")
+            "".concat(keyword, " ").concat(interfaceName, " = any;\n")
         ].filter(Boolean).join('\n');
     }
     if (paramType === 'response') {

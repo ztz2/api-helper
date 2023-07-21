@@ -1898,19 +1898,19 @@ var ds, vl = ge({ "node_modules/string-width/index.js": function () { N(), Cl(),
         if (R.parser === "vue")
             if (G.some(function (_) { return _.type === "docType" && _.value === "html" || _.type === "element" && _.name.toLowerCase() === "html"; })) {
                 U = !0, k = !0, j = !0, L = !0, t = !1;
-                var _3 = d.parse(b, { canSelfClose: U, allowHtmComponentClosingTags: L, isTagNameCaseSensitive: t });
-                G = _3.rootNodes, X = _3.errors;
+                var _ = d.parse(b, { canSelfClose: U, allowHtmComponentClosingTags: L, isTagNameCaseSensitive: t });
+                G = _.rootNodes, X = _.errors;
             }
             else {
-                var _4 = function (T) { if (!T || T.type !== "element" || T.name !== "template")
+                var _ = function (T) { if (!T || T.type !== "element" || T.name !== "template")
                     return !1; var x = T.attrs.find(function (V) { return V.name === "lang"; }), $ = x && x.value; return !$ || c($, R) === "html"; };
-                if (G.some(_4)) {
+                if (G.some(_)) {
                     var T_1, x_1 = function () { return d.parse(b, { canSelfClose: U, allowHtmComponentClosingTags: L, isTagNameCaseSensitive: t }); }, $_1 = function () { return T_1 || (T_1 = x_1()); }, V = function (z) { return $_1().rootNodes.find(function (Y) { var ie = Y.startSourceSpan; return ie && ie.start.offset === z.startSourceSpan.start.offset; }); };
                     for (var z = 0; z < G.length; z++) {
                         var Y = G[z], ie = Y.endSourceSpan, Ee = Y.startSourceSpan;
                         if (ie === null)
                             X = $_1().errors, G[z] = V(Y) || Y;
-                        else if (_4(Y)) {
+                        else if (_(Y)) {
                             var Fe = $_1(), Oe = Ee.end.offset, Z = ie.start.offset;
                             try {
                                 for (var _g = (e_9 = void 0, __values(Fe.errors)), _h = _g.next(); !_h.done; _h = _g.next()) {
@@ -1935,8 +1935,8 @@ var ds, vl = ge({ "node_modules/string-width/index.js": function () { N(), Cl(),
                 }
             }
         if (X.length > 0) {
-            var _j = X[0], E = _j.msg, _k = _j.span, _5 = _k.start, T = _k.end;
-            throw f(E, { start: { line: _5.line + 1, column: _5.col + 1 }, end: { line: T.line + 1, column: T.col + 1 } });
+            var _j = X[0], E = _j.msg, _k = _j.span, _ = _k.start, T = _k.end;
+            throw f(E, { start: { line: _.line + 1, column: _.col + 1 }, end: { line: T.line + 1, column: T.col + 1 } });
         }
         var Q = function (E) { var _ = E.name.startsWith(":") ? E.name.slice(1).split(":")[0] : null, T = E.nameSpan.toString(), x = _ !== null && T.startsWith("".concat(_, ":")), $ = x ? T.slice(_.length + 1) : T; E.name = $, E.namespace = _, E.hasExplicitNamespace = x; }, H = function (E) {
             var e_10, _b;
@@ -1945,8 +1945,8 @@ var ds, vl = ge({ "node_modules/string-width/index.js": function () { N(), Cl(),
                     Q(E);
                     try {
                         for (var _d = __values(E.attrs), _f = _d.next(); !_f.done; _f = _d.next()) {
-                            var _6 = _f.value;
-                            Q(_6), _6.valueSpan ? (_6.value = _6.valueSpan.toString(), /["']/.test(_6.value[0]) && (_6.value = _6.value.slice(1, -1))) : _6.value = null;
+                            var _ = _f.value;
+                            Q(_), _.valueSpan ? (_.value = _.valueSpan.toString(), /["']/.test(_.value[0]) && (_.value = _.value.slice(1, -1))) : _.value = null;
                         }
                     }
                     catch (e_10_1) { e_10 = { error: e_10_1 }; }
@@ -1967,11 +1967,11 @@ var ds, vl = ge({ "node_modules/string-width/index.js": function () { N(), Cl(),
         }, W = function (E, _) { var T = E.toLowerCase(); return _(T) ? T : E; }, K = function (E) {
             var e_11, _b;
             if (E.type === "element" && (k && (!E.namespace || E.namespace === E.tagDefinition.implicitNamespacePrefix || l(E)) && (E.name = W(E.name, function (_) { return _ in v; })), j)) {
-                var _7 = i[E.name] || Object.create(null);
+                var _3 = i[E.name] || Object.create(null);
                 try {
                     for (var _d = __values(E.attrs), _f = _d.next(); !_f.done; _f = _d.next()) {
                         var T = _f.value;
-                        T.namespace || (T.name = W(T.name, function (x) { return E.name in i && (x in i["*"] || x in _7); }));
+                        T.namespace || (T.name = W(T.name, function (x) { return E.name in i && (x in i["*"] || x in _3); }));
                     }
                 }
                 catch (e_11_1) { e_11 = { error: e_11_1 }; }
@@ -1983,8 +1983,8 @@ var ds, vl = ge({ "node_modules/string-width/index.js": function () { N(), Cl(),
                 }
             }
         }, J = function (E) { E.sourceSpan && E.endSourceSpan && (E.sourceSpan = new q(E.sourceSpan.start, E.endSourceSpan.end)); }, S = function (E) { if (E.type === "element") {
-            var _8 = P(t ? E.name : E.name.toLowerCase());
-            !E.namespace || E.namespace === _8.implicitNamespacePrefix || l(E) ? E.tagDefinition = _8 : E.tagDefinition = P("");
+            var _ = P(t ? E.name : E.name.toLowerCase());
+            !E.namespace || E.namespace === _.implicitNamespacePrefix || l(E) ? E.tagDefinition = _ : E.tagDefinition = P("");
         } };
         return A(new /** @class */ (function (_super) {
             __extends(class_3, _super);

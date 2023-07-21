@@ -31,7 +31,7 @@ export function renderInterface(
     }
     return [
       commentCode,
-      `${keyword} ${interfaceName} = any;`
+      `${keyword} ${interfaceName} = any;\n`
     ].filter(Boolean).join('\n');
   }
 
