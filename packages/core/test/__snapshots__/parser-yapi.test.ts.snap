@@ -1,184 +1,184 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解析转换测试 1`] = `
-Array [
-  Object {
+[
+  {
     "basePath": "/v2",
-    "categoryList": Array [
-      Object {
-        "apiList": Array [
-          Object {
+    "categoryList": [
+      {
+        "apiList": [
+          {
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": Array [],
+            "formDataKeyNameList": [],
             "id": "",
             "label": "Add a new pet to the store",
             "method": "POST",
             "path": "/v2/pet",
-            "pathParamKeyNameList": Array [],
-            "queryStringKeyNameList": Array [],
-            "requestDataSchema": Object {
-              "params": Array [
-                Object {
+            "pathParamKeyNameList": [],
+            "queryStringKeyNameList": [],
+            "requestDataSchema": {
+              "params": [
+                {
                   "description": "",
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "id",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rules": {
                     "required": false,
                   },
                   "title": "",
                   "type": "number",
                 },
-                Object {
+                {
                   "description": "",
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "category",
                   "label": "",
-                  "params": Array [
-                    Object {
+                  "params": [
+                    {
                       "description": "",
-                      "examples": Array [],
+                      "examples": [],
                       "id": "",
                       "keyName": "id",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rules": {
                         "required": false,
                       },
                       "title": "",
                       "type": "number",
                     },
-                    Object {
+                    {
                       "description": "",
-                      "examples": Array [],
+                      "examples": [],
                       "id": "",
                       "keyName": "name",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rules": {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": Object {
+                  "rules": {
                     "required": false,
                   },
                   "title": "",
                   "type": "object",
                 },
-                Object {
+                {
                   "description": "",
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "name",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rules": {
                     "required": true,
                   },
                   "title": "",
                   "type": "string",
                 },
-                Object {
+                {
                   "description": "",
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "photoUrls",
                   "label": "",
-                  "params": Array [
-                    Object {
+                  "params": [
+                    {
                       "description": "",
-                      "examples": Array [],
+                      "examples": [],
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rules": {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": Object {
+                  "rules": {
                     "required": true,
                   },
                   "title": "",
                   "type": "array",
                 },
-                Object {
+                {
                   "description": "",
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "tags",
                   "label": "",
-                  "params": Array [
-                    Object {
+                  "params": [
+                    {
                       "description": "",
-                      "examples": Array [],
+                      "examples": [],
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": Array [
-                        Object {
+                      "params": [
+                        {
                           "description": "",
-                          "examples": Array [],
+                          "examples": [],
                           "id": "",
                           "keyName": "id",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rules": {
                             "required": false,
                           },
                           "title": "",
                           "type": "number",
                         },
-                        Object {
+                        {
                           "description": "",
-                          "examples": Array [],
+                          "examples": [],
                           "id": "",
                           "keyName": "name",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rules": {
                             "required": false,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": Object {
+                      "rules": {
                         "required": false,
                       },
                       "title": "",
                       "type": "object",
                     },
                   ],
-                  "rules": Object {
+                  "rules": {
                     "required": false,
                   },
                   "title": "",
                   "type": "array",
                 },
-                Object {
+                {
                   "description": "pet status in the store",
-                  "enum": Array [
+                  "enum": [
                     "available",
                     "pending",
                     "sold",
                   ],
-                  "examples": Array [],
+                  "examples": [],
                   "id": "",
                   "keyName": "status",
                   "label": "pet status in the store",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rules": {
                     "required": false,
                   },
                   "title": "",
@@ -196,8 +196,8 @@ Array [
         "id": "",
         "name": "pet",
       },
-      Object {
-        "apiList": Array [],
+      {
+        "apiList": [],
         "description": "未设置分组的接口集合",
         "id": "",
         "name": "未知分组",

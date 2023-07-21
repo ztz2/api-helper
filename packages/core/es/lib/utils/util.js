@@ -377,6 +377,13 @@ export function processResponseSchemaPipeline(api, options) {
         });
     }
 }
+// 判断是否为对象类型的Schema, Array | Object
+export function isSchemaObject(schema) {
+    if (!schema) {
+        return false;
+    }
+    return !schema.keyName && (schema.type === 'array' || schema.type === 'object');
+}
 // 判断是否是原始值的Schema。
 export function isSchemaPrimitiveValue(schema) {
     if (!schema) {

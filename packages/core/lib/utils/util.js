@@ -30,7 +30,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
+exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
 var qs_1 = __importDefault(require("qs"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
 var constant_1 = require("../constant");
@@ -400,6 +400,14 @@ function processResponseSchemaPipeline(api, options) {
     }
 }
 exports.processResponseSchemaPipeline = processResponseSchemaPipeline;
+// 判断是否为对象类型的Schema, Array | Object
+function isSchemaObject(schema) {
+    if (!schema) {
+        return false;
+    }
+    return !schema.keyName && (schema.type === 'array' || schema.type === 'object');
+}
+exports.isSchemaObject = isSchemaObject;
 // 判断是否是原始值的Schema。
 function isSchemaPrimitiveValue(schema) {
     if (!schema) {

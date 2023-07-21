@@ -371,6 +371,14 @@ export function processResponseSchemaPipeline(api: APIHelper.API, options: Recor
   }
 }
 
+// 判断是否为对象类型的Schema, Array | Object
+export function isSchemaObject(schema: APIHelper.Schema | null) {
+  if (!schema) {
+    return false;
+  }
+  return !schema.keyName && (schema.type === 'array' || schema.type === 'object');
+}
+
 // 判断是否是原始值的Schema。
 export function isSchemaPrimitiveValue(schema: APIHelper.Schema | null) {
   if (!schema) {
