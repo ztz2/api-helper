@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import ParserSwagger from '@api-helper/core/es/lib/parser/parser-swagger';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/es/lib/utils/util';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { readJsonFile } from './utils/file';
 import { renderObject } from '../src/lib/render-object';

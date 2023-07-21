@@ -73,7 +73,7 @@ export function renderRequestFunctionName(
 function renderRequestFunctionComment(api: APIHelper.API) {
   const templateTenderParams = {
     api,
-    apiDescription: [api.summary, api.description].filter(Boolean).join('、')
+    apiDescription: [api.title, api.description].filter(Boolean).join('、')
   };
   return artTemplate.render(
 `/**

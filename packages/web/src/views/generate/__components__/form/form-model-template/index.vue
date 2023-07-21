@@ -227,7 +227,7 @@ watch(() => DOCUMENT.categoryList, (categoryList) => {
       apiMap.value.set(api.id, api);
       return {
         value: api.id,
-        label: api.summary,
+        label: api.label,
       };
     }) ?? [],
   })) ?? [];

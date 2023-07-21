@@ -10,9 +10,11 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import { camelCase } from 'change-case';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import formatCode from '../lib/utils/prettier';
 export function renderObject(schema, api, options) {
     var _a;
+    schema = filterSchemaPrimitiveValue(schema);
     if (!schema) {
         return '';
     }
@@ -50,9 +52,6 @@ function renderObjectDeepObject(schemaList, parentSchema, memo) {
         for (var schemaList_1 = __values(schemaList), schemaList_1_1 = schemaList_1.next(); !schemaList_1_1.done; schemaList_1_1 = schemaList_1.next()) {
             var schema = schemaList_1_1.value;
             var keyName = (_b = schema.keyName) !== null && _b !== void 0 ? _b : '';
-            if (!keyName && schema.type !== 'array' && schema.type !== 'object') {
-                continue;
-            }
             var type = schema.type;
             var temporaryCode = [renderObjectComment(schema)];
             var v = "''";
@@ -103,7 +102,7 @@ export function renderObjectComment(schema) {
     if ('enum' in schema && schema.enum.length > 0) {
         type = schema.enum.map(function (item) { return "'".concat(item, "'"); }).join(' | ');
     }
-    return "// { ".concat(type, " }") + (schema.title ? " ".concat(schema.title) : schema.description ? " ".concat(schema.description) : '');
+    return "// { ".concat(type, " }").concat(schema.label ? " ".concat(schema.label) : '');
 }
 export function renderObjectName(api, options) {
     var name = api.path;

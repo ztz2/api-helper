@@ -62,7 +62,7 @@ exports.renderRequestFunctionName = renderRequestFunctionName;
 function renderRequestFunctionComment(api) {
     var templateTenderParams = {
         api: api,
-        apiDescription: [api.summary, api.description].filter(Boolean).join('、')
+        apiDescription: [api.title, api.description].filter(Boolean).join('、')
     };
     return art_template_1.default.render("/**\n   * @description{{if apiDescription}} {{apiDescription}}{{else}} \u65E0{{/if}}\n{{if api.docURL}}   * @doc {{api.docURL}}\n{{/if}}   * @url [ {{api.method.toUpperCase()}} ] {{api.path}}\n   */", templateTenderParams);
 }

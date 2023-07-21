@@ -205,7 +205,7 @@ watch(() => props.categoryList, (categoryList) => {
       apiMap.value.set(api.id, api);
       return {
         value: api.id,
-        label: api.summary,
+        label: api.label,
       };
     }) ?? [],
   })) ?? [];
@@ -230,11 +230,14 @@ watch(() => formModel.value.apiId, (val) => {
 }, { deep: true });
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {
+  console.log('requestDataSchemaIdList: ', val);
   formModel.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
 }, { deep: true });
 
 watch(() => formModel.value.responseDataSchemaIdList, (val) => {
   formModel.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
+  console.log('responseDataSchemaIdList: ', val);
+  console.log('formModel.value.responseDataSchemaList: ', formModel.value.responseDataSchemaList);
 }, { deep: true });
 
 const requestFieldTree = computed(() => {
@@ -285,6 +288,7 @@ function validatorTpl(keyName: string, value: unknown, callback: Function) {
 
 function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
   const val = cloneDeep(ids);
+  debugger;
   const schemaList: APIHelper.SchemaList = [];
   while (val.length > 0) {
     const id = val.shift();

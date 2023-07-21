@@ -85,7 +85,7 @@ function renderInterfaceName(schema, api, options) {
 exports.renderInterfaceName = renderInterfaceName;
 function renderInterfaceComment(schema, api, paramType, isExtraData) {
     if (isExtraData === void 0) { isExtraData = false; }
-    var commentText = "/**\n * @description ".concat([api.summary, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
+    var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL, "\n") : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
     return commentText;
 }
 function renderInterfaceDeepObject(schema, memo) {
@@ -99,15 +99,8 @@ function renderInterfaceDeepObject(schema, memo) {
     memo.set(schema, 'null');
     var type = schema.type;
     var bannerComment = [];
-    if (schema.description) {
-        bannerComment.push(schema.description);
-    }
-    if (schema.title) {
-        var text = schema.title;
-        if (bannerComment.length > 0) {
-            text = "\uFF08".concat(text, "\uFF09");
-        }
-        bannerComment.push(text);
+    if (schema.label) {
+        bannerComment.push(schema.label);
     }
     var bannerCommentText = bannerComment.length > 0 ? "\n// ".concat(bannerComment.join('')) : '';
     if (isEmptyObject(schema)) {

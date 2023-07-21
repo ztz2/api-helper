@@ -35,9 +35,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderClassName = exports.renderClass = void 0;
 var changeCase = __importStar(require("change-case"));
+var util_1 = require("@api-helper/core/lib/utils/util");
 var prettier_1 = __importDefault(require("../lib/utils/prettier"));
 var render_object_1 = require("../lib/render-object");
 function renderClass(schema, api, options) {
+    schema = (0, util_1.filterSchemaPrimitiveValue)(schema);
     if (!schema) {
         return '';
     }
@@ -66,9 +68,6 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
         for (var schemaList_1 = __values(schemaList), schemaList_1_1 = schemaList_1.next(); !schemaList_1_1.done; schemaList_1_1 = schemaList_1.next()) {
             var schema = schemaList_1_1.value;
             var keyName = (_b = schema.keyName) !== null && _b !== void 0 ? _b : '';
-            if (!keyName && schema.type !== 'array' && schema.type !== 'object') {
-                continue;
-            }
             var type = schema.type;
             var temporaryCode = [(0, render_object_1.renderObjectComment)(schema)];
             var evaluationCode = isRoot ? ' = ' : ': ';

@@ -86,7 +86,7 @@ export interface IUserDeviceIdBodyRequestByPost {
  */
 export interface IUserDeviceIdBodyResponseByPost {
   // 用户信息
-  // 主键id（注解id-title）
+  // 注解id-title
   id?: string;
   // 名称
   name?: string;
@@ -131,7 +131,7 @@ userDeviceIdBodyByPost.requestConfig = {
 export interface IUserDeviceIdBody1RequestByPost {
   // 设备id
   deviceId: string;
-  // 主键id（注解id-title）
+  // 注解id-title
   id: string;
   // 名称
   name: string;
@@ -149,7 +149,7 @@ export interface IUserDeviceIdBody1RequestByPost {
  */
 export interface IUserDeviceIdBody1ResponseByPost {
   // 用户信息
-  // 主键id（注解id-title）
+  // 注解id-title
   id?: string;
   // 名称
   name?: string;
@@ -193,7 +193,7 @@ userDeviceIdBody1ByPost.requestConfig = {
  */
 export interface IUserGetRequest1RequestByPost {
   cade: string;
-  // 主键id（注解id-title）
+  // 注解id-title
   id: string;
   // 名称
   name: string;
@@ -211,7 +211,7 @@ export interface IUserGetRequest1RequestByPost {
  */
 export interface IUserGetRequest1ResponseByPost {
   // 用户信息
-  // 主键id（注解id-title）
+  // 注解id-title
   id?: string;
   // 名称
   name?: string;
@@ -300,7 +300,7 @@ userCreateOneByPost.requestConfig = {
  * @url [ POST ] /user/createOneSchema
  */
 export interface IUserCreateOneSchemaRequestByPost {
-  // 主键id（注解id-title）
+  // 注解id-title
   id: string;
   // 名称
   name: string;
@@ -318,7 +318,7 @@ export interface IUserCreateOneSchemaRequestByPost {
  */
 export interface IUserCreateOneSchemaResponseByPost {
   // 用户信息
-  // 主键id（注解id-title）
+  // 注解id-title
   id?: string;
   // 名称
   name?: string;
@@ -874,7 +874,7 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
  */
 export interface IUserGetRequestRequestByGet {
   userSchema: {
-    // 主键id（注解id-title）
+    // 注解id-title
     id: string;
     // 名称
     name: string;
@@ -894,7 +894,7 @@ export interface IUserGetRequestRequestByGet {
  */
 export interface IUserGetRequestResponseByGet {
   // 用户信息
-  // 主键id（注解id-title）
+  // 注解id-title
   id?: string;
   // 名称
   name?: string;

@@ -70,6 +70,8 @@ type ParserYapiParams = {
     'uid': number,
     'add_time': number,
     'req_body_type': string,
+    // 文档地址
+    'docURL': string;
     // 接口详情
     'content'?: {
       'query_path': {
@@ -209,10 +211,12 @@ export default class ParserYapi {
       const tag = apiMap.tag;
       const api: APIHelper.API = {
         id: this.generateId(),
-        summary: filterDesc(apiMap.title),
+        title: filterDesc(apiMap.title),
         description: filterDesc(apiMap.markdown),
+        label: '',
         path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
         method: apiMap.method,
+        docURL: apiMap.docURL ?? '',
         formDataKeyNameList: [],
         pathParamKeyNameList: [],
         queryStringKeyNameList: [],
@@ -220,6 +224,7 @@ export default class ParserYapi {
         requestExtraDataSchema: null,
         responseDataSchema: null,
       };
+      api.label = api.title ? api.title : api.description ? api.description : '';
 
       // API content-type，暂无特殊处理
       // switch (apiMap.req_body_type) {
@@ -279,6 +284,7 @@ export default class ParserYapi {
           id: this.generateId(),
           title: '',
           description: filterDesc(p.desc),
+          label: '',
           keyName: keyName,
           type: 'string',
           params: [],
@@ -286,6 +292,8 @@ export default class ParserYapi {
             required: true
           }
         };
+        scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+
         api.pathParamKeyNameList.push(keyName);
         requestKeyNameMemo.push(keyName);
         requestDataSchema.params.push(scm);
@@ -305,6 +313,7 @@ export default class ParserYapi {
           id: this.generateId(),
           title: '',
           description: filterDesc(p.desc),
+          label: '',
           keyName: keyName,
           type: 'string',
           params: [],
@@ -312,6 +321,8 @@ export default class ParserYapi {
             required: Number(p.required) === 1
           }
         };
+        scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+
         api.queryStringKeyNameList.push(keyName);
         requestKeyNameMemo.push(keyName);
         requestDataSchema.params.push(scm);
@@ -334,6 +345,7 @@ export default class ParserYapi {
               id: this.generateId(),
               title: '',
               description: filterDesc(p.desc),
+              label: '',
               keyName: keyName,
               type: 'string',
               params: [],
@@ -341,6 +353,8 @@ export default class ParserYapi {
                 required: Number(p.required) === 1
               }
             };
+            scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+
             api.formDataKeyNameList.push(keyName);
             requestKeyNameMemo.push(keyName);
             requestDataSchema.params.push(scm);
@@ -379,6 +393,7 @@ export default class ParserYapi {
             id: this.generateId(),
             title: '',
             description: filterDesc(apiContent.req_body_other),
+            label: '',
             keyName: keyName,
             type: 'string',
             params: [],
@@ -386,6 +401,8 @@ export default class ParserYapi {
               required: false
             }
           };
+          scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+
           api.formDataKeyNameList.push(keyName);
           requestKeyNameMemo.push(keyName);
           requestDataSchema.params.push(scm);

@@ -16,7 +16,8 @@ const await_to_js_1 = __importDefault(require("await-to-js"));
 const core_1 = require("@api-helper/core");
 const log_1 = __importDefault(require("../../../lib/tools/log"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
-const util_1 = require("../../../lib/tools/util");
+const util_1 = require("@api-helper/core/lib/utils/util");
+const util_2 = require("../../../lib/tools/util");
 const PROJECT_API = '/api/project/get';
 const MENU_API = '/api/interface/getCatMenu';
 const API_List = '/api/interface/list';
@@ -34,21 +35,22 @@ class ParserYapiPlugin {
             const dsTasks = [];
             for (const documentServer of documentServers) {
                 const errorServerText = `【${documentServer.url}】`;
+                const requestConfig = (0, util_2.processRequestConfig)(documentServer);
                 dsTasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     // 获取项目基本信息
                     const projectInfo = yield fetchProjectInfo(documentServer).catch((e) => {
-                        log_1.default.error('提示', `获取项目基本信息失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取项目基本信息失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     const projectId = projectInfo._id;
                     // 获取所有分类
                     const categoryList = yield fetchMenuList(documentServer, { projectId }).catch((e) => {
-                        log_1.default.error('提示', `获取菜单列表失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取菜单列表失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     // 获取所有接口
                     const apiList = yield fetchApiList(documentServer, { projectId }).catch((e) => {
-                        log_1.default.error('提示', `获取接口列表数据失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        log_1.default.error('提示', `获取接口列表数据失败${(0, util_2.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     if (apiList.length === 0) {
@@ -58,6 +60,7 @@ class ParserYapiPlugin {
                     const tasks = [];
                     const errorApi = [];
                     for (const api of apiList) {
+                        api.docURL = (0, util_1.mergeUrl)(requestConfig.origin, `/project/${projectId}/interface/api/${api._id}`);
                         tasks.push(fetchApiDetail(documentServer, { id: api._id }).then((res) => {
                             api.content = res;
                         }).catch((e) => {
@@ -87,10 +90,10 @@ class ParserYapiPlugin {
 }
 exports.default = ParserYapiPlugin;
 function fetchProjectInfo(documentServer) {
-    return (0, request_1.default)((0, util_1.processRequestConfig)(documentServer, { path: PROJECT_API, dataKey: 'data' }));
+    return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, { path: PROJECT_API, dataKey: 'data' }));
 }
 function fetchMenuList(documentServer, params) {
-    return (0, request_1.default)((0, util_1.processRequestConfig)(documentServer, {
+    return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, {
         path: MENU_API,
         dataKey: 'data',
         queryParams: {
@@ -99,7 +102,7 @@ function fetchMenuList(documentServer, params) {
     }));
 }
 function fetchApiList(documentServer, params) {
-    return (0, request_1.default)((0, util_1.processRequestConfig)(documentServer, {
+    return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, {
         path: API_List,
         dataKey: 'data',
         queryParams: {
@@ -113,7 +116,7 @@ function fetchApiList(documentServer, params) {
     });
 }
 function fetchApiDetail(documentServer, params) {
-    return (0, request_1.default)((0, util_1.processRequestConfig)(documentServer, {
+    return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, {
         path: API_DETAIL,
         dataKey: 'data',
         queryParams: {

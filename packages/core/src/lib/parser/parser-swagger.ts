@@ -119,8 +119,9 @@ export default class ParserSwagger {
           // 接口
           const api: APIHelper.API = {
             id: this.generateId(),
-            summary: filterDesc(apiMap.summary),
+            title: filterDesc(apiMap.summary),
             description: filterDesc(apiMap.description),
+            label: '',
             path: mPath,
             method,
             formDataKeyNameList: [],
@@ -130,6 +131,7 @@ export default class ParserSwagger {
             requestExtraDataSchema: null,
             responseDataSchema: null,
           }
+          api.label = api.title ? api.title : api.description ? api.description : '';
 
           /****************** 处理请求参数--开始 ******************/
           let requestExtraDataSchema: APIHelper.Schema | null = null;
@@ -156,6 +158,7 @@ export default class ParserSwagger {
                   id: this.generateId(),
                   title: '',
                   description: '',
+                  label: '',
                   type: 'string',
                   keyName,
                   params: [],
@@ -201,6 +204,7 @@ export default class ParserSwagger {
 
                 scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
                 scm.description = filterDesc(parameter.description);
+                scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
                 requestKeyNameMemo.push(keyName);
                 requestDataSchema.params.push(scm);

@@ -173,6 +173,7 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
         id: options.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),
+        label: '',
         keyName: keyName,
         type: transformType(schema.type),
         params: [],
@@ -182,6 +183,7 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
             required: requiredFieldList.includes(keyName),
         }
     };
+    resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
     try {
         // 枚举类型单独处理
         // 注意：过滤非对象类型
@@ -398,8 +400,6 @@ function processResponseSchemaPipeline(api, options) {
     }
 }
 exports.processResponseSchemaPipeline = processResponseSchemaPipeline;
-//
-// 例子:  过滤后输出 -> [{ keyName: 'username', type: 'string' }]
 /**
  * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
  * @example 例子说明：

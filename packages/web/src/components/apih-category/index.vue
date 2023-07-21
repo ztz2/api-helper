@@ -64,7 +64,7 @@
               class="apih-category-item-sub"
             >
               <div @click="handleSelectAPI(api)" class="apih-category-item-sub__label">
-                {{ api.summary ? api.summary : api.description }}
+                {{ api.label }}
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@ function handleSearch(): void {
       if (!hasMatch) {
         item.apiList = [];
         for (const t2 of apiList) {
-          if (t2.summary?.includes(text) || t2.path?.includes(text)) {
+          if (t2.label?.includes(text) || t2.title?.includes(text) || t2.description?.includes(text) || t2.path?.includes(text)) {
             hasMatch = true;
             item.apiList.push(t2);
           }

@@ -49,6 +49,7 @@ declare type ParserYapiParams = {
         'uid': number;
         'add_time': number;
         'req_body_type': string;
+        'docURL': string;
         'content'?: {
             'query_path': {
                 'path': string;

@@ -3,11 +3,9 @@
 import { Injectable } from '@nestjs/common';
 
 // import { swagger20 } from '../mock/api';
-// import { ParserOpenAPI } from '../utils/openapi';
 // import MockSwaggerApi from '../mock/swaggerApi.json';
 
 // const mockSwaggerApi = require('../mock/swaggerApi.json');
-// const {} = require();
 
 import { APIHelper } from '@api-helper/core';
 import { documentServersRunParserPlugins } from '@api-helper/cli/lib/tools/util';

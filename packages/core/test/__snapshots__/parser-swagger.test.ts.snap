@@ -13,6 +13,7 @@ Object {
             "file",
           ],
           "id": "",
+          "label": "uploads an image",
           "method": "post",
           "path": "/v2/pet/{petId}/uploadImage",
           "pathParamKeyNameList": Array [
@@ -26,6 +27,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet to update",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -38,6 +40,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "additionalMetadata",
+                "label": "Additional data to pass to server",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -50,6 +53,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "file",
+                "label": "file to upload",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -66,12 +70,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "code",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -84,6 +90,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "type",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -96,6 +103,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "message",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -110,12 +118,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "uploads an image",
+          "title": "uploads an image",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Add a new pet to the store",
           "method": "post",
           "path": "/v2/pet",
           "pathParamKeyNameList": Array [],
@@ -127,6 +136,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -139,12 +149,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -157,6 +169,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -176,6 +189,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -188,12 +202,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -213,18 +229,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -237,6 +256,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -268,6 +288,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -280,12 +301,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Add a new pet to the store",
+          "title": "Add a new pet to the store",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Update an existing pet",
           "method": "put",
           "path": "/v2/pet",
           "pathParamKeyNameList": Array [],
@@ -297,6 +319,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -309,12 +332,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -327,6 +352,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -346,6 +372,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -358,12 +385,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -383,18 +412,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -407,6 +439,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -438,6 +471,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -450,12 +484,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Update an existing pet",
+          "title": "Update an existing pet",
         },
         Object {
           "description": "Multiple status values can be provided with comma separated strings",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Finds Pets by status",
           "method": "get",
           "path": "/v2/pet/findByStatus",
           "pathParamKeyNameList": Array [],
@@ -469,6 +504,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Status values that need to be considered for filter",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -485,18 +521,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -509,12 +548,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "category",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -527,6 +568,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -546,6 +588,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -558,12 +601,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -583,18 +628,21 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "tags",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
                             "examples": Array [],
                             "id": "",
                             "keyName": "id",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -607,6 +655,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "name",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -638,6 +687,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "status",
+                    "label": "pet status in the store",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -659,12 +709,13 @@ Object {
             "title": "",
             "type": "array",
           },
-          "summary": "Finds Pets by status",
+          "title": "Finds Pets by status",
         },
         Object {
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Finds Pets by tags",
           "method": "get",
           "path": "/v2/pet/findByTags",
           "pathParamKeyNameList": Array [],
@@ -678,6 +729,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "Tags to filter by",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -694,18 +746,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -718,12 +773,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "category",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -736,6 +793,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -755,6 +813,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -767,12 +826,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -792,18 +853,21 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "tags",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
                             "examples": Array [],
                             "id": "",
                             "keyName": "id",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -816,6 +880,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "name",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -847,6 +912,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "status",
+                    "label": "pet status in the store",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -868,12 +934,13 @@ Object {
             "title": "",
             "type": "array",
           },
-          "summary": "Finds Pets by tags",
+          "title": "Finds Pets by tags",
         },
         Object {
           "description": "Returns a single pet",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Find pet by ID",
           "method": "get",
           "path": "/v2/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -887,6 +954,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -903,12 +971,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -921,12 +991,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -939,6 +1011,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -958,6 +1031,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -970,12 +1044,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -995,18 +1071,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -1019,6 +1098,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -1050,6 +1130,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1064,7 +1145,7 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Find pet by ID",
+          "title": "Find pet by ID",
         },
         Object {
           "description": "",
@@ -1073,6 +1154,7 @@ Object {
             "status",
           ],
           "id": "",
+          "label": "Updates a pet in the store with form data",
           "method": "post",
           "path": "/v2/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -1086,6 +1168,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1098,6 +1181,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "Updated name of the pet",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1110,6 +1194,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Updated status of the pet",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1122,12 +1207,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Updates a pet in the store with form data",
+          "title": "Updates a pet in the store with form data",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Deletes a pet",
           "method": "delete",
           "path": "/v2/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -1141,6 +1227,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1153,7 +1240,7 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Deletes a pet",
+          "title": "Deletes a pet",
         },
       ],
       "description": "Everything about your Pets",
@@ -1166,6 +1253,7 @@ Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Place an order for a pet",
           "method": "post",
           "path": "/v2/store/order",
           "pathParamKeyNameList": Array [],
@@ -1177,6 +1265,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1189,6 +1278,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1201,6 +1291,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1213,6 +1304,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1230,6 +1322,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1242,18 +1335,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tag",
+                "label": "Order Tag",
                 "params": Array [
                   Object {
                     "description": "Order Tag Child",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "Order Tag Child",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
@@ -1265,6 +1361,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": false,
@@ -1298,6 +1395,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1314,12 +1412,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1332,6 +1432,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1344,6 +1445,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1356,6 +1458,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1373,6 +1476,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1385,18 +1489,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tag",
+                "label": "Order Tag",
                 "params": Array [
                   Object {
                     "description": "Order Tag Child",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "Order Tag Child",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
@@ -1408,6 +1515,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -1441,6 +1549,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1455,12 +1564,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Place an order for a pet",
+          "title": "Place an order for a pet",
         },
         Object {
           "description": "For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Find purchase order by ID",
           "method": "get",
           "path": "/v2/store/order/{orderId}",
           "pathParamKeyNameList": Array [
@@ -1474,6 +1584,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
+                "label": "ID of pet that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1490,12 +1601,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1508,6 +1621,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1520,6 +1634,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1532,6 +1647,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1549,6 +1665,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1561,18 +1678,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tag",
+                "label": "Order Tag",
                 "params": Array [
                   Object {
                     "description": "Order Tag Child",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "Order Tag Child",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
@@ -1584,6 +1704,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "tagName",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -1617,6 +1738,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1631,12 +1753,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Find purchase order by ID",
+          "title": "Find purchase order by ID",
         },
         Object {
           "description": "For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Delete purchase order by ID",
           "method": "delete",
           "path": "/v2/store/order/{orderId}",
           "pathParamKeyNameList": Array [
@@ -1650,6 +1773,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
+                "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1662,12 +1786,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Delete purchase order by ID",
+          "title": "Delete purchase order by ID",
         },
         Object {
           "description": "Returns a map of status codes to quantities",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Returns pet inventories by status",
           "method": "get",
           "path": "/v2/store/inventory",
           "pathParamKeyNameList": Array [],
@@ -1679,6 +1804,7 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [],
             "rules": Object {
               "required": true,
@@ -1686,7 +1812,7 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Returns pet inventories by status",
+          "title": "Returns pet inventories by status",
         },
       ],
       "description": "Access to Petstore orders",
@@ -1699,6 +1825,7 @@ Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Creates list of users with given input array",
           "method": "post",
           "path": "/v2/user/createWithArray",
           "pathParamKeyNameList": Array [
@@ -1715,12 +1842,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userName",
+                "label": "List of user object",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -1740,6 +1869,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "The password for login in clear text",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1752,6 +1882,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userId",
+                "label": "The name that needs to be fetched. Use user1 for testing. ",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1764,12 +1895,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Creates list of users with given input array",
+          "title": "Creates list of users with given input array",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Creates list of users with given input array",
           "method": "post",
           "path": "/v2/user/createWithList",
           "pathParamKeyNameList": Array [],
@@ -1777,12 +1909,13 @@ Object {
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Creates list of users with given input array",
+          "title": "Creates list of users with given input array",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Get user by user name",
           "method": "get",
           "path": "/v2/user/{username}",
           "pathParamKeyNameList": Array [
@@ -1796,6 +1929,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username1",
+                "label": "The name that needs to be fetched. Use user1 for testing. ",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1812,12 +1946,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1830,6 +1966,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1842,6 +1979,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1854,6 +1992,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1866,6 +2005,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1878,6 +2018,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1890,6 +2031,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1902,6 +2044,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1916,12 +2059,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Get user by user name",
+          "title": "Get user by user name",
         },
         Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Updated user",
           "method": "put",
           "path": "/v2/user/{username}",
           "pathParamKeyNameList": Array [
@@ -1935,6 +2079,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "name that need to be updated",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -1947,6 +2092,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1959,6 +2105,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1971,6 +2118,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1983,6 +2131,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -1995,6 +2144,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2007,6 +2157,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2019,6 +2170,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2031,12 +2183,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Updated user",
+          "title": "Updated user",
         },
         Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Delete user",
           "method": "delete",
           "path": "/v2/user/{username}",
           "pathParamKeyNameList": Array [
@@ -2050,6 +2203,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username1",
+                "label": "The name that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2062,12 +2216,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Delete user",
+          "title": "Delete user",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Logs user into the system",
           "method": "get",
           "path": "/v2/user/login",
           "pathParamKeyNameList": Array [],
@@ -2082,6 +2237,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "The user name for login",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2094,6 +2250,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "The password for login in clear text",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2110,6 +2267,7 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [],
             "rules": Object {
               "required": true,
@@ -2117,12 +2275,13 @@ Object {
             "title": "",
             "type": "string",
           },
-          "summary": "Logs user into the system",
+          "title": "Logs user into the system",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Logs out current logged in user session",
           "method": "get",
           "path": "/v2/user/logout",
           "pathParamKeyNameList": Array [],
@@ -2130,12 +2289,13 @@ Object {
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Logs out current logged in user session",
+          "title": "Logs out current logged in user session",
         },
         Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Create user",
           "method": "post",
           "path": "/v2/user",
           "pathParamKeyNameList": Array [],
@@ -2147,6 +2307,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2159,6 +2320,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2171,6 +2333,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2183,6 +2346,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2195,6 +2359,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2207,6 +2372,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2219,6 +2385,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2231,6 +2398,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2243,7 +2411,7 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Create user",
+          "title": "Create user",
         },
       ],
       "description": "Operations about user",
@@ -2275,6 +2443,7 @@ Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "普通body请求-put",
           "method": "put",
           "path": "/body/bodyPut",
           "pathParamKeyNameList": Array [],
@@ -2286,6 +2455,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2298,6 +2468,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2310,6 +2481,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2322,6 +2494,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2341,12 +2514,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2359,6 +2534,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2371,6 +2547,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2383,6 +2560,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2397,12 +2575,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "普通body请求-put",
+          "title": "普通body请求-put",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "body请求",
           "method": "post",
           "path": "/user/{deviceId}/body",
           "pathParamKeyNameList": Array [
@@ -2416,6 +2595,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "deviceId",
+                "label": "设备id",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2435,12 +2615,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "用户信息",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2453,6 +2635,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2465,12 +2648,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2483,6 +2668,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2504,12 +2690,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "body请求",
+          "title": "body请求",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "body请求1",
           "method": "post",
           "path": "/user/{deviceId}/body1",
           "pathParamKeyNameList": Array [
@@ -2523,6 +2710,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "deviceId",
+                "label": "设备id",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2535,6 +2723,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2547,6 +2736,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2559,12 +2749,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -2577,6 +2769,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -2603,12 +2796,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "用户信息",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2621,6 +2816,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2633,12 +2829,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2651,6 +2849,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2672,12 +2871,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "body请求1",
+          "title": "body请求1",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "json参数查询1",
           "method": "post",
           "path": "/user/getRequest1",
           "pathParamKeyNameList": Array [],
@@ -2691,6 +2891,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "cade",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2703,6 +2904,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2715,6 +2917,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2727,12 +2930,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -2745,6 +2950,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -2771,12 +2977,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "用户信息",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2789,6 +2997,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2801,12 +3010,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2819,6 +3030,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -2840,12 +3052,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "json参数查询1",
+          "title": "json参数查询1",
         },
         Object {
           "description": "根据姓名创建用户1",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "创建用户-createOne",
           "method": "post",
           "path": "/user/createOne",
           "pathParamKeyNameList": Array [],
@@ -2857,6 +3070,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "主键id",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2869,6 +3083,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2888,12 +3103,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "主键id",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2906,6 +3123,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -2920,12 +3138,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "创建用户-createOne",
+          "title": "创建用户-createOne",
         },
         Object {
           "description": "根据姓名创建用户1",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "创建用户-Schema",
           "method": "post",
           "path": "/user/createOneSchema",
           "pathParamKeyNameList": Array [],
@@ -2937,6 +3156,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2949,6 +3169,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -2961,12 +3182,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -2979,6 +3202,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -3005,12 +3229,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "用户信息",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3023,6 +3249,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3035,12 +3262,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3053,6 +3282,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3074,12 +3304,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "创建用户-Schema",
+          "title": "创建用户-Schema",
         },
         Object {
           "description": "根据姓名创建用户1",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "创建用户1",
           "method": "post",
           "path": "/user/createOne1",
           "pathParamKeyNameList": Array [],
@@ -3094,6 +3325,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3106,6 +3338,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3125,12 +3358,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "主键id",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3143,6 +3378,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3157,12 +3393,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "创建用户1",
+          "title": "创建用户1",
         },
         Object {
           "description": "单纯文件上传，无任何参数",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "单纯文件上传",
           "method": "post",
           "path": "/file/upload",
           "pathParamKeyNameList": Array [],
@@ -3174,6 +3411,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "file",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3193,12 +3431,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3211,6 +3451,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3223,6 +3464,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3235,6 +3477,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3249,12 +3492,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "单纯文件上传",
+          "title": "单纯文件上传",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "文件上传-带参数",
           "method": "post",
           "path": "/file/uploadParam",
           "pathParamKeyNameList": Array [],
@@ -3268,6 +3512,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3280,6 +3525,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "file",
+                "label": "文件",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3299,12 +3545,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3317,6 +3565,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3329,6 +3578,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3341,6 +3591,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3355,12 +3606,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "文件上传-带参数",
+          "title": "文件上传-带参数",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "文件上传-带参数Header",
           "method": "post",
           "path": "/file/uploadParamHeader",
           "pathParamKeyNameList": Array [],
@@ -3374,6 +3626,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3386,6 +3639,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "file",
+                "label": "文件",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3405,12 +3659,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3423,6 +3679,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3435,6 +3692,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3447,6 +3705,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3461,12 +3720,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "文件上传-带参数Header",
+          "title": "文件上传-带参数Header",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "文件上传-带参数Path",
           "method": "post",
           "path": "/file/uploadParam/{id}",
           "pathParamKeyNameList": Array [
@@ -3482,6 +3742,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "文件id",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3494,6 +3755,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3506,6 +3768,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "file",
+                "label": "文件",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3525,12 +3788,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3543,6 +3808,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3555,6 +3821,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3567,6 +3834,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3581,12 +3849,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "文件上传-带参数Path",
+          "title": "文件上传-带参数Path",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "多文件上传",
           "method": "post",
           "path": "/file/uploadBatch",
           "pathParamKeyNameList": Array [],
@@ -3598,12 +3867,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "files",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -3630,18 +3901,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "文件对象",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "文件对象",
                 "params": Array [
                   Object {
                     "description": "随机名称",
                     "examples": Array [],
                     "id": "",
                     "keyName": "random",
+                    "label": "随机名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3654,6 +3928,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "文件名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3666,6 +3941,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "size",
+                    "label": "文件大小",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3678,6 +3954,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "success",
+                    "label": "是否上传成功",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -3699,12 +3976,13 @@ Object {
             "title": "",
             "type": "array",
           },
-          "summary": "多文件上传",
+          "title": "多文件上传",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "普通body请求",
           "method": "post",
           "path": "/body/body",
           "pathParamKeyNameList": Array [],
@@ -3716,6 +3994,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3728,6 +4007,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3740,6 +4020,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3752,6 +4033,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3771,12 +4053,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3789,6 +4073,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3801,6 +4086,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3813,6 +4099,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3827,12 +4114,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "普通body请求",
+          "title": "普通body请求",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "普通body请求+Param",
           "method": "post",
           "path": "/body/bodyParam",
           "pathParamKeyNameList": Array [],
@@ -3846,6 +4134,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3858,6 +4147,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3870,6 +4160,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3882,6 +4173,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3901,12 +4193,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3919,6 +4213,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3931,6 +4226,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3943,6 +4239,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -3957,12 +4254,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "普通body请求+Param",
+          "title": "普通body请求+Param",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "普通body请求+Param+Header",
           "method": "post",
           "path": "/body/bodyParamHeader",
           "pathParamKeyNameList": Array [],
@@ -3976,6 +4274,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -3988,6 +4287,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4000,6 +4300,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4012,6 +4313,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4031,12 +4333,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4049,6 +4353,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4061,6 +4366,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4073,6 +4379,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4087,12 +4394,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "普通body请求+Param+Header",
+          "title": "普通body请求+Param+Header",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "普通body请求+Param+Header+Path",
           "method": "post",
           "path": "/body/bodyParamHeaderPath/{id}",
           "pathParamKeyNameList": Array [
@@ -4108,6 +4416,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "文件id",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4120,6 +4429,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4132,6 +4442,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4144,6 +4455,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4156,6 +4468,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4175,12 +4488,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "文件对象",
             "params": Array [
               Object {
                 "description": "随机名称",
                 "examples": Array [],
                 "id": "",
                 "keyName": "random",
+                "label": "随机名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4193,6 +4508,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "文件名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4205,6 +4521,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "size",
+                "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4217,6 +4534,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "success",
+                "label": "是否上传成功",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4231,12 +4549,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "普通body请求+Param+Header+Path",
+          "title": "普通body请求+Param+Header+Path",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "json参数查询",
           "method": "get",
           "path": "/user/getRequest",
           "pathParamKeyNameList": Array [],
@@ -4251,12 +4570,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userSchema",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "主键id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "注解id-title",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -4269,6 +4590,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "名称",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -4281,12 +4603,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "partSchema",
+                    "label": "Part信息",
                     "params": Array [
                       Object {
                         "description": "part部分id",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "part部分id",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -4299,6 +4623,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "part部分名称",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -4325,6 +4650,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "cade",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4344,12 +4670,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "用户信息",
             "params": Array [
               Object {
                 "description": "主键id",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "注解id-title",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4362,6 +4690,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "名称",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4374,12 +4703,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "partSchema",
+                "label": "Part信息",
                 "params": Array [
                   Object {
                     "description": "part部分id",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "part部分id",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4392,6 +4723,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "part部分名称",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4413,12 +4745,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "json参数查询",
+          "title": "json参数查询",
         },
         Object {
           "description": "根据姓名创建用户",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "创建用户",
           "method": "get",
           "path": "/user/create",
           "pathParamKeyNameList": Array [],
@@ -4432,6 +4765,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4451,6 +4785,7 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [],
             "rules": Object {
               "required": false,
@@ -4458,7 +4793,7 @@ Object {
             "title": "",
             "type": "string",
           },
-          "summary": "创建用户",
+          "title": "创建用户",
         },
       ],
       "description": "未设置分组的接口集合",
@@ -4484,6 +4819,7 @@ Object {
           "description": "Update an existing pet by Id",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Update an existing pet",
           "method": "put",
           "path": "/api/v3/pet",
           "pathParamKeyNameList": Array [],
@@ -4502,6 +4838,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4514,6 +4851,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4526,12 +4864,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4544,6 +4884,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4563,12 +4904,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4588,18 +4931,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -4612,6 +4958,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -4643,6 +4990,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4659,12 +5007,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4677,6 +5027,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4689,12 +5040,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -4707,6 +5060,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -4726,12 +5080,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -4751,18 +5107,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -4775,6 +5134,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -4806,6 +5166,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4820,12 +5181,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Update an existing pet",
+          "title": "Update an existing pet",
         },
         Object {
           "description": "Add a new pet to the store",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Add a new pet to the store",
           "method": "post",
           "path": "/api/v3/pet",
           "pathParamKeyNameList": Array [],
@@ -4844,6 +5206,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -4856,6 +5219,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -4868,12 +5232,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4886,6 +5252,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4905,12 +5272,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -4930,18 +5299,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -4954,6 +5326,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": false,
@@ -4985,6 +5358,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -5001,12 +5375,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5019,6 +5395,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5031,12 +5408,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5049,6 +5428,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5068,12 +5448,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5093,18 +5475,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5117,6 +5502,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5148,6 +5534,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5162,12 +5549,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Add a new pet to the store",
+          "title": "Add a new pet to the store",
         },
         Object {
           "description": "Multiple status values can be provided with comma separated strings",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Finds Pets by status",
           "method": "get",
           "path": "/api/v3/pet/findByStatus",
           "pathParamKeyNameList": Array [],
@@ -5186,6 +5574,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Status values that need to be considered for filter",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -5202,18 +5591,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5226,6 +5618,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5238,12 +5631,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "category",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5256,6 +5651,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5275,12 +5671,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5300,18 +5698,21 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "tags",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
                             "examples": Array [],
                             "id": "",
                             "keyName": "id",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -5324,6 +5725,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "name",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -5355,6 +5757,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "status",
+                    "label": "pet status in the store",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5376,12 +5779,13 @@ Object {
             "title": "",
             "type": "array",
           },
-          "summary": "Finds Pets by status",
+          "title": "Finds Pets by status",
         },
         Object {
           "description": "Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Finds Pets by tags",
           "method": "get",
           "path": "/api/v3/pet/findByTags",
           "pathParamKeyNameList": Array [],
@@ -5395,12 +5799,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "Tags to filter by",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -5424,18 +5830,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5448,6 +5857,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5460,12 +5870,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "category",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5478,6 +5890,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5497,12 +5910,14 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "photoUrls",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5522,18 +5937,21 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "tags",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "",
+                        "label": "",
                         "params": Array [
                           Object {
                             "description": "",
                             "examples": Array [],
                             "id": "",
                             "keyName": "id",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -5546,6 +5964,7 @@ Object {
                             "examples": Array [],
                             "id": "",
                             "keyName": "name",
+                            "label": "",
                             "params": Array [],
                             "rules": Object {
                               "required": true,
@@ -5577,6 +5996,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "status",
+                    "label": "pet status in the store",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5598,12 +6018,13 @@ Object {
             "title": "",
             "type": "array",
           },
-          "summary": "Finds Pets by tags",
+          "title": "Finds Pets by tags",
         },
         Object {
           "description": "Returns a single pet",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Find pet by ID",
           "method": "get",
           "path": "/api/v3/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -5617,6 +6038,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5633,12 +6055,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5651,6 +6075,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5663,12 +6088,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "category",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5681,6 +6108,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "name",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5700,12 +6128,14 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "photoUrls",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": true,
@@ -5725,18 +6155,21 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "tags",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "",
+                    "label": "",
                     "params": Array [
                       Object {
                         "description": "",
                         "examples": Array [],
                         "id": "",
                         "keyName": "id",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5749,6 +6182,7 @@ Object {
                         "examples": Array [],
                         "id": "",
                         "keyName": "name",
+                        "label": "",
                         "params": Array [],
                         "rules": Object {
                           "required": true,
@@ -5780,6 +6214,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "pet status in the store",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5794,12 +6229,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Find pet by ID",
+          "title": "Find pet by ID",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Updates a pet in the store with form data",
           "method": "post",
           "path": "/api/v3/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -5816,6 +6252,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5828,6 +6265,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "name",
+                "label": "Name of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -5840,6 +6278,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Status of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -5852,12 +6291,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Updates a pet in the store with form data",
+          "title": "Updates a pet in the store with form data",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Deletes a pet",
           "method": "delete",
           "path": "/api/v3/pet/{petId}",
           "pathParamKeyNameList": Array [
@@ -5871,6 +6311,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5883,12 +6324,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Deletes a pet",
+          "title": "Deletes a pet",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "uploads an image",
           "method": "post",
           "path": "/api/v3/pet/{petId}/uploadImage",
           "pathParamKeyNameList": Array [
@@ -5904,6 +6346,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "ID of pet to update",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5916,6 +6359,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "additionalMetadata",
+                "label": "Additional Metadata",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -5932,12 +6376,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "code",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5950,6 +6396,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "type",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5962,6 +6409,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "message",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -5976,7 +6424,7 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "uploads an image",
+          "title": "uploads an image",
         },
       ],
       "description": "Everything about your Pets",
@@ -5989,6 +6437,7 @@ Object {
           "description": "Returns a map of status codes to quantities",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Returns pet inventories by status",
           "method": "get",
           "path": "/api/v3/store/inventory",
           "pathParamKeyNameList": Array [],
@@ -6000,6 +6449,7 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [],
             "rules": Object {
               "required": true,
@@ -6007,12 +6457,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Returns pet inventories by status",
+          "title": "Returns pet inventories by status",
         },
         Object {
           "description": "Place a new order in the store",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Place an order for a pet",
           "method": "post",
           "path": "/api/v3/store/order",
           "pathParamKeyNameList": Array [],
@@ -6031,6 +6482,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6043,6 +6495,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6055,6 +6508,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6067,6 +6521,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6084,6 +6539,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6096,6 +6552,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6112,12 +6569,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6130,6 +6589,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6142,6 +6602,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6154,6 +6615,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6171,6 +6633,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6183,6 +6646,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6197,12 +6661,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Place an order for a pet",
+          "title": "Place an order for a pet",
         },
         Object {
           "description": "For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Find purchase order by ID",
           "method": "get",
           "path": "/api/v3/store/order/{orderId}",
           "pathParamKeyNameList": Array [
@@ -6216,6 +6681,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
+                "label": "ID of order that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6232,12 +6698,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6250,6 +6718,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "petId",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6262,6 +6731,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "quantity",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6274,6 +6744,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "shipDate",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6291,6 +6762,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "status",
+                "label": "Order Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6303,6 +6775,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "complete",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6317,12 +6790,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Find purchase order by ID",
+          "title": "Find purchase order by ID",
         },
         Object {
           "description": "For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Delete purchase order by ID",
           "method": "delete",
           "path": "/api/v3/store/order/{orderId}",
           "pathParamKeyNameList": Array [
@@ -6336,6 +6810,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "orderId",
+                "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6348,7 +6823,7 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Delete purchase order by ID",
+          "title": "Delete purchase order by ID",
         },
       ],
       "description": "Access to Petstore orders",
@@ -6361,6 +6836,7 @@ Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Create user",
           "method": "post",
           "path": "/api/v3/user",
           "pathParamKeyNameList": Array [],
@@ -6381,6 +6857,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6393,6 +6870,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6405,6 +6883,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6417,6 +6896,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6429,6 +6909,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6441,6 +6922,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6453,6 +6935,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6465,6 +6948,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6477,12 +6961,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Create user",
+          "title": "Create user",
         },
         Object {
           "description": "Creates list of users with given input array",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Creates list of users with given input array",
           "method": "post",
           "path": "/api/v3/user/createWithList",
           "pathParamKeyNameList": Array [],
@@ -6492,18 +6977,21 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "",
+                "label": "",
                 "params": Array [
                   Object {
                     "description": "",
                     "examples": Array [],
                     "id": "",
                     "keyName": "id",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6516,6 +7004,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "username",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6528,6 +7017,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "firstName",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6540,6 +7030,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "lastName",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6552,6 +7043,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "email",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6564,6 +7056,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "password",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6576,6 +7069,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "phone",
+                    "label": "",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6588,6 +7082,7 @@ Object {
                     "examples": Array [],
                     "id": "",
                     "keyName": "userStatus",
+                    "label": "User Status",
                     "params": Array [],
                     "rules": Object {
                       "required": false,
@@ -6615,12 +7110,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6633,6 +7130,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6645,6 +7143,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6657,6 +7156,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6669,6 +7169,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6681,6 +7182,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6693,6 +7195,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6705,6 +7208,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6719,12 +7223,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Creates list of users with given input array",
+          "title": "Creates list of users with given input array",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Logs user into the system",
           "method": "get",
           "path": "/api/v3/user/login",
           "pathParamKeyNameList": Array [],
@@ -6739,6 +7244,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "The user name for login",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6751,6 +7257,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "The password for login in clear text",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6767,6 +7274,7 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [],
             "rules": Object {
               "required": true,
@@ -6774,12 +7282,13 @@ Object {
             "title": "",
             "type": "string",
           },
-          "summary": "Logs user into the system",
+          "title": "Logs user into the system",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Logs out current logged in user session",
           "method": "get",
           "path": "/api/v3/user/logout",
           "pathParamKeyNameList": Array [],
@@ -6787,12 +7296,13 @@ Object {
           "requestDataSchema": null,
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Logs out current logged in user session",
+          "title": "Logs out current logged in user session",
         },
         Object {
           "description": "",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Get user by user name",
           "method": "get",
           "path": "/api/v3/user/{username}",
           "pathParamKeyNameList": Array [
@@ -6806,6 +7316,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username1",
+                "label": "The name that needs to be fetched. Use user1 for testing. ",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6822,12 +7333,14 @@ Object {
             "examples": Array [],
             "id": "",
             "keyName": "",
+            "label": "",
             "params": Array [
               Object {
                 "description": "",
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6840,6 +7353,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6852,6 +7366,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6864,6 +7379,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6876,6 +7392,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6888,6 +7405,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6900,6 +7418,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6912,6 +7431,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6926,12 +7446,13 @@ Object {
             "title": "",
             "type": "object",
           },
-          "summary": "Get user by user name",
+          "title": "Get user by user name",
         },
         Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Update user",
           "method": "put",
           "path": "/api/v3/user/{username}",
           "pathParamKeyNameList": Array [
@@ -6954,6 +7475,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username1",
+                "label": "name that need to be deleted",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -6966,6 +7488,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "id",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6978,6 +7501,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -6990,6 +7514,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "firstName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7002,6 +7527,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "lastName",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7014,6 +7540,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "email",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7026,6 +7553,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "password",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7038,6 +7566,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "phone",
+                "label": "",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7050,6 +7579,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "userStatus",
+                "label": "User Status",
                 "params": Array [],
                 "rules": Object {
                   "required": false,
@@ -7062,12 +7592,13 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Update user",
+          "title": "Update user",
         },
         Object {
           "description": "This can only be done by the logged in user.",
           "formDataKeyNameList": Array [],
           "id": "",
+          "label": "Delete user",
           "method": "delete",
           "path": "/api/v3/user/{username}",
           "pathParamKeyNameList": Array [
@@ -7081,6 +7612,7 @@ Object {
                 "examples": Array [],
                 "id": "",
                 "keyName": "username",
+                "label": "The name that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
                   "required": true,
@@ -7093,7 +7625,7 @@ Object {
           },
           "requestExtraDataSchema": null,
           "responseDataSchema": null,
-          "summary": "Delete user",
+          "title": "Delete user",
         },
       ],
       "description": "Operations about user",

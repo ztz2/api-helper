@@ -32,7 +32,7 @@ export default new Template({
 
   function renderForm(schemaList = []) {
     const formItemCodeWrap = schemaList.map((item) => {
-      return \`  <el-form-item label="\${item.title?item.title:item.keyName}">
+      return \`  <el-form-item label="\${item.label?item.label:item.keyName}">
     \${item.type==='array'?\`<el-select v-model="form.\${item.keyName}" placeholder="请选择">
       <el-option label="数据1" value="1"></el-option>
       <el-option label="数据1" value="2"></el-option>

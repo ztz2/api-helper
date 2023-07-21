@@ -19,6 +19,7 @@ const fs_extra_1 = require("fs-extra");
 const template_1 = require("@api-helper/template");
 const log_1 = __importDefault(require("../../lib/tools/log"));
 const util_1 = require("../tools/util");
+const lib_1 = require("../../lib");
 const const_1 = require("../../lib/service/const");
 const parser_yapi_plugin_1 = __importDefault(require("./parser-plugins/parser-yapi-plugin"));
 const parser_swagger_plugin_1 = __importDefault(require("./parser-plugins/parser-swagger-plugin"));
@@ -226,7 +227,10 @@ import request from '${requestFilePath}';
                 }
             }
             spinner.succeed();
-            return code.filter(Boolean).join('\n');
+            return yield (0, lib_1.formatCode)({
+                sourceCode: code.filter(Boolean).join('\n'),
+                formatCodeExtension: isTS ? '.ts' : '.js',
+            });
         });
     }
     // 5. 输出

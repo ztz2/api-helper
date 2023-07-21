@@ -4,6 +4,7 @@ import { ParserYapi } from '@api-helper/core';
 import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
+import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import { processRequestConfig, getErrorMessage } from '@/lib/tools/util';
 import {AbstractParserPlugin, ParserPluginOptions, ParserPluginRunResult} from '@/lib/types';
 
@@ -27,6 +28,7 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
     const dsTasks = [];
     for (const documentServer of documentServers) {
       const errorServerText = `【${documentServer.url}】`;
+      const requestConfig = processRequestConfig(documentServer);
       dsTasks.push((async () => {
         // 获取项目基本信息
         const projectInfo: Recordable = await fetchProjectInfo(documentServer).catch((e) => {
@@ -56,6 +58,7 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         const tasks = [];
         const errorApi = [];
         for (const api of apiList) {
+          api.docURL = mergeUrl(requestConfig.origin, `/project/${projectId}/interface/api/${api._id}`);
           tasks.push(
             fetchApiDetail(documentServer, { id: api._id }).then((res) => {
               api.content = res;

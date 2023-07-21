@@ -115,7 +115,7 @@ var ParserYapi = /** @class */ (function () {
         });
         this.apiList.forEach(function (apiMap) {
             var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
-            var _e;
+            var _e, _f;
             var apiContent = apiMap.content;
             // 没有详情内容，不做任何处理
             if (!apiContent) {
@@ -124,10 +124,12 @@ var ParserYapi = /** @class */ (function () {
             var tag = apiMap.tag;
             var api = {
                 id: _this.generateId(),
-                summary: (0, util_1.filterDesc)(apiMap.title),
+                title: (0, util_1.filterDesc)(apiMap.title),
                 description: (0, util_1.filterDesc)(apiMap.markdown),
+                label: '',
                 path: (0, util_1.mergeUrl)((0, util_1.isHttp)(project.basePath) ? '' : project.basePath, apiMap.path),
                 method: apiMap.method,
+                docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
                 formDataKeyNameList: [],
                 pathParamKeyNameList: [],
                 queryStringKeyNameList: [],
@@ -135,6 +137,7 @@ var ParserYapi = /** @class */ (function () {
                 requestExtraDataSchema: null,
                 responseDataSchema: null,
             };
+            api.label = api.title ? api.title : api.description ? api.description : '';
             // API content-type，暂无特殊处理
             // switch (apiMap.req_body_type) {
             //   case 'form':
@@ -192,6 +195,7 @@ var ParserYapi = /** @class */ (function () {
                         id: _this.generateId(),
                         title: '',
                         description: (0, util_1.filterDesc)(p.desc),
+                        label: '',
                         keyName: keyName,
                         type: 'string',
                         params: [],
@@ -199,6 +203,7 @@ var ParserYapi = /** @class */ (function () {
                             required: true
                         }
                     };
+                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.pathParamKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
                     requestDataSchema.params.push(scm);
@@ -227,6 +232,7 @@ var ParserYapi = /** @class */ (function () {
                         id: _this.generateId(),
                         title: '',
                         description: (0, util_1.filterDesc)(p.desc),
+                        label: '',
                         keyName: keyName,
                         type: 'string',
                         params: [],
@@ -234,6 +240,7 @@ var ParserYapi = /** @class */ (function () {
                             required: Number(p.required) === 1
                         }
                     };
+                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.queryStringKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
                     requestDataSchema.params.push(scm);
@@ -252,8 +259,8 @@ var ParserYapi = /** @class */ (function () {
                 case 'form': {
                     try {
                         // Form Data数据
-                        for (var _f = __values(apiContent.req_body_form), _g = _f.next(); !_g.done; _g = _f.next()) {
-                            var p = _g.value;
+                        for (var _g = __values(apiContent.req_body_form), _h = _g.next(); !_h.done; _h = _g.next()) {
+                            var p = _h.value;
                             var keyName = (0, util_1.filterKeyName)(p.name);
                             // 参数字段没有，跳过该字段
                             if (!keyName || requestKeyNameMemo.includes(keyName)) {
@@ -265,6 +272,7 @@ var ParserYapi = /** @class */ (function () {
                                 id: _this.generateId(),
                                 title: '',
                                 description: (0, util_1.filterDesc)(p.desc),
+                                label: '',
                                 keyName: keyName,
                                 type: 'string',
                                 params: [],
@@ -272,6 +280,7 @@ var ParserYapi = /** @class */ (function () {
                                     required: Number(p.required) === 1
                                 }
                             };
+                            scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                             api.formDataKeyNameList.push(keyName);
                             requestKeyNameMemo.push(keyName);
                             requestDataSchema.params.push(scm);
@@ -280,7 +289,7 @@ var ParserYapi = /** @class */ (function () {
                     catch (e_3_1) { e_3 = { error: e_3_1 }; }
                     finally {
                         try {
-                            if (_g && !_g.done && (_c = _f.return)) _c.call(_f);
+                            if (_h && !_h.done && (_c = _g.return)) _c.call(_g);
                         }
                         finally { if (e_3) throw e_3.error; }
                     }
@@ -313,6 +322,7 @@ var ParserYapi = /** @class */ (function () {
                         id: _this.generateId(),
                         title: '',
                         description: (0, util_1.filterDesc)(apiContent.req_body_other),
+                        label: '',
                         keyName: keyName,
                         type: 'string',
                         params: [],
@@ -320,6 +330,7 @@ var ParserYapi = /** @class */ (function () {
                             required: false
                         }
                     };
+                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.formDataKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
                     requestDataSchema.params.push(scm);
@@ -336,7 +347,7 @@ var ParserYapi = /** @class */ (function () {
                         api.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, {
                             autoGenerateId: _this.autoGenerateId
                         });
-                        if (((_e = api.responseDataSchema) === null || _e === void 0 ? void 0 : _e.type) === 'object') {
+                        if (((_f = api.responseDataSchema) === null || _f === void 0 ? void 0 : _f.type) === 'object') {
                             api.responseDataSchema.keyName = '';
                         }
                     }

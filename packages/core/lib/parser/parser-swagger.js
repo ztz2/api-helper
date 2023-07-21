@@ -190,8 +190,9 @@ var ParserSwagger = /** @class */ (function () {
                         // 接口
                         var api = {
                             id: this_1.generateId(),
-                            summary: (0, util_1.filterDesc)(apiMap.summary),
+                            title: (0, util_1.filterDesc)(apiMap.summary),
                             description: (0, util_1.filterDesc)(apiMap.description),
+                            label: '',
                             path: mPath,
                             method: method,
                             formDataKeyNameList: [],
@@ -201,6 +202,7 @@ var ParserSwagger = /** @class */ (function () {
                             requestExtraDataSchema: null,
                             responseDataSchema: null,
                         };
+                        api.label = api.title ? api.title : api.description ? api.description : '';
                         /****************** 处理请求参数--开始 ******************/
                         var requestExtraDataSchema = null;
                         var requestDataSchema = {
@@ -225,6 +227,7 @@ var ParserSwagger = /** @class */ (function () {
                                         id: this_1.generateId(),
                                         title: '',
                                         description: '',
+                                        label: '',
                                         type: 'string',
                                         keyName: keyName,
                                         params: [],
@@ -261,6 +264,7 @@ var ParserSwagger = /** @class */ (function () {
                                     }
                                     scm.rules.required = parameter.in === 'path' ? true : (0, util_1.checkType)(parameter.required, 'Boolean') ? parameter.required : false;
                                     scm.description = (0, util_1.filterDesc)(parameter.description);
+                                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                                     requestKeyNameMemo.push(keyName);
                                     requestDataSchema.params.push(scm);
                                 }

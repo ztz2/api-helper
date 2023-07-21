@@ -51,9 +51,11 @@ export declare namespace APIHelper {
     // 随机生成的唯一ID
     id: string;
     // 一个可选的简要总结字符串，用来描述此路径内包含的所有操作。
-    summary: string;
-    // 一个可选的详细说明字符串，用于描述此路径包含的所有操作。
+    title: string;
+    // 一个可选的详细说明字符串，用于详细描述此路径包含的所有操作。
     description: string;
+    // 对 title 和 description的取值，title优先。取值规则 -> title ? title : description ? description : '';
+    label: string;
     // 接口的文档地址，预留。比如：yapi可以指定接口地址
     docURL?: string;
     // 到各个端点的相对路径，路径必须以/打头，这个路径会被直接连接到 Server 对象 的url字段以组成完整URL地址（不会考虑是否是相对路径）
@@ -94,10 +96,12 @@ export declare namespace APIHelper {
     type: SchemaType | undefined | '';
     // 字段名称，当为基本类型的时候，这个字段只是一个数据类型的标记，没有keyName存在
     keyName?: string;
-    // 简要描述
+    // 简要描述，比如 username，描述: 用户名
     title: string;
-    // 详细描述
+    // 详细描述，对字段的详细解释。
     description: string;
+    // 对 title 和 description的取值，title优先。取值规则 -> title ? title : description ? description : '';
+    label: string;
     // 校验规则
     rules: {
       // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
@@ -105,12 +109,14 @@ export declare namespace APIHelper {
     },
     // 例子数据
     examples: string[],
+    // 节点子对象属性Schema
     params: Schema[];
   }
 
   interface IString extends AbstractSchema {
     type: 'string';
     rules: {
+      // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
       required: boolean;
       // 字符串与数组的校验-长度
       minLength?: number;
@@ -129,6 +135,7 @@ export declare namespace APIHelper {
   interface INumber extends AbstractSchema {
     type: 'number';
     rules: {
+      // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
       required: boolean;
       // 数字校验-倍数
       multipleOf?: number;
@@ -152,6 +159,7 @@ export declare namespace APIHelper {
     type: 'array';
     params: Schema[];
     rules: {
+      // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
       required: boolean;
       // （对应数组中的minItems和maxItems）
       minLength?: number;

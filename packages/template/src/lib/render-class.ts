@@ -1,6 +1,6 @@
 import * as changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/es/lib/utils/util';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import formatCode from '@/lib/utils/prettier';
 import { renderObjectComment } from '@/lib/render-object';

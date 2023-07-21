@@ -9,7 +9,7 @@ export default function genEmptyApiTemplate() {
   \`生成模板例子，这里获取请求API集合，根据这些API，可以生成想要的任何模板代码
 《if apiList.length > 0》
 请求API：《each apiList》
-   《$value.summary》
+   《$value.label》
       url：《$value.path》
       method：《$value.method》《/each》
 《/if》

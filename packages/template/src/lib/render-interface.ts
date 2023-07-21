@@ -94,7 +94,7 @@ function renderInterfaceComment(
 ) {
   const commentText =
 `/**
- * @description ${[api.summary, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】
+ * @description ${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】${api.docURL ? `\n * @doc ${api.docURL}\n` : ''}
  * @url [ ${api.method.toUpperCase()} ] ${api.path}
  */`;
   return commentText;
@@ -115,15 +115,8 @@ function renderInterfaceDeepObject(
 
   const { type } = schema;
   const bannerComment = [];
-  if (schema.description) {
-    bannerComment.push(schema.description);
-  }
-  if (schema.title) {
-    let text = schema.title;
-    if (bannerComment.length > 0) {
-      text = `（${text}）`;
-    }
-    bannerComment.push(text);
+  if (schema.label) {
+    bannerComment.push(schema.label);
   }
   const bannerCommentText = bannerComment.length > 0 ? `\n// ${  bannerComment.join('')}` : '';
 

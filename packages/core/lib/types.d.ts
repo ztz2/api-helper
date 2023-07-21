@@ -22,8 +22,9 @@ export declare namespace APIHelper {
     }
     interface API {
         id: string;
-        summary: string;
+        title: string;
         description: string;
+        label: string;
         docURL?: string;
         path: string;
         method: string;
@@ -41,6 +42,7 @@ export declare namespace APIHelper {
         keyName?: string;
         title: string;
         description: string;
+        label: string;
         rules: {
             required: boolean;
         };

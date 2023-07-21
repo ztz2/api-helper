@@ -113,7 +113,7 @@
                         <a-tooltip content="点击复制接口路径">
                           <span @click.stop="handleCopyPath(api.path)">{{api.path}}</span>
                         </a-tooltip>
-                        <small><strong>{{api.summary}}</strong></small>
+                        <small><strong>{{api.label}}</strong></small>
                       </a-space>
                     </template>
                     <a-collapse expand-icon-position="right" :default-active-key="['3-2']" destroy-on-hide>

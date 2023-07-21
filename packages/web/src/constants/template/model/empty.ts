@@ -14,12 +14,12 @@ export default function genEmptyModelTemplate() {
 
 《if requestDataSchemaList.length > 0》
 请求数据字段：《each requestDataSchemaList》
-   《$value.keyName》《$value.summary || $value.title》《/each》
+   《$value.keyName》《$value.label》《/each》
 《/if》
 
 《if responseDataSchemaList.length > 0》
 响应数据字段：《each responseDataSchemaList》
-   《$value.keyName》《$value.summary || $value.title》《/each》
+   《$value.keyName》《$value.label》《/each》
 《/if》
   \`;
 

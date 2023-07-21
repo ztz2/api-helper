@@ -1,6 +1,6 @@
 import { camelCase } from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/es/lib/utils/util';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import formatCode from '@/lib/utils/prettier';
 
@@ -103,7 +103,7 @@ export function renderObjectComment(schema: APIHelper.Schema) {
   if ('enum' in schema && schema.enum.length > 0) {
     type = schema.enum.map((item) => `'${item}'`).join(' | ');
   }
-  return `// { ${type} }` + (schema.title ? ` ${schema.title}` :  schema.description ? ` ${schema.description}` : '');
+  return `// { ${type} }${schema.label ? ` ${schema.label}` : ''}`;
 }
 
 export function renderObjectName(

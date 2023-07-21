@@ -153,6 +153,7 @@ export function parserSchema(
     id: options.autoGenerateId ? randomId() : '',
     title: filterDesc(schema.title),
     description: filterDesc(schema.description),
+    label: '',
     keyName,
     type: transformType(schema.type as string),
     params: [],
@@ -162,6 +163,7 @@ export function parserSchema(
       required: requiredFieldList.includes(keyName),
     }
   };
+  resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
 
   try {
     // 枚举类型单独处理

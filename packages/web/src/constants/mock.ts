@@ -14,8 +14,9 @@ export const DOCUMENT = {
     'description': 'Tenant Controller',
     'apiList': [{
       'id': '51b3b94e-9d2a-4341-9a53-af0805a9b940',
-      'summary': '账户登录',
+      'title': '账户登录',
       'description': '账户登录',
+      'label': '账户登录',
       'path': '/api/tenant/auth',
       'method': 'post',
       'formDataKeyNameList': [],
@@ -308,8 +309,9 @@ export const DOCUMENT = {
       },
     }, {
       'id': 'd9e3e423-191e-4cce-ac4a-a56c8b8e09dc',
-      'summary': '登录确认',
+      'title': '登录确认',
       'description': '登录确认',
+      'label': '登录确认',
       'path': '/api/tenant/auth',
       'method': 'get',
       'formDataKeyNameList': [],
@@ -539,8 +541,9 @@ export const DOCUMENT = {
       },
     }, {
       'id': '832b91f9-43e0-423b-8c9b-4475dde98fc5',
-      'summary': '手机验证码获取',
+      'title': '手机验证码获取',
       'description': '手机验证码获取',
+      'label': '手机验证码获取',
       'path': '/api/tenant/auth/verification-code',
       'method': 'get',
       'formDataKeyNameList': [],
