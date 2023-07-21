@@ -1,5 +1,5 @@
 <template>
-  <div class="apih-code">
+  <div class="apih-code" :style="{height: currentHeight}">
     <div class="apih-code__handle">
       <a-tooltip :content="text">
         <icon-copy :size="30" style="color: #fff" @click="copy" />
@@ -40,6 +40,10 @@ const props = defineProps({
     type: [String, Array, Promise] as PropType<string|Promise<string[] | string>|Array<string>>,
     default: '',
   },
+  height: {
+    type: [String, Number],
+    default: '100%',
+  },
 });
 
 const { toClipboard } = useClipboard();
@@ -57,6 +61,7 @@ const text = computed(() => {
       return '复制代码';
   }
 });
+const currentHeight = computed(() => (typeof props.height === 'number' ? `${props.height}px` : props.height));
 
 let watchTimeRecord: number;
 watch(() => props.code, (val) => {

@@ -10,7 +10,7 @@
       <a-card title="基础配置">
         <a-spin :loading="loading" tip="加载中..." style="width: 100%;">
           <a-row :gutter="gutter">
-            <a-col :span="24">
+            <a-col :span="12">
               <a-form-item
                 style="margin-bottom: 0"
                 :rules="[{ required: true, validator: validatorPrettierrcOptions }]"
@@ -34,6 +34,22 @@
                 </div>
               </a-form-item>
             </a-col>
+            <a-col :span="12">
+              <a-form-item
+                style="margin-bottom: 0"
+                label="配置预览"
+              >
+                <div style="width: 100%;">
+                  <a-spin
+                    tip="加载中..."
+                    class="ztz-spin"
+                    :loading="loadingPreview"
+                  >
+                    <apih-code :code="currentPrettierrcOptions" height="calc(100vh - 252px)"></apih-code>
+                  </a-spin>
+                </div>
+              </a-form-item>
+            </a-col>
           </a-row>
         </a-spin>
       </a-card>
@@ -53,6 +69,7 @@ import {
   defineEmits,
   defineProps,
   defineExpose,
+  onBeforeUnmount,
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
@@ -79,16 +96,46 @@ const props = defineProps({
 const formRef = ref();
 const gutter = ref(15);
 const loading = ref(false);
+const loadingPreview = ref(false);
 const { currentProject } = useProject();
 let formatTime: number;
 
 const formModel = ref({
   prettierrcOptions: '',
 });
+const currentPrettierrcOptions = ref('');
 
 watch(() => props.data.prettierrcOptions, (val) => {
   formatPrettierrcOptions(val);
 }, { immediate: true });
+
+let timer: number;
+watch(() => formModel.value.prettierrcOptions, (val) => {
+  if (!val || val.trim() === '') {
+    currentPrettierrcOptions.value = val;
+  } else {
+    timer && clearTimeout(timer);
+    timer = setTimeout(async () => {
+      const v = formModel.value.prettierrcOptions;
+      if (!v || v.trim() === '') {
+        loadingPreview.value = false;
+        currentPrettierrcOptions.value = v;
+        return;
+      }
+      loadingPreview.value = true;
+      const res = await formatCode({
+        sourceCode: v,
+        formatCodeExtension: '.json',
+      });
+      loadingPreview.value = false;
+      currentPrettierrcOptions.value = res as string;
+    }, 1200) as unknown as number;
+  }
+}, { immediate: true });
+
+onBeforeUnmount(() => {
+  timer && clearTimeout(timer);
+});
 
 function validatorPrettierrcOptions(value: unknown, callback: Function) {
   try {
