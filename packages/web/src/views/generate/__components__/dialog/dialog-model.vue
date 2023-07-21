@@ -11,7 +11,7 @@
       <a-spin
         tip="加载中..."
         class="ztz-spin"
-        :loading="true"
+        :loading="loading"
       >
         <a-row :gutter="12">
           <a-col v-for="(item, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
