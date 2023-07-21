@@ -119,6 +119,7 @@
                   <span>编辑模版内容</span>
                   <apih-dialog-code-mirror
                     v-model:value="formModel.content"
+                    @update:value="$emit('exec-gen')"
                   />
                 </a-space>
               </template>
@@ -149,8 +150,11 @@ import {
   toRef,
   computed,
   PropType,
+  onMounted,
+  defineEmits,
   defineProps,
-  defineExpose, onBeforeUnmount, onMounted,
+  defineExpose,
+  onBeforeUnmount,
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
@@ -173,7 +177,7 @@ type FormModelType = Template;
 
 const span = ref(12);
 const gutter = ref(15);
-
+defineEmits(['exec-gen']);
 const props = defineProps({
   data: {
     type: Object as PropType<FormModelType>,

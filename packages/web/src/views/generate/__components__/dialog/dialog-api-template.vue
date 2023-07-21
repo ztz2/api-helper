@@ -5,6 +5,7 @@
     cancel-text="返回"
     :span="[15, 9]"
     :form-component="Form"
+    @exec-gen="handleGen"
     hide-ok
   >
     <template #default>

@@ -1,12 +1,13 @@
 <template>
   <apih-dialog
-      ref="dialogRef"
-      width="100%"
-      cancel-text="返回"
-      :span="[16, 8]"
-      :form-component="Form"
-      hide-ok
-      unique-form
+    ref="dialogRef"
+    width="100%"
+    cancel-text="返回"
+    :span="[16, 8]"
+    :form-component="Form"
+    @exec-gen="handleGen"
+    hide-ok
+    unique-form
   >
     <template #default>
       <a-spin

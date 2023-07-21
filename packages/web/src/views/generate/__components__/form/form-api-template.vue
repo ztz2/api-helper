@@ -72,6 +72,7 @@
                   <span>编辑模版内容</span>
                   <apih-dialog-code-mirror
                     v-model:value="formModel.content"
+                    @update:value="$emit('exec-gen')"
                   />
                 </a-space>
               </template>
@@ -102,6 +103,7 @@ import {
   watch,
   PropType,
   defineProps,
+  defineEmits,
   defineExpose,
   onBeforeUnmount,
 } from 'vue';
@@ -114,6 +116,7 @@ import { Template } from '@/store/template/interface';
 
 type FormModelType = Template;
 
+defineEmits(['exec-gen']);
 const props = defineProps({
   data: {
     type: Object as PropType<FormModelType>,
