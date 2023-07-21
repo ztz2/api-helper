@@ -20,7 +20,7 @@
     * 服务器端代码在server包下。
 
 ## 部署说明
-windows环境，可以双击运行 `run-template-server.bat` 即可。下面是手动部署。
+windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.bat` 即可。下面是手动部署。
 
 ### 步骤1
 打包浏览器代码，进入web包下，输入命令：`pnpm run build`。
