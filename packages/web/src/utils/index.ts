@@ -36,10 +36,6 @@ export function getMethodRgbaColor(method: HttpMethod = 'GET', alpha = 1) {
   return `${value.slice(0, value.length - 1)}, ${alpha})`;
 }
 
-export function isBasicDataTypeSchema(schema: APIHelper.Schema): boolean {
-  return !schema.keyName && schema.type !== 'array' && schema.type !== 'object';
-}
-
 export function modalConfirm(modalConfig: ModalConfig | string) {
   return new Promise((resolve, reject) => {
     const defaultConfig = {

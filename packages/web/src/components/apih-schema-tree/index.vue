@@ -26,7 +26,12 @@
                   :model-value="checkedKeys.includes(node[valueKey])"
                   @click="handleClickNode(node)"
               >
-                {{getLabel(node)}}
+                <a-space :size="4">
+                  <a-tooltip v-if="node.isSchemaObject" :content="`数据类型包装节点，当前数据类型为：${pascalCase(node.type)}`">
+                    <icon-info-circle-fill style="color: #666" />
+                  </a-tooltip>
+                  <span>{{getLabel(node)}}</span>
+                </a-space>
               </a-checkbox>
             </div>
             <div class="apih-schema-tree__node-handle">
@@ -56,6 +61,7 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import {
+  h,
   ref,
   watch,
   computed,
@@ -63,11 +69,14 @@ import {
   defineEmits,
   defineProps,
 } from 'vue';
-import { APIHelper } from '@api-helper/core/es/lib/types';
+import {
+  isSchemaObject,
+  isSchemaPrimitiveValue,
+} from '@api-helper/core/lib/utils/util';
 import { pascalCase } from 'change-case';
-import { treeForEach, treeMap } from '@/utils/tree';
+import { APIHelper } from '@api-helper/core/lib/types';
 
-import { isBasicDataTypeSchema } from '@/utils';
+import { treeForEach, treeMap } from '@/utils/tree';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
@@ -97,17 +106,16 @@ watch(() => props.value, () => checkedKeys.value = props.value, { deep: true });
 watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true });
 
 const treeData = computed(() => treeMap(props.data, (node: Recordable) => {
-  if (isBasicDataTypeSchema(node as APIHelper.Schema)) {
+  if (isSchemaPrimitiveValue(node as APIHelper.Schema)) {
     return null;
   }
-  node = {
+  node.isSchemaObject = isSchemaObject(node as APIHelper.Schema);
+  return {
     ...node,
     key: node[props.valueKey],
     title: node[props.labelKey],
     children: node[props.childrenKey],
-    isObjectNode: isObjectNode(node),
   };
-  return node;
 }, props.childrenKey));
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
@@ -147,14 +155,10 @@ function handleClickNode(node: Recordable) {
   index === -1 ? checkedKeys.value.push(node[props.valueKey]) : checkedKeys.value.splice(index, 1);
 }
 
-function isObjectNode(node: Recordable): boolean {
-  return !node.keyName && (node.type === 'array' || node.type === 'object');
-}
-
 function getLabel(node: Recordable) {
   // 如果是Object或者Array类型，会显示数据类型
-  if (node?.isObjectNode) {
-    return `数据格式(${pascalCase(node.type)})`;
+  if (node.isSchemaObject) {
+    return node.label ? node.label : pascalCase(node.type);
   }
   return node[props.labelKey];
 }
