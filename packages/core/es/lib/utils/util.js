@@ -377,6 +377,13 @@ export function processResponseSchemaPipeline(api, options) {
         });
     }
 }
+// 判断是否是原始值的Schema。
+export function isSchemaPrimitiveValue(schema) {
+    if (!schema) {
+        return false;
+    }
+    return !schema.keyName && schema.type !== 'array' && schema.type !== 'object';
+}
 /**
  * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
  * @example 例子说明：
@@ -407,7 +414,7 @@ export function filterSchemaPrimitiveValue(schema) {
         try {
             for (var scmList_1 = __values(scmList), scmList_1_1 = scmList_1.next(); !scmList_1_1.done; scmList_1_1 = scmList_1.next()) {
                 var scm = scmList_1_1.value;
-                if (!scm.keyName && scm.type !== 'array' && scm.type !== 'object') {
+                if (isSchemaPrimitiveValue(scm)) {
                     continue;
                 }
                 if (((_b = scm.params) === null || _b === void 0 ? void 0 : _b.length) > 0) {

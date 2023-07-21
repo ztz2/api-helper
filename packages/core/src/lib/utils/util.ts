@@ -371,6 +371,14 @@ export function processResponseSchemaPipeline(api: APIHelper.API, options: Recor
   }
 }
 
+// 判断是否是原始值的Schema。
+export function isSchemaPrimitiveValue(schema: APIHelper.Schema | null) {
+  if (!schema) {
+    return false;
+  }
+  return !schema.keyName && schema.type !== 'array' && schema.type !== 'object';
+}
+
 /**
  * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
  * @example 例子说明：
@@ -396,7 +404,7 @@ export function filterSchemaPrimitiveValue(schema: APIHelper.Schema | APIHelper.
     const result: Array<APIHelper.Schema> = [];
     memo.set(scmList, result);
     for (const scm of scmList) {
-      if (!scm.keyName && scm.type !== 'array' && scm.type !== 'object') {
+      if (isSchemaPrimitiveValue(scm)) {
         continue;
       }
       if (scm.params?.length > 0) {

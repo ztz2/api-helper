@@ -22,6 +22,7 @@ export declare function uniqueRequestDataRootSchema(api: APIHelper.API): APIHelp
 export declare function deepAddSchemaRules(schema: null | APIHelper.Schema | APIHelper.SchemaList, rules?: Recordable): undefined;
 export declare function processRequestSchemaPipeline(api: APIHelper.API, requestDataSchema: APIHelper.Schema, requestExtraDataSchema: APIHelper.Schema | null, options: Recordable): APIHelper.API;
 export declare function processResponseSchemaPipeline(api: APIHelper.API, options: Recordable): void;
+export declare function isSchemaPrimitiveValue(schema: APIHelper.Schema | null): boolean;
 /**
  * @description 过滤原始值的Schema。保留纯粹的类型对象。原始值Schema用于TS类型申明有用，在生成JS对象，Class实体类时候，这些原始值类型则无用，需要过滤掉。
  * @example 例子说明：
