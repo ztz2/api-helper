@@ -9,14 +9,15 @@ export default function genEmptyModelTemplate() {
   const responseDataSchemaList = params.responseDataSchemaList;
   const tpl1 = \`生成模板例子，这里获取请求数据和响应数据的字段，根据这些字段，可以生成想要的任何模板代码
 
-  {{if requestDataSchemaList.length > 0}}
-  请求数据字段：{{each requestDataSchemaList}}
-     {{$value.keyName}}({{$value.title}}){{/each}}
-  {{/if}}
-  {{if responseDataSchemaList.length > 0}}
-  响应数据字段：{{each responseDataSchemaList}}
-     {{$value.keyName}}({{$value.title}}){{/each}}
-  {{/if}}
+《if requestDataSchemaList.length > 0》
+请求数据字段：《each requestDataSchemaList》
+   《$value.keyName》《$value.summary || $value.title》《/each》
+《/if》
+
+《if responseDataSchemaList.length > 0》
+响应数据字段：《each responseDataSchemaList》
+   《$value.keyName》《$value.summary || $value.title》《/each》
+《/if》
   \`;
 
     // 当一个模板定义好之后，使用 artTemplate.render 方法进行生成，并添加到result返回数组中
