@@ -24,7 +24,7 @@ module.exports = defineConfig({
   },
   chainWebpack(config) {
     config.plugin('html').tap((args) => {
-      args[0].title = 'API Helper Template';
+      args[0].title = 'API Helper - 帮助开发者生成interface、类、对象等代码模板';
       return args;
     });
     if (process.env.NODE_ENV === 'production') {
