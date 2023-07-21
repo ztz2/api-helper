@@ -123,6 +123,7 @@ import {
   watch,
   toRef,
   toRefs,
+  nextTick,
   computed,
   PropType,
   onMounted,
@@ -140,7 +141,6 @@ import { useProject } from '@/store';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { DOCUMENT } from '@/constants/mock';
-import formatCode from '@/utils/format-code';
 import { Project } from '@/store/project/interface';
 import { Template } from '@/store/template/interface';
 import { FormModel } from '../form-model/interface';
@@ -233,6 +233,29 @@ watch(() => DOCUMENT.categoryList, (categoryList) => {
   })) ?? [];
 }, { immediate: true });
 
+// 模态框打开
+watch(() => props.visible, (v) => {
+  if (v) {
+    nextTick(() => {
+      // 重置表单
+      baseInfo.value = new FormModel();
+      baseInfo.value.apiId = defaultApi.id;
+      // 全选根节点上数据
+      treeForEach(defaultApi?.requestDataSchema?.params, (item: APIHelper.Schema) => {
+        if (item?.id) {
+          baseInfo.value.requestDataSchemaIdList.push(item.id as string);
+        }
+      });
+      // 全选根节点上数据
+      treeForEach(defaultApi?.responseDataSchema?.params, (item: APIHelper.Schema) => {
+        if (item?.id) {
+          baseInfo.value.responseDataSchemaIdList.push(item.id as string);
+        }
+      });
+    });
+  }
+}, { immediate: true });
+
 watch(() => baseInfo.value.apiId, (val) => {
   baseInfo.value.api = apiMap.value.get(val) as APIHelper.API;
 }, { deep: true });
@@ -272,7 +295,7 @@ const requestFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   const map = new Map<string, APIHelper.Schema>();
   treeForEach(requestFieldTree.value, (schema: APIHelper.Schema) => {
     map.set(schema.id, schema);
-  });
+  }, 'params');
   return map;
 });
 
@@ -280,7 +303,7 @@ const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   const map = new Map<string, APIHelper.Schema>();
   treeForEach(responseFieldTree.value, (schema: APIHelper.Schema) => {
     map.set(schema.id, schema);
-  });
+  }, 'params');
   return map;
 });
 
@@ -325,20 +348,6 @@ function getFormModel() {
     ...data,
   };
 }
-
-onMounted(() => {
-  baseInfo.value.apiId = defaultApi.id;
-  treeForEach([defaultApi?.requestDataSchema], (item: APIHelper.Schema) => {
-    if (item?.id) {
-      baseInfo.value.requestDataSchemaIdList.push(item.id as string);
-    }
-  }, 'params');
-  treeForEach([defaultApi?.responseDataSchema], (item: APIHelper.Schema) => {
-    if (item?.id) {
-      baseInfo.value.responseDataSchemaIdList.push(item.id as string);
-    }
-  }, 'params');
-});
 
 defineExpose({
   validate: async () => {

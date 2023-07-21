@@ -123,6 +123,7 @@ import { useRoute } from 'vue-router';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
+import { isSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import useForm from '@/hooks/use-form';
 import { FormModel } from './interface';
@@ -217,27 +218,26 @@ watch(() => formModel.value.apiId, (val) => {
   const api = apiMap.value.get(apiId);
   formModel.value.requestDataSchemaIdList = [];
   formModel.value.responseDataSchemaIdList = [];
-  treeForEach([api?.requestDataSchema], (item: APIHelper.Schema) => {
+  // 全选根节点上数据
+  treeForEach(api?.requestDataSchema?.params, (item: APIHelper.Schema) => {
     if (item?.id) {
       formModel.value.requestDataSchemaIdList.push(item.id as string);
     }
-  }, 'params');
-  treeForEach([api?.responseDataSchema], (item: APIHelper.Schema) => {
+  });
+  // 全选根节点上数据
+  treeForEach(api?.responseDataSchema?.params, (item: APIHelper.Schema) => {
     if (item?.id) {
       formModel.value.responseDataSchemaIdList.push(item.id as string);
     }
-  }, 'params');
+  });
 }, { deep: true });
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {
-  console.log('requestDataSchemaIdList: ', val);
   formModel.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
 }, { deep: true });
 
 watch(() => formModel.value.responseDataSchemaIdList, (val) => {
   formModel.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
-  console.log('responseDataSchemaIdList: ', val);
-  console.log('formModel.value.responseDataSchemaList: ', formModel.value.responseDataSchemaList);
 }, { deep: true });
 
 const requestFieldTree = computed(() => {
@@ -267,7 +267,7 @@ const requestFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   const map = new Map<string, APIHelper.Schema>();
   treeForEach(requestFieldTree.value, (schema: APIHelper.Schema) => {
     map.set(schema.id, schema);
-  });
+  }, 'params');
   return map;
 });
 
@@ -275,7 +275,7 @@ const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
   const map = new Map<string, APIHelper.Schema>();
   treeForEach(responseFieldTree.value, (schema: APIHelper.Schema) => {
     map.set(schema.id, schema);
-  });
+  }, 'params');
   return map;
 });
 
@@ -287,35 +287,30 @@ function validatorTpl(keyName: string, value: unknown, callback: Function) {
 }
 
 function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
-  const val = cloneDeep(ids);
-  debugger;
+  ids = cloneDeep(ids);
   const schemaList: APIHelper.SchemaList = [];
-  while (val.length > 0) {
-    const id = val.shift();
-    let row = cloneDeep(record.get(id as string));
+  for (const id of ids) {
+    const row = cloneDeep(record.get(id as string));
     if (row) {
-      row = { ...row };
-      row.params = filterChildren(row.params, val);
-      schemaList.push(cloneDeep(row));
+      row.params = filterChildren(row.params, ids);
+      schemaList.push(row);
     }
   }
   return schemaList;
 }
 
 function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = []) {
-  if (checkIds.length === 0) {
-    return [];
-  }
   return schemaList.filter((schema) => {
     const index = checkIds.indexOf(schema.id);
-    // 该节点的基本数据类型
-    if (!schema.keyName && schema.type !== 'object' && schema.type !== 'array') {
+    // 原始值类型的子属性直接可用
+    if (isSchemaPrimitiveValue(schema)) {
       return true;
     }
+    // 子属性不在其中，移除
     if (index === -1) {
       return false;
     }
-    checkIds.splice(index, 1);
+    // 递归子属性
     schema.params = filterChildren(schema.params, checkIds);
     return true;
   });
