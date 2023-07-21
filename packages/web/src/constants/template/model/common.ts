@@ -1,10 +1,10 @@
 export const COMMON_HEAD = `/**
- * @description 渲染函数，下面类型参数 APIHelper 说明文档在 @api-helper/core 包中，访问地址：https://github.com/ztz2/api-helper/blob/main/packages/core/lib/types.d.ts
+ * @description 渲染函数
  * @param params { object }
- * @param params.api { APIHelper.API } 选择的API
+ * @param params.api { APIHelper.API } 选择的API，APIHelper 说明文档在 @api-helper/core 包中，访问地址：https://github.com/ztz2/api-helper/blob/main/packages/core/lib/types.d.ts
  * @param params.requestDataSchemaList { Array<APIHelper.Schema> } 选择的请求数据字段集合
  * @param params.responseDataSchemaList { Array<APIHelper.Schema> } 选择的响应数据字段集合
- * @param config { Project } 配置对象
+ * @param config { Project } 项目配置对象，Project 说明文档参考：https://github.com/ztz2/api-helper/blob/main/packages/web/src/store/project/interface.ts
  * @return [] { Array<APIHelper.TemplateContent> } 返回数组，里面每一项都是一个模板。例子数据 -> [{ title: '模版标题', content: '模版内容' }];
  */
 function renderTemplate (params, config) {
