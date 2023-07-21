@@ -9,21 +9,19 @@
     hide-ok
   >
     <template #default>
-      <a-card style="position: relative;">
-        <a-spin
-          tip="加载中..."
-          class="ztz-spin"
-          :loading="loading"
-        >
-          <a-row :gutter="15">
-            <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
-              <div style="height: calc(100vh - 176px)">
-                <apih-code :code="code" />
-              </div>
-            </a-col>
-          </a-row>
-        </a-spin>
-      </a-card>
+      <a-spin
+        tip="加载中..."
+        class="ztz-spin"
+        :loading="loading"
+      >
+        <a-row :gutter="15">
+          <a-col v-for="(item, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
+            <a-card :title="item.title">
+              <apih-code height="calc(100vh - 222px)" :code="item.content" />
+            </a-card>
+          </a-col>
+        </a-row>
+      </a-spin>
     </template>
     <template #footer>
       <a-button type="primary" :loading="loading" @click="handleGen(true)">生成</a-button>
@@ -57,7 +55,7 @@ const { templateMap } = toRefs(useApiTemplate());
 
 const dialogRef = ref();
 const loading = ref(false);
-const codeList = ref<Array<string>>([]);
+const codeList = ref<Array<APIHelper.TemplateContent>>([]);
 
 const dialogOpenData = ref<OpenDataType>({
   apiList: [],
@@ -67,7 +65,10 @@ const currentCodeList = computed(() => {
   if (codeList.value.length > 0) {
     return codeList.value;
   }
-  return [''];
+  return [{
+    title: '空模板',
+    content: '',
+  }];
 });
 
 function close() {
@@ -99,7 +100,7 @@ async function handleGen(showMsg = false) {
       ...data,
     });
   }).then((res: unknown) => {
-    codeList.value = res as string[];
+    codeList.value = res as APIHelper.TemplateContent[];
     if (showMsg === true) {
       Message.success('已生成');
     }

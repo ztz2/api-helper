@@ -111,7 +111,9 @@
         </a-form>
       </a-col>
       <a-col :span="15">
-        <apih-code-mirror v-model="formModel.content" />
+        <a-card title="编辑模版内容">
+          <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
+        </a-card>
       </a-col>
     </a-row>
   </a-spin>
@@ -122,11 +124,8 @@ import {
   ref,
   watch,
   toRef,
-  toRefs,
-  nextTick,
   computed,
   PropType,
-  onMounted,
   defineProps,
   defineExpose,
 } from 'vue';

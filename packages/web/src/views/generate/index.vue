@@ -72,7 +72,7 @@
               </a-button>
             </a-space>
           </div>
-          <div class="generate-content">
+          <div class="generate-content" style="position: relative;z-index: 1;">
             <a-empty v-if="selectedAhModule.length === 0" style="margin-top: 20px">
               <template #image>
                 <icon-face-smile-fill />
@@ -171,8 +171,6 @@ export default defineComponent({
 <script lang="ts" setup>
 import {
   ref,
-  toRaw,
-  toRefs,
   computed,
   onMounted,
 } from 'vue';
@@ -247,14 +245,13 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
 });
 
 const mapMemo: Map<string, string[]> = new Map<string, string[]>();
-async function renderMap(api: APIHelper.API, isResp = false) {
+async function renderMap(api: APIHelper.API, isResp = false): Promise<string> {
   const params = {
     api,
     requestDataSchemaList: [] as APIHelper.SchemaList,
     responseDataSchemaList: [] as APIHelper.SchemaList,
   };
   const record = mapMemo.get(api.id) ?? [];
-  const hasMemo = mapMemo.has(api.id);
 
   if (isResp) {
     if (record?.[1]) {
@@ -275,18 +272,16 @@ async function renderMap(api: APIHelper.API, isResp = false) {
 
   const res = await renderTemplate(modelTemplateStore.defaultModelTemplate, params, projectStore.currentProject);
 
-  let result = '';
+  let result: string;
   if (isResp) {
-    record[1] = res?.[1] ?? '';
+    record[1] = res?.[1].content ?? '';
     result = record[1] as string;
   } else {
-    record[0] = res?.[0] ?? '';
+    record[0] = res?.[0].content ?? '';
     result = record[0] as string;
   }
 
-  if (!hasMemo) {
-    mapMemo.set(api.id, record);
-  }
+  mapMemo.set(api.id, record);
 
   return result;
 }
@@ -296,14 +291,15 @@ async function renderAPIFunc(api: APIHelper.API) {
   if (apiMemo.has(api.id)) {
     return apiMemo.get(api.id);
   }
-  const result = (await renderTemplate(apiTemplateStore.defaultApiTemplate, {
+  const res = (await renderTemplate(apiTemplateStore.defaultApiTemplate, {
     apiList: [api],
   }, {
     ...projectStore.currentProject,
     onlyApiFunc: true,
-  }))?.[0] ?? '';
-  apiMemo.set(api.id, result);
-  return result;
+  }))?.[0];
+  const value = res?.content ?? '';
+  apiMemo.set(api.id, value);
+  return value;
 }
 
 function handleCopyPath(path: string) {

@@ -64,7 +64,11 @@
         </a-form>
       </a-col>
       <a-col :span="15">
-        <apih-code-mirror v-model="formModel.content" />
+        <div>
+          <a-card title="编辑模版内容">
+            <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
+          </a-card>
+        </div>
       </a-col>
     </a-row>
   </a-spin>

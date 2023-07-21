@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import _apih from './render-template-apih';
 import formatCode from '@/utils/format-code';
@@ -24,8 +25,8 @@ export default async function _renderTemplate(
   params: RenderApiTemplateParams | RenderModelTemplateParams,
   // 渲染配置
   config?: Project,
-) {
-  let result: Array<string> = [];
+): Promise<Array<APIHelper.TemplateContent>> {
+  let result: Array<APIHelper.TemplateContent> = [];
   config = config ?? {} as any;
   try {
     const lodash = _;
@@ -44,38 +45,36 @@ export default async function _renderTemplate(
     }
 
     const { formatCodeExtension } = templateMap; // @ts-ignore
-    const codeList = exe.renderTemplate(params, config) ?? [];
-    [].push.apply(result, codeList);
-
+    const codeList = (exe.renderTemplate(params, config) ?? []) as Array<APIHelper.TemplateContent>;
+    result = [...codeList];
     if (formatCodeExtension) {
       const filterCodeList: string[] = [];
       const filterCodeListIdxMap: Record<string, number> = {};
       for (let i = 0; i < codeList.length; i++) {
-        const itm = codeList[i];
-        if (itm && itm?.trim() !== '') {
-          filterCodeList.push(itm);
-          filterCodeListIdxMap[itm.length - 1] = i;
+        const { content } = codeList[i];
+        if (content && content?.trim() !== '') {
+          filterCodeList.push(content);
+          filterCodeListIdxMap[filterCodeList.length - 1] = i;
         }
       }
       if (filterCodeList.length > 0) {
-        const formattedCodeList = (await formatCode(codeList.map((c: string) => ({
+        const formattedCodeList = (await formatCode(filterCodeList.map((c) => ({
           sourceCode: c,
           formatCodeExtension,
           prettierrcOptions: config?.prettierrcOptions,
-        })))) as [];
+        })) as any)) as [];
         for (let i = 0; i < formattedCodeList.length; i++) {
-          result[filterCodeListIdxMap[i]] = formattedCodeList[i] ?? '';
+          result[filterCodeListIdxMap[i]].content = formattedCodeList[i] ?? '';
         }
       }
     }
   } catch (e: any) {
-    if (typeof e === 'string') {
-      result = [e];
-      Message.error(e);
-    } else if (typeof e?.message === 'string') {
-      result = [e.message];
-      Message.error(e.message);
-    }
+    const errorText = getErrorMessage(e);
+    result = [{
+      title: '异常模版',
+      content: errorText,
+    }];
+    Message.error(errorText);
   }
   return result;
 }

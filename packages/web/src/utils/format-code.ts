@@ -1,8 +1,8 @@
 import to from 'await-to-js';
+import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 import { FormatCodeConfig } from '@api-helper/cli/lib/tools/format-code';
 
 import { fetchFormatCode } from '@/api';
-import { getErrorMessage } from '@/utils';
 
 export default function formatCode(config: FormatCodeConfig): Promise<string | string[]> {
   return new Promise(async (resolve) => {

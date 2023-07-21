@@ -62,25 +62,6 @@ export function modalConfirm(modalConfig: ModalConfig | string) {
   });
 }
 
-export function getErrorMessage<T extends string | Error & { msg?: string }>(error: T, prefix = '', postfix = ''): string {
-  function mergeMessage<T>(msg: T) {
-    return msg ? `${prefix}${msg}${postfix}` : '';
-  }
-  if (!error) {
-    return '';
-  }
-  if (typeof error === 'string') {
-    return mergeMessage(error);
-  }
-  if (error?.message) {
-    return mergeMessage(error.message);
-  }
-  if (error?.msg) {
-    return mergeMessage(error.msg);
-  }
-  return '';
-}
-
 export function assignDeep<T>(
   target: T,
   ...copyItemList: Array<{ [propName: string]: any }>

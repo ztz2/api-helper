@@ -69,8 +69,8 @@ a{
   min-height: 200px;
  .arco-spin-mask-icon{
     position: absolute;
-    top: 60px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%, -100%);
   }
 }

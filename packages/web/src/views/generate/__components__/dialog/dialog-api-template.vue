@@ -14,10 +14,10 @@
         :loading="loading"
       >
         <a-row :gutter="15">
-          <a-col v-for="(code, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
-            <div style="height: calc(100vh - 140px)">
-              <apih-code :code="code" />
-            </div>
+          <a-col v-for="(item, index) of currentCodeList" :span="24 / currentCodeList.length" :key="index">
+            <a-card :title="item.title">
+              <apih-code height="calc(100vh - 222px)" :code="item.content" />
+            </a-card>
           </a-col>
         </a-row>
       </a-spin>
@@ -37,6 +37,7 @@ import {
   defineEmits,
   defineExpose,
 } from 'vue';
+import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
 import { DOCUMENT } from '@/constants/mock';
@@ -54,13 +55,16 @@ const { currentProject } = useProject();
 const dialogRef = ref();
 const loading = ref(false);
 const loadingSave = ref(false);
-const codeList = ref<Array<string>>([]);
+const codeList = ref<Array<APIHelper.TemplateContent>>([]);
 
 const currentCodeList = computed(() => {
   if (codeList.value.length > 0) {
     return codeList.value;
   }
-  return [''];
+  return [{
+    title: '空模板',
+    content: '',
+  }];
 });
 
 function close() {
@@ -90,7 +94,7 @@ async function handleGen(showMsg = false) {
       ...data,
     });
   }).then((res: unknown) => {
-    codeList.value = res as string[];
+    codeList.value = res as APIHelper.TemplateContent[];
     if (showMsg === true) {
       Message.success('已生成');
     }
