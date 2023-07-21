@@ -172,7 +172,16 @@ var ParserYapi = /** @class */ (function () {
             // }
             /****************** 请求参数处理-开始 ******************/
             var requestDataSchema = {
+                id: _this.generateId(),
                 type: 'object',
+                keyName: '',
+                title: '',
+                description: '',
+                label: '',
+                rules: {
+                    required: false,
+                },
+                examples: [],
                 params: []
             };
             var requestExtraDataSchema = null;

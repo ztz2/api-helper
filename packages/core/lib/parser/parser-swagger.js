@@ -206,7 +206,16 @@ var ParserSwagger = /** @class */ (function () {
                         /****************** 处理请求参数--开始 ******************/
                         var requestExtraDataSchema = null;
                         var requestDataSchema = {
+                            id: this_1.generateId(),
                             type: 'object',
+                            keyName: '',
+                            title: '',
+                            description: '',
+                            label: '',
+                            rules: {
+                                required: false,
+                            },
+                            examples: [],
                             params: []
                         };
                         var requestKeyNameMemo = [];

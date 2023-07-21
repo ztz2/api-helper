@@ -95,7 +95,7 @@ export declare namespace APIHelper {
     // 类型
     type: SchemaType | undefined | '';
     // 字段名称，当为基本类型的时候，这个字段只是一个数据类型的标记，没有keyName存在
-    keyName?: string;
+    keyName: string;
     // 简要描述，比如 username，描述: 用户名
     title: string;
     // 详细描述，对字段的详细解释。

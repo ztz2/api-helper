@@ -21,6 +21,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet to update",
@@ -62,6 +67,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -130,6 +139,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -297,6 +311,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -313,6 +331,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -480,6 +503,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -498,6 +525,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
             "status",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Status values that need to be considered for filter",
@@ -513,6 +545,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -723,6 +759,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
             "tags",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Tags to filter by",
@@ -738,6 +779,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -948,6 +993,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet to return",
@@ -963,6 +1013,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1162,6 +1216,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet that needs to be updated",
@@ -1203,6 +1262,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1221,6 +1284,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Pet id to delete",
@@ -1236,6 +1304,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1259,6 +1331,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -1404,6 +1481,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "boolean",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1578,6 +1659,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet that needs to be fetched",
@@ -1593,6 +1679,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1767,6 +1857,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of the order that needs to be deleted",
@@ -1782,6 +1877,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1836,6 +1935,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
             "password",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "List of user object",
@@ -1891,6 +1995,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -1923,6 +2031,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The name that needs to be fetched. Use user1 for testing. ",
@@ -1938,6 +2051,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2073,6 +2190,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "name that need to be updated",
@@ -2179,6 +2301,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2197,6 +2323,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The name that needs to be deleted",
@@ -2212,6 +2343,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2231,6 +2366,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
             "password",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The user name for login",
@@ -2259,6 +2399,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2301,6 +2445,11 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -2407,6 +2556,10 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2449,6 +2602,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "随机名称",
@@ -2506,6 +2664,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2589,6 +2748,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "设备id",
@@ -2607,6 +2771,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2704,6 +2869,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "设备id",
@@ -2788,6 +2958,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -2885,6 +3056,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "cade",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -2969,6 +3145,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3064,6 +3241,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "主键id",
@@ -3095,6 +3277,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3150,6 +3333,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "主键id",
@@ -3221,6 +3409,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3319,6 +3508,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -3350,6 +3544,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3405,6 +3600,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -3423,6 +3623,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3506,6 +3707,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "文件名称",
@@ -3537,6 +3743,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3620,6 +3827,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "文件名称",
@@ -3651,6 +3863,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3736,6 +3949,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "文件id",
@@ -3780,6 +3998,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3861,6 +4080,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -3893,6 +4117,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -3988,6 +4213,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
           "pathParamKeyNameList": [],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "随机名称",
@@ -4045,6 +4275,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4128,6 +4359,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -4185,6 +4421,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4268,6 +4505,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "文件名称",
@@ -4325,6 +4567,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4410,6 +4653,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "文件id",
@@ -4480,6 +4728,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4564,6 +4813,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "cade",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -4662,6 +4916,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4759,6 +5014,11 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "name",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -4777,6 +5037,7 @@ exports[`swagger-parser OpenAPI-3.0.1文档解析转换测试: OpenAPI-3.1文档
             "rules": {
               "required": true,
             },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -4832,6 +5093,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "status",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -4999,6 +5265,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -5200,6 +5470,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "status",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -5367,6 +5642,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -5563,6 +5842,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "status",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Status values that need to be considered for filter",
@@ -5583,6 +5867,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -5793,6 +6081,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "tags",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Tags to filter by",
@@ -5822,6 +6115,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "array",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6032,6 +6329,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet to return",
@@ -6047,6 +6349,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6246,6 +6552,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "status",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet that needs to be updated",
@@ -6287,6 +6598,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6305,6 +6620,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "Pet id to delete",
@@ -6320,6 +6640,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6340,6 +6664,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "additionalMetadata",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of pet to update",
@@ -6368,6 +6697,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6476,6 +6809,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "complete",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -6561,6 +6899,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "boolean",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6675,6 +7017,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of order that needs to be fetched",
@@ -6690,6 +7037,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6804,6 +7155,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "ID of the order that needs to be deleted",
@@ -6819,6 +7175,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -6851,6 +7211,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "userStatus",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "",
@@ -6957,6 +7322,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -7238,6 +7607,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "password",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The user name for login",
@@ -7266,6 +7640,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -7310,6 +7688,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The name that needs to be fetched. Use user1 for testing. ",
@@ -7325,6 +7708,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -7469,6 +7856,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
             "userStatus",
           ],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "name that need to be deleted",
@@ -7588,6 +7980,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "number",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,
@@ -7606,6 +8002,11 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
           ],
           "queryStringKeyNameList": [],
           "requestDataSchema": {
+            "description": "",
+            "examples": [],
+            "id": "",
+            "keyName": "",
+            "label": "",
             "params": [
               {
                 "description": "The name that needs to be deleted",
@@ -7621,6 +8022,10 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
                 "type": "string",
               },
             ],
+            "rules": {
+              "required": false,
+            },
+            "title": "",
             "type": "object",
           },
           "requestExtraDataSchema": null,

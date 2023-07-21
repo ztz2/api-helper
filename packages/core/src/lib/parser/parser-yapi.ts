@@ -261,10 +261,19 @@ export default class ParserYapi {
       // }
 
       /****************** 请求参数处理-开始 ******************/
-      const requestDataSchema = {
+      const requestDataSchema: APIHelper.Schema = {
+        id: this.generateId(),
         type: 'object',
-        params: [] as APIHelper.SchemaList
-      } as APIHelper.Schema;
+        keyName: '',
+        title: '',
+        description: '',
+        label: '',
+        rules: {
+          required: false,
+        },
+        examples: [],
+        params: []
+      };
       let requestExtraDataSchema: APIHelper.Schema | null = null;
       // fix: 重复项问题
       const requestSchemaRecord: Array<JSONSchema4> = [];

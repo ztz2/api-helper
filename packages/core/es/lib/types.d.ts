@@ -39,7 +39,7 @@ export declare namespace APIHelper {
     interface AbstractSchema {
         id: string;
         type: SchemaType | undefined | '';
-        keyName?: string;
+        keyName: string;
         title: string;
         description: string;
         label: string;

@@ -18,6 +18,11 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             "pathParamKeyNameList": [],
             "queryStringKeyNameList": [],
             "requestDataSchema": {
+              "description": "",
+              "examples": [],
+              "id": "",
+              "keyName": "",
+              "label": "",
               "params": [
                 {
                   "description": "",
@@ -185,6 +190,10 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "type": "string",
                 },
               ],
+              "rules": {
+                "required": false,
+              },
+              "title": "",
               "type": "object",
             },
             "requestExtraDataSchema": null,

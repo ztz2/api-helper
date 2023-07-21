@@ -135,10 +135,19 @@ export default class ParserSwagger {
 
           /****************** 处理请求参数--开始 ******************/
           let requestExtraDataSchema: APIHelper.Schema | null = null;
-          const requestDataSchema = {
+          const requestDataSchema: APIHelper.Schema = {
+            id: this.generateId(),
             type: 'object',
-            params: [] as APIHelper.SchemaList
-          } as APIHelper.Schema;
+            keyName: '',
+            title: '',
+            description: '',
+            label: '',
+            rules: {
+              required: false,
+            },
+            examples: [],
+            params: []
+          };
           const requestKeyNameMemo: string[] = [];
           // fix: 重复项问题
           const requestSchemaRecord: Array<JSONSchema4> = [];
