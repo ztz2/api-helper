@@ -5,9 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const https_1 = __importDefault(require("https"));
 const axios_1 = __importDefault(require("axios"));
+const constant_1 = require("@api-helper/core/lib/constant");
 const log_1 = __importDefault(require("../../lib/tools/log"));
 const request = axios_1.default.create({
-    timeout: 30000,
+    timeout: constant_1.REQUEST_TIMEOUT,
 });
 const uniqueStatusMesMemo = [];
 const codeMessage = {

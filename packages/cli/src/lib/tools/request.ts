@@ -1,10 +1,15 @@
 import https from 'https';
-import axios, {AxiosError, AxiosRequestConfig} from 'axios';
+import axios, {
+  AxiosError,
+  AxiosRequestConfig,
+} from 'axios';
+import { REQUEST_TIMEOUT } from '@api-helper/core/lib/constant';
 
 import log from '@/lib/tools/log';
 
+
 const request = axios.create({
-  timeout: 30000,
+  timeout: REQUEST_TIMEOUT,
 });
 
 const uniqueStatusMesMemo: string[] = [];
