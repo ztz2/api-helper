@@ -15,16 +15,7 @@ import artTemplate from '../lib/utils/template/art-template-web.js';
 artTemplate.defaults.escape = false;
 artTemplate.defaults.minimize = false;
 // 新增模板《》语法的界定符规则
-artTemplate.defaults.rules[2] = __assign(__assign({}, artTemplate.defaults.rules[1]), { test: /《([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*》/ });
-artTemplate.defaults.imports.renderCharacterByBoolean = function (booleanStatus, trueValue, falseValue) {
-    if (booleanStatus === void 0) { booleanStatus = true; }
-    if (trueValue === void 0) { trueValue = ''; }
-    if (falseValue === void 0) { falseValue = ''; }
-    return booleanStatus ? trueValue : falseValue;
-};
-artTemplate.defaults.imports.renderTemplateLiteral = function (booleanStatus, defaultValue) {
-    if (booleanStatus === void 0) { booleanStatus = true; }
-    if (defaultValue === void 0) { defaultValue = '\''; }
-    return booleanStatus ? '`' : defaultValue;
-};
+artTemplate.defaults.rules.push(__assign(__assign({}, artTemplate.defaults.rules[1]), { test: /《([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*》/ }));
+// 为了避免和Vue数据绑定语法{{}}冲突，移除自带的{{}}语法规则
+artTemplate.defaults.rules = artTemplate.defaults.rules.filter(function (rule) { var _a, _b; return !((_b = (_a = rule === null || rule === void 0 ? void 0 : rule.test) === null || _a === void 0 ? void 0 : _a.test) === null || _b === void 0 ? void 0 : _b.call(_a, '{{}}')); });
 export default artTemplate;

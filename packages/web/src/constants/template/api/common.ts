@@ -6,7 +6,7 @@ export const COMMON_HEAD = `/**
  * @return [] { Array<APIHelper.TemplateContent> } 返回数组，里面每一项都是一个模板。例子数据 -> [{ title: '模版标题', content: '模版内容' }];
  */
 function renderTemplate (params, config) {
-  // 模板引擎基于 art-template 使用，artTemplate 变量就是对art-template的引用，为了避免使用{}冲突，新增取值《》语法，效果和 {{}} 取值一样，更多语法方法参考官方文档：https://github.com/aui/art-template
+  // 模板引擎基于 art-template 使用，artTemplate 变量就是对art-template的引用
+  // 使用 artTemplate 时注意：为了避免在渲染中与Vue的数据绑定语法{{}}冲突，删除了模板自带的{{}}语法，新增《》语法代替，更多语法方法参考官方文档：https://github.com/aui/art-template
   // 函数中可以使用Lodash工具包所有功能，比如 cloneDeep，使用方式：lodash.cloneDeep
-  config = config || {};
 `;

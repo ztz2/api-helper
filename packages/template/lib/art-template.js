@@ -20,16 +20,7 @@ var art_template_web_js_1 = __importDefault(require("../lib/utils/template/art-t
 art_template_web_js_1.default.defaults.escape = false;
 art_template_web_js_1.default.defaults.minimize = false;
 // 新增模板《》语法的界定符规则
-art_template_web_js_1.default.defaults.rules[2] = __assign(__assign({}, art_template_web_js_1.default.defaults.rules[1]), { test: /《([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*》/ });
-art_template_web_js_1.default.defaults.imports.renderCharacterByBoolean = function (booleanStatus, trueValue, falseValue) {
-    if (booleanStatus === void 0) { booleanStatus = true; }
-    if (trueValue === void 0) { trueValue = ''; }
-    if (falseValue === void 0) { falseValue = ''; }
-    return booleanStatus ? trueValue : falseValue;
-};
-art_template_web_js_1.default.defaults.imports.renderTemplateLiteral = function (booleanStatus, defaultValue) {
-    if (booleanStatus === void 0) { booleanStatus = true; }
-    if (defaultValue === void 0) { defaultValue = '\''; }
-    return booleanStatus ? '`' : defaultValue;
-};
+art_template_web_js_1.default.defaults.rules.push(__assign(__assign({}, art_template_web_js_1.default.defaults.rules[1]), { test: /《([@#]?)[ \t]*(\/?)([\w\W]*?)[ \t]*》/ }));
+// 为了避免和Vue数据绑定语法{{}}冲突，移除自带的{{}}语法规则
+art_template_web_js_1.default.defaults.rules = art_template_web_js_1.default.defaults.rules.filter(function (rule) { var _a, _b; return !((_b = (_a = rule === null || rule === void 0 ? void 0 : rule.test) === null || _a === void 0 ? void 0 : _a.test) === null || _b === void 0 ? void 0 : _b.call(_a, '{{}}')); });
 exports.default = art_template_web_js_1.default;

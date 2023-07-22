@@ -42,19 +42,19 @@ export function renderRequestFunction(
   };
 
   const code = artTemplate.render(
-    `{{if commentCode}}{{commentCode}}
-{{/if}}export function {{requestFunctionName}}(data{{if isTypescript}}: {{requestDataInterfaceName}}{{/if}}, extraData{{if isTypescript}}?: {{if api.requestExtraDataSchema}}{{requestExtraDataInterfaceName}}{{else}}unknown{{/if}}{{/if}}, ...args{{if isTypescript}}: CurrentRequestFunctionRestArgsType{{/if}}) {
-  return request{{if isTypescript}}<{{responseDataInterfaceName}}>{{/if}}(
-    processRequestFunctionConfig(data, extraData, {{requestFunctionName}}.requestConfig),
+    `《if commentCode》《commentCode》
+《/if》export function 《requestFunctionName》(data《if isTypescript》: 《requestDataInterfaceName》《/if》, extraData《if isTypescript》?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》《/if》, ...args《if isTypescript》: CurrentRequestFunctionRestArgsType《/if》) {
+  return request《if isTypescript》<《responseDataInterfaceName》>《/if》(
+    processRequestFunctionConfig(data, extraData, 《requestFunctionName》.requestConfig),
     ...args
   );
 }
-{{requestFunctionName}}.requestConfig = {
-  path: '{{api.path}}',
-  method: '{{api.method}}',
-  formDataKeyNameList: {{formDataKeyNameListStr}},
-  pathParamKeyNameList: {{pathParamKeyNameListStr}},
-  queryStringKeyNameList: {{queryStringKeyNameListStr}}
+《requestFunctionName》.requestConfig = {
+  path: '《api.path》',
+  method: '《api.method》',
+  formDataKeyNameList: 《formDataKeyNameListStr》,
+  pathParamKeyNameList: 《pathParamKeyNameListStr》,
+  queryStringKeyNameList: 《queryStringKeyNameListStr》
 }`, templateTenderParams);
 
   return formatCode(code, {
@@ -77,8 +77,8 @@ function renderRequestFunctionComment(api: APIHelper.API) {
   };
   return artTemplate.render(
 `/**
-   * @description{{if apiDescription}} {{apiDescription}}{{else}} 无{{/if}}
-{{if api.docURL}}   * @doc {{api.docURL}}
-{{/if}}   * @url [ {{api.method.toUpperCase()}} ] {{api.path}}
+   * @description《if apiDescription》 《apiDescription》《else》 无《/if》
+《if api.docURL》   * @doc 《api.docURL》
+《/if》   * @url [ 《api.method.toUpperCase()》 ] 《api.path》
    */`, templateTenderParams);
 }
