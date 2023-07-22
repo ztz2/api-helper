@@ -79,15 +79,15 @@
               </template>
               请先左边的API
             </a-empty>
-            <a-collapse
+            <apih-collapse
               v-else
               class="generate-collapse"
               expand-icon-position="right"
-              :default-active-key="[0]"
+              :default-active-key="['1-1']"
             >
-              <a-collapse-item
+              <apih-collapse-item
                 v-for="(ahModule, index) of selectedAhModule"
-                :key="index"
+                :key="`1-${index+1}`"
               >
                 <template #header>
                   <div class="generate-collapse__project-header">
@@ -95,14 +95,13 @@
                     <small>{{ahModule.description}}</small>
                   </div>
                 </template>
-                <a-collapse
+                <apih-collapse
                   v-if="ahModule.apiList.length > 0"
                   expand-icon-position="right"
-                  :default-active-key="[0]"
                 >
-                  <a-collapse-item
+                  <apih-collapse-item
                     v-for="(api, idx) of ahModule.apiList"
-                    :key="idx"
+                    :key="`2-${idx+1}`"
                     :class="`generate-collapse-item--${api.method.toLowerCase()}`"
                   >
                     <template #header>
@@ -114,38 +113,27 @@
                         <small><strong>{{api.label}}</strong></small>
                       </a-space>
                     </template>
-                    <a-collapse expand-icon-position="right" :default-active-key="['3-2']">
-                      <a-collapse-item key="3-1">
-                        <template #header>
-                          <div>
-                            接口API函数
-                          </div>
+                    <apih-collapse expand-icon-position="right">
+                      <apih-collapse-item key="3-1" header="接口API函数">
+                        <template #default="{isActive}">
+                          <ApiCode type="api" :api="api" :visible="isActive" />
                         </template>
-                        <div>
-                          <ApiCode :api="api" type="api" />
-                        </div>
-                      </a-collapse-item>
-                      <a-collapse-item :key="3-3-2">
-                        <template #header>
-                          <div>请求参数</div>
+                      </apih-collapse-item>
+                      <apih-collapse-item key="3-2" header="请求参数">
+                        <template #default="{isActive}">
+                          <ApiCode type="request" :api="api" :visible="isActive" />
                         </template>
-                        <div>
-                          <ApiCode :api="api" type="request" />
-                        </div>
-                      </a-collapse-item>
-                      <a-collapse-item :key="3-3-3">
-                        <template #header>
-                          <div>响应数据</div>
+                      </apih-collapse-item>
+                      <apih-collapse-item key="3-3" header="响应数据">
+                        <template #default="{isActive}">
+                          <ApiCode type="response" :api="api" :visible="isActive" />
                         </template>
-                        <div>
-                          <ApiCode :api="api" type="response" />
-                        </div>
-                      </a-collapse-item>
-                    </a-collapse>
-                  </a-collapse-item>
-                </a-collapse>
-              </a-collapse-item>
-            </a-collapse>
+                      </apih-collapse-item>
+                    </apih-collapse>
+                  </apih-collapse-item>
+                </apih-collapse>
+              </apih-collapse-item>
+            </apih-collapse>
           </div>
         </div>
       </a-spin>

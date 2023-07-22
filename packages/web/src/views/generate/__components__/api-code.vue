@@ -35,12 +35,16 @@ const props = defineProps({
     type: String as PropType<'api' | 'request' | 'response'>,
     default: 'api',
   },
+  visible: {
+    type: [Boolean, null, undefined] as PropType<boolean | null | undefined>,
+    default: null,
+  },
 });
 
 const loading = ref(false);
 const currentCode = ref('');
 const api = toRef(props, 'api');
-
+let isBindListener = false;
 async function updateCodeContent() {
   switch (props.type) {
     case 'api': {
@@ -95,21 +99,36 @@ async function updateCodeContent() {
   }
 }
 
-onMounted(() => {
-  switch (props.type) {
-    case 'api': {
-      watch(() => api.value, updateCodeContent, { immediate: true });
-      break;
+function bindListener() {
+  if (!isBindListener) {
+    isBindListener = true;
+    switch (props.type) {
+      case 'api': {
+        watch(() => api.value, updateCodeContent, { immediate: true });
+        break;
+      }
+      case 'request': {
+        watch(() => api.value.requestDataSchema, updateCodeContent, { immediate: true });
+        break;
+      }
+      case 'response': {
+        watch(() => api.value.responseDataSchema, updateCodeContent, { immediate: true });
+      }
     }
-    case 'request': {
-      watch(() => api.value.requestDataSchema, updateCodeContent, { immediate: true });
-      break;
-    }
-    case 'response': {
-      watch(() => api.value.responseDataSchema, updateCodeContent, { immediate: true });
-    }
+    // 项目配置变化更新代码
+    watch(() => projectStore.currentProject, updateCodeContent, { deep: true });
   }
-  // 项目配置变化更新代码
-  watch(() => projectStore.currentProject, updateCodeContent, { deep: true });
+}
+
+onMounted(() => {
+  if (props.visible != null) {
+    watch(() => props.visible, (val) => {
+      if (val) {
+        bindListener();
+      }
+    });
+  } else {
+    bindListener();
+  }
 });
 </script>
