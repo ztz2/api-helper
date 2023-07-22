@@ -61,7 +61,6 @@ export default defineComponent({
 </script>
 <script lang="ts" setup>
 import {
-  h,
   ref,
   watch,
   computed,

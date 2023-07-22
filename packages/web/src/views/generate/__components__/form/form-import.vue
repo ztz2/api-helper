@@ -34,20 +34,16 @@
 import {
   ref,
   toRef,
-  watch,
-  isRef,
-  toRefs,
   PropType,
-  isReactive,
   defineProps,
   defineExpose,
   defineEmits,
 } from 'vue';
-import { Message } from '@arco-design/web-vue';
+import { Message, FileItem } from '@arco-design/web-vue';
 
 import useForm from '@/hooks/use-form';
 
-type FormModelType = { fileList: File[] };
+type FormModelType = { fileList: FileItem[] };
 
 const emit = defineEmits(['save-template']);
 
@@ -88,7 +84,7 @@ function validateFileList(value: string, callback: Function) {
   callback();
 }
 
-function handleChange(fileList: Array<File>) {
+function handleChange(fileList: Array<FileItem>) {
   formModel.value.fileList = fileList;
 }
 

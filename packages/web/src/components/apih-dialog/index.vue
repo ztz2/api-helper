@@ -1,13 +1,10 @@
 <script lang="tsx">
 import {
   ref,
-  Ref,
-  watch,
   computed,
   PropType,
   useSlots,
   Component,
-  WatchStopHandle,
   defineComponent,
   ComponentPublicInstance,
 } from 'vue';

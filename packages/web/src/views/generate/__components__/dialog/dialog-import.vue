@@ -16,7 +16,6 @@
 import {
   h,
   ref,
-  nextTick,
   defineEmits,
   defineExpose,
 } from 'vue';
