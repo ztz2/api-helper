@@ -6,9 +6,10 @@ import {
   Template,
   TemplateCategory,
 } from '@/store/template/interface';
+import message from '@/utils/message';
+import { getTemplateList } from '@/utils';
 import templateList from '@/constants/template/api';
 import { API_CUSTOM_TEMPLATE_ID, DEFAULT_SELECT_API_TPL_ID } from '@/constants';
-import { getTemplateList } from '@/utils';
 
 const useApiTemplate = defineStore('api-template', {
   persist: true,
@@ -58,6 +59,29 @@ const useApiTemplate = defineStore('api-template', {
       }
       templateClassify.options.push(pick(value, Object.keys(new Template())) as Template);
       return value.value;
+    },
+    deleteById(value: string, options?: { showMessage?: boolean; onSuccess?: Function }) {
+      if (!value) {
+        return;
+      }
+      const showMessage = options?.showMessage !== false;
+      const { templateList } = this;
+      for (let j = 0; j < templateList.length; j++) {
+        const templateBox = templateList[j].options;
+        for (let i = 0; i < templateBox.length; i++) {
+          const tpl = templateBox[i];
+          if (tpl.value === value) {
+            if (tpl.builtIn) {
+              showMessage && message.warn('该模板为内置模板，不可删除');
+            } else {
+              templateBox.splice(i, 1);
+              showMessage && message.success('已删除');
+              options?.onSuccess?.(tpl);
+            }
+            return;
+          }
+        }
+      }
     },
   },
 });

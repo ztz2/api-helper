@@ -19,7 +19,12 @@
                   :rules="[{ required: true, message: '必选项' }]"
                   :validate-trigger="['change', 'input']"
                 >
-                  <a-select v-model="formModel.apiId" :options="options.categoryList"></a-select>
+                  <a-select
+                    v-model="formModel.apiId"
+                    :options="options.categoryList"
+                    placeholder="请选择API"
+                    allow-clear
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="24">
@@ -31,13 +36,27 @@
                   <template #label>
                     <a-space>
                       <span>模板</span>
-                      <div><a-button size="mini" @click.prevent="handleAddTpl">新增模板</a-button></div>
-                      <div><a-button size="mini" :disabled="!currentProject.modelTplId" @click.prevent="handleEditTpl" >编辑模板</a-button></div>
+                      <apih-tooltip
+                        :content="!selectedTemplate ? '' : selectedTemplate.builtIn !== false ? '当前选择模板为系统内置模板，不可删除' : ''"
+                      >
+                        <a-popconfirm content="确认删除该模板?" @ok="handleDeleteTpl">
+                          <a-button
+                            size="mini"
+                            status="danger"
+                            :disabled="!showDelete"
+                          >
+                            删除模板
+                          </a-button>
+                        </a-popconfirm>
+                      </apih-tooltip>
+                      <a-button type="primary" size="mini" @click.prevent="handleAddTpl">新增模板</a-button>
+                      <a-button type="primary" size="mini" :disabled="!currentProject.modelTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
                     </a-space>
                   </template>
                   <a-select
                     v-model="currentProject.modelTplId"
                     :options="templateList"
+                    placeholder="请选择模板"
                     allow-clear
                   />
                 </a-form-item>
@@ -125,6 +144,7 @@ import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
 import { isSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
+import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { FormModel } from './interface';
 import { treeForEach } from '@/utils/tree';
@@ -164,7 +184,9 @@ const route = useRoute();
 
 const projectStore = useProject();
 const modelTemplateStore = useModelTemplate();
-const { templateList, templateMap } = toRefs(modelTemplateStore);
+const { templateList, templateMap, deleteById } = toRefs(modelTemplateStore);
+const selectedTemplate = computed(() => templateMap.value.get(currentProject.modelTplId));
+const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
 
 const {
   formRef,
@@ -331,6 +353,17 @@ function handleAddTpl() {
     title: '新增模板',
     formComponentProps: {
       data: genEmptyModelTemplate(),
+    },
+  });
+}
+
+function handleDeleteTpl() {
+  if (!selectedTemplate.value) {
+    return message.warn('没有选择模板.');
+  }
+  deleteById.value(currentProject.modelTplId, {
+    onSuccess() {
+      currentProject.modelTplId = '';
     },
   });
 }

@@ -3,7 +3,6 @@ import { createApp } from 'vue';
 import '@arco-design/web-vue/dist/arco.css';
 import ArcoVue, { Message } from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
-import { artTemplate } from '@api-helper/template';
 
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/atom-one-dark.css';
@@ -45,11 +44,3 @@ app
   .use(store)
   .use(router)
   .mount('#app');
-
-console.log(artTemplate.defaults.rules);
-console.log(artTemplate.render(`
-我是《username》
-你是 {{username}}
-`, {
-  username: '赵铁柱',
-}));

@@ -14,20 +14,35 @@
                 label="模板选择"
                 field="apiTplId"
                 style="margin-bottom: 0"
-                :rules="[{ required: true, validator: validatorTpl.bind(null, 'modelTplId') }]"
+                :rules="[{ required: true, validator: validatorTpl.bind(null, 'apiTplId') }]"
                 :validate-trigger="['change', 'input']"
             >
               <template #label>
                 <a-space>
                   <span>模板</span>
-                  <div><a-button size="mini" @click.prevent="handleAddTpl">新增模板</a-button></div>
-                  <div><a-button size="mini" :disabled="!currentProject.apiTplId" @click.prevent="handleEditTpl" >编辑模板</a-button></div>
+                  <apih-tooltip
+                    :content="!selectedTemplate ? '' : selectedTemplate.builtIn !== false ? '当前选择模板为系统内置模板，不可删除' : ''"
+                  >
+                    <a-popconfirm content="确认删除该模板?" @ok="handleDeleteTpl">
+                      <a-button
+                        size="mini"
+                        status="danger"
+                        :disabled="!showDelete"
+                      >
+                        删除模板
+                      </a-button>
+                    </a-popconfirm>
+                  </apih-tooltip>
+                  <a-button size="mini" type="primary" @click.prevent="handleAddTpl">新增模板</a-button>
+                  <a-button size="mini" type="primary" :disabled="!currentProject.apiTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
                 </a-space>
               </template>
               <a-select
                 value-key="id"
                 v-model="currentProject.apiTplId"
+                placeholder="请选择模板"
                 :options="templateList"
+                allow-clear
               />
             </a-form-item>
           </a-col>
@@ -60,12 +75,9 @@
 <script lang="ts" setup>
 import {
   ref,
-  toRef,
-  watch,
-  isRef,
   toRefs,
   PropType,
-  isReactive,
+  computed,
   defineEmits,
   defineProps,
   defineExpose,
@@ -74,6 +86,7 @@ import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
+import message from '@/utils/message';
 import { randomChar, modalConfirm } from '@/utils';
 import { useProject, useApiTemplate } from '@/store';
 import { Template } from '@/store/template/interface';
@@ -98,7 +111,9 @@ const formRef = ref();
 const gutter = ref(15);
 const dialogAPITemplateRef = ref();
 const { currentProject } = useProject();
-const { templateMap, templateList } = toRefs(useApiTemplate());
+const { templateMap, templateList, deleteById } = toRefs(useApiTemplate());
+const selectedTemplate = computed(() => templateMap.value.get(currentProject.apiTplId));
+const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
 
 const options = ref({
   formatCodeExtension: FORMAT_CODE_EXTENSION.map((type) => ({
@@ -144,6 +159,17 @@ async function handleEditTpl() {
     title: '修改模板',
     formComponentProps: {
       data: tplModel,
+    },
+  });
+}
+
+function handleDeleteTpl() {
+  if (!selectedTemplate.value) {
+    return message.warn('没有选择模板.');
+  }
+  deleteById.value(currentProject.apiTplId, {
+    onSuccess() {
+      currentProject.apiTplId = '';
     },
   });
 }

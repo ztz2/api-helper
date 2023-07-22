@@ -3,9 +3,9 @@ import { FormatCodeConfig } from '@api-helper/cli/lib/tools/format-code';
 
 export class Template {
   // 模板名称
-  value = '';
-  // 唯一ID
   label = '';
+  // 唯一ID
+  value = '';
   // 模板内容
   content = '';
   // 是否为内置模版

@@ -23,7 +23,11 @@
                   :rules="[{ required: true, message: '必填项' }]"
                   :validate-trigger="['change', 'input']"
                 >
-                  <a-input v-model="formModel.label" :max-length="64" />
+                  <a-input
+                    v-model="formModel.label"
+                    :max-length="64"
+                    placeholder="请输入模板名称"
+                  />
                 </a-form-item>
               </a-col>
               <a-col :span="24">
@@ -31,12 +35,13 @@
                   label="模版文件后缀名"
                   field="formatCodeExtension"
                   style="margin-bottom: 0"
-                  tooltip="代码生成之后，会根据配置的后缀名，调用 prettier 对生成的代码进行美化"
+                  tooltip="代码生成之后，会根据配置的后缀名，生成一个文件，调用 prettier 对生成的代码进行美化"
                 >
                   <a-select
                     value-key="id"
                     v-model="formModel.formatCodeExtension"
                     :options="options.formatCodeExtension"
+                    placeholder="请选择模版文件后缀名"
                     allow-clear
                   />
                 </a-form-item>

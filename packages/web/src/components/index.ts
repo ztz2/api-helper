@@ -6,6 +6,7 @@ import ApihDialog from './apih-dialog/index.vue';
 import ApihLogo from './apih-logo/index.vue';
 import ApihSchemaTree from './apih-schema-tree/index.vue';
 import ApihDialogCodeMirror from './apih-dialog-code-mirror/index.vue';
+import ApihTooltip from './apih-tooltip/index.vue';
 
 const components = {
   ApihCategory,
@@ -15,6 +16,7 @@ const components = {
   ApihLogo,
   ApihSchemaTree,
   ApihDialogCodeMirror,
+  ApihTooltip,
 };
 
 export default function install(app: App): App {
