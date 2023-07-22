@@ -124,7 +124,7 @@
                           </div>
                         </template>
                         <div>
-                          <apih-code :code="renderAPIFunc(api)"></apih-code>
+                          <ApiCode :api="api" type="api" />
                         </div>
                       </a-collapse-item>
                       <a-collapse-item :key="3-3-2">
@@ -132,7 +132,7 @@
                           <div>请求参数</div>
                         </template>
                         <div>
-                          <apih-code :code="renderMap(api)"></apih-code>
+                          <ApiCode :api="api" type="request" />
                         </div>
                       </a-collapse-item>
                       <a-collapse-item :key="3-3-3">
@@ -140,7 +140,7 @@
                           <div>响应数据</div>
                         </template>
                         <div>
-                          <apih-code :code="renderMap(api, true)"></apih-code>
+                          <ApiCode :api="api" type="response" />
                         </div>
                       </a-collapse-item>
                     </a-collapse>
@@ -174,12 +174,10 @@ import {
   computed,
   onMounted,
 } from 'vue';
-import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { getSchema } from '@api-helper/core/es/lib/helpers';
 
 import {
   useProject,
@@ -187,13 +185,14 @@ import {
   useModelTemplate,
 } from '@/store';
 import {
+  SECRET_KEY,
   API_CUSTOM_TEMPLATE_ID,
-  MODEL_CUSTOM_TEMPLATE_ID, SECRET_KEY,
+  MODEL_CUSTOM_TEMPLATE_ID,
 } from '@/constants';
 import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
 import { modalConfirm } from '@/utils';
-import renderTemplate from '@/utils/render-template';
+import ApiCode from './__components__/api-code.vue';
 import { Template } from '@/store/template/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
 import { Project, APIHDocument } from '@/store/project/interface';
@@ -243,64 +242,6 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
   }
   return res;
 });
-
-const mapMemo: Map<string, string[]> = new Map<string, string[]>();
-async function renderMap(api: APIHelper.API, isResp = false): Promise<string> {
-  const params = {
-    api,
-    requestDataSchemaList: [] as APIHelper.SchemaList,
-    responseDataSchemaList: [] as APIHelper.SchemaList,
-  };
-  const record = mapMemo.get(api.id) ?? [];
-
-  if (isResp) {
-    if (record?.[1]) {
-      return record?.[1];
-    }
-    const dataKey = project.value?.dataKey ?? '';
-    let responseDataSchema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
-    if (dataKey) {
-      responseDataSchema = getSchema(responseDataSchema, dataKey);
-    }
-    params.responseDataSchemaList = responseDataSchema?.params ?? [];
-  } else {
-    if (record?.[0]) {
-      return record?.[0];
-    }
-    params.requestDataSchemaList = api.requestDataSchema ? api.requestDataSchema.params : [];
-  }
-
-  const res = await renderTemplate(modelTemplateStore.defaultModelTemplate, params, projectStore.currentProject);
-
-  let result: string;
-  if (isResp) {
-    record[1] = res?.[1].content ?? '';
-    result = record[1] as string;
-  } else {
-    record[0] = res?.[0].content ?? '';
-    result = record[0] as string;
-  }
-
-  mapMemo.set(api.id, record);
-
-  return result;
-}
-
-const apiMemo: Map<string, string> = new Map<string, string>();
-async function renderAPIFunc(api: APIHelper.API) {
-  if (apiMemo.has(api.id)) {
-    return apiMemo.get(api.id);
-  }
-  const res = (await renderTemplate(apiTemplateStore.defaultApiTemplate, {
-    apiList: [api],
-  }, {
-    ...projectStore.currentProject,
-    onlyApiFunc: true,
-  }))?.[0];
-  const value = res?.content ?? '';
-  apiMemo.set(api.id, value);
-  return value;
-}
 
 function handleCopyPath(path: string) {
   toClipboard(path);

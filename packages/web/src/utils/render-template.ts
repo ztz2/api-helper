@@ -26,7 +26,9 @@ export default async function _renderTemplate(
   // 渲染配置
   config?: Project,
 ): Promise<Array<APIHelper.TemplateContent>> {
-  config = config ?? {} as Project;
+  templateMap = _.cloneDeep(templateMap);
+  params = _.cloneDeep(params);
+  config = _.cloneDeep(config ?? {} as Project);
 
   let result: Array<APIHelper.TemplateContent> = [];
   const { formatCodeExtension } = templateMap;
