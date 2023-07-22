@@ -84,7 +84,6 @@
               class="generate-collapse"
               expand-icon-position="right"
               :default-active-key="[0]"
-              destroy-on-hide
             >
               <a-collapse-item
                 v-for="(ahModule, index) of selectedAhModule"
@@ -100,7 +99,6 @@
                   v-if="ahModule.apiList.length > 0"
                   expand-icon-position="right"
                   :default-active-key="[0]"
-                  destroy-on-hide
                 >
                   <a-collapse-item
                     v-for="(api, idx) of ahModule.apiList"
@@ -116,7 +114,7 @@
                         <small><strong>{{api.label}}</strong></small>
                       </a-space>
                     </template>
-                    <a-collapse expand-icon-position="right" :default-active-key="['3-2']" destroy-on-hide>
+                    <a-collapse expand-icon-position="right" :default-active-key="['3-2']">
                       <a-collapse-item key="3-1">
                         <template #header>
                           <div>
