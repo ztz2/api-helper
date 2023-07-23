@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { changeCase as _changeCase } from '@api-helper/template';
 import { checkType, getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import _apih from './render-template-apih';
@@ -36,6 +37,7 @@ export default async function _renderTemplate(
   try {
     const lodash = _;
     const apih = _apih;
+    const changeCase = _changeCase;
     // eslint-disable-next-line prefer-destructuring
     const artTemplate = apih.template.artTemplate;
     const exe = { renderTemplate: null };
