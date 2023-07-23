@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processRequestFunctionConfig = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
+exports.processRequestFunctionConfig = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.transformType = exports.createSchema = exports.createApi = exports.createCategory = exports.createDocument = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
 var utils = __importStar(require("./lib/utils"));
 exports.utils = utils;
 var parser_yapi_1 = __importDefault(require("./lib/parser/parser-yapi"));
@@ -33,9 +33,16 @@ var util_1 = require("./lib/utils/util");
 Object.defineProperty(exports, "isSchemaObject", { enumerable: true, get: function () { return util_1.isSchemaObject; } });
 Object.defineProperty(exports, "getErrorMessage", { enumerable: true, get: function () { return util_1.getErrorMessage; } });
 Object.defineProperty(exports, "isSchemaPrimitiveValue", { enumerable: true, get: function () { return util_1.isSchemaPrimitiveValue; } });
+Object.defineProperty(exports, "filterSchemaRoot", { enumerable: true, get: function () { return util_1.filterSchemaRoot; } });
+Object.defineProperty(exports, "filterSchemaRequired", { enumerable: true, get: function () { return util_1.filterSchemaRequired; } });
 Object.defineProperty(exports, "filterSchemaPrimitiveValue", { enumerable: true, get: function () { return util_1.filterSchemaPrimitiveValue; } });
 var helpers_1 = require("./lib/helpers");
 Object.defineProperty(exports, "getSchema", { enumerable: true, get: function () { return helpers_1.getSchema; } });
+Object.defineProperty(exports, "createDocument", { enumerable: true, get: function () { return helpers_1.createDocument; } });
+Object.defineProperty(exports, "createCategory", { enumerable: true, get: function () { return helpers_1.createCategory; } });
+Object.defineProperty(exports, "createApi", { enumerable: true, get: function () { return helpers_1.createApi; } });
+Object.defineProperty(exports, "createSchema", { enumerable: true, get: function () { return helpers_1.createSchema; } });
+Object.defineProperty(exports, "transformType", { enumerable: true, get: function () { return helpers_1.transformType; } });
 Object.defineProperty(exports, "processRequestFunctionConfig", { enumerable: true, get: function () { return helpers_1.processRequestFunctionConfig; } });
 if (typeof window === 'object' && window != null && !window.process) {
     window.process = {

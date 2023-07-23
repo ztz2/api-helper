@@ -9,13 +9,13 @@ export declare namespace APIHelper {
     type CategoryList = Array<Category>;
     type APIList = Array<API>;
     type SchemaList = Array<Schema>;
-    type SchemaType = 'string' | 'number' | 'object' | 'array' | 'boolean' | 'null' | 'any' | 'unknown';
+    type SchemaType = 'string' | 'number' | 'object' | 'array' | 'boolean' | 'null' | 'any' | 'File' | 'unknown';
     interface Document {
         id: string;
         title: OpenAPI.Document['info']['title'];
         description: OpenAPI.Document['info']['description'];
         version: OpenAPI.Document['info']['version'];
-        openapiVersion: string;
+        documentVersion: string;
         basePath: string;
         categoryList: CategoryList;
     }
@@ -40,10 +40,10 @@ export declare namespace APIHelper {
         requestExtraDataSchema: Schema | null;
         responseDataSchema: Schema | null;
     }
-    type Schema = IString | IEnum | INumber | IObject | IArray | IBoolean | INull | IAny | IUnknown;
-    interface AbstractSchema {
+    type Schema = IStringSchema | INumberSchema | IObjectSchema | IArraySchema | IBooleanSchema | IFileSchema | INullSchema | IAnySchema | IUnknownSchema;
+    interface IAbstractSchema {
         id: string;
-        type: SchemaType | undefined | '';
+        type: SchemaType | string;
         keyName: string;
         title: string;
         description: string;
@@ -53,8 +53,9 @@ export declare namespace APIHelper {
         };
         examples: string[];
         params: Schema[];
+        enum: Array<string | number>;
     }
-    interface IString extends AbstractSchema {
+    interface IStringSchema extends IAbstractSchema {
         type: 'string';
         rules: {
             required: boolean;
@@ -63,11 +64,7 @@ export declare namespace APIHelper {
             pattern?: string;
         };
     }
-    interface IEnum extends IString {
-        type: 'string';
-        enum: Array<string | number>;
-    }
-    interface INumber extends AbstractSchema {
+    interface INumberSchema extends IAbstractSchema {
         type: 'number';
         rules: {
             required: boolean;
@@ -78,13 +75,11 @@ export declare namespace APIHelper {
             exclusiveMaximum?: number | boolean;
         };
     }
-    interface IObject extends AbstractSchema {
+    interface IObjectSchema extends IAbstractSchema {
         type: 'object';
-        params: Schema[];
     }
-    interface IArray extends AbstractSchema {
+    interface IArraySchema extends IAbstractSchema {
         type: 'array';
-        params: Schema[];
         rules: {
             required: boolean;
             minLength?: number;
@@ -92,16 +87,19 @@ export declare namespace APIHelper {
             uniqueItems?: boolean;
         };
     }
-    interface IBoolean extends AbstractSchema {
+    interface IBooleanSchema extends IAbstractSchema {
         type: 'boolean';
     }
-    interface INull extends AbstractSchema {
+    interface IFileSchema extends IAbstractSchema {
+        type: 'file';
+    }
+    interface INullSchema extends IAbstractSchema {
         type: 'null';
     }
-    interface IAny extends AbstractSchema {
+    interface IAnySchema extends IAbstractSchema {
         type: 'any';
     }
-    interface IUnknown extends AbstractSchema {
+    interface IUnknownSchema extends IAbstractSchema {
         type: 'unknown';
     }
 }

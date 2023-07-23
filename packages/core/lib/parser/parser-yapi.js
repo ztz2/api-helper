@@ -50,6 +50,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../utils/util");
 var constant_1 = require("../../lib/constant");
 var validator_1 = require("../utils/validator");
+var helpers_1 = require("../helpers");
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -72,39 +73,30 @@ var ParserYapi = /** @class */ (function () {
         });
     };
     ParserYapi.prototype.parserProject = function () {
-        return {
+        return (0, helpers_1.createDocument)({
             id: this.generateId(),
             title: (0, util_1.filterDesc)(this.projectInfo.name),
             description: (0, util_1.filterDesc)(this.projectInfo.desc),
             version: 'last',
-            openapiVersion: '2.0',
+            documentVersion: '2.0',
             basePath: this.projectInfo.basepath || '/',
-            categoryList: [],
-        };
+        });
     };
     ParserYapi.prototype.parserCategoryList = function () {
         var _this = this;
         var result = [];
         this.categoryList.forEach(function (category) {
-            result.push({
+            result.push((0, helpers_1.createCategory)({
                 id: _this.generateId(),
-                // 分组名称
                 name: category.name,
-                // 分组描述
                 description: (0, util_1.filterDesc)(category === null || category === void 0 ? void 0 : category.desc),
-                // 分组下的接口列表
-                apiList: [],
-            });
+            }));
         });
-        result.push({
+        result.push((0, helpers_1.createCategory)({
             id: this.generateId(),
-            // 分组名称
             name: constant_1.UNKNOWN_GROUP_NAME,
-            // 分组描述
             description: constant_1.UNKNOWN_GROUP_DESC,
-            // 分组下的接口列表
-            apiList: [],
-        });
+        }));
         return result;
     };
     ParserYapi.prototype.parserApiList = function (project, categoryList) {
@@ -122,21 +114,14 @@ var ParserYapi = /** @class */ (function () {
                 return;
             }
             var tag = apiMap.tag;
-            var api = {
+            var api = (0, helpers_1.createApi)({
                 id: _this.generateId(),
                 title: (0, util_1.filterDesc)(apiMap.title),
                 description: (0, util_1.filterDesc)(apiMap.markdown),
-                label: '',
                 path: (0, util_1.mergeUrl)((0, util_1.isHttp)(project.basePath) ? '' : project.basePath, apiMap.path),
                 method: apiMap.method,
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
-                formDataKeyNameList: [],
-                pathParamKeyNameList: [],
-                queryStringKeyNameList: [],
-                requestDataSchema: null,
-                requestExtraDataSchema: null,
-                responseDataSchema: null,
-            };
+            });
             api.label = api.title ? api.title : api.description ? api.description : '';
             // API content-type，暂无特殊处理
             // switch (apiMap.req_body_type) {
@@ -171,19 +156,9 @@ var ParserYapi = /** @class */ (function () {
             //   });
             // }
             /****************** 请求参数处理-开始 ******************/
-            var requestDataSchema = {
+            var requestDataSchema = (0, helpers_1.createSchema)('object', {
                 id: _this.generateId(),
-                type: 'object',
-                keyName: '',
-                title: '',
-                description: '',
-                label: '',
-                rules: {
-                    required: false,
-                },
-                examples: [],
-                params: []
-            };
+            });
             var requestExtraDataSchema = null;
             // fix: 重复项问题
             var requestSchemaRecord = [];
@@ -199,19 +174,14 @@ var ParserYapi = /** @class */ (function () {
                         continue;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = (0, helpers_1.createSchema)('string', {
                         id: _this.generateId(),
-                        title: '',
                         description: (0, util_1.filterDesc)(p.desc),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
                         rules: {
                             required: true
                         }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.pathParamKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
@@ -236,19 +206,14 @@ var ParserYapi = /** @class */ (function () {
                         continue;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = (0, helpers_1.createSchema)('string', {
                         id: _this.generateId(),
-                        title: '',
                         description: (0, util_1.filterDesc)(p.desc),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
                         rules: {
                             required: Number(p.required) === 1
                         }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.queryStringKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
@@ -276,19 +241,15 @@ var ParserYapi = /** @class */ (function () {
                                 continue;
                             }
                             // 字段
-                            var scm = {
-                                examples: [],
+                            var scm = (0, helpers_1.createSchema)('string', {
                                 id: _this.generateId(),
-                                title: '',
                                 description: (0, util_1.filterDesc)(p.desc),
-                                label: '',
                                 keyName: keyName,
                                 type: 'string',
-                                params: [],
                                 rules: {
                                     required: Number(p.required) === 1
                                 }
-                            };
+                            });
                             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                             api.formDataKeyNameList.push(keyName);
                             requestKeyNameMemo.push(keyName);
@@ -326,19 +287,11 @@ var ParserYapi = /** @class */ (function () {
                         break;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = (0, helpers_1.createSchema)('File', {
                         id: _this.generateId(),
-                        title: '',
                         description: (0, util_1.filterDesc)(apiContent.req_body_other),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
-                        rules: {
-                            required: false
-                        }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.formDataKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);

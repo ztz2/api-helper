@@ -19,6 +19,7 @@ export declare namespace APIHelper {
     |'boolean'
     |'null'
     |'any'
+    |'File'
     |'unknown';
 
   // 根文档对象
@@ -31,8 +32,8 @@ export declare namespace APIHelper {
     description: OpenAPI.Document['info']['description'];
     // API文档的版本
     version: OpenAPI.Document['info']['version'];
-    // openapi版本
-    openapiVersion: string;
+    // 文档的版本，openapi版本，yapi版本
+    documentVersion: string;
     // 基础路径
     basePath: string;
     // 分组
@@ -84,21 +85,21 @@ export declare namespace APIHelper {
 
   // Schema
   type Schema =
-    | IString
-    | IEnum
-    | INumber
-    | IObject
-    | IArray
-    | IBoolean
-    | INull
-    | IAny
-    | IUnknown;
+    | IStringSchema
+    | INumberSchema
+    | IObjectSchema
+    | IArraySchema
+    | IBooleanSchema
+    | IFileSchema
+    | INullSchema
+    | IAnySchema
+    | IUnknownSchema;
 
-  interface AbstractSchema {
+  interface IAbstractSchema {
     // 随机生成的唯一ID
     id: string;
     // 类型
-    type: SchemaType | undefined | '';
+    type: SchemaType | string;
     // 字段名称，当为基本类型的时候，这个字段只是一个数据类型的标记，没有keyName存在
     keyName: string;
     // 简要描述，比如 username，描述: 用户名
@@ -116,9 +117,11 @@ export declare namespace APIHelper {
     examples: string[],
     // 节点子对象属性Schema
     params: Schema[];
+    // 枚举数据
+    enum: Array<string | number>;
   }
 
-  interface IString extends AbstractSchema {
+  interface IStringSchema extends IAbstractSchema {
     type: 'string';
     rules: {
       // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
@@ -131,13 +134,7 @@ export declare namespace APIHelper {
     }
   }
 
-  // 枚举类型，其值还是string类型，根据对象中是否包含 enum 判定
-  interface IEnum extends IString {
-    type: 'string';
-    enum: Array<string | number>;
-  }
-
-  interface INumber extends AbstractSchema {
+  interface INumberSchema extends IAbstractSchema {
     type: 'number';
     rules: {
       // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
@@ -155,14 +152,12 @@ export declare namespace APIHelper {
     }
   }
 
-  interface IObject extends AbstractSchema {
+  interface IObjectSchema extends IAbstractSchema {
     type: 'object';
-    params: Schema[];
   }
 
-  interface IArray extends AbstractSchema{
+  interface IArraySchema extends IAbstractSchema{
     type: 'array';
-    params: Schema[];
     rules: {
       // 标明此参数是否是必选参数。如果 参数位置 的值是 path，那么这个参数一定是 必选 的因此这里的值必须是true。其他的则视情况而定。此字段的默认值是false。
       required: boolean;
@@ -174,19 +169,23 @@ export declare namespace APIHelper {
     }
   }
 
-  interface IBoolean extends AbstractSchema {
+  interface IBooleanSchema extends IAbstractSchema {
     type: 'boolean';
   }
 
-  interface INull extends AbstractSchema {
+  interface IFileSchema extends IAbstractSchema {
+    type: 'file';
+  }
+
+  interface INullSchema extends IAbstractSchema {
     type: 'null';
   }
 
-  interface IAny extends AbstractSchema {
+  interface IAnySchema extends IAbstractSchema {
     type: 'any';
   }
 
-  interface IUnknown extends AbstractSchema {
+  interface IUnknownSchema extends IAbstractSchema {
     type: 'unknown';
   }
 }

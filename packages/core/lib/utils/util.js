@@ -1,4 +1,26 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -15,26 +37,17 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.transformType = exports.filterKeyName = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
+exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterKeyName = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
 var qs_1 = __importDefault(require("qs"));
+var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
 var constant_1 = require("../constant");
 var validator_1 = require("./validator");
+var helpers_1 = require("../helpers");
 function checkType(value, type) {
     return Object.prototype.toString.call(value) === "[object ".concat(type, "]");
 }
@@ -117,6 +130,56 @@ function filterDesc(value) {
     return value;
 }
 exports.filterDesc = filterDesc;
+function filterSchemaRoot(schemaList) {
+    var e_1, _a;
+    if (!schemaList) {
+        return [];
+    }
+    var result = [];
+    try {
+        for (var schemaList_1 = __values(schemaList), schemaList_1_1 = schemaList_1.next(); !schemaList_1_1.done; schemaList_1_1 = schemaList_1.next()) {
+            var schema = schemaList_1_1.value;
+            result.push((0, cloneDeep_1.default)(__assign(__assign({}, schema), { params: [] })));
+        }
+    }
+    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+    finally {
+        try {
+            if (schemaList_1_1 && !schemaList_1_1.done && (_a = schemaList_1.return)) _a.call(schemaList_1);
+        }
+        finally { if (e_1) throw e_1.error; }
+    }
+    return result;
+}
+exports.filterSchemaRoot = filterSchemaRoot;
+function filterSchemaRequired(schemaList) {
+    if (!schemaList) {
+        return [];
+    }
+    function dfs(ls) {
+        var e_2, _a;
+        var result = [];
+        try {
+            for (var ls_1 = __values(ls), ls_1_1 = ls_1.next(); !ls_1_1.done; ls_1_1 = ls_1.next()) {
+                var itm = ls_1_1.value;
+                if (itm.rules.required) {
+                    itm.params = dfs(itm.params);
+                    result.push(itm);
+                }
+            }
+        }
+        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        finally {
+            try {
+                if (ls_1_1 && !ls_1_1.done && (_a = ls_1.return)) _a.call(ls_1);
+            }
+            finally { if (e_2) throw e_2.error; }
+        }
+        return result;
+    }
+    return dfs((0, cloneDeep_1.default)(schemaList));
+}
+exports.filterSchemaRequired = filterSchemaRequired;
 function filterKeyName(value) {
     if (value === void 0) { value = ''; }
     value = value == null ? '' : value;
@@ -125,33 +188,8 @@ function filterKeyName(value) {
     return value;
 }
 exports.filterKeyName = filterKeyName;
-function transformType(type) {
-    var _a;
-    var typeMap = {
-        int: 'number',
-        integer: 'number',
-        double: 'number',
-        short: 'number',
-        float: 'number',
-        bigdecimal: 'number',
-        long: 'string',
-        string: 'string',
-        byte: 'string',
-        binary: 'string',
-        boolean: 'boolean',
-        date: 'string',
-        dateTime: 'string',
-        password: 'string',
-        void: 'null',
-        array: 'array',
-        object: 'object',
-    };
-    var typeValue = ((_a = typeMap[type]) !== null && _a !== void 0 ? _a : type);
-    return constant_1.TS_TYPE.includes(typeValue) ? typeValue : 'unknown';
-}
-exports.transformType = transformType;
 function parserSchema(schema, parentSchema, keyName, memo, options) {
-    var e_1, _a;
+    var e_3, _a;
     var _b;
     if (parentSchema === void 0) { parentSchema = {}; }
     if (keyName === void 0) { keyName = ''; }
@@ -169,31 +207,22 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
     keyName = filterKeyName(keyName);
     var requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []);
     // 定义数据，收集类型，对象类型在下面在进行单独处理
-    var resultSchema = {
+    var resultSchema = (0, helpers_1.createSchema)((0, helpers_1.transformType)(schema.type), {
         id: options.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),
-        label: '',
         keyName: keyName,
-        type: transformType(schema.type),
-        params: [],
-        enum: [],
+        type: (0, helpers_1.transformType)(schema.type, schema.format),
         examples: (_b = schema.examples) !== null && _b !== void 0 ? _b : [],
         rules: {
             required: requiredFieldList.includes(keyName),
         }
-    };
+    });
     resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
     try {
-        // 枚举类型单独处理
-        // 注意：过滤非对象类型
+        // 枚举类型单独处理，过滤非对象类型
         if (schema.enum) {
-            // @ts-ignore
             resultSchema.enum = schema.enum.filter(function (t) { return !(0, isPlainObject_1.default)(t); });
-        }
-        else {
-            // @ts-ignore
-            delete resultSchema.enum;
         }
         // 其他类型处理
         // eslint-disable-next-line default-case
@@ -254,12 +283,12 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
                             }
                         }
                     }
-                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
                     finally {
                         try {
                             if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
                         }
-                        finally { if (e_1) throw e_1.error; }
+                        finally { if (e_3) throw e_3.error; }
                     }
                     // 数组单一类型 schema.properties
                 }
@@ -343,7 +372,7 @@ function deepAddSchemaRules(schema, rules) {
     }
     var memo = [];
     var deepLoop = function (s) {
-        var e_2, _a;
+        var e_4, _a;
         try {
             for (var s_1 = __values(s), s_1_1 = s_1.next(); !s_1_1.done; s_1_1 = s_1.next()) {
                 var itm = s_1_1.value;
@@ -355,12 +384,12 @@ function deepAddSchemaRules(schema, rules) {
                 deepLoop(itm.params);
             }
         }
-        catch (e_2_1) { e_2 = { error: e_2_1 }; }
+        catch (e_4_1) { e_4 = { error: e_4_1 }; }
         finally {
             try {
                 if (s_1_1 && !s_1_1.done && (_a = s_1.return)) _a.call(s_1);
             }
-            finally { if (e_2) throw e_2.error; }
+            finally { if (e_4) throw e_4.error; }
         }
     };
     deepLoop(schema);
@@ -435,7 +464,7 @@ function filterSchemaPrimitiveValue(schema) {
     }
     var schemaList = Array.isArray(schema) ? schema : [schema];
     var filter = function (scmList, memo) {
-        var e_3, _a;
+        var e_5, _a;
         var _b;
         if (memo === void 0) { memo = new Map(); }
         if (memo.has(scmList)) {
@@ -455,12 +484,12 @@ function filterSchemaPrimitiveValue(schema) {
                 result.push(scm);
             }
         }
-        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+        catch (e_5_1) { e_5 = { error: e_5_1 }; }
         finally {
             try {
                 if (scmList_1_1 && !scmList_1_1.done && (_a = scmList_1.return)) _a.call(scmList_1);
             }
-            finally { if (e_3) throw e_3.error; }
+            finally { if (e_5) throw e_5.error; }
         }
         return result;
     };

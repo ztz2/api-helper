@@ -1,15 +1,16 @@
 import qs from 'qs';
+import cloneDeep from 'lodash/cloneDeep';
 import { JSONSchema4 } from 'json-schema';
 import isPlainObject from 'lodash/isPlainObject';
 
 import { APIHelper } from '../types';
 import {
-  TS_TYPE,
   LINE_FEED_CODE,
   COMMENT_END_CODE,
   COMMENT_START_CODE,
 } from '../constant';
 import { validateSchema } from './validator';
+import { createSchema, transformType } from '../helpers';
 
 export function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;
@@ -89,39 +90,42 @@ export function filterDesc(value = ''): string {
   return value;
 }
 
+export function filterSchemaRoot(schemaList: Array<APIHelper.Schema>) {
+  if (!schemaList) {
+    return [];
+  }
+  const result = [];
+  for (const schema of schemaList) {
+    result.push(cloneDeep({
+      ...schema,
+      params: [],
+    }));
+  }
+  return result;
+}
+
+export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
+  if (!schemaList) {
+    return [];
+  }
+  function dfs(ls: Array<APIHelper.Schema>) {
+    const result = [];
+    for (const itm of ls) {
+      if (itm.rules.required) {
+        itm.params = dfs(itm.params);
+        result.push(itm);
+      }
+    }
+    return result;
+  }
+  return dfs(cloneDeep(schemaList));
+}
+
 export function filterKeyName(value = ''): string {
   value = value == null ? '' : value;
   // keyName[0] => keyName
   value = value.replace(/\[.*?\]/gim, '');
   return value;
-}
-
-export function transformType(type: string): APIHelper.SchemaType {
-  const typeMap: Record<string, string> = {
-    int: 'number',
-    integer: 'number',
-    double: 'number',
-    short: 'number',
-    float: 'number',
-    bigdecimal: 'number',
-
-    long: 'string',
-    string: 'string',
-    byte: 'string',
-    binary: 'string',
-    boolean: 'boolean',
-    date: 'string',
-    dateTime: 'string',
-    password: 'string',
-    void: 'null',
-
-    array: 'array',
-    object: 'object',
-  }
-
-  const typeValue = (typeMap[type] ?? type) as APIHelper.SchemaType;
-
-  return TS_TYPE.includes(typeValue) ? typeValue : 'unknown';
 }
 
 export function parserSchema(
@@ -149,37 +153,29 @@ export function parserSchema(
   const requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []) as string[];
 
   // 定义数据，收集类型，对象类型在下面在进行单独处理
-  const resultSchema: APIHelper.Schema = {
+  const resultSchema = createSchema(transformType(schema.type as string), {
     id: options.autoGenerateId ? randomId() : '',
     title: filterDesc(schema.title),
     description: filterDesc(schema.description),
-    label: '',
     keyName,
-    type: transformType(schema.type as string),
-    params: [],
-    enum: [],
+    type: transformType(schema.type as string, schema.format),
     examples: schema.examples ?? [],
     rules: {
       required: requiredFieldList.includes(keyName),
     }
-  };
+  })
   resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
 
   try {
-    // 枚举类型单独处理
-    // 注意：过滤非对象类型
+    // 枚举类型单独处理，过滤非对象类型
     if (schema.enum) {
-      // @ts-ignore
       resultSchema.enum = schema.enum.filter((t) => !isPlainObject(t)) as string[];
-    } else {
-      // @ts-ignore
-      delete resultSchema.enum;
     }
     // 其他类型处理
     // eslint-disable-next-line default-case
     switch (schema.type) {
       case 'string':
-        const stringRules: APIHelper.IString['rules'] = {
+        const stringRules: APIHelper.IStringSchema['rules'] = {
           required: requiredFieldList.includes(keyName),
         };
         if (schema.minLength != null) stringRules.minLength = schema.minLength;
@@ -189,7 +185,7 @@ export function parserSchema(
         resultSchema.rules = stringRules;
         break;
       case 'number':
-        const numberRules: APIHelper.INumber['rules'] = {
+        const numberRules: APIHelper.INumberSchema['rules'] = {
           required: requiredFieldList.includes(keyName),
         };
         if (schema.multipleOf != null) numberRules.multipleOf = schema.multipleOf;
@@ -240,7 +236,7 @@ export function parserSchema(
             }
           }
         }
-        const arrayRules: APIHelper.IArray['rules'] = {
+        const arrayRules: APIHelper.IArraySchema['rules'] = {
           required: requiredFieldList.includes(keyName),
         };
         if (schema.minItems != null) arrayRules.minLength = schema.minItems;
@@ -400,9 +396,9 @@ export function isSchemaPrimitiveValue(schema: APIHelper.Schema | null) {
  * @param schema { schema: APIHelper.Schema | APIHelper.SchemaList | null } schema对象
  * @return APIHelper.Schema | APIHelper.SchemaList | null
  */
-export function filterSchemaPrimitiveValue(schema: APIHelper.Schema | APIHelper.SchemaList | null): APIHelper.Schema | APIHelper.SchemaList {
+export function filterSchemaPrimitiveValue<T>(schema: APIHelper.Schema | APIHelper.SchemaList | null): T {
   if (!schema) {
-    return schema!;
+    return schema as unknown as T;
   }
   const schemaList: Array<APIHelper.Schema> = Array.isArray(schema) ? schema : [schema];
   const filter = (scmList: Array<APIHelper.Schema>, memo: Map<Array<APIHelper.Schema>, Array<APIHelper.Schema>> = new Map()) => {
@@ -424,9 +420,9 @@ export function filterSchemaPrimitiveValue(schema: APIHelper.Schema | APIHelper.
   }
   const res = filter(schemaList);
   if (Array.isArray(schema)) {
-    return res;
+    return res as unknown as T;
   }
-  return schemaList[0];
+  return schemaList[0] as unknown as T;
 }
 
 export function getErrorMessage<T extends string | Error & { msg?: string }>(error: T, prefix = '', postfix = ''): string {

@@ -1,7 +1,210 @@
 import { stringify } from 'qs';
+import merge from 'lodash/merge';
 
 import { APIHelper } from './types';
 import { checkType } from './utils/util';
+
+class AbstractSchema implements APIHelper.IAbstractSchema{
+  id = '';
+  type = '';
+  keyName = '';
+  title = '';
+  description = '';
+  label = '';
+  rules = { required: false } as APIHelper.IAbstractSchema['rules'];
+  examples = [] as APIHelper.IAbstractSchema['examples'];
+  params = [] as APIHelper.IAbstractSchema['params'];
+  enum = [] as APIHelper.IAbstractSchema['enum'];
+}
+
+class StringSchema extends AbstractSchema implements APIHelper.IStringSchema{
+  type = 'string' as 'string';
+  rules = {
+    required: false,
+    minLength: undefined,
+    maxLength: undefined,
+    pattern: undefined,
+  } as APIHelper.IAbstractSchema['rules'];
+}
+
+class NumberSchema extends AbstractSchema implements APIHelper.INumberSchema{
+  type = 'number' as 'number';
+  rules = {
+    required: false,
+    multipleOf: undefined,
+    minimum: undefined,
+    maximum: undefined,
+    exclusiveMinimum: undefined,
+    exclusiveMaximum: undefined,
+  } as APIHelper.INumberSchema['rules'];
+}
+
+class ObjectSchema extends AbstractSchema implements APIHelper.IObjectSchema{
+  type = 'object' as 'object';
+}
+
+class ArraySchema extends AbstractSchema implements APIHelper.IArraySchema{
+  type = 'array' as 'array';
+  rules = {
+    required: false,
+    minLength: undefined,
+    maxLength: undefined,
+    uniqueItems: undefined,
+  } as APIHelper.IArraySchema['rules'];
+}
+
+class BooleanSchema extends AbstractSchema implements APIHelper.IBooleanSchema{
+  type = 'boolean' as 'boolean';
+}
+
+class NullSchema extends AbstractSchema implements APIHelper.INullSchema{
+  type = 'null' as 'null';
+}
+
+class FileSchema extends AbstractSchema implements APIHelper.IFileSchema{
+  type = 'file' as 'file';
+}
+
+class AnySchema extends AbstractSchema implements APIHelper.IAnySchema{
+  type = 'any' as 'any';
+}
+
+class UnknownSchema extends AbstractSchema implements APIHelper.IUnknownSchema{
+  type = 'unknown' as 'unknown';
+}
+
+export function createSchema(
+  type: APIHelper.SchemaType | 'enum',
+  options?: Partial<AbstractSchema & Recordable>
+): APIHelper.Schema {
+  let instance = new AbstractSchema();
+  switch (type) {
+    case 'string': case 'enum' :{
+      instance = new StringSchema();
+      break;
+    }
+    case 'number':{
+      instance = new NumberSchema();
+      break;
+    }
+    case 'object':{
+      instance = new ObjectSchema();
+      break;
+    }
+    case 'array':{
+      instance = new ArraySchema();
+      break;
+    }
+    case 'boolean':{
+      instance = new BooleanSchema();
+      break;
+    }
+    case 'File':{
+      instance = new FileSchema();
+      break;
+    }
+    case 'null':{
+      instance = new NullSchema();
+      break;
+    }
+    case 'any':{
+      instance = new AnySchema();
+      break;
+    }
+    case 'unknown':{
+      instance = new UnknownSchema();
+      break;
+    }
+  }
+  if (Object.prototype.toString.call(options) === '[object Object]') {
+    instance = merge(instance, options);
+  }
+  return instance as APIHelper.Schema;
+}
+
+export function createDocument(options?: Partial<APIHelper.Document & Recordable>): APIHelper.Document {
+  let instance: APIHelper.Document = {
+    id: '',
+    title: '',
+    description: '',
+    version: '',
+    documentVersion: '',
+    basePath: '',
+    categoryList: [] as APIHelper.Document['categoryList'],
+  };
+  if (Object.prototype.toString.call(options) === '[object Object]') {
+    instance = merge(instance, options);
+  }
+  return instance;
+}
+export function createCategory(options?: Partial<APIHelper.Category & Recordable>): APIHelper.Category {
+  let instance: APIHelper.Category = {
+    id: '',
+    name: '',
+    description: '',
+    apiList: [] as APIHelper.Category['apiList'],
+  };
+  if (Object.prototype.toString.call(options) === '[object Object]') {
+    instance = merge(instance, options);
+  }
+  return instance;
+}
+export function createApi(options?: Partial<APIHelper.API & Recordable>): APIHelper.API {
+  let instance: APIHelper.API = {
+    id: '',
+    title: '',
+    description: '',
+    label: '',
+    docURL: '',
+    path: '',
+    method: '',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: [],
+    requestDataSchema: null,
+    requestExtraDataSchema: null,
+    responseDataSchema: null,
+  };
+  if (Object.prototype.toString.call(options) === '[object Object]') {
+    instance = merge(instance, options);
+  }
+  return instance;
+}
+
+export function transformType(type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: APIHelper.SchemaType): APIHelper.SchemaType {
+  const typeMap: Record<string, APIHelper.SchemaType> = {
+    int: 'number',
+    integer: 'number',
+    double: 'number',
+    short: 'number',
+    float: 'number',
+    bigdecimal: 'number',
+
+    long: 'string',
+    char: 'string',
+    string: 'string',
+    byte: 'string',
+    date: 'string',
+    dateTime: 'string',
+    password: 'string',
+
+    boolean: 'boolean',
+
+    void: 'null',
+
+    array: 'array',
+    object: 'object',
+
+    file: 'File',
+    File: 'File',
+    binary: 'File',
+  }
+  if (format === 'binary') {
+    return 'File';
+  }
+  const typeValue = typeMap[type];
+  return typeValue ? typeValue : emptyType ? emptyType : 'unknown';
+}
 
 export class FormDataItem<T> {
   private value: T | undefined;

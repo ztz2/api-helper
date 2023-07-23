@@ -6,6 +6,85 @@
     "tag": [
       "pet"
     ],
+    "_id": 969388,
+    "method": "POST",
+    "title": "uploads an image",
+    "path": "/pet/{petId}/uploadImage",
+    "project_id": 16095,
+    "catid": 302328,
+    "uid": 28300,
+    "add_time": 1688298350,
+    "content": {
+      "query_path": {
+        "path": "/pet/{petId}/uploadImage",
+        "params": []
+      },
+      "edit_uid": 0,
+      "status": "undone",
+      "type": "var",
+      "req_body_is_json_schema": false,
+      "res_body_is_json_schema": true,
+      "api_opened": false,
+      "index": 0,
+      "tag": [
+        "pet"
+      ],
+      "_id": 969388,
+      "method": "POST",
+      "title": "uploads an image",
+      "desc": "",
+      "path": "/pet/{petId}/uploadImage",
+      "req_params": [
+        {
+          "_id": "64a1636e09b47100098e8bab",
+          "name": "petId",
+          "desc": "ID of pet to update"
+        }
+      ],
+      "req_body_form": [
+        {
+          "required": "0",
+          "_id": "64a1636e09b47100098e8bad",
+          "name": "additionalMetadata",
+          "desc": "Additional data to pass to server",
+          "type": "text"
+        },
+        {
+          "required": "0",
+          "_id": "64a1636e09b47100098e8bac",
+          "name": "file",
+          "desc": "file to upload",
+          "type": "file"
+        }
+      ],
+      "req_headers": [
+        {
+          "required": "1",
+          "_id": "64a1636e09b47100098e8bae",
+          "name": "Content-Type",
+          "value": "multipart/form-data"
+        }
+      ],
+      "req_query": [],
+      "req_body_type": "form",
+      "res_body_type": "json",
+      "res_body": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"code\": {\n      \"type\": \"integer\",\n      \"format\": \"int32\"\n    },\n    \"type\": {\n      \"type\": \"string\"\n    },\n    \"message\": {\n      \"type\": \"string\"\n    }\n  },\n  \"$$ref\": \"#/definitions/ApiResponse\"\n}",
+      "project_id": 16095,
+      "catid": 302328,
+      "uid": 28300,
+      "add_time": 1688298350,
+      "up_time": 1688298350,
+      "__v": 0,
+      "username": "448941273"
+    }
+  },
+  {
+    "edit_uid": 0,
+    "status": "undone",
+    "api_opened": false,
+    "tag": [
+      "pet"
+    ],
     "_id": 969390,
     "method": "POST",
     "title": "Add a new pet to the store",

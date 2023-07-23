@@ -65,7 +65,8 @@ var __read = (this && this.__read) || function (o, n) {
 import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
 import { isHttp, mergeUrl, randomId, checkType, filterDesc, parserSchema, filterKeyName, processRequestSchema, processRequestSchemaPipeline, processResponseSchemaPipeline, } from '../utils/util';
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../constant';
-import { validateOpenAPIDocument, validateSchema, } from '../utils/validator';
+import { validateSchema, validateOpenAPIDocument, } from '../utils/validator';
+import { createApi, createCategory, createDocument, createSchema, transformType } from '../helpers';
 var ParserSwagger = /** @class */ (function () {
     function ParserSwagger(options) {
         this.autoGenerateId = true;
@@ -137,36 +138,36 @@ var ParserSwagger = /** @class */ (function () {
         for (var i = 0; i < openAPIDocumentList.length; i++) {
             var openAPIDocument = openAPIDocumentList[i];
             var basePath = '';
-            var openapiVersion = '';
+            var documentVersion = '';
             // 2.0 版本OpenAPI
             if ('swagger' in openAPIDocument && openAPIDocument.swagger.startsWith('2')) {
                 basePath = (_a = openAPIDocument === null || openAPIDocument === void 0 ? void 0 : openAPIDocument.basePath) !== null && _a !== void 0 ? _a : '';
-                openapiVersion = (_b = openAPIDocument.swagger) !== null && _b !== void 0 ? _b : '';
+                documentVersion = (_b = openAPIDocument.swagger) !== null && _b !== void 0 ? _b : '';
             } // 3.0 版本OpenAPI
             else if ('openapi' in openAPIDocument && openAPIDocument.openapi.startsWith('3')) {
                 basePath = (_e = (_d = (_c = openAPIDocument.servers) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.url) !== null && _e !== void 0 ? _e : '';
-                openapiVersion = (_f = openAPIDocument.openapi) !== null && _f !== void 0 ? _f : '';
+                documentVersion = (_f = openAPIDocument.openapi) !== null && _f !== void 0 ? _f : '';
             }
-            var document_2 = {
+            var document_2 = createDocument({
                 id: this.generateId(),
                 title: filterDesc(openAPIDocument.info.title),
                 description: filterDesc(openAPIDocument.info.description),
                 version: openAPIDocument.info.version,
-                openapiVersion: openapiVersion,
+                documentVersion: documentVersion,
                 basePath: basePath,
                 categoryList: []
-            };
+            });
             result.set(document_2, openAPIDocument);
         }
         return result;
     };
     ParserSwagger.prototype.parserPath2API = function (parsedDocumentMap) {
         var e_3, _a, e_4, _b;
-        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
+        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
         var result = [];
         try {
             for (var parsedDocumentMap_1 = __values(parsedDocumentMap), parsedDocumentMap_1_1 = parsedDocumentMap_1.next(); !parsedDocumentMap_1_1.done; parsedDocumentMap_1_1 = parsedDocumentMap_1.next()) {
-                var _6 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _6[0], openAPIDocument = _6[1];
+                var _10 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _10[0], openAPIDocument = _10[1];
                 var paths = openAPIDocument.paths;
                 if (!paths) {
                     continue;
@@ -174,48 +175,43 @@ var ParserSwagger = /** @class */ (function () {
                 var pathsEntries = Object.entries(paths);
                 var categoryMap = this.parserCategory(openAPIDocument);
                 for (var i = 0; i < pathsEntries.length; i++) {
-                    var _7 = __read(pathsEntries[i], 2), path = _7[0], methodMap = _7[1];
+                    var _11 = __read(pathsEntries[i], 2), path = _11[0], methodMap = _11[1];
                     var methodMapEntries = Object.entries(methodMap);
                     var _loop_1 = function (w) {
-                        var e_5, _9;
+                        var e_5, _13;
                         var method = methodMapEntries[w][0];
                         var apiMap = methodMapEntries[w][1];
                         // fix: basePath为/，导致//
                         var mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
                         // 接口
-                        var api = {
+                        var api = createApi({
                             id: this_1.generateId(),
                             title: filterDesc(apiMap.summary),
                             description: filterDesc(apiMap.description),
-                            label: '',
                             path: mPath,
                             method: method,
-                            formDataKeyNameList: [],
-                            pathParamKeyNameList: [],
-                            queryStringKeyNameList: [],
-                            requestDataSchema: null,
-                            requestExtraDataSchema: null,
-                            responseDataSchema: null,
-                        };
+                        });
                         api.label = api.title ? api.title : api.description ? api.description : '';
                         /****************** 处理请求参数--开始 ******************/
                         var requestExtraDataSchema = null;
-                        var requestDataSchema = {
+                        var requestDataSchema = createSchema('object', {
                             id: this_1.generateId(),
-                            type: 'object',
-                            keyName: '',
-                            title: '',
-                            description: '',
-                            label: '',
-                            rules: {
-                                required: false,
-                            },
-                            examples: [],
-                            params: []
-                        };
+                        });
                         var requestKeyNameMemo = [];
                         // fix: 重复项问题
                         var requestSchemaRecord = [];
+                        // FormData数据
+                        var formDataSource = (_e = (_d = (_c = apiMap.requestBody) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d['multipart/form-data']) === null || _e === void 0 ? void 0 : _e.schema;
+                        var formDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, formDataSource, undefined, {
+                            autoGenerateId: this_1.autoGenerateId,
+                        });
+                        // 记录表单数据key
+                        if (formDataSchema) {
+                            (_f = formDataSchema === null || formDataSchema === void 0 ? void 0 : formDataSchema.params) === null || _f === void 0 ? void 0 : _f.forEach(function (_a) {
+                                var keyName = _a.keyName;
+                                api.formDataKeyNameList.push(keyName);
+                            });
+                        }
                         if ('parameters' in apiMap) {
                             var parameters = apiMap.parameters;
                             for (var j = 0; j < parameters.length; j++) {
@@ -226,19 +222,10 @@ var ParserSwagger = /** @class */ (function () {
                                     if (requestKeyNameMemo.includes(keyName)) {
                                         continue;
                                     }
-                                    var scm = {
-                                        examples: [],
+                                    var scm = createSchema('string', {
                                         id: this_1.generateId(),
-                                        title: '',
-                                        description: '',
-                                        label: '',
-                                        type: 'string',
                                         keyName: keyName,
-                                        params: [],
-                                        rules: {
-                                            required: false
-                                        }
-                                    };
+                                    });
                                     // fix: url参数也是一个对象问题.
                                     if (parameter.schema) {
                                         var parsedSchema = parserSchema(parameter.schema, undefined, undefined, undefined, {
@@ -246,26 +233,21 @@ var ParserSwagger = /** @class */ (function () {
                                         });
                                         if (parsedSchema) {
                                             scm = parsedSchema;
-                                            if (!scm.type) {
-                                                // @ts-ignore
-                                                scm.type = 'string';
-                                                // @ts-ignore
-                                                scm.params = [];
-                                            }
                                         }
                                     }
-                                    scm.id = this_1.generateId();
-                                    scm.keyName = keyName;
                                     // 路径参数
                                     if (parameter.in === 'path') {
                                         api.pathParamKeyNameList.push(keyName);
                                     } // URL参数
                                     else if (parameter.in === 'query') {
                                         api.queryStringKeyNameList.push(keyName);
-                                    } // 表单参数（可能这个不是标准规范）
+                                    } // 表单参数（这个可能不是标准规范）
                                     else if (parameter.in === 'formData') {
+                                        scm.type = transformType(parameter.type, undefined, 'string');
                                         api.formDataKeyNameList.push(keyName);
                                     }
+                                    scm.id = this_1.generateId();
+                                    scm.keyName = keyName;
                                     scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
                                     scm.description = filterDesc(parameter.description);
                                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
@@ -283,7 +265,7 @@ var ParserSwagger = /** @class */ (function () {
                             }
                         }
                         // URL query 参数，query参数必须包含key，不存在不兼容问题
-                        processRequestSchema(requestDataSchema, requestSchemaRecord, (_e = (_d = (_c = apiMap.requestBody) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d['application/x-www-form-urlencoded']) === null || _e === void 0 ? void 0 : _e.schema, requestKeyNameMemo, {
+                        processRequestSchema(requestDataSchema, requestSchemaRecord, (_j = (_h = (_g = apiMap.requestBody) === null || _g === void 0 ? void 0 : _g.content) === null || _h === void 0 ? void 0 : _h['application/x-www-form-urlencoded']) === null || _j === void 0 ? void 0 : _j.schema, requestKeyNameMemo, {
                             autoGenerateId: this_1.autoGenerateId,
                             callback: function (parsedSchema) {
                                 // 收集URL query 参数字段
@@ -293,19 +275,19 @@ var ParserSwagger = /** @class */ (function () {
                             }
                         });
                         // 请求 Body 为 json参数
-                        var requestSchemaSource = (_j = (_h = (_g = (_f = apiMap.requestBody) === null || _f === void 0 ? void 0 : _f.content) === null || _g === void 0 ? void 0 : _g['application/json']) === null || _h === void 0 ? void 0 : _h.schema) !== null && _j !== void 0 ? _j : (_m = (_l = (_k = apiMap.requestBody) === null || _k === void 0 ? void 0 : _k.content) === null || _l === void 0 ? void 0 : _l['text/json']) === null || _m === void 0 ? void 0 : _m.schema;
+                        var requestSchemaSource = (_o = (_m = (_l = (_k = apiMap.requestBody) === null || _k === void 0 ? void 0 : _k.content) === null || _l === void 0 ? void 0 : _l['application/json']) === null || _m === void 0 ? void 0 : _m.schema) !== null && _o !== void 0 ? _o : (_r = (_q = (_p = apiMap.requestBody) === null || _p === void 0 ? void 0 : _p.content) === null || _q === void 0 ? void 0 : _q['text/json']) === null || _r === void 0 ? void 0 : _r.schema;
                         requestExtraDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
                             autoGenerateId: this_1.autoGenerateId,
                         });
                         processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this_1);
                         /****************** 处理请求参数--结束 ******************/
                         /****************** 处理响应参数--开始 ******************/
-                        var responsesSchemaSource = (_0 = (_v = (_q = (_p = (_o = apiMap.responses) === null || _o === void 0 ? void 0 : _o['200']) === null || _p === void 0 ? void 0 : _p.schema) !== null && _q !== void 0 ? _q : (_u = (_t = (_s = (_r = apiMap.responses) === null || _r === void 0 ? void 0 : _r['200']) === null || _s === void 0 ? void 0 : _s.content) === null || _t === void 0 ? void 0 : _t['application/json']) === null || _u === void 0 ? void 0 : _u.schema) !== null && _v !== void 0 ? _v : (_z = (_y = (_x = (_w = apiMap.responses) === null || _w === void 0 ? void 0 : _w['200']) === null || _x === void 0 ? void 0 : _x.content) === null || _y === void 0 ? void 0 : _y['text/json']) === null || _z === void 0 ? void 0 : _z.schema) !== null && _0 !== void 0 ? _0 : (_4 = (_3 = (_2 = (_1 = apiMap.responses) === null || _1 === void 0 ? void 0 : _1['200']) === null || _2 === void 0 ? void 0 : _2.content) === null || _3 === void 0 ? void 0 : _3['*/*']) === null || _4 === void 0 ? void 0 : _4.schema;
+                        var responsesSchemaSource = (_4 = (_z = (_u = (_t = (_s = apiMap.responses) === null || _s === void 0 ? void 0 : _s['200']) === null || _t === void 0 ? void 0 : _t.schema) !== null && _u !== void 0 ? _u : (_y = (_x = (_w = (_v = apiMap.responses) === null || _v === void 0 ? void 0 : _v['200']) === null || _w === void 0 ? void 0 : _w.content) === null || _x === void 0 ? void 0 : _x['application/json']) === null || _y === void 0 ? void 0 : _y.schema) !== null && _z !== void 0 ? _z : (_3 = (_2 = (_1 = (_0 = apiMap.responses) === null || _0 === void 0 ? void 0 : _0['200']) === null || _1 === void 0 ? void 0 : _1.content) === null || _2 === void 0 ? void 0 : _2['text/json']) === null || _3 === void 0 ? void 0 : _3.schema) !== null && _4 !== void 0 ? _4 : (_8 = (_7 = (_6 = (_5 = apiMap.responses) === null || _5 === void 0 ? void 0 : _5['200']) === null || _6 === void 0 ? void 0 : _6.content) === null || _7 === void 0 ? void 0 : _7['*/*']) === null || _8 === void 0 ? void 0 : _8.schema;
                         if (validateSchema(responsesSchemaSource)) {
                             api.responseDataSchema = parserSchema(responsesSchemaSource, undefined, undefined, undefined, {
                                 autoGenerateId: this_1.autoGenerateId
                             });
-                            if (((_5 = api.responseDataSchema) === null || _5 === void 0 ? void 0 : _5.type) === 'object') {
+                            if (((_9 = api.responseDataSchema) === null || _9 === void 0 ? void 0 : _9.type) === 'object') {
                                 api.responseDataSchema.keyName = '';
                             }
                         }
@@ -313,8 +295,8 @@ var ParserSwagger = /** @class */ (function () {
                         try {
                             /****************** 处理响应参数--结束 ******************/
                             // 将该API添加到所依赖的模块中
-                            for (var _10 = (e_5 = void 0, __values(apiMap.tags)), _11 = _10.next(); !_11.done; _11 = _10.next()) {
-                                var tagName = _11.value;
+                            for (var _14 = (e_5 = void 0, __values(apiMap.tags)), _15 = _14.next(); !_15.done; _15 = _14.next()) {
+                                var tagName = _15.value;
                                 var recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
                                 recordCategory && recordCategory.apiList.push(api);
                             }
@@ -322,7 +304,7 @@ var ParserSwagger = /** @class */ (function () {
                         catch (e_5_1) { e_5 = { error: e_5_1 }; }
                         finally {
                             try {
-                                if (_11 && !_11.done && (_9 = _10.return)) _9.call(_10);
+                                if (_15 && !_15.done && (_13 = _14.return)) _13.call(_14);
                             }
                             finally { if (e_5) throw e_5.error; }
                         }
@@ -335,7 +317,7 @@ var ParserSwagger = /** @class */ (function () {
                 try {
                     // 将转换完成的分组添加到文档中
                     for (var categoryMap_1 = (e_4 = void 0, __values(categoryMap)), categoryMap_1_1 = categoryMap_1.next(); !categoryMap_1_1.done; categoryMap_1_1 = categoryMap_1.next()) {
-                        var _8 = __read(categoryMap_1_1.value, 2), category = _8[1];
+                        var _12 = __read(categoryMap_1_1.value, 2), category = _12[1];
                         apiDocument.categoryList.push(category);
                     }
                 }
@@ -365,15 +347,11 @@ var ParserSwagger = /** @class */ (function () {
             try {
                 for (var _b = __values(openAPIDocument.tags), _c = _b.next(); !_c.done; _c = _b.next()) {
                     var tag = _c.value;
-                    result.set(tag.name, {
+                    result.set(tag.name, createCategory({
                         id: this.generateId(),
-                        // 分组名称
                         name: tag.name,
-                        // 分组描述
                         description: filterDesc(tag === null || tag === void 0 ? void 0 : tag.description),
-                        // 分组下的接口列表
-                        apiList: [],
-                    });
+                    }));
                 }
             }
             catch (e_6_1) { e_6 = { error: e_6_1 }; }
@@ -384,15 +362,11 @@ var ParserSwagger = /** @class */ (function () {
                 finally { if (e_6) throw e_6.error; }
             }
         }
-        result.set(UNKNOWN_GROUP_NAME, {
+        result.set(UNKNOWN_GROUP_NAME, createCategory({
             id: this.generateId(),
-            // 分组名称
             name: UNKNOWN_GROUP_NAME,
-            // 分组描述
             description: UNKNOWN_GROUP_DESC,
-            // 分组下的接口列表
-            apiList: [],
-        });
+        }));
         return result;
     };
     ParserSwagger.prototype.generateId = function () {

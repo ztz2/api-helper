@@ -17,8 +17,20 @@ import {
   processRequestSchemaPipeline,
   processResponseSchemaPipeline,
 } from '../utils/util';
-import {UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME,} from '../constant';
-import {validateOpenAPIDocument, validateSchema,} from '../utils/validator';
+import {
+  UNKNOWN_GROUP_DESC,
+  UNKNOWN_GROUP_NAME,
+} from '../constant';
+import {
+  validateSchema,
+  validateOpenAPIDocument,
+} from '../utils/validator';
+import {
+  createApi,
+  createCategory,
+  createDocument,
+  createSchema, transformType
+} from '../helpers';
 
 export default class ParserSwagger {
   private autoGenerateId = true;
@@ -71,26 +83,26 @@ export default class ParserSwagger {
       const openAPIDocument = openAPIDocumentList[i];
 
       let basePath = '';
-      let openapiVersion = '';
+      let documentVersion = '';
 
       // 2.0 版本OpenAPI
       if ('swagger' in openAPIDocument && openAPIDocument.swagger.startsWith('2')) {
         basePath = openAPIDocument?.basePath ?? '';
-        openapiVersion = openAPIDocument.swagger ?? '';
+        documentVersion = openAPIDocument.swagger ?? '';
       }  // 3.0 版本OpenAPI
       else if ('openapi' in openAPIDocument && openAPIDocument.openapi.startsWith('3')) {
         basePath = openAPIDocument.servers?.[0]?.url ?? '';
-        openapiVersion = openAPIDocument.openapi ?? '';
+        documentVersion = openAPIDocument.openapi ?? '';
       }
-      const document: APIHelper.Document = {
+      const document = createDocument({
         id: this.generateId(),
         title: filterDesc(openAPIDocument.info.title),
         description: filterDesc(openAPIDocument.info.description),
         version: openAPIDocument.info.version,
-        openapiVersion,
+        documentVersion,
         basePath,
         categoryList: [] as APIHelper.CategoryList
-      };
+      });
       result.set(document, openAPIDocument);
     }
     return result;
@@ -117,40 +129,41 @@ export default class ParserSwagger {
           // fix: basePath为/，导致//
           const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
           // 接口
-          const api: APIHelper.API = {
+          const api: APIHelper.API = createApi({
             id: this.generateId(),
             title: filterDesc(apiMap.summary),
             description: filterDesc(apiMap.description),
-            label: '',
             path: mPath,
             method,
-            formDataKeyNameList: [],
-            pathParamKeyNameList: [],
-            queryStringKeyNameList: [],
-            requestDataSchema: null,
-            requestExtraDataSchema: null,
-            responseDataSchema: null,
-          }
+          });
           api.label = api.title ? api.title : api.description ? api.description : '';
 
           /****************** 处理请求参数--开始 ******************/
           let requestExtraDataSchema: APIHelper.Schema | null = null;
-          const requestDataSchema: APIHelper.Schema = {
+          const requestDataSchema = createSchema('object', {
             id: this.generateId(),
-            type: 'object',
-            keyName: '',
-            title: '',
-            description: '',
-            label: '',
-            rules: {
-              required: false,
-            },
-            examples: [],
-            params: []
-          };
+          });
           const requestKeyNameMemo: string[] = [];
           // fix: 重复项问题
           const requestSchemaRecord: Array<JSONSchema4> = [];
+
+          // FormData数据
+          const formDataSource = apiMap.requestBody?.content?.['multipart/form-data']?.schema;
+          const formDataSchema = processRequestSchema(
+            requestDataSchema,
+            requestSchemaRecord,
+            formDataSource,
+            undefined,
+            {
+              autoGenerateId: this.autoGenerateId,
+            }
+          );
+          // 记录表单数据key
+          if (formDataSchema) {
+            formDataSchema?.params?.forEach(({keyName}) => {
+              api.formDataKeyNameList.push(keyName);
+            });
+          }
 
           if ('parameters' in apiMap) {
             const parameters = apiMap.parameters;
@@ -162,19 +175,10 @@ export default class ParserSwagger {
                 if (requestKeyNameMemo.includes(keyName)) {
                   continue;
                 }
-                let scm = {
-                  examples: [],
+                let scm = createSchema('string', {
                   id: this.generateId(),
-                  title: '',
-                  description: '',
-                  label: '',
-                  type: 'string',
                   keyName,
-                  params: [],
-                  rules: {
-                    required: false
-                  }
-                } as APIHelper.Schema;
+                });
 
                 // fix: url参数也是一个对象问题.
                 if (parameter.schema) {
@@ -189,16 +193,8 @@ export default class ParserSwagger {
                   );
                   if (parsedSchema) {
                     scm = parsedSchema;
-                    if (!scm.type) {
-                      // @ts-ignore
-                      scm.type = 'string';
-                      // @ts-ignore
-                      scm.params = [];
-                    }
                   }
                 }
-                scm.id = this.generateId();
-                scm.keyName = keyName;
 
                 // 路径参数
                 if (parameter.in === 'path') {
@@ -206,11 +202,14 @@ export default class ParserSwagger {
                 } // URL参数
                 else if (parameter.in === 'query') {
                   api.queryStringKeyNameList.push(keyName);
-                } // 表单参数（可能这个不是标准规范）
+                } // 表单参数（这个可能不是标准规范）
                 else if (parameter.in === 'formData') {
+                  scm.type = transformType(parameter.type, undefined, 'string') as any;
                   api.formDataKeyNameList.push(keyName);
                 }
 
+                scm.id = this.generateId();
+                scm.keyName = keyName;
                 scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
                 scm.description = filterDesc(parameter.description);
                 scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
@@ -311,26 +310,18 @@ export default class ParserSwagger {
     const result: Map<string, APIHelper.Category> = new Map();
     if (openAPIDocument.tags) {
       for (const tag of openAPIDocument.tags) {
-        result.set(tag.name, {
+        result.set(tag.name, createCategory({
           id: this.generateId(),
-          // 分组名称
           name: tag.name,
-          // 分组描述
           description: filterDesc(tag?.description),
-          // 分组下的接口列表
-          apiList: [],
-        })
+        }));
       }
     }
-    result.set(UNKNOWN_GROUP_NAME, {
+    result.set(UNKNOWN_GROUP_NAME, createCategory( {
       id: this.generateId(),
-      // 分组名称
       name: UNKNOWN_GROUP_NAME,
-      // 分组描述
       description: UNKNOWN_GROUP_DESC,
-      // 分组下的接口列表
-      apiList: [],
-    });
+    }));
     return result;
   }
 

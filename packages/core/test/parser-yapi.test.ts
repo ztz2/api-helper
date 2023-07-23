@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { ParserYapi } from '../';
+import { ParserYapi } from '../src';
 import { readJsonFile } from './utils/file';
 
 describe('yapi-parser', () => {

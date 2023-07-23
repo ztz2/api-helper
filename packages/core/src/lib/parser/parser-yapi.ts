@@ -17,6 +17,12 @@ import {
 } from '@/lib/constant';
 import { APIHelper } from '../types';
 import { validateSchema } from '../utils/validator';
+import {
+  createApi,
+  createCategory,
+  createDocument,
+  createSchema,
+} from '../helpers';
 
 type ParserYapiParams = {
   autoGenerateId?: boolean;
@@ -160,39 +166,30 @@ export default class ParserYapi {
   }
 
   private parserProject(): APIHelper.Document {
-    return {
+    return createDocument({
       id: this.generateId(),
       title: filterDesc(this.projectInfo.name),
       description: filterDesc(this.projectInfo.desc),
       version: 'last',
-      openapiVersion: '2.0',
+      documentVersion: '2.0',
       basePath: this.projectInfo.basepath || '/',
-      categoryList: [],
-    };
+    });
   }
 
   private parserCategoryList(): APIHelper.CategoryList {
     const result: APIHelper.CategoryList = [];
     this.categoryList.forEach((category) => {
-      result.push({
+      result.push(createCategory({
         id: this.generateId(),
-        // 分组名称
         name: category.name,
-        // 分组描述
         description: filterDesc(category?.desc),
-        // 分组下的接口列表
-        apiList: [],
-      });
+      }));
     })
-    result.push({
+    result.push(createCategory({
       id: this.generateId(),
-      // 分组名称
       name: UNKNOWN_GROUP_NAME,
-      // 分组描述
       description: UNKNOWN_GROUP_DESC,
-      // 分组下的接口列表
-      apiList: [],
-    });
+    }));
     return result;
   }
 
@@ -209,21 +206,14 @@ export default class ParserYapi {
         return;
       }
       const tag = apiMap.tag;
-      const api: APIHelper.API = {
+      const api: APIHelper.API = createApi({
         id: this.generateId(),
         title: filterDesc(apiMap.title),
         description: filterDesc(apiMap.markdown),
-        label: '',
         path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
         method: apiMap.method,
         docURL: apiMap.docURL ?? '',
-        formDataKeyNameList: [],
-        pathParamKeyNameList: [],
-        queryStringKeyNameList: [],
-        requestDataSchema: null,
-        requestExtraDataSchema: null,
-        responseDataSchema: null,
-      };
+      });
       api.label = api.title ? api.title : api.description ? api.description : '';
 
       // API content-type，暂无特殊处理
@@ -261,19 +251,9 @@ export default class ParserYapi {
       // }
 
       /****************** 请求参数处理-开始 ******************/
-      const requestDataSchema: APIHelper.Schema = {
+      const requestDataSchema: APIHelper.Schema = createSchema('object', {
         id: this.generateId(),
-        type: 'object',
-        keyName: '',
-        title: '',
-        description: '',
-        label: '',
-        rules: {
-          required: false,
-        },
-        examples: [],
-        params: []
-      };
+      });
       let requestExtraDataSchema: APIHelper.Schema | null = null;
       // fix: 重复项问题
       const requestSchemaRecord: Array<JSONSchema4> = [];
@@ -288,19 +268,14 @@ export default class ParserYapi {
           continue;
         }
         // 字段
-        const scm: APIHelper.Schema = {
-          examples: [],
+        const scm: APIHelper.Schema = createSchema('string', {
           id: this.generateId(),
-          title: '',
           description: filterDesc(p.desc),
-          label: '',
           keyName: keyName,
-          type: 'string',
-          params: [],
           rules: {
             required: true
           }
-        };
+        });
         scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
         api.pathParamKeyNameList.push(keyName);
@@ -317,19 +292,14 @@ export default class ParserYapi {
           continue;
         }
         // 字段
-        const scm: APIHelper.Schema = {
-          examples: [],
+        const scm: APIHelper.Schema = createSchema('string', {
           id: this.generateId(),
-          title: '',
           description: filterDesc(p.desc),
-          label: '',
           keyName: keyName,
-          type: 'string',
-          params: [],
           rules: {
             required: Number(p.required) === 1
           }
-        };
+        });
         scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
         api.queryStringKeyNameList.push(keyName);
@@ -349,19 +319,15 @@ export default class ParserYapi {
               continue;
             }
             // 字段
-            const scm: APIHelper.Schema = {
-              examples: [],
+            const scm: APIHelper.Schema = createSchema('string', {
               id: this.generateId(),
-              title: '',
               description: filterDesc(p.desc),
-              label: '',
               keyName: keyName,
               type: 'string',
-              params: [],
               rules: {
                 required: Number(p.required) === 1
               }
-            };
+            });
             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
             api.formDataKeyNameList.push(keyName);
@@ -397,19 +363,11 @@ export default class ParserYapi {
             break;
           }
           // 字段
-          const scm: APIHelper.Schema = {
-            examples: [],
+          const scm: APIHelper.Schema = createSchema('File', {
             id: this.generateId(),
-            title: '',
             description: filterDesc(apiContent.req_body_other),
-            label: '',
             keyName: keyName,
-            type: 'string',
-            params: [],
-            rules: {
-              required: false
-            }
-          };
+          });
           scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
           api.formDataKeyNameList.push(keyName);

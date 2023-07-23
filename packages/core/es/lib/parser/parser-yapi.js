@@ -48,6 +48,7 @@ var __values = (this && this.__values) || function(o) {
 import { isHttp, randomId, mergeUrl, filterDesc, parserSchema, filterKeyName, processRequestSchema, processRequestSchemaPipeline, processResponseSchemaPipeline, } from '../utils/util';
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../../lib/constant';
 import { validateSchema } from '../utils/validator';
+import { createApi, createCategory, createDocument, createSchema, } from '../helpers';
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -70,39 +71,30 @@ var ParserYapi = /** @class */ (function () {
         });
     };
     ParserYapi.prototype.parserProject = function () {
-        return {
+        return createDocument({
             id: this.generateId(),
             title: filterDesc(this.projectInfo.name),
             description: filterDesc(this.projectInfo.desc),
             version: 'last',
-            openapiVersion: '2.0',
+            documentVersion: '2.0',
             basePath: this.projectInfo.basepath || '/',
-            categoryList: [],
-        };
+        });
     };
     ParserYapi.prototype.parserCategoryList = function () {
         var _this = this;
         var result = [];
         this.categoryList.forEach(function (category) {
-            result.push({
+            result.push(createCategory({
                 id: _this.generateId(),
-                // 分组名称
                 name: category.name,
-                // 分组描述
                 description: filterDesc(category === null || category === void 0 ? void 0 : category.desc),
-                // 分组下的接口列表
-                apiList: [],
-            });
+            }));
         });
-        result.push({
+        result.push(createCategory({
             id: this.generateId(),
-            // 分组名称
             name: UNKNOWN_GROUP_NAME,
-            // 分组描述
             description: UNKNOWN_GROUP_DESC,
-            // 分组下的接口列表
-            apiList: [],
-        });
+        }));
         return result;
     };
     ParserYapi.prototype.parserApiList = function (project, categoryList) {
@@ -120,21 +112,14 @@ var ParserYapi = /** @class */ (function () {
                 return;
             }
             var tag = apiMap.tag;
-            var api = {
+            var api = createApi({
                 id: _this.generateId(),
                 title: filterDesc(apiMap.title),
                 description: filterDesc(apiMap.markdown),
-                label: '',
                 path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
                 method: apiMap.method,
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
-                formDataKeyNameList: [],
-                pathParamKeyNameList: [],
-                queryStringKeyNameList: [],
-                requestDataSchema: null,
-                requestExtraDataSchema: null,
-                responseDataSchema: null,
-            };
+            });
             api.label = api.title ? api.title : api.description ? api.description : '';
             // API content-type，暂无特殊处理
             // switch (apiMap.req_body_type) {
@@ -169,19 +154,9 @@ var ParserYapi = /** @class */ (function () {
             //   });
             // }
             /****************** 请求参数处理-开始 ******************/
-            var requestDataSchema = {
+            var requestDataSchema = createSchema('object', {
                 id: _this.generateId(),
-                type: 'object',
-                keyName: '',
-                title: '',
-                description: '',
-                label: '',
-                rules: {
-                    required: false,
-                },
-                examples: [],
-                params: []
-            };
+            });
             var requestExtraDataSchema = null;
             // fix: 重复项问题
             var requestSchemaRecord = [];
@@ -197,19 +172,14 @@ var ParserYapi = /** @class */ (function () {
                         continue;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = createSchema('string', {
                         id: _this.generateId(),
-                        title: '',
                         description: filterDesc(p.desc),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
                         rules: {
                             required: true
                         }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.pathParamKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
@@ -234,19 +204,14 @@ var ParserYapi = /** @class */ (function () {
                         continue;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = createSchema('string', {
                         id: _this.generateId(),
-                        title: '',
                         description: filterDesc(p.desc),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
                         rules: {
                             required: Number(p.required) === 1
                         }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.queryStringKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
@@ -274,19 +239,15 @@ var ParserYapi = /** @class */ (function () {
                                 continue;
                             }
                             // 字段
-                            var scm = {
-                                examples: [],
+                            var scm = createSchema('string', {
                                 id: _this.generateId(),
-                                title: '',
                                 description: filterDesc(p.desc),
-                                label: '',
                                 keyName: keyName,
                                 type: 'string',
-                                params: [],
                                 rules: {
                                     required: Number(p.required) === 1
                                 }
-                            };
+                            });
                             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                             api.formDataKeyNameList.push(keyName);
                             requestKeyNameMemo.push(keyName);
@@ -324,19 +285,11 @@ var ParserYapi = /** @class */ (function () {
                         break;
                     }
                     // 字段
-                    var scm = {
-                        examples: [],
+                    var scm = createSchema('File', {
                         id: _this.generateId(),
-                        title: '',
                         description: filterDesc(apiContent.req_body_other),
-                        label: '',
                         keyName: keyName,
-                        type: 'string',
-                        params: [],
-                        rules: {
-                            required: false
-                        }
-                    };
+                    });
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                     api.formDataKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
