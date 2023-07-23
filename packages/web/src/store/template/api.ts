@@ -1,4 +1,4 @@
-import { pick } from 'lodash';
+import { forOwn, pick } from 'lodash';
 import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
 
@@ -54,11 +54,19 @@ const useApiTemplate = defineStore('api-template', {
       let templateClassify = this.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID);
       // 不存在，创建自定义分组
       if (!templateClassify) {
-        templateClassify = new TemplateCategory('自定义', API_CUSTOM_TEMPLATE_ID);
+        templateClassify = new TemplateCategory('自定义', {
+          id: API_CUSTOM_TEMPLATE_ID,
+        });
         this.templateList.push(templateClassify);
       }
       templateClassify.options.push(pick(value, Object.keys(new Template())) as Template);
       return value.value;
+    },
+    addCategory(value: TemplateCategory) {
+      const { templateList } = this;
+      if (!templateList.find((t) => t.id === value.id)) {
+        templateList.push(value);
+      }
     },
     deleteById(value: string, options?: { showMessage?: boolean; onSuccess?: Function }) {
       if (!value) {

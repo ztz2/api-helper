@@ -2,8 +2,8 @@ import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: 'Element UI Plus / Table 表格',
-  value: 'element-ui_table_d6940207e7e1f35e',
+  label: 'Arco Design / Form 表单',
+  value: 'arco-design_form_6d49657c450e7bb4',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -24,7 +24,7 @@ export default new Template({
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI Plus / Table 表格模版（请求数据）',
+    title: 'Arco Design / Form 表单模版（请求数据）',
     content: tpl1,
   });
 
@@ -36,36 +36,47 @@ export default new Template({
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI Plus / Table 表格模版（响应数据）',
+    title: 'Arco Design / Form 表单模版（响应数据）',
     content: tpl2,
   });
 
   function renderTpl(schemaList = []) {
     return artTemplate.render(\`
 <template>
-  <el-table
-    :data="tableData"
-    style="width: 100%">
+  <a-form ref="formRef" :model="form" :style="{width:'600px'}" @submit="handleSubmit">
     《each schemaList》
-      <el-table-column
-        prop="《$value.keyName》"
-        label="《$value.label ? $value.label : $value.keyName》"
-        width="180">
-      </el-table-column>《/each》
-  </el-table>
+      <a-form-item field="《$value.keyName》" label="《$value.label ? $value.label : $value.keyName 》"《if $value.rules.required》 :rules="[{required:true,message:'《$value.keyName》 is required'}]"《/if》>
+        <a-input v-model="form.《$value.keyName》" />
+      </a-form-item>《/each》
+     <a-form-item>
+      <a-space>
+        <a-button html-type="submit">Submit</a-button>
+        <a-button @click="$refs.formRef.resetFields()">Reset</a-button>
+      </a-space>
+    </a-form-item>
+  </a-form>
 </template>
+<script lang="ts">
+import { reactive } from 'vue';
 
-<script>
-  export default {
-    data() {
-      return {
-        tableData: [{
-         《each schemaList》
-           《$value.keyName》: '模拟数据(《$value.label ? $value.label : $value.keyName》)',《/each》
-        }]
-      }
+export default {
+  setup() {
+    const handleSubmit = ({values, errors}) => {
+      console.log('values:', values, '\\\\nerrors:', errors);
     }
-  }
+
+    const form = reactive(
+      《apih.template.renderObject(schemaList, api, { onlyBody: true })》
+    );
+
+    return {
+      form,
+      options,
+      treeData,
+      handleSubmit
+    }
+  },
+}
 </script>
 \`, { schemaList, api, params, config, apih, lodash });
   }

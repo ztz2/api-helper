@@ -11,7 +11,7 @@
         search-button
       />
     </div>
-    <div class="apih-category-body">
+    <div class="apih-category-body" @click="logUid">
       <a-empty v-if="currentData.length === 0" />
       <template v-else>
         <div
@@ -86,6 +86,7 @@ import {
   ref, PropType, defineProps, defineEmits, watch,
 } from 'vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { log, randomChar } from '@/utils';
 
 const emit = defineEmits([
   'update:selectedKeys',
@@ -203,6 +204,9 @@ function handleSelectAPI(api: APIHelper.API) {
   } else {
     currentSelectedKeys.value.splice(index, 1);
   }
+}
+function logUid() {
+  log(randomChar(16));
 }
 </script>
 

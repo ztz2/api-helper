@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import '@arco-design/web-vue/dist/arco.css';
 import ArcoVue, { Message } from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';
+import { artTemplate } from '@api-helper/template';
 
 import hljs from 'highlight.js/lib/core';
 import 'highlight.js/styles/atom-one-dark.css';

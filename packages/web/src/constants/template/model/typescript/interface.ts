@@ -2,8 +2,8 @@ import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: 'interface',
-  value: 'interface_Y4AIsXBlcKRXjU95av0Cx',
+  label: 'Typescript / interface',
+  value: 'typescript_interface_004b76d09ea723be',
   formatCodeExtension: '.ts',
   builtIn: true,
   content: `${COMMON_HEAD}

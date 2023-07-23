@@ -2,8 +2,8 @@ import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: 'Element UI / Form 表单',
-  value: 'element-ui_form_aa76ae2a8278f3e7',
+  label: 'Element UI Plus / Form 表单',
+  value: 'element-plus_form_24e5ca0ab18176d4',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -24,7 +24,7 @@ export default new Template({
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI / Form 表单模版（请求数据）',
+    title: 'Element UI Plus / Form 表单模版（请求数据）',
     content: tpl1,
   });
 
@@ -36,53 +36,78 @@ export default new Template({
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI / Form 表单模版（响应数据）',
+    title: 'Element UI Plus / Form 表单模版（响应数据）',
     content: tpl2,
   });
 
   function renderTpl(schemaList = []) {
     return artTemplate.render(\`
 <template>
-  <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+  <el-form
+    ref="ruleFormRef"
+    :model="ruleForm"
+    :rules="rules"
+    label-width="120px"
+    class="demo-ruleForm"
+    :size="formSize"
+    status-icon
+  >
     《each schemaList》
       <el-form-item label="《$value.label ? $value.label : $value.keyName 》" prop="《$value.keyName》">
-        <el-input v-model="ruleForm.$value.keyName"></el-input>
+        <el-input v-model="ruleForm.《$value.keyName》"></el-input>
       </el-form-item>《/each》
     <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
+      <el-button type="primary" @click="submitForm(ruleFormRef)">
+        Create
+      </el-button>
+      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
     </el-form-item>
   </el-form>
 </template>
-<script>
-  export default {
-    data() {
-      return {
-        ruleForm: 《apih.template.renderObject(schemaList, api, { onlyBody: true })》,
-        rules: {
-          《each apih.core.filterSchemaRequired(schemaList)》
-            《$value.keyName》: [
-              { required: true, message: '必填项', trigger: 'change' }
-            ],《/each》
-        }
-      };
-    },
-    methods: {
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
+<script lang="ts" setup>
+import { reactive, ref } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
+
+《apih.template.renderInterface(schemaList, api, {
+  prefix: '',
+  name: 'RuleForm',
+  dropComment: true,
+  emptyBodyCode: 'Record<string, any>;',
+})》
+
+const formSize = ref('default');
+const ruleFormRef = ref<FormInstance>();
+const ruleForm = reactive<RuleForm>(
+  《apih.template.renderObject(schemaList, api, { onlyBody: true })》
+);
+
+const rules = reactive<FormRules<RuleForm>>({
+ 《each apih.core.filterSchemaRequired(schemaList)》
+    《$value.keyName》: [
+      { required: true, message: '必填项', trigger: 'change' }
+    ],《/each》
+})
+
+const submitForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+      console.log('submit!')
+    } else {
+      console.log('error submit!', fields)
     }
-  }
+  })
+}
+
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
+
+const options = Array.from({ length: 10000 }).map((_, idx) => ({
+  value: \\\`\\\${idx + 1}\\\`,
+  label: \\\`\\\${idx + 1}\\\`,
+}))
 </script>
 \`, { schemaList, api, params, config, apih, lodash });
   }

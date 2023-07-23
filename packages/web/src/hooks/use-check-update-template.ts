@@ -13,7 +13,7 @@ function templateClassifyMap(source: TemplateCategory[]): { [id: string]: Templa
   }
   return result;
 }
-function checkUpdate(source: TemplateCategory[], value: TemplateCategory[], save: Function) {
+function checkUpdate(source: TemplateCategory[], value: TemplateCategory[], save: Function, add: Function) {
   const sMap = templateClassifyMap(source);
   const vMap = templateClassifyMap(value);
   for (const [id] of Object.entries(sMap)) {
@@ -23,10 +23,14 @@ function checkUpdate(source: TemplateCategory[], value: TemplateCategory[], save
       save(newTemplate);
     }
   }
+  // 添加分组，内部会检测是否存在在进行添加。
+  for (const v of value) {
+    add(v);
+  }
 }
 export function useCheckUpdateTemplate() {
   const apiTemplateStore = useApiTemplate();
   const modelTemplateStore = useModelTemplate();
-  checkUpdate(apiTemplateStore.templateList, apiTemplateList, apiTemplateStore.save);
-  checkUpdate(modelTemplateStore.templateList, modelTemplateList, modelTemplateStore.save);
+  checkUpdate(apiTemplateStore.templateList, apiTemplateList, apiTemplateStore.save, apiTemplateStore.addCategory);
+  checkUpdate(modelTemplateStore.templateList, modelTemplateList, modelTemplateStore.save, modelTemplateStore.addCategory);
 }

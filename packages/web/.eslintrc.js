@@ -30,6 +30,7 @@ module.exports = {
     'import/first': 0,
     'no-loop-func': 0,
     'padded-blocks': 0,
+    'guard-for-in': 0,
     'no-trailing-spaces': 0,
     'no-return-await': 0,
     'no-await-in-loop': 0,

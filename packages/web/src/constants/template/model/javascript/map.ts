@@ -3,7 +3,7 @@ import { DEFAULT_SELECT_MODEL_TPL_ID } from '@/constants';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: '对象',
+  label: 'Javascript / 对象',
   value: DEFAULT_SELECT_MODEL_TPL_ID,
   formatCodeExtension: '.js',
   builtIn: true,
@@ -22,7 +22,7 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = apih.template.renderObject(requestDataSchemaList, api, {
       paramType: 'request',
-      onlyMap: config.onlyMap
+      onlyBody: config.onlyBody
     });
   } else {
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
@@ -37,7 +37,7 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = apih.template.renderObject(responseDataSchemaList, api, {
       paramType: 'response',
-      onlyMap: config.onlyMap
+      onlyBody: config.onlyBody
     });
   } else {
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;

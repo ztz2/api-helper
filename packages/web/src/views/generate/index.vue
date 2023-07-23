@@ -160,10 +160,12 @@ import {
   computed,
   onMounted,
 } from 'vue';
+import { nanoid } from 'nanoid';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { createDocument } from '@api-helper/core/lib/helpers';
 
 import {
   useProject,
@@ -181,7 +183,7 @@ import { modalConfirm } from '@/utils';
 import ApiCode from './__components__/api-code.vue';
 import { Template } from '@/store/template/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
-import { Project, APIHDocument } from '@/store/project/interface';
+import { Project } from '@/store/project/interface';
 
 import DialogAPI from './__components__/dialog/dialog-api.vue';
 import DialogModel from './__components__/dialog/dialog-model.vue';
@@ -208,7 +210,7 @@ const project = computed<Project>(() => {
   const { id } = route.query;
   return projectStore.data.find((itm) => itm.id === id) as Project;
 });
-const ahProject = ref<APIHelper.Document>(new APIHDocument());
+const ahProject = ref<APIHelper.Document>(createDocument({ id: nanoid() }));
 const selectedKeys = ref<string[]>([]);
 const selectedAhModule = computed<Array<APIHelper.Category>>(() => {
   const categoryList = [...ahProject.value.categoryList] as Array<APIHelper.Category>;

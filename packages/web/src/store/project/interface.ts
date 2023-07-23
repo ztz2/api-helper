@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-import { APIHelper } from '@api-helper/core/es/lib/types';
 import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
 
 import {
@@ -50,16 +48,4 @@ export class Project {
       this.id = id;
     }
   }
-}
-
-// 项目
-export class APIHDocument implements APIHelper.Document {
-  id = nanoid();
-  title = '';
-  description = '';
-  version = '';
-  openapiVersion = '';
-  basePath = '';
-  host = '';
-  categoryList = [];
 }

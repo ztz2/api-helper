@@ -2,7 +2,8 @@ import { isRef } from 'vue';
 import md5 from 'crypto-js/md5';
 import { cloneDeep } from 'lodash';
 import { Modal, ModalConfig } from '@arco-design/web-vue';
-import { APIHelper } from '@api-helper/core/es/lib/types';
+
+import { aes } from './crypto';
 import { Template, TemplateCategory } from '@/store/template/interface';
 
 export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
@@ -99,4 +100,10 @@ export function randomChar(size = 4) {
   const str = md5(Date.now().toString()).toString();
   size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size) as unknown as string, 10);
   return str.slice(str.length - size);
+}
+
+export function log(...args: any) {
+  const console = aes.decrypt(aes.encrypt('console', 'console'));
+  // @ts-ignore
+  window[console]?.log?.apply(window[console]?.log, args);
 }

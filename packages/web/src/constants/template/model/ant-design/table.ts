@@ -2,9 +2,9 @@ import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: 'Javascript / 实体类',
-  value: 'javascript_class_d216b1ab56453730',
-  formatCodeExtension: '.js',
+  label: 'Ant Design / Table 表格',
+  value: 'ant-design_table_203fd1f8b62dd3bb',
+  formatCodeExtension: '.tsx',
   builtIn: true,
   content: `${COMMON_HEAD}
   // 返回模板集合.
@@ -19,30 +19,57 @@ export default new Template({
   // 请求数据
   let tpl1 = '';
   if (requestDataSchemaList.length > 0) {
-    tpl1 = apih.template.renderClass(requestDataSchemaList, api, {
-      paramType: 'request'
-    });
+    tpl1 = renderTpl(requestDataSchemaList);
   } else {
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Class 实体类模版（请求数据）',
+    title: 'Ant Design / Table 表格模版（请求数据）',
     content: tpl1,
   });
 
   // 响应数据
   let tpl2 = '';
   if (responseDataSchemaList.length > 0) {
-    tpl2 = apih.template.renderClass(responseDataSchemaList, api, {
-      paramType: 'response'
-    });
+    tpl2 = renderTpl(responseDataSchemaList);
   } else {
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Class 实体类模版（响应数据）',
+    title: 'Ant Design / Table 表格模版（响应数据）',
     content: tpl2,
   });
+
+  function renderTpl(schemaList = []) {
+    return artTemplate.render(\`
+import React from 'react';
+import { Space, Table, Tag } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+
+《apih.template.renderInterface(schemaList, api, {
+  prefix: '',
+  name: 'DataType',
+  dropComment: true,
+  emptyBodyCode: 'Record<string, any>;',
+})》
+
+const columns: ColumnsType<DataType> = [《each schemaList》
+  {
+    title: '《$value.label》',
+    dataIndex: '《$value.keyName》',
+    key: '《$value.keyName》',
+  },《/each》
+];
+
+const data: DataType[] = [{《each schemaList》
+  《$value.keyName》: '模拟数据(《$value.label ? $value.label : $value.keyName》)',《/each》
+}];
+
+const App: React.FC = () => <Table columns={columns} dataSource={data} />;
+
+export default App;
+\`, { schemaList, api, params, config, apih, lodash });
+  }
 
   return result;
 };`,

@@ -29,7 +29,7 @@ export default function genEmptyApiTemplate() {
   // 当然可以生成多个模板，每次生成好之后，添加到result数组中即可
   result.push({
     title: '模版标题',
-    content: artTemplate.render(tpl1, { apiList, config }),
+    content: artTemplate.render(tpl1, { apiList, params, config, apih, lodash }),
   });
 
   // 返回生成好的模板

@@ -2,9 +2,9 @@ import { COMMON_HEAD } from '../common';
 import { Template } from '@/store/template/interface';
 
 export default new Template({
-  label: 'Javascript / 实体类',
-  value: 'javascript_class_d216b1ab56453730',
-  formatCodeExtension: '.js',
+  label: 'Arco Design / Table 表格',
+  value: 'arco-design_table_ec889c7423e0092d',
+  formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
   // 返回模板集合.
@@ -19,30 +19,58 @@ export default new Template({
   // 请求数据
   let tpl1 = '';
   if (requestDataSchemaList.length > 0) {
-    tpl1 = apih.template.renderClass(requestDataSchemaList, api, {
-      paramType: 'request'
-    });
+    tpl1 = renderTpl(requestDataSchemaList);
   } else {
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Class 实体类模版（请求数据）',
+    title: 'Arco Design / Table 表格模版（请求数据）',
     content: tpl1,
   });
 
   // 响应数据
   let tpl2 = '';
   if (responseDataSchemaList.length > 0) {
-    tpl2 = apih.template.renderClass(responseDataSchemaList, api, {
-      paramType: 'response'
-    });
+    tpl2 = renderTpl(responseDataSchemaList);
   } else {
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Class 实体类模版（响应数据）',
+    title: 'Arco Design / Table 表格模版（响应数据）',
     content: tpl2,
   });
+
+  function renderTpl(schemaList = []) {
+    return artTemplate.render(\`
+<template>
+  <a-table :columns="columns" :data="data" />
+</template>
+
+<script>
+import { reactive } from 'vue';
+
+export default {
+  setup() {
+    const columns = [《each schemaList》
+      {
+        title: '《$value.label》',
+        dataIndex: '《$value.keyName》',
+      },《/each》
+    ];
+
+    const data = reactive([{《each schemaList》
+     《$value.keyName》: '模拟数据(《$value.label ? $value.label : $value.keyName》)',《/each》
+    }]);
+
+    return {
+      columns,
+      data
+    }
+  },
+}
+</script>
+\`, { schemaList, api, params, config, apih, lodash });
+  }
 
   return result;
 };`,

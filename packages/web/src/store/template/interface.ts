@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { FormatCodeConfig } from '@api-helper/cli/lib/tools/format-code';
+import { merge } from 'lodash';
 
 export class Template {
   // 模板名称
@@ -29,12 +30,12 @@ export class TemplateCategory {
   label;
   isGroup = true;
   options = [] as Array<Template>;
-  constructor(label: string, options?: Array<Template> | string) {
-    this.label = label;
-    if (typeof options === 'string') {
-      this.id = options;
-    } else if (Array.isArray(options)) {
-      this.options = options;
+  constructor(label: string, options?: Partial<TemplateCategory>) {
+    if (options) {
+      for (const key in options) { // @ts-ignore
+        this[key] = options[key];
+      }
     }
+    this.label = label;
   }
 }
