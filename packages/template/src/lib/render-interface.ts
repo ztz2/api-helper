@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import * as changeCase from 'change-case';
+import * as _changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid } from '@api-helper/core/lib/utils/util';
 import { createSchema } from '@api-helper/core/lib/helpers';
@@ -62,7 +62,7 @@ export function renderInterface(
   let interfaceName = options?.name ? options.name : onRenderInterfaceName(schema, api, {
     isExtraData,
     paramType,
-    changeCase
+    changeCase: _changeCase,
   });
 
   /**
@@ -105,6 +105,7 @@ export function renderInterfaceName (
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }): string {
+  const changeCase = options.changeCase ?? _changeCase;
   const isInterface = checkIsInterface(schema);
 
   let name = `${isInterface ? 'I' : ''}${api.path}`;

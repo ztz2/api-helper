@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import * as changeCase from 'change-case';
+import * as _changeCase from 'change-case';
 import { uuid } from '@api-helper/core/lib/utils/util';
 import { createSchema } from '@api-helper/core/lib/helpers';
 import { checkIsInterface, isEmptyObject, postCode } from '../lib/utils/util';
@@ -27,7 +27,7 @@ export function renderInterface(schema, api, options) {
     var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
         isExtraData: isExtraData,
         paramType: paramType,
-        changeCase: changeCase
+        changeCase: _changeCase,
     });
     /**
      * output ->  export interface interfaceName
@@ -58,6 +58,8 @@ export function renderInterface(schema, api, options) {
     }, { onlyBody: onlyBody });
 }
 export function renderInterfaceName(schema, api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     var isInterface = checkIsInterface(schema);
     var name = "".concat(isInterface ? 'I' : '').concat(api.path);
     if (options.paramType) {

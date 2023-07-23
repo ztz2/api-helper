@@ -12,4 +12,4 @@ export declare function renderClass(schema: APIHelper.Schema | Array<APIHelper.S
 export declare function renderClassName(api: APIHelper.API, options: {
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
-}): any;
+}): string;

@@ -25,7 +25,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderInterfaceName = exports.renderInterface = void 0;
 var merge_1 = __importDefault(require("lodash/merge"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
-var changeCase = __importStar(require("change-case"));
+var _changeCase = __importStar(require("change-case"));
 var util_1 = require("@api-helper/core/lib/utils/util");
 var helpers_1 = require("@api-helper/core/lib/helpers");
 var util_2 = require("../lib/utils/util");
@@ -52,7 +52,7 @@ function renderInterface(schema, api, options) {
     var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
         isExtraData: isExtraData,
         paramType: paramType,
-        changeCase: changeCase
+        changeCase: _changeCase,
     });
     /**
      * output ->  export interface interfaceName
@@ -84,6 +84,8 @@ function renderInterface(schema, api, options) {
 }
 exports.renderInterface = renderInterface;
 function renderInterfaceName(schema, api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     var isInterface = (0, util_2.checkIsInterface)(schema);
     var name = "".concat(isInterface ? 'I' : '').concat(api.path);
     if (options.paramType) {

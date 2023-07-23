@@ -1,4 +1,4 @@
-import * as changeCase from 'change-case';
+import * as _changeCase from 'change-case';
 import { getSchema } from '@api-helper/core/lib/helpers';
 
 import { ChangeCase } from '@/lib/types';
@@ -35,10 +35,10 @@ export function renderRequestFunction(
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-    requestFunctionName: onRenderRequestFunctionName(api, { changeCase }),
-    requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema as APIHelper.Schema, api, { paramType: 'request', changeCase }),
-    requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema as APIHelper.Schema, api, { paramType: 'request', isExtraData: true, changeCase }),
-    responseDataInterfaceName: onRenderInterfaceName(responseDataSchema as APIHelper.Schema, api, { paramType: 'response', changeCase }),
+    requestFunctionName: onRenderRequestFunctionName(api, { changeCase: _changeCase }),
+    requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema as APIHelper.Schema, api, { paramType: 'request', changeCase: _changeCase }),
+    requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema as APIHelper.Schema, api, { paramType: 'request', isExtraData: true, changeCase: _changeCase }),
+    responseDataInterfaceName: onRenderInterfaceName(responseDataSchema as APIHelper.Schema, api, { paramType: 'response', changeCase: _changeCase }),
   };
 
   const code = artTemplate.render(
@@ -65,7 +65,8 @@ export function renderRequestFunction(
 export function renderRequestFunctionName(
   api: APIHelper.API,
   options: { changeCase: ChangeCase }) {
-  return options.changeCase.camelCase(`${api.path} By ${api.method}`);
+  const changeCase = options?.changeCase ?? _changeCase;
+  return changeCase.camelCase(`${api.path} By ${api.method}`);
 }
 
 function renderRequestFunctionComment(api: APIHelper.API) {

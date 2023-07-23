@@ -1,6 +1,6 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import * as changeCase from 'change-case';
+import * as _changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
@@ -51,7 +51,7 @@ export function renderClass(
   let commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
   let className = options?.name ? options.name : onRenderClassName(api, {
     paramType,
-    changeCase
+    changeCase: _changeCase,
   });
 
   /**
@@ -138,6 +138,7 @@ export function renderClassName(
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }) {
+  const changeCase = options.changeCase ?? _changeCase;
   let name = api.path;
   if (options.paramType) {
     name += ` ${options.paramType}`;

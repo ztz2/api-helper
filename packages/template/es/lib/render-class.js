@@ -11,7 +11,7 @@ var __values = (this && this.__values) || function(o) {
 };
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
-import * as changeCase from 'change-case';
+import * as _changeCase from 'change-case';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
 import { renderComment } from '../lib/render-object';
@@ -31,7 +31,7 @@ export function renderClass(schema, api, options) {
     var commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
     var className = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderClassName(api, {
         paramType: paramType,
-        changeCase: changeCase
+        changeCase: _changeCase,
     });
     /**
      * output ->  export class
@@ -114,6 +114,8 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
     return code;
 }
 export function renderClassName(api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);

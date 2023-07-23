@@ -12,9 +12,9 @@ var __values = (this && this.__values) || function(o) {
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
-import { camelCase } from 'change-case';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
+import _changeCase from "change-case";
 export function renderObject(schema, api, options) {
     var _a, _b, _c;
     options = merge({
@@ -129,12 +129,14 @@ export function renderComment(schema) {
     return "// { ".concat(type, " }").concat(schema.label ? " ".concat(schema.label) : '');
 }
 export function renderObjectName(api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
     name += "By ".concat(api.method);
-    return camelCase(name);
+    return changeCase.camelCase(name);
 }
 function renderObjectComment(api, paramType, isExtraData) {
     if (isExtraData === void 0) { isExtraData = false; }

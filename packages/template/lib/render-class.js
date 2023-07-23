@@ -36,7 +36,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderClassName = exports.renderClass = void 0;
 var merge_1 = __importDefault(require("lodash/merge"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
-var changeCase = __importStar(require("change-case"));
+var _changeCase = __importStar(require("change-case"));
 var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 var render_object_1 = require("../lib/render-object");
@@ -56,7 +56,7 @@ function renderClass(schema, api, options) {
     var commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
     var className = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderClassName(api, {
         paramType: paramType,
-        changeCase: changeCase
+        changeCase: _changeCase,
     });
     /**
      * output ->  export class
@@ -140,6 +140,8 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
     return code;
 }
 function renderClassName(api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);

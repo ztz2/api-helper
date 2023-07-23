@@ -1,12 +1,12 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
-import { camelCase } from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { ChangeCase } from '@/lib/types';
 import { postCode } from '@/lib/utils/util';
+import _changeCase from "change-case";
 
 export function renderObject(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
@@ -153,12 +153,13 @@ export function renderObjectName(
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }) {
+  const changeCase = options.changeCase ?? _changeCase;
   let name = api.path;
   if (options.paramType) {
     name += ` ${options.paramType}`;
   }
   name += `By ${api.method}`;
-  return camelCase(name);
+  return changeCase.camelCase(name);
 }
 
 function renderObjectComment(

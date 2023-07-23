@@ -23,7 +23,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderRequestFunctionName = exports.renderRequestFunction = void 0;
-var changeCase = __importStar(require("change-case"));
+var _changeCase = __importStar(require("change-case"));
 var helpers_1 = require("@api-helper/core/lib/helpers");
 var art_template_1 = __importDefault(require("../lib/art-template"));
 var prettier_1 = __importDefault(require("../lib/utils/prettier"));
@@ -44,10 +44,10 @@ function renderRequestFunction(api, options) {
         formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
         pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
         queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-        requestFunctionName: onRenderRequestFunctionName(api, { changeCase: changeCase }),
-        requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema, api, { paramType: 'request', changeCase: changeCase }),
-        requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema, api, { paramType: 'request', isExtraData: true, changeCase: changeCase }),
-        responseDataInterfaceName: onRenderInterfaceName(responseDataSchema, api, { paramType: 'response', changeCase: changeCase }),
+        requestFunctionName: onRenderRequestFunctionName(api, { changeCase: _changeCase }),
+        requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema, api, { paramType: 'request', changeCase: _changeCase }),
+        requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema, api, { paramType: 'request', isExtraData: true, changeCase: _changeCase }),
+        responseDataInterfaceName: onRenderInterfaceName(responseDataSchema, api, { paramType: 'response', changeCase: _changeCase }),
     };
     var code = art_template_1.default.render("\u300Aif commentCode\u300B\u300AcommentCode\u300B\n\u300A/if\u300Bexport function \u300ArequestFunctionName\u300B(data\u300Aif isTypescript\u300B: \u300ArequestDataInterfaceName\u300B\u300A/if\u300B, extraData\u300Aif isTypescript\u300B?: \u300Aif api.requestExtraDataSchema\u300B\u300ArequestExtraDataInterfaceName\u300B\u300Aelse\u300Bunknown\u300A/if\u300B\u300A/if\u300B, ...args\u300Aif isTypescript\u300B: CurrentRequestFunctionRestArgsType\u300A/if\u300B) {\n  return request\u300Aif isTypescript\u300B<\u300AresponseDataInterfaceName\u300B>\u300A/if\u300B(\n    processRequestFunctionConfig(data, extraData, \u300ArequestFunctionName\u300B.requestConfig),\n    ...args\n  );\n}\n\u300ArequestFunctionName\u300B.requestConfig = {\n  path: '\u300Aapi.path\u300B',\n  method: '\u300Aapi.method.toLowerCase()\u300B',\n  formDataKeyNameList: \u300AformDataKeyNameListStr\u300B,\n  pathParamKeyNameList: \u300ApathParamKeyNameListStr\u300B,\n  queryStringKeyNameList: \u300AqueryStringKeyNameListStr\u300B\n}", templateTenderParams);
     return (0, prettier_1.default)(code, {
@@ -56,7 +56,9 @@ function renderRequestFunction(api, options) {
 }
 exports.renderRequestFunction = renderRequestFunction;
 function renderRequestFunctionName(api, options) {
-    return options.changeCase.camelCase("".concat(api.path, " By ").concat(api.method));
+    var _a;
+    var changeCase = (_a = options === null || options === void 0 ? void 0 : options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
+    return changeCase.camelCase("".concat(api.path, " By ").concat(api.method));
 }
 exports.renderRequestFunctionName = renderRequestFunctionName;
 function renderRequestFunctionComment(api) {

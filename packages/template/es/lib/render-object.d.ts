@@ -13,4 +13,4 @@ export declare function renderComment(schema: APIHelper.Schema): string;
 export declare function renderObjectName(api: APIHelper.API, options: {
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
-}): any;
+}): string;

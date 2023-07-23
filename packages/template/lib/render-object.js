@@ -37,9 +37,9 @@ exports.renderObjectName = exports.renderComment = exports.renderObject = void 0
 var merge_1 = __importDefault(require("lodash/merge"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var changeCase = __importStar(require("change-case"));
-var change_case_1 = require("change-case");
 var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
+var change_case_1 = __importDefault(require("change-case"));
 function renderObject(schema, api, options) {
     var _a, _b, _c;
     options = (0, merge_1.default)({
@@ -156,12 +156,14 @@ function renderComment(schema) {
 }
 exports.renderComment = renderComment;
 function renderObjectName(api, options) {
+    var _a;
+    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : change_case_1.default;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
     name += "By ".concat(api.method);
-    return (0, change_case_1.camelCase)(name);
+    return changeCase.camelCase(name);
 }
 exports.renderObjectName = renderObjectName;
 function renderObjectComment(api, paramType, isExtraData) {
