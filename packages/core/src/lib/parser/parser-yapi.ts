@@ -22,6 +22,7 @@ import {
   createCategory,
   createDocument,
   createSchema,
+  transformType,
 } from '../helpers';
 
 type ParserYapiParams = {
@@ -206,12 +207,13 @@ export default class ParserYapi {
         return;
       }
       const tag = apiMap.tag;
+      const method = apiMap.method.toLowerCase();
       const api: APIHelper.API = createApi({
+        method,
         id: this.generateId(),
         title: filterDesc(apiMap.title),
         description: filterDesc(apiMap.markdown),
         path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
-        method: apiMap.method,
         docURL: apiMap.docURL ?? '',
       });
       api.label = api.title ? api.title : api.description ? api.description : '';
@@ -328,6 +330,7 @@ export default class ParserYapi {
                 required: Number(p.required) === 1
               }
             });
+            scm.type = transformType(p.type, undefined, 'string');
             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
             api.formDataKeyNameList.push(keyName);

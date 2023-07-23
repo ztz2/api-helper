@@ -22,54 +22,70 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkInterface = exports.renderInterfaceName = exports.renderInterface = void 0;
+exports.renderInterfaceName = exports.renderInterface = void 0;
+var merge_1 = __importDefault(require("lodash/merge"));
+var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var changeCase = __importStar(require("change-case"));
-var prettier_1 = __importDefault(require("../lib/utils/prettier"));
+var util_1 = require("@api-helper/core/lib/utils/util");
+var helpers_1 = require("@api-helper/core/lib/helpers");
+var util_2 = require("../lib/utils/util");
 function renderInterface(schema, api, options) {
-    var isExtraData = options.isExtraData, paramType = options.paramType, hasComment = options.hasComment;
-    var keyword = checkInterface(schema) ? 'export interface ' : 'export type ';
+    options = (0, merge_1.default)({
+        onlyBody: false,
+        prefix: 'export ',
+        paramType: 'request',
+        emptyBodyCode: 'any;',
+    }, options);
+    schema = (0, cloneDeep_1.default)(schema);
+    var sourceSchema = schema;
+    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
+    if (Array.isArray(schema)) {
+        schema = (0, helpers_1.createSchema)('object', {
+            id: (0, util_1.uuid)(),
+            params: schema,
+        });
+    }
+    var isInterface = (0, util_2.checkIsInterface)(schema);
+    var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
     var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
-    var commentCode = hasComment !== false ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
-    var interfaceName = onRenderInterfaceName(schema, api, {
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
+    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
         isExtraData: isExtraData,
         paramType: paramType,
         changeCase: changeCase
     });
-    // 前置处理
-    if (!schema || isEmptyObject(schema)) {
+    /**
+     * output ->  export interface interfaceName
+     *            export type Type =
+     */
+    var ki = ["".concat(keyword, " ").concat(interfaceName, " ").concat(!isInterface ? '=' : '')].filter(Boolean).join('\n');
+    // 前置处理，渲染数据为空，直接返回 export type xxx = any;
+    if ((Array.isArray(sourceSchema) && sourceSchema.length === 0) ||
+        !sourceSchema ||
+        (0, util_2.isEmptyObject)(sourceSchema)) {
         // 不兼容的数据，不显示类型
         if (isExtraData) {
             return '';
         }
-        return [
-            commentCode,
-            "".concat(keyword, " ").concat(interfaceName, " = any;\n")
-        ].filter(Boolean).join('\n');
+        return (0, util_2.postCode)({
+            ki: ki,
+            commentCode: commentCode,
+            code: emptyBodyCode
+        }, { onlyBody: onlyBody });
     }
     if (paramType === 'response') {
         schema.keyName = '';
     }
-    var code = renderInterfaceDeepObject(schema);
-    // 移除多余换行符
-    code = code.replace(/\n\n/gim, '\n');
-    // 开始组合
-    interfaceName = keyword + interfaceName;
-    if (schema.type !== 'object') {
-        interfaceName += ' = ';
-    }
-    var formatted = (0, prettier_1.default)(interfaceName + code, {
-        parser: 'typescript'
-    });
-    return [
-        commentCode,
-        formatted
-    ].filter(Boolean).join('\n');
+    return (0, util_2.postCode)({
+        ki: ki,
+        commentCode: commentCode,
+        code: renderInterfaceDeepObject(schema)
+    }, { onlyBody: onlyBody });
 }
 exports.renderInterface = renderInterface;
 function renderInterfaceName(schema, api, options) {
-    var isInterface = checkInterface(schema);
-    var name = isInterface ? 'I' : '';
-    name += api.path;
+    var isInterface = (0, util_2.checkIsInterface)(schema);
+    var name = "".concat(isInterface ? 'I' : '').concat(api.path);
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
@@ -103,7 +119,7 @@ function renderInterfaceDeepObject(schema, memo) {
         bannerComment.push(schema.label);
     }
     var bannerCommentText = bannerComment.length > 0 ? "\n// ".concat(bannerComment.join('')) : '';
-    if (isEmptyObject(schema)) {
+    if ((0, util_2.isEmptyObject)(schema)) {
         return [
             bannerCommentText,
             schema.keyName ? "".concat(schema.keyName, ": ") : '',
@@ -151,15 +167,4 @@ function renderInterfaceDeepObject(schema, memo) {
             }
     }
     return code;
-}
-function checkInterface(schema) {
-    var _a;
-    var isType = !schema || (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' || isEmptyObject(schema);
-    var hasKey = (_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.some(function (s) { return s.keyName; });
-    return !isType && hasKey;
-}
-exports.checkInterface = checkInterface;
-function isEmptyObject(schema) {
-    var _a;
-    return (schema === null || schema === void 0 ? void 0 : schema.type) === 'object' && ((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0;
 }

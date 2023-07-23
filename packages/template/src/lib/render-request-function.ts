@@ -10,7 +10,7 @@ import { renderInterfaceName } from '@/lib/render-interface';
 export function renderRequestFunction(
   api: APIHelper.API,
   options?: {
-    codeType: 'typescript' | 'javascript';
+    codeType?: 'typescript' | 'javascript';
     dataKey?: string | undefined;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
@@ -51,7 +51,7 @@ export function renderRequestFunction(
 }
 《requestFunctionName》.requestConfig = {
   path: '《api.path》',
-  method: '《api.method》',
+  method: '《api.method.toLowerCase()》',
   formDataKeyNameList: 《formDataKeyNameListStr》,
   pathParamKeyNameList: 《pathParamKeyNameListStr》,
   queryStringKeyNameList: 《queryStringKeyNameListStr》
@@ -64,10 +64,8 @@ export function renderRequestFunction(
 
 export function renderRequestFunctionName(
   api: APIHelper.API,
-  options?: {
-    changeCase: ChangeCase
-  }) {
-  return changeCase.camelCase(`${api.path} By ${api.method}`);
+  options: { changeCase: ChangeCase }) {
+  return options.changeCase.camelCase(`${api.path} By ${api.method}`);
 }
 
 function renderRequestFunctionComment(api: APIHelper.API) {

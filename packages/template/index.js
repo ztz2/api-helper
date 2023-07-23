@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderObjectComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderClass = exports.renderAllApi = exports.formatCode = exports.changeCase = exports.artTemplate = void 0;
+exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderClass = exports.renderAllApi = exports.formatCode = exports.changeCase = exports.artTemplate = void 0;
 var changeCase = __importStar(require("change-case"));
 exports.changeCase = changeCase;
 var art_template_1 = __importDefault(require("./lib/art-template"));
@@ -39,7 +39,7 @@ Object.defineProperty(exports, "renderInterface", { enumerable: true, get: funct
 Object.defineProperty(exports, "renderInterfaceName", { enumerable: true, get: function () { return render_interface_1.renderInterfaceName; } });
 var render_object_1 = require("./lib/render-object");
 Object.defineProperty(exports, "renderObject", { enumerable: true, get: function () { return render_object_1.renderObject; } });
-Object.defineProperty(exports, "renderObjectComment", { enumerable: true, get: function () { return render_object_1.renderObjectComment; } });
+Object.defineProperty(exports, "renderComment", { enumerable: true, get: function () { return render_object_1.renderComment; } });
 Object.defineProperty(exports, "renderObjectName", { enumerable: true, get: function () { return render_object_1.renderObjectName; } });
 var render_request_function_1 = require("./lib/render-request-function");
 Object.defineProperty(exports, "renderRequestFunction", { enumerable: true, get: function () { return render_request_function_1.renderRequestFunction; } });

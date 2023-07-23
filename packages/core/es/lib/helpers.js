@@ -147,7 +147,7 @@ var FileSchema = /** @class */ (function (_super) {
     __extends(FileSchema, _super);
     function FileSchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.type = 'file';
+        _this.type = 'File';
         return _this;
     }
     return FileSchema;
@@ -194,7 +194,8 @@ export function createSchema(type, options) {
             instance = new BooleanSchema();
             break;
         }
-        case 'File': {
+        case 'File':
+        case 'file': {
             instance = new FileSchema();
             break;
         }
@@ -279,6 +280,7 @@ export function transformType(type, format, emptyType) {
         date: 'string',
         dateTime: 'string',
         password: 'string',
+        text: 'string',
         boolean: 'boolean',
         void: 'null',
         array: 'array',

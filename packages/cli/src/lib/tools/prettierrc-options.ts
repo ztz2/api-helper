@@ -5,7 +5,7 @@ export default class PrettierrcOptions implements Options{
    * 一行最多多少个字符（超过后会要求换行）
    * @default 80
    */
-  printWidth = 80;
+  printWidth = 100;
   /**
    * 指定每个缩进级别的空格数
    * @default 2

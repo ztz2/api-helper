@@ -62,7 +62,7 @@ class NullSchema extends AbstractSchema implements APIHelper.INullSchema{
 }
 
 class FileSchema extends AbstractSchema implements APIHelper.IFileSchema{
-  type = 'file' as 'file';
+  type = 'File' as 'File';
 }
 
 class AnySchema extends AbstractSchema implements APIHelper.IAnySchema{
@@ -74,7 +74,7 @@ class UnknownSchema extends AbstractSchema implements APIHelper.IUnknownSchema{
 }
 
 export function createSchema(
-  type: APIHelper.SchemaType | 'enum',
+  type: APIHelper.SchemaType | 'enum' | 'file',
   options?: Partial<AbstractSchema & Recordable>
 ): APIHelper.Schema {
   let instance = new AbstractSchema();
@@ -99,7 +99,7 @@ export function createSchema(
       instance = new BooleanSchema();
       break;
     }
-    case 'File':{
+    case 'File': case 'file':{
       instance = new FileSchema();
       break;
     }
@@ -187,6 +187,7 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
     date: 'string',
     dateTime: 'string',
     password: 'string',
+    text: 'string',
 
     boolean: 'boolean',
 

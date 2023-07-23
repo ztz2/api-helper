@@ -174,7 +174,7 @@ export declare namespace APIHelper {
   }
 
   interface IFileSchema extends IAbstractSchema {
-    type: 'file';
+    type: 'File';
   }
 
   interface INullSchema extends IAbstractSchema {

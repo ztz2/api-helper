@@ -1,0 +1,182 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2.0生成 interface 测试 1`] = `
+"{
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { array } Order Tag
+  tag: [
+    [
+      {
+        // { 'error' | 'waring' | 'info' }
+        tagName: 'error'
+      }
+    ]
+  ],
+  // { boolean }
+  complete: false
+}"
+`;
+
+exports[`生成 javascript 对象测试 OpenAPI-3.0生成对象测试: OpenAPI-3.00生成对象测试 1`] = `
+"/**
+ * @description Place an order for a pet、Place a new order in the store【响应数据实体对象】
+ * @url [ POST ] /api/v3/store/order
+ */
+export const apiV3StoreOrderResponseByPost = {
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { boolean }
+  complete: false
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 dropComment测试 1`] = `
+"export const v2StoreOrderRequestByPost = {
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { array } Order Tag
+  tag: [
+    [
+      {
+        // { 'error' | 'waring' | 'info' }
+        tagName: 'error'
+      }
+    ]
+  ],
+  // { boolean }
+  complete: false
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 name测试 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据实体对象】
+ * @url [ POST ] /v2/store/order
+ */
+export const 自定义名称 = {
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { array } Order Tag
+  tag: [
+    [
+      {
+        // { 'error' | 'waring' | 'info' }
+        tagName: 'error'
+      }
+    ]
+  ],
+  // { boolean }
+  complete: false
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 onlyBody测试 1`] = `
+"{
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { array } Order Tag
+  tag: [
+    [
+      {
+        // { 'error' | 'waring' | 'info' }
+        tagName: 'error'
+      }
+    ]
+  ],
+  // { boolean }
+  complete: false
+}"
+`;
+
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 prefix测试 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据实体对象】
+ * @url [ POST ] /v2/store/order
+ */
+export const v2StoreOrderRequestByPost = {
+  // { number }
+  id: 0,
+  // { number }
+  petId: 0,
+  // { number }
+  quantity: 0,
+  // { string }
+  shipDate: '',
+  // { 'placed' | 'approved' | 'delivered' } Order Status
+  status: 'placed',
+  // { array } Order Tag
+  tag: [
+    [
+      {
+        // { 'error' | 'waring' | 'info' }
+        tagName: 'error'
+      }
+    ]
+  ],
+  // { boolean }
+  complete: false
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 null 属性 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据实体对象】
+ * @url [ POST ] /v2/store/order
+ */
+export const v2StoreOrderRequestByPost = {};
+"
+`;
+
+exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 空数组 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据实体对象】
+ * @url [ POST ] /v2/store/order
+ */
+export const v2StoreOrderRequestByPost = {};
+"
+`;

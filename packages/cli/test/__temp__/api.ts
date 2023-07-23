@@ -56,11 +56,7 @@ export function bodyBodyPutByPut(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyPutResponseByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyPutByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyPutByPut.requestConfig),
     ...args
   );
 }
@@ -108,11 +104,7 @@ export function userDeviceIdBodyByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserDeviceIdBodyResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userDeviceIdBodyByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userDeviceIdBodyByPost.requestConfig),
     ...args
   );
 }
@@ -171,11 +163,7 @@ export function userDeviceIdBody1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserDeviceIdBody1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userDeviceIdBody1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userDeviceIdBody1ByPost.requestConfig),
     ...args
   );
 }
@@ -233,11 +221,7 @@ export function userGetRequest1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserGetRequest1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userGetRequest1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userGetRequest1ByPost.requestConfig),
     ...args
   );
 }
@@ -279,11 +263,7 @@ export function userCreateOneByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOneResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOneByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOneByPost.requestConfig),
     ...args
   );
 }
@@ -340,11 +320,7 @@ export function userCreateOneSchemaByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOneSchemaResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOneSchemaByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOneSchemaByPost.requestConfig),
     ...args
   );
 }
@@ -384,11 +360,7 @@ export function userCreateOne1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOne1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOne1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOne1ByPost.requestConfig),
     ...args
   );
 }
@@ -405,7 +377,7 @@ userCreateOne1ByPost.requestConfig = {
  * @url [ POST ] /file/upload
  */
 export interface IFileUploadRequestByPost {
-  file: string;
+  file: File;
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
@@ -432,11 +404,7 @@ export function fileUploadByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadByPost.requestConfig),
     ...args
   );
 }
@@ -456,7 +424,7 @@ export interface IFileUploadParamRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数【响应数据类型定义】
@@ -483,11 +451,7 @@ export function fileUploadParamByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamByPost.requestConfig),
     ...args
   );
 }
@@ -507,7 +471,7 @@ export interface IFileUploadParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数Header【响应数据类型定义】
@@ -534,11 +498,7 @@ export function fileUploadParamHeaderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamHeaderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamHeaderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamHeaderByPost.requestConfig),
     ...args
   );
 }
@@ -560,7 +520,7 @@ export interface IFileUploadParamIdRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数Path【响应数据类型定义】
@@ -587,11 +547,7 @@ export function fileUploadParamIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamIdResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamIdByPost.requestConfig),
     ...args
   );
 }
@@ -608,7 +564,7 @@ fileUploadParamIdByPost.requestConfig = {
  * @url [ POST ] /file/uploadBatch
  */
 export interface IFileUploadBatchRequestByPost {
-  files: Array<string>;
+  files: Array<File>;
 }
 /**
  * @description 多文件上传【响应数据类型定义】
@@ -635,11 +591,7 @@ export function fileUploadBatchByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<FileUploadBatchResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadBatchByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadBatchByPost.requestConfig),
     ...args
   );
 }
@@ -740,11 +692,7 @@ export function bodyBodyParamByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamByPost.requestConfig),
     ...args
   );
 }
@@ -795,11 +743,7 @@ export function bodyBodyParamHeaderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamHeaderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamHeaderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderByPost.requestConfig),
     ...args
   );
 }
@@ -852,11 +796,7 @@ export function bodyBodyParamHeaderPathIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamHeaderPathIdResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamHeaderPathIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderPathIdByPost.requestConfig),
     ...args
   );
 }
@@ -916,11 +856,7 @@ export function userGetRequestByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserGetRequestResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userGetRequestByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userGetRequestByGet.requestConfig),
     ...args
   );
 }
@@ -954,11 +890,7 @@ export function userCreateByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<UserCreateResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateByGet.requestConfig),
     ...args
   );
 }

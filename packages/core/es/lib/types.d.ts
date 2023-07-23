@@ -91,7 +91,7 @@ export declare namespace APIHelper {
         type: 'boolean';
     }
     interface IFileSchema extends IAbstractSchema {
-        type: 'file';
+        type: 'File';
     }
     interface INullSchema extends IAbstractSchema {
         type: 'null';

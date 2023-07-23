@@ -1,62 +1,100 @@
+import merge from 'lodash/merge';
+import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
+import { uuid } from '@api-helper/core/lib/utils/util';
+import { createSchema } from '@api-helper/core/lib/helpers';
 
 import { ChangeCase } from '@/lib/types';
-import formatCode from '@/lib/utils/prettier';
+import { checkIsInterface, isEmptyObject, postCode } from '@/lib/utils/util';
 
 export function renderInterface(
-  schema: APIHelper.Schema | null,
+  schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
-  options: {
-    paramType: 'request' | 'response';
-    isExtraData?: boolean;
-    hasComment?: boolean;
+  options?: {
+    // 请求数据还是响应数据
+    paramType?: 'request' | 'response';
+    // 前缀
+    prefix?: string,
+    // interface 名称
+    name?: string;
+    // 删除interface注释
+    dropComment?: boolean;
+    // 只生成类型部分
+    onlyBody?: boolean;
+    // 生成接口名称回调
     onRenderInterfaceName?: typeof renderInterfaceName;
+    // 是否是额外数据
+    isExtraData?: boolean;
+    // 当数据为空的body代码
+    emptyBodyCode?: string;
   }) {
-  const { isExtraData, paramType, hasComment, } = options;
-  const keyword = checkInterface(schema) ? 'export interface ' : 'export type ';
+  options = merge({
+    onlyBody: false,
+    prefix: 'export ',
+    paramType: 'request',
+    emptyBodyCode: 'any;',
+  }, options);
+
+  schema = cloneDeep(schema);
+  const sourceSchema = schema;
+
+  const {
+    prefix,
+    onlyBody,
+    dropComment,
+    isExtraData,
+    emptyBodyCode,
+    paramType = 'request',
+  } = options;
+
+  if (Array.isArray(schema)) {
+    schema = createSchema('object', {
+      id: uuid(),
+      params: schema,
+    }) as APIHelper.Schema;
+  }
+
+  const isInterface = checkIsInterface(schema);
+  const keyword = isInterface ? `${prefix} interface` : `${prefix}type`;
   const onRenderInterfaceName = options?.onRenderInterfaceName ? options.onRenderInterfaceName : renderInterfaceName;
-  const commentCode = hasComment !== false ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
-  let interfaceName = onRenderInterfaceName(schema, api, {
+  let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
+  let interfaceName = options?.name ? options.name : onRenderInterfaceName(schema, api, {
     isExtraData,
     paramType,
     changeCase
   });
 
-  // 前置处理
-  if (!schema || isEmptyObject(schema)) {
+  /**
+   * output ->  export interface interfaceName
+   *            export type Type =
+   */
+  let ki = [`${keyword} ${interfaceName} ${!isInterface ? '=' : ''}`].filter(Boolean).join('\n');
+
+  // 前置处理，渲染数据为空，直接返回 export type xxx = any;
+  if ((Array.isArray(sourceSchema) && sourceSchema.length === 0) ||
+    !sourceSchema ||
+    isEmptyObject(sourceSchema as APIHelper.Schema)) {
     // 不兼容的数据，不显示类型
     if (isExtraData) {
       return '';
     }
-    return [
+    return postCode({
+      ki,
       commentCode,
-      `${keyword} ${interfaceName} = any;\n`
-    ].filter(Boolean).join('\n');
+      code: emptyBodyCode
+    }, { onlyBody });
   }
 
   if (paramType === 'response') {
-    schema.keyName = '';
+    (schema as APIHelper.Schema).keyName = '';
   }
 
-  let code = renderInterfaceDeepObject(schema);
-
-  // 移除多余换行符
-  code = code.replace(/\n\n/gim, '\n');
-
-  // 开始组合
-  interfaceName = keyword + interfaceName;
-  if (schema.type !== 'object') {
-    interfaceName += ' = ';
-  }
-
-  const formatted = formatCode(interfaceName + code, {
-    parser: 'typescript'
-  });
-  return [
+  return postCode({
+    ki,
     commentCode,
-    formatted
-  ].filter(Boolean).join('\n');
+    code: renderInterfaceDeepObject(schema as APIHelper.Schema)
+  }, { onlyBody });
 }
 
 export function renderInterfaceName (
@@ -67,11 +105,9 @@ export function renderInterfaceName (
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }): string {
-  const isInterface = checkInterface(schema);
+  const isInterface = checkIsInterface(schema);
 
-  let name = isInterface ? 'I' : '';
-
-  name += api.path;
+  let name = `${isInterface ? 'I' : ''}${api.path}`;
 
   if (options.paramType) {
     name += ` ${options.paramType}`;
@@ -169,14 +205,4 @@ function renderInterfaceDeepObject(
   }
 
   return code;
-}
-
-export function checkInterface(schema: APIHelper.Schema | null) {
-  let isType = !schema || schema?.type === 'array' || isEmptyObject(schema);
-  let hasKey = schema?.params?.some((s) => s.keyName);
-  return !isType && hasKey;
-}
-
-function isEmptyObject(schema: APIHelper.Schema) {
-  return schema?.type === 'object' && schema?.params?.length === 0;
 }

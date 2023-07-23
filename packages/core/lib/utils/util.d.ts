@@ -87,7 +87,7 @@ export declare function filterSchemaRoot(schemaList: Array<APIHelper.Schema>): (
     enum: (string | number)[];
 } | {
     params: never[];
-    type: "file";
+    type: "File";
     id: string;
     keyName: string;
     title: string;

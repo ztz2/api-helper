@@ -17,11 +17,7 @@ import request from './request';
  */
 export function v2PetPetIdUploadImageByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdUploadImageByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
@@ -38,10 +34,7 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  * @url [ POST ] /v2/pet
  */
 export function v2PetByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
 }
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
@@ -56,10 +49,7 @@ v2PetByPost.requestConfig = {
  * @url [ PUT ] /v2/pet
  */
 export function v2PetByPut(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
 }
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
@@ -75,11 +65,7 @@ v2PetByPut.requestConfig = {
  */
 export function v2PetFindByStatusByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByStatusByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
     ...args
   );
 }
@@ -97,11 +83,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export function v2PetFindByTagsByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByTagsByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
     ...args
   );
 }
@@ -119,11 +101,7 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export function v2PetPetIdByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
     ...args
   );
 }
@@ -141,11 +119,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export function v2PetPetIdByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
     ...args
   );
 }
@@ -163,11 +137,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export function v2PetPetIdByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
     ...args
   );
 }
@@ -185,11 +155,7 @@ v2PetPetIdByDelete.requestConfig = {
  */
 export function v2StoreOrderByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
     ...args
   );
 }
@@ -207,11 +173,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export function v2StoreOrderOrderIdByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
@@ -229,11 +191,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export function v2StoreOrderOrderIdByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
@@ -251,11 +209,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  */
 export function v2StoreInventoryByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
@@ -273,11 +227,7 @@ v2StoreInventoryByGet.requestConfig = {
  */
 export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithArrayByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
     ...args
   );
 }
@@ -295,11 +245,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  */
 export function v2UserCreateWithListByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithListByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
     ...args
   );
 }
@@ -317,11 +263,7 @@ v2UserCreateWithListByPost.requestConfig = {
  */
 export function v2UserUsernameByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
     ...args
   );
 }
@@ -339,11 +281,7 @@ v2UserUsernameByGet.requestConfig = {
  */
 export function v2UserUsernameByPut(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
     ...args
   );
 }
@@ -361,11 +299,7 @@ v2UserUsernameByPut.requestConfig = {
  */
 export function v2UserUsernameByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
     ...args
   );
 }
@@ -383,11 +317,7 @@ v2UserUsernameByDelete.requestConfig = {
  */
 export function v2UserLoginByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLoginByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
     ...args
   );
 }
@@ -405,11 +335,7 @@ v2UserLoginByGet.requestConfig = {
  */
 export function v2UserLogoutByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLogoutByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
     ...args
   );
 }
@@ -471,7 +397,7 @@ export interface IV2PetPetIdUploadImageRequestByPost {
   // Additional data to pass to server
   additionalMetadata?: string;
   // file to upload
-  file?: string;
+  file?: File;
 }
 /**
  * @description uploads an image【响应数据类型定义】
@@ -492,11 +418,7 @@ export function v2PetPetIdUploadImageByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2PetPetIdUploadImageResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdUploadImageByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
@@ -637,11 +559,7 @@ export function v2PetFindByStatusByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetFindByStatusResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByStatusByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
     ...args
   );
 }
@@ -690,11 +608,7 @@ export function v2PetFindByTagsByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetFindByTagsResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByTagsByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
     ...args
   );
 }
@@ -743,11 +657,7 @@ export function v2PetPetIdByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2PetPetIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
     ...args
   );
 }
@@ -786,11 +696,7 @@ export function v2PetPetIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetPetIdResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
     ...args
   );
 }
@@ -825,11 +731,7 @@ export function v2PetPetIdByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetPetIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
     ...args
   );
 }
@@ -877,11 +779,7 @@ export function v2StoreOrderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
     ...args
   );
 }
@@ -924,11 +822,7 @@ export function v2StoreOrderOrderIdByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
@@ -963,11 +857,7 @@ export function v2StoreOrderOrderIdByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2StoreOrderOrderIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
@@ -999,11 +889,7 @@ export function v2StoreInventoryByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2StoreInventoryResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
@@ -1035,11 +921,7 @@ export function v2UserCreateWithArrayByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserCreateWithArrayResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithArrayByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
     ...args
   );
 }
@@ -1071,11 +953,7 @@ export function v2UserCreateWithListByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserCreateWithListResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithListByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
     ...args
   );
 }
@@ -1120,11 +998,7 @@ export function v2UserUsernameByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2UserUsernameResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
     ...args
   );
 }
@@ -1167,11 +1041,7 @@ export function v2UserUsernameByPut(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserUsernameResponseTypeByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
     ...args
   );
 }
@@ -1206,11 +1076,7 @@ export function v2UserUsernameByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserUsernameResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
     ...args
   );
 }
@@ -1247,11 +1113,7 @@ export function v2UserLoginByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserLoginResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLoginByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
     ...args
   );
 }
@@ -1283,11 +1145,7 @@ export function v2UserLogoutByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserLogoutResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLogoutByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
     ...args
   );
 }
@@ -1402,11 +1260,7 @@ export function bodyBodyPutByPut(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyPutResponseByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyPutByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyPutByPut.requestConfig),
     ...args
   );
 }
@@ -1454,11 +1308,7 @@ export function userDeviceIdBodyByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserDeviceIdBodyResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userDeviceIdBodyByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userDeviceIdBodyByPost.requestConfig),
     ...args
   );
 }
@@ -1517,11 +1367,7 @@ export function userDeviceIdBody1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserDeviceIdBody1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userDeviceIdBody1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userDeviceIdBody1ByPost.requestConfig),
     ...args
   );
 }
@@ -1579,11 +1425,7 @@ export function userGetRequest1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserGetRequest1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userGetRequest1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userGetRequest1ByPost.requestConfig),
     ...args
   );
 }
@@ -1625,11 +1467,7 @@ export function userCreateOneByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOneResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOneByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOneByPost.requestConfig),
     ...args
   );
 }
@@ -1686,11 +1524,7 @@ export function userCreateOneSchemaByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOneSchemaResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOneSchemaByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOneSchemaByPost.requestConfig),
     ...args
   );
 }
@@ -1730,11 +1564,7 @@ export function userCreateOne1ByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserCreateOne1ResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateOne1ByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateOne1ByPost.requestConfig),
     ...args
   );
 }
@@ -1751,7 +1581,7 @@ userCreateOne1ByPost.requestConfig = {
  * @url [ POST ] /file/upload
  */
 export interface IFileUploadRequestByPost {
-  file: string;
+  file: File;
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
@@ -1778,11 +1608,7 @@ export function fileUploadByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadByPost.requestConfig),
     ...args
   );
 }
@@ -1802,7 +1628,7 @@ export interface IFileUploadParamRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数【响应数据类型定义】
@@ -1829,11 +1655,7 @@ export function fileUploadParamByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamByPost.requestConfig),
     ...args
   );
 }
@@ -1853,7 +1675,7 @@ export interface IFileUploadParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数Header【响应数据类型定义】
@@ -1880,11 +1702,7 @@ export function fileUploadParamHeaderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamHeaderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamHeaderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamHeaderByPost.requestConfig),
     ...args
   );
 }
@@ -1906,7 +1724,7 @@ export interface IFileUploadParamIdRequestByPost {
   // 文件名称
   name: string;
   // 文件
-  file: string;
+  file: File;
 }
 /**
  * @description 文件上传-带参数Path【响应数据类型定义】
@@ -1933,11 +1751,7 @@ export function fileUploadParamIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IFileUploadParamIdResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadParamIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadParamIdByPost.requestConfig),
     ...args
   );
 }
@@ -1954,7 +1768,7 @@ fileUploadParamIdByPost.requestConfig = {
  * @url [ POST ] /file/uploadBatch
  */
 export interface IFileUploadBatchRequestByPost {
-  files: Array<string>;
+  files: Array<File>;
 }
 /**
  * @description 多文件上传【响应数据类型定义】
@@ -1981,11 +1795,7 @@ export function fileUploadBatchByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<FileUploadBatchResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      fileUploadBatchByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, fileUploadBatchByPost.requestConfig),
     ...args
   );
 }
@@ -2086,11 +1896,7 @@ export function bodyBodyParamByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamByPost.requestConfig),
     ...args
   );
 }
@@ -2141,11 +1947,7 @@ export function bodyBodyParamHeaderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamHeaderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamHeaderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderByPost.requestConfig),
     ...args
   );
 }
@@ -2198,11 +2000,7 @@ export function bodyBodyParamHeaderPathIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IBodyBodyParamHeaderPathIdResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      bodyBodyParamHeaderPathIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderPathIdByPost.requestConfig),
     ...args
   );
 }
@@ -2262,11 +2060,7 @@ export function userGetRequestByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IUserGetRequestResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userGetRequestByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userGetRequestByGet.requestConfig),
     ...args
   );
 }
@@ -2300,11 +2094,7 @@ export function userCreateByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<UserCreateResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      userCreateByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, userCreateByGet.requestConfig),
     ...args
   );
 }

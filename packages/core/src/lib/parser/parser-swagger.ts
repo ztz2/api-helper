@@ -124,7 +124,7 @@ export default class ParserSwagger {
         const methodMapEntries = Object.entries(methodMap);
 
         for (let w = 0; w < methodMapEntries.length; w++) {
-          const method = methodMapEntries[w][0];
+          const method = methodMapEntries[w][0].toLowerCase();
           const apiMap: any = methodMapEntries[w][1];
           // fix: basePath为/，导致//
           const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);

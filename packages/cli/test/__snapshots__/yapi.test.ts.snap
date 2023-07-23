@@ -31,7 +31,7 @@ export interface IV2PetPetIdUploadImageRequestByPost {
   // Additional data to pass to server
   additionalMetadata?: string;
   // file to upload
-  file?: string;
+  file?: File;
 }
 /**
  * @description uploads an image【响应数据类型定义】
@@ -54,17 +54,13 @@ export function v2PetPetIdUploadImageByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2PetPetIdUploadImageResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdUploadImageByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: ['additionalMetadata', 'file'],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -113,7 +109,7 @@ export function v2PetByPost(
 }
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -162,7 +158,7 @@ export function v2PetByPut(
 }
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
-  method: 'PUT',
+  method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -208,17 +204,13 @@ export function v2PetFindByStatusByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetFindByStatusResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByStatusByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
     ...args
   );
 }
 v2PetFindByStatusByGet.requestConfig = {
   path: '/v2/pet/findByStatus',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['status'],
@@ -264,17 +256,13 @@ export function v2PetFindByTagsByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetFindByTagsResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByTagsByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
     ...args
   );
 }
 v2PetFindByTagsByGet.requestConfig = {
   path: '/v2/pet/findByTags',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['tags'],
@@ -320,17 +308,13 @@ export function v2PetPetIdByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2PetPetIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
     ...args
   );
 }
 v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -366,17 +350,13 @@ export function v2PetPetIdByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetPetIdResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
     ...args
   );
 }
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: ['name', 'status'],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -408,17 +388,13 @@ export function v2PetPetIdByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2PetPetIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
     ...args
   );
 }
 v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
-  method: 'DELETE',
+  method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -477,17 +453,13 @@ export function v2StoreOrderByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
     ...args
   );
 }
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -534,17 +506,13 @@ export function v2StoreOrderOrderIdByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
 v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
@@ -576,17 +544,13 @@ export function v2StoreOrderOrderIdByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2StoreOrderOrderIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
 v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'DELETE',
+  method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
@@ -615,17 +579,13 @@ export function v2StoreInventoryByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2StoreInventoryResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
 v2StoreInventoryByGet.requestConfig = {
   path: '/v2/store/inventory',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -661,17 +621,13 @@ export function v2UserCreateWithArrayByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserCreateWithArrayResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithArrayByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
     ...args
   );
 }
 v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['userId'],
   queryStringKeyNameList: ['userName', 'password'],
@@ -710,17 +666,13 @@ export function v2UserCreateWithListByPost(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserCreateWithListResponseTypeByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithListByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
     ...args
   );
 }
 v2UserCreateWithListByPost.requestConfig = {
   path: '/v2/user/createWithList',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -763,17 +715,13 @@ export function v2UserUsernameByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<IV2UserUsernameResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
     ...args
   );
 }
 v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username1', 'username'],
   queryStringKeyNameList: [],
@@ -813,17 +761,13 @@ export function v2UserUsernameByPut(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserUsernameResponseTypeByPut>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
     ...args
   );
 }
 v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'PUT',
+  method: 'put',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
@@ -856,17 +800,13 @@ export function v2UserUsernameByDelete(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserUsernameResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
     ...args
   );
 }
 v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
-  method: 'DELETE',
+  method: 'delete',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username1', 'username'],
   queryStringKeyNameList: [],
@@ -900,17 +840,13 @@ export function v2UserLoginByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserLoginResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLoginByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
     ...args
   );
 }
 v2UserLoginByGet.requestConfig = {
   path: '/v2/user/login',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['username', 'password'],
@@ -939,17 +875,13 @@ export function v2UserLogoutByGet(
   ...args: CurrentRequestFunctionRestArgsType
 ) {
   return request<V2UserLogoutResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLogoutByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
     ...args
   );
 }
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
-  method: 'GET',
+  method: 'get',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -994,7 +926,7 @@ export function v2UserByPost(
 }
 v2UserByPost.requestConfig = {
   path: '/v2/user',
-  method: 'POST',
+  method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],

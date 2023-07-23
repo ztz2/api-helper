@@ -4,7 +4,7 @@ import formatCode from '@/lib/utils/prettier';
 import { renderAllApi } from '@/lib/render-all-api';
 import { renderClass, renderClassName } from '@/lib/render-class';
 import { renderInterface, renderInterfaceName } from '@/lib/render-interface';
-import { renderObject, renderObjectComment, renderObjectName } from '@/lib/render-object';
+import { renderObject, renderComment, renderObjectName } from '@/lib/render-object';
 import { renderRequestFunction, renderRequestFunctionName } from '@/lib/render-request-function';
 
 export {
@@ -17,7 +17,7 @@ export {
   renderInterface,
   renderInterfaceName,
   renderObject,
-  renderObjectComment,
+  renderComment,
   renderObjectName,
   renderRequestFunction,
   renderRequestFunctionName,

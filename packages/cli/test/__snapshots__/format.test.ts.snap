@@ -18,9 +18,7 @@ exports[`format 格式化Vue代码: format.格式化Vue代码 1`] = `
       <div class="app-header__right">
         <a-space :size="20">
           <a href="https://apih.andou.live" target="_blank">文档</a>
-          <a href="https://apih.andou.live/config/cli.html" target="_blank"
-            >CLI</a
-          >
+          <a href="https://apih.andou.live/config/cli.html" target="_blank">CLI</a>
           <a href="https://github.com/ztz2/api-helper" target="_blank">
             <icon-github :size="24" />
           </a>

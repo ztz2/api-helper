@@ -1,46 +1,87 @@
+import merge from 'lodash/merge';
+import cloneDeep from 'lodash/cloneDeep';
+import * as changeCase from 'change-case';
 import { camelCase } from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
-import formatCode from '@/lib/utils/prettier';
+import { ChangeCase } from '@/lib/types';
+import { postCode } from '@/lib/utils/util';
 
 export function renderObject(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
-  options: {
-    onlyMap?: boolean;
-    paramType: 'request' | 'response';
-    startSpace?: ''
+  options?: {
+    // 请求数据还是响应数据
+    paramType?: 'request' | 'response';
+    // 前缀
+    prefix?: string,
+    // interface 名称
+    name?: string;
+    // 删除interface注释
+    dropComment?: boolean;
+    // 只生成类型部分
+    onlyBody?: boolean;
+    // 当数据为空的body代码
+    emptyBodyCode?: string;
+    // 生成接口名称回调
+    onRenderObjectName?: typeof renderObjectName;
   }
 ) {
-  schema = filterSchemaPrimitiveValue(schema);
+  options = merge({
+    prefix: 'export ',
+    onlyBody: false,
+    paramType: 'request',
+    emptyBodyCode: '{}',
+  }, options);
+  schema = cloneDeep(schema);
 
-  if (!schema) {
-    return '';
+  const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
+
+  const {
+    prefix,
+    dropComment,
+    emptyBodyCode,
+    paramType = 'request',
+  } = options;
+  // @ts-ignore
+  const onlyBody = options?.onlyMap ?? options.onlyBody;
+
+  const keyword = `${prefix} const`;
+  const onRenderObjectName = options?.onRenderObjectName ? options.onRenderObjectName : renderObjectName;
+  let commentCode = onlyBody ? '' : dropComment !== true ? renderObjectComment(api, paramType) : '';
+  let objectName = options?.name ? options.name : onRenderObjectName(api, {
+    paramType,
+    changeCase
+  });
+
+  /**
+   * output ->  export class
+   */
+  let ki = [`${keyword} ${objectName} = `].filter(Boolean).join('\n');
+
+  let bodyCode;
+  if (!schema || (Array.isArray(schema) && schema.length === 0)){
+    bodyCode = emptyBodyCode;
+  } else {
+    bodyCode = renderObjectDeepObject(schemaList);
   }
 
-  if (!Array.isArray(schema)) {
-    schema = schema.params;
-  }
+  let code = postCode({
+    ki,
+    commentCode,
+    code: bodyCode
+  }, { onlyBody })
 
-  const code = renderObjectDeepObject(schema);
-  const prefixCode = `export const ${renderObjectName(api, options)} = `;
-
-  let formatted = formatCode(prefixCode + code);
-
-  if (options?.onlyMap === true) {
-    formatted = formatted.replace(new RegExp('^' + prefixCode), '').trim();
-    if (formatted.endsWith(';')) {
-      formatted = formatted.slice(0, formatted.length - 1);
+  // 移除最后的分号。
+  if (onlyBody) {
+    code = code.trim();
+    if (code.endsWith(';')) {
+      code = code.slice(0, code.length - 1);
     }
   }
 
-  // 开始空格键处理
-  if (options.startSpace?.length) {
-    formatted = formatted.split('\n').map((line: string, index: number) => index === 0 ? line : `${options.startSpace}${line}`).join('\n');
-  }
-
-  return formatted;
+  return code;
 }
 
 function renderObjectDeepObject(
@@ -59,7 +100,7 @@ function renderObjectDeepObject(
   for (const schema of schemaList) {
     const keyName = schema.keyName ?? '';
     const type = schema.type;
-    const temporaryCode = [renderObjectComment(schema)];
+    const temporaryCode = [renderComment(schema)];
     let v = "''";
     switch (type) {
       // 数组类型 | 对象类型
@@ -90,7 +131,7 @@ function renderObjectDeepObject(
 
   if (parentSchema?.keyName) {
     code = [
-      renderObjectComment(parentSchema),
+      renderComment(parentSchema),
       `${parentSchema.keyName}: ${code}`
     ].join('\n');
   }
@@ -98,7 +139,7 @@ function renderObjectDeepObject(
   return code;
 }
 
-export function renderObjectComment(schema: APIHelper.Schema) {
+export function renderComment(schema: APIHelper.Schema) {
   let type: string = schema.type;
   if ('enum' in schema && schema.enum.length > 0) {
     type = schema.enum.map((item) => `'${item}'`).join(' | ');
@@ -109,7 +150,8 @@ export function renderObjectComment(schema: APIHelper.Schema) {
 export function renderObjectName(
   api: APIHelper.API,
   options: {
-    paramType: 'request' | 'response'
+    paramType: 'request' | 'response';
+    changeCase: ChangeCase;
   }) {
   let name = api.path;
   if (options.paramType) {
@@ -117,4 +159,17 @@ export function renderObjectName(
   }
   name += `By ${api.method}`;
   return camelCase(name);
+}
+
+function renderObjectComment(
+  api: APIHelper.API,
+  paramType: 'request' | 'response',
+  isExtraData = false
+) {
+  const commentText =
+    `/**
+ * @description ${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}实体对象】${api.docURL ? `\n * @doc ${api.docURL}` : ''}
+ * @url [ ${api.method.toUpperCase()} ] ${api.path}
+ */`;
+  return commentText;
 }

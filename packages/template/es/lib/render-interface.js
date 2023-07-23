@@ -1,49 +1,65 @@
+import merge from 'lodash/merge';
+import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
-import formatCode from '../lib/utils/prettier';
+import { uuid } from '@api-helper/core/lib/utils/util';
+import { createSchema } from '@api-helper/core/lib/helpers';
+import { checkIsInterface, isEmptyObject, postCode } from '../lib/utils/util';
 export function renderInterface(schema, api, options) {
-    var isExtraData = options.isExtraData, paramType = options.paramType, hasComment = options.hasComment;
-    var keyword = checkInterface(schema) ? 'export interface ' : 'export type ';
+    options = merge({
+        onlyBody: false,
+        prefix: 'export ',
+        paramType: 'request',
+        emptyBodyCode: 'any;',
+    }, options);
+    schema = cloneDeep(schema);
+    var sourceSchema = schema;
+    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
+    if (Array.isArray(schema)) {
+        schema = createSchema('object', {
+            id: uuid(),
+            params: schema,
+        });
+    }
+    var isInterface = checkIsInterface(schema);
+    var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
     var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
-    var commentCode = hasComment !== false ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
-    var interfaceName = onRenderInterfaceName(schema, api, {
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
+    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
         isExtraData: isExtraData,
         paramType: paramType,
         changeCase: changeCase
     });
-    // 前置处理
-    if (!schema || isEmptyObject(schema)) {
+    /**
+     * output ->  export interface interfaceName
+     *            export type Type =
+     */
+    var ki = ["".concat(keyword, " ").concat(interfaceName, " ").concat(!isInterface ? '=' : '')].filter(Boolean).join('\n');
+    // 前置处理，渲染数据为空，直接返回 export type xxx = any;
+    if ((Array.isArray(sourceSchema) && sourceSchema.length === 0) ||
+        !sourceSchema ||
+        isEmptyObject(sourceSchema)) {
         // 不兼容的数据，不显示类型
         if (isExtraData) {
             return '';
         }
-        return [
-            commentCode,
-            "".concat(keyword, " ").concat(interfaceName, " = any;\n")
-        ].filter(Boolean).join('\n');
+        return postCode({
+            ki: ki,
+            commentCode: commentCode,
+            code: emptyBodyCode
+        }, { onlyBody: onlyBody });
     }
     if (paramType === 'response') {
         schema.keyName = '';
     }
-    var code = renderInterfaceDeepObject(schema);
-    // 移除多余换行符
-    code = code.replace(/\n\n/gim, '\n');
-    // 开始组合
-    interfaceName = keyword + interfaceName;
-    if (schema.type !== 'object') {
-        interfaceName += ' = ';
-    }
-    var formatted = formatCode(interfaceName + code, {
-        parser: 'typescript'
-    });
-    return [
-        commentCode,
-        formatted
-    ].filter(Boolean).join('\n');
+    return postCode({
+        ki: ki,
+        commentCode: commentCode,
+        code: renderInterfaceDeepObject(schema)
+    }, { onlyBody: onlyBody });
 }
 export function renderInterfaceName(schema, api, options) {
-    var isInterface = checkInterface(schema);
-    var name = isInterface ? 'I' : '';
-    name += api.path;
+    var isInterface = checkIsInterface(schema);
+    var name = "".concat(isInterface ? 'I' : '').concat(api.path);
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
@@ -124,14 +140,4 @@ function renderInterfaceDeepObject(schema, memo) {
             }
     }
     return code;
-}
-export function checkInterface(schema) {
-    var _a;
-    var isType = !schema || (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' || isEmptyObject(schema);
-    var hasKey = (_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.some(function (s) { return s.keyName; });
-    return !isType && hasKey;
-}
-function isEmptyObject(schema) {
-    var _a;
-    return (schema === null || schema === void 0 ? void 0 : schema.type) === 'object' && ((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0;
 }

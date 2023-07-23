@@ -48,7 +48,7 @@ var __values = (this && this.__values) || function(o) {
 import { isHttp, randomId, mergeUrl, filterDesc, parserSchema, filterKeyName, processRequestSchema, processRequestSchemaPipeline, processResponseSchemaPipeline, } from '../utils/util';
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../../lib/constant';
 import { validateSchema } from '../utils/validator';
-import { createApi, createCategory, createDocument, createSchema, } from '../helpers';
+import { createApi, createCategory, createDocument, createSchema, transformType, } from '../helpers';
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -112,12 +112,13 @@ var ParserYapi = /** @class */ (function () {
                 return;
             }
             var tag = apiMap.tag;
+            var method = apiMap.method.toLowerCase();
             var api = createApi({
+                method: method,
                 id: _this.generateId(),
                 title: filterDesc(apiMap.title),
                 description: filterDesc(apiMap.markdown),
                 path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
-                method: apiMap.method,
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
             });
             api.label = api.title ? api.title : api.description ? api.description : '';
@@ -248,6 +249,7 @@ var ParserYapi = /** @class */ (function () {
                                     required: Number(p.required) === 1
                                 }
                             });
+                            scm.type = transformType(p.type, undefined, 'string');
                             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                             api.formDataKeyNameList.push(keyName);
                             requestKeyNameMemo.push(keyName);

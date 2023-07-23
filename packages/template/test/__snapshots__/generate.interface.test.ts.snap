@@ -1,11 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`生成 interface 测试 OpenAPI-2.0-source生成 interface 测试: OpenAPI-2.0-source生成 interface 测试 1`] = `
+"/**
+ * @description uploads an image【请求数据类型定义】
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
+ */
+export interface 安逗和黑子 {
+  code: number;
+  type: string;
+  message: string;
+}
+"
+`;
+
 exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "/**
  * @description Place an order for a pet【请求数据类型定义】
  * @url [ POST ] /v2/store/order
  */
-export interface IV2StoreOrderRequestByPost {
+export interface 安逗和黑子 {
   id: number;
   petId: number;
   quantity: number;
@@ -37,6 +50,84 @@ export interface IApiV3StoreOrderResponseByPost {
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
   complete?: boolean;
+}
+"
+`;
+
+exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `
+"export interface IV2StoreOrderRequestByPost {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete: boolean;
+}
+"
+`;
+
+exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - name属性测试 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据类型定义】
+ * @url [ POST ] /v2/store/order
+ */
+export interface 自定义名称 {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete: boolean;
+}
+"
+`;
+
+exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - onlyBody属性测试 1`] = `
+"interface RuleForm {
+  // 手机号
+  phone: string;
+  // 账户名
+  username: string;
+}
+"
+`;
+
+exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - prefix属性测试 1`] = `
+"/**
+ * @description Place an order for a pet【请求数据类型定义】
+ * @url [ POST ] /v2/store/order
+ */
+interface IV2StoreOrderRequestByPost {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete: boolean;
 }
 "
 `;

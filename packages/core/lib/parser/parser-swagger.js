@@ -184,7 +184,7 @@ var ParserSwagger = /** @class */ (function () {
                     var methodMapEntries = Object.entries(methodMap);
                     var _loop_1 = function (w) {
                         var e_5, _13;
-                        var method = methodMapEntries[w][0];
+                        var method = methodMapEntries[w][0].toLowerCase();
                         var apiMap = methodMapEntries[w][1];
                         // fix: basePath为/，导致//
                         var mPath = (0, util_1.mergeUrl)((0, util_1.isHttp)(apiDocument.basePath) ? '' : apiDocument.basePath, path);

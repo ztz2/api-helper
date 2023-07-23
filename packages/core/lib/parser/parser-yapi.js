@@ -114,12 +114,13 @@ var ParserYapi = /** @class */ (function () {
                 return;
             }
             var tag = apiMap.tag;
+            var method = apiMap.method.toLowerCase();
             var api = (0, helpers_1.createApi)({
+                method: method,
                 id: _this.generateId(),
                 title: (0, util_1.filterDesc)(apiMap.title),
                 description: (0, util_1.filterDesc)(apiMap.markdown),
                 path: (0, util_1.mergeUrl)((0, util_1.isHttp)(project.basePath) ? '' : project.basePath, apiMap.path),
-                method: apiMap.method,
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
             });
             api.label = api.title ? api.title : api.description ? api.description : '';
@@ -250,6 +251,7 @@ var ParserYapi = /** @class */ (function () {
                                     required: Number(p.required) === 1
                                 }
                             });
+                            scm.type = (0, helpers_1.transformType)(p.type, undefined, 'string');
                             scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                             api.formDataKeyNameList.push(keyName);
                             requestKeyNameMemo.push(keyName);

@@ -355,12 +355,12 @@ var pr = Object.defineProperty, pf = Object.getOwnPropertyDescriptor, fr = Objec
         U();
         function f(E) { return function (S, k, L) { var N = L && L.backwards; if (k === !1)
             return !1; var O = S.length, A = k; for (; A >= 0 && A < O;) {
-            var _ = S.charAt(A);
+            var _1 = S.charAt(A);
             if (E instanceof RegExp) {
-                if (!E.test(_))
+                if (!E.test(_1))
                     return A;
             }
-            else if (!E.includes(_))
+            else if (!E.includes(_1))
                 return A;
             N ? A-- : A++;
         } return A === -1 || A === O ? A : !1; }; }

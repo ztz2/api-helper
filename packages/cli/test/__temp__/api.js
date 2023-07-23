@@ -14,11 +14,7 @@ import request from './request';
  */
 export function v2PetPetIdUploadImageByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdUploadImageByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
@@ -35,10 +31,7 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  * @url [ POST ] /v2/pet
  */
 export function v2PetByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
 }
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
@@ -53,10 +46,7 @@ v2PetByPost.requestConfig = {
  * @url [ PUT ] /v2/pet
  */
 export function v2PetByPut(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
 }
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
@@ -72,11 +62,7 @@ v2PetByPut.requestConfig = {
  */
 export function v2PetFindByStatusByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByStatusByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
     ...args
   );
 }
@@ -94,11 +80,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export function v2PetFindByTagsByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetFindByTagsByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
     ...args
   );
 }
@@ -116,11 +98,7 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export function v2PetPetIdByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
     ...args
   );
 }
@@ -138,11 +116,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export function v2PetPetIdByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
     ...args
   );
 }
@@ -160,11 +134,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export function v2PetPetIdByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2PetPetIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
     ...args
   );
 }
@@ -182,11 +152,7 @@ v2PetPetIdByDelete.requestConfig = {
  */
 export function v2StoreOrderByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
     ...args
   );
 }
@@ -204,11 +170,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export function v2StoreOrderOrderIdByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
@@ -226,11 +188,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export function v2StoreOrderOrderIdByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
@@ -248,11 +206,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  */
 export function v2StoreInventoryByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
@@ -270,11 +224,7 @@ v2StoreInventoryByGet.requestConfig = {
  */
 export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithArrayByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
     ...args
   );
 }
@@ -292,11 +242,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  */
 export function v2UserCreateWithListByPost(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserCreateWithListByPost.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
     ...args
   );
 }
@@ -314,11 +260,7 @@ v2UserCreateWithListByPost.requestConfig = {
  */
 export function v2UserUsernameByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
     ...args
   );
 }
@@ -336,11 +278,7 @@ v2UserUsernameByGet.requestConfig = {
  */
 export function v2UserUsernameByPut(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByPut.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
     ...args
   );
 }
@@ -358,11 +296,7 @@ v2UserUsernameByPut.requestConfig = {
  */
 export function v2UserUsernameByDelete(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserUsernameByDelete.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
     ...args
   );
 }
@@ -380,11 +314,7 @@ v2UserUsernameByDelete.requestConfig = {
  */
 export function v2UserLoginByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLoginByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
     ...args
   );
 }
@@ -402,11 +332,7 @@ v2UserLoginByGet.requestConfig = {
  */
 export function v2UserLogoutByGet(data, extraData, ...args) {
   return request(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2UserLogoutByGet.requestConfig
-    ),
+    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
     ...args
   );
 }

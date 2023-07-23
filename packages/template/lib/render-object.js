@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -14,33 +33,57 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderObjectName = exports.renderObjectComment = exports.renderObject = void 0;
+exports.renderObjectName = exports.renderComment = exports.renderObject = void 0;
+var merge_1 = __importDefault(require("lodash/merge"));
+var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
+var changeCase = __importStar(require("change-case"));
 var change_case_1 = require("change-case");
 var util_1 = require("@api-helper/core/lib/utils/util");
-var prettier_1 = __importDefault(require("../lib/utils/prettier"));
+var util_2 = require("../lib/utils/util");
 function renderObject(schema, api, options) {
-    var _a;
-    schema = (0, util_1.filterSchemaPrimitiveValue)(schema);
-    if (!schema) {
-        return '';
+    var _a, _b, _c;
+    options = (0, merge_1.default)({
+        prefix: 'export ',
+        onlyBody: false,
+        paramType: 'request',
+        emptyBodyCode: '{}',
+    }, options);
+    schema = (0, cloneDeep_1.default)(schema);
+    var schemaList = (0, util_1.filterSchemaPrimitiveValue)(Array.isArray(schema) ? schema : (_b = (_a = schema) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : []);
+    var prefix = options.prefix, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _d = options.paramType, paramType = _d === void 0 ? 'request' : _d;
+    // @ts-ignore
+    var onlyBody = (_c = options === null || options === void 0 ? void 0 : options.onlyMap) !== null && _c !== void 0 ? _c : options.onlyBody;
+    var keyword = "".concat(prefix, " const");
+    var onRenderObjectName = (options === null || options === void 0 ? void 0 : options.onRenderObjectName) ? options.onRenderObjectName : renderObjectName;
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderObjectComment(api, paramType) : '';
+    var objectName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderObjectName(api, {
+        paramType: paramType,
+        changeCase: changeCase
+    });
+    /**
+     * output ->  export class
+     */
+    var ki = ["".concat(keyword, " ").concat(objectName, " = ")].filter(Boolean).join('\n');
+    var bodyCode;
+    if (!schema || (Array.isArray(schema) && schema.length === 0)) {
+        bodyCode = emptyBodyCode;
     }
-    if (!Array.isArray(schema)) {
-        schema = schema.params;
+    else {
+        bodyCode = renderObjectDeepObject(schemaList);
     }
-    var code = renderObjectDeepObject(schema);
-    var prefixCode = "export const ".concat(renderObjectName(api, options), " = ");
-    var formatted = (0, prettier_1.default)(prefixCode + code);
-    if ((options === null || options === void 0 ? void 0 : options.onlyMap) === true) {
-        formatted = formatted.replace(new RegExp('^' + prefixCode), '').trim();
-        if (formatted.endsWith(';')) {
-            formatted = formatted.slice(0, formatted.length - 1);
+    var code = (0, util_2.postCode)({
+        ki: ki,
+        commentCode: commentCode,
+        code: bodyCode
+    }, { onlyBody: onlyBody });
+    // 移除最后的分号。
+    if (onlyBody) {
+        code = code.trim();
+        if (code.endsWith(';')) {
+            code = code.slice(0, code.length - 1);
         }
     }
-    // 开始空格键处理
-    if ((_a = options.startSpace) === null || _a === void 0 ? void 0 : _a.length) {
-        formatted = formatted.split('\n').map(function (line, index) { return index === 0 ? line : "".concat(options.startSpace).concat(line); }).join('\n');
-    }
-    return formatted;
+    return code;
 }
 exports.renderObject = renderObject;
 function renderObjectDeepObject(schemaList, parentSchema, memo) {
@@ -60,7 +103,7 @@ function renderObjectDeepObject(schemaList, parentSchema, memo) {
             var schema = schemaList_1_1.value;
             var keyName = (_b = schema.keyName) !== null && _b !== void 0 ? _b : '';
             var type = schema.type;
-            var temporaryCode = [renderObjectComment(schema)];
+            var temporaryCode = [renderComment(schema)];
             var v = "''";
             switch (type) {
                 // 数组类型 | 对象类型
@@ -98,20 +141,20 @@ function renderObjectDeepObject(schemaList, parentSchema, memo) {
     var code = prefix + codeWrap.join(',\n') + postfix;
     if (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.keyName) {
         code = [
-            renderObjectComment(parentSchema),
+            renderComment(parentSchema),
             "".concat(parentSchema.keyName, ": ").concat(code)
         ].join('\n');
     }
     return code;
 }
-function renderObjectComment(schema) {
+function renderComment(schema) {
     var type = schema.type;
     if ('enum' in schema && schema.enum.length > 0) {
         type = schema.enum.map(function (item) { return "'".concat(item, "'"); }).join(' | ');
     }
     return "// { ".concat(type, " }").concat(schema.label ? " ".concat(schema.label) : '');
 }
-exports.renderObjectComment = renderObjectComment;
+exports.renderComment = renderComment;
 function renderObjectName(api, options) {
     var name = api.path;
     if (options.paramType) {
@@ -121,3 +164,8 @@ function renderObjectName(api, options) {
     return (0, change_case_1.camelCase)(name);
 }
 exports.renderObjectName = renderObjectName;
+function renderObjectComment(api, paramType, isExtraData) {
+    if (isExtraData === void 0) { isExtraData = false; }
+    var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u5B9E\u4F53\u5BF9\u8C61\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
+    return commentText;
+}
