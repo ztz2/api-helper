@@ -166,6 +166,7 @@ export const swagger20 = {
       },
       title: 'TokenRequestVO',
       description: '登录请求参数',
+      required: ['phone', 'username'],
     },
     TokenResponseVO: {
       type: 'object',
