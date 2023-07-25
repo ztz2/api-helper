@@ -1,6 +1,7 @@
+import { Template } from '@api-helper/template';
+
 import { COMMON_HEAD } from '../common';
 import { DEFAULT_SELECT_API_TPL_ID } from '@/constants';
-import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: '请求接口模板（Typescript）',

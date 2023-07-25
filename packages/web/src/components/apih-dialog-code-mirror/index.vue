@@ -52,8 +52,7 @@ import {
   defineEmits,
   defineExpose,
 } from 'vue';
-
-import formatCode from '@/utils/format-code';
+import { formatCodeServer } from '@api-helper/template';
 import { DialogOpenConfig } from '../apih-dialog/interface';
 
 const emit = defineEmits(['update:value']);
@@ -133,7 +132,7 @@ async function format(v: string): Promise<string> {
   if (!v || v.trim() === '' || !props.formatCodeExtension) {
     return v;
   }
-  return await formatCode({
+  return await formatCodeServer({
     sourceCode: v,
     formatCodeExtension: props.formatCodeExtension,
   }) as string;

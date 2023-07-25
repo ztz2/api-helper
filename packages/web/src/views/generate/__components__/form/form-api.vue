@@ -84,12 +84,12 @@ import {
 } from 'vue';
 import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
+import { Template } from '@api-helper/template';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
 import message from '@/utils/message';
 import { randomChar, modalConfirm } from '@/utils';
 import { useProject, useApiTemplate } from '@/store';
-import { Template } from '@/store/template/interface';
 import genEmptyApiTemplate from '@/constants/template/api/empty';
 import DialogAPITemplate from '../dialog/dialog-api-template.vue';
 

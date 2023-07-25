@@ -1,3 +1,4 @@
+import os from 'os';
 import { OpenAPI } from 'openapi-types';
 
 export const validSwagger = function (openapiDocument: OpenAPI.Document) {
@@ -38,4 +39,15 @@ export const generateTitle = function (requestParams: any = {}, p: any = {}) {
 export function processDataType(type: string | string[]) {
   type = Array.isArray(type) ? type : [type];
   return type[0];
+}
+
+function getLocalIPV4List(): Array<string> {
+  const networkInterfaces = os.networkInterfaces() ?? {};
+  const set = new Set();
+  for (const [, list] of Object.entries(networkInterfaces)) {
+    for (const itm of list) {
+      set.add(itm.address);
+    }
+  }
+  return Array.from(set) as Array<string>;
 }

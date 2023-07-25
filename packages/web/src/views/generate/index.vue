@@ -70,6 +70,19 @@
               >
                 prettier配置
               </a-button>
+              <a-button
+                type="primary"
+                :disabled="selectApiList.length === 0"
+                @click="dialogExportFileRef.open({
+                  type: 'EDIT',
+                  title: '文件模块导出',
+                  formComponentProps: {
+                    apiList: selectApiList
+                  }
+                })"
+              >
+                文件模块导出
+              </a-button>
             </a-space>
           </div>
           <div class="generate-content" style="position: relative;z-index: 1;">
@@ -144,6 +157,7 @@
   <DialogModel ref="dialogModelRef" />
   <DialogImport ref="dialogImportRef" />
   <DialogPrettier ref="dialogPrettierRef" />
+  <DialogExportFile ref="dialogExportFileRef" />
 </template>
 
 <script lang="ts">
@@ -164,6 +178,7 @@ import { nanoid } from 'nanoid';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { Message } from '@arco-design/web-vue';
+import { Template } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { createDocument } from '@api-helper/core/lib/helpers';
 
@@ -181,7 +196,6 @@ import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
 import { modalConfirm } from '@/utils';
 import ApiCode from './__components__/api-code.vue';
-import { Template } from '@/store/template/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
 import { Project } from '@/store/project/interface';
 
@@ -189,6 +203,7 @@ import DialogAPI from './__components__/dialog/dialog-api.vue';
 import DialogModel from './__components__/dialog/dialog-model.vue';
 import DialogImport from './__components__/dialog/dialog-import.vue';
 import DialogPrettier from './__components__/dialog/dialog-prettier.vue';
+import DialogExportFile from './__components__/dialog/dialog-export-file.vue';
 
 const route = useRoute();
 
@@ -204,6 +219,7 @@ const dialogAPIRef = ref();
 const dialogModelRef = ref();
 const dialogImportRef = ref();
 const dialogPrettierRef = ref();
+const dialogExportFileRef = ref();
 const isEmpty = computed(() => !project.value);
 
 const project = computed<Project>(() => {

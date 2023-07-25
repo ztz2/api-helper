@@ -27,3 +27,18 @@ export function isEmptyObject(schema) {
     var _a;
     return (schema === null || schema === void 0 ? void 0 : schema.type) === 'object' && ((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0;
 }
+export function uuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        // eslint-disable-next-line no-bitwise
+        var r = (Math.random() * 16) | 0;
+        // eslint-disable-next-line no-bitwise
+        var v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+export function randomChar(size) {
+    if (size === void 0) { size = 4; }
+    var str = uuid();
+    size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size), 10);
+    return str.slice(str.length - size);
+}

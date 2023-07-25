@@ -139,6 +139,7 @@ import {
 } from 'vue';
 import { get, cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
+import { Template } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
@@ -150,7 +151,6 @@ import { FormModel } from './interface';
 import { treeForEach } from '@/utils/tree';
 import { randomChar, modalConfirm } from '@/utils';
 import { Project } from '@/store/project/interface';
-import { Template } from '@/store/template/interface';
 import { useModelTemplate, useProject } from '@/store';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 import genEmptyModelTemplate from '@/constants/template/model/empty';

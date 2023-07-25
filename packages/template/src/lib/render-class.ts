@@ -4,8 +4,8 @@ import * as _changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
-import { ChangeCase } from '@/lib/types';
 import { postCode } from '@/lib/utils/util';
+import { ChangeCase } from '@/lib/interface';
 import { renderComment } from '@/lib/render-object';
 
 export function renderClass(

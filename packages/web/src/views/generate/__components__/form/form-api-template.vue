@@ -112,12 +112,12 @@ import {
   defineExpose,
   onBeforeUnmount,
 } from 'vue';
+import { Template } from '@api-helper/template';
+import { formatCodeServer } from '@api-helper/template';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
 import { useProject } from '@/store';
 import useForm from '@/hooks/use-form';
-import formatCode from '@/utils/format-code';
-import { Template } from '@/store/template/interface';
 
 type FormModelType = Template;
 
@@ -182,7 +182,7 @@ watch(() => formModel.value.content, (val) => {
         templateContent.value = v;
         return;
       }
-      const res = await formatCode({
+      const res = await formatCodeServer({
         sourceCode: v,
         formatCodeExtension: formModel.value.formatCodeExtension,
       });

@@ -1,3 +1,4 @@
+import { merge } from 'lodash';
 import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
 
 import {
@@ -24,6 +25,10 @@ export class Project {
   dataKey = '';
 
   /** 以下属性是基于项目级别的通用配置项 - 开始 * */
+  // 选择的文件模块ID
+  exportFileId = '';
+  // 文件模块导出路径
+  exportFilePath = '';
   // API选择的模版ID
   apiTplId = DEFAULT_SELECT_API_TPL_ID;
   // 模型选择的模版ID
@@ -43,9 +48,12 @@ export class Project {
   // prettier配置对象
   prettierrcOptions = new PrettierrcOptions();
   /** 以下属性是基于项目级别的通用配置项 - 结束 * */
-  constructor(id?: string) {
+  constructor(id?: string | Partial<Project>) {
     if (typeof id === 'string') {
       this.id = id;
+    }
+    if (Object.prototype.toString.call(id) === '[object Object]') {
+      merge(this, id);
     }
   }
 }

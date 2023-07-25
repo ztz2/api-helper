@@ -42,14 +42,16 @@ import {
   defineEmits,
   defineExpose,
 } from 'vue';
+import {
+  renderTemplate,
+  formatCodeServer,
+} from '@api-helper/template';
 import { omit } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
+import { Template } from '@api-helper/template';
 
-import formatCode from '@/utils/format-code';
 import Form from '../form/form-model-template';
-import renderTemplate from '@/utils/render-template';
-import { Template } from '@/store/template/interface';
 import { useProject, useModelTemplate } from '@/store';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
@@ -122,7 +124,7 @@ function handleSave() {
   dialogRef.value.execAsyncTask(async () => {
     const data = await dialogRef.value.getFormRef().validate();
     loadingSave.value = true;
-    data.content = await formatCode({
+    data.content = await formatCodeServer({
       sourceCode: data.content,
       formatCodeExtension: '.js',
     });

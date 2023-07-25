@@ -68,11 +68,11 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import { cloneDeep } from 'lodash';
+import { formatCodeServer } from '@api-helper/template';
 import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
 
 import { checkType } from '@/utils';
 import { useProject } from '@/store';
-import formatCode from '@/utils/format-code';
 import { Project } from '@/store/project/interface';
 
 const emit = defineEmits(['success']);
@@ -119,7 +119,7 @@ watch(() => formModel.value.prettierrcOptions, (val) => {
         return;
       }
       loadingPreview.value = true;
-      const res = await formatCode({
+      const res = await formatCodeServer({
         sourceCode: v,
         formatCodeExtension: '.json',
       });
@@ -157,7 +157,7 @@ async function formatPrettierrcOptions(val: object | string) {
   let result = '';
   loading.value = true;
   try {
-    result = await formatCode({
+    result = await formatCodeServer({
       sourceCode: val,
       // @ts-ignore
       formatCodeExtension: '.json',

@@ -1,5 +1,6 @@
+import { Template } from '@api-helper/template';
+
 import { COMMON_HEAD } from './common';
-import { Template } from '@/store/template/interface';
 
 export default function genEmptyApiTemplate() {
   return new Template({

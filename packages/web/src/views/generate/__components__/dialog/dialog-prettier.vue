@@ -18,11 +18,11 @@ import {
   defineExpose,
 } from 'vue';
 import { merge, cloneDeep } from 'lodash';
+import { Template } from '@api-helper/template';
 
 import { useProject } from '@/store';
 import message from '@/utils/message';
 import Form from '../form/form-prettier.vue';
-import { Template } from '@/store/template/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
 const { currentProject } = useProject();

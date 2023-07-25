@@ -74,3 +74,16 @@ a{
     transform: translateX(-50%, -100%);
   }
 }
+
+.hide-label{
+  .arco-form-item-label-col{
+    display: none;
+  }
+}
+
+.box-sizing{
+  box-sizing: border-box;
+}
+.overflow{
+  overflow: auto;
+}

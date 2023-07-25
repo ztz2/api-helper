@@ -1,5 +1,5 @@
+import { Template } from '@api-helper/template';
 import { COMMON_HEAD } from '../common';
-import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: 'Ant Design / Table 表格',

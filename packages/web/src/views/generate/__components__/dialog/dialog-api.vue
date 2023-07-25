@@ -37,13 +37,15 @@ import {
   computed,
   defineExpose,
 } from 'vue';
+import {
+  renderTemplate,
+} from '@api-helper/template';
 import { Message } from '@arco-design/web-vue';
+import { Template } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
 import Form from '../form/form-api.vue';
 import { useProject, useApiTemplate } from '@/store';
-import renderTemplate from '@/utils/render-template';
-import { Template } from '@/store/template/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
 type OpenDataType = {

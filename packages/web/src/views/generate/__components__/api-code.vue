@@ -18,8 +18,8 @@ import {
 } from 'vue';
 import { APIHelper } from '@api-helper/core';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
+import { renderTemplate } from '@api-helper/template';
 
-import renderTemplate from '@/utils/render-template';
 import { useProject, useApiTemplate, useModelTemplate } from '@/store';
 
 const projectStore = useProject();

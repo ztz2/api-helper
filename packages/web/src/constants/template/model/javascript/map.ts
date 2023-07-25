@@ -1,6 +1,6 @@
+import { Template } from '@api-helper/template';
 import { COMMON_HEAD } from '../common';
 import { DEFAULT_SELECT_MODEL_TPL_ID } from '@/constants';
-import { Template } from '@/store/template/interface';
 
 export default new Template({
   label: 'Javascript / 对象',

@@ -10,11 +10,11 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import merge from 'lodash/merge';
+import _changeCase from 'change-case';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
-import _changeCase from "change-case";
 export function renderObject(schema, api, options) {
     var _a, _b, _c;
     options = merge({

@@ -1,13 +1,14 @@
+import { Template } from '@api-helper/template';
 import { useApiTemplate, useModelTemplate } from '@/store';
 import apiTemplateList from '@/constants/template/api';
 import modelTemplateList from '@/constants/template/model';
-import { Template, TemplateCategory } from '@/store/template/interface';
+import { TemplateCategory } from '@/store/template/interface';
 
 function templateClassifyMap(source: TemplateCategory[]): { [id: string]: Template } {
   source = source ?? [];
   const result: { [id: string]: Template } = {};
   for (const s of source) {
-    for (const t of s.options) {
+    for (const t of s.options) { // @ts-ignore
       result[t.value] = t;
     }
   }

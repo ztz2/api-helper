@@ -168,6 +168,8 @@ import {
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
+import { Template } from '@api-helper/template';
+import { formatCodeServer } from '@api-helper/template';
 import { SelectOptionGroup } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
@@ -178,10 +180,8 @@ import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { DOCUMENT } from '@/constants/mock';
 import { Project } from '@/store/project/interface';
-import { Template } from '@/store/template/interface';
 import { FormModel } from '../form-model/interface';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
-import formatCode from '@/utils/format-code';
 
 type FormModelType = Template;
 
@@ -256,7 +256,7 @@ onMounted(() => {
           return;
         }
         loadingPreview.value = true;
-        const res = await formatCode({
+        const res = await formatCodeServer({
           sourceCode: v,
           formatCodeExtension: '.js',
         });

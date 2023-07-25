@@ -15,10 +15,3 @@ export function getDocs(data: Project): Promise<Array<APIHelper.Document>> {
     data,
   });
 }
-
-export function fetchFormatCode(data: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
-  return request<any, string>('/app/formatCode', {
-    method: 'post',
-    data,
-  });
-}

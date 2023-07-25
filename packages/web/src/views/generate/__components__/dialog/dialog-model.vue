@@ -38,15 +38,15 @@ import {
 } from 'vue';
 import { merge, omit } from 'lodash';
 import { Message } from '@arco-design/web-vue';
+import { Template } from '@api-helper/template';
+import { renderTemplate } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
 import message from '@/utils/message';
 import Form from '../form/form-model/index.vue';
-import renderTemplate from '@/utils/render-template';
 import { useProject, useModelTemplate } from '@/store';
 import { FormModel } from '../form/form-model/interface';
 import { DialogOpenConfig } from '@/components/apih-dialog/interface';
-import { Template } from '@/store/template/interface';
 
 type OpenDataType = {
   categoryList: APIHelper.CategoryList

@@ -1,9 +1,9 @@
-import { forOwn, pick } from 'lodash';
+import { pick } from 'lodash';
 import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
+import { Template } from '@api-helper/template';
 
 import {
-  Template,
   TemplateCategory,
 } from '@/store/template/interface';
 import message from '@/utils/message';
@@ -26,9 +26,9 @@ const useApiTemplate = defineStore('api-template', {
       });
       return templateMap;
     },
-    customTemplateList(state): Template[] {
+    customTemplateList(state): Array<Template> {
       const row = state.templateList.find((item) => item.id === API_CUSTOM_TEMPLATE_ID);
-      return row?.options ?? [];
+      return (row?.options ?? []) as Array<Template>;
     },
     defaultApiTemplate(state): Template {
       let result;

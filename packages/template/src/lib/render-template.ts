@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
-import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { changeCase as _changeCase } from '@api-helper/template';
 import { checkType, getErrorMessage } from '@api-helper/core/lib/utils/util';
 
+import {
+  Template,
+  DocumentConfig,
+} from './interface';
 import _apih from './render-template-apih';
-import formatCode from '@/utils/format-code';
-import { Project } from '@/store/project/interface';
-import { Template } from '@/store/template/interface';
+import formatCodeServer from './utils/format-code-server';
 
 export type RenderApiTemplateParams = {
   apiList: Array<APIHelper.API>
@@ -19,17 +19,17 @@ export type RenderModelTemplateParams = {
   responseDataSchemaList: APIHelper.SchemaList
 }
 
-export default async function _renderTemplate(
+export default async function renderTemplate(
   // 模板对象
   templateMap: Template,
   // 渲染数据
   params: RenderApiTemplateParams | RenderModelTemplateParams,
   // 渲染配置
-  config?: Project,
+  config?: DocumentConfig,
 ): Promise<Array<APIHelper.TemplateContent>> {
   templateMap = _.cloneDeep(templateMap);
   params = _.cloneDeep(params);
-  config = _.cloneDeep(config ?? {} as Project);
+  config = _.cloneDeep(config ?? {} as DocumentConfig);
 
   let result: Array<APIHelper.TemplateContent> = [];
   const { formatCodeExtension } = templateMap;
@@ -37,7 +37,6 @@ export default async function _renderTemplate(
   try {
     const lodash = _;
     const apih = _apih;
-    const changeCase = _changeCase;
     // eslint-disable-next-line prefer-destructuring
     const artTemplate = apih.template.artTemplate;
     const exe = { renderTemplate: null };
@@ -95,7 +94,7 @@ export default async function _renderTemplate(
       return result;
     }
     // 美化代码
-    const formattedCodeList = (await formatCode(filterCodeList.map((c) => ({
+    const formattedCodeList = (await formatCodeServer(filterCodeList.map((c) => ({
       sourceCode: c,
       formatCodeExtension,
       prettierrcOptions: config?.prettierrcOptions,
@@ -109,7 +108,6 @@ export default async function _renderTemplate(
       title: '异常模版',
       content: errorText,
     }];
-    Message.error(errorText);
   }
   return result;
 }

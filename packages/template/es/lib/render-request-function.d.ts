@@ -1,4 +1,4 @@
-import { ChangeCase } from '../lib/types';
+import { ChangeCase } from '../lib/interface';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { renderInterfaceName } from '../lib/render-interface';
 export declare function renderRequestFunction(api: APIHelper.API, options?: {

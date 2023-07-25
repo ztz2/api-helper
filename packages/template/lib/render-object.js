@@ -35,11 +35,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderObjectName = exports.renderComment = exports.renderObject = void 0;
 var merge_1 = __importDefault(require("lodash/merge"));
+var change_case_1 = __importDefault(require("change-case"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var changeCase = __importStar(require("change-case"));
 var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
-var change_case_1 = __importDefault(require("change-case"));
 function renderObject(schema, api, options) {
     var _a, _b, _c;
     options = (0, merge_1.default)({
