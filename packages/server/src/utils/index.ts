@@ -1,11 +1,8 @@
 import { mergeUrl } from '@api-helper/core/lib/utils/util';
 import { toUnixPath } from '@api-helper/cli/lib/tools/util';
-import { FileDirectory } from '@api-helper/template';
+import { FileDirectoryConfig } from '../dto/file-directory-config';
 
-type TreeData = {
-  label: string;
-  children: TreeData[];
-} & FileDirectory;
+type TreeData = FileDirectoryConfig & Recordable;
 export function getTreePath(
   treeData: Array<TreeData>,
   basePath = '',
