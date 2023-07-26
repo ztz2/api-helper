@@ -11,7 +11,7 @@
         <a-row :gutter="gutter">
           <a-form-item
             label="文件模块导出路径"
-            tooltip="当不能对该路径进行读写时候，会将文件模块打一个zip压缩包，并自动下载该压缩包"
+            tooltip="文件模块生成之后，会输出到该目录下，注意，在文件输出之前，会清除该目录下所有文件。当无法访问该文件目录时候，会将文件模块打一个zip压缩包，并自动下载该压缩包"
             :validate-trigger="['change', 'input']"
           >
             <a-input

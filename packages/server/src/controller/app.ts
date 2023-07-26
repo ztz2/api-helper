@@ -1,10 +1,6 @@
 import to from 'await-to-js';
 import { Response } from 'express';
-import {
-  stat,
-  remove,
-  outputFile,
-} from 'fs-extra';
+import { stat, outputFile } from 'fs-extra';
 import { formatCode } from '@api-helper/cli/lib';
 import { renderTemplate } from '@api-helper/template';
 import { mergeUrl } from '@api-helper/core/lib/utils/util';

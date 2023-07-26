@@ -54,12 +54,14 @@ async function handleExport() {
     try {
       res = typeof res === 'string' ? JSON.parse(res) : res;
       if (res?.data?.isOutputFile) {
+        close();
         return message.success({
           duration: 5000,
           content: `文件模块已创建到：${data.fileDirectoryExportPath}中`,
         });
       }
     } catch {}
+    close();
     message.success({
       duration: 3000,
       content: '文件模块压缩包已下载',
