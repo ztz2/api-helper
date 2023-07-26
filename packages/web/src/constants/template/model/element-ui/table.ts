@@ -2,7 +2,7 @@ import { Template } from '@api-helper/template';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Element UI Plus / Table 表格',
+  label: 'Element UI / Table 表格',
   value: 'element-ui_table_d6940207e7e1f35e',
   formatCodeExtension: '.vue',
   builtIn: true,
@@ -24,7 +24,7 @@ export default new Template({
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI Plus / Table 表格模版（请求数据）',
+    title: 'Element UI / Table 表格模版（请求数据）',
     content: tpl1,
   });
 
@@ -36,7 +36,7 @@ export default new Template({
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
   }
   result.push({
-    title: 'Element UI Plus / Table 表格模版（响应数据）',
+    title: 'Element UI / Table 表格模版（响应数据）',
     content: tpl2,
   });
 
