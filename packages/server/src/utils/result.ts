@@ -1,5 +1,5 @@
 export class Result<T> {
-  data: T|null = null;
+  data: T | null = null;
   code = 200;
   message = 'ok';
   static success<T>(data: T) {

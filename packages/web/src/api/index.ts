@@ -17,7 +17,10 @@ export function getDocs(data: Project): Promise<Array<APIHelper.Document>> {
 
 export function exportFileApi(data: Project): Promise<Array<APIHelper.Document>> {
   return request<unknown, Array<APIHelper.Document>>('/app/export-file', {
-    method: 'post',
     data,
+    method: 'post',
+    responseType: 'blob',
+    // @ts-ignore
+    download: true,
   });
 }

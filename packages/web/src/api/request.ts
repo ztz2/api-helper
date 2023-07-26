@@ -8,8 +8,19 @@ const request = axios.create({
 });
 
 request.interceptors.response.use(
-  (response) => {
-    const { data } = response;
+  async (response) => {
+    const { data, config, headers } = response;
+    if (data instanceof Blob) {
+      let blob = data;
+      try {
+        blob = JSON.parse(await data.text());
+      } catch {}
+      if ('download' in config) {
+        downloadBlob(blob, headers['content-disposition'] as string);
+      }
+      return blob;
+    }
+
     if (data.code === 200 || data.code === 1000) {
       return data.data;
     }
@@ -21,5 +32,22 @@ request.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+function downloadBlob(blob: Blob, filename: string) {
+  debugger;
+  if (!filename || !blob) {
+    return;
+  }
+  if (filename.includes('attachment;')) {
+    const attachment = /attachment;.*filename=(.*)($|;)/.exec(filename)?.[1];
+    if (attachment) {
+      filename = attachment;
+    }
+  }
+  const link = document.createElement('a');
+  link.download = decodeURIComponent(filename);
+  link.href = URL.createObjectURL(blob);
+  link.click();
+}
 
 export default request;
