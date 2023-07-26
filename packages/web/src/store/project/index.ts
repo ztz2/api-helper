@@ -40,6 +40,12 @@ const useProject = defineStore('project', {
       const p = state.data.find((itm) => itm.id === id);
       return p ?? new Project();
     },
+    dataKey(state): string {
+      const route = useRoute();
+      const { id } = route.query;
+      const p = state.data.find((itm) => itm.id === id);
+      return p?.dataKey ?? '';
+    },
   },
 });
 

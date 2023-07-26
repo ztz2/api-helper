@@ -50,6 +50,7 @@ export declare class ExportFile {
     builtIn: boolean;
     formatCodeExtension: "" | ".ts" | ".tsx" | ".js" | ".jsx" | ".vue" | ".html" | ".scss" | ".less" | ".css" | ".json" | ".java";
     fileDirectory: FileDirectory[];
+    exportFilePath: string;
     constructor(options?: Partial<FileDirectory>);
 }
 export declare function createTemplate(id?: string | Partial<DocumentConfig>): DocumentConfig;

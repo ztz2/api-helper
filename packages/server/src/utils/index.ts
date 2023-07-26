@@ -41,13 +41,25 @@ export function processDataType(type: string | string[]) {
   return type[0];
 }
 
-function getLocalIPV4List(): Array<string> {
-  const networkInterfaces = os.networkInterfaces() ?? {};
-  const set = new Set();
-  for (const [, list] of Object.entries(networkInterfaces)) {
-    for (const itm of list) {
-      set.add(itm.address);
+type TreeData = {
+  label: string;
+  children: TreeData[];
+};
+export function getTreePath(
+  treeData: Array<TreeData>,
+): Array<[string, TreeData]> {
+  const result: Array<[string, TreeData]> = [];
+  function dfs(treeList: Array<TreeData>, pathMemo = []) {
+    for (let i = 0; i < treeList.length; i++) {
+      const item = treeList[i];
+      pathMemo.push(item.label);
+      if (Array.isArray(item.children) && item.children.length > 0) {
+        dfs(item.children, pathMemo);
+        continue;
+      }
+      result.push([pathMemo.join('/'), item]);
     }
   }
-  return Array.from(set) as Array<string>;
+  dfs(treeData);
+  return result;
 }

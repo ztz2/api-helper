@@ -18,6 +18,8 @@ type UseFormConfig<T> = {
 
   // validate函数执行，校验失败提示消息，null或者false不提示
   validateFailMsg?: string | null | undefined | false;
+
+  getFormModel?: (data: T) => Promise<T>,
 };
 
 export default function useForm<T extends object>(
@@ -47,8 +49,12 @@ export default function useForm<T extends object>(
     return formModel;
   }
 
-  function getFormModel() {
-    return cloneDeep(formModel.value);
+  async function getFormModel() {
+    const data = cloneDeep(formModel.value);
+    if (typeof currentConfig.getFormModel === 'function') {
+      return await currentConfig.getFormModel(data);
+    }
+    return data;
   }
 
   function setFormModel(value: T, original = false) {

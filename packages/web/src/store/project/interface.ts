@@ -11,7 +11,7 @@ export class Project {
   // 项目名称
   title = '';
   // 文档地址
-  url = 'http://localhost:3210/app/swagger/test';
+  url = 'http://localhost:3210/app/swagger/mock';
   // 文档类型，默认可以解析 swagger
   type = 'swagger';
   // 访问文档可能需要认证信息，http auth验证方式

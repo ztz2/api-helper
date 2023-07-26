@@ -222,7 +222,7 @@ export class FormDataItem<T> {
 
 export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyName = true): APIHelper.Schema | null {
   if (!schema || !path) {
-    return null;
+    return schema;
   }
   const pathList = path.replace(/\[/gim, '.').replace(/\]/gim, '').split('.');
   if (pathList.length === 0) {

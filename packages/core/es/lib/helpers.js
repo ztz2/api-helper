@@ -312,7 +312,7 @@ export function getSchema(schema, path, clearKeyName) {
     if (path === void 0) { path = ''; }
     if (clearKeyName === void 0) { clearKeyName = true; }
     if (!schema || !path) {
-        return null;
+        return schema;
     }
     var pathList = path.replace(/\[/gim, '.').replace(/\]/gim, '').split('.');
     if (pathList.length === 0) {

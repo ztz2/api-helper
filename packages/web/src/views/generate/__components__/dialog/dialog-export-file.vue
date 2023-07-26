@@ -18,15 +18,14 @@ import {
   ref,
   defineExpose,
 } from 'vue';
+import { Template } from '@api-helper/template';
 
-import { renderTemplate, Template } from '@api-helper/template';
-import { omit } from 'lodash';
-import { APIHelper } from '@api-helper/core/es';
-import { Message } from '@arco-design/web-vue';
 import { useProject } from '@/store';
-import Form from '../form/form-export-file';
-import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 import message from '@/utils/message';
+import { exportFileApi } from '@/api';
+import Form from '../form/form-export-file';
+
+import { DialogOpenConfig } from '@/components/apih-dialog/interface';
 
 const { currentProject } = useProject();
 
@@ -43,29 +42,31 @@ function open(config: DialogOpenConfig) {
 }
 
 async function handleExport() {
-  // dialogRef.value.execAsyncTask(async () => {
-  //   const data = await dialogRef.value.getFormRef().getFormModel();
-  //   if (!template.content) {
-  //     message.warn('该模板没有内容，请重新选择模板');
-  //     return [''];
-  //   }
-  //   loading.value = true;
-  //   return await renderTemplate(template, {
-  //     api: data.api,
-  //     requestDataSchemaList: data.requestDataSchemaList,
-  //     responseDataSchemaList: data.responseDataSchemaList,
-  //   }, {
-  //     ...currentProject,
-  //     ...omit(data, [
-  //       'api',
-  //       'apiId',
-  //       'requestDataSchemaList',
-  //       'requestDataSchemaIdList',
-  //       'responseDataSchemaList',
-  //       'responseDataSchemaIdList',
-  //     ]),
-  //   });
-  // }).then((res: unknown) => {
+  dialogRef.value.execAsyncTask(async () => {
+    const data = await dialogRef.value.getFormRef().validate?.();
+    await exportFileApi(data);
+    // if (!template.content) {
+    //   message.warn('该模板没有内容，请重新选择模板');
+    //   return [''];
+    // }
+    // loading.value = true;
+    // return await renderTemplate(template, {
+    //   api: data.api,
+    //   requestDataSchemaList: data.requestDataSchemaList,
+    //   responseDataSchemaList: data.responseDataSchemaList,
+    // }, {
+    //   ...currentProject,
+    //   ...omit(data, [
+    //     'api',
+    //     'apiId',
+    //     'requestDataSchemaList',
+    //     'requestDataSchemaIdList',
+    //     'responseDataSchemaList',
+    //     'responseDataSchemaIdList',
+    //   ]),
+    // });
+  });
+  //   .then((res: unknown) => {
   //   codeList.value = res as APIHelper.TemplateContent[];
   //   if (showMsg === true) {
   //     Message.success('已生成');

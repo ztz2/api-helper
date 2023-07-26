@@ -101,12 +101,19 @@
                     :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'apiId', '必选项') }]"
                     :validate-trigger="['change', 'input']"
                   >
-                    <apih-select
-                      v-model="selectFolderNode.apiId"
-                      placeholder="请选择需要关联的API"
-                      :options="apiList"
-                      allow-clear
-                    />
+                    <div style="display: flex;width: 100%;">
+                      <div style="flex-grow: 1;">
+                        <apih-select
+                          v-model="selectFolderNode.apiId"
+                          placeholder="请选择需要关联的API"
+                          :options="apiList"
+                          allow-clear
+                        />
+                      </div>
+                      <div style="margin-left: 12px;">
+                        <a-button>字段选择</a-button>
+                      </div>
+                    </div>
                   </a-form-item>
                   <a-form-item
                     label="关联模板"
@@ -119,7 +126,7 @@
                       v-model="selectFolderNode.modelTplId"
                       value-key="id"
                       placeholder="请选择需要关联的模板"
-                      :options="moduleTemplateList"
+                      :options="modelTemplateList"
                       allow-clear
                     />
                   </a-form-item>
@@ -164,7 +171,6 @@ import {
   defineExpose,
 } from 'vue';
 import {
-  get,
   cloneDeep,
 } from 'lodash';
 import {
@@ -176,16 +182,18 @@ import {
   ExportFile,
   FileDirectory,
   createExportFile,
+  renderTemplate,
 } from '@api-helper/template';
+import to from 'await-to-js';
+import { APIHelper, getSchema } from '@api-helper/core';
 
-import { APIHelper } from '@api-helper/core';
 import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { modalConfirm, randomChar } from '@/utils';
 import { useExportFile, useModelTemplate, useProject } from '@/store';
-import DialogExportFileTemplate from '../dialog/dialog-export-file-template.vue';
 import { validatorObject, validatorProjectConfig } from '@/utils/validator';
+import DialogExportFileTemplate from '../dialog/dialog-export-file-template.vue';
 
 type FormModelType = ExportFile;
 
@@ -224,20 +232,43 @@ const {
   getReactiveFormModel,
 } = useForm<FormModelType>(new ExportFile(), {
   watchFormModel: toRef(props, 'data'),
+  getFormModel: async (data) => {
+    const tasks: Array<Promise<unknown>> = [];
+    data.exportFilePath = currentProject.value.exportFilePath;
+    // 生成模版数据
+    treeForEach(data.fileDirectory, (fileDirectory: FileDirectory) => {
+      if (!fileDirectory.isFolder && fileDirectory.apiId && fileDirectory.modelTplId) {
+        const api = props.apiList.find((t) => t.id === fileDirectory.apiId) as any;
+        const modelTemplate = modelTemplateMap.value.get(fileDirectory.modelTplId) as any;
+        if (!api || !modelTemplate) {
+          return;
+        }
+        const responseDataSchemaList = getSchema(api.responseDataSchema, dataKey.value)?.params ?? [];
+        tasks.push(renderTemplate(modelTemplate, {
+          api: api as any,
+          requestDataSchemaList: api.requestDataSchema,
+          responseDataSchemaList: responseDataSchemaList as any,
+        } as any, currentProject.value).then((content) => {
+          fileDirectory.templateContent = content[fileDirectory.modelTplIndex]?.content ?? '';
+        }));
+      }
+    });
+    await to(Promise.all(tasks));
+    return data;
+  },
 });
 
-const projectStore = useProject();
 const {
   deleteById,
   templateMap,
   templateList,
 } = toRefs(useExportFile());
-const { templateList: moduleTemplateList } = toRefs(useModelTemplate());
+const { currentProject, dataKey } = toRefs(useProject());
+const { templateList: modelTemplateList, templateMap: modelTemplateMap } = toRefs(useModelTemplate());
 
 const wrapHeight = ref('calc(100vh - 488px)');
 const loading = ref(false);
 const selectFolder = ref('');
-const { currentProject } = projectStore;
 const dialogExportFileTemplateRef = ref();
 const showDelete = computed(() => formModel?.value?.builtIn === false);
 const fileDirectoryMap = computed<Map<string, FileDirectory>>(() => {
@@ -250,9 +281,6 @@ const fileDirectoryMap = computed<Map<string, FileDirectory>>(() => {
 const selectFolderNode = ref<FileDirectory>(null!);
 watch(() => selectFolder.value, (v) => {
   const node = fileDirectoryMap.value.get(v);
-  if (node) {
-    node.apiId = 'fffffffff';
-  }
   selectFolderNode.value = node ?? null!;
 });
 const fileDirectoryList = computed(() => {
@@ -261,22 +289,22 @@ const fileDirectoryList = computed(() => {
   });
   return formModel.value.fileDirectory;
 });
-watch([() => currentProject.exportFileId, () => props.visible], () => {
+watch([() => currentProject.value.exportFileId, () => props.visible], () => {
   selectFolder.value = '';
-  formModel.value = cloneDeep(templateMap.value.get(currentProject.exportFileId)) ?? createExportFile() as any;
+  formModel.value = cloneDeep(templateMap.value.get(currentProject.value.exportFileId)) ?? createExportFile() as any;
 }, { immediate: true });
 
 function handleSuccess(id: string) {
-  currentProject.exportFileId = id;
+  currentProject.value.exportFileId = id;
 }
 
 function handleDeleteTpl() {
   if (!formModel.value) {
     return message.warn('没有选择模板.');
   }
-  deleteById.value(currentProject.exportFileId, {
+  deleteById.value(currentProject.value.exportFileId, {
     onSuccess() {
-      currentProject.exportFileId = '';
+      currentProject.value.exportFileId = '';
     },
   });
 }
@@ -291,7 +319,7 @@ function handleAddTpl() {
 }
 
 async function handleEditTpl() {
-  const tplModel = cloneDeep(templateMap.value.get(currentProject.exportFileId));
+  const tplModel = cloneDeep(templateMap.value.get(currentProject.value.exportFileId));
   if (!tplModel) {
     return Message.error('请重新选择模板');
   }
@@ -308,11 +336,6 @@ async function handleEditTpl() {
       data: tplModel,
     },
   });
-}
-
-function handleChange(v: string) {
-  console.log(v);
-  // selectFolderNode.apiId = v;
 }
 
 defineExpose({

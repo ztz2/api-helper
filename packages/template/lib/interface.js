@@ -42,7 +42,7 @@ var DocumentConfig = /** @class */ (function () {
         // 项目名称
         this.title = '';
         // 文档地址
-        this.url = 'http://localhost:3210/app/swagger/test';
+        this.url = 'http://localhost:3210/app/swagger/mock';
         // 文档类型，默认可以解析 swagger
         this.type = 'swagger';
         // 访问文档可能需要认证信息，http auth验证方式
@@ -155,6 +155,8 @@ var ExportFile = /** @class */ (function () {
         this.formatCodeExtension = '.ts';
         // 模板内容
         this.fileDirectory = [];
+        // 文件模块导出路径
+        this.exportFilePath = '';
         if (options && Object.prototype.toString.call(options) === '[object Object]') {
             try {
                 for (var _b = __values(Object.entries(options)), _c = _b.next(); !_c.done; _c = _b.next()) {
