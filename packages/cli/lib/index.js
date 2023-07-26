@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.formatCode = exports.run = exports.defineConfig = void 0;
-const types_1 = require("./types");
+const types_1 = require("../lib/types");
 const Service_1 = __importDefault(require("../lib/service/Service"));
 const format_code_1 = __importDefault(require("../lib/tools/format-code"));
 exports.formatCode = format_code_1.default;

@@ -11,22 +11,20 @@
         <a-row :gutter="gutter">
           <a-form-item
             label="文件模块导出路径"
-            field="exportFilePath"
-            :rules="[{ required: true, validator: validatorProjectConfig.bind(null, 'exportFilePath') }]"
+            tooltip="当不能对该路径进行读写时候，会将文件模块打一个zip压缩包，并自动下载该压缩包"
             :validate-trigger="['change', 'input']"
           >
             <a-input
               value-key="id"
-              v-model="currentProject.exportFilePath"
+              v-model="currentDocumentConfig.fileDirectoryExportPath"
               placeholder="请输入文件模块导出路径"
               :max-length="512"
               allow-clear
             />
           </a-form-item>
           <a-form-item
-            field="apiTplId"
             style="margin-bottom: 0"
-            :rules="[{ required: true, validator: validatorProjectConfig.bind(null, 'exportFileId') }]"
+            :rules="[{ required: true, validator: validatorProjectConfig.bind(null, 'fileDirectoryId') }]"
             :validate-trigger="['change', 'input']"
           >
             <template #label>
@@ -46,14 +44,14 @@
                   </a-popconfirm>
                 </apih-tooltip>
                 <a-button size="mini" type="primary" @click.prevent="handleAddTpl">新增文件模块配置</a-button>
-                <a-button size="mini" type="primary" :disabled="!currentProject.apiTplId" @click.prevent="handleEditTpl" >编辑文件模块配置</a-button>
+                <a-button size="mini" type="primary" :disabled="!currentDocumentConfig.apiTplId" @click.prevent="handleEditTpl" >编辑文件模块配置</a-button>
               </a-space>
             </template>
-            <a-select
+            <apih-select
               value-key="id"
-              v-model="currentProject.exportFileId"
+              v-model="currentDocumentConfig.fileDirectoryId"
               placeholder="请选择文件模块配置"
-              :options="templateList"
+              :options="fileDirectoryListStore"
               allow-clear
             />
           </a-form-item>
@@ -64,7 +62,7 @@
           <a-card title="文件模块信息">
             <div class="box-sizing overflow" :style="{height: wrapHeight}">
               <div>
-                <a-empty v-if="!currentProject.exportFileId" description="请选择文档模块配置" />
+                <a-empty v-if="!currentDocumentConfig.fileDirectoryId" description="请选择文档模块配置" />
                 <div v-else>
                   <a-form-item
                     class="hide-label"
@@ -88,7 +86,7 @@
             <template #title>
               <span>文件与模版、API关联</span>
               <span v-if="selectFolderNode">
-                - 当前选择文件（<strong>{{selectFolderNode.label}}</strong>）
+                - 当前选择文件（<strong>{{selectFolderNode.title}}</strong>）
               </span>
             </template>
             <div class="box-sizing overflow" :style="{height: wrapHeight}">
@@ -97,8 +95,6 @@
                 <div v-else>
                   <a-form-item
                     label="关联API"
-                    field="apiId"
-                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'apiId', '必选项') }]"
                     :validate-trigger="['change', 'input']"
                   >
                     <div style="display: flex;width: 100%;">
@@ -117,13 +113,12 @@
                   </a-form-item>
                   <a-form-item
                     label="关联模板"
-                    field="modelTplId"
                     style="width: 100%"
-                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'modelTplId', '必选项') }]"
+                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'templateId', '必选项') }]"
                     :validate-trigger="['change', 'input']"
                   >
-                    <a-select
-                      v-model="selectFolderNode.modelTplId"
+                    <apih-select
+                      v-model="selectFolderNode.templateId"
                       value-key="id"
                       placeholder="请选择需要关联的模板"
                       :options="modelTemplateList"
@@ -134,11 +129,11 @@
                     label="关联模版内容下标"
                     field="modelTplIndex"
                     style="margin-bottom: 0"
-                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'modelTplIndex', '必填项') }]"
+                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'templateContentIndex', '必填项') }]"
                     :validate-trigger="['change', 'input']"
                   >
                     <a-input-number
-                      v-model="selectFolderNode.modelTplIndex"
+                      v-model="selectFolderNode.templateContentIndex"
                       placeholder="请输入关联模板内容下标"
                       :min="0"
                       :max="10"
@@ -152,8 +147,8 @@
         </a-col>
       </a-row>
     </a-form>
-    <DialogExportFileTemplate
-      ref="dialogExportFileTemplateRef"
+    <CtrlDrawerExportFileTemplate
+      ref="ctrlDrawerExportFileTemplateRef"
       @success="handleSuccess"
     />
   </div>
@@ -177,28 +172,22 @@ import {
   Message,
   TreeNodeData,
 } from '@arco-design/web-vue';
-import {
-  Template,
-  ExportFile,
-  FileDirectory,
-  createExportFile,
-  renderTemplate,
-} from '@api-helper/template';
-import to from 'await-to-js';
 import { APIHelper, getSchema } from '@api-helper/core';
 
+import {
+  useFileDirectory,
+  useModelTemplate,
+  useDocumentConfig,
+} from '@/store';
 import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { modalConfirm, randomChar } from '@/utils';
-import { useExportFile, useModelTemplate, useProject } from '@/store';
 import { validatorObject, validatorProjectConfig } from '@/utils/validator';
-import DialogExportFileTemplate from '../dialog/dialog-export-file-template.vue';
+import { FileDirectory, FileDirectoryConfig } from '@/store/file-directory/interface';
+import CtrlDrawerExportFileTemplate from '../../__controller__/ctrl-drawer-export-file-template.vue';
 
-type FormModelType = ExportFile;
-
-const span = ref(12);
-const gutter = ref(15);
+type FormModelType = FileDirectory;
 
 const props = defineProps({
   data: {
@@ -230,106 +219,105 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel,
-} = useForm<FormModelType>(new ExportFile(), {
+} = useForm<FormModelType>(new FileDirectory(), {
   watchFormModel: toRef(props, 'data'),
   getFormModel: async (data) => {
-    const tasks: Array<Promise<unknown>> = [];
-    data.exportFilePath = currentProject.value.exportFilePath;
+    data.fileDirectoryExportPath = currentDocumentConfig.value.fileDirectoryExportPath;
     // 生成模版数据
-    treeForEach(data.fileDirectory, (fileDirectory: FileDirectory) => {
-      if (!fileDirectory.isFolder && fileDirectory.apiId && fileDirectory.modelTplId) {
+    treeForEach(data.fileDirectoryConfigList, (fileDirectory: FileDirectoryConfig) => {
+      if (!fileDirectory.isFolder && fileDirectory.apiId && fileDirectory.templateId) {
         const api = props.apiList.find((t) => t.id === fileDirectory.apiId) as any;
-        const modelTemplate = modelTemplateMap.value.get(fileDirectory.modelTplId) as any;
-        if (!api || !modelTemplate) {
+        const modelTemplate = modelTemplateMap.value.get(fileDirectory.templateId) as any;
+        if (!modelTemplate) {
           return;
         }
-        const responseDataSchemaList = getSchema(api.responseDataSchema, dataKey.value)?.params ?? [];
-        tasks.push(renderTemplate(modelTemplate, {
-          api: api as any,
-          requestDataSchemaList: api.requestDataSchema,
-          responseDataSchemaList: responseDataSchemaList as any,
-        } as any, currentProject.value).then((content) => {
-          fileDirectory.templateContent = content[fileDirectory.modelTplIndex]?.content ?? '';
-        }));
+        const requestDataSchemaList = api?.requestDataSchema?.params ?? [];
+        const responseDataSchemaList = getSchema(api?.responseDataSchema, currentDocumentConfigDataKey.value)?.params ?? [];
+        fileDirectory.api = api;
+        fileDirectory.template = modelTemplate;
+        fileDirectory.requestDataSchemaList = requestDataSchemaList;
+        fileDirectory.responseDataSchemaList = responseDataSchemaList;
       }
     });
-    await to(Promise.all(tasks));
     return data;
   },
 });
 
 const {
-  deleteById,
-  templateMap,
-  templateList,
-} = toRefs(useExportFile());
-const { currentProject, dataKey } = toRefs(useProject());
-const { templateList: modelTemplateList, templateMap: modelTemplateMap } = toRefs(useModelTemplate());
+  fileDirectoryMap,
+  deleteFileDirectoryById,
+  fileDirectoryList: fileDirectoryListStore,
+} = toRefs(useFileDirectory());
+const { currentDocumentConfig, currentDocumentConfigDataKey } = toRefs(useDocumentConfig());
+const { modelTemplateList, modelTemplateMap } = toRefs(useModelTemplate());
 
+const span = ref(12);
+const gutter = ref(15);
 const wrapHeight = ref('calc(100vh - 488px)');
 const loading = ref(false);
 const selectFolder = ref('');
-const dialogExportFileTemplateRef = ref();
-const showDelete = computed(() => formModel?.value?.builtIn === false);
-const fileDirectoryMap = computed<Map<string, FileDirectory>>(() => {
+const ctrlDrawerExportFileTemplateRef = ref();
+const showDelete = computed(() => formModel.value && formModel.value.id && formModel.value.builtIn === false);
+const fileDirectoryConfigMap = computed<Map<string, FileDirectoryConfig>>(() => {
   const result = new Map();
-  treeForEach(formModel.value.fileDirectory, (node: FileDirectory) => {
-    result.set(node.value, node);
+  treeForEach(formModel.value.fileDirectoryConfigList, (node: FileDirectory) => {
+    result.set(node.id, node);
   }, 'children');
   return result;
 });
-const selectFolderNode = ref<FileDirectory>(null!);
+const selectFolderNode = ref<FileDirectoryConfig>(null!);
 watch(() => selectFolder.value, (v) => {
-  const node = fileDirectoryMap.value.get(v);
+  const node = fileDirectoryConfigMap.value.get(v);
   selectFolderNode.value = node ?? null!;
 });
 const fileDirectoryList = computed(() => {
-  treeForEach(formModel.value.fileDirectory, (itm: TreeNodeData & FileDirectory) => {
+  treeForEach(formModel.value.fileDirectoryConfigList, (itm: TreeNodeData & FileDirectoryConfig) => {
     itm.disabled = itm.isFolder;
   });
-  return formModel.value.fileDirectory;
+  return formModel.value.fileDirectoryConfigList;
 });
-watch([() => currentProject.value.exportFileId, () => props.visible], () => {
+watch([() => currentDocumentConfig.value.fileDirectoryId, () => props.visible], () => {
   selectFolder.value = '';
-  formModel.value = cloneDeep(templateMap.value.get(currentProject.value.exportFileId)) ?? createExportFile() as any;
+  formModel.value = cloneDeep(fileDirectoryMap.value.get(currentDocumentConfig.value.fileDirectoryId) ?? new FileDirectory()) as FileDirectory;
+  console.log(formModel.value);
 }, { immediate: true });
 
 function handleSuccess(id: string) {
-  currentProject.value.exportFileId = id;
+  currentDocumentConfig.value.fileDirectoryId = id;
 }
 
 function handleDeleteTpl() {
   if (!formModel.value) {
     return message.warn('没有选择模板.');
   }
-  deleteById.value(currentProject.value.exportFileId, {
+  deleteFileDirectoryById.value(currentDocumentConfig.value.fileDirectoryId, {
     onSuccess() {
-      currentProject.value.exportFileId = '';
+      currentDocumentConfig.value.fileDirectoryId = '';
     },
   });
 }
 function handleAddTpl() {
-  dialogExportFileTemplateRef.value?.open({
+  ctrlDrawerExportFileTemplateRef.value?.open({
     type: 'ADD',
     title: '新增模板',
     formComponentProps: {
-      data: createExportFile(),
+      data: new FileDirectory(),
     },
   });
 }
 
 async function handleEditTpl() {
-  const tplModel = cloneDeep(templateMap.value.get(currentProject.value.exportFileId));
+  const tplModel = cloneDeep(modelTemplateMap.value.get(currentDocumentConfig.value.fileDirectoryId));
   if (!tplModel) {
     return Message.error('请重新选择模板');
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ` - 副本${randomChar()}`;
-    tplModel.value = '';
+    tplModel.title += ` - 副本${randomChar()}`;
+    tplModel.id = '';
     tplModel.builtIn = false;
   }
-  dialogExportFileTemplateRef.value?.open({
+  ctrlDrawerExportFileTemplateRef.value?.open({
     type: 'EDIT',
     title: '修改模板',
     formComponentProps: {

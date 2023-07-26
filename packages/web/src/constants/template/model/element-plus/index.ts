@@ -1,8 +1,8 @@
-import { TemplateCategory } from '@/store/template/interface';
+import SelectOptionGroup from '@/constants/select-option-group';
 import formTemplate from './form';
 import tableTemplate from './table';
 
-export default new TemplateCategory('element-plus', {
+export default new SelectOptionGroup('element-plus', {
   id: '9c5a9b8464aef790',
   options: [
     formTemplate,

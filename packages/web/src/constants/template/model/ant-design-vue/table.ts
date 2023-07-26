@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Ant Design Vue / Table 表格',
-  value: 'ant-design-vue_table_e8a47e23e9b6c298',
+  title: 'Ant Design Vue / Table 表格',
+  id: 'ant-design-vue_table_e8a47e23e9b6c298',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -64,7 +64,7 @@ export default new Template({
     },
   };
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

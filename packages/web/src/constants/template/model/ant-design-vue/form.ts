@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Ant Design Vue / Form 表单',
-  value: 'ant-design-vue_form_7623856acb2a549a',
+  title: 'Ant Design Vue / Form 表单',
+  id: 'ant-design-vue_form_7623856acb2a549a',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -98,7 +98,7 @@ const resetForm = () => {
   formRef.value.resetFields();
 };
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Ant Design / Table 表格',
-  value: 'ant-design_table_203fd1f8b62dd3bb',
+  title: 'Ant Design / Table 表格',
+  id: 'ant-design_table_203fd1f8b62dd3bb',
   formatCodeExtension: '.tsx',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -68,7 +68,7 @@ const data: DataType[] = [{《each schemaList》
 const App: React.FC = () => <Table columns={columns} dataSource={data} />;
 
 export default App;
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

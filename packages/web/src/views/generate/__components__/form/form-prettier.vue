@@ -13,7 +13,7 @@
             <a-col :span="12">
               <a-form-item
                 style="margin-bottom: 0"
-                :rules="[{ required: true, validator: validatorPrettierrcOptions }]"
+                :rules="[{ required: true, validator: validatorPrettierOptions }]"
                 :validate-trigger="['change', 'input']"
               >
                 <template #label>
@@ -22,7 +22,7 @@
                     <div>
                       <a-popconfirm
                         content="确定要重置配置?"
-                        @ok="handleResetPrettierrcOptions"
+                        @ok="handleResetPrettierOptions"
                       >
                         <a-button size="mini">重置配置</a-button>
                       </a-popconfirm>
@@ -30,7 +30,7 @@
                   </a-space>
                 </template>
                 <div style="width: 100%;">
-                  <apih-code-mirror v-model="formModel.prettierrcOptions" height="calc(100vh - 252px)" />
+                  <apih-code-mirror v-model="formModel.prettierOptions" height="calc(100vh - 252px)" />
                 </div>
               </a-form-item>
             </a-col>
@@ -45,7 +45,7 @@
                     class="ztz-spin"
                     :loading="loadingPreview"
                   >
-                    <apih-code :code="currentPrettierrcOptions" height="calc(100vh - 252px)"></apih-code>
+                    <apih-code :code="currentPrettierOptions" height="calc(100vh - 252px)"></apih-code>
                   </a-spin>
                 </div>
               </a-form-item>
@@ -69,17 +69,16 @@ import {
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { formatCodeServer } from '@api-helper/template';
-import PrettierrcOptions from '@api-helper/cli/lib/tools/prettierrc-options';
+import { PrettierOptions } from '@api-helper/cli/lib/types';
 
 import { checkType } from '@/utils';
-import { useProject } from '@/store';
-import { Project } from '@/store/project/interface';
+import { DocumentConfig } from '@/store/document-config/interface';
 
 const emit = defineEmits(['success']);
 
 const props = defineProps({
   data: {
-    type: Object as PropType<Project>,
+    type: Object as PropType<DocumentConfig>,
     default: () => ({}),
   },
   // ADD = '新增', EDIT = '修改'
@@ -93,29 +92,28 @@ const formRef = ref();
 const gutter = ref(15);
 const loading = ref(false);
 const loadingPreview = ref(false);
-const { currentProject } = useProject();
 let formatTime: number;
 
 const formModel = ref({
-  prettierrcOptions: '',
+  prettierOptions: '',
 });
-const currentPrettierrcOptions = ref('');
+const currentPrettierOptions = ref('');
 
-watch(() => props.data.prettierrcOptions, (val) => {
-  formatPrettierrcOptions(val);
+watch(() => props.data.prettierOptions, (val) => {
+  formatPrettierOptions(val);
 }, { immediate: true });
 
 let timer: number;
-watch(() => formModel.value.prettierrcOptions, (val) => {
+watch(() => formModel.value.prettierOptions, (val) => {
   if (!val || val.trim() === '') {
-    currentPrettierrcOptions.value = val;
+    currentPrettierOptions.value = val;
   } else {
     timer && clearTimeout(timer);
     timer = setTimeout(async () => {
-      const v = formModel.value.prettierrcOptions;
+      const v = formModel.value.prettierOptions;
       if (!v || v.trim() === '') {
         loadingPreview.value = false;
-        currentPrettierrcOptions.value = v;
+        currentPrettierOptions.value = v;
         return;
       }
       loadingPreview.value = true;
@@ -124,7 +122,7 @@ watch(() => formModel.value.prettierrcOptions, (val) => {
         formatCodeExtension: '.json',
       });
       loadingPreview.value = false;
-      currentPrettierrcOptions.value = res as string;
+      currentPrettierOptions.value = res as string;
     }, 1200) as unknown as number;
   }
 }, { immediate: true });
@@ -133,9 +131,9 @@ onBeforeUnmount(() => {
   timer && clearTimeout(timer);
 });
 
-function validatorPrettierrcOptions(value: unknown, callback: Function) {
+function validatorPrettierOptions(value: unknown, callback: Function) {
   try {
-    const conf = JSON.stringify(formModel.value.prettierrcOptions);
+    const conf = JSON.stringify(formModel.value.prettierOptions);
     if (!checkType(conf, 'Object')) {
       return callback('配置解析错误.');
     }
@@ -145,11 +143,11 @@ function validatorPrettierrcOptions(value: unknown, callback: Function) {
   callback();
 }
 
-function handleResetPrettierrcOptions() {
-  formatPrettierrcOptions(new PrettierrcOptions());
+function handleResetPrettierOptions() {
+  formatPrettierOptions(new PrettierOptions());
 }
 
-async function formatPrettierrcOptions(val: object | string) {
+async function formatPrettierOptions(val: object | string) {
   const formatTimeNow = Date.now();
   formatTime = formatTimeNow;
   val = (checkType(val, 'Object') ? JSON.stringify(val)
@@ -168,13 +166,13 @@ async function formatPrettierrcOptions(val: object | string) {
     loading.value = false;
   }
   if (formatTime === formatTimeNow) {
-    formModel.value.prettierrcOptions = result;
+    formModel.value.prettierOptions = result;
   }
 }
 
 function getFormModel() {
   const data = cloneDeep(formModel.value);
-  data.prettierrcOptions = JSON.parse(data.prettierrcOptions);
+  data.prettierOptions = JSON.parse(data.prettierOptions);
   return data;
 }
 

@@ -13,10 +13,7 @@ import request from './request';
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export function v2PetPetIdUploadImageByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig), ...args);
 }
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
@@ -61,10 +58,7 @@ v2PetByPut.requestConfig = {
  * @url [ GET ] /v2/pet/findByStatus
  */
 export function v2PetFindByStatusByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig), ...args);
 }
 v2PetFindByStatusByGet.requestConfig = {
   path: '/v2/pet/findByStatus',
@@ -79,10 +73,7 @@ v2PetFindByStatusByGet.requestConfig = {
  * @url [ GET ] /v2/pet/findByTags
  */
 export function v2PetFindByTagsByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig), ...args);
 }
 v2PetFindByTagsByGet.requestConfig = {
   path: '/v2/pet/findByTags',
@@ -97,10 +88,7 @@ v2PetFindByTagsByGet.requestConfig = {
  * @url [ GET ] /v2/pet/{petId}
  */
 export function v2PetPetIdByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig), ...args);
 }
 v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -115,10 +103,7 @@ v2PetPetIdByGet.requestConfig = {
  * @url [ POST ] /v2/pet/{petId}
  */
 export function v2PetPetIdByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig), ...args);
 }
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -133,10 +118,7 @@ v2PetPetIdByPost.requestConfig = {
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export function v2PetPetIdByDelete(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig), ...args);
 }
 v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -151,10 +133,7 @@ v2PetPetIdByDelete.requestConfig = {
  * @url [ POST ] /v2/store/order
  */
 export function v2StoreOrderByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig), ...args);
 }
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
@@ -169,10 +148,7 @@ v2StoreOrderByPost.requestConfig = {
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig), ...args);
 }
 v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
@@ -187,10 +163,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export function v2StoreOrderOrderIdByDelete(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig), ...args);
 }
 v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
@@ -205,10 +178,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  * @url [ GET ] /v2/store/inventory
  */
 export function v2StoreInventoryByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig), ...args);
 }
 v2StoreInventoryByGet.requestConfig = {
   path: '/v2/store/inventory',
@@ -223,10 +193,7 @@ v2StoreInventoryByGet.requestConfig = {
  * @url [ POST ] /v2/user/createWithArray
  */
 export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
 }
 v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
@@ -241,10 +208,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @url [ POST ] /v2/user/createWithList
  */
 export function v2UserCreateWithListByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
 }
 v2UserCreateWithListByPost.requestConfig = {
   path: '/v2/user/createWithList',
@@ -259,10 +223,7 @@ v2UserCreateWithListByPost.requestConfig = {
  * @url [ GET ] /v2/user/{username}
  */
 export function v2UserUsernameByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig), ...args);
 }
 v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
@@ -277,10 +238,7 @@ v2UserUsernameByGet.requestConfig = {
  * @url [ PUT ] /v2/user/{username}
  */
 export function v2UserUsernameByPut(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig), ...args);
 }
 v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
@@ -295,10 +253,7 @@ v2UserUsernameByPut.requestConfig = {
  * @url [ DELETE ] /v2/user/{username}
  */
 export function v2UserUsernameByDelete(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig), ...args);
 }
 v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
@@ -313,10 +268,7 @@ v2UserUsernameByDelete.requestConfig = {
  * @url [ GET ] /v2/user/login
  */
 export function v2UserLoginByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig), ...args);
 }
 v2UserLoginByGet.requestConfig = {
   path: '/v2/user/login',
@@ -331,10 +283,7 @@ v2UserLoginByGet.requestConfig = {
  * @url [ GET ] /v2/user/logout
  */
 export function v2UserLogoutByGet(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
 }
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
@@ -349,10 +298,7 @@ v2UserLogoutByGet.requestConfig = {
  * @url [ POST ] /v2/user
  */
 export function v2UserByPost(data, extraData, ...args) {
-  return request(
-    processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig),
-    ...args
-  );
+  return request(processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig), ...args);
 }
 v2UserByPost.requestConfig = {
   path: '/v2/user',

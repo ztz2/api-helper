@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: '请求接口模板（Javascript）',
-  value: 'javascript_api_d85fb69ff5bc9b2f',
+  title: '请求接口模板（Javascript）',
+  id: 'javascript_api_d85fb69ff5bc9b2f',
   formatCodeExtension: '.ts',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -24,20 +24,20 @@ export default new Template({
 
   function renderApi() {
      return artTemplate.render(\`
-       《if config.onlyApiFunc === false》
+       《if documentConfig.onlyApiFunc === false》
          import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
-         《config.headCodeText》
+         《documentConfig.headCodeText》
        《/if》
        《each apiList》
           《apih.template.renderRequestFunction($value, { codeType: 'javascript' })》
        《/each》
-    \`, { apiList, params, config, apih, lodash });
+    \`, { apiList, params, documentConfig, apih, lodash });
   }
 
   function renderApiTyping() {
     return artTemplate.render(\`
       import { 《each apiList》《apih.template.renderRequestFunctionName($value)》,《/each》 } from '@/api';
-    \`, { apiList, params, config, apih, lodash });
+    \`, { apiList, params, documentConfig, apih, lodash });
   }
 
   return result;

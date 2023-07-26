@@ -141,6 +141,7 @@ function handleSearch(): void {
   if (searchTimer) {
     clearTimeout(searchTimer);
   }
+  // @ts-ignore
   searchTimer = setTimeout(() => {
     const text = searchValue.value?.trim() ?? '';
     if (!text) {

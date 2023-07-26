@@ -1,11 +1,11 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 
 import { COMMON_HEAD } from '../common';
 import { DEFAULT_SELECT_API_TPL_ID } from '@/constants';
 
 export default new Template({
-  label: '请求接口模板（Typescript）',
-  value: DEFAULT_SELECT_API_TPL_ID,
+  title: '请求接口模板（Typescript）',
+  id: DEFAULT_SELECT_API_TPL_ID,
   formatCodeExtension: '.ts',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -26,28 +26,28 @@ export default new Template({
 
   function renderApi() {
      return artTemplate.render(\`
-       《if config.onlyApiFunc === false》
+       《if documentConfig.onlyApiFunc === false》
          import { processRequestFunctionConfig, RequestFunctionRestArgsType } from '@api-helper/core/es/lib/helpers';
-         《config.headCodeText》
+         《documentConfig.headCodeText》
          type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
        《/if》
        《each apiList》
           《apih.template.renderInterface($value.requestDataSchema, $value, { paramType: 'request' })》
           《apih.template.renderInterface($value.requestExtraDataSchema, $value, { paramType: 'request', isExtraData: true })》
           《apih.template.renderInterface(
-              config.dataKey ? apih.core.getSchema($value.responseDataSchema, config.dataKey) : $value.responseDataSchema,
+              documentConfig.dataKey ? apih.core.getSchema($value.responseDataSchema, documentConfig.dataKey) : $value.responseDataSchema,
               $value,
               { paramType: 'response' }
            )》
           《apih.template.renderRequestFunction($value, { codeType: 'typescript' })》
        《/each》
-    \`, { apiList, params, config, apih, lodash });
+    \`, { apiList, params, documentConfig, apih, lodash });
   }
 
   function renderApiTyping() {
     return artTemplate.render(\`
       import { 《each apiList》《apih.template.renderRequestFunctionName($value)》,《/each》 } from '@/api';
-    \`, { apiList, params, config, apih, lodash });
+    \`, { apiList, params, documentConfig, apih, lodash });
   }
 
   return result;

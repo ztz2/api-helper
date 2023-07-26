@@ -1,19 +1,19 @@
 import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
-import useProject from './project';
+import useDocumentConfig from '@/store/document-config';
 import useApiTemplate from './template/api';
 import useModelTemplate from './template/model';
-import useExportFile from './export-file';
+import useFileDirectory from '@/store/file-directory';
 
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 export {
-  useProject,
+  useDocumentConfig,
   useApiTemplate,
   useModelTemplate,
-  useExportFile,
+  useFileDirectory,
 };
 
 export default pinia;

@@ -1,11 +1,14 @@
 import { isRef } from 'vue';
 import md5 from 'crypto-js/md5';
 import { cloneDeep } from 'lodash';
-import { ExportFile, Template } from '@api-helper/template';
-import { Modal, ModalConfig } from '@arco-design/web-vue';
+import {
+  Modal,
+  ModalConfig,
+  SelectOptionData,
+} from '@arco-design/web-vue';
 
 import { aes } from './crypto';
-import { TemplateCategory } from '@/store/template/interface';
+import SelectOptionGroup from '@/constants/select-option-group';
 
 export const checkType = (value: any, target: string) => Object.prototype.toString.call(value) === `[object ${target}]`;
 
@@ -85,14 +88,14 @@ export function assignDeep<T>(
   return target;
 }
 
-export function getTemplateList(templateList: Array<TemplateCategory>): Array<Template> | Array<ExportFile> {
+export function getSelectOptionList(selectOptionGroup: Array<SelectOptionGroup>): Array<SelectOptionData> {
   const result = [];
-  for (let j = 0; j < templateList.length; j++) {
-    for (let i = 0; i < templateList[j].options.length; i++) {
-      result.push(templateList[j].options[i]);
+  for (let j = 0; j < selectOptionGroup.length; j++) {
+    for (let i = 0; i < selectOptionGroup[j].options.length; i++) {
+      result.push(selectOptionGroup[j].options[i]);
     }
   }
-  return result as any;
+  return result;
 }
 
 export const noop = () => undefined;

@@ -50,15 +50,8 @@ export interface IBodyBodyPutResponseByPut {
  * @description 普通body请求-put
  * @url [ PUT ] /body/bodyPut
  */
-export function bodyBodyPutByPut(
-  data: IBodyBodyPutRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IBodyBodyPutResponseByPut>(
-    processRequestFunctionConfig(data, extraData, bodyBodyPutByPut.requestConfig),
-    ...args
-  );
+export function bodyBodyPutByPut(data: IBodyBodyPutRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IBodyBodyPutResponseByPut>(processRequestFunctionConfig(data, extraData, bodyBodyPutByPut.requestConfig), ...args);
 }
 bodyBodyPutByPut.requestConfig = {
   path: '/body/bodyPut',
@@ -257,15 +250,8 @@ export interface IUserCreateOneResponseByPost {
  * @description 创建用户-createOne、根据姓名创建用户1
  * @url [ POST ] /user/createOne
  */
-export function userCreateOneByPost(
-  data: IUserCreateOneRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IUserCreateOneResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userCreateOneByPost.requestConfig),
-    ...args
-  );
+export function userCreateOneByPost(data: IUserCreateOneRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IUserCreateOneResponseByPost>(processRequestFunctionConfig(data, extraData, userCreateOneByPost.requestConfig), ...args);
 }
 userCreateOneByPost.requestConfig = {
   path: '/user/createOne',
@@ -354,15 +340,8 @@ export interface IUserCreateOne1ResponseByPost {
  * @description 创建用户1、根据姓名创建用户1
  * @url [ POST ] /user/createOne1
  */
-export function userCreateOne1ByPost(
-  data: IUserCreateOne1RequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IUserCreateOne1ResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userCreateOne1ByPost.requestConfig),
-    ...args
-  );
+export function userCreateOne1ByPost(data: IUserCreateOne1RequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IUserCreateOne1ResponseByPost>(processRequestFunctionConfig(data, extraData, userCreateOne1ByPost.requestConfig), ...args);
 }
 userCreateOne1ByPost.requestConfig = {
   path: '/user/createOne1',
@@ -398,15 +377,8 @@ export interface IFileUploadResponseByPost {
  * @description 单纯文件上传、单纯文件上传，无任何参数
  * @url [ POST ] /file/upload
  */
-export function fileUploadByPost(
-  data: IFileUploadRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IFileUploadResponseByPost>(
-    processRequestFunctionConfig(data, extraData, fileUploadByPost.requestConfig),
-    ...args
-  );
+export function fileUploadByPost(data: IFileUploadRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IFileUploadResponseByPost>(processRequestFunctionConfig(data, extraData, fileUploadByPost.requestConfig), ...args);
 }
 fileUploadByPost.requestConfig = {
   path: '/file/upload',
@@ -636,15 +608,8 @@ export interface IBodyBodyResponseByPost {
  * @description 普通body请求
  * @url [ POST ] /body/body
  */
-export function bodyBodyByPost(
-  data: IBodyBodyRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IBodyBodyResponseByPost>(
-    processRequestFunctionConfig(data, extraData, bodyBodyByPost.requestConfig),
-    ...args
-  );
+export function bodyBodyByPost(data: IBodyBodyRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IBodyBodyResponseByPost>(processRequestFunctionConfig(data, extraData, bodyBodyByPost.requestConfig), ...args);
 }
 bodyBodyByPost.requestConfig = {
   path: '/body/body',
@@ -686,15 +651,8 @@ export interface IBodyBodyParamResponseByPost {
  * @description 普通body请求+Param
  * @url [ POST ] /body/bodyParam
  */
-export function bodyBodyParamByPost(
-  data: IBodyBodyParamRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IBodyBodyParamResponseByPost>(
-    processRequestFunctionConfig(data, extraData, bodyBodyParamByPost.requestConfig),
-    ...args
-  );
+export function bodyBodyParamByPost(data: IBodyBodyParamRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IBodyBodyParamResponseByPost>(processRequestFunctionConfig(data, extraData, bodyBodyParamByPost.requestConfig), ...args);
 }
 bodyBodyParamByPost.requestConfig = {
   path: '/body/bodyParam',
@@ -850,15 +808,8 @@ export interface IUserGetRequestResponseByGet {
  * @description json参数查询
  * @url [ GET ] /user/getRequest
  */
-export function userGetRequestByGet(
-  data: IUserGetRequestRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IUserGetRequestResponseByGet>(
-    processRequestFunctionConfig(data, extraData, userGetRequestByGet.requestConfig),
-    ...args
-  );
+export function userGetRequestByGet(data: IUserGetRequestRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IUserGetRequestResponseByGet>(processRequestFunctionConfig(data, extraData, userGetRequestByGet.requestConfig), ...args);
 }
 userGetRequestByGet.requestConfig = {
   path: '/user/getRequest',
@@ -884,15 +835,8 @@ export type UserCreateResponseTypeByGet = string;
  * @description 创建用户、根据姓名创建用户
  * @url [ GET ] /user/create
  */
-export function userCreateByGet(
-  data: IUserCreateRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<UserCreateResponseTypeByGet>(
-    processRequestFunctionConfig(data, extraData, userCreateByGet.requestConfig),
-    ...args
-  );
+export function userCreateByGet(data: IUserCreateRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<UserCreateResponseTypeByGet>(processRequestFunctionConfig(data, extraData, userCreateByGet.requestConfig), ...args);
 }
 userCreateByGet.requestConfig = {
   path: '/user/create',

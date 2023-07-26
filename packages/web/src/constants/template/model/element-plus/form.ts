@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Element UI Plus / Form 表单',
-  value: 'element-plus_form_24e5ca0ab18176d4',
+  title: 'Element UI Plus / Form 表单',
+  id: 'element-plus_form_24e5ca0ab18176d4',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -109,7 +109,7 @@ const options = Array.from({ length: 10000 }).map((_, idx) => ({
   label: \\\`\\\${idx + 1}\\\`,
 }))
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

@@ -1,6 +1,10 @@
 import to from 'await-to-js';
 import { Response } from 'express';
-import { stat, outputFile } from 'fs-extra';
+import {
+  stat,
+  remove,
+  outputFile,
+} from 'fs-extra';
 import { formatCode } from '@api-helper/cli/lib';
 import { renderTemplate } from '@api-helper/template';
 import { mergeUrl } from '@api-helper/core/lib/utils/util';
@@ -16,6 +20,7 @@ import { FormatCode } from '../dto/format-code';
 import { FileDirectory } from '../dto/file-directory';
 import { ClientIP, getLocalIPV4List } from '../utils/ip';
 import { FileDirectoryConfig } from '../dto/file-directory-config';
+import { clearDir } from '../utils/file';
 
 const JSZip = require('jszip');
 
@@ -60,30 +65,33 @@ export class AppController {
       fileDirectory.fileDirectoryConfigList,
     );
     const templateContentRecordMap = new Map<string, string>();
-
     // 模版生成
     const renderTemplateTasks = [];
     treeForEach(
       fileDirectory.fileDirectoryConfigList,
       (fileDirectoryConfig: FileDirectoryConfig) => {
-        renderTemplateTasks.push(
-          renderTemplate(
-            fileDirectoryConfig.template,
-            {
-              api: fileDirectoryConfig.api,
-              requestDataSchemaList: fileDirectoryConfig.requestDataSchemaList,
-              responseDataSchemaList:
-                fileDirectoryConfig.responseDataSchemaList,
-            },
-            fileDirectory.documentConfig,
-          ).then((content) => {
-            templateContentRecordMap.set(
-              fileDirectoryConfig.id,
-              content[fileDirectoryConfig.templateContentIndex ?? 0]?.content ??
-                '',
-            );
-          }),
-        );
+        if (!fileDirectoryConfig.isFolder) {
+          renderTemplateTasks.push(
+            renderTemplate(
+              fileDirectoryConfig.template as any,
+              {
+                api: fileDirectoryConfig.api,
+                requestDataSchemaList:
+                  fileDirectoryConfig.requestDataSchemaList,
+                responseDataSchemaList:
+                  fileDirectoryConfig.responseDataSchemaList,
+              },
+              fileDirectory.documentConfig as any,
+              formatCode as any,
+            ).then((content) => {
+              templateContentRecordMap.set(
+                fileDirectoryConfig.id,
+                content[fileDirectoryConfig.templateContentIndex ?? 0]
+                  ?.content ?? '',
+              );
+            }),
+          );
+        }
       },
     );
     await to(Promise.all(renderTemplateTasks));
@@ -93,26 +101,30 @@ export class AppController {
       localIPV4List &&
       clientIP &&
       localIPV4List.includes(clientIP) &&
-      fileDirectory.exportFilePath
+      fileDirectory.fileDirectoryExportPath
     ) {
-      const [ex] = await to(stat(fileDirectory.exportFilePath));
+      const [ex] = await to(stat(fileDirectory.fileDirectoryExportPath));
       if (ex) {
         return Result.fail('文件模块导出路径访问异常，请检查目录是否正确。');
       }
+      // 删除
+      clearDir(fileDirectory.fileDirectoryExportPath);
       const outputFileTasks = [];
       for (const [path, { id }] of fileDirectoryConfigPathList) {
         const templateContent = templateContentRecordMap.get(id) ?? '';
         outputFileTasks.push(
           outputFile(
-            mergeUrl(`${fileDirectory.exportFilePath}/${path}`),
+            mergeUrl(`${fileDirectory.fileDirectoryExportPath}/${path}`),
             templateContent,
           ),
         );
       }
       await to(Promise.all(outputFileTasks));
-      return Result.success({
-        isOutputFile: true,
-      });
+      return res.send(
+        Result.success({
+          isOutputFile: true,
+        }),
+      );
     }
     // 其他IP地址访问，执行zip文件导出
     const zip = new JSZip();

@@ -24,7 +24,7 @@
                   :validate-trigger="['change', 'input']"
                 >
                   <a-input
-                    v-model="formModel.label"
+                    v-model="formModel.title"
                     :max-length="64"
                     placeholder="请输入模板名称"
                   />
@@ -37,7 +37,7 @@
                   style="margin-bottom: 0"
                   tooltip="代码生成之后，会根据配置的后缀名，生成一个文件，调用 prettier 对生成的代码进行美化"
                 >
-                  <a-select
+                  <apih-select
                     value-key="id"
                     v-model="formModel.formatCodeExtension"
                     :options="options.formatCodeExtension"
@@ -56,12 +56,12 @@
                   label="只生成API函数"
                   style="margin-bottom: 0"
                 >
-                  <a-radio-group v-model="currentProject.onlyApiFunc" :options="options.boolean" />
+                  <a-radio-group v-model="currentDocumentConfig.onlyApiFunc" :options="options.boolean" />
                 </a-form-item>
               </a-col>
-              <a-col v-if="currentProject.onlyApiFunc === false" style="margin-top: 20px" :span="24">
+              <a-col v-if="currentDocumentConfig.onlyApiFunc === false" style="margin-top: 20px" :span="24">
                 <a-form-item label="API函数头部代码" style="margin-bottom: 0">
-                  <a-textarea v-model="currentProject.headCodeText" :max-length="512"></a-textarea>
+                  <a-textarea v-model="currentDocumentConfig.headCodeText" :max-length="512"></a-textarea>
                 </a-form-item>
               </a-col>
             </a-row>
@@ -75,7 +75,7 @@
               <template #title>
                 <a-space>
                   <span>编辑模版内容</span>
-                  <apih-dialog-code-mirror
+                  <apih-drawer-code-mirror
                     v-model:value="formModel.content"
                     @update:value="$emit('exec-gen')"
                   />
@@ -106,18 +106,19 @@ import {
   ref,
   toRef,
   watch,
+  toRefs,
   PropType,
   defineProps,
   defineEmits,
   defineExpose,
   onBeforeUnmount,
 } from 'vue';
-import { Template } from '@api-helper/template';
 import { formatCodeServer } from '@api-helper/template';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
-import { useProject } from '@/store';
+import { useDocumentConfig } from '@/store';
 import useForm from '@/hooks/use-form';
+import { Template } from '@/store/template/interface';
 
 type FormModelType = Template;
 
@@ -134,7 +135,7 @@ const props = defineProps({
   },
 });
 
-const { currentProject } = useProject();
+const { currentDocumentConfig } = toRefs(useDocumentConfig());
 
 const loading = ref(false);
 const loadingPreview = ref(false);

@@ -1,91 +1,93 @@
-import { pick } from 'lodash';
+import {
+  omit,
+  merge,
+} from 'lodash';
 import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
-import { Template } from '@api-helper/template';
 
 import {
-  TemplateCategory,
-} from '@/store/template/interface';
-import {
-  MODEL_CUSTOM_TEMPLATE_ID,
+  MODEL_CUSTOM_GROUP_ID,
   DEFAULT_SELECT_MODEL_TPL_ID,
 } from '@/constants';
 import message from '@/utils/message';
-import { getTemplateList } from '@/utils';
-import templateList from '@/constants/template/model';
+import { getSelectOptionList } from '@/utils';
+import { Template } from '@/store/template/interface';
+import modelTemplateList from '@/constants/template/model';
+import SelectOptionGroup from '@/constants/select-option-group';
 
 const useModelTemplate = defineStore('model-template', {
   persist: true,
   state: (): {
-    templateList: Array<TemplateCategory>,
+    modelTemplateList: Array<SelectOptionGroup>,
   } => ({
-    templateList,
+    modelTemplateList,
   }),
   getters: {
-    templateMap(state): Map<string, Template> {
-      const templateMap = new Map();
-      getTemplateList(state.templateList).forEach((itm) => {
-        templateMap.set(itm.value, itm);
+    modelTemplateMap(state): Map<string, Template> {
+      const modelTemplateMap = new Map();
+      getSelectOptionList(state.modelTemplateList).forEach((itm) => {
+        modelTemplateMap.set(itm.id, itm);
       });
-      return templateMap;
+      return modelTemplateMap;
     },
-    customTemplateList(state): Array<Template> {
-      const row = state.templateList.find((item) => item.id === MODEL_CUSTOM_TEMPLATE_ID);
+    customModelTemplateList(state): Array<Template> {
+      const row = state.modelTemplateList.find((item) => item.id === MODEL_CUSTOM_GROUP_ID);
       return (row?.options ?? []) as Array<Template>;
     },
     defaultModelTemplate(state): Template {
       let result;
-      for (const itm of getTemplateList(state.templateList)) {
-        if (itm.value === DEFAULT_SELECT_MODEL_TPL_ID) {
+      for (const itm of getSelectOptionList(state.modelTemplateList)) {
+        if (itm.id === DEFAULT_SELECT_MODEL_TPL_ID) {
           result = itm;
+          break;
         }
       }
       return result as Template;
     },
   },
   actions: {
-    save(value: Template): string {
-      const template = this.templateMap.get(value.value);
+    saveModelTemplate(value: Template): string {
+      const modelTemplate = this.modelTemplateMap.get(value.id);
       // 更新操作
-      if (template) {
-        template.label = value.label;
-        template.content = value.content;
-        return value.value;
+      if (modelTemplate) {
+        merge(modelTemplate, omit(value, ['id']));
+        return modelTemplate.id;
       }
       // 新增
-      value.value = value.value ? value.value : nanoid();
-      let templateClassify = this.templateList.find((item) => item.id === MODEL_CUSTOM_TEMPLATE_ID);
+      value.id = value.id ? value.id : nanoid();
+      debugger;
+      let modelTemplateGroup = this.modelTemplateList.find((item) => item.id === MODEL_CUSTOM_GROUP_ID);
       // 不存在，创建自定义分组
-      if (!templateClassify) {
-        templateClassify = new TemplateCategory('自定义', {
-          id: MODEL_CUSTOM_TEMPLATE_ID,
+      if (!modelTemplateGroup) {
+        modelTemplateGroup = new SelectOptionGroup('自定义', {
+          id: MODEL_CUSTOM_GROUP_ID,
         });
-        this.templateList.push(templateClassify);
+        this.modelTemplateList.push(modelTemplateGroup);
       }
-      templateClassify.options.push(pick(value, Object.keys(new Template())) as Template);
-      return value.value;
+      modelTemplateGroup.options.push(value);
+      return value.id;
     },
-    addCategory(value: TemplateCategory) {
-      const { templateList } = this;
-      if (!templateList.find((t) => t.id === value.id)) {
-        templateList.push(value);
+    addModelTemplateGroup(value: SelectOptionGroup) {
+      const { modelTemplateList } = this;
+      if (!modelTemplateList.find((t) => t.id === value.id)) {
+        modelTemplateList.push(value);
       }
     },
-    deleteById(value: string, options?: { showMessage?: boolean; onSuccess?: Function }) {
-      if (!value) {
+    deleteModelTemplateById(id: string, options?: { showMessage?: boolean; onSuccess?: Function }) {
+      if (!id) {
         return;
       }
       const showMessage = options?.showMessage !== false;
-      const { templateList } = this;
-      for (let j = 0; j < templateList.length; j++) {
-        const templateBox = templateList[j].options;
-        for (let i = 0; i < templateBox.length; i++) {
-          const tpl = templateBox[i];
-          if (tpl.value === value) {
+      const { modelTemplateList } = this;
+      for (let j = 0; j < modelTemplateList.length; j++) {
+        const modelTemplateGroup = modelTemplateList[j].options;
+        for (let i = 0; i < modelTemplateGroup.length; i++) {
+          const tpl = modelTemplateGroup[i];
+          if (tpl.id === id) {
             if (tpl.builtIn) {
               showMessage && message.warn('该模板为内置模板，不可删除');
             } else {
-              templateBox.splice(i, 1);
+              modelTemplateGroup.splice(i, 1);
               showMessage && message.success('已删除');
               options?.onSuccess?.(tpl);
             }

@@ -1,7 +1,7 @@
 import * as _changeCase from 'change-case';
 import { getSchema } from '@api-helper/core/lib/helpers';
 
-import { ChangeCase } from '@/lib/interface';
+import { ChangeCase } from '@/lib/types';
 import artTemplate from '@/lib/art-template';
 import formatCode from '@/lib/utils/prettier';
 import { APIHelper } from '@api-helper/core/lib/types';

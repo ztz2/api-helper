@@ -106,7 +106,7 @@ align-items: center;
 
 `,
       formatCodeExtension: '.vue',
-      prettierrcOptions: {
+      prettierOptions: {
         singleQuote: false,
         semi: false,
       }

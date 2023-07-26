@@ -1,4 +1,4 @@
-import { TemplateCategory } from '@/store/template/interface';
+import SelectOptionGroup from '@/constants/select-option-group';
 import javascript from './javascript';
 import typescript from './typescript';
 import elementUi from './element-ui';
@@ -16,4 +16,4 @@ export default [
   antdv,
   // React 组件
   antd,
-] as TemplateCategory[];
+] as SelectOptionGroup[];

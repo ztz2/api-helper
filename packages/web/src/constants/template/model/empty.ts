@@ -1,4 +1,4 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from './common';
 
 /**
@@ -8,7 +8,7 @@ export default function genEmptyModelTemplate() {
   return new Template({
     content: `${COMMON_HEAD}
   console.log('数据参数: ', params);
-  console.log('通用配置: ', config);
+  console.log('文档配置信息: ', documentConfig);
 
   // 返回模板集合.
   const result = [];
@@ -37,7 +37,7 @@ export default function genEmptyModelTemplate() {
     // 当然可以生成多个模板，每次生成好之后，添加到result数组中即可
     result.push({
       title: '模版标题',
-      content: artTemplate.render(tpl1, { requestDataSchemaList, responseDataSchemaList, params, config, apih, lodash }),
+      content: artTemplate.render(tpl1, { requestDataSchemaList, responseDataSchemaList, params, documentConfig, apih, lodash }),
     });
 
     // 返回生成好的模板

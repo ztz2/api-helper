@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Arco Design / Table 表格',
-  value: 'arco-design_table_ec889c7423e0092d',
+  title: 'Arco Design / Table 表格',
+  id: 'arco-design_table_ec889c7423e0092d',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -69,7 +69,7 @@ export default {
   },
 }
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

@@ -1,8 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Prettierrc,
-  FormatCodeConfig,
-} from '@api-helper/cli/lib/tools/format-code';
+import { FormatCodeConfig } from '@api-helper/cli/lib/types';
 
 export class FormatCode implements FormatCodeConfig {
   @ApiProperty({
@@ -18,5 +15,5 @@ export class FormatCode implements FormatCodeConfig {
   @ApiProperty({
     description: 'prettier配置信息',
   })
-  prettierOptions: Prettierrc;
+  prettierOptions: Recordable;
 }

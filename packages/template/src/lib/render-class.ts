@@ -5,7 +5,7 @@ import { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { postCode } from '@/lib/utils/util';
-import { ChangeCase } from '@/lib/interface';
+import { ChangeCase } from '@/lib/types';
 import { renderComment } from '@/lib/render-object';
 
 export function renderClass(

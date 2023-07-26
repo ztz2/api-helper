@@ -15,7 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 // @ts-ignore
-var art_template_web_js_1 = __importDefault(require("../lib/utils/template/art-template-web.js"));
+var art_template_web_js_1 = __importDefault(require("./utils/template/art-template-web.js"));
 // @ts-ignore
 art_template_web_js_1.default.defaults.escape = false;
 art_template_web_js_1.default.defaults.minimize = false;

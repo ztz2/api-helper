@@ -1,7 +1,7 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
-import { ChangeCase } from '@/lib/interface';
+import { ChangeCase } from '@/lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid } from '@api-helper/core/lib/utils/util';
 import { createSchema } from '@api-helper/core/lib/helpers';

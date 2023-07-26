@@ -19,7 +19,7 @@
                   :rules="[{ required: true, message: '必选项' }]"
                   :validate-trigger="['change', 'input']"
                 >
-                  <a-select
+                  <apih-select
                     v-model="formModel.apiId"
                     :options="options.categoryList"
                     placeholder="请选择API"
@@ -50,12 +50,12 @@
                         </a-popconfirm>
                       </apih-tooltip>
                       <a-button type="primary" size="mini" @click.prevent="handleAddTpl">新增模板</a-button>
-                      <a-button type="primary" size="mini" :disabled="!currentProject.modelTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
+                      <a-button type="primary" size="mini" :disabled="!currentDocumentConfig.modelTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
                     </a-space>
                   </template>
-                  <a-select
-                    v-model="currentProject.modelTplId"
-                    :options="templateList"
+                  <apih-select
+                    v-model="currentDocumentConfig.modelTplId"
+                    :options="modelTemplateList"
                     placeholder="请选择模板"
                     allow-clear
                   />
@@ -71,7 +71,7 @@
                   <div>maxlength</div>
                   <div>
                     <a-form-item field="maxlength" no-style>
-                      <a-input-number v-model="currentProject.maxlength" allow-clear hide-button />
+                      <a-input-number v-model="currentDocumentConfig.maxlength" allow-clear hide-button />
                     </a-form-item>
                   </div>
                 </a-space>
@@ -79,7 +79,7 @@
               <a-col :span="12">
                 <div style="margin-top: 4px">
                   <a-form-item field="placeholder" no-style>
-                    <a-checkbox v-model="currentProject.placeholder">是否生成placeholder</a-checkbox>
+                    <a-checkbox v-model="currentDocumentConfig.placeholder">是否生成placeholder</a-checkbox>
                   </a-form-item>
                 </div>
               </a-col>
@@ -89,8 +89,8 @@
           <a-card title="其他配置">
             <a-row :gutter="gutter">
               <a-space :size="2" class="a-space--shim" direction="vertical">
-                <div><a-checkbox v-model="currentProject.grid">是否使用格栅布局</a-checkbox></div>
-                <div><a-checkbox v-model="currentProject.generateLabel">Form表单项是否生成label</a-checkbox></div>
+                <div><a-checkbox v-model="currentDocumentConfig.grid">是否使用格栅布局</a-checkbox></div>
+                <div><a-checkbox v-model="currentDocumentConfig.generateLabel">Form表单项是否生成label</a-checkbox></div>
               </a-space>
             </a-row>
           </a-card>
@@ -121,7 +121,7 @@
         </a-tab-pane>
       </a-tabs>
     </a-form>
-    <DialogModelTemplate ref="dialogModelTemplateRef" @success="handleSuccess" />
+    <CtrlDrawerModelTemplate ref="ctrlDrawerModelTemplateRef" @success="handleSuccess" />
   </div>
 </template>
 
@@ -139,7 +139,6 @@ import {
 } from 'vue';
 import { get, cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
-import { Template } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
@@ -149,21 +148,17 @@ import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { FormModel } from './interface';
 import { treeForEach } from '@/utils/tree';
+import { Template } from '@/store/template/interface';
 import { randomChar, modalConfirm } from '@/utils';
-import { Project } from '@/store/project/interface';
-import { useModelTemplate, useProject } from '@/store';
+import { useModelTemplate, useDocumentConfig } from '@/store';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 import genEmptyModelTemplate from '@/constants/template/model/empty';
-import DialogModelTemplate from '../../dialog/dialog-model-template.vue';
+import { DocumentConfig } from '@/store/document-config/interface';
+import CtrlDrawerModelTemplate from '../../../__controller__/ctrl-drawer-model-template.vue';
 
 type FormModelType = FormModel;
 
 const emit = defineEmits(['success', 'exec-gen']);
-const { currentProject } = useProject();
-
-const span = ref(12);
-const gutter = ref(15);
-const dialogModelTemplateRef = ref();
 
 const props = defineProps({
   data: {
@@ -181,11 +176,13 @@ const props = defineProps({
   },
 });
 const route = useRoute();
+const { currentDocumentConfig, documentConfigList } = toRefs(useDocumentConfig());
+const { modelTemplateList, modelTemplateMap, deleteModelTemplateById } = toRefs(useModelTemplate());
 
-const projectStore = useProject();
-const modelTemplateStore = useModelTemplate();
-const { templateList, templateMap, deleteById } = toRefs(modelTemplateStore);
-const selectedTemplate = computed(() => templateMap.value.get(currentProject.modelTplId));
+const span = ref(12);
+const gutter = ref(15);
+const ctrlDrawerModelTemplateRef = ref();
+const selectedTemplate = computed(() => modelTemplateMap.value.get(currentDocumentConfig.value.modelTplId));
 const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
 
 const {
@@ -213,9 +210,9 @@ const options = ref({
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
 
-const project = computed<Project>(() => {
+const documentConfig = computed<DocumentConfig>(() => {
   const { id } = route.query;
-  return projectStore.data.find((itm) => itm.id === id) as Project;
+  return documentConfigList.value.find((itm) => itm.id === id) as DocumentConfig;
 });
 
 watch(() => props.categoryList, (categoryList) => {
@@ -227,8 +224,8 @@ watch(() => props.categoryList, (categoryList) => {
     options: module.apiList?.map((api) => {
       apiMap.value.set(api.id, api);
       return {
-        value: api.id,
-        label: api.label,
+        id: api.id,
+        title: api.label,
       };
     }) ?? [],
   })) ?? [];
@@ -302,7 +299,7 @@ function getResponseDataSchema(): APIHelper.Schema | null {
   if (!api || !api.responseDataSchema) {
     return null;
   }
-  const { dataKey } = project.value;
+  const { dataKey } = documentConfig.value;
   let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     schema = getSchema(schema, dataKey);
@@ -311,7 +308,7 @@ function getResponseDataSchema(): APIHelper.Schema | null {
 }
 
 function validatorTpl(keyName: string, value: unknown, callback: Function) {
-  if (!get(currentProject, keyName)) {
+  if (!get(currentDocumentConfig.value, keyName)) {
     return callback('必选项');
   }
   callback();
@@ -348,7 +345,7 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
 }
 
 function handleAddTpl() {
-  dialogModelTemplateRef.value?.open({
+  ctrlDrawerModelTemplateRef.value?.open({
     type: 'ADD',
     title: '新增模板',
     formComponentProps: {
@@ -361,25 +358,25 @@ function handleDeleteTpl() {
   if (!selectedTemplate.value) {
     return message.warn('没有选择模板.');
   }
-  deleteById.value(currentProject.modelTplId, {
+  deleteModelTemplateById.value(currentDocumentConfig.value.modelTplId, {
     onSuccess() {
-      currentProject.modelTplId = '';
+      currentDocumentConfig.value.modelTplId = '';
     },
   });
 }
 
 async function handleEditTpl() {
-  const tplModel = cloneDeep(templateMap.value.get(currentProject.modelTplId));
+  const tplModel = cloneDeep(modelTemplateMap.value.get(currentDocumentConfig.value.modelTplId));
   if (!tplModel) {
     return Message.error('请重新选择模板');
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ` - 副本${randomChar()}`;
-    tplModel.value = '';
+    tplModel.title += ` - 副本${randomChar()}`;
+    tplModel.id = '';
     tplModel.builtIn = false;
   }
-  dialogModelTemplateRef.value?.open({
+  ctrlDrawerModelTemplateRef.value?.open({
     type: 'EDIT',
     title: '修改模板',
     formComponentProps: {
@@ -389,7 +386,7 @@ async function handleEditTpl() {
 }
 
 function handleSuccess(id: string) {
-  currentProject.modelTplId = id;
+  currentDocumentConfig.value.modelTplId = id;
   emit('exec-gen', id);
 }
 

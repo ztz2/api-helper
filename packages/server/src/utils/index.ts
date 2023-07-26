@@ -12,7 +12,7 @@ export function getTreePath(
     for (let i = 0; i < treeList.length; i++) {
       const item = treeList[i];
       const currentPathMemo = [...pathMemo];
-      currentPathMemo.push(item.label);
+      currentPathMemo.push(item.title);
       if (Array.isArray(item.children) && item.children.length > 0) {
         dfs(item.children, currentPathMemo);
         continue;

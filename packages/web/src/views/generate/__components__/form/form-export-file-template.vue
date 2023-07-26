@@ -12,17 +12,17 @@
           <a-col :span="24">
             <a-form-item
               label="名称"
-              field="label"
+              field="title"
               :rules="[{ required: true, message: '必填项' }]"
               :validate-trigger="['change', 'input']"
             >
-              <a-input v-model="formModel.label" :max-length="64" />
+              <a-input v-model="formModel.title" :max-length="64" />
             </a-form-item>
           </a-col>
           <a-col :span="24">
             <a-form-item
               label="文件模块"
-              field="fileDirectory"
+              field="fileDirectoryConfigList"
               :rules="[{ min: 0, required: true, message: '文件模块不能为空' }]"
               :validate-trigger="['change', 'input']"
             >
@@ -57,7 +57,7 @@
               </template>
               <apih-tree
                 v-model:value="selectFolder"
-                :data="formModel.fileDirectory"
+                :data="formModel.fileDirectoryConfigList"
                 file-icon
                 draggable
               />
@@ -66,7 +66,7 @@
         </a-row>
       </a-card>
     </a-form>
-    <DialogExportFileDirectory ref="dialogExportFileDirectoryRef" @success="handleSuccess"/>
+    <CtrlDrawerExportFileDirectory ref="ctrlDrawerExportFileDirectoryRef" @success="handleSuccess"/>
   </div>
 </template>
 
@@ -83,18 +83,13 @@ import {
   SelectOptionGroup,
 } from '@arco-design/web-vue';
 import { merge } from 'lodash';
-import {
-  ExportFile,
-  FileDirectory,
-  createExportFile,
-} from '@api-helper/template';
 
-import { useProject } from '@/store';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
-import DialogExportFileDirectory from '../dialog/dialog-export-file-directory.vue';
+import { FileDirectory, FileDirectoryConfig } from '@/store/file-directory/interface';
+import CtrlDrawerExportFileDirectory from '../../__controller__/ctrl-drawer-export-file-directory.vue';
 
-type FormModelType = ExportFile;
+type FormModelType = FileDirectory;
 
 const props = defineProps({
   data: {
@@ -121,20 +116,18 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel,
-} = useForm<FormModelType>(createExportFile(), {
+} = useForm<FormModelType>(new FileDirectory(), {
   watchFormModel: toRef(props, 'data'),
 });
 const span = ref(12);
 const gutter = ref(15);
 const loading = ref(false);
-const projectStore = useProject();
 const selectFolder = ref('');
-const dialogExportFileDirectoryRef = ref('');
-const { currentProject } = projectStore;
-const fileDirectoryMap = computed<Map<string, FileDirectory>>(() => {
+const ctrlDrawerExportFileDirectoryRef = ref('');
+const fileDirectoryMap = computed<Map<string, FileDirectoryConfig>>(() => {
   const result = new Map();
-  treeForEach(formModel.value.fileDirectory, (node: FileDirectory) => {
-    result.set(node.value, node);
+  treeForEach(formModel.value.fileDirectoryConfigList, (node: FileDirectoryConfig) => {
+    result.set(node.id, node);
   }, 'children');
   return result;
 });
@@ -147,8 +140,8 @@ const options = ref({
   boo: [] as Array<SelectOptionGroup>,
 });
 
-function handleSuccess(data: FileDirectory) {
-  const itm = fileDirectoryMap.value.get(data.value);
+function handleSuccess(data: FileDirectoryConfig) {
+  const itm = fileDirectoryMap.value.get(data.id);
   // 修改
   if (itm) {
     merge(itm, data);
@@ -160,11 +153,11 @@ function handleSuccess(data: FileDirectory) {
     return undefined;
   }
   // 新增到根节点
-  formModel.value.fileDirectory.push(data);
+  formModel.value.fileDirectoryConfigList.push(data);
 }
 
 function handleAdd() {
-  dialogExportFileDirectoryRef.value.open({
+  ctrlDrawerExportFileDirectoryRef.value.open({
     title: '新增文件(夹)',
     type: 'ADD',
   });
@@ -172,7 +165,7 @@ function handleAdd() {
 
 function handleEdit() {
   if (selectFolderNode.value) {
-    dialogExportFileDirectoryRef.value.open({
+    ctrlDrawerExportFileDirectoryRef.value.open({
       type: 'EDIT',
       title: '修改文件(夹)',
       formComponentProps: {
@@ -183,13 +176,13 @@ function handleEdit() {
 }
 
 function handleDelete() {
-  function dfs(nodeList: Array<FileDirectory>) {
+  function dfs(nodeList: Array<FileDirectoryConfig>) {
     if (!Array.isArray(nodeList)) {
       return undefined;
     }
     for (let i = 0; i < nodeList.length; i++) {
       const itm = nodeList[i];
-      if (itm.value === selectFolderNode.value?.value) {
+      if (itm.id === selectFolderNode.value?.id) {
         nodeList.splice(i, 1);
         return undefined;
       }
@@ -197,7 +190,7 @@ function handleDelete() {
     }
   }
   if (selectFolderNode.value) {
-    dfs(formModel.value.fileDirectory);
+    dfs(formModel.value.fileDirectoryConfigList);
   }
 }
 

@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Element UI / Table 表格',
-  value: 'element-ui_table_d6940207e7e1f35e',
+  title: 'Element UI / Table 表格',
+  id: 'element-ui_table_d6940207e7e1f35e',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -67,7 +67,7 @@ export default new Template({
     }
   }
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

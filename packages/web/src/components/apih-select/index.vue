@@ -1,17 +1,10 @@
 <template>
   <a-select
     v-model="currentValue"
-    value-key="id"
     :placeholder="placeholder"
     :allow-clear="allowClear"
-  >
-    <a-option
-      v-for="item of currentOptions"
-      :key="item.value"
-      :label="item.label"
-      :value="item.value"
-    />
-  </a-select>
+    :options="currentOptions"
+  />
 </template>
 
 <script lang="ts">
@@ -31,14 +24,15 @@ import {
   defineEmits,
   defineProps,
 } from 'vue';
-import {
-  TreeNodeData,
+import type {
+  SelectOptionData,
+  SelectOptionGroup,
 } from '@arco-design/web-vue';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
   options: {
-    type: Array as PropType<Array<TreeNodeData>>,
+    type: Array as PropType<Array<SelectOptionData>>,
     default: () => [],
   },
   value: {
@@ -51,7 +45,7 @@ const props = defineProps({
   },
   labelKey: {
     type: String,
-    default: 'label',
+    default: 'title',
   },
   valueKey: {
     type: String,
@@ -69,15 +63,7 @@ const props = defineProps({
 
 const currentValue = ref<string[]>([]);
 const multiple = toRef(props, 'multiple');
-const currentOptions = computed(() => props.options.map((item) => ({
-  ...item,
-  label: getLabel(item),
-  value: getValue(item),
-})));
-
-watch(() => currentOptions.value, (val) => {
-  console.log(val);
-}, { immediate: true });
+const currentOptions = computed(() => processOptions(props.options));
 
 watch(() => props.value, (val) => {
   // 多选
@@ -107,8 +93,8 @@ watch(() => currentValue.value, (val: string[]) => {
   emit('update:value', val.length > 0 ? val[0] : '');
 }, { deep: true, immediate: true });
 
-function getLabel(node: TreeNodeData): string {
-  const valueKeys = [props.labelKey, 'name', 'label', 'title'];
+function getLabel(node: SelectOptionData): string {
+  const valueKeys = [props.labelKey, 'title', 'name', 'label'];
   for (const key of valueKeys) {
     if (Object.hasOwn(node, key)) { // @ts-ignore
       return node[key];
@@ -117,7 +103,7 @@ function getLabel(node: TreeNodeData): string {
   return '';
 }
 
-function getValue(node: TreeNodeData): string {
+function getValue(node: SelectOptionData): string {
   const valueKeys = [props.valueKey, 'id', 'key', 'value'];
   for (const key of valueKeys) {
     if (Object.hasOwn(node, key)) { // @ts-ignore
@@ -126,8 +112,19 @@ function getValue(node: TreeNodeData): string {
   }
   return '';
 }
+
+function processOptions(options: Array<SelectOptionGroup> | Array<SelectOptionData>) {
+  return options.map((item: SelectOptionGroup | SelectOptionData) => {
+    item = { ...item };
+    item.label = getLabel(item);
+    item.value = getValue(item);
+    if (Array.isArray(item.options)) {
+      item.options = processOptions(item.options as Array<SelectOptionGroup>);
+    }
+    if (Array.isArray(item.children)) {
+      item.children = processOptions(item.children);
+    }
+    return item;
+  });
+}
 </script>
-
-<style lang="scss">
-
-</style>

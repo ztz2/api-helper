@@ -2,7 +2,7 @@
   <div>
     <a-form
       ref="formRef"
-      :model="currentProject"
+      :model="currentDocumentConfig"
       layout="vertical"
       auto-label-width
     >
@@ -34,14 +34,14 @@
                     </a-popconfirm>
                   </apih-tooltip>
                   <a-button size="mini" type="primary" @click.prevent="handleAddTpl">新增模板</a-button>
-                  <a-button size="mini" type="primary" :disabled="!currentProject.apiTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
+                  <a-button size="mini" type="primary" :disabled="!currentDocumentConfig.apiTplId" @click.prevent="handleEditTpl" >编辑模板</a-button>
                 </a-space>
               </template>
-              <a-select
+              <apih-select
                 value-key="id"
-                v-model="currentProject.apiTplId"
+                v-model="currentDocumentConfig.apiTplId"
                 placeholder="请选择模板"
-                :options="templateList"
+                :options="apiTemplateList"
                 allow-clear
               />
             </a-form-item>
@@ -57,18 +57,18 @@
                 field="onlyApiFunc"
                 style="margin-bottom: 0"
             >
-              <a-radio-group v-model="currentProject.onlyApiFunc" :options="options.boolean" />
+              <a-radio-group v-model="currentDocumentConfig.onlyApiFunc" :options="options.boolean" />
             </a-form-item>
           </a-col>
-          <a-col v-if="currentProject.onlyApiFunc === false" style="margin-top: 20px" :span="24">
+          <a-col v-if="currentDocumentConfig.onlyApiFunc === false" style="margin-top: 20px" :span="24">
             <a-form-item label="API函数头部代码" field="headCodeText" style="margin-bottom: 0">
-              <a-textarea v-model="currentProject.headCodeText" :max-length="512"></a-textarea>
+              <a-textarea v-model="currentDocumentConfig.headCodeText" :max-length="512"></a-textarea>
             </a-form-item>
           </a-col>
         </a-row>
       </a-card>
     </a-form>
-    <DialogAPITemplate ref="dialogAPITemplateRef" @success="handleSuccess" />
+    <CtrlDrawerAPITemplate ref="ctrlDrawerAPITemplateRef" @success="handleSuccess" />
   </div>
 </template>
 
@@ -84,14 +84,14 @@ import {
 } from 'vue';
 import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
-import { Template } from '@api-helper/template';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
 import message from '@/utils/message';
 import { randomChar, modalConfirm } from '@/utils';
-import { useProject, useApiTemplate } from '@/store';
+import { useDocumentConfig, useApiTemplate } from '@/store';
 import genEmptyApiTemplate from '@/constants/template/api/empty';
-import DialogAPITemplate from '../dialog/dialog-api-template.vue';
+import CtrlDrawerAPITemplate from '../../__controller__/ctrl-drawer-api-template.vue';
+import { Template } from '@/store/template/interface';
 
 const emit = defineEmits(['success', 'exec-gen']);
 
@@ -106,13 +106,14 @@ const props = defineProps({
     default: 'ADD',
   },
 });
+const { currentDocumentConfig } = toRefs(useDocumentConfig());
+const { apiTemplateMap, apiTemplateList, deleteApiTemplateById } = toRefs(useApiTemplate());
 
 const formRef = ref();
 const gutter = ref(15);
-const dialogAPITemplateRef = ref();
-const { currentProject } = useProject();
-const { templateMap, templateList, deleteById } = toRefs(useApiTemplate());
-const selectedTemplate = computed(() => templateMap.value.get(currentProject.apiTplId));
+const ctrlDrawerAPITemplateRef = ref();
+
+const selectedTemplate = computed(() => apiTemplateMap.value.get(currentDocumentConfig.value.apiTplId));
 const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
 
 const options = ref({
@@ -127,14 +128,14 @@ const options = ref({
 });
 
 function validatorTpl(keyName: string, value: unknown, callback: Function) {
-  if (!get(currentProject, keyName)) {
+  if (!get(currentDocumentConfig.value, keyName)) {
     return callback('必选项');
   }
   callback();
 }
 
 function handleAddTpl() {
-  dialogAPITemplateRef.value?.open({
+  ctrlDrawerAPITemplateRef.value?.open({
     type: 'ADD',
     title: '新增模板',
     formComponentProps: {
@@ -144,17 +145,17 @@ function handleAddTpl() {
 }
 
 async function handleEditTpl() {
-  const tplModel = cloneDeep(templateMap.value.get(currentProject.apiTplId));
+  const tplModel = cloneDeep(apiTemplateMap.value.get(currentDocumentConfig.value.apiTplId));
   if (!tplModel) {
     return Message.error('请重新选择模板');
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.label += ` - 副本${randomChar()}`;
-    tplModel.value = '';
+    tplModel.title += ` - 副本${randomChar()}`;
+    tplModel.id = '';
     tplModel.builtIn = false;
   }
-  dialogAPITemplateRef.value?.open({
+  ctrlDrawerAPITemplateRef.value?.open({
     type: 'EDIT',
     title: '修改模板',
     formComponentProps: {
@@ -167,20 +168,20 @@ function handleDeleteTpl() {
   if (!selectedTemplate.value) {
     return message.warn('没有选择模板.');
   }
-  deleteById.value(currentProject.apiTplId, {
+  deleteApiTemplateById.value(currentDocumentConfig.value.apiTplId, {
     onSuccess() {
-      currentProject.apiTplId = '';
+      currentDocumentConfig.value.apiTplId = '';
     },
   });
 }
 
 function handleSuccess(id: string) {
-  currentProject.apiTplId = id;
+  currentDocumentConfig.value.apiTplId = id;
   emit('exec-gen', id);
 }
 
 function getFormModel() {
-  return cloneDeep(currentProject);
+  return cloneDeep(currentDocumentConfig.value);
 }
 
 defineExpose({

@@ -1,10 +1,8 @@
-import { render } from 'vue';
 import { merge } from 'lodash';
-
 import { Message, MessageConfig } from '@arco-design/web-vue';
+import { checkType } from '@api-helper/core/lib/utils/util';
 
 import UniqueTask from '@/utils/unique-task';
-import { checkType } from '@/utils/index';
 
 type ModelFuncHook = null | undefined | Function;
 type ModelFuncType = 'success' | 'error' | 'info' | 'warning' | 'warn' | 'loading';

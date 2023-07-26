@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import 'uno.css';
 import '@arco-design/web-vue/dist/arco.css';
 import ArcoVue, { Message } from '@arco-design/web-vue';
 import ArcoVueIcon from '@arco-design/web-vue/es/icon';

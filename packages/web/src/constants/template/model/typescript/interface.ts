@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Typescript / interface',
-  value: 'typescript_interface_004b76d09ea723be',
+  title: 'Typescript / interface',
+  id: 'typescript_interface_004b76d09ea723be',
   formatCodeExtension: '.ts',
   builtIn: true,
   content: `${COMMON_HEAD}

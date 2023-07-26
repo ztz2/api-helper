@@ -20,7 +20,7 @@ const util_1 = require("@api-helper/core/lib/utils/util");
 const util_2 = require("../../lib/tools/util");
 const constants_1 = require("../../lib/constants");
 const log_1 = __importDefault(require("../../lib/tools/log"));
-const prettierrc_options_1 = __importDefault(require("./prettierrc-options"));
+const types_1 = require("../../lib/types");
 function formatCode(config) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Array.isArray(config)) {
@@ -47,14 +47,14 @@ function format(config) {
             log_1.default.warn('提示', errorText);
             return resolve(errorText);
         }
-        const prettierrc = (0, util_2.checkType)(config.prettierrcOptions, 'Object') ?
-            config.prettierrcOptions :
-            (0, util_2.checkType)(config.prettierrcOptions, 'String') ? JSON.parse(config.prettierrcOptions) : {};
-        const prettierrcOptions = JSON.stringify((0, merge_1.default)(new prettierrc_options_1.default(), prettierrc));
+        const prettier = (0, util_2.checkType)(config.prettierOptions, 'Object') ?
+            config.prettierOptions :
+            (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
+        const prettierOptions = JSON.stringify((0, merge_1.default)(new types_1.PrettierOptions(), prettier));
         const filepath = (0, util_2.createTempFile)(sourceCode, { postfix: formatCodeExtension });
-        const prettierrcFilePath = (0, util_2.createTempFile)(prettierrcOptions, { postfix: '.json' });
-        const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierrcFilePath))]); });
-        node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierrcFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
+        const prettierFilePath = (0, util_2.createTempFile)(prettierOptions, { postfix: '.json' });
+        const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierFilePath))]); });
+        node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
                 const errorText = `@api-helper/cli/lib/tools/format.ts 格式化代码失败：${(0, util_1.getErrorMessage)(err)}`;
                 log_1.default.warn('提示', errorText);

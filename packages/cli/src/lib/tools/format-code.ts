@@ -10,21 +10,11 @@ import {
   createTempFile,
 } from '@/lib/tools/util';
 
-import {
-  FormatCodeExtension,
-  FORMAT_CODE_EXTENSION,
-} from '@/lib/constants';
+import { FORMAT_CODE_EXTENSION } from '@/lib/constants';
 
 import log from '@/lib/tools/log';
-import PrettierrcOptions from './prettierrc-options';
+import { PrettierOptions, FormatCodeConfig } from '@/lib/types';
 
-export type Prettierrc = string | Partial<PrettierrcOptions>;
-
-export type FormatCodeConfig = {
-  sourceCode: string;
-  formatCodeExtension: FormatCodeExtension;
-  prettierrcOptions?: Prettierrc;
-}
 
 export default async function formatCode(config: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
   if (Array.isArray(config)) {
@@ -51,16 +41,16 @@ function format(config: FormatCodeConfig): Promise<string> {
       return resolve(errorText);
     }
 
-    const prettierrc = checkType(config.prettierrcOptions, 'Object') ?
-      config.prettierrcOptions :
-        checkType(config.prettierrcOptions, 'String') ? JSON.parse(config.prettierrcOptions as string) : {};
-    const prettierrcOptions = JSON.stringify(merge(new PrettierrcOptions(), prettierrc));
+    const prettier = checkType(config.prettierOptions, 'Object') ?
+      config.prettierOptions :
+        checkType(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions as string) : {};
+    const prettierOptions = JSON.stringify(merge(new PrettierOptions(), prettier));
 
     const filepath = createTempFile(sourceCode, { postfix: formatCodeExtension });
-    const prettierrcFilePath = createTempFile(prettierrcOptions, { postfix: '.json' });
+    const prettierFilePath = createTempFile(prettierOptions, { postfix: '.json' });
 
-    const clearTempFile = async () => { await Promise.all([to(remove(filepath)), to(remove(prettierrcFilePath))]); }
-    cp.exec(`npx prettier --write ${filepath} --config ${prettierrcFilePath}`, async (err) => {
+    const clearTempFile = async () => { await Promise.all([to(remove(filepath)), to(remove(prettierFilePath))]); }
+    cp.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, async (err) => {
       if (err) {
         const errorText = `@api-helper/cli/lib/tools/format.ts 格式化代码失败：${getErrorMessage(err as Error)}`;
         log.warn('提示', errorText);

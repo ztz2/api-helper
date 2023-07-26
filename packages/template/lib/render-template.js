@@ -62,95 +62,96 @@ var _ = __importStar(require("lodash"));
 var util_1 = require("@api-helper/core/lib/utils/util");
 var render_template_apih_1 = __importDefault(require("./render-template-apih"));
 var format_code_server_1 = __importDefault(require("./utils/format-code-server"));
-function renderTemplate(
+exports.default = (function (
 // 模板对象
 templateMap, 
 // 渲染数据
 params, 
-// 渲染配置
-config) {
+// 渲染配置，参考：
+documentConfig, 
+// axios配置
+formatCodeFunc) { return __awaiter(void 0, void 0, void 0, function () {
+    var result, formatCodeExtension, lodash, apih, config, artTemplate, exe, codeList, i, itm, filterCodeList, filterCodeListIdxMap, i, content, formattedCodeList, i, e_1, errorText;
     var _a;
-    return __awaiter(this, void 0, void 0, function () {
-        var result, formatCodeExtension, lodash, apih, artTemplate, exe, codeList, i, itm, filterCodeList, filterCodeListIdxMap, i, content, formattedCodeList, i, e_1, errorText;
-        return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    templateMap = _.cloneDeep(templateMap);
-                    params = _.cloneDeep(params);
-                    config = _.cloneDeep(config !== null && config !== void 0 ? config : {});
-                    result = [];
-                    formatCodeExtension = templateMap.formatCodeExtension;
-                    _b.label = 1;
-                case 1:
-                    _b.trys.push([1, 3, , 4]);
-                    lodash = _;
-                    apih = render_template_apih_1.default;
-                    artTemplate = apih.template.artTemplate;
-                    exe = { renderTemplate: null };
-                    eval("".concat(templateMap.content, "\n")
-                        + 'exe.renderTemplate = renderTemplate');
-                    if (typeof exe.renderTemplate !== 'function') {
-                        // 模板中缺少 renderTemplate 函数
-                        result = [{
-                                title: '异常模板',
-                                content: "// \u6A21\u677F\u6E32\u67D3\u9519\u8BEF\uFF1A\u6A21\u677F\u4E2D\u7F3A\u5C11 renderTemplate \u51FD\u6570\n",
-                            }];
-                        return [2 /*return*/, result];
-                    }
-                    codeList = exe.renderTemplate(params, config);
-                    // 模版返回值异常
-                    if (!Array.isArray(codeList)) {
-                        result = [{
-                                title: '异常模板',
-                                content: "// \u6A21\u677F\u6E32\u67D3\u9519\u8BEF\uFF1ArenderTemplate \u51FD\u6570\u8FD4\u56DE\u503C\u9519\u8BEF\uFF0C\u6B63\u786E\u7684\u8FD4\u56DE\u503C\u7C7B\u578B\u5E94\u8BE5\u662F\uFF1AArray<APIHelper.TemplateContent>\n// \u6570\u7EC4\u91CC\u9762\u6BCF\u4E00\u9879\u90FD\u662F\u4E00\u4E2A\u6A21\u677F\u3002\u4F8B\u5B50\u6570\u636E\uFF1A[{ title: '\u6A21\u7248\u6807\u9898', content: '\u6A21\u7248\u5185\u5BB9' }];\n// APIHelper.TemplateContent \u7C7B\u578B\u8BF4\u660E\u6587\u6863: https://github.com/ztz2/api-helper/blob/main/packages/core/lib/types.d.ts\n",
-                            }];
-                        return [2 /*return*/, result];
-                    }
-                    // 兼容旧版模板的返回值
-                    for (i = 0; i < codeList.length; i++) {
-                        itm = codeList[i];
-                        result.push((0, util_1.checkType)(itm, 'Object') ? itm : {
-                            title: "\u6A21\u7248".concat(i + 1),
-                            content: itm,
-                        });
-                    }
-                    if (!formatCodeExtension) {
-                        return [2 /*return*/, result];
-                    }
-                    filterCodeList = [];
-                    filterCodeListIdxMap = {};
-                    for (i = 0; i < result.length; i++) {
-                        content = result[i].content;
-                        if (content && (content === null || content === void 0 ? void 0 : content.trim()) !== '') {
-                            filterCodeList.push(content);
-                            filterCodeListIdxMap[filterCodeList.length - 1] = i;
-                        }
-                    }
-                    if (filterCodeList.length === 0) {
-                        return [2 /*return*/, result];
-                    }
-                    return [4 /*yield*/, (0, format_code_server_1.default)(filterCodeList.map(function (c) { return ({
-                            sourceCode: c,
-                            formatCodeExtension: formatCodeExtension,
-                            prettierrcOptions: config === null || config === void 0 ? void 0 : config.prettierrcOptions,
-                        }); }))];
-                case 2:
-                    formattedCodeList = (_b.sent());
-                    for (i = 0; i < formattedCodeList.length; i++) {
-                        result[filterCodeListIdxMap[i]].content = (_a = formattedCodeList[i]) !== null && _a !== void 0 ? _a : '';
-                    }
-                    return [3 /*break*/, 4];
-                case 3:
-                    e_1 = _b.sent();
-                    errorText = (0, util_1.getErrorMessage)(e_1);
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                templateMap = _.cloneDeep(templateMap);
+                params = _.cloneDeep(params);
+                documentConfig = _.cloneDeep(documentConfig !== null && documentConfig !== void 0 ? documentConfig : {});
+                formatCodeFunc = formatCodeFunc !== null && formatCodeFunc !== void 0 ? formatCodeFunc : format_code_server_1.default;
+                result = [];
+                formatCodeExtension = templateMap.formatCodeExtension;
+                _b.label = 1;
+            case 1:
+                _b.trys.push([1, 3, , 4]);
+                lodash = _;
+                apih = render_template_apih_1.default;
+                config = documentConfig;
+                artTemplate = apih.template.artTemplate;
+                exe = { renderTemplate: null };
+                eval("".concat(templateMap.content, "\n")
+                    + 'exe.renderTemplate = renderTemplate');
+                if (typeof exe.renderTemplate !== 'function') {
+                    // 模板中缺少 renderTemplate 函数
                     result = [{
-                            title: '异常模版',
-                            content: errorText,
+                            title: '异常模板',
+                            content: "// \u6A21\u677F\u6E32\u67D3\u9519\u8BEF\uFF1A\u6A21\u677F\u4E2D\u7F3A\u5C11 renderTemplate \u51FD\u6570\n",
                         }];
-                    return [3 /*break*/, 4];
-                case 4: return [2 /*return*/, result];
-            }
-        });
+                    return [2 /*return*/, result];
+                }
+                codeList = exe.renderTemplate(params, config);
+                // 模版返回值异常
+                if (!Array.isArray(codeList)) {
+                    result = [{
+                            title: '异常模板',
+                            content: "// \u6A21\u677F\u6E32\u67D3\u9519\u8BEF\uFF1ArenderTemplate \u51FD\u6570\u8FD4\u56DE\u503C\u9519\u8BEF\uFF0C\u6B63\u786E\u7684\u8FD4\u56DE\u503C\u7C7B\u578B\u5E94\u8BE5\u662F\uFF1AArray<APIHelper.TemplateContent>\n// \u6570\u7EC4\u91CC\u9762\u6BCF\u4E00\u9879\u90FD\u662F\u4E00\u4E2A\u6A21\u677F\u3002\u4F8B\u5B50\u6570\u636E\uFF1A[{ title: '\u6A21\u7248\u6807\u9898', content: '\u6A21\u7248\u5185\u5BB9' }];\n// APIHelper.TemplateContent \u7C7B\u578B\u8BF4\u660E\u6587\u6863: https://github.com/ztz2/api-helper/blob/main/packages/core/lib/types.d.ts\n",
+                        }];
+                    return [2 /*return*/, result];
+                }
+                // 兼容旧版模板的返回值
+                for (i = 0; i < codeList.length; i++) {
+                    itm = codeList[i];
+                    result.push((0, util_1.checkType)(itm, 'Object') ? itm : {
+                        title: "\u6A21\u7248".concat(i + 1),
+                        content: itm,
+                    });
+                }
+                if (!formatCodeExtension) {
+                    return [2 /*return*/, result];
+                }
+                filterCodeList = [];
+                filterCodeListIdxMap = {};
+                for (i = 0; i < result.length; i++) {
+                    content = result[i].content;
+                    if (content && (content === null || content === void 0 ? void 0 : content.trim()) !== '') {
+                        filterCodeList.push(content);
+                        filterCodeListIdxMap[filterCodeList.length - 1] = i;
+                    }
+                }
+                if (filterCodeList.length === 0) {
+                    return [2 /*return*/, result];
+                }
+                return [4 /*yield*/, formatCodeFunc(filterCodeList.map(function (c) { return ({
+                        sourceCode: c,
+                        formatCodeExtension: formatCodeExtension,
+                        prettierOptions: documentConfig === null || documentConfig === void 0 ? void 0 : documentConfig.prettierOptions,
+                    }); }))];
+            case 2:
+                formattedCodeList = (_b.sent());
+                for (i = 0; i < formattedCodeList.length; i++) {
+                    result[filterCodeListIdxMap[i]].content = (_a = formattedCodeList[i]) !== null && _a !== void 0 ? _a : '';
+                }
+                return [3 /*break*/, 4];
+            case 3:
+                e_1 = _b.sent();
+                errorText = (0, util_1.getErrorMessage)(e_1);
+                result = [{
+                        title: '异常模版',
+                        content: errorText,
+                    }];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/, result];
+        }
     });
-}
-exports.default = renderTemplate;
+}); });

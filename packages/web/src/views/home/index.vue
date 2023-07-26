@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-space>
-      <a-button @click="dialogCURef.open({ type: 'ADD' })" type="primary">添加</a-button>
+      <a-button @click="ctrlDrawerCuRef.open({ type: 'ADD' })" type="primary">添加</a-button>
       <a-button
         :disabled="selectedKeys.length === 0"
         @click="handleDelete(selectedKeys)"
@@ -15,7 +15,7 @@
   <div style="margin-top: 14px">
     <a-table
       v-model:selectedKeys="selectedKeys"
-      :data="tableData"
+      :data="documentConfigList"
       :row-selection="rowSelection"
       :pagination="false"
       row-key="id"
@@ -27,7 +27,7 @@
         <a-table-column title="操作" :width="200">
           <template #cell="{ record }">
             <a-space>
-              <a-button @click="dialogCURef.open({ type: 'EDIT', formComponentProps: { data: record } })" size="mini">编辑</a-button>
+              <a-button @click="ctrlDrawerCuRef.open({ type: 'EDIT', formComponentProps: { data: record } })" size="mini">编辑</a-button>
               <a-button @click="handleDelete(record)" type="primary" status="danger" size="mini">删除</a-button>
               <a-button size="mini" :href="`/#/generate?id=${record.id}`" type="primary">生成</a-button>
             </a-space>
@@ -36,7 +36,7 @@
       </template>
     </a-table>
   </div>
-  <DialogCU ref="dialogCURef" />
+  <CtrlDrawerCu ref="ctrlDrawerCuRef" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -48,29 +48,31 @@ export default defineComponent({
 <script lang="ts" setup>
 import {
   ref,
-  computed,
+  toRefs,
   reactive,
 } from 'vue';
 
 import { confirm } from '@/utils';
-import { useProject } from '@/store';
-import { Project } from '@/store/project/interface';
-import DialogCU from './__components__/dialog/dialog-cu.vue';
+import { useDocumentConfig } from '@/store';
+import CtrlDrawerCu from './__controller__/ctrl-drawer-cu.vue';
+import { DocumentConfig } from '@/store/document-config/interface';
 
-const dialogCURef = ref();
-const projectStore = useProject();
+const {
+  documentConfigList,
+  deleteDocumentConfig,
+} = toRefs(useDocumentConfig());
 
+const ctrlDrawerCuRef = ref();
 const selectedKeys = ref<Array<string>>([]);
-const tableData = computed(() => projectStore.data);
 const rowSelection = reactive<any>({
   type: 'checkbox',
   showCheckedAll: true,
   onlyCurrent: true,
 });
 
-function handleDelete(row: (Project | string) | Array<Project | string>) {
+function handleDelete(row: (DocumentConfig | string) | Array<DocumentConfig | string>) {
   confirm('确认要进行删除吗？', () => {
-    projectStore.delete(row);
+    deleteDocumentConfig.value(row);
   });
 }
 </script>

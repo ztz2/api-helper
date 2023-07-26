@@ -1,17 +1,20 @@
 import { merge } from 'lodash';
-import { nanoid } from 'nanoid';
-import { Template, ExportFile } from '@api-helper/template';
+import { checkType } from '@api-helper/core/lib/utils/util';
+import type { SelectOptionData } from '@arco-design/web-vue';
+import type { FormatCodeConfig } from '@api-helper/cli/lib/types';
 
-// 分组
-export class TemplateCategory {
-  id = nanoid();
-  label;
-  isGroup = true;
-  options = [] as Array<Template | ExportFile>;
-  constructor(label: string, options?: Partial<TemplateCategory>) {
-    if (options) {
-      merge(this, options);
-    }
-    this.label = label;
+export class Template implements SelectOptionData {
+  // 模板名称
+  title = '';
+  // 唯一ID
+  id = '';
+  // 模板内容
+  content = '';
+  // 是否为内置模版
+  builtIn = false;
+  // 格式化代码的文件后缀名
+  formatCodeExtension = '.ts' as FormatCodeConfig['formatCodeExtension'] | '';
+  constructor(options?: Partial<Template>) {
+    checkType(options, 'Object') && merge(this, options);
   }
 }

@@ -1,5 +1,5 @@
 import { cloneDeep, uniq, merge } from 'lodash';
-import { checkType } from '@/utils/index';
+import { checkType } from '@api-helper/core/lib/utils/util';
 
 /**
  * 遍历 tree

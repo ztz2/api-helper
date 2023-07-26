@@ -97,15 +97,8 @@ export type V2PetResponseTypeByPost = any;
  * @doc https://yapi.pro/project/16095/interface/api/969390
  * @url [ POST ] /v2/pet
  */
-export function v2PetByPost(
-  data: IV2PetRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig),
-    ...args
-  );
+export function v2PetByPost(data: IV2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseTypeByPost>(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
 }
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
@@ -146,15 +139,8 @@ export type V2PetResponseTypeByPut = any;
  * @doc https://yapi.pro/project/16095/interface/api/969392
  * @url [ PUT ] /v2/pet
  */
-export function v2PetByPut(
-  data: IV2PetRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetResponseTypeByPut>(
-    processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig),
-    ...args
-  );
+export function v2PetByPut(data: IV2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseTypeByPut>(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
 }
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
@@ -250,11 +236,7 @@ export type V2PetFindByTagsResponseTypeByGet = Array<{
  * @doc https://yapi.pro/project/16095/interface/api/969396
  * @url [ GET ] /v2/pet/findByTags
  */
-export function v2PetFindByTagsByGet(
-  data: IV2PetFindByTagsRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
+export function v2PetFindByTagsByGet(data: IV2PetFindByTagsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
   return request<V2PetFindByTagsResponseTypeByGet>(
     processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig),
     ...args
@@ -302,15 +284,8 @@ export interface IV2PetPetIdResponseByGet {
  * @doc https://yapi.pro/project/16095/interface/api/969398
  * @url [ GET ] /v2/pet/{petId}
  */
-export function v2PetPetIdByGet(
-  data: IV2PetPetIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2PetPetIdResponseByGet>(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig),
-    ...args
-  );
+export function v2PetPetIdByGet(data: IV2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IV2PetPetIdResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig), ...args);
 }
 v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -344,15 +319,8 @@ export type V2PetPetIdResponseTypeByPost = any;
  * @doc https://yapi.pro/project/16095/interface/api/969400
  * @url [ POST ] /v2/pet/{petId}
  */
-export function v2PetPetIdByPost(
-  data: IV2PetPetIdRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetPetIdResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig),
-    ...args
-  );
+export function v2PetPetIdByPost(data: IV2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseTypeByPost>(processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig), ...args);
 }
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -382,15 +350,8 @@ export type V2PetPetIdResponseTypeByDelete = any;
  * @doc https://yapi.pro/project/16095/interface/api/969402
  * @url [ DELETE ] /v2/pet/{petId}
  */
-export function v2PetPetIdByDelete(
-  data: IV2PetPetIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2PetPetIdResponseTypeByDelete>(
-    processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig),
-    ...args
-  );
+export function v2PetPetIdByDelete(data: IV2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseTypeByDelete>(processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig), ...args);
 }
 v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
@@ -447,15 +408,8 @@ export interface IV2StoreOrderResponseByPost {
  * @doc https://yapi.pro/project/16095/interface/api/969404
  * @url [ POST ] /v2/store/order
  */
-export function v2StoreOrderByPost(
-  data: IV2StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2StoreOrderResponseByPost>(
-    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
-    ...args
-  );
+export function v2StoreOrderByPost(data: IV2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IV2StoreOrderResponseByPost>(processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig), ...args);
 }
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
@@ -709,15 +663,8 @@ export interface IV2UserUsernameResponseByGet {
  * @doc https://yapi.pro/project/16095/interface/api/969416
  * @url [ GET ] /v2/user/{username}
  */
-export function v2UserUsernameByGet(
-  data: IV2UserUsernameRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2UserUsernameResponseByGet>(
-    processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig),
-    ...args
-  );
+export function v2UserUsernameByGet(data: IV2UserUsernameRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<IV2UserUsernameResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig), ...args);
 }
 v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
@@ -755,11 +702,7 @@ export type V2UserUsernameResponseTypeByPut = any;
  * @doc https://yapi.pro/project/16095/interface/api/969418
  * @url [ PUT ] /v2/user/{username}
  */
-export function v2UserUsernameByPut(
-  data: IV2UserUsernameRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
+export function v2UserUsernameByPut(data: IV2UserUsernameRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
   return request<V2UserUsernameResponseTypeByPut>(
     processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig),
     ...args
@@ -834,15 +777,8 @@ export type V2UserLoginResponseTypeByGet = string;
  * @doc https://yapi.pro/project/16095/interface/api/969422
  * @url [ GET ] /v2/user/login
  */
-export function v2UserLoginByGet(
-  data: IV2UserLoginRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserLoginResponseTypeByGet>(
-    processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig),
-    ...args
-  );
+export function v2UserLoginByGet(data: IV2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLoginResponseTypeByGet>(processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig), ...args);
 }
 v2UserLoginByGet.requestConfig = {
   path: '/v2/user/login',
@@ -869,15 +805,8 @@ export type V2UserLogoutResponseTypeByGet = any;
  * @doc https://yapi.pro/project/16095/interface/api/969424
  * @url [ GET ] /v2/user/logout
  */
-export function v2UserLogoutByGet(
-  data: V2UserLogoutRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserLogoutResponseTypeByGet>(
-    processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig),
-    ...args
-  );
+export function v2UserLogoutByGet(data: V2UserLogoutRequestTypeByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLogoutResponseTypeByGet>(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
 }
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
@@ -914,15 +843,8 @@ export type V2UserResponseTypeByPost = any;
  * @doc https://yapi.pro/project/16095/interface/api/969426
  * @url [ POST ] /v2/user
  */
-export function v2UserByPost(
-  data: IV2UserRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserResponseTypeByPost>(
-    processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig),
-    ...args
-  );
+export function v2UserByPost(data: IV2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserResponseTypeByPost>(processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig), ...args);
 }
 v2UserByPost.requestConfig = {
   path: '/v2/user',

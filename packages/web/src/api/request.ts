@@ -28,13 +28,13 @@ request.interceptors.response.use(
     return Promise.reject(data.message);
   },
   (error) => {
+    debugger;
     message.error('服务异常');
     return Promise.reject(error);
   },
 );
 
 function downloadBlob(blob: Blob, filename: string) {
-  debugger;
   if (!filename || !blob) {
     return;
   }

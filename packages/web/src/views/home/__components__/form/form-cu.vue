@@ -38,7 +38,7 @@
               :rules="[{ required: true, message: '必填项' }]"
               :validate-trigger="['change', 'input']"
           >
-            <a-select
+            <apih-select
               v-model="formModel.type"
               :options="options.type"
               placeholder="请选择文档类型"
@@ -86,9 +86,12 @@ import {
   defineExpose,
 } from 'vue';
 import useForm from '@/hooks/use-form';
-import { Project } from '@/store/project/interface';
+import {
+  DocumentConfig,
+  createDocumentConfig,
+} from '@/store/document-config/interface';
 
-type FormModelType = Project;
+type FormModelType = DocumentConfig;
 
 const span = ref(12);
 const gutter = ref(15);
@@ -120,7 +123,7 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel,
-} = useForm<FormModelType>(new Project(), {
+} = useForm<FormModelType>(createDocumentConfig(), {
   watchFormModel: toRef(props, 'data'),
 });
 
@@ -142,5 +145,3 @@ defineExpose({
   getReactiveFormModel,
 });
 </script>
-
-<style lang="less" scoped></style>

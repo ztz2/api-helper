@@ -1,4 +1,3 @@
-const UnoCSS = require('@unocss/webpack').default;
 const { defineConfig } = require('@vue/cli-service');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const CompressionPlugin = require('compression-webpack-plugin');
@@ -21,10 +20,6 @@ module.exports = defineConfig({
         http: require.resolve('stream-http'),
         https: require.resolve('https-browserify'),
       },
-    },
-    plugins: [UnoCSS()],
-    optimization: {
-      realContentHash: true,
     },
   },
   chainWebpack(config) {

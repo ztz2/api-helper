@@ -25,7 +25,7 @@
                       :validate-trigger="['change', 'input']"
                     >
                       <a-input
-                        v-model="formModel.label"
+                        v-model="formModel.title"
                         :max-length="64"
                         placeholder="请输入模板名称"
                       />
@@ -37,7 +37,7 @@
                       field="formatCodeExtension"
                       tooltip="代码生成之后，会根据配置的后缀名，生成一个文件，调用 prettier 对生成的代码进行美化"
                     >
-                      <a-select
+                      <apih-select
                         value-key="id"
                         v-model="formModel.formatCodeExtension"
                         :options="options.formatCodeExtension"
@@ -51,7 +51,7 @@
                       label="API"
                       field="apiId"
                     >
-                      <a-select
+                      <apih-select
                         v-model="baseInfo.apiId"
                         :options="options.categoryList"
                         placeholder="请选择API"
@@ -69,7 +69,7 @@
                       <div>maxlength</div>
                       <div>
                         <a-form-item field="maxlength" no-style>
-                          <a-input-number v-model="currentProject.maxlength" allow-clear hide-button />
+                          <a-input-number v-model="currentDocumentConfig.maxlength" allow-clear hide-button />
                         </a-form-item>
                       </div>
                     </a-space>
@@ -77,7 +77,7 @@
                   <a-col :span="12">
                     <div style="margin-top: 4px">
                       <a-form-item field="placeholder" no-style>
-                        <a-checkbox v-model="currentProject.placeholder">是否生成placeholder</a-checkbox>
+                        <a-checkbox v-model="currentDocumentConfig.placeholder">是否生成placeholder</a-checkbox>
                       </a-form-item>
                     </div>
                   </a-col>
@@ -87,8 +87,8 @@
               <a-card title="其他配置">
                 <a-row :gutter="gutter">
                   <a-space :size="2" class="a-space--shim" direction="vertical">
-                    <div><a-checkbox v-model="currentProject.grid">是否使用格栅布局</a-checkbox></div>
-                    <div><a-checkbox v-model="currentProject.generateLabel">Form表单项是否生成label</a-checkbox></div>
+                    <div><a-checkbox v-model="currentDocumentConfig.grid">是否使用格栅布局</a-checkbox></div>
+                    <div><a-checkbox v-model="currentDocumentConfig.generateLabel">Form表单项是否生成label</a-checkbox></div>
                   </a-space>
                 </a-row>
               </a-card>
@@ -127,7 +127,7 @@
               <template #title>
                 <a-space>
                   <span>编辑模版内容</span>
-                  <apih-dialog-code-mirror
+                  <apih-drawer-code-mirror
                     v-model:value="formModel.content"
                     @update:value="$emit('exec-gen')"
                   />
@@ -158,6 +158,7 @@ import {
   ref,
   watch,
   toRef,
+  toRefs,
   computed,
   PropType,
   onMounted,
@@ -168,25 +169,23 @@ import {
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
-import { Template } from '@api-helper/template';
 import { formatCodeServer } from '@api-helper/template';
 import { SelectOptionGroup } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
-import { useProject } from '@/store';
+import { useDocumentConfig } from '@/store';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { DOCUMENT } from '@/constants/mock';
-import { Project } from '@/store/project/interface';
 import { FormModel } from '../form-model/interface';
 import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
+import { Template } from '@/store/template/interface';
+import { DocumentConfig } from '@/store/document-config/interface';
 
 type FormModelType = Template;
 
-const span = ref(12);
-const gutter = ref(15);
 defineEmits(['exec-gen']);
 const props = defineProps({
   data: {
@@ -200,12 +199,14 @@ const props = defineProps({
   },
   visible: Boolean,
 });
+const route = useRoute();
+const { currentDocumentConfig, documentConfigList } = toRefs(useDocumentConfig());
+
+const span = ref(12);
+const gutter = ref(15);
 const loading = ref(false);
 const loadingPreview = ref(false);
 const templateContent = ref('');
-const route = useRoute();
-const projectStore = useProject();
-const { currentProject } = projectStore;
 const {
   formRef,
   formModel,
@@ -236,9 +237,9 @@ const baseInfo = ref(new FormModel({
 }));
 
 const apiMap = ref<Map<string, APIHelper.API>>(new Map<string, APIHelper.API>());
-const project = computed<Project>(() => {
+const documentConfig = computed<DocumentConfig>(() => {
   const { id } = route.query;
-  return projectStore.data.find((itm) => itm.id === id) as Project;
+  return documentConfigList.value.find((itm) => itm.id === id) as DocumentConfig;
 });
 
 let timer: number;
@@ -356,8 +357,7 @@ function getResponseDataSchema(): APIHelper.Schema | null {
   if (!api || !api.responseDataSchema) {
     return null;
   }
-  // const { dataKey } = project.value;
-  const dataKey = 'data';
+  const { dataKey } = documentConfig.value;
   let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
   if (dataKey) {
     schema = getSchema(schema, dataKey);

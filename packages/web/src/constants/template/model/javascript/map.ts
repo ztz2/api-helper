@@ -1,10 +1,10 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 import { DEFAULT_SELECT_MODEL_TPL_ID } from '@/constants';
 
 export default new Template({
-  label: 'Javascript / 对象',
-  value: DEFAULT_SELECT_MODEL_TPL_ID,
+  title: 'Javascript / 对象',
+  id: DEFAULT_SELECT_MODEL_TPL_ID,
   formatCodeExtension: '.js',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -22,7 +22,7 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = apih.template.renderObject(requestDataSchemaList, api, {
       paramType: 'request',
-      onlyBody: config.onlyBody
+      onlyBody: documentConfig.onlyBody
     });
   } else {
     tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
@@ -37,7 +37,7 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = apih.template.renderObject(responseDataSchemaList, api, {
       paramType: 'response',
-      onlyBody: config.onlyBody
+      onlyBody: documentConfig.onlyBody
     });
   } else {
     tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;

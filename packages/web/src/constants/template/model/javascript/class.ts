@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Javascript / 实体类',
-  value: 'javascript_class_d216b1ab56453730',
+  title: 'Javascript / 实体类',
+  id: 'javascript_class_d216b1ab56453730',
   formatCodeExtension: '.js',
   builtIn: true,
   content: `${COMMON_HEAD}

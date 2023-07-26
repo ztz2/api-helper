@@ -51,10 +51,8 @@ import {
   defineEmits,
   defineProps,
 } from 'vue';
-import {
-  TreeNodeData,
-} from '@arco-design/web-vue';
-import { IconCodeSquare, IconFolder } from '@arco-design/web-vue/es/icon';
+import type { TreeNodeData } from '@arco-design/web-vue';
+import { IconFolder, IconCodeSquare } from '@arco-design/web-vue/es/icon';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
@@ -129,7 +127,7 @@ watch(() => currentValue.value, (val: string[]) => {
 }, { deep: true, immediate: true });
 
 function getLabel(node: TreeNodeData): string {
-  const valueKeys = [props.labelKey, 'name', 'label', 'title'];
+  const valueKeys = [props.labelKey, 'title', 'name', 'label'];
   for (const key of valueKeys) {
     if (Object.hasOwn(node, key)) { // @ts-ignore
       return node[key];
@@ -148,7 +146,3 @@ function getValue(node: TreeNodeData): string {
   return '';
 }
 </script>
-
-<style lang="scss">
-
-</style>

@@ -3,9 +3,9 @@ import { APIHelper } from '@api-helper/core/es/lib/types';
 import request from '@/api/request';
 import { aes } from '@/utils/crypto';
 import { SECRET_KEY } from '@/constants';
-import { Project } from '@/store/project/interface';
+import { DocumentConfig } from '@/store/document-config/interface';
 
-export function getDocs(data: Project): Promise<Array<APIHelper.Document>> {
+export function getDocs(data: DocumentConfig): Promise<Array<APIHelper.Document>> {
   if (data?.auth?.password) {
     data.auth.password = aes.encrypt(data.auth.password, SECRET_KEY);
   }
@@ -15,8 +15,8 @@ export function getDocs(data: Project): Promise<Array<APIHelper.Document>> {
   });
 }
 
-export function exportFileApi(data: Project): Promise<Array<APIHelper.Document>> {
-  return request<unknown, Array<APIHelper.Document>>('/app/export-file', {
+export function exportFileApi(data: DocumentConfig): Promise<Array<APIHelper.Document>> {
+  return request<unknown, Array<APIHelper.Document>>('/app/fileDirectory', {
     data,
     method: 'post',
     responseType: 'blob',

@@ -11,6 +11,7 @@
 import {
   ref,
   toRef,
+  toRefs,
   watch,
   PropType,
   onMounted,
@@ -20,11 +21,12 @@ import { APIHelper } from '@api-helper/core';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { renderTemplate } from '@api-helper/template';
 
-import { useProject, useApiTemplate, useModelTemplate } from '@/store';
-
-const projectStore = useProject();
-const apiTemplateStore = useApiTemplate();
-const modelTemplateStore = useModelTemplate();
+import {
+  useDocumentConfig,
+  useApiTemplate,
+  useModelTemplate,
+} from '@/store';
+import { Template } from '@/store/template/interface';
 
 const props = defineProps({
   api: {
@@ -41,6 +43,10 @@ const props = defineProps({
   },
 });
 
+const { currentDocumentConfig } = toRefs(useDocumentConfig());
+const { defaultApiTemplate } = toRefs(useApiTemplate());
+const { defaultModelTemplate } = toRefs(useModelTemplate());
+
 const loading = ref(false);
 const currentCode = ref('');
 const api = toRef(props, 'api');
@@ -55,10 +61,10 @@ async function updateCodeContent() {
       }
 
       loading.value = true;
-      const res = await renderTemplate(apiTemplateStore.defaultApiTemplate, {
+      const res = await renderTemplate(defaultApiTemplate.value as Template, {
         apiList: [api.value],
       }, {
-        ...projectStore.currentProject,
+        ...currentDocumentConfig.value,
         onlyApiFunc: true,
       });
       loading.value = false;
@@ -74,13 +80,13 @@ async function updateCodeContent() {
         responseDataSchemaList: [],
       };
       loading.value = true;
-      const res = await renderTemplate(modelTemplateStore.defaultModelTemplate, params, projectStore.currentProject);
+      const res = await renderTemplate(defaultModelTemplate.value as Template, params, currentDocumentConfig.value);
       loading.value = false;
       currentCode.value = res?.[0]?.content ?? '';
       break;
     }
     case 'response': {
-      const { dataKey } = projectStore.currentProject;
+      const { dataKey } = currentDocumentConfig.value;
       let { responseDataSchema } = api.value;
       if (dataKey) {
         responseDataSchema = getSchema(responseDataSchema, dataKey);
@@ -91,7 +97,8 @@ async function updateCodeContent() {
         responseDataSchemaList: responseDataSchema?.params ?? [],
       };
       loading.value = true;
-      const res = await renderTemplate(modelTemplateStore.defaultModelTemplate, params, projectStore.currentProject);
+      debugger;
+      const res = await renderTemplate(defaultModelTemplate.value, params, currentDocumentConfig.value);
       loading.value = false;
       currentCode.value = res?.[1]?.content ?? '';
       break;
@@ -116,7 +123,7 @@ function bindListener() {
       }
     }
     // 项目配置变化更新代码
-    watch(() => projectStore.currentProject, updateCodeContent, { deep: true });
+    watch(() => currentDocumentConfig.value, updateCodeContent, { deep: true });
   }
 }
 

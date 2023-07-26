@@ -1,4 +1,4 @@
-import { ChangeCase } from '../lib/interface';
+import { ChangeCase } from '../lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
 export declare function renderInterface(schema: APIHelper.Schema | Array<APIHelper.Schema> | null, api: APIHelper.API, options?: {
     paramType?: 'request' | 'response';

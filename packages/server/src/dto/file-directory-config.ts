@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { APIHelper } from '@api-helper/core';
-import { Template } from '@api-helper/template';
 
 export class FileDirectoryConfig {
   @ApiProperty({
@@ -14,11 +13,6 @@ export class FileDirectoryConfig {
   id = '';
 
   @ApiProperty({
-    description: '文件模块导出路径',
-  })
-  exportFilePath = '';
-
-  @ApiProperty({
     description: '是否为文件夹',
   })
   isFolder: boolean;
@@ -26,7 +20,7 @@ export class FileDirectoryConfig {
   @ApiProperty({
     description: '选择的模版',
   })
-  template: Template;
+  template: Recordable;
 
   @ApiProperty({
     description: '选择的模版内容索引',

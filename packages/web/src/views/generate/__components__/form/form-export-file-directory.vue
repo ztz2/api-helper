@@ -10,13 +10,13 @@
       <a-row :gutter="gutter">
         <a-col :span="24">
           <a-form-item
-            field="label"
+            field="title"
             :label="filename"
             :rules="[{ required: true, message: '必填项' }]"
             :validate-trigger="['change', 'input']"
           >
             <a-input
-              v-model="formModel.label"
+              v-model="formModel.title"
               :max-length="64"
               @change="handleChangeLabel"
             />
@@ -45,14 +45,11 @@ import {
   defineExpose,
 } from 'vue';
 import textExtensions from 'text-extensions';
-import {
-  FileDirectory,
-  createFileDirectory,
-} from '@api-helper/template';
 
 import useForm from '@/hooks/use-form';
+import { FileDirectoryConfig } from '@/store/file-directory/interface';
 
-type FormModelType = FileDirectory;
+type FormModelType = FileDirectoryConfig;
 
 const span = ref(12);
 const gutter = ref(15);
@@ -83,14 +80,14 @@ const {
   setFormModel,
   clearValidate,
   getReactiveFormModel,
-} = useForm<FormModelType>(createFileDirectory(), {
+} = useForm<FormModelType>(new FileDirectoryConfig(), {
   watchFormModel: toRef(props, 'data'),
 });
 const filename = computed(() => (formModel.value.isFolder ? '文件夹名称' : '文件名称'));
 
 function handleChangeLabel() {
   for (const extension of textExtensions) {
-    if (formModel.value.label.endsWith(`.${extension}`)) {
+    if (formModel.value.title.endsWith(`.${extension}`)) {
       formModel.value.isFolder = false;
       return undefined;
     }

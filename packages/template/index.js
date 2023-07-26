@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createExportFile = exports.createFileDirectory = exports.ExportFile = exports.FileDirectory = exports.createProjectConfig = exports.createTemplate = exports.DocumentConfig = exports.Template = exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderTemplate = exports.renderClass = exports.renderAllApi = exports.formatCodeServer = exports.formatCode = exports.changeCase = exports.artTemplate = void 0;
+exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderTemplate = exports.renderClass = exports.renderAllApi = exports.formatCodeServer = exports.formatCode = exports.changeCase = exports.artTemplate = void 0;
 var changeCase = __importStar(require("change-case"));
 exports.changeCase = changeCase;
 var art_template_1 = __importDefault(require("./lib/art-template"));
@@ -48,12 +48,3 @@ Object.defineProperty(exports, "renderObjectName", { enumerable: true, get: func
 var render_request_function_1 = require("./lib/render-request-function");
 Object.defineProperty(exports, "renderRequestFunction", { enumerable: true, get: function () { return render_request_function_1.renderRequestFunction; } });
 Object.defineProperty(exports, "renderRequestFunctionName", { enumerable: true, get: function () { return render_request_function_1.renderRequestFunctionName; } });
-var interface_1 = require("./lib/interface");
-Object.defineProperty(exports, "Template", { enumerable: true, get: function () { return interface_1.Template; } });
-Object.defineProperty(exports, "DocumentConfig", { enumerable: true, get: function () { return interface_1.DocumentConfig; } });
-Object.defineProperty(exports, "createTemplate", { enumerable: true, get: function () { return interface_1.createTemplate; } });
-Object.defineProperty(exports, "createProjectConfig", { enumerable: true, get: function () { return interface_1.createProjectConfig; } });
-Object.defineProperty(exports, "FileDirectory", { enumerable: true, get: function () { return interface_1.FileDirectory; } });
-Object.defineProperty(exports, "ExportFile", { enumerable: true, get: function () { return interface_1.ExportFile; } });
-Object.defineProperty(exports, "createFileDirectory", { enumerable: true, get: function () { return interface_1.createFileDirectory; } });
-Object.defineProperty(exports, "createExportFile", { enumerable: true, get: function () { return interface_1.createExportFile; } });

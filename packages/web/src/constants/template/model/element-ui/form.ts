@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Element UI / Form 表单',
-  value: 'element-ui_form_aa76ae2a8278f3e7',
+  title: 'Element UI / Form 表单',
+  id: 'element-ui_form_aa76ae2a8278f3e7',
   formatCodeExtension: '.vue',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -84,7 +84,7 @@ export default new Template({
     }
   }
 </script>
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

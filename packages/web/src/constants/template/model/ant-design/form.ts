@@ -1,9 +1,9 @@
-import { Template } from '@api-helper/template';
+import { Template } from '@/store/template/interface';
 import { COMMON_HEAD } from '../common';
 
 export default new Template({
-  label: 'Ant Design / Form 表单',
-  value: 'ant-design_form_2398410fa8d5cd70',
+  title: 'Ant Design / Form 表单',
+  id: 'ant-design_form_2398410fa8d5cd70',
   formatCodeExtension: '.tsx',
   builtIn: true,
   content: `${COMMON_HEAD}
@@ -81,7 +81,7 @@ const App: React.FC = () => (
 );
 
 export default App;
-\`, { schemaList, api, params, config, apih, lodash });
+\`, { schemaList, api, params, documentConfig, apih, lodash });
   }
 
   return result;

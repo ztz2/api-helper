@@ -23,7 +23,7 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogAPIRef.open({
+                @click="ctrlDrawerAPIRef.open({
                   type: 'ADD',
                   title: '生成(API函数代码)',
                 }, {
@@ -35,7 +35,7 @@
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
-                @click="dialogModelRef.open({
+                @click="ctrlDrawerModelRef.open({
                   type: 'ADD',
                   title: '生成(表单代码)'
                 }, {
@@ -46,13 +46,13 @@
                 生成(表单代码)
               </a-button>
               <a-button
-                :disabled="apiTemplateStore.customTemplateList.length === 0 && modelTemplateStore.customTemplateList.length === 0"
+                :disabled="customApiTemplateList.length === 0 && customModelTemplateList.length === 0"
                 @click="handleExport"
               >
                 导出自定义模板
               </a-button>
               <a-button
-                @click="dialogImportRef.open({
+                @click="ctrlDrawerImportRef.open({
                   type: 'ADD',
                   title: '导入自定义模板'
                 })"
@@ -63,7 +63,7 @@
             <a-space style="margin-left: 14px">
               <a-button
                 type="primary"
-                @click="dialogPrettierRef.open({
+                @click="ctrlDrawerPrettierRef.open({
                   type: 'EDIT',
                   title: 'prettier配置',
                 })"
@@ -73,7 +73,7 @@
               <a-button
                 type="primary"
                 :disabled="selectApiList.length === 0"
-                @click="dialogExportFileRef.open({
+                @click="ctrlDrawerExportFileRef.open({
                   type: 'EDIT',
                   title: '文件模块导出',
                   formComponentProps: {
@@ -153,11 +153,11 @@
     </template>
   </div>
 
-  <DialogAPI ref="dialogAPIRef" />
-  <DialogModel ref="dialogModelRef" />
-  <DialogImport ref="dialogImportRef" />
-  <DialogPrettier ref="dialogPrettierRef" />
-  <DialogExportFile ref="dialogExportFileRef" />
+  <CtrlDrawerAPI ref="ctrlDrawerAPIRef" />
+  <CtrlDrawerModel ref="ctrlDrawerModelRef" />
+  <CtrlDrawerImport ref="ctrlDrawerImportRef" />
+  <CtrlDrawerPrettier ref="ctrlDrawerPrettierRef" />
+  <CtrlDrawerExportFile ref="ctrlDrawerExportFileRef" />
 </template>
 
 <script lang="ts">
@@ -171,6 +171,7 @@ export default defineComponent({
 <script lang="ts" setup>
 import {
   ref,
+  toRefs,
   computed,
   onMounted,
 } from 'vue';
@@ -178,53 +179,51 @@ import { nanoid } from 'nanoid';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { Message } from '@arco-design/web-vue';
-import { Template } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { createDocument } from '@api-helper/core/lib/helpers';
 
 import {
-  useProject,
   useApiTemplate,
   useModelTemplate,
+  useDocumentConfig,
 } from '@/store';
 import {
   SECRET_KEY,
-  API_CUSTOM_TEMPLATE_ID,
-  MODEL_CUSTOM_TEMPLATE_ID,
+  API_CUSTOM_GROUP_ID,
+  MODEL_CUSTOM_GROUP_ID,
 } from '@/constants';
 import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
 import { modalConfirm } from '@/utils';
 import ApiCode from './__components__/api-code.vue';
+import { Template } from '@/store/template/interface';
+import { DocumentConfig } from '@/store/document-config/interface';
 import ApihCategory from '@/components/apih-category/index.vue';
-import { Project } from '@/store/project/interface';
 
-import DialogAPI from './__components__/dialog/dialog-api.vue';
-import DialogModel from './__components__/dialog/dialog-model.vue';
-import DialogImport from './__components__/dialog/dialog-import.vue';
-import DialogPrettier from './__components__/dialog/dialog-prettier.vue';
-import DialogExportFile from './__components__/dialog/dialog-export-file.vue';
+import CtrlDrawerAPI from './__controller__/ctrl-drawer-api.vue';
+import CtrlDrawerModel from './__controller__/ctrl-drawer-model.vue';
+import CtrlDrawerImport from './__controller__/ctrl-drawer-import.vue';
+import CtrlDrawerPrettier from './__controller__/ctrl-drawer-prettier.vue';
+import CtrlDrawerExportFile from './__controller__/ctrl-drawer-export-file.vue';
 
 const route = useRoute();
-
-const projectStore = useProject();
-const apiTemplateStore = useApiTemplate();
-const modelTemplateStore = useModelTemplate();
-
 const { toClipboard } = useClipboard();
+const { documentConfigList } = toRefs(useDocumentConfig());
+const { customApiTemplateList } = toRefs(useApiTemplate());
+const { customModelTemplateList } = toRefs(useModelTemplate());
 
 const gap = ref(320);
 const loading = ref(true);
-const dialogAPIRef = ref();
-const dialogModelRef = ref();
-const dialogImportRef = ref();
-const dialogPrettierRef = ref();
-const dialogExportFileRef = ref();
-const isEmpty = computed(() => !project.value);
+const ctrlDrawerAPIRef = ref();
+const ctrlDrawerModelRef = ref();
+const ctrlDrawerImportRef = ref();
+const ctrlDrawerPrettierRef = ref();
+const ctrlDrawerExportFileRef = ref();
+const isEmpty = computed(() => !documentConfig.value);
 
-const project = computed<Project>(() => {
+const documentConfig = computed<DocumentConfig>(() => {
   const { id } = route.query;
-  return projectStore.data.find((itm) => itm.id === id) as Project;
+  return documentConfigList.value.find((itm) => itm.id === id) as DocumentConfig;
 });
 const ahProject = ref<APIHelper.Document>(createDocument({ id: nanoid() }));
 const selectedKeys = ref<string[]>([]);
@@ -255,11 +254,11 @@ function handleCopyPath(path: string) {
 async function handleExport() {
   await modalConfirm('确认要导出全部自定义模板吗？');
   const dataMap: Recordable = {};
-  if (apiTemplateStore.customTemplateList.length > 0) {
-    dataMap[API_CUSTOM_TEMPLATE_ID] = apiTemplateStore.customTemplateList;
+  if (customApiTemplateList.value.length > 0) {
+    dataMap[API_CUSTOM_GROUP_ID] = customApiTemplateList.value;
   }
-  if (modelTemplateStore.customTemplateList.length > 0) {
-    dataMap[MODEL_CUSTOM_TEMPLATE_ID] = modelTemplateStore.customTemplateList;
+  if (customModelTemplateList.value.length > 0) {
+    dataMap[MODEL_CUSTOM_GROUP_ID] = customModelTemplateList.value;
   }
   const exportContent = aes.encrypt(JSON.stringify(dataMap), SECRET_KEY);
   const eleLink = document.createElement('a');
@@ -274,10 +273,10 @@ async function handleExport() {
 }
 
 onMounted(async () => {
-  if (project.value) {
+  if (documentConfig.value) {
     try {
       loading.value = true;
-      const res: any = await getDocs(project.value);
+      const res: any = await getDocs(documentConfig.value);
       ahProject.value = res?.[0] as APIHelper.Document;
     } finally {
       loading.value = false;

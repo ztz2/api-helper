@@ -2,7 +2,6 @@
   <div class="app-container">
     <div class="app-header">
       <div class="app-header__left">
-        <a-button @click="s1">下载zip</a-button>
         <a
           href="/"
           class="app-header__label"
@@ -32,34 +31,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import JSZip from 'jszip';
 import { useCheckUpdateTemplate } from '@/hooks/use-check-update-template';
 
 const linkColor = ref('rgba(0,0,0,.8509803922)');
 
 useCheckUpdateTemplate();
-
-function s1() {
-  const zip = new JSZip();
-  // @ts-ignore
-  zip.folder('sub').file('file.txt', 'content');
-  zip.file('sub/file.txt'); // the file
-  // @ts-ignore
-  zip.folder('sub').file('file.txt');
-  zip.generateAsync({
-    type: 'blob',
-    compression: 'DEFLATE',
-    compressionOptions: {
-      level: 5,
-    },
-  }).then((content) => {
-    const link = document.createElement('a');
-    link.download = 'newZip.zip';
-    link.href = URL.createObjectURL(content);
-    link.click();
-    // saveAs(content, 'newZip.zip');
-  });
-}
 </script>
 
 <style lang="scss">
