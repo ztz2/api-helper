@@ -42,11 +42,10 @@ import { renderTemplate } from '@api-helper/template';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
 import message from '@/utils/message';
-import Form from '../__components__/form/form-model/index.vue';
+import Form from '@/views/generate/__components__/form-model/index.vue';
 import { Template } from '@/store/template/interface';
 import { useDocumentConfig, useModelTemplate } from '@/store';
-import { FormModel } from '../__components__/form/form-model/interface';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import { FormModel } from '@/views/generate/__components__/form-model/interface';
 
 type OpenDataType = {
   categoryList: APIHelper.CategoryList
@@ -79,7 +78,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig, data: OpenDataType) {
+function open(config: DialogOpenConfig, data: OpenDataType) {
   config = merge(config, {
     formComponentProps: {
       categoryList: data.categoryList,
@@ -92,7 +91,7 @@ function open(config: DrawerOpenConfig, data: OpenDataType) {
   dialogOpenData.value.categoryList = data.categoryList;
   dialogOpenData.value.apiList = data.apiList;
 
-  nextTick(() => {
+  setTimeout(() => {
     handleGen();
   });
 }
@@ -120,7 +119,7 @@ function handleGen(showMsg = false) {
         'responseDataSchemaList',
         'responseDataSchemaIdList',
       ]),
-    });
+    } as any);
   }).then((res: unknown) => {
     codeList.value = res as APIHelper.TemplateContent[];
     if (showMsg === true) {

@@ -1,5 +1,5 @@
 <template>
-  <apih-drawer
+  <apih-modal
     ref="dialogRef"
     width="500px"
     cancel-text="返回"
@@ -10,7 +10,7 @@
     <template #footer>
       <a-button type="primary" @click="handleSave">保存</a-button>
     </template>
-  </apih-drawer>
+  </apih-modal>
 </template>
 
 <script lang="ts" setup>
@@ -22,8 +22,7 @@ import {
 
 import { randomChar } from '@/utils';
 import { useFileDirectory } from '@/store';
-import Form from '../__components__/form/form-export-file-directory.vue';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import Form from '../__components__/form-export-file-directory.vue';
 
 const emit = defineEmits(['success']);
 
@@ -36,7 +35,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
 }
 

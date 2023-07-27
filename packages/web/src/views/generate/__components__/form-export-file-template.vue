@@ -37,14 +37,15 @@
                   >
                     新增文件(夹)
                   </a-button>
-                  <a-button
-                    size="mini"
-                    type="primary"
-                    :disabled="!selectFolderNode"
-                    @click.prevent="handleDelete"
-                  >
-                    删除文件(夹)
-                  </a-button>
+                  <a-popconfirm content="确认删除?" @ok="handleDelete">
+                    <a-button
+                      size="mini"
+                      type="primary"
+                      :disabled="!selectFolderNode"
+                    >
+                      删除文件(夹)
+                    </a-button>
+                  </a-popconfirm>
                   <a-button
                     size="mini"
                     type="primary"
@@ -59,14 +60,18 @@
                 v-model:value="selectFolder"
                 :data="formModel.fileDirectoryConfigList"
                 file-icon
-                draggable
+                expand-all
+                sort-filename
               />
             </a-form-item>
           </a-col>
         </a-row>
       </a-card>
     </a-form>
-    <CtrlDrawerExportFileDirectory ref="ctrlDrawerExportFileDirectoryRef" @success="handleSuccess"/>
+    <CtrlDrawerExportFileDirectory
+      ref="ctrlDrawerExportFileDirectoryRef"
+      @success="handleSuccess"
+    />
   </div>
 </template>
 
@@ -74,20 +79,20 @@
 import {
   ref,
   toRef,
+  watch,
+  nextTick,
   PropType,
   computed,
   defineProps,
   defineExpose,
 } from 'vue';
-import {
-  SelectOptionGroup,
-} from '@arco-design/web-vue';
 import { merge } from 'lodash';
 
+import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { FileDirectory, FileDirectoryConfig } from '@/store/file-directory/interface';
-import CtrlDrawerExportFileDirectory from '../../__controller__/ctrl-drawer-export-file-directory.vue';
+import CtrlDrawerExportFileDirectory from '../__controller__/ctrl-drawer-export-file-directory.vue';
 
 type FormModelType = FileDirectory;
 
@@ -136,24 +141,50 @@ const selectFolderNode = computed(() => {
   return node ?? null;
 });
 
-const options = ref({
-  boo: [] as Array<SelectOptionGroup>,
+watch(() => props.visible, (val) => {
+  if (val) {
+    nextTick(() => {
+      selectFolder.value = formModel.value.fileDirectoryConfigList[0]?.id ?? '';
+    });
+  }
 });
 
 function handleSuccess(data: FileDirectoryConfig) {
   const itm = fileDirectoryMap.value.get(data.id);
+
   // 修改
   if (itm) {
     merge(itm, data);
+    // 如果是文件夹，自动选中
+    if (data.isFolder) {
+      selectFolder.value = data.id;
+    }
     return;
   }
-  // 新增到已经选择的节点
-  if (selectFolderNode.value) {
-    selectFolderNode.value?.children.push(data);
+
+  const wrap = selectFolderNode.value ? selectFolderNode.value.children : formModel.value.fileDirectoryConfigList;
+  // 新增到已经选择的节点或者新增到根节点
+  const exist = wrap.find((itm) => itm.title === data.title);
+  if (exist) {
+    return message.warn(`${data.title}已存在！`);
+  }
+  wrap.push(data);
+
+  // 根节点文件夹，自动选中
+  if (data.isFolder) {
+    selectFolder.value = data.id;
+  }
+}
+
+function removeAlreadyExist(nodeList: Array<FileDirectoryConfig>, title: string) {
+  if (!nodeList.length || !title) {
     return undefined;
   }
-  // 新增到根节点
-  formModel.value.fileDirectoryConfigList.push(data);
+  let index = nodeList.findIndex((itm) => itm.title === title);
+  while (index !== -1) {
+    nodeList.splice(index, 1);
+    index = nodeList.findIndex((itm) => itm.title === title);
+  }
 }
 
 function handleAdd() {
@@ -182,16 +213,17 @@ function handleDelete() {
     }
     for (let i = 0; i < nodeList.length; i++) {
       const itm = nodeList[i];
-      if (itm.id === selectFolderNode.value?.id) {
+      if (itm.id === selectFolder.value) {
         nodeList.splice(i, 1);
         return undefined;
       }
       dfs(itm.children);
     }
   }
-  if (selectFolderNode.value) {
+  if (selectFolder.value) {
     dfs(formModel.value.fileDirectoryConfigList);
   }
+  selectFolder.value = '';
 }
 
 defineExpose({
@@ -205,5 +237,3 @@ defineExpose({
   getReactiveFormModel,
 });
 </script>
-<style lang="scss" scoped>
-</style>

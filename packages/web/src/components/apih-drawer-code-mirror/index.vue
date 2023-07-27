@@ -53,7 +53,7 @@ import {
   defineExpose,
 } from 'vue';
 import { formatCodeServer } from '@api-helper/template';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import { DialogOpenConfig } from '@/components/apih-drawer/interface';
 
 const emit = defineEmits(['update:value']);
 const props = defineProps({
@@ -78,7 +78,7 @@ const loading = ref(false);
 const loadingPreview = ref(false);
 const prettierrcValue = ref('');
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   loading.value = false;
   loadingPreview.value = false;
 

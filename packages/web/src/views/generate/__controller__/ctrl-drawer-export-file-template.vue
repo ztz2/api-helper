@@ -22,8 +22,7 @@ import {
 
 import message from '@/utils/message';
 import { useFileDirectory } from '@/store';
-import Form from '../__components__/form/form-export-file-template.vue';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import Form from '../__components__/form-export-file-template.vue';
 
 const emit = defineEmits(['success']);
 
@@ -36,7 +35,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
 }
 

@@ -103,7 +103,7 @@
                   <div class="text-center">请求数据字段</div>
                 </template>
                 <div style="width: 100%; height: calc(100vh - 277px)">
-                  <ApihSchemaTree v-model:value="formModel.requestDataSchemaIdList" :data="requestFieldTree" />
+                  <apih-schema-tree v-model:value="formModel.requestDataSchemaIdList" :data="requestDataSchemaList" />
                 </div>
               </a-card>
             </a-col>
@@ -113,7 +113,7 @@
                   <div class="text-center">响应数据字段</div>
                 </template>
                 <div style="width: 100%; height: calc(100vh - 277px)">
-                  <ApihSchemaTree v-model:value="formModel.responseDataSchemaIdList" :data="responseFieldTree" />
+                  <apih-schema-tree v-model:value="formModel.responseDataSchemaIdList" :data="responseDataSchemaList" />
                 </div>
               </a-card>
             </a-col>
@@ -135,7 +135,7 @@ import {
   PropType,
   defineEmits,
   defineProps,
-  defineExpose,
+  defineExpose, nextTick,
 } from 'vue';
 import { get, cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
@@ -151,10 +151,11 @@ import { treeForEach } from '@/utils/tree';
 import { Template } from '@/store/template/interface';
 import { randomChar, modalConfirm } from '@/utils';
 import { useModelTemplate, useDocumentConfig } from '@/store';
-import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 import genEmptyModelTemplate from '@/constants/template/model/empty';
 import { DocumentConfig } from '@/store/document-config/interface';
-import CtrlDrawerModelTemplate from '../../../__controller__/ctrl-drawer-model-template.vue';
+import CtrlDrawerModelTemplate from '../../__controller__/ctrl-drawer-model-template.vue';
+import useSchema, { getResponseDataSchema } from '@/hooks/use-schema';
+import { getSchemaListByIds } from '@/utils/schema';
 
 type FormModelType = FormModel;
 
@@ -175,16 +176,6 @@ const props = defineProps({
     default: () => ([]),
   },
 });
-const route = useRoute();
-const { currentDocumentConfig, documentConfigList } = toRefs(useDocumentConfig());
-const { modelTemplateList, modelTemplateMap, deleteModelTemplateById } = toRefs(useModelTemplate());
-
-const span = ref(12);
-const gutter = ref(15);
-const ctrlDrawerModelTemplateRef = ref();
-const selectedTemplate = computed(() => modelTemplateMap.value.get(currentDocumentConfig.value.modelTplId));
-const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
-
 const {
   formRef,
   formModel,
@@ -203,6 +194,30 @@ const {
 }, {
   watchFormModel: toRef(props, 'data') as any,
 });
+
+const selectedApi = ref<APIHelper.API>({} as APIHelper.API);
+const route = useRoute();
+const {
+  requestDataSchemaList,
+  responseDataSchemaList,
+  requestDataSchemaMap,
+  responseDataSchemaMap,
+} = useSchema(selectedApi);
+const {
+  documentConfigList,
+  currentDocumentConfig,
+} = toRefs(useDocumentConfig());
+const {
+  modelTemplateMap,
+  modelTemplateList,
+  deleteModelTemplateById,
+} = toRefs(useModelTemplate());
+
+const span = ref(12);
+const gutter = ref(15);
+const ctrlDrawerModelTemplateRef = ref();
+const selectedTemplate = computed(() => modelTemplateMap.value.get(currentDocumentConfig.value.modelTplId));
+const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
 
 const options = ref({
   categoryList: [] as Array<SelectOptionGroup>,
@@ -235,6 +250,7 @@ watch(() => formModel.value.apiId, (val) => {
   formModel.value.api = apiMap.value.get(val) as APIHelper.API;
   const { apiId } = formModel.value;
   const api = apiMap.value.get(apiId);
+  selectedApi.value = api!;
   formModel.value.requestDataSchemaIdList = [];
   formModel.value.responseDataSchemaIdList = [];
   // 全选根节点上数据
@@ -244,104 +260,31 @@ watch(() => formModel.value.apiId, (val) => {
     }
   });
   // 全选根节点上数据
-  const responseDataSchemaList = getResponseDataSchema()?.params ?? [];
+  const responseDataSchemaList = getResponseDataSchema(api, currentDocumentConfig.value.dataKey)?.params ?? [];
   treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
     if (item?.id) {
       formModel.value.responseDataSchemaIdList.push(item.id as string);
     }
   });
-});
+}, { immediate: true });
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {
-  formModel.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
+  nextTick(() => {
+    formModel.value.requestDataSchemaList = getSchemaListByIds(val, requestDataSchemaMap.value);
+  });
 }, { deep: true });
 
 watch(() => formModel.value.responseDataSchemaIdList, (val) => {
-  formModel.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
+  nextTick(() => {
+    formModel.value.responseDataSchemaList = getSchemaListByIds(val, responseDataSchemaMap.value);
+  });
 }, { deep: true });
-
-const requestFieldTree = computed(() => {
-  const { apiId } = formModel.value;
-  const api = apiMap.value.get(apiId);
-  if (!api || !api.requestDataSchema) {
-    return [];
-  }
-  return cloneDeep(api.requestDataSchema.params);
-});
-
-const responseFieldTree = computed(() => {
-  const schema = getResponseDataSchema();
-  if (!schema) {
-    return [];
-  }
-  return schema?.params ?? [];
-});
-
-const requestFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
-  const map = new Map<string, APIHelper.Schema>();
-  treeForEach(requestFieldTree.value, (schema: APIHelper.Schema) => {
-    map.set(schema.id, schema);
-  }, 'params');
-  return map;
-});
-
-const responseFieldMap = computed<Map<string, APIHelper.Schema>>(() => {
-  const map = new Map<string, APIHelper.Schema>();
-  treeForEach(responseFieldTree.value, (schema: APIHelper.Schema) => {
-    map.set(schema.id, schema);
-  }, 'params');
-  return map;
-});
-
-function getResponseDataSchema(): APIHelper.Schema | null {
-  const { apiId } = formModel.value;
-  const api = apiMap.value.get(apiId);
-  if (!api || !api.responseDataSchema) {
-    return null;
-  }
-  const { dataKey } = documentConfig.value;
-  let schema: APIHelper.Schema | null = cloneDeep(api.responseDataSchema);
-  if (dataKey) {
-    schema = getSchema(schema, dataKey);
-  }
-  return schema;
-}
 
 function validatorTpl(keyName: string, value: unknown, callback: Function) {
   if (!get(currentDocumentConfig.value, keyName)) {
     return callback('必选项');
   }
   callback();
-}
-
-function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
-  ids = cloneDeep(ids);
-  const schemaList: APIHelper.SchemaList = [];
-  for (const id of ids) {
-    const row = cloneDeep(record.get(id as string));
-    if (row) {
-      row.params = filterChildren(row.params, ids);
-      schemaList.push(row);
-    }
-  }
-  return schemaList;
-}
-
-function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = []) {
-  return schemaList.filter((schema) => {
-    const index = checkIds.indexOf(schema.id);
-    // 原始值类型的子属性直接可用
-    if (isSchemaPrimitiveValue(schema)) {
-      return true;
-    }
-    // 子属性不在其中，移除
-    if (index === -1) {
-      return false;
-    }
-    // 递归子属性
-    schema.params = filterChildren(schema.params, checkIds);
-    return true;
-  });
 }
 
 function handleAddTpl() {

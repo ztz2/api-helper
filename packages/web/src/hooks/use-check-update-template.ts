@@ -1,7 +1,9 @@
-import { useApiTemplate, useModelTemplate } from '@/store';
+import { useApiTemplate, useModelTemplate, useFileDirectory } from '@/store';
 import apiTemplateList from '@/constants/template/api';
 import modelTemplateList from '@/constants/template/model';
+import fileDirectoryList from '@/constants/file-directory';
 import { Template } from '@/store/template/interface';
+import { FileDirectory } from '@/store/file-directory/interface';
 import SelectOptionGroup from '@/constants/select-option-group';
 
 function templateClassifyMap(source: SelectOptionGroup[]): { [id: string]: Template } {
@@ -16,7 +18,7 @@ function templateClassifyMap(source: SelectOptionGroup[]): { [id: string]: Templ
 }
 function checkUpdate(
   source: SelectOptionGroup[],
-  templateMap: Map<string, Template>,
+  templateMap: Map<string, Template | FileDirectory>,
   save: Function,
   add: Function,
 ) {
@@ -35,6 +37,8 @@ function checkUpdate(
 export function useCheckUpdateTemplate() {
   const apiTemplateStore = useApiTemplate();
   const modelTemplateStore = useModelTemplate();
+  const fileDirectoryStore = useFileDirectory();
+
   checkUpdate(
     apiTemplateList,
     apiTemplateStore.apiTemplateMap,
@@ -46,5 +50,11 @@ export function useCheckUpdateTemplate() {
     modelTemplateStore.modelTemplateMap,
     modelTemplateStore.saveModelTemplate,
     modelTemplateStore.addModelTemplateGroup,
+  );
+  checkUpdate(
+    fileDirectoryList,
+    fileDirectoryStore.fileDirectoryMap,
+    fileDirectoryStore.saveFileDirectory,
+    fileDirectoryStore.addFileDirectoryGroup,
   );
 }

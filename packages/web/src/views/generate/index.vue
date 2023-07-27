@@ -46,10 +46,23 @@
                 生成(表单代码)
               </a-button>
               <a-button
-                :disabled="customApiTemplateList.length === 0 && customModelTemplateList.length === 0"
+                  type="primary"
+                  :disabled="selectApiList.length === 0"
+                  @click="ctrlDrawerExportFileRef.open({
+                  type: 'EDIT',
+                  title: '文件模块生成',
+                  formComponentProps: {
+                    apiList: selectApiList
+                  }
+                })"
+              >
+                文件模块生成
+              </a-button>
+              <a-button
+                :disabled="!hasExportData"
                 @click="handleExport"
               >
-                导出自定义模板
+                导出自定义配置
               </a-button>
               <a-button
                 @click="ctrlDrawerImportRef.open({
@@ -57,7 +70,7 @@
                   title: '导入自定义模板'
                 })"
               >
-                导入自定义模板
+                导入自定义配置
               </a-button>
             </a-space>
             <a-space style="margin-left: 14px">
@@ -69,19 +82,6 @@
                 })"
               >
                 prettier配置
-              </a-button>
-              <a-button
-                type="primary"
-                :disabled="selectApiList.length === 0"
-                @click="ctrlDrawerExportFileRef.open({
-                  type: 'EDIT',
-                  title: '文件模块导出',
-                  formComponentProps: {
-                    apiList: selectApiList
-                  }
-                })"
-              >
-                文件模块导出
               </a-button>
             </a-space>
           </div>
@@ -186,11 +186,12 @@ import {
   useApiTemplate,
   useModelTemplate,
   useDocumentConfig,
+  useFileDirectory,
 } from '@/store';
 import {
   SECRET_KEY,
   API_CUSTOM_GROUP_ID,
-  MODEL_CUSTOM_GROUP_ID,
+  MODEL_CUSTOM_GROUP_ID, FILE_DIRECTORY_CUSTOM_GROUP_ID,
 } from '@/constants';
 import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
@@ -211,6 +212,7 @@ const { toClipboard } = useClipboard();
 const { documentConfigList } = toRefs(useDocumentConfig());
 const { customApiTemplateList } = toRefs(useApiTemplate());
 const { customModelTemplateList } = toRefs(useModelTemplate());
+const { customFileDirectoryList } = toRefs(useFileDirectory());
 
 const gap = ref(320);
 const loading = ref(true);
@@ -220,6 +222,9 @@ const ctrlDrawerImportRef = ref();
 const ctrlDrawerPrettierRef = ref();
 const ctrlDrawerExportFileRef = ref();
 const isEmpty = computed(() => !documentConfig.value);
+const hasExportData = computed(() => customApiTemplateList.value.length
+  || customModelTemplateList.value.length
+  || customFileDirectoryList.value.length);
 
 const documentConfig = computed<DocumentConfig>(() => {
   const { id } = route.query;
@@ -260,9 +265,12 @@ async function handleExport() {
   if (customModelTemplateList.value.length > 0) {
     dataMap[MODEL_CUSTOM_GROUP_ID] = customModelTemplateList.value;
   }
+  if (customFileDirectoryList.value.length > 0) {
+    dataMap[FILE_DIRECTORY_CUSTOM_GROUP_ID] = customFileDirectoryList.value;
+  }
   const exportContent = aes.encrypt(JSON.stringify(dataMap), SECRET_KEY);
   const eleLink = document.createElement('a');
-  eleLink.download = '自定义模板.txt';
+  eleLink.download = 'api-helper自定义配置.txt';
   eleLink.style.display = 'none';
   eleLink.style.position = 'fixed';
   const blob = new Blob([exportContent]);

@@ -7,6 +7,9 @@ module.exports = {
     Recordable: 'readonly',
     HttpMethod: 'readonly',
     require: 'readonly',
+    DialogOpenConfig: 'readonly',
+    DialogProps: 'readonly',
+    FormComponentProps: 'readonly',
   },
   extends: [
     'plugin:vue/vue3-essential',

@@ -6,32 +6,31 @@
     layout="vertical"
     auto-label-width
   >
-    <a-card title="基础信息">
-      <a-row :gutter="gutter">
-        <a-col :span="24">
-          <a-form-item
+    <a-row :gutter="gutter">
+      <a-col :span="24">
+        <a-form-item
             field="title"
             :label="filename"
             :rules="[{ required: true, message: '必填项' }]"
             :validate-trigger="['change', 'input']"
-          >
-            <a-input
-              v-model="formModel.title"
-              :max-length="64"
-              @change="handleChangeLabel"
-            />
-          </a-form-item>
-        </a-col>
-        <a-col :span="24">
-          <a-form-item
+        >
+          <a-input
+            v-model="formModel.title"
+            placeholder="请输入..."
+            :max-length="64"
+            @change="handleChangeLabel"
+          />
+        </a-form-item>
+      </a-col>
+      <a-col :span="24">
+        <a-form-item
             label="是否为文件夹"
             field="isFolder"
-          >
-            <a-checkbox v-model="formModel.isFolder">文件夹</a-checkbox>
-          </a-form-item>
-        </a-col>
-      </a-row>
-    </a-card>
+        >
+          <a-checkbox v-model="formModel.isFolder">文件夹</a-checkbox>
+        </a-form-item>
+      </a-col>
+    </a-row>
   </a-form>
 </template>
 

@@ -21,6 +21,7 @@ windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.ba
 ![](../public/images/map-code.png)
 ![](../public/images/class-code.png)
 ![](../public/images/form-code.png)
+![](../public/images/file-directory.png)
 
 ## 许可
 

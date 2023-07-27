@@ -2,8 +2,9 @@ import to from 'await-to-js';
 import { Response } from 'express';
 import { stat, outputFile } from 'fs-extra';
 import { formatCode } from '@api-helper/cli/lib';
+import { clearDir } from '@api-helper/cli/lib/tools/fs';
 import { renderTemplate } from '@api-helper/template';
-import { mergeUrl } from '@api-helper/core/lib/utils/util';
+import { checkType, mergeUrl } from '@api-helper/core/lib/utils/util';
 import { treeForEach } from '@api-helper/core/lib/utils/tree';
 import { Get, Res, Post, Body, Controller } from '@nestjs/common';
 
@@ -16,7 +17,6 @@ import { FormatCode } from '../dto/format-code';
 import { FileDirectory } from '../dto/file-directory';
 import { ClientIP, getLocalIPV4List } from '../utils/ip';
 import { FileDirectoryConfig } from '../dto/file-directory-config';
-import { clearDir } from '../utils/file';
 
 const JSZip = require('jszip');
 
@@ -28,8 +28,13 @@ export class AppController {
     return await this.appService.getHello();
   }
 
-  @Get('/app/swagger/mock')
+  @Get('/app/swagger/test')
   async test() {
+    return swagger20;
+  }
+
+  @Get('/app/swagger/mock')
+  async mock() {
     return swagger20;
   }
 
@@ -48,72 +53,47 @@ export class AppController {
   }
 
   @Post('/app/fileDirectory')
-  async exportFile(
-    @Body() fileDirectory: FileDirectory,
-    @ClientIP() clientIP: string,
-    @Res() res: Response,
-  ) {
+  async exportFile(@Body() fileDirectory: FileDirectory, @ClientIP() clientIP: string, @Res() res: Response) {
     const localIPV4List = getLocalIPV4List();
     if (fileDirectory.fileDirectoryConfigList.length === 0) {
-      return Result.fail('文件模块不能为空');
+      return res.send(Result.fail('文件模块不能为空'));
     }
-    const fileDirectoryConfigPathList = getTreePath(
-      fileDirectory.fileDirectoryConfigList,
-    );
+    const fileDirectoryConfigPathList = getTreePath(fileDirectory.fileDirectoryConfigList);
     const templateContentRecordMap = new Map<string, string>();
     // 模版生成
     const renderTemplateTasks = [];
-    treeForEach(
-      fileDirectory.fileDirectoryConfigList,
-      (fileDirectoryConfig: FileDirectoryConfig) => {
-        if (!fileDirectoryConfig.isFolder) {
-          renderTemplateTasks.push(
-            renderTemplate(
-              fileDirectoryConfig.template as any,
-              {
-                api: fileDirectoryConfig.api,
-                requestDataSchemaList:
-                  fileDirectoryConfig.requestDataSchemaList,
-                responseDataSchemaList:
-                  fileDirectoryConfig.responseDataSchemaList,
-              },
-              fileDirectory.documentConfig as any,
-              formatCode as any,
-            ).then((content) => {
-              templateContentRecordMap.set(
-                fileDirectoryConfig.id,
-                content[fileDirectoryConfig.templateContentIndex ?? 0]
-                  ?.content ?? '',
-              );
-            }),
-          );
-        }
-      },
-    );
+    treeForEach(fileDirectory.fileDirectoryConfigList, (fileDirectoryConfig: FileDirectoryConfig) => {
+      if (!fileDirectoryConfig.isFolder && checkType(fileDirectoryConfig.template, 'Object') && Object.keys(fileDirectoryConfig.template).length > 0) {
+        renderTemplateTasks.push(
+          renderTemplate(
+            fileDirectoryConfig.template as any,
+            {
+              api: fileDirectoryConfig.api,
+              requestDataSchemaList: fileDirectoryConfig.requestDataSchemaList,
+              responseDataSchemaList: fileDirectoryConfig.responseDataSchemaList,
+            },
+            fileDirectory.documentConfig as any,
+            formatCode as any,
+          ).then((content) => {
+            templateContentRecordMap.set(fileDirectoryConfig.id, content[fileDirectoryConfig.templateContentIndex ?? 0]?.content ?? '');
+          }),
+        );
+      }
+    });
     await to(Promise.all(renderTemplateTasks));
 
     // 本地IP地址，配置里面有输出目录，将文件输出到输出目录
-    if (
-      localIPV4List &&
-      clientIP &&
-      localIPV4List.includes(clientIP) &&
-      fileDirectory.fileDirectoryExportPath
-    ) {
+    if (localIPV4List && clientIP && localIPV4List.includes(clientIP) && fileDirectory.fileDirectoryExportPath) {
       const [ex] = await to(stat(fileDirectory.fileDirectoryExportPath));
       if (ex) {
-        return Result.fail('文件模块导出路径访问异常，请检查目录是否正确。');
+        return res.send(Result.fail('文件模块导出路径访问异常，请检查目录是否正确。'));
       }
       // 删除
       clearDir(fileDirectory.fileDirectoryExportPath);
       const outputFileTasks = [];
       for (const [path, { id }] of fileDirectoryConfigPathList) {
         const templateContent = templateContentRecordMap.get(id) ?? '';
-        outputFileTasks.push(
-          outputFile(
-            mergeUrl(`${fileDirectory.fileDirectoryExportPath}/${path}`),
-            templateContent,
-          ),
-        );
+        outputFileTasks.push(outputFile(mergeUrl(`${fileDirectory.fileDirectoryExportPath}/${path}`), templateContent));
       }
       await to(Promise.all(outputFileTasks));
       return res.send(
@@ -142,11 +122,8 @@ export class AppController {
         level: 5,
       },
     });
-    res.setHeader('Content-Type', 'application/octet-stream');
-    res.setHeader(
-      'Content-Disposition',
-      `attachment;filename=${encodeURIComponent('导出文件模块.zip')}`,
-    );
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment;filename=${encodeURIComponent('导出文件模块.zip')}`);
     res.send(blobZip);
   }
 }

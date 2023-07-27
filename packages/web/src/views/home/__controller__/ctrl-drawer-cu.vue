@@ -25,9 +25,8 @@ import {
 import { Message } from '@arco-design/web-vue';
 
 import { getDocs } from '@/api';
-import Form from '../__components__/form/form-cu.vue';
+import Form from '../__components__/form-cu.vue';
 import { useDocumentConfig } from '@/store';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
 
 const emit = defineEmits(['success']);
 const { saveDocumentConfig } = toRefs(useDocumentConfig());
@@ -36,7 +35,7 @@ const dialogRef = ref();
 const dialogOpenType = ref('DETAIL');
 const loadingSave = ref(false);
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   loadingSave.value = false;
   dialogOpenType.value = config.type;
   nextTick(() => {

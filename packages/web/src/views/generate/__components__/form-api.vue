@@ -90,7 +90,7 @@ import message from '@/utils/message';
 import { randomChar, modalConfirm } from '@/utils';
 import { useDocumentConfig, useApiTemplate } from '@/store';
 import genEmptyApiTemplate from '@/constants/template/api/empty';
-import CtrlDrawerAPITemplate from '../../__controller__/ctrl-drawer-api-template.vue';
+import CtrlDrawerAPITemplate from '../__controller__/ctrl-drawer-api-template.vue';
 import { Template } from '@/store/template/interface';
 
 const emit = defineEmits(['success', 'exec-gen']);
@@ -180,7 +180,7 @@ function handleSuccess(id: string) {
   emit('exec-gen', id);
 }
 
-function getFormModel() {
+async function getFormModel() {
   return cloneDeep(currentDocumentConfig.value);
 }
 
@@ -190,7 +190,7 @@ defineExpose({
     if (error) {
       return Promise.reject(error);
     }
-    return getFormModel();
+    return await getFormModel();
   },
   getFormRef() {
     return formRef.value;

@@ -23,14 +23,19 @@ import {
 
 import { aes } from '@/utils/crypto';
 import message from '@/utils/message';
-import Form from '../__components__/form/form-import.vue';
-import { useApiTemplate, useModelTemplate } from '@/store';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
-import { SECRET_KEY, API_CUSTOM_GROUP_ID, MODEL_CUSTOM_GROUP_ID } from '@/constants';
+import Form from '../__components__/form-import.vue';
+import { useApiTemplate, useFileDirectory, useModelTemplate } from '@/store';
+import {
+  SECRET_KEY,
+  API_CUSTOM_GROUP_ID,
+  MODEL_CUSTOM_GROUP_ID,
+  FILE_DIRECTORY_CUSTOM_GROUP_ID,
+} from '@/constants';
 
 const emit = defineEmits(['success']);
 const { saveApiTemplate } = toRefs(useApiTemplate());
 const { saveModelTemplate } = toRefs(useModelTemplate());
+const { saveFileDirectory } = toRefs(useFileDirectory());
 
 const dialogRef = ref();
 const loading = ref(false);
@@ -39,7 +44,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
   loading.value = false;
 }
@@ -79,14 +84,18 @@ async function handleOk() {
         const code: Recordable = JSON.parse(codeText);
         const apiCustomTemplateList = code?.[API_CUSTOM_GROUP_ID] ?? [];
         const modelCustomTemplateList = code?.[MODEL_CUSTOM_GROUP_ID] ?? [];
+        const fileDirectoryCustomList = code?.[FILE_DIRECTORY_CUSTOM_GROUP_ID] ?? [];
         if (!hasImport) {
-          hasImport = apiCustomTemplateList.length > 0 || modelCustomTemplateList.length > 0;
+          hasImport = apiCustomTemplateList.length > 0 || modelCustomTemplateList.length > 0 || fileDirectoryCustomList.length;
         }
         for (const item of apiCustomTemplateList) {
           saveApiTemplate.value(item);
         }
         for (const item of modelCustomTemplateList) {
           saveModelTemplate.value(item);
+        }
+        for (const item of fileDirectoryCustomList) {
+          saveFileDirectory.value(item);
         }
         successNameList.push(item.file.name);
       } catch {

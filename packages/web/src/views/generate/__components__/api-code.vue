@@ -97,7 +97,6 @@ async function updateCodeContent() {
         responseDataSchemaList: responseDataSchema?.params ?? [],
       };
       loading.value = true;
-      debugger;
       const res = await renderTemplate(defaultModelTemplate.value, params, currentDocumentConfig.value);
       loading.value = false;
       currentCode.value = res?.[1]?.content ?? '';

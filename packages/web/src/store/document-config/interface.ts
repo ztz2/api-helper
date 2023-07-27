@@ -3,6 +3,7 @@ import { PrettierOptions } from '@api-helper/cli/lib/types';
 
 import {
   DEFAULT_SELECT_API_TPL_ID,
+  DEFAULT_SELECT_FILE_DIRECTORY_ID,
   DEFAULT_SELECT_MODEL_TPL_ID,
 } from '@/constants';
 
@@ -26,8 +27,8 @@ export class DocumentConfig {
 
   /** 以下属性是基于项目级别的通用配置项 - 开始 * */
   // 选择的文件模块ID
-  fileDirectoryId = '';
-  // 文件模块导出路径
+  fileDirectoryId = DEFAULT_SELECT_FILE_DIRECTORY_ID;
+  // 文件模块生成路径
   fileDirectoryExportPath = '';
   // API选择的模版ID
   apiTplId = DEFAULT_SELECT_API_TPL_ID;

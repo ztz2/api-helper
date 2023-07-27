@@ -20,15 +20,14 @@ import {
   defineExpose,
 } from 'vue';
 
-import message from '@/utils/message';
-import { useDocumentConfig } from '@/store';
 import { exportFileApi } from '@/api';
-import Form from '../__components__/form/form-export-file.vue';
-
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import message from '@/utils/message';
 import { Template } from '@/store/template/interface';
+import { useDocumentConfig, useFileDirectory } from '@/store';
+import Form from '../__components__/form-export-file.vue';
 
 const { currentDocumentConfig } = toRefs(useDocumentConfig());
+const { updateFileDirectoryConfigTemplateId } = useFileDirectory();
 
 const dialogRef = ref();
 const loading = ref(false);
@@ -37,7 +36,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   loading.value = false;
   dialogRef.value.open(config);
 }
@@ -51,21 +50,22 @@ async function handleExport() {
       res: await exportFileApi(data),
     };
   }).then(({ data, res }: Recordable) => {
+    function end(isOutputFile = false) {
+      close();
+      updateFileDirectoryConfigTemplateId(data.fileDirectoryConfigList);
+      const noticeText = isOutputFile ? `文件模块已创建到：${data.fileDirectoryExportPath}中` : '文件模块压缩包已下载';
+      message.success({
+        duration: 5000,
+        content: noticeText,
+      });
+    }
     try {
       res = typeof res === 'string' ? JSON.parse(res) : res;
       if (res?.data?.isOutputFile) {
-        close();
-        return message.success({
-          duration: 5000,
-          content: `文件模块已创建到：${data.fileDirectoryExportPath}中`,
-        });
+        return end(true);
       }
     } catch {}
-    close();
-    message.success({
-      duration: 3000,
-      content: '文件模块压缩包已下载',
-    });
+    end();
   }).finally(() => {
     loading.value = false;
   });

@@ -170,7 +170,7 @@ async function formatPrettierOptions(val: object | string) {
   }
 }
 
-function getFormModel() {
+async function getFormModel() {
   const data = cloneDeep(formModel.value);
   data.prettierOptions = JSON.parse(data.prettierOptions);
   return data;
@@ -182,7 +182,7 @@ defineExpose({
     if (error) {
       return Promise.reject(error);
     }
-    return getFormModel();
+    return await getFormModel();
   },
   getFormRef() {
     return formRef.value;

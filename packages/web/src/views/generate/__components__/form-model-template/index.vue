@@ -20,7 +20,7 @@
                   <a-col :span="24">
                     <a-form-item
                       label="模板名称"
-                      field="label"
+                      field="title"
                       :rules="[{ required: true, message: '必填项' }]"
                       :validate-trigger="['change', 'input']"
                     >
@@ -101,7 +101,7 @@
                       <div class="text-center">请求数据字段</div>
                     </template>
                     <div style="width: 100%; height: calc(100vh - 277px)">
-                      <ApihSchemaTree v-model:value="baseInfo.requestDataSchemaIdList" :data="requestFieldTree" />
+                      <apih-schema-tree v-model:value="baseInfo.requestDataSchemaIdList" :data="requestFieldTree" />
                     </div>
                   </a-card>
                 </a-col>
@@ -111,7 +111,7 @@
                       <div class="text-center">响应数据字段</div>
                     </template>
                     <div style="width: 100%; height: calc(100vh - 277px)">
-                      <ApihSchemaTree v-model:value="baseInfo.responseDataSchemaIdList" :data="responseFieldTree" />
+                      <apih-schema-tree v-model:value="baseInfo.responseDataSchemaIdList" :data="responseFieldTree" />
                     </div>
                   </a-card>
                 </a-col>
@@ -180,9 +180,9 @@ import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { DOCUMENT } from '@/constants/mock';
 import { FormModel } from '../form-model/interface';
-import ApihSchemaTree from '@/components/apih-schema-tree/index.vue';
 import { Template } from '@/store/template/interface';
 import { DocumentConfig } from '@/store/document-config/interface';
+import { getSchemaListByIds } from '@/utils/schema';
 
 type FormModelType = Template;
 
@@ -306,11 +306,11 @@ onMounted(() => {
   }, { immediate: true });
 
   watch(() => baseInfo.value.requestDataSchemaIdList, (val) => {
-    baseInfo.value.requestDataSchemaList = getSchemaList(val, requestFieldMap.value);
+    baseInfo.value.requestDataSchemaList = getSchemaListByIds(val, requestFieldMap.value);
   }, { deep: true, immediate: true });
 
   watch(() => baseInfo.value.responseDataSchemaIdList, (val) => {
-    baseInfo.value.responseDataSchemaList = getSchemaList(val, responseFieldMap.value);
+    baseInfo.value.responseDataSchemaList = getSchemaListByIds(val, responseFieldMap.value);
   }, { deep: true, immediate: true });
 });
 
@@ -365,42 +365,8 @@ function getResponseDataSchema(): APIHelper.Schema | null {
   return schema;
 }
 
-function getSchemaList(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
-  const val = cloneDeep(ids);
-  const schemaList: APIHelper.SchemaList = [];
-  while (val.length > 0) {
-    const id = val.shift();
-    let row = cloneDeep(record.get(id as string));
-    if (row) {
-      row = { ...row };
-      row.params = filterChildren(row.params, val);
-      schemaList.push(cloneDeep(row));
-    }
-  }
-  return schemaList;
-}
-
-function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = []) {
-  if (checkIds.length === 0) {
-    return [];
-  }
-  return schemaList.filter((schema) => {
-    const index = checkIds.indexOf(schema.id);
-    // 该节点的基本数据类型
-    if (!schema.keyName && schema.type !== 'object' && schema.type !== 'array') {
-      return true;
-    }
-    if (index === -1) {
-      return false;
-    }
-    checkIds.splice(index, 1);
-    schema.params = filterChildren(schema.params, checkIds);
-    return true;
-  });
-}
-
-function getFormModel() {
-  const data = _getFormModel();
+async function getFormModel() {
+  const data = await _getFormModel();
   return {
     ...baseInfo.value,
     ...data,
@@ -410,7 +376,7 @@ function getFormModel() {
 defineExpose({
   validate: async () => {
     await _validate();
-    return getFormModel();
+    return await getFormModel();
   },
   validateFields,
   setFields,

@@ -51,10 +51,9 @@ import { omit } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
-import Form from '../__components__/form/form-model-template/index.vue';
 import { Template } from '@/store/template/interface';
 import { useDocumentConfig, useModelTemplate } from '@/store';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import Form from '@/views/generate/__components__/form-model-template/index.vue';
 
 const emit = defineEmits(['success']);
 
@@ -80,7 +79,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
   loading.value = false;
   loadingSave.value = false;
@@ -110,7 +109,7 @@ function handleGen(showMsg = false) {
         'responseDataSchemaList',
         'responseDataSchemaIdList',
       ]),
-    });
+    } as any);
   }).then((res: unknown) => {
     codeList.value = res as APIHelper.TemplateContent[];
     if (showMsg === true) {

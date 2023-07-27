@@ -55,7 +55,6 @@ const useModelTemplate = defineStore('model-template', {
       }
       // 新增
       value.id = value.id ? value.id : nanoid();
-      debugger;
       let modelTemplateGroup = this.modelTemplateList.find((item) => item.id === MODEL_CUSTOM_GROUP_ID);
       // 不存在，创建自定义分组
       if (!modelTemplateGroup) {

@@ -101,7 +101,7 @@ export function getSelectOptionList(selectOptionGroup: Array<SelectOptionGroup>)
 export const noop = () => undefined;
 
 export function randomChar(size = 4) {
-  const str = md5(Date.now().toString()).toString();
+  const str = md5(Number.parseInt(String(Date.now() + Math.random() * 10000000), 10).toString()).toString();
   size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size) as unknown as string, 10);
   return str.slice(str.length - size);
 }

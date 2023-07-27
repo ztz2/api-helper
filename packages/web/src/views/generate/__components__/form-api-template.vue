@@ -19,7 +19,7 @@
               <a-col :span="24">
                 <a-form-item
                   label="模板名称"
-                  field="label"
+                  field="title"
                   :rules="[{ required: true, message: '必填项' }]"
                   :validate-trigger="['change', 'input']"
                 >

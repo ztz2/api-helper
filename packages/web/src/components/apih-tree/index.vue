@@ -2,9 +2,11 @@
   <a-tree
     v-bind="$attrs"
     v-model:selected-keys="currentValue"
+    ref="treeRef"
     size="large"
     :data="currentData"
-    :multiple="multiple"
+    @select="handleSelect"
+    multiple
   >
     <template v-if="$slots.default" #default="scope">
       <slot name="default" v-bind="scope"></slot>
@@ -48,12 +50,18 @@ import {
   watch,
   PropType,
   computed,
+  nextTick,
   defineEmits,
   defineProps,
 } from 'vue';
-import type { TreeNodeData } from '@arco-design/web-vue';
+import { cloneDeep } from 'lodash';
+import type { TreeNodeData as _TreeNodeData } from '@arco-design/web-vue';
 import { IconFolder, IconCodeSquare } from '@arco-design/web-vue/es/icon';
+import { FileDirectoryConfig } from '@/store/file-directory/interface';
 
+type TreeNodeData = _TreeNodeData & Partial<FileDirectoryConfig> & {
+  children: Array<TreeNodeData>
+};
 const emit = defineEmits(['update:value']);
 const props = defineProps({
   data: {
@@ -77,19 +85,29 @@ const props = defineProps({
     default: 'title',
   },
   fileIcon: Boolean,
+  sortFilename: Boolean,
+  expandAll: Boolean,
 });
 
+const treeRef = ref();
 const currentValue = ref<string[]>([]);
 const multiple = toRef(props, 'multiple');
 const currentData = computed(() => {
   function dfs(nodeList: TreeNodeData[]): TreeNodeData[] {
-    return [...nodeList].map((node) => {
+    let nl = [...nodeList];
+    if (props.sortFilename) {
+      const l = nodeList.filter((itm) => itm.isFolder).sort((a: any, b: any) => getLabel(a).localeCompare(getLabel(b)));
+      const r = nodeList.filter((itm) => !itm.isFolder).sort((a: any, b: any) => getLabel(a).localeCompare(getLabel(b)));
+      nl = [...l, ...r];
+    }
+    return nl.map((node: TreeNodeData) => {
       const itm = {
         ...node,
         key: getValue(node),
         title: getLabel(node),
-      };
+      } as TreeNodeData;
       if (Array.isArray(itm?.children)) {
+        // @ts-ignore
         itm.children = dfs(itm.children);
       }
       return itm;
@@ -98,7 +116,15 @@ const currentData = computed(() => {
   return dfs(props.data);
 });
 
-watch(() => props.value, (val) => {
+watch(() => currentData.value, () => {
+  nextTick(() => {
+    treeRef.value?.expandAll?.();
+  });
+}, { immediate: true });
+
+let oldValue: Array<string> = [];
+watch(() => props.value, (val, old) => {
+  oldValue = old as Array<string>;
   // 多选
   if (multiple.value) {
     if (Array.isArray(val)) {
@@ -144,5 +170,13 @@ function getValue(node: TreeNodeData): string {
     }
   }
   return '';
+}
+
+function handleSelect() {
+  // 单选处理
+  if (!props.multiple && currentValue.value.length > 1) {
+    currentValue.value.shift();
+    currentValue.value.splice(1, currentValue.value.length);
+  }
 }
 </script>

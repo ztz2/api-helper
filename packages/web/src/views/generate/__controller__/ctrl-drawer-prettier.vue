@@ -22,8 +22,7 @@ import { merge, cloneDeep } from 'lodash';
 
 import message from '@/utils/message';
 import { useDocumentConfig } from '@/store';
-import Form from '../__components__/form/form-prettier.vue';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
+import Form from '../__components__/form-prettier.vue';
 
 const dialogRef = ref();
 
@@ -33,7 +32,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(merge(config, {
     formComponentProps: {
       data: cloneDeep(currentDocumentConfig.value),

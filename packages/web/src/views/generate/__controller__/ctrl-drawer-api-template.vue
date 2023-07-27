@@ -47,9 +47,8 @@ import { APIHelper } from '@api-helper/core';
 import { Message } from '@arco-design/web-vue';
 
 import { DOCUMENT } from '@/constants/mock';
-import Form from '../__components__/form/form-api-template.vue';
+import Form from '../__components__/form-api-template.vue';
 import { useDocumentConfig, useApiTemplate } from '@/store';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
 
 const emit = defineEmits(['success']);
 
@@ -75,7 +74,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig) {
+function open(config: DialogOpenConfig) {
   dialogRef.value.open(config);
   loading.value = false;
   loadingSave.value = false;

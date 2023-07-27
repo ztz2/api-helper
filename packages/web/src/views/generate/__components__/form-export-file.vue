@@ -10,20 +10,21 @@
       <a-card title="基础信息">
         <a-row :gutter="gutter">
           <a-form-item
-            label="文件模块导出路径"
+            label="文件模块生成路径"
             tooltip="文件模块生成之后，会输出到该目录下，注意，在文件输出之前，会清除该目录下所有文件。当无法访问该文件目录时候，会将文件模块打一个zip压缩包，并自动下载该压缩包"
             :validate-trigger="['change', 'input']"
           >
             <a-input
               value-key="id"
               v-model="currentDocumentConfig.fileDirectoryExportPath"
-              placeholder="请输入文件模块导出路径"
+              placeholder="请输入文件模块生成路径"
               :max-length="512"
               allow-clear
             />
           </a-form-item>
           <a-form-item
             style="margin-bottom: 0"
+            field="fileDirectoryId"
             :rules="[{ required: true, validator: validatorProjectConfig.bind(null, 'fileDirectoryId') }]"
             :validate-trigger="['change', 'input']"
           >
@@ -33,7 +34,7 @@
                 <apih-tooltip
                   :content="!formModel ? '' : formModel.builtIn !== false ? '当前选择模板为系统内置模板，不可删除' : ''"
                 >
-                  <a-popconfirm content="确认删除该模板?" @ok="handleDeleteTpl">
+                  <a-popconfirm content="确认删除该模板?" @ok="handleDeleteFileDirectory">
                     <a-button
                       size="mini"
                       status="danger"
@@ -43,8 +44,8 @@
                     </a-button>
                   </a-popconfirm>
                 </apih-tooltip>
-                <a-button size="mini" type="primary" @click.prevent="handleAddTpl">新增文件模块配置</a-button>
-                <a-button size="mini" type="primary" :disabled="!currentDocumentConfig.apiTplId" @click.prevent="handleEditTpl" >编辑文件模块配置</a-button>
+                <a-button size="mini" type="primary" @click.prevent="handleAddFileDirectory">新增文件模块配置</a-button>
+                <a-button size="mini" type="primary" :disabled="!currentDocumentConfig.fileDirectoryId" @click.prevent="handleEditFileDirectory" >编辑文件模块配置</a-button>
               </a-space>
             </template>
             <apih-select
@@ -74,7 +75,16 @@
                       v-model:value="selectFolder"
                       :data="fileDirectoryList"
                       file-icon
-                    />
+                    >
+                      <template #title="{title, templateId}">
+                        <a-space>
+                          <span>{{title}}</span>
+                          <a-tooltip v-if="checkHasTemplate(templateId)" content="该文件已关联模版">
+                            <icon-exclamation-circle style="color: #FF5722" />
+                          </a-tooltip>
+                        </a-space>
+                      </template>
+                    </apih-tree>
                   </a-form-item>
                 </div>
               </div>
@@ -107,14 +117,21 @@
                         />
                       </div>
                       <div style="margin-left: 12px;">
-                        <a-button>字段选择</a-button>
+                        <apih-select-schema
+                          v-model:request-data-schema-value="selectFolderNode.requestDataSchemaIds"
+                          v-model:response-data-schema-value="selectFolderNode.responseDataSchemaIds"
+                          :api="selectedApi"
+                        >
+                          <a-button :disabled="!selectedApi">字段选择</a-button>
+                        </apih-select-schema>
                       </div>
                     </div>
                   </a-form-item>
                   <a-form-item
                     label="关联模板"
+                    field="templateId"
                     style="width: 100%"
-                    :rules="[{ required: true, validator: validatorObject.bind(null, selectFolderNode, 'templateId', '必选项') }]"
+                    :rules="[{ required: true, validator: validatorTemplateId }]"
                     :validate-trigger="['change', 'input']"
                   >
                     <apih-select
@@ -162,6 +179,7 @@ import {
   watch,
   PropType,
   computed,
+  nextTick,
   defineProps,
   defineExpose,
 } from 'vue';
@@ -172,8 +190,9 @@ import {
   Message,
   TreeNodeData,
 } from '@arco-design/web-vue';
-import { APIHelper, getSchema } from '@api-helper/core';
+import { APIHelper } from '@api-helper/core';
 
+import { checkType } from '@api-helper/core/lib/utils/util';
 import {
   useFileDirectory,
   useModelTemplate,
@@ -183,9 +202,16 @@ import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
 import { modalConfirm, randomChar } from '@/utils';
+import { getSchemaListByIds } from '@/utils/schema';
+import useSchema, { getDataSchemaList } from '@/hooks/use-schema';
 import { validatorObject, validatorProjectConfig } from '@/utils/validator';
-import { FileDirectory, FileDirectoryConfig } from '@/store/file-directory/interface';
-import CtrlDrawerExportFileTemplate from '../../__controller__/ctrl-drawer-export-file-template.vue';
+import {
+  FileDirectory,
+  FileDirectoryConfig,
+  createFileDirectory,
+  createFileDirectoryConfig,
+} from '@/store/file-directory/interface';
+import CtrlDrawerExportFileTemplate from '../__controller__/ctrl-drawer-export-file-template.vue';
 
 type FormModelType = FileDirectory;
 
@@ -223,22 +249,11 @@ const {
   watchFormModel: toRef(props, 'data'),
   getFormModel: async (data) => {
     data.fileDirectoryExportPath = currentDocumentConfig.value.fileDirectoryExportPath;
-    // 生成模版数据
-    treeForEach(data.fileDirectoryConfigList, (fileDirectory: FileDirectoryConfig) => {
-      if (!fileDirectory.isFolder && fileDirectory.apiId && fileDirectory.templateId) {
-        const api = props.apiList.find((t) => t.id === fileDirectory.apiId) as any;
-        const modelTemplate = modelTemplateMap.value.get(fileDirectory.templateId) as any;
-        if (!modelTemplate) {
-          return;
-        }
-        const requestDataSchemaList = api?.requestDataSchema?.params ?? [];
-        const responseDataSchemaList = getSchema(api?.responseDataSchema, currentDocumentConfigDataKey.value)?.params ?? [];
-        fileDirectory.api = api;
-        fileDirectory.template = modelTemplate;
-        fileDirectory.requestDataSchemaList = requestDataSchemaList;
-        fileDirectory.responseDataSchemaList = responseDataSchemaList;
+    treeForEach(data.fileDirectoryConfigList, (fileDirectoryConfig: FileDirectoryConfig) => {
+      if (!fileDirectoryConfig.isFolder && fileDirectoryConfig.templateId) {
+        fileDirectoryConfig.template = cloneDeep(modelTemplateMap.value.get(fileDirectoryConfig.templateId))!;
       }
-    });
+    }, 'children');
     return data;
   },
 });
@@ -248,7 +263,7 @@ const {
   deleteFileDirectoryById,
   fileDirectoryList: fileDirectoryListStore,
 } = toRefs(useFileDirectory());
-const { currentDocumentConfig, currentDocumentConfigDataKey } = toRefs(useDocumentConfig());
+const { currentDocumentConfig } = toRefs(useDocumentConfig());
 const { modelTemplateList, modelTemplateMap } = toRefs(useModelTemplate());
 
 const span = ref(12);
@@ -266,6 +281,45 @@ const fileDirectoryConfigMap = computed<Map<string, FileDirectoryConfig>>(() => 
   return result;
 });
 const selectFolderNode = ref<FileDirectoryConfig>(null!);
+
+// 选择API变化，绑定该API实例
+const selectedApi = computed(() => props.apiList.find((t) => t.id === selectFolderNode.value?.apiId));
+const {
+  requestDataSchemaList,
+  responseDataSchemaList,
+  requestDataSchemaMap,
+  responseDataSchemaMap,
+} = useSchema(selectedApi);
+watch(() => selectFolderNode.value?.apiId, () => {
+  if (selectFolderNode.value) {
+    const [req, resp] = getDataSchemaList(selectedApi.value, currentDocumentConfig.value.dataKey, true);
+    selectFolderNode.value.api = selectedApi.value!;
+    selectFolderNode.value.requestDataSchemaIds = req.map((itm) => itm.id);
+    selectFolderNode.value.responseDataSchemaIds = resp.map((itm) => itm.id);
+  }
+});
+watch(() => selectFolderNode.value?.requestDataSchemaIds, (val) => {
+  if (selectFolderNode.value) {
+    nextTick(() => {
+      selectFolderNode.value.requestDataSchemaList = getSchemaListByIds(val, requestDataSchemaMap.value);
+    });
+  }
+}, { deep: true });
+watch(() => selectFolderNode.value?.responseDataSchemaIds, (val) => {
+  if (selectFolderNode.value) {
+    nextTick(() => {
+      selectFolderNode.value.responseDataSchemaList = getSchemaListByIds(val, responseDataSchemaMap.value);
+    });
+  }
+}, { deep: true });
+// 选择模版变化，绑定该模版实例
+const selectedTemplate = computed(() => modelTemplateMap.value.get(selectFolderNode.value?.templateId));
+watch(() => selectFolderNode.value?.templateId, () => {
+  if (selectFolderNode.value) {
+    selectFolderNode.value.template = cloneDeep(selectedTemplate.value!);
+  }
+});
+
 watch(() => selectFolder.value, (v) => {
   const node = fileDirectoryConfigMap.value.get(v);
   selectFolderNode.value = node ?? null!;
@@ -278,15 +332,37 @@ const fileDirectoryList = computed(() => {
 });
 watch([() => currentDocumentConfig.value.fileDirectoryId, () => props.visible], () => {
   selectFolder.value = '';
-  formModel.value = cloneDeep(fileDirectoryMap.value.get(currentDocumentConfig.value.fileDirectoryId) ?? new FileDirectory()) as FileDirectory;
-  console.log(formModel.value);
+  formModel.value = cloneDeep(
+    fileDirectoryMap.value.get(currentDocumentConfig.value.fileDirectoryId) ?? new FileDirectory(),
+  ) as FileDirectory;
 }, { immediate: true });
 
+function checkHasTemplate(id: string) {
+  const tpl = modelTemplateMap.value.get(id);
+  return checkType(tpl, 'Object') && tpl && Object.keys(tpl).length > 0;
+}
+
+function validatorTemplateId(value: unknown, callback: Function) {
+  if (!selectFolderNode.value.templateId) {
+    return callback('必选项');
+  }
+  if (!modelTemplateMap.value.get(selectFolderNode.value?.templateId)) {
+    return callback('模板不存在，请重新选择');
+  }
+  callback();
+}
+
 function handleSuccess(id: string) {
+  if (id === currentDocumentConfig.value.fileDirectoryId) {
+    formModel.value = cloneDeep(
+      fileDirectoryMap.value.get(id) ?? new FileDirectory(),
+    ) as FileDirectory;
+    return;
+  }
   currentDocumentConfig.value.fileDirectoryId = id;
 }
 
-function handleDeleteTpl() {
+function handleDeleteFileDirectory() {
   if (!formModel.value) {
     return message.warn('没有选择模板.');
   }
@@ -296,32 +372,48 @@ function handleDeleteTpl() {
     },
   });
 }
-function handleAddTpl() {
+function handleAddFileDirectory() {
   ctrlDrawerExportFileTemplateRef.value?.open({
     type: 'ADD',
-    title: '新增模板',
+    title: '新增文件模块配置',
     formComponentProps: {
-      data: new FileDirectory(),
+      data: createFileDirectory({
+        fileDirectoryConfigList: [
+          createFileDirectoryConfig({
+            title: 'apih-create-file-directory',
+            isFolder: true,
+            children: [
+              createFileDirectoryConfig({
+                title: 'index.ts',
+              }, true),
+            ],
+          }, true),
+        ],
+      }, true),
     },
   });
 }
 
-async function handleEditTpl() {
-  const tplModel = cloneDeep(modelTemplateMap.value.get(currentDocumentConfig.value.fileDirectoryId));
-  if (!tplModel) {
-    return Message.error('请重新选择模板');
+async function handleEditFileDirectory() {
+  const fileDirectory = cloneDeep(fileDirectoryMap.value.get(currentDocumentConfig.value.fileDirectoryId));
+  if (!fileDirectory) {
+    return Message.error('请重新选择文件模块配置');
   }
-  if (tplModel.builtIn) {
+  const data = cloneDeep(formModel.value);
+  treeForEach(data.fileDirectoryConfigList, (itm: Recordable) => {
+    delete itm.disabled;
+  }, 'children');
+  if (fileDirectory.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.title += ` - 副本${randomChar()}`;
-    tplModel.id = '';
-    tplModel.builtIn = false;
+    data.title += ` - 副本${randomChar()}`;
+    data.id = '';
+    data.builtIn = false;
   }
   ctrlDrawerExportFileTemplateRef.value?.open({
     type: 'EDIT',
-    title: '修改模板',
+    title: '修改文件模块配置',
     formComponentProps: {
-      data: tplModel,
+      data,
     },
   });
 }
@@ -337,5 +429,3 @@ defineExpose({
   getReactiveFormModel,
 });
 </script>
-<style lang="scss" scoped>
-</style>

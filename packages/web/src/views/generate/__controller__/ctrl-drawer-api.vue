@@ -43,10 +43,9 @@ import {
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 
-import Form from '../__components__/form/form-api.vue';
+import Form from '../__components__/form-api.vue';
 import { Template } from '@/store/template/interface';
 import { useDocumentConfig, useApiTemplate } from '@/store';
-import { DrawerOpenConfig } from '@/components/apih-drawer/interface';
 
 type OpenDataType = {
   apiList: Array<APIHelper.API>
@@ -77,7 +76,7 @@ function close() {
   dialogRef.value.close();
 }
 
-function open(config: DrawerOpenConfig, payload: OpenDataType) {
+function open(config: DialogOpenConfig, payload: OpenDataType) {
   dialogRef.value.open(config);
   dialogOpenData.value.apiList = payload.apiList;
   loading.value = false;

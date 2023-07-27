@@ -6,3 +6,4 @@ export const FILE_DIRECTORY_CUSTOM_GROUP_ID = '自定义文件导出分组ID_501
 
 export const DEFAULT_SELECT_API_TPL_ID = 'typescript_api_76ea205dba9f3dfb';
 export const DEFAULT_SELECT_MODEL_TPL_ID = 'javascript_map_841d8ffc9b34d1d5';
+export const DEFAULT_SELECT_FILE_DIRECTORY_ID = 'file_directory_59241240e20d5e77';

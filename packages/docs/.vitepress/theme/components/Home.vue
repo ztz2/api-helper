@@ -95,6 +95,10 @@ onMounted(async () => {
     <img alt="" src="/images/form-code.png" />
   </section>
 
+  <section id="sponsors">
+    <h2>生成整体文件模块</h2>
+    <img alt="" src="/images/file-directory.png" />
+  </section>
   <SiteMap />
   <!-- <NewsLetter /> -->
 </template>

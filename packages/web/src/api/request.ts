@@ -9,18 +9,28 @@ const request = axios.create({
 
 request.interceptors.response.use(
   async (response) => {
-    const { data, config, headers } = response;
+    const { config, headers } = response;
+    let { data } = response;
     if (data instanceof Blob) {
-      let blob = data;
+      let blob: Blob | Recordable = data;
       try {
-        blob = JSON.parse(await data.text());
+        blob = JSON.parse(await data.text()) as unknown as Recordable;
+        if ('code' in blob && 'message' in blob && 'data' in blob && !(blob.code === 200 || blob.code === 1000)) {
+          message.error(blob.message);
+          return Promise.reject(blob.message);
+        }
+        return blob;
       } catch {}
       if ('download' in config) {
-        downloadBlob(blob, headers['content-disposition'] as string);
+        downloadBlob(blob as Blob, headers['content-disposition'] as string);
       }
       return blob;
     }
-
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch {}
+    }
     if (data.code === 200 || data.code === 1000) {
       return data.data;
     }
@@ -28,7 +38,6 @@ request.interceptors.response.use(
     return Promise.reject(data.message);
   },
   (error) => {
-    debugger;
     message.error('服务异常');
     return Promise.reject(error);
   },
