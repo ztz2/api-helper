@@ -35,20 +35,25 @@ const useFileDirectory = defineStore('file-directory', {
     },
   },
   actions: {
-    saveFileDirectory(value: FileDirectory): string {
+    saveFileDirectory(value: FileDirectory, isAppUpdate = false): string {
       const fileDirectory = this.fileDirectoryMap.get(value.id);
       // 更新操作
       if (fileDirectory) {
-        for (const fdl of this.fileDirectoryList) {
-          for (let i = 0; i < fdl.options.length; i++) {
-            const itm = fdl.options[i];
-            if (itm.id === value.id) {
-              const row = merge({}, omit(fileDirectory, 'fileDirectoryConfigList'), omit(value, ['id']));
-              fdl.options.splice(i, 1, row);
-              return fileDirectory.id;
+        if (isAppUpdate) {
+          const fileDirectoryConfigMap = new Map();
+          treeForEach(fileDirectory.fileDirectoryConfigList, (c: FileDirectoryConfig) => {
+            fileDirectoryConfigMap.set(c.id, c);
+          }, 'children');
+          treeForEach(value.fileDirectoryConfigList, (c: FileDirectoryConfig) => {
+            const record = fileDirectoryConfigMap.get(c.id);
+            if (record) {
+              console.log(123);
+              c.templateId = record.templateId;
+              c.templateContentIndex = record.templateContentIndex;
             }
-          }
+          }, 'children');
         }
+        merge(fileDirectory, value);
         return fileDirectory.id;
       }
       // 新增
@@ -94,19 +99,25 @@ const useFileDirectory = defineStore('file-directory', {
       }
     },
     // 更新已经选择模板
-    updateFileDirectoryConfigTemplateId(fileDirectoryConfigList: Array<FileDirectoryConfig> = []) {
+    updateFileDirectoryConfigTemplate(fileDirectoryConfigList: Array<FileDirectoryConfig> = []) {
       const { fileDirectoryList } = this;
-      const baseMap = new Map<string, FileDirectoryConfig>();
+      const fileDirectoryConfigMap = new Map<string, FileDirectoryConfig>();
       treeForEach(fileDirectoryConfigList, (item: FileDirectoryConfig) => {
-        baseMap.set(item.id, item);
+        fileDirectoryConfigMap.set(item.id, item);
       }, 'children');
       for (const fc of fileDirectoryList) {
         for (const itm of fc.options) {
-          treeForEach(itm.fileDirectoryConfigList, (fdc: FileDirectoryConfig) => {
-            const bm = baseMap.get(fdc.id);
-            if (bm) {
-              fdc.templateId = bm?.templateId ?? '';
-              fdc.templateContentIndex = bm?.templateContentIndex ?? 0;
+          treeForEach(itm.fileDirectoryConfigList, (fileDirectoryConfig: FileDirectoryConfig) => {
+            const newConfig = fileDirectoryConfigMap.get(fileDirectoryConfig.id);
+            if (newConfig) {
+              console.log('旧', JSON.parse(JSON.stringify(fileDirectoryConfig)));
+              if ('templateId' in newConfig) {
+                fileDirectoryConfig.templateId = newConfig?.templateId ?? '';
+              }
+              if ('templateContentIndex' in newConfig) {
+                fileDirectoryConfig.templateContentIndex = newConfig?.templateContentIndex ?? 0;
+              }
+              console.log('新', JSON.parse(JSON.stringify(fileDirectoryConfig)));
             }
           }, 'children');
         }

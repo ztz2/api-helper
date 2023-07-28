@@ -111,3 +111,11 @@ export function log(...args: any) {
   // @ts-ignore
   window[console]?.log?.apply(window[console]?.log, args);
 }
+
+export function isWindowsSystem() {
+  return /windows|win32|win64|wow32|wow64/g.test(navigator.userAgent.toLowerCase());
+}
+
+export function toUnixPath(path: string) {
+  return path.replace(/[/\\]+/g, '/');
+}

@@ -11,7 +11,7 @@
         <a-row :gutter="gutter">
           <a-form-item
             label="文件模块生成路径"
-            tooltip="文件模块生成之后，会输出到该目录下，注意，在文件输出之前，会清除该目录下所有文件。当无法访问该文件目录时候，会将文件模块打一个zip压缩包，并自动下载该压缩包"
+            tooltip="文件模块生成之后，会输出到该目录下，该功能需本地部署电脑使用才会生效。非本地部署电脑使用时会将文件模块合成一个zip压缩包，并自动下载该压缩包"
             :validate-trigger="['change', 'input']"
           >
             <a-input
@@ -20,7 +20,14 @@
               placeholder="请输入文件模块生成路径"
               :max-length="512"
               allow-clear
-            />
+            >
+              <template v-if="FILE_DIRECTORY_BASE_PATH" #append>
+                <a-space>
+                  <span>{{pathDelimiter}}</span>
+                  <span>{{FILE_DIRECTORY_BASE_PATH}}</span>
+                </a-space>
+              </template>
+            </a-input>
           </a-form-item>
           <a-form-item
             style="margin-bottom: 0"
@@ -139,6 +146,7 @@
                       value-key="id"
                       placeholder="请选择需要关联的模板"
                       :options="modelTemplateList"
+                      @change="updateFileDirectoryConfigTemplateId"
                       allow-clear
                     />
                   </a-form-item>
@@ -154,6 +162,7 @@
                       placeholder="请输入关联模板内容下标"
                       :min="0"
                       :max="10"
+                      @change="updateFileDirectoryConfigTemplateContentIndex"
                       hide-button
                     />
                   </a-form-item>
@@ -201,7 +210,7 @@ import {
 import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
-import { modalConfirm, randomChar } from '@/utils';
+import { isWindowsSystem, modalConfirm, randomChar } from '@/utils';
 import { getSchemaListByIds } from '@/utils/schema';
 import useSchema, { getDataSchemaList } from '@/hooks/use-schema';
 import { validatorObject, validatorProjectConfig } from '@/utils/validator';
@@ -212,6 +221,7 @@ import {
   createFileDirectoryConfig,
 } from '@/store/file-directory/interface';
 import CtrlDrawerExportFileTemplate from '../__controller__/ctrl-drawer-export-file-template.vue';
+import { FILE_DIRECTORY_BASE_PATH } from '@/constants';
 
 type FormModelType = FileDirectory;
 
@@ -262,12 +272,14 @@ const {
   fileDirectoryMap,
   deleteFileDirectoryById,
   fileDirectoryList: fileDirectoryListStore,
+  updateFileDirectoryConfigTemplate,
 } = toRefs(useFileDirectory());
 const { currentDocumentConfig } = toRefs(useDocumentConfig());
 const { modelTemplateList, modelTemplateMap } = toRefs(useModelTemplate());
 
 const span = ref(12);
 const gutter = ref(15);
+const pathDelimiter = ref(isWindowsSystem() ? '\\' : '/');
 const wrapHeight = ref('calc(100vh - 488px)');
 const loading = ref(false);
 const selectFolder = ref('');
@@ -337,6 +349,30 @@ watch([() => currentDocumentConfig.value.fileDirectoryId, () => props.visible], 
   ) as FileDirectory;
 }, { immediate: true });
 
+watch(() => selectFolderNode.value?.templateContentIndex, () => {
+  const id = selectFolderNode.value?.id;
+  if (id) {
+
+  }
+});
+function updateFileDirectoryConfigTemplateId() {
+  const id = selectFolderNode.value?.id;
+  if (id) {
+    console.log('更新');
+    updateFileDirectoryConfigTemplate.value([
+      { id, templateId: selectFolderNode.value.templateId } as FileDirectoryConfig,
+    ]);
+  }
+}
+function updateFileDirectoryConfigTemplateContentIndex() {
+  const id = selectFolderNode.value?.id;
+  if (id) {
+    console.log('更新');
+    updateFileDirectoryConfigTemplate.value([
+      { id, templateContentIndex: selectFolderNode.value.templateContentIndex } as FileDirectoryConfig,
+    ]);
+  }
+}
 function checkHasTemplate(id: string) {
   const tpl = modelTemplateMap.value.get(id);
   return checkType(tpl, 'Object') && tpl && Object.keys(tpl).length > 0;
@@ -380,13 +416,19 @@ function handleAddFileDirectory() {
       data: createFileDirectory({
         fileDirectoryConfigList: [
           createFileDirectoryConfig({
-            title: 'apih-create-file-directory',
+            title: '__components__',
             isFolder: true,
             children: [
               createFileDirectoryConfig({
-                title: 'index.ts',
+                title: 'form.vue',
+              }, true),
+              createFileDirectoryConfig({
+                title: 'table.vue',
               }, true),
             ],
+          }, true),
+          createFileDirectoryConfig({
+            title: 'index.vue',
           }, true),
         ],
       }, true),

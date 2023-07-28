@@ -3,10 +3,7 @@ import { toUnixPath } from '@api-helper/cli/lib/tools/util';
 import { FileDirectoryConfig } from '../dto/file-directory-config';
 
 type TreeData = FileDirectoryConfig & Recordable;
-export function getTreePath(
-  treeData: Array<TreeData>,
-  basePath = '',
-): Array<[string, TreeData]> {
+export function getTreePath(treeData: Array<TreeData>, basePath = ''): Array<[string, TreeData]> {
   const result: Array<[string, TreeData]> = [];
   function dfs(treeList: Array<TreeData>, pathMemo = []) {
     for (let i = 0; i < treeList.length; i++) {
@@ -17,10 +14,7 @@ export function getTreePath(
         dfs(item.children, currentPathMemo);
         continue;
       }
-      result.push([
-        toUnixPath(mergeUrl(basePath, '/', currentPathMemo.join('/'))),
-        item,
-      ]);
+      result.push([toUnixPath(mergeUrl(basePath, '/', currentPathMemo.join('/'))), item]);
     }
   }
   dfs(treeData);

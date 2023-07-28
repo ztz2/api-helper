@@ -58,16 +58,18 @@
               >
                 文件模块生成
               </a-button>
-              <a-button
-                :disabled="!hasExportData"
-                @click="handleExport"
-              >
-                导出自定义配置
-              </a-button>
+              <a-tooltip content="导出内容，包含自定义模板，自定义文件模块配置">
+                <a-button
+                  :disabled="!hasExportData"
+                  @click="handleExport"
+                >
+                  导出自定义配置
+                </a-button>
+              </a-tooltip>
               <a-button
                 @click="ctrlDrawerImportRef.open({
                   type: 'ADD',
-                  title: '导入自定义模板'
+                  title: '导入自定义配置'
                 })"
               >
                 导入自定义配置

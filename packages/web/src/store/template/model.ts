@@ -50,7 +50,7 @@ const useModelTemplate = defineStore('model-template', {
       const modelTemplate = this.modelTemplateMap.get(value.id);
       // 更新操作
       if (modelTemplate) {
-        merge(modelTemplate, omit(value, ['id']));
+        merge(modelTemplate, value);
         return modelTemplate.id;
       }
       // 新增

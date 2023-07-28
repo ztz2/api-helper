@@ -47,7 +47,7 @@ const useApiTemplate = defineStore('api-template', {
       const apiTemplate = this.apiTemplateMap.get(value.id);
       // 更新操作
       if (apiTemplate) {
-        merge(apiTemplate, omit(value, ['id']));
+        merge(apiTemplate, value);
         return apiTemplate.id;
       }
       // 新增

@@ -17,6 +17,8 @@ import { FormatCode } from '../dto/format-code';
 import { FileDirectory } from '../dto/file-directory';
 import { ClientIP, getLocalIPV4List } from '../utils/ip';
 import { FileDirectoryConfig } from '../dto/file-directory-config';
+import { toUnixPath } from '@api-helper/cli/lib/tools/util';
+import { FILE_DIRECTORY_BASE_PATH } from '../constants';
 
 const JSZip = require('jszip');
 
@@ -58,7 +60,7 @@ export class AppController {
     if (fileDirectory.fileDirectoryConfigList.length === 0) {
       return res.send(Result.fail('文件模块不能为空'));
     }
-    const fileDirectoryConfigPathList = getTreePath(fileDirectory.fileDirectoryConfigList);
+    const fileDirectoryConfigPathList = getTreePath(fileDirectory.fileDirectoryConfigList, FILE_DIRECTORY_BASE_PATH);
     const templateContentRecordMap = new Map<string, string>();
     // 模版生成
     const renderTemplateTasks = [];
@@ -88,12 +90,12 @@ export class AppController {
       if (ex) {
         return res.send(Result.fail('文件模块导出路径访问异常，请检查目录是否正确。'));
       }
-      // 删除
-      clearDir(fileDirectory.fileDirectoryExportPath);
+      // 清空目录
+      clearDir(toUnixPath(mergeUrl(fileDirectory.fileDirectoryExportPath, `/${FILE_DIRECTORY_BASE_PATH}`)));
       const outputFileTasks = [];
       for (const [path, { id }] of fileDirectoryConfigPathList) {
         const templateContent = templateContentRecordMap.get(id) ?? '';
-        outputFileTasks.push(outputFile(mergeUrl(`${fileDirectory.fileDirectoryExportPath}/${path}`), templateContent));
+        outputFileTasks.push(outputFile(toUnixPath(mergeUrl(`${fileDirectory.fileDirectoryExportPath}/${path}`)), templateContent));
       }
       await to(Promise.all(outputFileTasks));
       return res.send(

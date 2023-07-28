@@ -11,7 +11,7 @@ function templateClassifyMap(source: SelectOptionGroup[]): { [id: string]: Templ
   const result: { [id: string]: Template } = {};
   for (const s of source) {
     for (const t of s.options) { // @ts-ignore
-      result[t.value] = t;
+      result[t.id] = t;
     }
   }
   return result;
@@ -26,7 +26,7 @@ function checkUpdate(
   for (const [id, val] of Object.entries(sMap)) {
     if (templateMap.has(id)) {
       // 更新
-      save(val);
+      save(val, true);
     }
   }
   // 添加分组，内部会检测是否存在在进行添加。
@@ -39,18 +39,18 @@ export function useCheckUpdateTemplate() {
   const modelTemplateStore = useModelTemplate();
   const fileDirectoryStore = useFileDirectory();
 
-  checkUpdate(
-    apiTemplateList,
-    apiTemplateStore.apiTemplateMap,
-    apiTemplateStore.saveApiTemplate,
-    apiTemplateStore.addApiTemplateGroup,
-  );
-  checkUpdate(
-    modelTemplateList,
-    modelTemplateStore.modelTemplateMap,
-    modelTemplateStore.saveModelTemplate,
-    modelTemplateStore.addModelTemplateGroup,
-  );
+  // checkUpdate(
+  //   apiTemplateList,
+  //   apiTemplateStore.apiTemplateMap,
+  //   apiTemplateStore.saveApiTemplate,
+  //   apiTemplateStore.addApiTemplateGroup,
+  // );
+  // checkUpdate(
+  //   modelTemplateList,
+  //   modelTemplateStore.modelTemplateMap,
+  //   modelTemplateStore.saveModelTemplate,
+  //   modelTemplateStore.addModelTemplateGroup,
+  // );
   checkUpdate(
     fileDirectoryList,
     fileDirectoryStore.fileDirectoryMap,

@@ -16,9 +16,7 @@ const useDocumentConfig = defineStore('document-config', {
       if (index !== -1) {
         this.documentConfigList.splice(index, 1, value);
       } else {
-        if (!value.id) {
-          value.id = nanoid();
-        }
+        value.id = value.id ? value.id : nanoid();
         this.documentConfigList.push(value);
       }
     },

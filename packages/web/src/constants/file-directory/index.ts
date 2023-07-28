@@ -15,32 +15,31 @@ export default [
         builtIn: true,
         fileDirectoryConfigList: [
           createFileDirectoryConfig({
-            title: 'apih-create-file-directory',
+            title: '__components__',
+            id: '667e4a4c3bf34d6b',
             isFolder: true,
             children: [
               createFileDirectoryConfig({
-                isFolder: true,
-                title: '__components__',
-                children: [
-                  createFileDirectoryConfig({
-                    title: 'form-cud.vue',
-                  }, true),
-                ],
-              }, true),
-              createFileDirectoryConfig({
-                isFolder: true,
-                title: '__controller__',
-                children: [
-                  createFileDirectoryConfig({
-                    title: 'ctrl-drawer-cud.vue',
-                  }, true),
-                ],
-              }, true),
-              createFileDirectoryConfig({
-                title: 'list.vue',
-              }, true),
+                title: 'form-cud.vue',
+                id: 'd1f27e4e8d872575',
+              }),
             ],
-          }, true),
+          }),
+          createFileDirectoryConfig({
+            title: '__controller__',
+            id: '2f9e81551c4712d9',
+            isFolder: true,
+            children: [
+              createFileDirectoryConfig({
+                title: 'ctrl-drawer-cud.vue',
+                id: '755a87c65374e8f7',
+              }),
+            ],
+          }),
+          createFileDirectoryConfig({
+            title: 'list.vue',
+            id: 'f58e9f9e5a3b6543',
+          }),
         ],
       }),
     ],

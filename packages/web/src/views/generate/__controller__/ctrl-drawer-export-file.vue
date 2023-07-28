@@ -19,15 +19,17 @@ import {
   toRefs,
   defineExpose,
 } from 'vue';
+import { mergeUrl } from '@api-helper/core/lib/utils/util';
 
 import { exportFileApi } from '@/api';
 import message from '@/utils/message';
+import { toUnixPath } from '@/utils';
+import { useDocumentConfig } from '@/store';
 import { Template } from '@/store/template/interface';
-import { useDocumentConfig, useFileDirectory } from '@/store';
 import Form from '../__components__/form-export-file.vue';
+import { FILE_DIRECTORY_BASE_PATH } from '@/constants';
 
 const { currentDocumentConfig } = toRefs(useDocumentConfig());
-const { updateFileDirectoryConfigTemplateId } = useFileDirectory();
 
 const dialogRef = ref();
 const loading = ref(false);
@@ -52,8 +54,7 @@ async function handleExport() {
   }).then(({ data, res }: Recordable) => {
     function end(isOutputFile = false) {
       close();
-      updateFileDirectoryConfigTemplateId(data.fileDirectoryConfigList);
-      const noticeText = isOutputFile ? `文件模块已创建到：${data.fileDirectoryExportPath}中` : '文件模块压缩包已下载';
+      const noticeText = isOutputFile ? `文件模块已生成：${toUnixPath(mergeUrl(data.fileDirectoryExportPath, FILE_DIRECTORY_BASE_PATH ? `/${FILE_DIRECTORY_BASE_PATH}` : ''))}` : '文件模块压缩包已下载';
       message.success({
         duration: 5000,
         content: noticeText,
