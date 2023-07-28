@@ -19,7 +19,6 @@ windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.ba
 启动服务，进入server包下，输入命令：`pnpm run start:prod`。服务器端会将浏览器web包下dist目录作为静态资源入口，服务启动之后，就能直接访问服务：[http://127.0.0.1:3210](http://127.0.0.1:3210)。
 
 ![](../public/images/map-code.png)
-![](../public/images/class-code.png)
 ![](../public/images/form-code.png)
 ![](../public/images/file-directory.png)
 

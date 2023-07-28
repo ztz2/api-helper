@@ -33,7 +33,6 @@ windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.ba
 
 
 ![](../docs/src/public/images/map-code.png)
-![](../docs/src/public/images/class-code.png)
 ![](../docs/src/public/images/form-code.png)
 ![](../docs/src/public/images/file-directory.png)
 

@@ -85,10 +85,10 @@ onMounted(async () => {
     <img alt="" src="/images/map-code.png" />
   </section>
 
-  <section id="sponsors">
-    <h2>生成Javascript实体类代码</h2>
-    <img alt="" src="/images/class-code.png" />
-  </section>
+<!--  <section id="sponsors">-->
+<!--    <h2>生成Javascript实体类代码</h2>-->
+<!--    <img alt="" src="/images/class-code.png" />-->
+<!--  </section>-->
 
   <section id="sponsors">
     <h2>生成表单模板代码</h2>
