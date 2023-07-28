@@ -113,7 +113,12 @@
                   <div class="text-center">响应数据字段</div>
                 </template>
                 <div style="width: 100%; height: calc(100vh - 277px)">
-                  <apih-schema-tree v-model:value="formModel.responseDataSchemaIdList" :data="responseDataSchemaList" />
+                  <apih-schema-tree
+                    v-model:value="formModel.responseDataSchemaIdList"
+                    :data="responseDataSchemaList"
+                    extra-label-key="label"
+                    draggable
+                  />
                 </div>
               </a-card>
             </a-col>

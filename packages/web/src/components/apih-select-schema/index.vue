@@ -1,8 +1,9 @@
 <template>
   <div class="apih-select-schema">
     <ApihModal
-      hide-ok
+      width="860px"
       ref="dialogRef"
+      hide-ok
     >
       <template #footer>
         <a-button type="primary" @click="handleSave">保存</a-button>
@@ -101,6 +102,7 @@ function setPropsResponseDataSchemaValue2CurrentValue() {
 function handleSave() {
   emit('update:requestDataSchemaValue', cloneDeep(currentRequestDataSchemaValue.value));
   emit('update:responseDataSchemaValue', cloneDeep(currentResponseDataSchemaValue.value));
+  dialogRef.value.close();
 }
 
 function showModal() {
