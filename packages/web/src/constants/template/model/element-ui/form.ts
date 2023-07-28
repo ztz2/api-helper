@@ -21,7 +21,7 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = renderTpl(requestDataSchemaList);
   } else {
-    tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Element UI / Form 表单模版（请求数据）',
@@ -33,7 +33,7 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = renderTpl(responseDataSchemaList);
   } else {
-    tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Element UI / Form 表单模版（响应数据）',
@@ -45,8 +45,8 @@ export default new Template({
 <template>
   <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
     《each schemaList》
-      <el-form-item label="《$value.label ? $value.label : $value.keyName 》" prop="《$value.keyName》">
-        <el-input v-model="ruleForm.$value.keyName"></el-input>
+      <el-form-item label="《$value.label||$value.keyName》" prop="《$value.keyName》">
+        <el-input v-model="ruleForm.《$value.keyName》"></el-input>
       </el-form-item>《/each》
     <el-form-item>
       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>

@@ -21,7 +21,7 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = renderTpl(requestDataSchemaList);
   } else {
-    tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Element UI / Table 表格模版（请求数据）',
@@ -33,7 +33,7 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = renderTpl(responseDataSchemaList);
   } else {
-    tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Element UI / Table 表格模版（响应数据）',
@@ -49,7 +49,7 @@ export default new Template({
     《each schemaList》
       <el-table-column
         prop="《$value.keyName》"
-        label="《$value.label ? $value.label : $value.keyName》"
+        label="《$value.label||$value.keyName》"
         width="180">
       </el-table-column>《/each》
   </el-table>
@@ -61,7 +61,7 @@ export default new Template({
       return {
         tableData: [{
          《each schemaList》
-           《$value.keyName》: '模拟数据(《$value.label ? $value.label : $value.keyName》)',《/each》
+           《$value.keyName》: '模拟数据(《$value.label||$value.keyName》)',《/each》
         }]
       }
     }

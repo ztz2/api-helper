@@ -25,7 +25,7 @@ export default new Template({
       onlyBody: documentConfig.onlyBody
     });
   } else {
-    tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Javascript对象模版（请求数据）',
@@ -40,7 +40,7 @@ export default new Template({
       onlyBody: documentConfig.onlyBody
     });
   } else {
-    tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Javascript对象模版（响应数据）',

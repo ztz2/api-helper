@@ -21,7 +21,7 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = renderTpl(requestDataSchemaList);
   } else {
-    tpl1 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Ant Design Vue / Form 表单模版（请求数据）',
@@ -33,7 +33,7 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = renderTpl(responseDataSchemaList);
   } else {
-    tpl2 = \`// 没有字段可以生成\n// 如果有请求数据字段，请先选择后在进行生成\`;
+    tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }
   result.push({
     title: 'Ant Design Vue / Form 表单模版（响应数据）',
@@ -51,7 +51,7 @@ export default new Template({
     :wrapper-col="wrapperCol"
   >
     《each schemaList》
-      <a-form-item label="《$value.label ? $value.label : $value.keyName 》" name="《$value.keyName》"《if $value.rules.required》 required《/if》>
+      <a-form-item label="《$value.label||$value.keyName》" name="《$value.keyName》"《if $value.rules.required》 required《/if》>
         <a-input v-model:value="formState.《$value.keyName》" />
       </a-form-item>《/each》
      <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
