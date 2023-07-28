@@ -358,7 +358,6 @@ watch(() => selectFolderNode.value?.templateContentIndex, () => {
 function updateFileDirectoryConfigTemplateId() {
   const id = selectFolderNode.value?.id;
   if (id) {
-    console.log('更新');
     updateFileDirectoryConfigTemplate.value([
       { id, templateId: selectFolderNode.value.templateId } as FileDirectoryConfig,
     ]);
@@ -367,7 +366,6 @@ function updateFileDirectoryConfigTemplateId() {
 function updateFileDirectoryConfigTemplateContentIndex() {
   const id = selectFolderNode.value?.id;
   if (id) {
-    console.log('更新');
     updateFileDirectoryConfigTemplate.value([
       { id, templateContentIndex: selectFolderNode.value.templateContentIndex } as FileDirectoryConfig,
     ]);

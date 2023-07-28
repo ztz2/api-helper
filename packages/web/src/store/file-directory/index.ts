@@ -47,7 +47,6 @@ const useFileDirectory = defineStore('file-directory', {
           treeForEach(value.fileDirectoryConfigList, (c: FileDirectoryConfig) => {
             const record = fileDirectoryConfigMap.get(c.id);
             if (record) {
-              console.log(123);
               c.templateId = record.templateId;
               c.templateContentIndex = record.templateContentIndex;
             }
@@ -110,14 +109,12 @@ const useFileDirectory = defineStore('file-directory', {
           treeForEach(itm.fileDirectoryConfigList, (fileDirectoryConfig: FileDirectoryConfig) => {
             const newConfig = fileDirectoryConfigMap.get(fileDirectoryConfig.id);
             if (newConfig) {
-              console.log('旧', JSON.parse(JSON.stringify(fileDirectoryConfig)));
               if ('templateId' in newConfig) {
                 fileDirectoryConfig.templateId = newConfig?.templateId ?? '';
               }
               if ('templateContentIndex' in newConfig) {
                 fileDirectoryConfig.templateContentIndex = newConfig?.templateContentIndex ?? 0;
               }
-              console.log('新', JSON.parse(JSON.stringify(fileDirectoryConfig)));
             }
           }, 'children');
         }

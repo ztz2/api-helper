@@ -125,7 +125,7 @@ export class AppController {
       },
     });
     res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment;filename=${encodeURIComponent('导出文件模块.zip')}`);
+    res.setHeader('Content-Disposition', `attachment;filename=${encodeURIComponent('文件模块集合.zip')}`);
     res.send(blobZip);
   }
 }
