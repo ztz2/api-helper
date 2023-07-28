@@ -33,6 +33,7 @@ API生成代码展示，[查看这里文档](./packages/cli/README.md)
 ![](./packages/docs/src/public/images/map-code.png)
 ![](./packages/docs/src/public/images/class-code.png)
 ![](./packages/docs/src/public/images/form-code.png)
+![](./packages/docs/src/public/images/file-directory.png)
 
 ## 许可
 [MIT](https://opensource.org/licenses/MIT)
