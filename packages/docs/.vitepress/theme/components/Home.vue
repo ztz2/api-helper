@@ -76,17 +76,17 @@ onMounted(async () => {
   </section>
 
   <section id="sponsors">
-    <h2>生成API，interface代码</h2>
+    <h2>生成接口函数以及与之对应的请求参数与响应数据interface代码</h2>
     <img alt="" src="/images/api-code.png" />
   </section>
 
   <section id="sponsors">
-    <h2>生成JS对象代码</h2>
+    <h2>生成Jascript对象代码</h2>
     <img alt="" src="/images/map-code.png" />
   </section>
 
   <section id="sponsors">
-    <h2>生成JS类代码</h2>
+    <h2>生成Javascript实体类代码</h2>
     <img alt="" src="/images/class-code.png" />
   </section>
 
