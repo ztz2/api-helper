@@ -31,11 +31,8 @@ API生成代码展示，[查看这里文档](./packages/cli/README.md)
 ### 基于API的代码生成器
 代码生成器，生成代码展示，该功能需本地部署服务，[查看这里文档](./packages/server/README.md)
 ![](./packages/docs/src/public/images/map-code.png)
-![](./packages/docs/src/public/images/class-code.png)
 ![](./packages/docs/src/public/images/form-code.png)
 ![](./packages/docs/src/public/images/file-directory.png)
 
 ## 许可
-[MIT](https://opensource.org/licenses/MIT)
-
-Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
+[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
