@@ -25,14 +25,6 @@
         </a-col>
         <a-col :span="24">
           <a-form-item
-            label="响应数据 dataKey"
-            field="dataKey"
-          >
-            <a-input v-model="formModel.dataKey" placeholder="请输入响应数据 dataKey" :max-length="32" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="24">
-          <a-form-item
               label="文档类型"
               field="type"
               :rules="[{ required: true, message: '必填项' }]"
@@ -57,7 +49,6 @@
           <a-form-item
               label="用户名"
               field="username"
-              style="margin-bottom: 0"
           >
             <a-input v-model="formModel.auth.username" placeholder="请输入用户名" :max-length="32" />
           </a-form-item>
@@ -66,9 +57,17 @@
           <a-form-item
               label="密码"
               field="password"
-              style="margin-bottom: 0"
           >
             <a-input v-model="formModel.auth.password" type="password" placeholder="请输入密码" :max-length="32" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="24">
+          <a-form-item
+            label="响应数据 dataKey"
+            field="dataKey"
+            style="margin-bottom: 0"
+          >
+            <a-input v-model="formModel.dataKey" placeholder="请输入响应数据 dataKey" :max-length="32" />
           </a-form-item>
         </a-col>
       </a-row>

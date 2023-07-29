@@ -3,6 +3,7 @@
     <div class="apih-category-search">
       <a-input-search
         v-model="searchValue"
+        :max-length="64"
         @search="handleSearch"
         @blur="handleBlur"
         @keydown.enter="handleSearch"
