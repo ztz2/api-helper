@@ -22,7 +22,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processRequestFunctionConfig = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.transformType = exports.createSchema = exports.createApi = exports.createCategory = exports.createDocument = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
+exports.processRequestFunctionConfig = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.transformType = exports.createSchema = exports.createApi = exports.randomChar = exports.createCategory = exports.createDocument = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
 var utils = __importStar(require("./lib/utils"));
 exports.utils = utils;
 var parser_yapi_1 = __importDefault(require("./lib/parser/parser-yapi"));
@@ -36,6 +36,7 @@ Object.defineProperty(exports, "isSchemaPrimitiveValue", { enumerable: true, get
 Object.defineProperty(exports, "filterSchemaRoot", { enumerable: true, get: function () { return util_1.filterSchemaRoot; } });
 Object.defineProperty(exports, "filterSchemaRequired", { enumerable: true, get: function () { return util_1.filterSchemaRequired; } });
 Object.defineProperty(exports, "filterSchemaPrimitiveValue", { enumerable: true, get: function () { return util_1.filterSchemaPrimitiveValue; } });
+Object.defineProperty(exports, "randomChar", { enumerable: true, get: function () { return util_1.randomChar; } });
 var helpers_1 = require("./lib/helpers");
 Object.defineProperty(exports, "getSchema", { enumerable: true, get: function () { return helpers_1.getSchema; } });
 Object.defineProperty(exports, "createDocument", { enumerable: true, get: function () { return helpers_1.createDocument; } });

@@ -7,6 +7,10 @@ export declare namespace APIHelper {
     title: string;
     content: string;
   };
+  type OpenAPIDocument = OpenAPI.Document & {
+    documentServerUrl?: string;
+  }
+  type OpenAPIDocumentList = Array<OpenAPIDocument>;
   type TemplateContentList = Array<TemplateContent>;
   type CategoryList = Array<Category>;
   type APIList = Array<API>;
@@ -36,6 +40,8 @@ export declare namespace APIHelper {
     documentVersion: string;
     // 基础路径
     basePath: string;
+    // 该文件资源地址
+    documentServerUrl: string;
     // 分组
     categoryList: CategoryList;
   }

@@ -77,12 +77,15 @@ var ParserYapi = /** @class */ (function () {
         });
     };
     ParserYapi.prototype.parserProject = function () {
+        var _a;
+        var title = (0, util_1.filterDesc)(this.projectInfo.name);
         return (0, helpers_1.createDocument)({
             id: this.generateId(),
-            title: (0, util_1.filterDesc)(this.projectInfo.name),
+            title: title ? title : '接口文档',
             description: (0, util_1.filterDesc)(this.projectInfo.desc),
             version: 'last',
             documentVersion: '2.0',
+            documentServerUrl: (_a = this.projectInfo.documentServerUrl) !== null && _a !== void 0 ? _a : '',
             basePath: this.projectInfo.basepath || '/',
         });
     };

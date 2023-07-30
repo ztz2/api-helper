@@ -145,22 +145,21 @@ import {
 import { get, cloneDeep } from 'lodash';
 import { useRoute } from 'vue-router';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { getSchema } from '@api-helper/core/es/lib/helpers';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 import { Message, SelectOptionGroup } from '@arco-design/web-vue';
-import { isSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
+import { modalConfirm } from '@/utils';
 import { FormModel } from './interface';
 import { treeForEach } from '@/utils/tree';
-import { Template } from '@/store/template/interface';
-import { randomChar, modalConfirm } from '@/utils';
-import { useModelTemplate, useDocumentConfig } from '@/store';
-import genEmptyModelTemplate from '@/constants/template/model/empty';
-import { DocumentConfig } from '@/store/document-config/interface';
-import CtrlDrawerModelTemplate from '../../__controller__/ctrl-drawer-model-template.vue';
-import useSchema, { getResponseDataSchema } from '@/hooks/use-schema';
 import { getSchemaListByIds } from '@/utils/schema';
+import { Template } from '@/store/template/interface';
+import { useModelTemplate, useDocumentConfig } from '@/store';
+import { DocumentConfig } from '@/store/document-config/interface';
+import genEmptyModelTemplate from '@/constants/template/model/empty';
+import useSchema, { getResponseDataSchema } from '@/hooks/use-schema';
+import CtrlDrawerModelTemplate from '../../__controller__/ctrl-drawer-model-template.vue';
 
 type FormModelType = FormModel;
 
@@ -320,7 +319,7 @@ async function handleEditTpl() {
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.title += ` - 副本${randomChar()}`;
+    tplModel.title += ` - 副本${randomChar(4)}`;
     tplModel.id = '';
     tplModel.builtIn = false;
   }

@@ -26,8 +26,8 @@ exports.renderInterfaceName = exports.renderInterface = void 0;
 var merge_1 = __importDefault(require("lodash/merge"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var _changeCase = __importStar(require("change-case"));
-var util_1 = require("@api-helper/core/lib/utils/util");
 var helpers_1 = require("@api-helper/core/lib/helpers");
+var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 function renderInterface(schema, api, options) {
     options = (0, merge_1.default)({
@@ -41,7 +41,7 @@ function renderInterface(schema, api, options) {
     var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
     if (Array.isArray(schema)) {
         schema = (0, helpers_1.createSchema)('object', {
-            id: (0, util_1.uuid)(),
+            id: (0, util_1.randomChar)(),
             params: schema,
         });
     }

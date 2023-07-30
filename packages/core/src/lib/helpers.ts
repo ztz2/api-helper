@@ -129,6 +129,7 @@ export function createDocument(options?: Partial<APIHelper.Document & Recordable
     description: '',
     version: '',
     documentVersion: '',
+    documentServerUrl: '',
     basePath: '',
     categoryList: [] as APIHelper.Document['categoryList'],
   };

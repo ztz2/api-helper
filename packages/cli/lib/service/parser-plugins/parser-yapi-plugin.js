@@ -90,7 +90,12 @@ class ParserYapiPlugin {
 }
 exports.default = ParserYapiPlugin;
 function fetchProjectInfo(documentServer) {
-    return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, { path: PROJECT_API, dataKey: 'data' }));
+    const conf = (0, util_2.processRequestConfig)(documentServer, { path: PROJECT_API, dataKey: 'data' });
+    return (0, request_1.default)(conf).then((res) => {
+        // @ts-ignore
+        res.documentServerUrl = documentServer.url;
+        return res;
+    });
 }
 function fetchMenuList(documentServer, params) {
     return (0, request_1.default)((0, util_2.processRequestConfig)(documentServer, {

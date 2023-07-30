@@ -6,6 +6,7 @@ export const DOCUMENT: APIHelper.Document = {
   description: '测试API示例项目',
   version: '0.0.1-SNAPSHOT',
   documentVersion: '2.0',
+  documentServerUrl: '',
   basePath: '/api',
   categoryList: [{
     id: '10a3c5a3-7a24-471a-a5d1-fffb2f2b2179',

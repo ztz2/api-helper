@@ -11,7 +11,6 @@ import {
 } from '../constant';
 import { validateSchema } from './validator';
 import { createSchema, transformType } from '../helpers';
-import ParserKeyName2Schema from '@/lib/parser/parser-key-name-2-schema';
 
 export function pushArray<T, R>(target: T, value: R): T {
   [].push.apply(target, value as any);
@@ -53,8 +52,14 @@ export function uuid() {
   });
 }
 
-export function randomId() {
-  return uuid();
+export function randomChar(size = 16) {
+  const str = uuid().replace(/-/gim, '').toLocaleLowerCase();
+  size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size) as unknown as string, 10);
+  return str.slice(str.length - size);
+}
+
+export function randomId(size?: number) {
+  return randomChar(size);
 }
 
 export function mergeUrl(...args: string[]) {

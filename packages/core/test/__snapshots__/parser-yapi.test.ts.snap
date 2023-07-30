@@ -669,6 +669,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
       },
     ],
     "description": "",
+    "documentServerUrl": "",
     "documentVersion": "2.0",
     "id": "",
     "title": "智慧商城",

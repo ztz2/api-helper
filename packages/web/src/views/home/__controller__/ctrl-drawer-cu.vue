@@ -22,11 +22,13 @@ import {
   defineEmits,
   defineExpose,
 } from 'vue';
+import urlParse from 'url-parse';
 import { Message } from '@arco-design/web-vue';
 
 import { getDocs } from '@/api';
 import Form from '../__components__/form-cu.vue';
 import { useDocumentConfig } from '@/store';
+import { createDocumentConfig } from '@/store/document-config/interface';
 
 const emit = defineEmits(['success']);
 const { saveDocumentConfig } = toRefs(useDocumentConfig());
@@ -59,10 +61,18 @@ async function handleSave() {
     const { data, documentList } = res;
     for (const item of documentList) {
       delete item.id;
+      let url = item.documentServerUrl;
+      if (/http(s?):\/\//.test(item.documentServerUrl)) {
+        const urlParsed = urlParse(item.documentServerUrl);
+        if (urlParsed) {
+          url = urlParsed.origin + urlParsed.pathname;
+        }
+      }
       saveDocumentConfig.value(pick({
         ...data,
         ...item,
-      }, Object.keys(data)) as any);
+        url,
+      }, Object.keys(createDocumentConfig())) as any);
     }
     const text = dialogOpenType.value === 'ADD' ? '添加成功' : dialogOpenType.value === 'EDIT' ? '修改成功' : null;
     text && Message.success(text);

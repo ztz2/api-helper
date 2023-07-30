@@ -1,7 +1,9 @@
-import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
+import { merge, omit } from 'lodash';
 import { useRoute } from 'vue-router';
-import { DocumentConfig } from '@/store/document-config/interface';
+import { randomChar } from '@api-helper/core/lib/utils/util';
+
+import { createDocumentConfig, DocumentConfig } from '@/store/document-config/interface';
 
 const useDocumentConfig = defineStore('document-config', {
   persist: true,
@@ -12,11 +14,11 @@ const useDocumentConfig = defineStore('document-config', {
   }),
   actions: {
     saveDocumentConfig(value: DocumentConfig) {
-      const index = this.documentConfigList.findIndex((itm) => itm.id === value.id);
-      if (index !== -1) {
-        this.documentConfigList.splice(index, 1, value);
+      const documentConfig = this.documentConfigList.find((itm) => itm.id === value.id || itm.url === value.url);
+      if (documentConfig) {
+        merge(documentConfig, omit(value, ['id']));
       } else {
-        value.id = value.id ? value.id : nanoid();
+        value.id = value.id ? value.id : randomChar();
         this.documentConfigList.push(value);
       }
     },
@@ -34,7 +36,7 @@ const useDocumentConfig = defineStore('document-config', {
       const route = useRoute();
       const { id } = route.query;
       const p = state.documentConfigList.find((itm) => itm.id === id);
-      return p ?? new DocumentConfig();
+      return p ?? createDocumentConfig();
     },
     currentDocumentConfigDataKey(state): string {
       const route = useRoute();

@@ -200,6 +200,7 @@ import {
   TreeNodeData,
 } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 import { checkType } from '@api-helper/core/lib/utils/util';
 import {
@@ -210,7 +211,7 @@ import {
 import message from '@/utils/message';
 import useForm from '@/hooks/use-form';
 import { treeForEach } from '@/utils/tree';
-import { isWindowsSystem, modalConfirm, randomChar } from '@/utils';
+import { isWindowsSystem, modalConfirm } from '@/utils';
 import { getSchemaListByIds } from '@/utils/schema';
 import useSchema, { getDataSchemaList } from '@/hooks/use-schema';
 import { validatorObject, validatorProjectConfig } from '@/utils/validator';
@@ -445,7 +446,7 @@ async function handleEditFileDirectory() {
   }, 'children');
   if (fileDirectory.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    data.title += ` - 副本${randomChar()}`;
+    data.title += ` - 副本${randomChar(4)}`;
     data.id = '';
     data.builtIn = false;
   }

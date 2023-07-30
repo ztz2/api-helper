@@ -22,6 +22,7 @@ declare type ParserYapiParams = {
         'tag': string[];
         'cat': string[];
         'role': boolean;
+        'documentServerUrl': string;
     };
     categoryList: Array<{
         'index': number;

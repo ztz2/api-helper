@@ -76,8 +76,14 @@ export function uuid() {
         return v.toString(16);
     });
 }
-export function randomId() {
-    return uuid();
+export function randomChar(size) {
+    if (size === void 0) { size = 16; }
+    var str = uuid().replace(/-/gim, '').toLocaleLowerCase();
+    size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size), 10);
+    return str.slice(str.length - size);
+}
+export function randomId(size) {
+    return randomChar(size);
 }
 export function mergeUrl() {
     var args = [];

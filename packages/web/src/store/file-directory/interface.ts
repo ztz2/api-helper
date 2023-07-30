@@ -1,10 +1,10 @@
 import { merge } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 import type { SelectOptionData } from '@arco-design/web-vue';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
-import { randomChar } from '@/utils';
 import { Template } from '@/store/template/interface';
-import { DocumentConfig } from '../document-config/interface';
+import { DocumentConfig, createDocumentConfig } from '../document-config/interface';
 
 export class FileDirectory {
   // 唯一ID
@@ -18,7 +18,7 @@ export class FileDirectory {
   // 是否内置模板
   builtIn = false;
   // 文档配置信息
-  documentConfig: DocumentConfig = new DocumentConfig();
+  documentConfig: DocumentConfig = createDocumentConfig();
   constructor(options?: Partial<FileDirectory>) {
     options && merge(this, options);
   }
@@ -57,7 +57,7 @@ export class FileDirectoryConfig implements SelectOptionData {
 export function createFileDirectory(options?: Partial<FileDirectory>, autoGenId = false) {
   const model = new FileDirectory(options);
   if (autoGenId) {
-    model.id = randomChar(16);
+    model.id = randomChar();
   }
   return model;
 }
@@ -65,7 +65,7 @@ export function createFileDirectory(options?: Partial<FileDirectory>, autoGenId 
 export function createFileDirectoryConfig(options?: Partial<FileDirectoryConfig>, autoGenId = false) {
   const model = new FileDirectoryConfig(options);
   if (autoGenId) {
-    model.id = randomChar(16);
+    model.id = randomChar();
   }
   return model;
 }

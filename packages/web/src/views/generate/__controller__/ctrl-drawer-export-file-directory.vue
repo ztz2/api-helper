@@ -19,8 +19,8 @@ import {
   defineEmits,
   defineExpose,
 } from 'vue';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
-import { randomChar } from '@/utils';
 import { useFileDirectory } from '@/store';
 import Form from '../__components__/form-export-file-directory.vue';
 
@@ -42,7 +42,7 @@ function open(config: DialogOpenConfig) {
 async function handleSave() {
   const data = await dialogRef.value.getFormRef().validate();
   if (!data.id) {
-    data.id = randomChar(16);
+    data.id = randomChar();
   }
   emit('success', data);
   close();

@@ -59,5 +59,5 @@ export class DocumentConfig {
 }
 
 export function createDocumentConfig(id?: string | Partial<DocumentConfig>) {
-  return new DocumentConfig();
+  return new DocumentConfig(id);
 }

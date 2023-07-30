@@ -1,9 +1,8 @@
 import {
-  omit,
   merge,
 } from 'lodash';
-import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 import {
   MODEL_CUSTOM_GROUP_ID,
@@ -54,7 +53,7 @@ const useModelTemplate = defineStore('model-template', {
         return modelTemplate.id;
       }
       // 新增
-      value.id = value.id ? value.id : nanoid();
+      value.id = value.id ? value.id : randomChar();
       let modelTemplateGroup = this.modelTemplateList.find((item) => item.id === MODEL_CUSTOM_GROUP_ID);
       // 不存在，创建自定义分组
       if (!modelTemplateGroup) {

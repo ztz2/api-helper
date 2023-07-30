@@ -84,14 +84,15 @@ import {
 } from 'vue';
 import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
 
 import message from '@/utils/message';
-import { randomChar, modalConfirm } from '@/utils';
+import { modalConfirm } from '@/utils';
+import { Template } from '@/store/template/interface';
 import { useDocumentConfig, useApiTemplate } from '@/store';
 import genEmptyApiTemplate from '@/constants/template/api/empty';
 import CtrlDrawerAPITemplate from '../__controller__/ctrl-drawer-api-template.vue';
-import { Template } from '@/store/template/interface';
 
 const emit = defineEmits(['success', 'exec-gen']);
 
@@ -151,7 +152,7 @@ async function handleEditTpl() {
   }
   if (tplModel.builtIn) {
     await modalConfirm('该模板为内置模板，不可进行编辑，是否复制该模板？');
-    tplModel.title += ` - 副本${randomChar()}`;
+    tplModel.title += ` - 副本${randomChar(4)}`;
     tplModel.id = '';
     tplModel.builtIn = false;
   }

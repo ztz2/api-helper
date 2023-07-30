@@ -65,42 +65,44 @@ function getDocument(documentServer) {
         const serverUrlText = isHttp ? `【${documentServer.url}】` : '';
         // 本地文件，尝试读取本地文件
         if (!isHttp) {
-            const [e, json] = yield (0, await_to_js_1.default)(yield (0, fs_extra_1.readJson)(documentServer.url));
+            let [e, json] = yield (0, await_to_js_1.default)(yield (0, fs_extra_1.readJson)(documentServer.url));
             if (e) {
                 const errorText = `swagger文件读取失败${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
                 log_1.default.error('提示', errorText);
                 return Promise.reject(errorText);
             }
-            if (Array.isArray(json)) {
-                [].push.apply(openAPIDocumentList, json);
-            }
-            else if ((0, util_2.checkType)(json, 'Object')) {
-                openAPIDocumentList.push(json);
-            }
+            json = (Array.isArray(json) ? json : [json]);
+            json.forEach((itm) => {
+                itm.documentServerUrl = documentServer.url;
+            });
+            [].push.apply(openAPIDocumentList, json);
             return openAPIDocumentList;
         }
         // 直接根据资源地址获取配置
         const [, openAPIDocument] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: documentServer.url })));
         if ((0, validator_1.validateOpenAPIDocument)(openAPIDocument)) {
+            openAPIDocument.documentServerUrl = documentServer.url;
             openAPIDocumentList.push(openAPIDocument);
             return openAPIDocumentList;
         }
         const { origin } = requestConfig;
-        // OpenAPI 2.0
+        // 获取所有分组-OpenAPI 2.0
         let [, swaggerResources] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: (0, util_1.mergeUrl)(origin, '/swagger-resources', requestConfig.qs) })));
-        // OpenAPI 3.0
+        // 获取所有分组-OpenAPI 3.0
         if (!((_a = swaggerResources) === null || _a === void 0 ? void 0 : _a.length)) {
             [, swaggerResources] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: (0, util_1.mergeUrl)(origin, '/data/openapi.json', requestConfig.qs) })));
         }
-        // OpenAPI 3.0
+        // 获取所有分组-OpenAPI 3.0
         if (!((_b = swaggerResources) === null || _b === void 0 ? void 0 : _b.length)) {
             [, swaggerResources] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: (0, util_1.mergeUrl)(origin, '/openapi.json', requestConfig.qs) })));
         }
         if (Array.isArray(swaggerResources)) {
             const tasks2 = [];
             for (const sr of swaggerResources) {
-                tasks2.push((0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: (0, util_1.mergeUrl)(origin, sr.url, requestConfig.qs) })).then((openapiDocument) => {
+                const documentServerUrl = (0, util_1.mergeUrl)(origin, sr.url, requestConfig.qs);
+                tasks2.push((0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: documentServerUrl })).then((openapiDocument) => {
                     if ((0, validator_1.validateOpenAPIDocument)(openapiDocument)) {
+                        openapiDocument.documentServerUrl = documentServerUrl;
                         openAPIDocumentList.push(openapiDocument);
                     }
                 })));

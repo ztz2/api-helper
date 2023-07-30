@@ -7,7 +7,8 @@ export declare function filterEmpty(value: any): any;
 export declare function Try<T>(fn: () => T, err: (e: Error) => any): T;
 export declare function arrayUniquePush(array: Array<any>, item: any): number;
 export declare function uuid(): string;
-export declare function randomId(): string;
+export declare function randomChar(size?: number): string;
+export declare function randomId(size?: number): string;
 export declare function mergeUrl(...args: string[]): string;
 export declare function filterDesc(value?: string): string;
 export declare function filterSchemaRoot(schemaList: Array<APIHelper.Schema>): ({

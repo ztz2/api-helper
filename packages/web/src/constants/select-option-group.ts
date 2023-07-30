@@ -1,12 +1,12 @@
 import { merge } from 'lodash';
-import { nanoid } from 'nanoid';
 import type {
   SelectOptionGroup as ISelectOptionGroup,
   SelectOptionData as ISelectOptionData,
 } from '@arco-design/web-vue';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 export default class SelectOptionGroup implements ISelectOptionGroup {
-  id = nanoid();
+  id = randomChar();
   label = '';
   isGroup = true as const;
   options: Array<ISelectOptionData> = [];

@@ -7,9 +7,10 @@ import {
   Component,
   ComponentPublicInstance,
 } from 'vue';
-import { nanoid } from 'nanoid';
 import { merge } from 'lodash';
 import { Message } from '@arco-design/web-vue';
+import { randomChar } from '@api-helper/core/lib/utils/util';
+
 import { noop } from '@/utils';
 
 export const defaultDialogProps = {
@@ -52,7 +53,7 @@ export function useDialog(props: typeof defaultDialogProps, emit: Function) {
 
   const formRef = ref<FormComponentInstance | undefined>();
   const title = ref('新增');
-  const dialogOpenUid = ref(nanoid());
+  const dialogOpenUid = ref(randomChar());
   const loadingOk = ref(false);
   const currentVisible = ref(false);
   const dialogOpenType = ref('ADD');
@@ -74,7 +75,7 @@ export function useDialog(props: typeof defaultDialogProps, emit: Function) {
   }
 
   async function open(config: DialogOpenConfig) {
-    const uid = nanoid();
+    const uid = randomChar();
     dialogOpenUid.value = uid;
     config = merge(
       {

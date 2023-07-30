@@ -5,6 +5,10 @@ export declare namespace APIHelper {
         title: string;
         content: string;
     };
+    type OpenAPIDocument = OpenAPI.Document & {
+        documentServerUrl?: string;
+    };
+    type OpenAPIDocumentList = Array<OpenAPIDocument>;
     type TemplateContentList = Array<TemplateContent>;
     type CategoryList = Array<Category>;
     type APIList = Array<API>;
@@ -17,6 +21,7 @@ export declare namespace APIHelper {
         version: OpenAPI.Document['info']['version'];
         documentVersion: string;
         basePath: string;
+        documentServerUrl: string;
         categoryList: CategoryList;
     }
     interface Category {

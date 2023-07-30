@@ -1,4 +1,3 @@
-import { OpenAPI } from 'openapi-types';
 import { APIHelper } from '../types';
 export default class ParserSwagger {
     private autoGenerateId;
@@ -9,7 +8,7 @@ export default class ParserSwagger {
         requiredResponseField?: boolean;
         requiredRequestField?: boolean;
     } | boolean);
-    parser(documentList: Array<OpenAPI.Document>): Promise<Array<APIHelper.Document>>;
+    parser(documentList: Array<APIHelper.OpenAPIDocument>): Promise<Array<APIHelper.Document>>;
     private parserDocument;
     private parserPath2API;
     private parserCategory;

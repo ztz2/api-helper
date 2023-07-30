@@ -87,7 +87,9 @@ import {
   ref, PropType, defineProps, defineEmits, watch,
 } from 'vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { log, randomChar } from '@/utils';
+import { randomChar } from '@api-helper/core/lib/utils/util';
+
+import { log } from '@/utils';
 
 const emit = defineEmits([
   'update:selectedKeys',
@@ -208,7 +210,7 @@ function handleSelectAPI(api: APIHelper.API) {
   }
 }
 function logUid() {
-  log(randomChar(16));
+  log(randomChar());
 }
 </script>
 

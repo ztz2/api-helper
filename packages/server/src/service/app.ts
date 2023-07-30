@@ -6,6 +6,7 @@ import ParserYapiPlugin from '@api-helper/cli/lib/service/parser-plugins/parser-
 import ParserSwaggerPlugin from '@api-helper/cli/lib/service/parser-plugins/parser-swagger-plugin';
 
 import { Docs } from '../dto/docs';
+import to from 'await-to-js';
 
 @Injectable()
 export class AppService {
@@ -15,14 +16,15 @@ export class AppService {
 
   async getDocs(docs: Docs): Promise<APIHelper.Document[]> {
     const documentServers = [docs] as Config['documentServers'];
-    const documentServersRunResult = await documentServersRunParserPlugins(
+    const [e, documentServersRunResult] = await to(documentServersRunParserPlugins(
       documentServers,
-      [new ParserYapiPlugin(), new ParserSwaggerPlugin()],
-    );
+      [new ParserYapiPlugin(), new ParserSwaggerPlugin()]
+    ));
     const result = [];
-    for (const {
-      parsedDocumentList,
-    } of documentServersRunResult.parserPluginRunResult) {
+    if (e) {
+      return result;
+    }
+    for (const { parsedDocumentList } of documentServersRunResult.parserPluginRunResult) {
       [].push.apply(result, parsedDocumentList);
     }
     return result;

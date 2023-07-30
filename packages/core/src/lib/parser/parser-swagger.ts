@@ -55,8 +55,8 @@ export default class ParserSwagger {
     this.requiredResponseField = currentOptions.requiredResponseField;
   }
 
-  async parser(documentList: Array<OpenAPI.Document>): Promise<Array<APIHelper.Document>> {
-    const openAPIDocumentList: Array<OpenAPI.Document> = [];
+  async parser(documentList: Array<APIHelper.OpenAPIDocument>): Promise<Array<APIHelper.Document>> {
+    const openAPIDocumentList: Array<APIHelper.OpenAPIDocument> = [];
 
     if (!documentList || documentList.length === 0) {
       return [];
@@ -79,7 +79,7 @@ export default class ParserSwagger {
     return this.parserPath2API(parsedDocumentMap);
   }
 
-  private parserDocument(openAPIDocumentList: Array<OpenAPI.Document>): Map<APIHelper.Document, OpenAPI.Document> {
+  private parserDocument(openAPIDocumentList: Array<APIHelper.OpenAPIDocument>): Map<APIHelper.Document, APIHelper.OpenAPIDocument> {
     const result = new Map();
     for (let i = 0; i < openAPIDocumentList.length; i++) {
       const openAPIDocument = openAPIDocumentList[i];
@@ -96,12 +96,14 @@ export default class ParserSwagger {
         basePath = openAPIDocument.servers?.[0]?.url ?? '';
         documentVersion = openAPIDocument.openapi ?? '';
       }
+      const title = filterDesc(openAPIDocument.info.title);
       const document = createDocument({
         id: this.generateId(),
-        title: filterDesc(openAPIDocument.info.title),
+        title: title ? title : '接口文档',
         description: filterDesc(openAPIDocument.info.description),
         version: openAPIDocument.info.version,
         documentVersion,
+        documentServerUrl: openAPIDocument.documentServerUrl ?? '',
         basePath,
         categoryList: [] as APIHelper.CategoryList
       });
@@ -110,7 +112,7 @@ export default class ParserSwagger {
     return result;
   }
 
-  private parserPath2API(parsedDocumentMap: Map<APIHelper.Document, OpenAPI.Document> ): Array<APIHelper.Document> {
+  private parserPath2API(parsedDocumentMap: Map<APIHelper.Document, APIHelper.OpenAPIDocument> ): Array<APIHelper.Document> {
     const result: Array<APIHelper.Document> = [];
 
     for (const [apiDocument, openAPIDocument] of parsedDocumentMap) {
@@ -192,9 +194,6 @@ export default class ParserSwagger {
                 if (parserKeyName2SchemaRes) {
                   parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
                   scm = parserKeyName2SchemaRes.targetSchema;
-                  if (scm.keyName === 'deptIds') {
-                    console.log(12);
-                  }
                   keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
                 } else {
                   // fix: url参数也是一个对象问题.
@@ -246,10 +245,6 @@ export default class ParserSwagger {
               } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                 // header 和 cookie信息，暂无特殊处理
               }
-            }
-
-            if (parserKeyName2SchemaWrap.length > 0) {
-              console.log();
             }
             // 合并 name[0].a.rule 属性。
             ParserKeyName2Schema.appendSchemeList(
@@ -333,7 +328,7 @@ export default class ParserSwagger {
     return result;
   }
 
-  private parserCategory(openAPIDocument: OpenAPI.Document): Map<string, APIHelper.Category>{
+  private parserCategory(openAPIDocument: APIHelper.OpenAPIDocument): Map<string, APIHelper.Category>{
     const result: Map<string, APIHelper.Category> = new Map();
     if (openAPIDocument.tags) {
       for (const tag of openAPIDocument.tags) {

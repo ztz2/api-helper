@@ -63,17 +63,17 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
 
   // 本地文件，尝试读取本地文件
   if (!isHttp) {
-    const [e, json] = await to(await readJson(documentServer.url));
+    let [e, json] = await to(await readJson(documentServer.url));
     if (e) {
       const errorText = `swagger文件读取失败${getErrorMessage(e, ': ')}${serverUrlText}`;
       log.error('提示', errorText);
       return Promise.reject(errorText);
     }
-    if (Array.isArray(json)) {
-      [].push.apply(openAPIDocumentList, json as any);
-    } else if (checkType(json, 'Object')) {
-      openAPIDocumentList.push(json as unknown as OpenAPI.Document);
-    }
+    json = (Array.isArray(json) ? json : [json]);
+    (json as any).forEach((itm: OpenAPI.Document & { documentServerUrl: string }) => {
+      itm.documentServerUrl = documentServer.url;
+    });
+    [].push.apply(openAPIDocumentList, (json as any));
     return openAPIDocumentList;
   }
 
@@ -84,18 +84,19 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
     url: documentServer.url,
   })) as [unknown, OpenAPI.Document];
   if (validateOpenAPIDocument(openAPIDocument as any)) {
+    (openAPIDocument as any).documentServerUrl = documentServer.url;
     openAPIDocumentList.push(openAPIDocument);
     return openAPIDocumentList;
   }
 
   const { origin } = requestConfig;
-  // OpenAPI 2.0
+  // 获取所有分组-OpenAPI 2.0
   let [, swaggerResources] = await to<OpenAPI.Parameter>(request({
     ...requestConfig,
     method: 'get',
     url: mergeUrl(origin, '/swagger-resources', requestConfig.qs),
   }));
-  // OpenAPI 3.0
+  // 获取所有分组-OpenAPI 3.0
   if (!(swaggerResources as any)?.length) {
     [, swaggerResources] = await to<OpenAPI.Parameter>(request({
       ...requestConfig,
@@ -103,7 +104,7 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
       url: mergeUrl(origin, '/data/openapi.json', requestConfig.qs),
     }));
   }
-  // OpenAPI 3.0
+  // 获取所有分组-OpenAPI 3.0
   if (!(swaggerResources as any)?.length) {
     [, swaggerResources] = await to<OpenAPI.Parameter>(request({
       ...requestConfig,
@@ -115,12 +116,14 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
   if (Array.isArray(swaggerResources)) {
     const tasks2 = [];
     for (const sr of swaggerResources) {
+      const documentServerUrl = mergeUrl(origin, sr.url, requestConfig.qs);
       tasks2.push(to(request<unknown, OpenAPI.Document>({
         ...requestConfig,
         method: 'get',
-        url: mergeUrl(origin, sr.url, requestConfig.qs),
+        url: documentServerUrl,
       }).then((openapiDocument) => {
         if (validateOpenAPIDocument(openapiDocument as any)) {
+          (openapiDocument as any).documentServerUrl = documentServerUrl;
           openAPIDocumentList.push(openapiDocument);
         }
       })));

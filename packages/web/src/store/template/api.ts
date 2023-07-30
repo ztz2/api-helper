@@ -1,6 +1,6 @@
-import { merge, omit } from 'lodash';
-import { nanoid } from 'nanoid';
+import { merge } from 'lodash';
 import { defineStore } from 'pinia';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 import {
   API_CUSTOM_GROUP_ID,
@@ -51,7 +51,7 @@ const useApiTemplate = defineStore('api-template', {
         return apiTemplate.id;
       }
       // 新增
-      value.id = value.id ? value.id : nanoid();
+      value.id = value.id ? value.id : randomChar();
       let apiTemplateGroup = this.apiTemplateList.find((item) => item.id === API_CUSTOM_GROUP_ID);
       // 不存在，创建自定义分组
       if (!apiTemplateGroup) {

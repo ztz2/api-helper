@@ -1,8 +1,8 @@
 import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
-import { uuid } from '@api-helper/core/lib/utils/util';
 import { createSchema } from '@api-helper/core/lib/helpers';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 import { checkIsInterface, isEmptyObject, postCode } from '../lib/utils/util';
 export function renderInterface(schema, api, options) {
     options = merge({
@@ -16,7 +16,7 @@ export function renderInterface(schema, api, options) {
     var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
     if (Array.isArray(schema)) {
         schema = createSchema('object', {
-            id: uuid(),
+            id: randomChar(),
             params: schema,
         });
     }

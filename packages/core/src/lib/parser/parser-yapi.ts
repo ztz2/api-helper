@@ -50,7 +50,8 @@ type ParserYapiParams = {
     'up_time': number,
     'tag': string[],
     'cat': string[],
-    'role': boolean
+    'role': boolean,
+    'documentServerUrl': string,
   },
   categoryList: Array<{
     'index': number,
@@ -168,12 +169,14 @@ export default class ParserYapi {
   }
 
   private parserProject(): APIHelper.Document {
+    const title = filterDesc(this.projectInfo.name);
     return createDocument({
       id: this.generateId(),
-      title: filterDesc(this.projectInfo.name),
+      title: title ? title : '接口文档',
       description: filterDesc(this.projectInfo.desc),
       version: 'last',
       documentVersion: '2.0',
+      documentServerUrl: this.projectInfo.documentServerUrl ?? '',
       basePath: this.projectInfo.basepath || '/',
     });
   }

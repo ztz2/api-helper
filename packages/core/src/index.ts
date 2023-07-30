@@ -20,6 +20,7 @@ import {
   filterSchemaRoot,
   filterSchemaRequired,
   filterSchemaPrimitiveValue,
+  randomChar,
 } from './lib/utils/util';
 
 import {
@@ -57,6 +58,7 @@ export {
   getErrorMessage,
   createDocument,
   createCategory,
+  randomChar,
   createApi,
   createSchema,
   transformType,

@@ -35,7 +35,6 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
           log.error('提示', `获取项目基本信息失败${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
-
         const projectId = projectInfo._id;
 
         // 获取所有分类
@@ -101,7 +100,12 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
 }
 
 function fetchProjectInfo(documentServer: DocumentServer) {
-  return request(processRequestConfig(documentServer, { path: PROJECT_API, dataKey: 'data' }));
+  const conf = processRequestConfig(documentServer, { path: PROJECT_API, dataKey: 'data' });
+  return request(conf).then((res) => {
+    // @ts-ignore
+    res.documentServerUrl = documentServer.url;
+    return res;
+  });
 }
 
 function fetchMenuList(documentServer: DocumentServer, params: Recordable) {

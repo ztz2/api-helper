@@ -2,17 +2,17 @@ import {
   omit,
   merge,
 } from 'lodash';
-import { nanoid } from 'nanoid';
 import { defineStore } from 'pinia';
 import { treeForEach } from '@api-helper/core/lib/utils/tree';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 import message from '@/utils/message';
 import { getSelectOptionList } from '@/utils';
 import { Template } from '@/store/template/interface';
-import { FileDirectory, FileDirectoryConfig } from './interface';
 import fileDirectoryList from '@/constants/file-directory';
 import { FILE_DIRECTORY_CUSTOM_GROUP_ID } from '@/constants';
 import SelectOptionGroup from '@/constants/select-option-group';
+import { FileDirectory, FileDirectoryConfig } from './interface';
 
 const useFileDirectory = defineStore('file-directory', {
   persist: true,
@@ -56,7 +56,7 @@ const useFileDirectory = defineStore('file-directory', {
         return fileDirectory.id;
       }
       // 新增
-      value.id = value.id ? value.id : nanoid();
+      value.id = value.id ? value.id : randomChar();
       let fileDirectoryGroup = this.fileDirectoryList.find((item) => item.id === FILE_DIRECTORY_CUSTOM_GROUP_ID);
       // 不存在，创建自定义分组
       if (!fileDirectoryGroup) {

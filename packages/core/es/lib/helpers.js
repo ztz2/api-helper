@@ -224,6 +224,7 @@ export function createDocument(options) {
         description: '',
         version: '',
         documentVersion: '',
+        documentServerUrl: '',
         basePath: '',
         categoryList: [],
     };

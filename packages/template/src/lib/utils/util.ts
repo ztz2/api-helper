@@ -28,18 +28,4 @@ export function isEmptyObject(schema: APIHelper.Schema | null) {
   return schema?.type === 'object' && schema?.params?.length === 0;
 }
 
-export function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    // eslint-disable-next-line no-bitwise
-    const r = (Math.random() * 16) | 0;
-    // eslint-disable-next-line no-bitwise
-    const v = c === 'x' ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-}
 
-export function randomChar(size = 4) {
-  const str = uuid();
-  size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size) as unknown as string, 10);
-  return str.slice(str.length - size);
-}

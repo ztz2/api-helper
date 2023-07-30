@@ -177,11 +177,11 @@ import {
   computed,
   onMounted,
 } from 'vue';
-import { nanoid } from 'nanoid';
 import { useRoute } from 'vue-router';
 import useClipboard from 'vue-clipboard3';
 import { Message } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 import { createDocument } from '@api-helper/core/lib/helpers';
 
 import {
@@ -193,7 +193,8 @@ import {
 import {
   SECRET_KEY,
   API_CUSTOM_GROUP_ID,
-  MODEL_CUSTOM_GROUP_ID, FILE_DIRECTORY_CUSTOM_GROUP_ID,
+  MODEL_CUSTOM_GROUP_ID,
+  FILE_DIRECTORY_CUSTOM_GROUP_ID,
 } from '@/constants';
 import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
@@ -232,7 +233,7 @@ const documentConfig = computed<DocumentConfig>(() => {
   const { id } = route.query;
   return documentConfigList.value.find((itm) => itm.id === id) as DocumentConfig;
 });
-const ahProject = ref<APIHelper.Document>(createDocument({ id: nanoid() }));
+const ahProject = ref<APIHelper.Document>(createDocument({ id: randomChar() }));
 const selectedKeys = ref<string[]>([]);
 const selectedAhModule = computed<Array<APIHelper.Category>>(() => {
   const categoryList = [...ahProject.value.categoryList] as Array<APIHelper.Category>;

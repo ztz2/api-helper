@@ -3,8 +3,8 @@ import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
 import { ChangeCase } from '@/lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { uuid } from '@api-helper/core/lib/utils/util';
 import { createSchema } from '@api-helper/core/lib/helpers';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
 import { checkIsInterface, isEmptyObject, postCode } from '@/lib/utils/util';
 
@@ -50,7 +50,7 @@ export function renderInterface(
 
   if (Array.isArray(schema)) {
     schema = createSchema('object', {
-      id: uuid(),
+      id: randomChar(),
       params: schema,
     }) as APIHelper.Schema;
   }

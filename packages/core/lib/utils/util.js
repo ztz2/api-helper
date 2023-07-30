@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterSchemaRequired = exports.filterKeyName = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = exports.pushArray = void 0;
+exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterSchemaRequired = exports.filterKeyName = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.randomChar = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = exports.pushArray = void 0;
 var qs_1 = __importDefault(require("qs"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
@@ -89,8 +89,15 @@ function uuid() {
     });
 }
 exports.uuid = uuid;
-function randomId() {
-    return uuid();
+function randomChar(size) {
+    if (size === void 0) { size = 16; }
+    var str = uuid().replace(/-/gim, '').toLocaleLowerCase();
+    size = Number.parseInt((size > str.length ? str.length : size < 1 ? 1 : size), 10);
+    return str.slice(str.length - size);
+}
+exports.randomChar = randomChar;
+function randomId(size) {
+    return randomChar(size);
 }
 exports.randomId = randomId;
 function mergeUrl() {

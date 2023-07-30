@@ -139,7 +139,7 @@ var ParserSwagger = /** @class */ (function () {
         });
     };
     ParserSwagger.prototype.parserDocument = function (openAPIDocumentList) {
-        var _a, _b, _c, _d, _e, _f;
+        var _a, _b, _c, _d, _e, _f, _g;
         var result = new Map();
         for (var i = 0; i < openAPIDocumentList.length; i++) {
             var openAPIDocument = openAPIDocumentList[i];
@@ -154,12 +154,14 @@ var ParserSwagger = /** @class */ (function () {
                 basePath = (_e = (_d = (_c = openAPIDocument.servers) === null || _c === void 0 ? void 0 : _c[0]) === null || _d === void 0 ? void 0 : _d.url) !== null && _e !== void 0 ? _e : '';
                 documentVersion = (_f = openAPIDocument.openapi) !== null && _f !== void 0 ? _f : '';
             }
+            var title = (0, util_1.filterDesc)(openAPIDocument.info.title);
             var document_2 = (0, helpers_1.createDocument)({
                 id: this.generateId(),
-                title: (0, util_1.filterDesc)(openAPIDocument.info.title),
+                title: title ? title : '接口文档',
                 description: (0, util_1.filterDesc)(openAPIDocument.info.description),
                 version: openAPIDocument.info.version,
                 documentVersion: documentVersion,
+                documentServerUrl: (_g = openAPIDocument.documentServerUrl) !== null && _g !== void 0 ? _g : '',
                 basePath: basePath,
                 categoryList: []
             });
@@ -240,9 +242,6 @@ var ParserSwagger = /** @class */ (function () {
                                     if (parserKeyName2SchemaRes) {
                                         parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
                                         scm = parserKeyName2SchemaRes.targetSchema;
-                                        if (scm.keyName === 'deptIds') {
-                                            console.log(12);
-                                        }
                                         keyName = (0, util_1.filterKeyName)(parserKeyName2SchemaRes.wrapSchema.keyName);
                                     }
                                     else {
@@ -282,9 +281,6 @@ var ParserSwagger = /** @class */ (function () {
                                 else if (parameter.in === 'header' || parameter.in === 'cookie') {
                                     // header 和 cookie信息，暂无特殊处理
                                 }
-                            }
-                            if (parserKeyName2SchemaWrap.length > 0) {
-                                console.log();
                             }
                             // 合并 name[0].a.rule 属性。
                             parser_key_name_2_schema_1.default.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
