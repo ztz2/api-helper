@@ -599,9 +599,6 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
-      nanoid:
-        specifier: ^4.0.0
-        version: 4.0.0
       nprogress:
         specifier: ^0.2.0
         version: 0.2.0
@@ -626,6 +623,9 @@ importers:
       text-extensions:
         specifier: ^2.4.0
         version: 2.4.0
+      url-parse:
+        specifier: ^1.5.10
+        version: 1.5.10
       vue:
         specifier: ^3.2.45
         version: 3.2.45
@@ -654,6 +654,9 @@ importers:
       '@types/nprogress':
         specifier: ^0.2.0
         version: 0.2.0
+      '@types/url-parse':
+        specifier: ^1.4.8
+        version: 1.4.8
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.4.0
         version: 5.54.0(@typescript-eslint/parser@5.4.0)(eslint@7.32.0)(typescript@4.5.5)
@@ -14118,12 +14121,6 @@ packages:
     resolution: {integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
-
-  /nanoid@4.0.0:
-    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: false
 
   /napi-nanoid-android-arm-eabi@0.1.0:
     resolution: {integrity: sha512-8Sggtd3VTuXTY1eCxQfrcT0ZO9q7pBC0U7yu1mFy+o0+BJU1vxble1ilUrXgxcIy46c3w8Oc4N2E0sqj3dZjQA==}
