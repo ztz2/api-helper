@@ -4,7 +4,8 @@ exports[`swagger文档 基于swagger2.0，生成 javascript api 代码: 基于sw
 "/* eslint-disable */
 /* prettier-ignore-start */
 
-/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
@@ -318,7 +319,8 @@ exports[`swagger文档 基于swagger2.0，生成 typescript api 代码: 基于sw
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // @ts-ignore
 // prettier-ignore
@@ -339,7 +341,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
  */
 export interface IV2PetPetIdUploadImageRequestByPost {
   // ID of pet to update
-  petId: string;
+  petId: number;
   // Additional data to pass to server
   additionalMetadata?: string;
   // file to upload
@@ -382,13 +384,13 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  */
 export interface IV2PetRequestByPost {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -421,13 +423,13 @@ v2PetByPost.requestConfig = {
  */
 export interface IV2PetRequestByPut {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -460,7 +462,7 @@ v2PetByPut.requestConfig = {
  */
 export interface IV2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: string;
+  status: Array<any>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
@@ -509,7 +511,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export interface IV2PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: string;
+  tags: Array<any>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
@@ -554,7 +556,7 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByGet {
   // ID of pet to return
-  petId: string;
+  petId: number;
 }
 /**
  * @description Find pet by ID、Returns a single pet【响应数据类型定义】
@@ -596,7 +598,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
-  petId: string;
+  petId: number;
   // Updated name of the pet
   name?: string;
   // Updated status of the pet
@@ -628,7 +630,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export interface IV2PetPetIdRequestByDelete {
   // Pet id to delete
-  petId: string;
+  petId: number;
 }
 /**
  * @description Deletes a pet【响应数据类型定义】
@@ -697,7 +699,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByGet {
   // ID of pet that needs to be fetched
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
@@ -740,7 +742,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByDelete {
   // ID of the order that needs to be deleted
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
@@ -1074,7 +1076,8 @@ exports[`swagger文档 基于swagger3.0.1，生成 typescript api 代码: 基于
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // @ts-ignore
 // prettier-ignore
@@ -1152,7 +1155,7 @@ export interface IUserDeviceIdBodyResponseByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -1211,7 +1214,7 @@ export interface IUserDeviceIdBody1ResponseByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -1269,7 +1272,7 @@ export interface IUserGetRequest1ResponseByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -1361,7 +1364,7 @@ export interface IUserCreateOneSchemaResponseByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -1869,7 +1872,7 @@ export interface IUserGetRequestResponseByGet {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称

@@ -1,7 +1,8 @@
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/** ————————————— 警告：该文件由 api-helper 自动生成，切记不能对文件进行修改（因为生成之后内容将会覆盖该文件，如果自动生成代码不满足业务，提PR） —————————————  **/
+/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';

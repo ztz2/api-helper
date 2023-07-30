@@ -42,6 +42,10 @@ import isPlainObject from 'lodash/isPlainObject';
 import { LINE_FEED_CODE, COMMENT_END_CODE, COMMENT_START_CODE, } from '../constant';
 import { validateSchema } from './validator';
 import { createSchema, transformType } from '../helpers';
+export function pushArray(target, value) {
+    [].push.apply(target, value);
+    return target;
+}
 export function checkType(value, type) {
     return Object.prototype.toString.call(value) === "[object ".concat(type, "]");
 }
@@ -136,6 +140,10 @@ export function filterSchemaRoot(schemaList) {
     }
     return result;
 }
+// 预留，用于统一处理keyName，目前不需要进行任何处理。
+export function filterKeyName(v) {
+    return v;
+}
 export function filterSchemaRequired(schemaList) {
     if (!schemaList) {
         return [];
@@ -162,13 +170,6 @@ export function filterSchemaRequired(schemaList) {
         return result;
     }
     return dfs(cloneDeep(schemaList));
-}
-export function filterKeyName(value) {
-    if (value === void 0) { value = ''; }
-    value = value == null ? '' : value;
-    // keyName[0] => keyName
-    value = value.replace(/\[.*?\]/gim, '');
-    return value;
 }
 export function parserSchema(schema, parentSchema, keyName, memo, options) {
     var e_3, _a;

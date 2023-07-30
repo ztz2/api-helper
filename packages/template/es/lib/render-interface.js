@@ -79,6 +79,10 @@ function renderInterfaceComment(schema, api, paramType, isExtraData) {
     var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
     return commentText;
 }
+function requiredChar(schema) {
+    var _a;
+    return !((_a = schema === null || schema === void 0 ? void 0 : schema.rules) === null || _a === void 0 ? void 0 : _a.required) ? '?' : '';
+}
 function renderInterfaceDeepObject(schema, memo) {
     if (memo === void 0) { memo = new Map(); }
     if (!schema) {
@@ -97,7 +101,7 @@ function renderInterfaceDeepObject(schema, memo) {
     if (isEmptyObject(schema)) {
         return [
             bannerCommentText,
-            schema.keyName ? "".concat(schema.keyName, ": ") : '',
+            schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
             '{',
             '[propName: string]: any',
             '}',
@@ -109,7 +113,7 @@ function renderInterfaceDeepObject(schema, memo) {
         case 'object':
             code = [
                 bannerCommentText,
-                schema.keyName ? "".concat(schema.keyName, ": ") : '',
+                schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
                 '{',
                 // 类型遍历
                 schema.params.map(function (item) { return renderInterfaceDeepObject(item, memo); }).join('\n'),
@@ -122,7 +126,7 @@ function renderInterfaceDeepObject(schema, memo) {
             child = child || 'any';
             code = [
                 bannerCommentText,
-                schema.keyName ? "".concat(schema.keyName, ": ") : '',
+                schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
                 // 类型遍历
                 "Array<".concat(child, ">"),
             ].filter(Boolean).join('\n');
@@ -135,7 +139,7 @@ function renderInterfaceDeepObject(schema, memo) {
                 typeCode = schema.enum.map(function (item) { return "'".concat(item, "'"); }).join(' | ');
             }
             if (schema.keyName) {
-                code = [bannerCommentText, "".concat(schema.keyName).concat(!schema.rules.required ? '?' : '', ": ").concat(typeCode)].filter(Boolean).join('\n');
+                code = [bannerCommentText, "".concat(schema.keyName).concat(requiredChar(schema), ": ").concat(typeCode)].filter(Boolean).join('\n');
             }
             else {
                 code = typeCode;

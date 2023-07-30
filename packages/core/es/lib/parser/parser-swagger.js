@@ -67,6 +67,7 @@ import { isHttp, mergeUrl, randomId, checkType, filterDesc, parserSchema, filter
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../constant';
 import { validateSchema, validateOpenAPIDocument, } from '../utils/validator';
 import { createApi, createCategory, createDocument, createSchema, transformType } from '../helpers';
+import ParserKeyName2Schema from '../../lib/parser/parser-key-name-2-schema';
 var ParserSwagger = /** @class */ (function () {
     function ParserSwagger(options) {
         this.autoGenerateId = true;
@@ -200,6 +201,7 @@ var ParserSwagger = /** @class */ (function () {
                         var requestKeyNameMemo = [];
                         // fix: 重复项问题
                         var requestSchemaRecord = [];
+                        var parserKeyName2SchemaWrap = [];
                         // FormData数据
                         var formDataSource = (_e = (_d = (_c = apiMap.requestBody) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d['multipart/form-data']) === null || _e === void 0 ? void 0 : _e.schema;
                         var formDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, formDataSource, undefined, {
@@ -210,6 +212,7 @@ var ParserSwagger = /** @class */ (function () {
                             (_f = formDataSchema === null || formDataSchema === void 0 ? void 0 : formDataSchema.params) === null || _f === void 0 ? void 0 : _f.forEach(function (_a) {
                                 var keyName = _a.keyName;
                                 api.formDataKeyNameList.push(keyName);
+                                requestKeyNameMemo.push(keyName);
                             });
                         }
                         if ('parameters' in apiMap) {
@@ -222,37 +225,49 @@ var ParserSwagger = /** @class */ (function () {
                                     if (requestKeyNameMemo.includes(keyName)) {
                                         continue;
                                     }
-                                    var scm = createSchema('string', {
+                                    requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
+                                    var type = transformType(parameter.type, undefined, 'string');
+                                    var scm = createSchema(type, {
                                         id: this_1.generateId(),
                                         keyName: keyName,
                                     });
-                                    // fix: url参数也是一个对象问题.
-                                    if (parameter.schema) {
-                                        var parsedSchema = parserSchema(parameter.schema, undefined, undefined, undefined, {
-                                            autoGenerateId: this_1.autoGenerateId,
-                                        });
-                                        if (parsedSchema) {
-                                            scm = parsedSchema;
+                                    var parserKeyName2SchemaRes = new ParserKeyName2Schema(parameter.name, type).parse();
+                                    if (parserKeyName2SchemaRes) {
+                                        parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                                        scm = parserKeyName2SchemaRes.targetSchema;
+                                        if (scm.keyName === 'deptIds') {
+                                            console.log(12);
+                                        }
+                                        keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
+                                    }
+                                    else {
+                                        // fix: url参数也是一个对象问题.
+                                        if (parameter.schema) {
+                                            var parsedSchema = parserSchema(parameter.schema, undefined, keyName, undefined, {
+                                                autoGenerateId: this_1.autoGenerateId,
+                                            });
+                                            if (parsedSchema) {
+                                                scm = parsedSchema;
+                                            }
                                         }
                                     }
-                                    // 路径参数
-                                    if (parameter.in === 'path') {
-                                        api.pathParamKeyNameList.push(keyName);
-                                    } // URL参数
-                                    else if (parameter.in === 'query') {
-                                        api.queryStringKeyNameList.push(keyName);
-                                    } // 表单参数（这个可能不是标准规范）
-                                    else if (parameter.in === 'formData') {
-                                        scm.type = transformType(parameter.type, undefined, 'string');
-                                        api.formDataKeyNameList.push(keyName);
-                                    }
                                     scm.id = this_1.generateId();
-                                    scm.keyName = keyName;
                                     scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
                                     scm.description = filterDesc(parameter.description);
                                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                                    requestKeyNameMemo.push(keyName);
-                                    requestDataSchema.params.push(scm);
+                                    // 路径参数
+                                    if (parameter.in === 'path') {
+                                        !api.pathParamKeyNameList.includes(keyName) && api.pathParamKeyNameList.push(keyName);
+                                    } // URL参数
+                                    else if (parameter.in === 'query') {
+                                        !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+                                    } // 表单参数（这个可能不是标准规范）
+                                    else if (parameter.in === 'formData') {
+                                        !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
+                                    }
+                                    if (!parserKeyName2SchemaRes) {
+                                        requestDataSchema.params.push(scm);
+                                    }
                                 }
                                 else if (parameter.in === 'body') { // body 参数
                                     requestExtraDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, parameter.schema, requestKeyNameMemo, {
@@ -263,6 +278,11 @@ var ParserSwagger = /** @class */ (function () {
                                     // header 和 cookie信息，暂无特殊处理
                                 }
                             }
+                            if (parserKeyName2SchemaWrap.length > 0) {
+                                console.log();
+                            }
+                            // 合并 name[0].a.rule 属性。
+                            ParserKeyName2Schema.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
                         }
                         // URL query 参数，query参数必须包含key，不存在不兼容问题
                         processRequestSchema(requestDataSchema, requestSchemaRecord, (_j = (_h = (_g = apiMap.requestBody) === null || _g === void 0 ? void 0 : _g.content) === null || _h === void 0 ? void 0 : _h['application/x-www-form-urlencoded']) === null || _j === void 0 ? void 0 : _j.schema, requestKeyNameMemo, {

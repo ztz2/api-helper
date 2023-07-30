@@ -129,15 +129,21 @@ function getNormalizedRelativePath(from, to) {
 }
 exports.getNormalizedRelativePath = getNormalizedRelativePath;
 function processRequestConfig(documentServer, options) {
-    var _a, _b, _c, _d, _e, _f;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
     const { auth, authToken } = documentServer;
     const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
     const path = (_a = options === null || options === void 0 ? void 0 : options.path) !== null && _a !== void 0 ? _a : '';
     const method = (_b = options === null || options === void 0 ? void 0 : options.method) !== null && _b !== void 0 ? _b : 'get';
     const urlInfo = (isHttp ? (0, url_parse_1.default)(documentServer.url) : {});
-    const origin = (_c = urlInfo === null || urlInfo === void 0 ? void 0 : urlInfo.origin) !== null && _c !== void 0 ? _c : '';
+    let origin = (_c = urlInfo === null || urlInfo === void 0 ? void 0 : urlInfo.origin) !== null && _c !== void 0 ? _c : '';
     const queryParams = isHttp ? Object.assign(qs_1.default.parse(((_d = urlInfo === null || urlInfo === void 0 ? void 0 : urlInfo.query) === null || _d === void 0 ? void 0 : _d.slice(1)) || ''), (_e = options === null || options === void 0 ? void 0 : options.queryParams) !== null && _e !== void 0 ? _e : {}) : {};
-    const requestConfig = Object.assign(Object.assign({}, options), { method, headers: (_f = documentServer === null || documentServer === void 0 ? void 0 : documentServer.headers) !== null && _f !== void 0 ? _f : {}, url: (0, util_1.mergeUrl)(origin, path), qs: '', documentServerUrl: documentServer.url, origin });
+    // 公共路径
+    if (documentServer.url.includes('doc.html') || documentServer.url.includes('swagger-ui.html')) {
+        const str = documentServer.url.replace(origin, '');
+        const p = (_g = (_f = /(\/.*?)\/(doc|swagger-ui)\.html/.exec(str)) === null || _f === void 0 ? void 0 : _f[1]) !== null && _g !== void 0 ? _g : '';
+        origin += p;
+    }
+    const requestConfig = Object.assign(Object.assign({}, options), { method, headers: (_h = documentServer === null || documentServer === void 0 ? void 0 : documentServer.headers) !== null && _h !== void 0 ? _h : {}, url: (0, util_1.mergeUrl)(origin, path), qs: '', documentServerUrl: documentServer.url, origin });
     // 有密码
     if ((auth === null || auth === void 0 ? void 0 : auth.username) && (auth === null || auth === void 0 ? void 0 : auth.password)) {
         requestConfig.auth = {

@@ -1,0 +1,487 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parser-key-name-2-schema .searchValue: .searchValue 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "searchValue",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "number",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "searchValue",
+        "label": "",
+        "params": [],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "number",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "object",
+  },
+}
+`;
+
+exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.updateBy[0].time 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "time",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "null",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "",
+        "label": "",
+        "params": [
+          StringSchema {
+            "description": "",
+            "enum": [],
+            "examples": [],
+            "id": "",
+            "keyName": "params",
+            "label": "",
+            "params": [
+              StringSchema {
+                "description": "",
+                "enum": [],
+                "examples": [],
+                "id": "",
+                "keyName": "updateBy",
+                "label": "",
+                "params": [
+                  StringSchema {
+                    "description": "",
+                    "enum": [],
+                    "examples": [],
+                    "id": "",
+                    "keyName": "",
+                    "label": "",
+                    "params": [
+                      StringSchema {
+                        "description": "",
+                        "enum": [],
+                        "examples": [],
+                        "id": "",
+                        "keyName": "time",
+                        "label": "",
+                        "params": [],
+                        "rules": {
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
+                          "required": false,
+                        },
+                        "title": "",
+                        "type": "null",
+                      },
+                    ],
+                    "rules": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
+                      "required": false,
+                    },
+                    "title": "",
+                    "type": "object",
+                  },
+                ],
+                "rules": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                  "required": false,
+                },
+                "title": "",
+                "type": "array",
+              },
+            ],
+            "rules": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+              "required": false,
+            },
+            "title": "",
+            "type": "object",
+          },
+        ],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "object",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "array",
+  },
+}
+`;
+
+exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.username 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "username",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "string",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "dept",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "searchValue",
+        "label": "",
+        "params": [
+          StringSchema {
+            "description": "",
+            "enum": [],
+            "examples": [],
+            "id": "",
+            "keyName": "username",
+            "label": "",
+            "params": [],
+            "rules": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+              "required": false,
+            },
+            "title": "",
+            "type": "string",
+          },
+        ],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "object",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "object",
+  },
+}
+`;
+
+exports[`parser-key-name-2-schema dept.searchValue: dept.searchValue 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "searchValue",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "number",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "dept",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "searchValue",
+        "label": "",
+        "params": [],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "number",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "object",
+  },
+}
+`;
+
+exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.updateBy 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "updateBy",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "unknown",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "roles",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "",
+        "label": "",
+        "params": [
+          StringSchema {
+            "description": "",
+            "enum": [],
+            "examples": [],
+            "id": "",
+            "keyName": "params",
+            "label": "",
+            "params": [
+              StringSchema {
+                "description": "",
+                "enum": [],
+                "examples": [],
+                "id": "",
+                "keyName": "updateBy",
+                "label": "",
+                "params": [],
+                "rules": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                  "required": false,
+                },
+                "title": "",
+                "type": "unknown",
+              },
+            ],
+            "rules": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+              "required": false,
+            },
+            "title": "",
+            "type": "object",
+          },
+        ],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "object",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "array",
+  },
+}
+`;
+
+exports[`parser-key-name-2-schema roles[0].params: roles[0].params 1`] = `
+{
+  "targetSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "params",
+    "label": "",
+    "params": [],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "boolean",
+  },
+  "wrapSchema": StringSchema {
+    "description": "",
+    "enum": [],
+    "examples": [],
+    "id": "",
+    "keyName": "roles",
+    "label": "",
+    "params": [
+      StringSchema {
+        "description": "",
+        "enum": [],
+        "examples": [],
+        "id": "",
+        "keyName": "",
+        "label": "",
+        "params": [
+          StringSchema {
+            "description": "",
+            "enum": [],
+            "examples": [],
+            "id": "",
+            "keyName": "params",
+            "label": "",
+            "params": [],
+            "rules": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+              "required": false,
+            },
+            "title": "",
+            "type": "boolean",
+          },
+        ],
+        "rules": {
+          "maxLength": undefined,
+          "minLength": undefined,
+          "pattern": undefined,
+          "required": false,
+        },
+        "title": "",
+        "type": "object",
+      },
+    ],
+    "rules": {
+      "maxLength": undefined,
+      "minLength": undefined,
+      "pattern": undefined,
+      "required": false,
+    },
+    "title": "",
+    "type": "array",
+  },
+}
+`;

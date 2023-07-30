@@ -11,6 +11,12 @@ import {
 } from '../constant';
 import { validateSchema } from './validator';
 import { createSchema, transformType } from '../helpers';
+import ParserKeyName2Schema from '@/lib/parser/parser-key-name-2-schema';
+
+export function pushArray<T, R>(target: T, value: R): T {
+  [].push.apply(target, value as any);
+  return target;
+}
 
 export function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;
@@ -104,6 +110,11 @@ export function filterSchemaRoot(schemaList: Array<APIHelper.Schema>) {
   return result;
 }
 
+// 预留，用于统一处理keyName，目前不需要进行任何处理。
+export function filterKeyName<T>(v: T) {
+  return v;
+}
+
 export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
   if (!schemaList) {
     return [];
@@ -119,13 +130,6 @@ export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
     return result;
   }
   return dfs(cloneDeep(schemaList));
-}
-
-export function filterKeyName(value = ''): string {
-  value = value == null ? '' : value;
-  // keyName[0] => keyName
-  value = value.replace(/\[.*?\]/gim, '');
-  return value;
 }
 
 export function parserSchema(

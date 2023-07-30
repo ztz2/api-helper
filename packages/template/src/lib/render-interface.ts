@@ -137,6 +137,10 @@ function renderInterfaceComment(
   return commentText;
 }
 
+function requiredChar(schema: APIHelper.Schema) {
+  return !schema?.rules?.required ? '?' : '';
+}
+
 function renderInterfaceDeepObject(
   schema: APIHelper.Schema,
   memo = new Map<APIHelper.Schema, string>()
@@ -160,7 +164,7 @@ function renderInterfaceDeepObject(
   if (isEmptyObject(schema)) {
     return [
       bannerCommentText,
-      schema.keyName ? `${schema.keyName}: ` : '',
+      schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
       '{',
         '[propName: string]: any',
       '}',
@@ -173,7 +177,7 @@ function renderInterfaceDeepObject(
     case 'object':
       code = [
         bannerCommentText,
-        schema.keyName ? `${schema.keyName}: ` : '',
+        schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
         '{',
           // 类型遍历
           schema.params.map((item) => renderInterfaceDeepObject(item, memo)).join('\n'),
@@ -186,7 +190,7 @@ function renderInterfaceDeepObject(
       child = child || 'any';
       code = [
         bannerCommentText,
-        schema.keyName ? `${schema.keyName}: ` : '',
+        schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
         // 类型遍历
         `Array<${child}>`,
       ].filter(Boolean).join('\n');
@@ -199,7 +203,7 @@ function renderInterfaceDeepObject(
         typeCode = schema.enum.map((item) => `'${item}'`).join(' | ');
       }
       if (schema.keyName) {
-        code = [bannerCommentText, `${schema.keyName}${!schema.rules.required ? '?' : ''}: ${typeCode}`].filter(Boolean).join('\n');
+        code = [bannerCommentText, `${schema.keyName}${requiredChar(schema)}: ${typeCode}`].filter(Boolean).join('\n');
       } else {
         code = typeCode;
       }

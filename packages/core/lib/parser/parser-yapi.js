@@ -46,11 +46,15 @@ var __values = (this && this.__values) || function(o) {
     };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../utils/util");
 var constant_1 = require("../../lib/constant");
 var validator_1 = require("../utils/validator");
 var helpers_1 = require("../helpers");
+var parser_key_name_2_schema_1 = __importDefault(require("../../lib/parser/parser-key-name-2-schema"));
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -163,6 +167,7 @@ var ParserYapi = /** @class */ (function () {
             var requestExtraDataSchema = null;
             // fix: 重复项问题
             var requestSchemaRecord = [];
+            var parserKeyName2SchemaWrap = [];
             var requestKeyNameMemo = [];
             // 路径参数
             var reqParams = apiContent.req_params;
@@ -206,19 +211,30 @@ var ParserYapi = /** @class */ (function () {
                     if (!keyName || requestKeyNameMemo.includes(keyName)) {
                         continue;
                     }
+                    requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
                     // 字段
-                    var scm = (0, helpers_1.createSchema)('string', {
-                        id: _this.generateId(),
-                        description: (0, util_1.filterDesc)(p.desc),
-                        keyName: keyName,
-                        rules: {
-                            required: Number(p.required) === 1
-                        }
-                    });
+                    var scm = null;
+                    var parserKeyName2SchemaRes = new parser_key_name_2_schema_1.default(p.name, 'string').parse();
+                    if (parserKeyName2SchemaRes) {
+                        parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                        scm = parserKeyName2SchemaRes.targetSchema;
+                        keyName = (0, util_1.filterKeyName)(parserKeyName2SchemaRes.wrapSchema.keyName);
+                    }
+                    else {
+                        scm = (0, helpers_1.createSchema)('string', {
+                            id: _this.generateId(),
+                            description: (0, util_1.filterDesc)(p.desc),
+                            keyName: keyName,
+                            rules: {
+                                required: Number(p.required) === 1
+                            }
+                        });
+                    }
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                    api.queryStringKeyNameList.push(keyName);
-                    requestKeyNameMemo.push(keyName);
-                    requestDataSchema.params.push(scm);
+                    !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+                    if (!parserKeyName2SchemaRes) {
+                        requestDataSchema.params.push(scm);
+                    }
                 }
             }
             catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -228,6 +244,8 @@ var ParserYapi = /** @class */ (function () {
                 }
                 finally { if (e_2) throw e_2.error; }
             }
+            // 合并 name[0].a.rule 属性。
+            parser_key_name_2_schema_1.default.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
             // Body 参数
             var reqBodyType = apiContent.req_body_type;
             switch (reqBodyType) {

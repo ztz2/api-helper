@@ -24,6 +24,7 @@ import {
   createSchema,
   transformType,
 } from '../helpers';
+import ParserKeyName2Schema from '@/lib/parser/parser-key-name-2-schema';
 
 type ParserYapiParams = {
   autoGenerateId?: boolean;
@@ -259,6 +260,7 @@ export default class ParserYapi {
       let requestExtraDataSchema: APIHelper.Schema | null = null;
       // fix: 重复项问题
       const requestSchemaRecord: Array<JSONSchema4> = [];
+      const parserKeyName2SchemaWrap: Array<APIHelper.Schema> = [];
       const requestKeyNameMemo: string[] = [];
 
       // 路径参数
@@ -288,26 +290,41 @@ export default class ParserYapi {
       // URL Query 参数
       const reqQuery = apiContent.req_query;
       for (const p of reqQuery) {
-        const keyName = filterKeyName(p.name);
+        let keyName = filterKeyName(p.name);
         // 参数字段没有，跳过该字段
         if (!keyName || requestKeyNameMemo.includes(keyName)) {
           continue;
         }
+        requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
         // 字段
-        const scm: APIHelper.Schema = createSchema('string', {
-          id: this.generateId(),
-          description: filterDesc(p.desc),
-          keyName: keyName,
-          rules: {
-            required: Number(p.required) === 1
-          }
-        });
+        let scm: APIHelper.Schema = null!;
+        const parserKeyName2SchemaRes = new ParserKeyName2Schema(p.name, 'string').parse();
+        if (parserKeyName2SchemaRes) {
+          parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+          scm = parserKeyName2SchemaRes.targetSchema;
+          keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
+        } else {
+          scm = createSchema('string', {
+            id: this.generateId(),
+            description: filterDesc(p.desc),
+            keyName: keyName,
+            rules: {
+              required: Number(p.required) === 1
+            }
+          })
+        }
         scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-
-        api.queryStringKeyNameList.push(keyName);
-        requestKeyNameMemo.push(keyName);
-        requestDataSchema.params.push(scm);
+        !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+        if (!parserKeyName2SchemaRes) {
+          requestDataSchema.params.push(scm);
+        }
       }
+      // 合并 name[0].a.rule 属性。
+      ParserKeyName2Schema.appendSchemeList(
+        parserKeyName2SchemaWrap,
+        requestDataSchema,
+        requestKeyNameMemo,
+      );
 
       // Body 参数
       const reqBodyType = apiContent.req_body_type;

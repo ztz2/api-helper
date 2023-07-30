@@ -5,6 +5,21 @@ import { readJsonFile } from './utils/file';
 import { renderInterface } from '../src/lib/render-interface';
 
 describe('生成 interface 测试', () => {
+  test('open-api-2.0-param[0].json', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-param[0].json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[8];
+    const api = category.apiList[2];
+    const responseCode = [
+      renderInterface(api.requestDataSchema, api),
+      renderInterface(api.responseDataSchema, api),
+    ].join('\n');
+    expect(
+      responseCode,
+    ).toMatchSnapshot('open-api-2.0-param[0].json');
+  });
+
   test('OpenAPI-2.0-source生成 interface 测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-source.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);

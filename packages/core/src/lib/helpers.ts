@@ -344,7 +344,7 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   }
 
   // 合并URL参数
-  const queryString = stringify(queryParams);
+  const queryString = stringify(queryParams, { allowDots: true });
   if (queryString.length) {
     requestFunctionConfig.path += `?${queryString}`;
   }

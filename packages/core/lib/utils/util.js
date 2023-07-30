@@ -41,13 +41,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterKeyName = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = void 0;
+exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterSchemaRequired = exports.filterKeyName = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = exports.pushArray = void 0;
 var qs_1 = __importDefault(require("qs"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
 var constant_1 = require("../constant");
 var validator_1 = require("./validator");
 var helpers_1 = require("../helpers");
+function pushArray(target, value) {
+    [].push.apply(target, value);
+    return target;
+}
+exports.pushArray = pushArray;
 function checkType(value, type) {
     return Object.prototype.toString.call(value) === "[object ".concat(type, "]");
 }
@@ -152,6 +157,11 @@ function filterSchemaRoot(schemaList) {
     return result;
 }
 exports.filterSchemaRoot = filterSchemaRoot;
+// 预留，用于统一处理keyName，目前不需要进行任何处理。
+function filterKeyName(v) {
+    return v;
+}
+exports.filterKeyName = filterKeyName;
 function filterSchemaRequired(schemaList) {
     if (!schemaList) {
         return [];
@@ -180,14 +190,6 @@ function filterSchemaRequired(schemaList) {
     return dfs((0, cloneDeep_1.default)(schemaList));
 }
 exports.filterSchemaRequired = filterSchemaRequired;
-function filterKeyName(value) {
-    if (value === void 0) { value = ''; }
-    value = value == null ? '' : value;
-    // keyName[0] => keyName
-    value = value.replace(/\[.*?\]/gim, '');
-    return value;
-}
-exports.filterKeyName = filterKeyName;
 function parserSchema(schema, parentSchema, keyName, memo, options) {
     var e_3, _a;
     var _b;

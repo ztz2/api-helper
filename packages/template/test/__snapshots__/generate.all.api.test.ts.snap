@@ -7,7 +7,7 @@ exports[`生成全部API函数 OpenAPI-2.0-source生成全部API函数: OpenAPI-
  */
 export interface IV2PetPetIdUploadImageRequestByPost {
   // ID of pet to update
-  petId: string;
+  petId: number;
   // Additional data to pass to server
   additionalMetadata?: string;
   // file to upload
@@ -54,13 +54,13 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  */
 export interface IV2PetRequestByPost {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -100,13 +100,13 @@ v2PetByPost.requestConfig = {
  */
 export interface IV2PetRequestByPut {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -146,7 +146,7 @@ v2PetByPut.requestConfig = {
  */
 export interface IV2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: string;
+  status: Array<any>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
@@ -199,7 +199,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export interface IV2PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: string;
+  tags: Array<any>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
@@ -252,7 +252,7 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByGet {
   // ID of pet to return
-  petId: string;
+  petId: number;
 }
 /**
  * @description Find pet by ID、Returns a single pet【响应数据类型定义】
@@ -305,7 +305,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
-  petId: string;
+  petId: number;
   // Updated name of the pet
   name?: string;
   // Updated status of the pet
@@ -348,7 +348,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export interface IV2PetPetIdRequestByDelete {
   // Pet id to delete
-  petId: string;
+  petId: number;
 }
 /**
  * @description Deletes a pet【响应数据类型定义】
@@ -439,7 +439,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByGet {
   // ID of pet that needs to be fetched
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
@@ -486,7 +486,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByDelete {
   // ID of the order that needs to be deleted
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
@@ -890,7 +890,7 @@ exports[`生成全部API函数 OpenAPI-2.0生成全部API函数: OpenAPI-2.0生�
  */
 export interface IV2PetPetIdUploadImageRequestByPost {
   // ID of pet to update
-  petId: string;
+  petId: number;
   // Additional data to pass to server
   additionalMetadata?: string;
   // file to upload
@@ -937,13 +937,13 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  */
 export interface IV2PetRequestByPost {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -983,13 +983,13 @@ v2PetByPost.requestConfig = {
  */
 export interface IV2PetRequestByPut {
   id?: number;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -1029,7 +1029,7 @@ v2PetByPut.requestConfig = {
  */
 export interface IV2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: string;
+  status: Array<any>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
@@ -1082,7 +1082,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export interface IV2PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: string;
+  tags: Array<any>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
@@ -1135,7 +1135,7 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByGet {
   // ID of pet to return
-  petId: string;
+  petId: number;
 }
 /**
  * @description Find pet by ID、Returns a single pet【响应数据类型定义】
@@ -1188,7 +1188,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export interface IV2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
-  petId: string;
+  petId: number;
   // Updated name of the pet
   name?: string;
   // Updated status of the pet
@@ -1231,7 +1231,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export interface IV2PetPetIdRequestByDelete {
   // Pet id to delete
-  petId: string;
+  petId: number;
 }
 /**
  * @description Deletes a pet【响应数据类型定义】
@@ -1276,7 +1276,7 @@ export interface IV2StoreOrderRequestByPost {
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
   // Order Tag
-  tag: Array<
+  tag?: Array<
     // Order Tag Child
     Array<{
       tagName?: 'error' | 'waring' | 'info';
@@ -1336,7 +1336,7 @@ v2StoreOrderByPost.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByGet {
   // ID of pet that needs to be fetched
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
@@ -1390,7 +1390,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export interface IV2StoreOrderOrderIdRequestByDelete {
   // ID of the order that needs to be deleted
-  orderId: string;
+  orderId: number;
 }
 /**
  * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
@@ -1914,7 +1914,7 @@ export interface IUserDeviceIdBody1RequestByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -1976,7 +1976,7 @@ export interface IUserGetRequest1RequestByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -2083,7 +2083,7 @@ export interface IUserCreateOneSchemaRequestByPost {
   // 名称
   name?: string;
   // Part信息
-  partSchema: {
+  partSchema?: {
     // part部分id
     id?: string;
     // part部分名称
@@ -2657,7 +2657,7 @@ export interface IUserGetRequestRequestByGet {
     // 名称
     name?: string;
     // Part信息
-    partSchema: {
+    partSchema?: {
       // part部分id
       id?: string;
       // part部分名称
@@ -2758,12 +2758,12 @@ exports[`生成全部API函数 OpenAPI-3.0生成全部API函数: OpenAPI-3.0生�
 export interface IApiV3PetRequestByPut {
   id?: number;
   name: string;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -2825,12 +2825,12 @@ apiV3PetByPut.requestConfig = {
 export interface IApiV3PetRequestByPost {
   id?: number;
   name: string;
-  category: {
+  category?: {
     id?: number;
     name?: string;
   };
   photoUrls: Array<string>;
-  tags: Array<{
+  tags?: Array<{
     id?: number;
     name?: string;
   }>;
@@ -2944,7 +2944,7 @@ apiV3PetFindByStatusByGet.requestConfig = {
  */
 export interface IApiV3PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: Array<string>;
+  tags?: Array<string>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】

@@ -426,7 +426,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
         finally { if (e_1) throw e_1.error; }
     }
     // 合并URL参数
-    var queryString = (0, qs_1.stringify)(queryParams);
+    var queryString = (0, qs_1.stringify)(queryParams, { allowDots: true });
     if (queryString.length) {
         requestFunctionConfig.path += "?".concat(queryString);
     }

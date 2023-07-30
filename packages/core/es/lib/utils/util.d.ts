@@ -1,5 +1,6 @@
 import { JSONSchema4 } from 'json-schema';
 import { APIHelper } from '../types';
+export declare function pushArray<T, R>(target: T, value: R): T;
 export declare function checkType<T>(value: T, type: string): boolean;
 export declare function isHttp<T>(value: T): boolean;
 export declare function filterEmpty(value: any): any;
@@ -138,8 +139,8 @@ export declare function filterSchemaRoot(schemaList: Array<APIHelper.Schema>): (
     examples: string[];
     enum: (string | number)[];
 })[];
+export declare function filterKeyName<T>(v: T): T;
 export declare function filterSchemaRequired(schemaList: Array<APIHelper.Schema>): (APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema)[];
-export declare function filterKeyName(value?: string): string;
 export declare function parserSchema(schema: JSONSchema4, parentSchema?: JSONSchema4, keyName?: string, memo?: Map<JSONSchema4, null>, options?: {
     autoGenerateId: boolean;
 }): APIHelper.Schema | null;

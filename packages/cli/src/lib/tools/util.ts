@@ -144,8 +144,16 @@ export function processRequestConfig(documentServer: DocumentServer, options?: {
   const path = options?.path ?? '';
   const method = options?.method ?? 'get';
   const urlInfo = (isHttp ? parse(documentServer.url): {}) as Recordable;
-  const origin = urlInfo?.origin ?? '';
+  let origin = urlInfo?.origin ?? '';
   const queryParams = isHttp ? Object.assign(qs.parse(urlInfo?.query?.slice(1) || ''), options?.queryParams ?? {}) : {};
+
+  // 公共路径
+  if (documentServer.url.includes('doc.html') || documentServer.url.includes('swagger-ui.html')) {
+    const str = documentServer.url.replace(origin, '');
+    const p = /(\/.*?)\/(doc|swagger-ui)\.html/.exec(str)?.[1] ?? '';
+    origin += p;
+  }
+
   const requestConfig = {
     ...options,
     method,

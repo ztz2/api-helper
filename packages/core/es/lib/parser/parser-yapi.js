@@ -49,6 +49,7 @@ import { isHttp, randomId, mergeUrl, filterDesc, parserSchema, filterKeyName, pr
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../../lib/constant';
 import { validateSchema } from '../utils/validator';
 import { createApi, createCategory, createDocument, createSchema, transformType, } from '../helpers';
+import ParserKeyName2Schema from '../../lib/parser/parser-key-name-2-schema';
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -161,6 +162,7 @@ var ParserYapi = /** @class */ (function () {
             var requestExtraDataSchema = null;
             // fix: 重复项问题
             var requestSchemaRecord = [];
+            var parserKeyName2SchemaWrap = [];
             var requestKeyNameMemo = [];
             // 路径参数
             var reqParams = apiContent.req_params;
@@ -204,19 +206,30 @@ var ParserYapi = /** @class */ (function () {
                     if (!keyName || requestKeyNameMemo.includes(keyName)) {
                         continue;
                     }
+                    requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
                     // 字段
-                    var scm = createSchema('string', {
-                        id: _this.generateId(),
-                        description: filterDesc(p.desc),
-                        keyName: keyName,
-                        rules: {
-                            required: Number(p.required) === 1
-                        }
-                    });
+                    var scm = null;
+                    var parserKeyName2SchemaRes = new ParserKeyName2Schema(p.name, 'string').parse();
+                    if (parserKeyName2SchemaRes) {
+                        parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                        scm = parserKeyName2SchemaRes.targetSchema;
+                        keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
+                    }
+                    else {
+                        scm = createSchema('string', {
+                            id: _this.generateId(),
+                            description: filterDesc(p.desc),
+                            keyName: keyName,
+                            rules: {
+                                required: Number(p.required) === 1
+                            }
+                        });
+                    }
                     scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                    api.queryStringKeyNameList.push(keyName);
-                    requestKeyNameMemo.push(keyName);
-                    requestDataSchema.params.push(scm);
+                    !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+                    if (!parserKeyName2SchemaRes) {
+                        requestDataSchema.params.push(scm);
+                    }
                 }
             }
             catch (e_2_1) { e_2 = { error: e_2_1 }; }
@@ -226,6 +239,8 @@ var ParserYapi = /** @class */ (function () {
                 }
                 finally { if (e_2) throw e_2.error; }
             }
+            // 合并 name[0].a.rule 属性。
+            ParserKeyName2Schema.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
             // Body 参数
             var reqBodyType = apiContent.req_body_type;
             switch (reqBodyType) {

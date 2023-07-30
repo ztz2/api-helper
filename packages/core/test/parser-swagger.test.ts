@@ -17,6 +17,12 @@ describe('swagger-parser', () => {
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('OpenAPI-2.0-source文档解析转换测试');
   });
+  test('OpenAPI-2.0-user[0].name特殊参数处理', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-param[0].json'));
+    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocument = ahDocumentList[0];
+    expect(ahDocument).toMatchSnapshot('OpenAPI-2.0-user[0].name特殊参数处理');
+  });
   test('OpenAPI-3.0文档解析转换测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-3.0.json'));
     const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
