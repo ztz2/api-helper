@@ -8,8 +8,11 @@ import { renderRequestFunction, renderRequestFunctionName } from '@/lib/render-r
 export function renderAllApi(
   apiDocument: APIHelper.Document,
   options?: {
-    codeType: 'typescript' | 'javascript';
+    codeType?: 'typescript' | 'javascript';
     dataKey?: string;
+    // 是否只生成接口请求数据和返回数据的 TypeScript 类型
+    onlyTyping?: boolean;
+    showUpdateTime?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName,
     onRenderRequestFunctionName?: typeof renderRequestFunctionName,
   }
@@ -19,6 +22,8 @@ export function renderAllApi(
   }
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
+  const onlyTyping = options?.onlyTyping;
+  const showUpdateTime = options?.showUpdateTime ?? true;
   const isTS = codeType === 'typescript';
 
   const categoryList: APIHelper.CategoryList = apiDocument.categoryList;
@@ -40,27 +45,32 @@ export function renderAllApi(
       p.push(renderInterface(api.requestDataSchema, api, {
         paramType: 'request',
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        showUpdateTime,
       }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
       p.push(renderInterface(api.requestExtraDataSchema, api, {
         paramType: 'request',
         isExtraData: true,
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        showUpdateTime,
       }));
       // 2. 生成interface-响应数据
       p.push(renderInterface(responseDataSchema, api, {
         paramType: 'response',
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        showUpdateTime,
       }));
     }
     // 3. 生成请求函数
-    p.push(renderRequestFunction(api, {
-      codeType,
-      dataKey,
-      onRenderInterfaceName: options?.onRenderInterfaceName,
-      onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
-    }));
-
+    if (onlyTyping !== true) {
+      p.push(renderRequestFunction(api, {
+        codeType,
+        dataKey,
+        onRenderInterfaceName: options?.onRenderInterfaceName,
+        onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
+        showUpdateTime,
+      }));
+    }
     code.push(p.join(''));
   }
 

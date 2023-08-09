@@ -27,5 +27,3 @@ export function checkIsInterface(schema: APIHelper.Schema | null) {
 export function isEmptyObject(schema: APIHelper.Schema | null) {
   return schema?.type === 'object' && schema?.params?.length === 0;
 }
-
-

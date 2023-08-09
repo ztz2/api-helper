@@ -22,7 +22,6 @@ export default new Template({
   if (requestDataSchemaList.length > 0) {
     tpl1 = apih.template.renderObject(requestDataSchemaList, api, {
       paramType: 'request',
-      onlyBody: documentConfig.onlyBody
     });
   } else {
     tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
@@ -37,11 +36,11 @@ export default new Template({
   if (responseDataSchemaList.length > 0) {
     tpl2 = apih.template.renderObject(responseDataSchemaList, api, {
       paramType: 'response',
-      onlyBody: documentConfig.onlyBody
     });
   } else {
     tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }
+
   result.push({
     title: 'Javascript对象模版（响应数据）',
     content: tpl2,

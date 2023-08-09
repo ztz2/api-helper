@@ -41,13 +41,15 @@ function format(config: FormatCodeConfig): Promise<string> {
       return resolve(errorText);
     }
 
-    const prettier = checkType(config.prettierOptions, 'Object') ?
-      config.prettierOptions :
+    let prettierOptions = {};
+    try{
+      prettierOptions = checkType(config.prettierOptions, 'Object') ?
+        config.prettierOptions :
         checkType(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions as string) : {};
-    const prettierOptions = JSON.stringify(merge(new PrettierOptions(), prettier));
-
+    } catch {}
+    const prettierOptionsStr = JSON.stringify(merge(new PrettierOptions(), prettierOptions));
     const filepath = createTempFile(sourceCode, { postfix: formatCodeExtension });
-    const prettierFilePath = createTempFile(prettierOptions, { postfix: '.json' });
+    const prettierFilePath = createTempFile(prettierOptionsStr, { postfix: '.json' });
 
     const clearTempFile = async () => { await Promise.all([to(remove(filepath)), to(remove(prettierFilePath))]); }
     cp.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, async (err) => {

@@ -28,6 +28,7 @@ var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var _changeCase = __importStar(require("change-case"));
 var helpers_1 = require("@api-helper/core/lib/helpers");
 var util_1 = require("@api-helper/core/lib/utils/util");
+var art_template_1 = __importDefault(require("../lib/art-template"));
 var util_2 = require("../lib/utils/util");
 function renderInterface(schema, api, options) {
     options = (0, merge_1.default)({
@@ -46,9 +47,10 @@ function renderInterface(schema, api, options) {
         });
     }
     var isInterface = (0, util_2.checkIsInterface)(schema);
+    var updateTime = (options === null || options === void 0 ? void 0 : options.showUpdateTime) ? (0, util_1.formatDate)(Date.now()) : '';
     var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
     var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
-    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData, updateTime) : '';
     var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
         isExtraData: isExtraData,
         paramType: paramType,
@@ -101,10 +103,15 @@ function renderInterfaceName(schema, api, options) {
     return changeCase.pascalCase(name);
 }
 exports.renderInterfaceName = renderInterfaceName;
-function renderInterfaceComment(schema, api, paramType, isExtraData) {
+function renderInterfaceComment(api, paramType, isExtraData, updateTime) {
     if (isExtraData === void 0) { isExtraData = false; }
-    var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
-    return commentText;
+    if (updateTime === void 0) { updateTime = ''; }
+    return art_template_1.default.render("/**\n * @description \u300Adescription\u300B\u300Aif docURL\u300B\n * @doc \u300AdocURL\u300B\u300A/if\u300B\n * @url \u300Aurl\u300B\u300Aif updateTime\u300B\n * @update \u300AupdateTime\u300B\u300A/if\u300B\n */", {
+        description: "".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011"),
+        docURL: api.docURL,
+        url: "[ ".concat(api.method.toUpperCase(), " ] ").concat(api.path),
+        updateTime: updateTime
+    });
 }
 function requiredChar(schema) {
     var _a;

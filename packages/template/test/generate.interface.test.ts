@@ -12,8 +12,8 @@ describe('生成 interface 测试', () => {
     const category = openAPIDocument.categoryList[8];
     const api = category.apiList[2];
     const responseCode = [
-      renderInterface(api.requestDataSchema, api),
-      renderInterface(api.responseDataSchema, api),
+      renderInterface(api.requestDataSchema, api, { showUpdateTime: false }),
+      renderInterface(api.responseDataSchema, api, { showUpdateTime: false }),
     ].join('\n');
     expect(
       responseCode,
@@ -29,6 +29,7 @@ describe('生成 interface 测试', () => {
     const responseCode = renderInterface(api.responseDataSchema, api, {
       paramType: 'request',
       name: '安逗和黑子',
+      showUpdateTime: false,
     });
     expect(
       responseCode,
@@ -44,6 +45,7 @@ describe('生成 interface 测试', () => {
     const responseCode = renderInterface(api.responseDataSchema, api, {
       paramType: 'request',
       name: '安逗和黑子',
+      showUpdateTime: false,
     });
     expect(
       responseCode,
@@ -57,7 +59,8 @@ describe('生成 interface 测试', () => {
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[1];
     const responseCode = renderInterface(api.requestDataSchema, api, {
-      paramType: 'response'
+      paramType: 'response',
+      showUpdateTime: false,
     });
     expect(
       responseCode,
@@ -74,18 +77,21 @@ describe('生成 interface 测试', () => {
       renderInterface(api.responseDataSchema, api, {
         paramType: 'request',
         name: '自定义名称',
+        showUpdateTime: false,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 interface - name属性测试');
     expect(
       renderInterface(api.responseDataSchema, api, {
         paramType: 'request',
         prefix: '',
+        showUpdateTime: false,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 interface - prefix属性测试');
     expect(
       renderInterface(api.responseDataSchema, api, {
         paramType: 'request',
         dropComment: true,
+        showUpdateTime: false,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 interface - dropComment属性测试');
     expect(
@@ -93,6 +99,7 @@ describe('生成 interface 测试', () => {
         prefix: '',
         name: 'RuleForm',
         onlyBody: true,
+        showUpdateTime: false,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 interface - onlyBody属性测试');
   });

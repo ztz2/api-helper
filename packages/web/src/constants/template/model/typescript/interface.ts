@@ -17,12 +17,13 @@ export default new Template({
   // 请求数据
   let tpl1 = '';
   if (requestDataSchemaList.length > 0) {
-    tpl1 = apih.template.renderInterface({
-      type: 'object',
-      params: requestDataSchemaList
-    }, api, {
-      paramType: 'request'
-    });
+    tpl1 = apih.template.renderInterface(
+      apih.core.createSchema('object', { params: requestDataSchemaList }),
+      api,
+      {
+        paramType: 'request',
+      }
+    );
   } else {
     tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
   }
@@ -34,12 +35,13 @@ export default new Template({
   // 响应数据
   let tpl2 = '';
   if (responseDataSchemaList.length > 0) {
-    tpl2 = apih.template.renderInterface({
-      type: 'object',
-      params: responseDataSchemaList
-    }, api, {
-      paramType: 'response'
-    });
+    tpl2 = apih.template.renderInterface(
+      apih.core.createSchema('object', { params: responseDataSchemaList }),
+      api,
+      {
+        paramType: 'response',
+      }
+    );
   } else {
     tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;
   }

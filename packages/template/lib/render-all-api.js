@@ -46,11 +46,14 @@ var render_interface_1 = require("../lib/render-interface");
 var render_request_function_1 = require("../lib/render-request-function");
 function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
+    var _c;
     if (!apiDocument) {
         return '';
     }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
+    var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
+    var showUpdateTime = (_c = options === null || options === void 0 ? void 0 : options.showUpdateTime) !== null && _c !== void 0 ? _c : true;
     var isTS = codeType === 'typescript';
     var categoryList = apiDocument.categoryList;
     var allApi = [];
@@ -81,26 +84,32 @@ function renderAllApi(apiDocument, options) {
                 p.push((0, render_interface_1.renderInterface)(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push((0, render_interface_1.renderInterface)(api.requestExtraDataSchema, api, {
                     paramType: 'request',
                     isExtraData: true,
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-响应数据
                 p.push((0, render_interface_1.renderInterface)(responseDataSchema, api, {
                     paramType: 'response',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
             }
             // 3. 生成请求函数
-            p.push((0, render_request_function_1.renderRequestFunction)(api, {
-                codeType: codeType,
-                dataKey: dataKey,
-                onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-            }));
+            if (onlyTyping !== true) {
+                p.push((0, render_request_function_1.renderRequestFunction)(api, {
+                    codeType: codeType,
+                    dataKey: dataKey,
+                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    showUpdateTime: showUpdateTime,
+                }));
+            }
             code.push(p.join(''));
         }
     }

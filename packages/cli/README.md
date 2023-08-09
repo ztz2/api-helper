@@ -101,6 +101,13 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
   * 说明：
     接口请求函数文件路径。
 
+### onlyTyping
+* 是否必须：否
+* 数据类型：boolean
+* 默认值：false
+* 说明：
+  是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
+
 ### requiredRequestField
   * 是否必须：否
   * 数据类型：boolean

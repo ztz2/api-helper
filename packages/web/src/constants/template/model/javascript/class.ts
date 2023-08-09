@@ -20,7 +20,7 @@ export default new Template({
   let tpl1 = '';
   if (requestDataSchemaList.length > 0) {
     tpl1 = apih.template.renderClass(requestDataSchemaList, api, {
-      paramType: 'request'
+      paramType: 'request',
     });
   } else {
     tpl1 = \`// 没有请求参数字段可以生成，如果有请求参数字段，请先选择后再进行模版生成\`;
@@ -34,7 +34,7 @@ export default new Template({
   let tpl2 = '';
   if (responseDataSchemaList.length > 0) {
     tpl2 = apih.template.renderClass(responseDataSchemaList, api, {
-      paramType: 'response'
+      paramType: 'response',
     });
   } else {
     tpl2 = \`// 没有响应数据字段可以生成，如果有响应数据字段，请先选择后再进行模版生成\`;

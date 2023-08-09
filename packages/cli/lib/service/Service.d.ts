@@ -2,7 +2,8 @@ declare class Service {
     static init: () => void;
     private parserPlugins;
     private configFilePath?;
-    constructor(configFilePath?: string);
+    private isTestEnv;
+    constructor(configFilePath?: string, isTestEnv?: boolean);
     run(): Promise<void>;
     private injectParserPlugins;
     private getParserPluginMap;

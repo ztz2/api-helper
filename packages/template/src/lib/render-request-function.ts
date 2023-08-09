@@ -1,10 +1,11 @@
 import * as _changeCase from 'change-case';
 import { getSchema } from '@api-helper/core/lib/helpers';
+import { APIHelper } from '@api-helper/core/lib/types';
+import { formatDate } from '@api-helper/core/lib/utils/util';
 
 import { ChangeCase } from '@/lib/types';
 import artTemplate from '@/lib/art-template';
 import formatCode from '@/lib/utils/prettier';
-import { APIHelper } from '@api-helper/core/lib/types';
 import { renderInterfaceName } from '@/lib/render-interface';
 
 export function renderRequestFunction(
@@ -14,6 +15,7 @@ export function renderRequestFunction(
     dataKey?: string | undefined;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
+    showUpdateTime?: boolean;
   }
 ) {
   if (!api) {
@@ -22,6 +24,7 @@ export function renderRequestFunction(
 
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
+  const updateTime = options?.showUpdateTime ? formatDate(Date.now()) : '';
 
   const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
@@ -31,7 +34,7 @@ export function renderRequestFunction(
   const templateTenderParams = {
     api,
     isTypescript: codeType === 'typescript',
-    commentCode: renderRequestFunctionComment(api),
+    commentCode: renderRequestFunctionComment(api, updateTime),
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
@@ -69,15 +72,17 @@ export function renderRequestFunctionName(
   return changeCase.camelCase(`${api.path} By ${api.method}`);
 }
 
-function renderRequestFunctionComment(api: APIHelper.API) {
-  const templateTenderParams = {
-    api,
-    apiDescription: [api.title, api.description].filter(Boolean).join('、')
-  };
+function renderRequestFunctionComment(api: APIHelper.API, updateTime = '') {
   return artTemplate.render(
 `/**
-   * @description《if apiDescription》 《apiDescription》《else》 无《/if》
-《if api.docURL》   * @doc 《api.docURL》
-《/if》   * @url [ 《api.method.toUpperCase()》 ] 《api.path》
-   */`, templateTenderParams);
+   * @description《if description》 《description》《else》 无《/if》《if docURL》
+   * @doc 《docURL》《/if》
+   * @url 《url》《if updateTime》
+   * @update 《updateTime》《/if》
+   */`, {
+      description: [api.title, api.description].filter(Boolean).join('、'),
+      docURL: api.docURL,
+      url: `[ ${api.method.toUpperCase()} ] ${api.path}`,
+      updateTime
+    });
 }

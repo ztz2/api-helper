@@ -47,12 +47,16 @@ function format(config) {
             log_1.default.warn('提示', errorText);
             return resolve(errorText);
         }
-        const prettier = (0, util_2.checkType)(config.prettierOptions, 'Object') ?
-            config.prettierOptions :
-            (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
-        const prettierOptions = JSON.stringify((0, merge_1.default)(new types_1.PrettierOptions(), prettier));
+        let prettierOptions = {};
+        try {
+            prettierOptions = (0, util_2.checkType)(config.prettierOptions, 'Object') ?
+                config.prettierOptions :
+                (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
+        }
+        catch (_a) { }
+        const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new types_1.PrettierOptions(), prettierOptions));
         const filepath = (0, util_2.createTempFile)(sourceCode, { postfix: formatCodeExtension });
-        const prettierFilePath = (0, util_2.createTempFile)(prettierOptions, { postfix: '.json' });
+        const prettierFilePath = (0, util_2.createTempFile)(prettierOptionsStr, { postfix: '.json' });
         const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierFilePath))]); });
         node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
             if (err) {

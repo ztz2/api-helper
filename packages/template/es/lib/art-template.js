@@ -10,8 +10,8 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 // @ts-ignore
-import artTemplate from './utils/template/art-template-web.js';
-// @ts-ignore
+import template from './utils/template/art-template-web.js';
+var artTemplate = template;
 artTemplate.defaults.escape = false;
 artTemplate.defaults.minimize = false;
 // 新增模板《》语法的界定符规则

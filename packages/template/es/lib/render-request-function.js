@@ -1,5 +1,6 @@
 import * as _changeCase from 'change-case';
 import { getSchema } from '@api-helper/core/lib/helpers';
+import { formatDate } from '@api-helper/core/lib/utils/util';
 import artTemplate from '../lib/art-template';
 import formatCode from '../lib/utils/prettier';
 import { renderInterfaceName } from '../lib/render-interface';
@@ -9,13 +10,14 @@ export function renderRequestFunction(api, options) {
     }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
+    var updateTime = (options === null || options === void 0 ? void 0 : options.showUpdateTime) ? formatDate(Date.now()) : '';
     var onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
     var onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
     var responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
     var templateTenderParams = {
         api: api,
         isTypescript: codeType === 'typescript',
-        commentCode: renderRequestFunctionComment(api),
+        commentCode: renderRequestFunctionComment(api, updateTime),
         formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
         pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
         queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
@@ -34,10 +36,12 @@ export function renderRequestFunctionName(api, options) {
     var changeCase = (_a = options === null || options === void 0 ? void 0 : options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
     return changeCase.camelCase("".concat(api.path, " By ").concat(api.method));
 }
-function renderRequestFunctionComment(api) {
-    var templateTenderParams = {
-        api: api,
-        apiDescription: [api.title, api.description].filter(Boolean).join('、')
-    };
-    return artTemplate.render("/**\n   * @description\u300Aif apiDescription\u300B \u300AapiDescription\u300B\u300Aelse\u300B \u65E0\u300A/if\u300B\n\u300Aif api.docURL\u300B   * @doc \u300Aapi.docURL\u300B\n\u300A/if\u300B   * @url [ \u300Aapi.method.toUpperCase()\u300B ] \u300Aapi.path\u300B\n   */", templateTenderParams);
+function renderRequestFunctionComment(api, updateTime) {
+    if (updateTime === void 0) { updateTime = ''; }
+    return artTemplate.render("/**\n   * @description\u300Aif description\u300B \u300Adescription\u300B\u300Aelse\u300B \u65E0\u300A/if\u300B\u300Aif docURL\u300B\n   * @doc \u300AdocURL\u300B\u300A/if\u300B\n   * @url \u300Aurl\u300B\u300Aif updateTime\u300B\n   * @update \u300AupdateTime\u300B\u300A/if\u300B\n   */", {
+        description: [api.title, api.description].filter(Boolean).join('、'),
+        docURL: api.docURL,
+        url: "[ ".concat(api.method.toUpperCase(), " ] ").concat(api.path),
+        updateTime: updateTime
+    });
 }

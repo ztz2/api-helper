@@ -27,11 +27,12 @@ const parser_swagger_plugin_1 = __importDefault(require("./parser-plugins/parser
 const prompts = require('prompts');
 let outputDiscardWarn = false;
 class Service {
-    constructor(configFilePath) {
+    constructor(configFilePath, isTestEnv = false) {
         this.parserPlugins = [
             new parser_yapi_plugin_1.default(),
             new parser_swagger_plugin_1.default(),
         ];
+        this.isTestEnv = isTestEnv;
         this.configFilePath = configFilePath;
     }
     run() {
@@ -170,13 +171,14 @@ class Service {
                     break;
                 }
             }
-            const code = [];
-            if (isTS) {
-                code.push(`/* tslint:disable */
+            const codeHead = template_1.artTemplate.render(`
+《if config.onlyTyping !== true》
+  《if isTS》
+/* tslint:disable */
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // @ts-ignore
@@ -187,38 +189,38 @@ import {
 } from '@api-helper/core/es/lib/helpers';
 // @ts-ignore
 // prettier-ignore
-import request from '${requestFilePath}';
+import request from '《requestFilePath》';
 // @ts-ignore
 // prettier-ignore
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
-`);
-            }
-            else {
-                code.push(`/* eslint-disable */
+  《else》
+/* eslint-disable */
 /* prettier-ignore-start */
 
-/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 // prettier-ignore
-import request from '${requestFilePath}';
-`);
-            }
+import request from '《requestFilePath》';
+  《/if》
+《/if》
+
+`, {
+                isTS,
+                requestFilePath,
+                config,
+            });
             // 生成代码
+            const code = [codeHead];
             const spinner = (0, ora_1.default)(oraText).start();
             for (const item of parserPluginRunResult) {
                 const { documentServer, parsedDocumentList } = item;
                 const { dataKey } = documentServer;
                 for (const d of parsedDocumentList) {
                     try {
-                        let str = (0, template_1.renderAllApi)(d, {
-                            codeType: isTS ? 'typescript' : 'javascript',
-                            dataKey: dataKey,
-                            onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName,
-                            onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName,
-                        });
+                        let str = (0, template_1.renderAllApi)(d, Object.assign(Object.assign(Object.assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, showUpdateTime: !this.isTestEnv, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName }));
                         if (!str.endsWith('\n')) {
                             str += '\n';
                         }
@@ -291,8 +293,6 @@ export default defineConfig({
   outputFilePath: 'src/api/index.ts',
   // 接口请求函数文件路径
   requestFunctionFilePath: 'src/api/request.ts',
-  // 响应数据所有字段设置成必有属性
-  requiredResponseField: true,
   // 接口文档服务配置
   documentServers: [
     {
@@ -350,6 +350,9 @@ function getRequestFunctionFilePath(config) {
             requestFunctionFilePath += extensionName;
         }
         requestFunctionFilePath = (0, util_2.resolve)(requestFunctionFilePath);
+        if (config.onlyTyping) {
+            return requestFunctionFilePath;
+        }
         try { // 路径可以访问，文件已经创建，直接返回
             yield (0, fs_extra_1.stat)((0, util_2.resolve)(requestFunctionFilePath));
             return requestFunctionFilePath;

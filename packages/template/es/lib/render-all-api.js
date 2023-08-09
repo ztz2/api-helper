@@ -40,11 +40,14 @@ import { renderInterface } from '../lib/render-interface';
 import { renderRequestFunction } from '../lib/render-request-function';
 export function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
+    var _c;
     if (!apiDocument) {
         return '';
     }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
+    var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
+    var showUpdateTime = (_c = options === null || options === void 0 ? void 0 : options.showUpdateTime) !== null && _c !== void 0 ? _c : true;
     var isTS = codeType === 'typescript';
     var categoryList = apiDocument.categoryList;
     var allApi = [];
@@ -75,26 +78,32 @@ export function renderAllApi(apiDocument, options) {
                 p.push(renderInterface(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push(renderInterface(api.requestExtraDataSchema, api, {
                     paramType: 'request',
                     isExtraData: true,
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-响应数据
                 p.push(renderInterface(responseDataSchema, api, {
                     paramType: 'response',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    showUpdateTime: showUpdateTime,
                 }));
             }
             // 3. 生成请求函数
-            p.push(renderRequestFunction(api, {
-                codeType: codeType,
-                dataKey: dataKey,
-                onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-            }));
+            if (onlyTyping !== true) {
+                p.push(renderRequestFunction(api, {
+                    codeType: codeType,
+                    dataKey: dataKey,
+                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    showUpdateTime: showUpdateTime,
+                }));
+            }
             code.push(p.join(''));
         }
     }

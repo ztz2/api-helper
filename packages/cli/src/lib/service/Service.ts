@@ -8,7 +8,7 @@ import {
   stat,
   outputFile,
 } from 'fs-extra';
-import { renderAllApi } from '@api-helper/template';
+import { renderAllApi, artTemplate } from '@api-helper/template';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import log from '@/lib/tools/log';
@@ -41,7 +41,9 @@ class Service{
     new ParserSwaggerPlugin(),
   ];
   private configFilePath?: string;
-  constructor(configFilePath?: string) {
+  private isTestEnv: boolean;
+  constructor(configFilePath?: string, isTestEnv = false) {
+    this.isTestEnv = isTestEnv;
     this.configFilePath = configFilePath;
   }
 
@@ -190,13 +192,14 @@ class Service{
       }
     }
 
-    const code = [];
-    if (isTS) {
-      code.push(`/* tslint:disable */
+    const codeHead = artTemplate.render(`
+《if config.onlyTyping !== true》
+  《if isTS》
+/* tslint:disable */
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // @ts-ignore
@@ -207,26 +210,32 @@ import {
 } from '@api-helper/core/es/lib/helpers';
 // @ts-ignore
 // prettier-ignore
-import request from '${requestFilePath}';
+import request from '《requestFilePath》';
 // @ts-ignore
 // prettier-ignore
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
-`);
-    } else {
-      code.push(`/* eslint-disable */
+  《else》
+/* eslint-disable */
 /* prettier-ignore-start */
 
-/* 提示：该文件由 API Helper Cli 自动生成，请勿直接修改。 */
+/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 // prettier-ignore
-import request from '${requestFilePath}';
-`);
-    }
+import request from '《requestFilePath》';
+  《/if》
+《/if》
+
+`, {
+      isTS,
+      requestFilePath,
+      config,
+    });
 
     // 生成代码
+    const code = [codeHead];
     const spinner = ora(oraText).start();
     for (const item of parserPluginRunResult) {
       const { documentServer, parsedDocumentList } = item;
@@ -234,8 +243,11 @@ import request from '${requestFilePath}';
       for (const d of parsedDocumentList) {
         try {
           let str = renderAllApi(d, {
+            ...config,
+            ...documentServer,
             codeType: isTS ? 'typescript' : 'javascript',
             dataKey: dataKey,
+            showUpdateTime: !this.isTestEnv,
             onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
             onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
           });
@@ -314,8 +326,6 @@ export default defineConfig({
   outputFilePath: 'src/api/index.ts',
   // 接口请求函数文件路径
   requestFunctionFilePath: 'src/api/request.ts',
-  // 响应数据所有字段设置成必有属性
-  requiredResponseField: true,
   // 接口文档服务配置
   documentServers: [
     {
@@ -361,7 +371,7 @@ function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunct
   return resolve(config.outputFilePath);
 }
 
-async function getRequestFunctionFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): Promise<string> {
+async function getRequestFunctionFilePath(config: Pick<Config, 'onlyTyping' | 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): Promise<string> {
   const outputFilename = getOutputFilePath(config);
   const extensionName = getExtensionName(outputFilename);
   const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
@@ -372,6 +382,10 @@ async function getRequestFunctionFilePath(config: Pick<Config, 'outputFilePath' 
     requestFunctionFilePath += extensionName;
   }
   requestFunctionFilePath = resolve(requestFunctionFilePath);
+
+  if (config.onlyTyping) {
+    return requestFunctionFilePath;
+  }
 
   try { // 路径可以访问，文件已经创建，直接返回
     await stat(resolve(requestFunctionFilePath));

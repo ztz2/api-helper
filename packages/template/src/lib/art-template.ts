@@ -1,7 +1,19 @@
 // @ts-ignore
-import artTemplate from './utils/template/art-template-web.js';
+import template from './utils/template/art-template-web.js';
 
-// @ts-ignore
+type ArtTemplate = {
+  render(source: string, data?: Recordable): string;
+  readonly defaults: {
+    escape: boolean;
+    minimize: boolean;
+    rules: Array<{
+      test: RegExp
+    }>;
+  }
+}
+
+const artTemplate: ArtTemplate = template;
+
 artTemplate.defaults.escape = false;
 artTemplate.defaults.minimize = false;
 // 新增模板《》语法的界定符规则

@@ -452,3 +452,25 @@ export function getErrorMessage<T extends string | Error & { msg?: string }>(err
   }
   return '';
 }
+
+export function formatDate(date: number | string | Date, format = 'YYYY-MM-dd HH:mm:ss') {
+  date = !(date instanceof Date) ? new Date(date) : date;
+  const o = {
+    'M+': date.getMonth() + 1, // 月份
+    'd+': date.getDate(), // 日
+    'H+': date.getHours(), // 小时
+    'm+': date.getMinutes(), // 分
+    's+': date.getSeconds(), // 秒
+    'q+': Math.floor((date.getMonth() + 3) / 3), // 季度
+    'S': date.getMilliseconds() // 毫秒
+  };
+  if (/(Y+)/.test(format)) {
+    format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+  }
+  for (const k in o) {
+    if (new RegExp('(' + k + ')').test(format)) { // @ts-ignore
+      format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k] as string).substr(('' + o[k]).length)));
+    }
+  }
+  return format;
+}

@@ -4,9 +4,10 @@ import * as _changeCase from 'change-case';
 import { ChangeCase } from '@/lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { createSchema } from '@api-helper/core/lib/helpers';
-import { randomChar } from '@api-helper/core/lib/utils/util';
+import { randomChar, formatDate } from '@api-helper/core/lib/utils/util';
 
-import { checkIsInterface, isEmptyObject, postCode } from '@/lib/utils/util';
+import artTemplate from '@/lib/art-template';
+import { postCode, isEmptyObject, checkIsInterface } from '@/lib/utils/util';
 
 export function renderInterface(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
@@ -28,6 +29,8 @@ export function renderInterface(
     isExtraData?: boolean;
     // 当数据为空的body代码
     emptyBodyCode?: string;
+    // 显示更新时间
+    showUpdateTime?: boolean;
   }) {
   options = merge({
     onlyBody: false,
@@ -56,9 +59,10 @@ export function renderInterface(
   }
 
   const isInterface = checkIsInterface(schema);
+  const updateTime = options?.showUpdateTime ? formatDate(Date.now()) : '';
   const keyword = isInterface ? `${prefix} interface` : `${prefix}type`;
   const onRenderInterfaceName = options?.onRenderInterfaceName ? options.onRenderInterfaceName : renderInterfaceName;
-  let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(schema, api, paramType, isExtraData) : '';
+  let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData, updateTime) : '';
   let interfaceName = options?.name ? options.name : onRenderInterfaceName(schema, api, {
     isExtraData,
     paramType,
@@ -124,17 +128,23 @@ export function renderInterfaceName (
 }
 
 function renderInterfaceComment(
-  schema: APIHelper.Schema | null,
   api: APIHelper.API,
   paramType: 'request' | 'response',
-  isExtraData = false
+  isExtraData = false,
+  updateTime = '',
 ) {
-  const commentText =
-`/**
- * @description ${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】${api.docURL ? `\n * @doc ${api.docURL}` : ''}
- * @url [ ${api.method.toUpperCase()} ] ${api.path}
- */`;
-  return commentText;
+  return artTemplate.render(
+    `/**
+ * @description 《description》《if docURL》
+ * @doc 《docURL》《/if》
+ * @url 《url》《if updateTime》
+ * @update 《updateTime》《/if》
+ */`, {
+      description: `${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】`,
+      docURL: api.docURL,
+      url: `[ ${api.method.toUpperCase()} ] ${api.path}`,
+      updateTime
+    })
 }
 
 function requiredChar(schema: APIHelper.Schema) {

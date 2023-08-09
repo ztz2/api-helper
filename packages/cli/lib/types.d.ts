@@ -17,6 +17,7 @@ export declare abstract class AbstractParserPlugin {
 export declare type Config = {
     outputFilePath: string;
     requestFunctionFilePath: string;
+    onlyTyping?: boolean;
     requiredRequestField?: boolean;
     requiredResponseField?: boolean;
     documentServers: Array<{
