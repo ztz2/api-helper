@@ -2,20 +2,12 @@
 
 exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
 "/**
- * @description Place an order for a pet
- * @url [ POST ] /v2/store/order
- */
-export function v2StoreOrderByPost(
-  data: IV2StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2StoreOrderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderByPost.requestConfig
-    ),
+   * @description Place an order for a pet
+   * @url [ POST ] /v2/store/order
+   */
+export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig),
     ...args
   );
 }
@@ -25,23 +17,14 @@ v2StoreOrderByPost.requestConfig = {
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
-};
-
+}
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
- * @url [ GET ] /v2/store/order/{orderId}
- */
-export function v2StoreOrderOrderIdByGet(
-  data: IV2StoreOrderOrderIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IV2StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByGet.requestConfig
-    ),
+   * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+   * @url [ GET ] /v2/store/order/{orderId}
+   */
+export function v2StoreOrderOrderIdByGet(data: V2StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
@@ -49,25 +32,16 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'get',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
-};
-
+}
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
- * @url [ DELETE ] /v2/store/order/{orderId}
- */
-export function v2StoreOrderOrderIdByDelete(
-  data: IV2StoreOrderOrderIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2StoreOrderOrderIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreOrderOrderIdByDelete.requestConfig
-    ),
+   * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+   * @url [ DELETE ] /v2/store/order/{orderId}
+   */
+export function v2StoreOrderOrderIdByDelete(data: V2StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderOrderIdResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
@@ -75,25 +49,16 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'delete',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
-};
-
+}
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @url [ GET ] /v2/store/inventory
- */
-export function v2StoreInventoryByGet(
-  data: V2StoreInventoryRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2StoreInventoryResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      v2StoreInventoryByGet.requestConfig
-    ),
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /v2/store/inventory
+   */
+export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
@@ -103,26 +68,17 @@ v2StoreInventoryByGet.requestConfig = {
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
-};
-"
+}"
 `;
 
 exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3.0生成接口函数测试 1`] = `
 "/**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @url [ GET ] /api/v3/store/inventory
- */
-export function apiV3StoreInventoryByGet(
-  data: ApiV3StoreInventoryRequestTypeByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreInventoryResponseTypeByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3StoreInventoryByGet.requestConfig
-    ),
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /api/v3/store/inventory
+   */
+export function apiV3StoreInventoryByGet(data: ApiV3StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<ApiV3StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, apiV3StoreInventoryByGet.requestConfig),
     ...args
   );
 }
@@ -132,23 +88,14 @@ apiV3StoreInventoryByGet.requestConfig = {
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
-};
-
+}
 /**
- * @description Place an order for a pet、Place a new order in the store
- * @url [ POST ] /api/v3/store/order
- */
-export function apiV3StoreOrderByPost(
-  data: IApiV3StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IApiV3StoreOrderResponseByPost>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3StoreOrderByPost.requestConfig
-    ),
+   * @description Place an order for a pet、Place a new order in the store
+   * @url [ POST ] /api/v3/store/order
+   */
+export function apiV3StoreOrderByPost(data: ApiV3StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<ApiV3StoreOrderResponseByPost>(
+    processRequestFunctionConfig(data, extraData, apiV3StoreOrderByPost.requestConfig),
     ...args
   );
 }
@@ -157,31 +104,15 @@ apiV3StoreOrderByPost.requestConfig = {
   method: 'post',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [
-    'id',
-    'petId',
-    'quantity',
-    'shipDate',
-    'status',
-    'complete'
-  ]
-};
-
+  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+}
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
- * @url [ GET ] /api/v3/store/order/{orderId}
- */
-export function apiV3StoreOrderOrderIdByGet(
-  data: IApiV3StoreOrderOrderIdRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<IApiV3StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3StoreOrderOrderIdByGet.requestConfig
-    ),
+   * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+   * @url [ GET ] /api/v3/store/order/{orderId}
+   */
+export function apiV3StoreOrderOrderIdByGet(data: ApiV3StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<ApiV3StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(data, extraData, apiV3StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
@@ -189,25 +120,16 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'get',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
-};
-
+}
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
- * @url [ DELETE ] /api/v3/store/order/{orderId}
- */
-export function apiV3StoreOrderOrderIdByDelete(
-  data: IApiV3StoreOrderOrderIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreOrderOrderIdResponseTypeByDelete>(
-    processRequestFunctionConfig(
-      data,
-      extraData,
-      apiV3StoreOrderOrderIdByDelete.requestConfig
-    ),
+   * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+   * @url [ DELETE ] /api/v3/store/order/{orderId}
+   */
+export function apiV3StoreOrderOrderIdByDelete(data: ApiV3StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<ApiV3StoreOrderOrderIdResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, apiV3StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
@@ -215,8 +137,7 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'delete',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['orderId'],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
-};
-"
+}"
 `;

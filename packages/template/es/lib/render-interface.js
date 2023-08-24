@@ -2,9 +2,9 @@ import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
 import { createSchema } from '@api-helper/core/lib/helpers';
-import { randomChar, formatDate } from '@api-helper/core/lib/utils/util';
+import { randomChar } from '@api-helper/core/lib/utils/util';
+import { postCode, isEmptyObject, checkIsInterface, } from '../lib/utils/util';
 import artTemplate from '../lib/art-template';
-import { postCode, isEmptyObject, checkIsInterface } from '../lib/utils/util';
 export function renderInterface(schema, api, options) {
     options = merge({
         onlyBody: false,
@@ -22,13 +22,13 @@ export function renderInterface(schema, api, options) {
         });
     }
     var isInterface = checkIsInterface(schema);
-    var updateTime = (options === null || options === void 0 ? void 0 : options.showUpdateTime) ? formatDate(Date.now()) : '';
     var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
     var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
-    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData, updateTime) : '';
-    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
-        isExtraData: isExtraData,
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
+    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(api, {
+        schema: schema,
         paramType: paramType,
+        isExtraData: isExtraData,
         changeCase: _changeCase,
     });
     /**
@@ -59,22 +59,16 @@ export function renderInterface(schema, api, options) {
         code: renderInterfaceDeepObject(schema)
     }, { onlyBody: onlyBody });
 }
-export function renderInterfaceName(schema, api, options) {
-    var _a;
-    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
-    var isInterface = checkIsInterface(schema);
-    var name = "".concat(isInterface ? 'I' : '').concat(api.path);
+export function renderInterfaceName(api, options) {
+    var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
-    }
-    if (!isInterface) {
-        name += 'Type';
     }
     if (options.isExtraData) {
         name += 'ExtraData';
     }
     name += "By ".concat(api.method);
-    return changeCase.pascalCase(name);
+    return options.changeCase.pascalCase(name);
 }
 function renderInterfaceComment(api, paramType, isExtraData, updateTime) {
     if (isExtraData === void 0) { isExtraData = false; }

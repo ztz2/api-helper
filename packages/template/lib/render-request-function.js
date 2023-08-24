@@ -22,12 +22,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderRequestFunctionName = exports.renderRequestFunction = void 0;
+exports.renderRequestFunctionComment = exports.renderRequestFunctionName = exports.renderRequestFunction = void 0;
 var _changeCase = __importStar(require("change-case"));
 var helpers_1 = require("@api-helper/core/lib/helpers");
-var util_1 = require("@api-helper/core/lib/utils/util");
 var art_template_1 = __importDefault(require("../lib/art-template"));
-var prettier_1 = __importDefault(require("../lib/utils/prettier"));
 var render_interface_1 = require("../lib/render-interface");
 function renderRequestFunction(api, options) {
     if (!api) {
@@ -35,26 +33,38 @@ function renderRequestFunction(api, options) {
     }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
-    var updateTime = (options === null || options === void 0 ? void 0 : options.showUpdateTime) ? (0, util_1.formatDate)(Date.now()) : '';
     var onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
     var onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : render_interface_1.renderInterfaceName;
     var responseDataSchema = dataKey ? (0, helpers_1.getSchema)(api.responseDataSchema, dataKey) : api.responseDataSchema;
     var templateTenderParams = {
         api: api,
         isTypescript: codeType === 'typescript',
-        commentCode: renderRequestFunctionComment(api, updateTime),
+        commentCode: renderRequestFunctionComment(api),
         formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
         pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
         queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-        requestFunctionName: onRenderRequestFunctionName(api, { changeCase: _changeCase }),
-        requestDataInterfaceName: onRenderInterfaceName(api.requestDataSchema, api, { paramType: 'request', changeCase: _changeCase }),
-        requestExtraDataInterfaceName: onRenderInterfaceName(api.requestExtraDataSchema, api, { paramType: 'request', isExtraData: true, changeCase: _changeCase }),
-        responseDataInterfaceName: onRenderInterfaceName(responseDataSchema, api, { paramType: 'response', changeCase: _changeCase }),
+        requestFunctionName: onRenderRequestFunctionName(api, {
+            changeCase: _changeCase,
+        }),
+        requestDataInterfaceName: onRenderInterfaceName(api, {
+            paramType: 'request',
+            changeCase: _changeCase,
+            schema: api.requestDataSchema,
+        }),
+        requestExtraDataInterfaceName: onRenderInterfaceName(api, {
+            isExtraData: true,
+            paramType: 'request',
+            changeCase: _changeCase,
+            schema: api.requestExtraDataSchema,
+        }),
+        responseDataInterfaceName: onRenderInterfaceName(api, {
+            paramType: 'response',
+            changeCase: _changeCase,
+            schema: responseDataSchema,
+        }),
     };
     var code = art_template_1.default.render("\u300Aif commentCode\u300B\u300AcommentCode\u300B\n\u300A/if\u300Bexport function \u300ArequestFunctionName\u300B(data\u300Aif isTypescript\u300B: \u300ArequestDataInterfaceName\u300B\u300A/if\u300B, extraData\u300Aif isTypescript\u300B?: \u300Aif api.requestExtraDataSchema\u300B\u300ArequestExtraDataInterfaceName\u300B\u300Aelse\u300Bunknown\u300A/if\u300B\u300A/if\u300B, ...args\u300Aif isTypescript\u300B: CurrentRequestFunctionRestArgsType\u300A/if\u300B) {\n  return request\u300Aif isTypescript\u300B<\u300AresponseDataInterfaceName\u300B>\u300A/if\u300B(\n    processRequestFunctionConfig(data, extraData, \u300ArequestFunctionName\u300B.requestConfig),\n    ...args\n  );\n}\n\u300ArequestFunctionName\u300B.requestConfig = {\n  path: '\u300Aapi.path\u300B',\n  method: '\u300Aapi.method.toLowerCase()\u300B',\n  formDataKeyNameList: \u300AformDataKeyNameListStr\u300B,\n  pathParamKeyNameList: \u300ApathParamKeyNameListStr\u300B,\n  queryStringKeyNameList: \u300AqueryStringKeyNameListStr\u300B\n}", templateTenderParams);
-    return (0, prettier_1.default)(code, {
-        parser: codeType !== 'typescript' ? 'babel' : 'typescript'
-    });
+    return code;
 }
 exports.renderRequestFunction = renderRequestFunction;
 function renderRequestFunctionName(api, options) {
@@ -72,3 +82,4 @@ function renderRequestFunctionComment(api, updateTime) {
         updateTime: updateTime
     });
 }
+exports.renderRequestFunctionComment = renderRequestFunctionComment;

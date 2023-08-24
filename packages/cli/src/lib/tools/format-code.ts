@@ -15,7 +15,6 @@ import { FORMAT_CODE_EXTENSION } from '@/lib/constants';
 import log from '@/lib/tools/log';
 import { PrettierOptions, FormatCodeConfig } from '@/lib/types';
 
-
 export default async function formatCode(config: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
   if (Array.isArray(config)) {
     const codeList: string[] = [];

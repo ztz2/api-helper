@@ -6,8 +6,8 @@ export declare function renderRequestFunction(api: APIHelper.API, options?: {
     dataKey?: string | undefined;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
-    showUpdateTime?: boolean;
-}): any;
+}): string;
 export declare function renderRequestFunctionName(api: APIHelper.API, options: {
     changeCase: ChangeCase;
 }): string;
+export declare function renderRequestFunctionComment(api: APIHelper.API, updateTime?: string): string;

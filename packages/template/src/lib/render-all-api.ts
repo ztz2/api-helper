@@ -1,18 +1,27 @@
 import { APIHelper } from '@api-helper/core/lib/types';
 import { getSchema } from '@api-helper/core/lib/helpers';
 
-import formatCode from '@/lib/utils/prettier';
-import { renderInterface, renderInterfaceName } from '@/lib/render-interface';
-import { renderRequestFunction, renderRequestFunctionName } from '@/lib/render-request-function';
+import {
+  renderInterface,
+  renderInterfaceName,
+} from '@/lib/render-interface';
+import {
+  renderRequestFunction,
+  renderRequestFunctionName,
+} from '@/lib/render-request-function';
+import {
+  renderRequestFunctionDeclare,
+} from '@/lib/render-request-function-declare';
 
 export function renderAllApi(
   apiDocument: APIHelper.Document,
   options?: {
-    codeType?: 'typescript' | 'javascript';
     dataKey?: string;
+    codeType?: 'typescript' | 'javascript';
+    // 生成的是类型申明代码，默认false
+    isDeclare?: boolean;
     // 是否只生成接口请求数据和返回数据的 TypeScript 类型
     onlyTyping?: boolean;
-    showUpdateTime?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName,
     onRenderRequestFunctionName?: typeof renderRequestFunctionName,
   }
@@ -23,8 +32,8 @@ export function renderAllApi(
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
   const onlyTyping = options?.onlyTyping;
-  const showUpdateTime = options?.showUpdateTime ?? true;
   const isTS = codeType === 'typescript';
+  const isDeclare = options?.isDeclare ?? false;
 
   const categoryList: APIHelper.CategoryList = apiDocument.categoryList;
   let allApi: APIHelper.APIList = [];
@@ -45,36 +54,40 @@ export function renderAllApi(
       p.push(renderInterface(api.requestDataSchema, api, {
         paramType: 'request',
         onRenderInterfaceName: options?.onRenderInterfaceName,
-        showUpdateTime,
       }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
       p.push(renderInterface(api.requestExtraDataSchema, api, {
         paramType: 'request',
         isExtraData: true,
         onRenderInterfaceName: options?.onRenderInterfaceName,
-        showUpdateTime,
       }));
       // 2. 生成interface-响应数据
       p.push(renderInterface(responseDataSchema, api, {
         paramType: 'response',
         onRenderInterfaceName: options?.onRenderInterfaceName,
-        showUpdateTime,
       }));
     }
+
     // 3. 生成请求函数
     if (onlyTyping !== true) {
-      p.push(renderRequestFunction(api, {
-        codeType,
-        dataKey,
-        onRenderInterfaceName: options?.onRenderInterfaceName,
-        onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
-        showUpdateTime,
-      }));
+      if (isDeclare) {
+        p.push(renderRequestFunctionDeclare(api, {
+          dataKey,
+          onRenderInterfaceName: options?.onRenderInterfaceName,
+          onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
+        }));
+      } else {
+        p.push(renderRequestFunction(api, {
+          dataKey,
+          codeType,
+          onRenderInterfaceName: options?.onRenderInterfaceName,
+          onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
+        }));
+      }
     }
+
     code.push(p.join(''));
   }
 
-  return formatCode(code.join('\n'), {
-    parser: codeType !== 'typescript' ? 'babel' : 'typescript'
-  });
+  return code.join('\n');
 }

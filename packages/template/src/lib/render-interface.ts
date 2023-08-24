@@ -4,10 +4,14 @@ import * as _changeCase from 'change-case';
 import { ChangeCase } from '@/lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { createSchema } from '@api-helper/core/lib/helpers';
-import { randomChar, formatDate } from '@api-helper/core/lib/utils/util';
+import { randomChar } from '@api-helper/core/lib/utils/util';
 
+import {
+  postCode,
+  isEmptyObject,
+  checkIsInterface,
+} from '@/lib/utils/util';
 import artTemplate from '@/lib/art-template';
-import { postCode, isEmptyObject, checkIsInterface } from '@/lib/utils/util';
 
 export function renderInterface(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
@@ -29,8 +33,6 @@ export function renderInterface(
     isExtraData?: boolean;
     // 当数据为空的body代码
     emptyBodyCode?: string;
-    // 显示更新时间
-    showUpdateTime?: boolean;
   }) {
   options = merge({
     onlyBody: false,
@@ -59,13 +61,13 @@ export function renderInterface(
   }
 
   const isInterface = checkIsInterface(schema);
-  const updateTime = options?.showUpdateTime ? formatDate(Date.now()) : '';
   const keyword = isInterface ? `${prefix} interface` : `${prefix}type`;
   const onRenderInterfaceName = options?.onRenderInterfaceName ? options.onRenderInterfaceName : renderInterfaceName;
-  let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData, updateTime) : '';
-  let interfaceName = options?.name ? options.name : onRenderInterfaceName(schema, api, {
-    isExtraData,
+  let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
+  let interfaceName = options?.name ? options.name : onRenderInterfaceName(api, {
+    schema,
     paramType,
+    isExtraData,
     changeCase: _changeCase,
   });
 
@@ -102,29 +104,23 @@ export function renderInterface(
 }
 
 export function renderInterfaceName (
-  schema: APIHelper.Schema | null,
   api: APIHelper.API,
   options: {
-    isExtraData?: boolean;
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
+    isExtraData?: boolean;
+    // 兼容2.2版本
+    schema?: APIHelper.Schema | null,
   }): string {
-  const changeCase = options.changeCase ?? _changeCase;
-  const isInterface = checkIsInterface(schema);
-
-  let name = `${isInterface ? 'I' : ''}${api.path}`;
-
+  let name = api.path;
   if (options.paramType) {
     name += ` ${options.paramType}`;
-  }
-  if (!isInterface) {
-    name += 'Type';
   }
   if (options.isExtraData) {
     name += 'ExtraData'
   }
   name += `By ${api.method}`;
-  return changeCase.pascalCase(name);
+  return options.changeCase.pascalCase(name);
 }
 
 function renderInterfaceComment(

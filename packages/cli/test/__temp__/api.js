@@ -1,6 +1,7 @@
 /* eslint-disable */
 /* prettier-ignore-start */
 
+/* 代码生成时间:  */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
@@ -23,7 +24,6 @@ v2PetPetIdUploadImageByPost.requestConfig = {
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Add a new pet to the store
  * @url [ POST ] /v2/pet
@@ -38,7 +38,6 @@ v2PetByPost.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Update an existing pet
  * @url [ PUT ] /v2/pet
@@ -53,7 +52,6 @@ v2PetByPut.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
  * @url [ GET ] /v2/pet/findByStatus
@@ -68,7 +66,6 @@ v2PetFindByStatusByGet.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['status'],
 };
-
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  * @url [ GET ] /v2/pet/findByTags
@@ -83,7 +80,6 @@ v2PetFindByTagsByGet.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['tags'],
 };
-
 /**
  * @description Find pet by ID、Returns a single pet
  * @url [ GET ] /v2/pet/{petId}
@@ -98,7 +94,6 @@ v2PetPetIdByGet.requestConfig = {
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Updates a pet in the store with form data
  * @url [ POST ] /v2/pet/{petId}
@@ -113,7 +108,6 @@ v2PetPetIdByPost.requestConfig = {
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Deletes a pet
  * @url [ DELETE ] /v2/pet/{petId}
@@ -128,7 +122,6 @@ v2PetPetIdByDelete.requestConfig = {
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Place an order for a pet
  * @url [ POST ] /v2/store/order
@@ -143,7 +136,6 @@ v2StoreOrderByPost.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
  * @url [ GET ] /v2/store/order/{orderId}
@@ -158,7 +150,6 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
  * @url [ DELETE ] /v2/store/order/{orderId}
@@ -173,7 +164,6 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @url [ GET ] /v2/store/inventory
@@ -188,7 +178,6 @@ v2StoreInventoryByGet.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Creates list of users with given input array
  * @url [ POST ] /v2/user/createWithArray
@@ -203,7 +192,6 @@ v2UserCreateWithArrayByPost.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Creates list of users with given input array
  * @url [ POST ] /v2/user/createWithList
@@ -218,7 +206,6 @@ v2UserCreateWithListByPost.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Get user by user name
  * @url [ GET ] /v2/user/{username}
@@ -233,7 +220,6 @@ v2UserUsernameByGet.requestConfig = {
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Updated user、This can only be done by the logged in user.
  * @url [ PUT ] /v2/user/{username}
@@ -248,7 +234,6 @@ v2UserUsernameByPut.requestConfig = {
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Delete user、This can only be done by the logged in user.
  * @url [ DELETE ] /v2/user/{username}
@@ -263,7 +248,6 @@ v2UserUsernameByDelete.requestConfig = {
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Logs user into the system
  * @url [ GET ] /v2/user/login
@@ -278,7 +262,6 @@ v2UserLoginByGet.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['username', 'password'],
 };
-
 /**
  * @description Logs out current logged in user session
  * @url [ GET ] /v2/user/logout
@@ -293,7 +276,6 @@ v2UserLogoutByGet.requestConfig = {
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
-
 /**
  * @description Create user、This can only be done by the logged in user.
  * @url [ POST ] /v2/user

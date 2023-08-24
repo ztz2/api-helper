@@ -1,0 +1,119 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
+"/**
+   * @description Place an order for a pet
+   * @url [ POST ] /v2/store/order
+   */
+export declare const v2StoreOrderByPost: {
+  (data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderResponseByPost>;
+  readonly requestConfig: {
+    path: '/v2/store/order',
+    method: 'post',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: []
+  }
+};
+/**
+   * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+   * @url [ GET ] /v2/store/order/{orderId}
+   */
+export declare const v2StoreOrderOrderIdByGet: {
+  (data: V2StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByGet>;
+  readonly requestConfig: {
+    path: '/v2/store/order/{orderId}',
+    method: 'get',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: ["orderId"],
+    queryStringKeyNameList: []
+  }
+};
+/**
+   * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+   * @url [ DELETE ] /v2/store/order/{orderId}
+   */
+export declare const v2StoreOrderOrderIdByDelete: {
+  (data: V2StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByDelete>;
+  readonly requestConfig: {
+    path: '/v2/store/order/{orderId}',
+    method: 'delete',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: ["orderId"],
+    queryStringKeyNameList: []
+  }
+};
+/**
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /v2/store/inventory
+   */
+export declare const v2StoreInventoryByGet: {
+  (data: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
+  readonly requestConfig: {
+    path: '/v2/store/inventory',
+    method: 'get',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: []
+  }
+};"
+`;
+
+exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3.0生成接口函数测试 1`] = `
+"/**
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /api/v3/store/inventory
+   */
+export declare const apiV3StoreInventoryByGet: {
+  (data: ApiV3StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreInventoryResponseByGet>;
+  readonly requestConfig: {
+    path: '/api/v3/store/inventory',
+    method: 'get',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: []
+  }
+};
+/**
+   * @description Place an order for a pet、Place a new order in the store
+   * @url [ POST ] /api/v3/store/order
+   */
+export declare const apiV3StoreOrderByPost: {
+  (data: ApiV3StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderResponseByPost>;
+  readonly requestConfig: {
+    path: '/api/v3/store/order',
+    method: 'post',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+  }
+};
+/**
+   * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+   * @url [ GET ] /api/v3/store/order/{orderId}
+   */
+export declare const apiV3StoreOrderOrderIdByGet: {
+  (data: ApiV3StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderOrderIdResponseByGet>;
+  readonly requestConfig: {
+    path: '/api/v3/store/order/{orderId}',
+    method: 'get',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: ["orderId"],
+    queryStringKeyNameList: []
+  }
+};
+/**
+   * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+   * @url [ DELETE ] /api/v3/store/order/{orderId}
+   */
+export declare const apiV3StoreOrderOrderIdByDelete: {
+  (data: ApiV3StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderOrderIdResponseByDelete>;
+  readonly requestConfig: {
+    path: '/api/v3/store/order/{orderId}',
+    method: 'delete',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: ["orderId"],
+    queryStringKeyNameList: []
+  }
+};"
+`;

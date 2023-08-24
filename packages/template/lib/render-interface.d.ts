@@ -9,10 +9,10 @@ export declare function renderInterface(schema: APIHelper.Schema | Array<APIHelp
     onRenderInterfaceName?: typeof renderInterfaceName;
     isExtraData?: boolean;
     emptyBodyCode?: string;
-    showUpdateTime?: boolean;
 }): string;
-export declare function renderInterfaceName(schema: APIHelper.Schema | null, api: APIHelper.API, options: {
-    isExtraData?: boolean;
+export declare function renderInterfaceName(api: APIHelper.API, options: {
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
+    isExtraData?: boolean;
+    schema?: APIHelper.Schema | null;
 }): string;

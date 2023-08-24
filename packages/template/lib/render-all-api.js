@@ -35,15 +35,12 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.renderAllApi = void 0;
 var helpers_1 = require("@api-helper/core/lib/helpers");
-var prettier_1 = __importDefault(require("../lib/utils/prettier"));
 var render_interface_1 = require("../lib/render-interface");
 var render_request_function_1 = require("../lib/render-request-function");
+var render_request_function_declare_1 = require("../lib/render-request-function-declare");
 function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
     var _c;
@@ -53,8 +50,8 @@ function renderAllApi(apiDocument, options) {
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
     var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
-    var showUpdateTime = (_c = options === null || options === void 0 ? void 0 : options.showUpdateTime) !== null && _c !== void 0 ? _c : true;
     var isTS = codeType === 'typescript';
+    var isDeclare = (_c = options === null || options === void 0 ? void 0 : options.isDeclare) !== null && _c !== void 0 ? _c : false;
     var categoryList = apiDocument.categoryList;
     var allApi = [];
     try {
@@ -84,31 +81,36 @@ function renderAllApi(apiDocument, options) {
                 p.push((0, render_interface_1.renderInterface)(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push((0, render_interface_1.renderInterface)(api.requestExtraDataSchema, api, {
                     paramType: 'request',
                     isExtraData: true,
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-响应数据
                 p.push((0, render_interface_1.renderInterface)(responseDataSchema, api, {
                     paramType: 'response',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
             }
             // 3. 生成请求函数
             if (onlyTyping !== true) {
-                p.push((0, render_request_function_1.renderRequestFunction)(api, {
-                    codeType: codeType,
-                    dataKey: dataKey,
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-                    showUpdateTime: showUpdateTime,
-                }));
+                if (isDeclare) {
+                    p.push((0, render_request_function_declare_1.renderRequestFunctionDeclare)(api, {
+                        dataKey: dataKey,
+                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    }));
+                }
+                else {
+                    p.push((0, render_request_function_1.renderRequestFunction)(api, {
+                        dataKey: dataKey,
+                        codeType: codeType,
+                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    }));
+                }
             }
             code.push(p.join(''));
         }
@@ -120,8 +122,6 @@ function renderAllApi(apiDocument, options) {
         }
         finally { if (e_2) throw e_2.error; }
     }
-    return (0, prettier_1.default)(code.join('\n'), {
-        parser: codeType !== 'typescript' ? 'babel' : 'typescript'
-    });
+    return code.join('\n');
 }
 exports.renderAllApi = renderAllApi;

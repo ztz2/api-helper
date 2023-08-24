@@ -35,9 +35,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 import { getSchema } from '@api-helper/core/lib/helpers';
-import formatCode from '../lib/utils/prettier';
-import { renderInterface } from '../lib/render-interface';
-import { renderRequestFunction } from '../lib/render-request-function';
+import { renderInterface, } from '../lib/render-interface';
+import { renderRequestFunction, } from '../lib/render-request-function';
+import { renderRequestFunctionDeclare, } from '../lib/render-request-function-declare';
 export function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
     var _c;
@@ -47,8 +47,8 @@ export function renderAllApi(apiDocument, options) {
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
     var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
-    var showUpdateTime = (_c = options === null || options === void 0 ? void 0 : options.showUpdateTime) !== null && _c !== void 0 ? _c : true;
     var isTS = codeType === 'typescript';
+    var isDeclare = (_c = options === null || options === void 0 ? void 0 : options.isDeclare) !== null && _c !== void 0 ? _c : false;
     var categoryList = apiDocument.categoryList;
     var allApi = [];
     try {
@@ -78,31 +78,36 @@ export function renderAllApi(apiDocument, options) {
                 p.push(renderInterface(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push(renderInterface(api.requestExtraDataSchema, api, {
                     paramType: 'request',
                     isExtraData: true,
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
                 // 2. 生成interface-响应数据
                 p.push(renderInterface(responseDataSchema, api, {
                     paramType: 'response',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    showUpdateTime: showUpdateTime,
                 }));
             }
             // 3. 生成请求函数
             if (onlyTyping !== true) {
-                p.push(renderRequestFunction(api, {
-                    codeType: codeType,
-                    dataKey: dataKey,
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-                    showUpdateTime: showUpdateTime,
-                }));
+                if (isDeclare) {
+                    p.push(renderRequestFunctionDeclare(api, {
+                        dataKey: dataKey,
+                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    }));
+                }
+                else {
+                    p.push(renderRequestFunction(api, {
+                        dataKey: dataKey,
+                        codeType: codeType,
+                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                    }));
+                }
             }
             code.push(p.join(''));
         }
@@ -114,7 +119,5 @@ export function renderAllApi(apiDocument, options) {
         }
         finally { if (e_2) throw e_2.error; }
     }
-    return formatCode(code.join('\n'), {
-        parser: codeType !== 'typescript' ? 'babel' : 'typescript'
-    });
+    return code.join('\n');
 }

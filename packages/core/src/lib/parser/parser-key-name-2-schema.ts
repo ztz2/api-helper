@@ -1,8 +1,7 @@
-import { APIHelper, createSchema } from '@root/src';
-import consola from 'consola';
-import { pushArray } from '@/lib/utils/util';
-import merge from 'lodash/merge';
 import { cloneDeep } from 'lodash';
+
+import { pushArray } from '@/lib/utils/util';
+import { APIHelper, createSchema } from '@root/src';
 
 // keyName[0].name => Schema
 // [0].updateValue => Schema

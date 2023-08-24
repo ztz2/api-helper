@@ -28,8 +28,8 @@ var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var _changeCase = __importStar(require("change-case"));
 var helpers_1 = require("@api-helper/core/lib/helpers");
 var util_1 = require("@api-helper/core/lib/utils/util");
-var art_template_1 = __importDefault(require("../lib/art-template"));
 var util_2 = require("../lib/utils/util");
+var art_template_1 = __importDefault(require("../lib/art-template"));
 function renderInterface(schema, api, options) {
     options = (0, merge_1.default)({
         onlyBody: false,
@@ -47,13 +47,13 @@ function renderInterface(schema, api, options) {
         });
     }
     var isInterface = (0, util_2.checkIsInterface)(schema);
-    var updateTime = (options === null || options === void 0 ? void 0 : options.showUpdateTime) ? (0, util_1.formatDate)(Date.now()) : '';
     var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
     var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
-    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData, updateTime) : '';
-    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(schema, api, {
-        isExtraData: isExtraData,
+    var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
+    var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(api, {
+        schema: schema,
         paramType: paramType,
+        isExtraData: isExtraData,
         changeCase: _changeCase,
     });
     /**
@@ -85,22 +85,16 @@ function renderInterface(schema, api, options) {
     }, { onlyBody: onlyBody });
 }
 exports.renderInterface = renderInterface;
-function renderInterfaceName(schema, api, options) {
-    var _a;
-    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
-    var isInterface = (0, util_2.checkIsInterface)(schema);
-    var name = "".concat(isInterface ? 'I' : '').concat(api.path);
+function renderInterfaceName(api, options) {
+    var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
-    }
-    if (!isInterface) {
-        name += 'Type';
     }
     if (options.isExtraData) {
         name += 'ExtraData';
     }
     name += "By ".concat(api.method);
-    return changeCase.pascalCase(name);
+    return options.changeCase.pascalCase(name);
 }
 exports.renderInterfaceName = renderInterfaceName;
 function renderInterfaceComment(api, paramType, isExtraData, updateTime) {

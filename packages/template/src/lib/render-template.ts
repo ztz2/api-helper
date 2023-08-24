@@ -1,11 +1,16 @@
 import * as _ from 'lodash';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { FormatCodeConfig, PrettierOptions } from '@api-helper/cli/lib/types';
-import { checkType, getErrorMessage } from '@api-helper/core/lib/utils/util';
+import {
+  PrettierOptions,
+  FormatCodeConfig,
+} from '@api-helper/cli/lib/types';
+import {
+  checkType,
+  getErrorMessage,
+} from '@api-helper/core/lib/utils/util';
 
 import _apih from './render-template-apih';
 import formatCodeServer from './utils/format-code-server';
-
 
 export type RenderApiTemplateParams = {
   apiList: Array<APIHelper.API>

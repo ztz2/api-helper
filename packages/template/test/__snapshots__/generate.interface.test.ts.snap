@@ -42,7 +42,7 @@ exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0
  * @description Place an order for a pet、Place a new order in the store【响应数据类型定义】
  * @url [ POST ] /api/v3/store/order
  */
-export interface IApiV3StoreOrderResponseByPost {
+export interface ApiV3StoreOrderResponseByPost {
   id?: number;
   petId?: number;
   quantity?: number;
@@ -55,7 +55,7 @@ export interface IApiV3StoreOrderResponseByPost {
 `;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `
-"export interface IV2StoreOrderRequestByPost {
+"export interface V2StoreOrderRequestByPost {
   id: number;
   petId: number;
   quantity: number;
@@ -113,7 +113,7 @@ exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性�
  * @description Place an order for a pet【请求数据类型定义】
  * @url [ POST ] /v2/store/order
  */
-interface IV2StoreOrderRequestByPost {
+interface V2StoreOrderRequestByPost {
   id: number;
   petId: number;
   quantity: number;
@@ -137,7 +137,7 @@ exports[`生成 interface 测试 open-api-2.0-param[0].json: open-api-2.0-param[
  * @description allocatedList【请求数据类型定义】
  * @url [ GET ] /system/role/authUser/allocatedList
  */
-export interface ISystemRoleAuthUserAllocatedListRequestByGet {
+export interface SystemRoleAuthUserAllocatedListRequestByGet {
   // 创建者
   createBy?: string;
   // 创建时间
@@ -238,7 +238,7 @@ export interface ISystemRoleAuthUserAllocatedListRequestByGet {
  * @description allocatedList【请求数据类型定义】
  * @url [ GET ] /system/role/authUser/allocatedList
  */
-export interface ISystemRoleAuthUserAllocatedListRequestByGet {
+export interface SystemRoleAuthUserAllocatedListRequestByGet {
   // TableDataInfo
   code: number;
   msg: string;

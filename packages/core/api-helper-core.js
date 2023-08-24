@@ -1,5 +1,5 @@
 /*!
- * @api-helper/core v2.2.6
+ * @api-helper/core v2.3.0
  * (c) 2023-present ztz2
  * Released under the MIT License.
  */

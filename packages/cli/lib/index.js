@@ -12,11 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatCode = exports.run = exports.defineConfig = void 0;
+exports.formatCode = exports.run = exports.defineConfig = exports.checkIsInterface = void 0;
 const types_1 = require("../lib/types");
 const Service_1 = __importDefault(require("../lib/service/Service"));
 const format_code_1 = __importDefault(require("../lib/tools/format-code"));
 exports.formatCode = format_code_1.default;
+var util_1 = require("@api-helper/template/lib/utils/util");
+Object.defineProperty(exports, "checkIsInterface", { enumerable: true, get: function () { return util_1.checkIsInterface; } });
 function defineConfig(config) {
     return Array.isArray(config) ? config : [config];
 }

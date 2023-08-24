@@ -2,7 +2,7 @@
  * @description 普通body请求-put【请求数据类型定义】
  * @url [ PUT ] /body/bodyPut
  */
-export interface IBodyBodyPutRequestByPut {
+export interface BodyBodyPutRequestByPut {
   // 随机名称
   random?: string;
   // 文件名称
@@ -16,7 +16,7 @@ export interface IBodyBodyPutRequestByPut {
  * @description 普通body请求-put【响应数据类型定义】
  * @url [ PUT ] /body/bodyPut
  */
-export interface IBodyBodyPutResponseByPut {
+export interface BodyBodyPutResponseByPut {
   // 文件对象
   // 随机名称
   random: string;
@@ -32,7 +32,7 @@ export interface IBodyBodyPutResponseByPut {
  * @description body请求【请求数据类型定义】
  * @url [ POST ] /user/{deviceId}/body
  */
-export interface IUserDeviceIdBodyRequestByPost {
+export interface UserDeviceIdBodyRequestByPost {
   // 设备id
   deviceId: string;
 }
@@ -40,7 +40,7 @@ export interface IUserDeviceIdBodyRequestByPost {
  * @description body请求【响应数据类型定义】
  * @url [ POST ] /user/{deviceId}/body
  */
-export interface IUserDeviceIdBodyResponseByPost {
+export interface UserDeviceIdBodyResponseByPost {
   // 用户信息
   // 注解id-title
   id: string;
@@ -59,7 +59,7 @@ export interface IUserDeviceIdBodyResponseByPost {
  * @description body请求1【请求数据类型定义】
  * @url [ POST ] /user/{deviceId}/body1
  */
-export interface IUserDeviceIdBody1RequestByPost {
+export interface UserDeviceIdBody1RequestByPost {
   // 设备id
   deviceId: string;
   // 注解id-title
@@ -78,7 +78,7 @@ export interface IUserDeviceIdBody1RequestByPost {
  * @description body请求1【响应数据类型定义】
  * @url [ POST ] /user/{deviceId}/body1
  */
-export interface IUserDeviceIdBody1ResponseByPost {
+export interface UserDeviceIdBody1ResponseByPost {
   // 用户信息
   // 注解id-title
   id: string;
@@ -97,7 +97,7 @@ export interface IUserDeviceIdBody1ResponseByPost {
  * @description json参数查询1【请求数据类型定义】
  * @url [ POST ] /user/getRequest1
  */
-export interface IUserGetRequest1RequestByPost {
+export interface UserGetRequest1RequestByPost {
   cade: string;
   // 注解id-title
   id?: string;
@@ -115,7 +115,7 @@ export interface IUserGetRequest1RequestByPost {
  * @description json参数查询1【响应数据类型定义】
  * @url [ POST ] /user/getRequest1
  */
-export interface IUserGetRequest1ResponseByPost {
+export interface UserGetRequest1ResponseByPost {
   // 用户信息
   // 注解id-title
   id: string;
@@ -134,7 +134,7 @@ export interface IUserGetRequest1ResponseByPost {
  * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
  * @url [ POST ] /user/createOne
  */
-export interface IUserCreateOneRequestByPost {
+export interface UserCreateOneRequestByPost {
   // 主键id
   id?: string;
   // 名称
@@ -144,7 +144,7 @@ export interface IUserCreateOneRequestByPost {
  * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
  * @url [ POST ] /user/createOne
  */
-export interface IUserCreateOneResponseByPost {
+export interface UserCreateOneResponseByPost {
   // 主键id
   id: string;
   // 名称
@@ -155,7 +155,7 @@ export interface IUserCreateOneResponseByPost {
  * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
  * @url [ POST ] /user/createOneSchema
  */
-export interface IUserCreateOneSchemaRequestByPost {
+export interface UserCreateOneSchemaRequestByPost {
   // 注解id-title
   id?: string;
   // 名称
@@ -172,7 +172,7 @@ export interface IUserCreateOneSchemaRequestByPost {
  * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
  * @url [ POST ] /user/createOneSchema
  */
-export interface IUserCreateOneSchemaResponseByPost {
+export interface UserCreateOneSchemaResponseByPost {
   // 用户信息
   // 注解id-title
   id: string;
@@ -191,7 +191,7 @@ export interface IUserCreateOneSchemaResponseByPost {
  * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
  * @url [ POST ] /user/createOne1
  */
-export interface IUserCreateOne1RequestByPost {
+export interface UserCreateOne1RequestByPost {
   id?: string;
   name?: string;
 }
@@ -199,7 +199,7 @@ export interface IUserCreateOne1RequestByPost {
  * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
  * @url [ POST ] /user/createOne1
  */
-export interface IUserCreateOne1ResponseByPost {
+export interface UserCreateOne1ResponseByPost {
   // 主键id
   id: string;
   // 名称
@@ -210,14 +210,14 @@ export interface IUserCreateOne1ResponseByPost {
  * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
  * @url [ POST ] /file/upload
  */
-export interface IFileUploadRequestByPost {
+export interface FileUploadRequestByPost {
   file: File;
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
  * @url [ POST ] /file/upload
  */
-export interface IFileUploadResponseByPost {
+export interface FileUploadResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -233,7 +233,7 @@ export interface IFileUploadResponseByPost {
  * @description 文件上传-带参数【请求数据类型定义】
  * @url [ POST ] /file/uploadParam
  */
-export interface IFileUploadParamRequestByPost {
+export interface FileUploadParamRequestByPost {
   // 文件名称
   name: string;
   // 文件
@@ -243,7 +243,7 @@ export interface IFileUploadParamRequestByPost {
  * @description 文件上传-带参数【响应数据类型定义】
  * @url [ POST ] /file/uploadParam
  */
-export interface IFileUploadParamResponseByPost {
+export interface FileUploadParamResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -259,7 +259,7 @@ export interface IFileUploadParamResponseByPost {
  * @description 文件上传-带参数Header【请求数据类型定义】
  * @url [ POST ] /file/uploadParamHeader
  */
-export interface IFileUploadParamHeaderRequestByPost {
+export interface FileUploadParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 文件
@@ -269,7 +269,7 @@ export interface IFileUploadParamHeaderRequestByPost {
  * @description 文件上传-带参数Header【响应数据类型定义】
  * @url [ POST ] /file/uploadParamHeader
  */
-export interface IFileUploadParamHeaderResponseByPost {
+export interface FileUploadParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -285,7 +285,7 @@ export interface IFileUploadParamHeaderResponseByPost {
  * @description 文件上传-带参数Path【请求数据类型定义】
  * @url [ POST ] /file/uploadParam/{id}
  */
-export interface IFileUploadParamIdRequestByPost {
+export interface FileUploadParamIdRequestByPost {
   // 文件id
   id: string;
   // 文件名称
@@ -297,7 +297,7 @@ export interface IFileUploadParamIdRequestByPost {
  * @description 文件上传-带参数Path【响应数据类型定义】
  * @url [ POST ] /file/uploadParam/{id}
  */
-export interface IFileUploadParamIdResponseByPost {
+export interface FileUploadParamIdResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -313,14 +313,14 @@ export interface IFileUploadParamIdResponseByPost {
  * @description 多文件上传【请求数据类型定义】
  * @url [ POST ] /file/uploadBatch
  */
-export interface IFileUploadBatchRequestByPost {
+export interface FileUploadBatchRequestByPost {
   files: Array<File>;
 }
 /**
  * @description 多文件上传【响应数据类型定义】
  * @url [ POST ] /file/uploadBatch
  */
-export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
+export type FileUploadBatchResponseByPost = Array<// 文件对象
 {
   // 随机名称
   random: string;
@@ -336,7 +336,7 @@ export type FileUploadBatchResponseTypeByPost = Array<// 文件对象
  * @description 普通body请求【请求数据类型定义】
  * @url [ POST ] /body/body
  */
-export interface IBodyBodyRequestByPost {
+export interface BodyBodyRequestByPost {
   // 随机名称
   random?: string;
   // 文件名称
@@ -350,7 +350,7 @@ export interface IBodyBodyRequestByPost {
  * @description 普通body请求【响应数据类型定义】
  * @url [ POST ] /body/body
  */
-export interface IBodyBodyResponseByPost {
+export interface BodyBodyResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -366,7 +366,7 @@ export interface IBodyBodyResponseByPost {
  * @description 普通body请求+Param【请求数据类型定义】
  * @url [ POST ] /body/bodyParam
  */
-export interface IBodyBodyParamRequestByPost {
+export interface BodyBodyParamRequestByPost {
   name: string;
   // 随机名称
   random?: string;
@@ -379,7 +379,7 @@ export interface IBodyBodyParamRequestByPost {
  * @description 普通body请求+Param【响应数据类型定义】
  * @url [ POST ] /body/bodyParam
  */
-export interface IBodyBodyParamResponseByPost {
+export interface BodyBodyParamResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -395,7 +395,7 @@ export interface IBodyBodyParamResponseByPost {
  * @description 普通body请求+Param+Header【请求数据类型定义】
  * @url [ POST ] /body/bodyParamHeader
  */
-export interface IBodyBodyParamHeaderRequestByPost {
+export interface BodyBodyParamHeaderRequestByPost {
   // 文件名称
   name: string;
   // 随机名称
@@ -409,7 +409,7 @@ export interface IBodyBodyParamHeaderRequestByPost {
  * @description 普通body请求+Param+Header【响应数据类型定义】
  * @url [ POST ] /body/bodyParamHeader
  */
-export interface IBodyBodyParamHeaderResponseByPost {
+export interface BodyBodyParamHeaderResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -425,7 +425,7 @@ export interface IBodyBodyParamHeaderResponseByPost {
  * @description 普通body请求+Param+Header+Path【请求数据类型定义】
  * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
-export interface IBodyBodyParamHeaderPathIdRequestByPost {
+export interface BodyBodyParamHeaderPathIdRequestByPost {
   // 文件id
   id: string;
   // 文件名称
@@ -441,7 +441,7 @@ export interface IBodyBodyParamHeaderPathIdRequestByPost {
  * @description 普通body请求+Param+Header+Path【响应数据类型定义】
  * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
-export interface IBodyBodyParamHeaderPathIdResponseByPost {
+export interface BodyBodyParamHeaderPathIdResponseByPost {
   // 文件对象
   // 随机名称
   random: string;
@@ -457,7 +457,7 @@ export interface IBodyBodyParamHeaderPathIdResponseByPost {
  * @description json参数查询【请求数据类型定义】
  * @url [ GET ] /user/getRequest
  */
-export interface IUserGetRequestRequestByGet {
+export interface UserGetRequestRequestByGet {
   userSchema: {
     // 注解id-title
     id?: string;
@@ -477,7 +477,7 @@ export interface IUserGetRequestRequestByGet {
  * @description json参数查询【响应数据类型定义】
  * @url [ GET ] /user/getRequest
  */
-export interface IUserGetRequestResponseByGet {
+export interface UserGetRequestResponseByGet {
   // 用户信息
   // 注解id-title
   id: string;
@@ -496,11 +496,11 @@ export interface IUserGetRequestResponseByGet {
  * @description 创建用户、根据姓名创建用户【请求数据类型定义】
  * @url [ GET ] /user/create
  */
-export interface IUserCreateRequestByGet {
+export interface UserCreateRequestByGet {
   name: string;
 }
 /**
  * @description 创建用户、根据姓名创建用户【响应数据类型定义】
  * @url [ GET ] /user/create
  */
-export type UserCreateResponseTypeByGet = string;
+export type UserCreateResponseByGet = string;

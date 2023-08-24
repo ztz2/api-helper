@@ -8,7 +8,11 @@ import {
   stat,
   outputFile,
 } from 'fs-extra';
-import { renderAllApi, artTemplate } from '@api-helper/template';
+import {
+  artTemplate,
+  renderAllApi,
+} from '@api-helper/template';
+import { formatDate } from '@api-helper/core/lib/utils/util';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
 import log from '@/lib/tools/log';
@@ -64,9 +68,9 @@ class Service{
 
         const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
 
-        const code = await this.genCode(config, chooseDocumentList);
+        const codes = await this.genCode(config, chooseDocumentList);
 
-        await this.output(config, code);
+        await this.output(config, codes);
       } catch {}
     }
   }
@@ -178,7 +182,8 @@ class Service{
   }
 
   // 4. 生成代码
-  private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<string> {
+  private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<Array<string>> {
+    const result: string[] = [];
     const oraText = `代码生成`;
     const outputFilename = getOutputFilePath(config);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
@@ -192,21 +197,23 @@ class Service{
       }
     }
 
-    const codeHead = artTemplate.render(`
+    const genTimeStr = this.isTestEnv ? '' : formatDate(Date.now());
+    const codeHeadTpl = `
 《if config.onlyTyping !== true》
   《if isTS》
 /* tslint:disable */
 /* eslint-disable */
 /* prettier-ignore-start */
 
+/* 代码生成时间: ${genTimeStr} */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // @ts-ignore
 // prettier-ignore
 import {
-  RequestFunctionRestArgsType,
-  processRequestFunctionConfig,
+  RequestFunctionRestArgsType,${isTS ? `
+  processRequestFunctionConfig,` : ''}
 } from '@api-helper/core/es/lib/helpers';
 // @ts-ignore
 // prettier-ignore
@@ -218,6 +225,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 /* eslint-disable */
 /* prettier-ignore-start */
 
+/* 代码生成时间: ${genTimeStr} */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
@@ -228,33 +236,51 @@ import request from '《requestFilePath》';
   《/if》
 《/if》
 
-`, {
+`;
+    const codeHead = artTemplate.render(codeHeadTpl, {
       isTS,
+      requestFilePath,
+      config,
+    });
+    const codeHeadTS = artTemplate.render(codeHeadTpl, {
+      isTS: true,
       requestFilePath,
       config,
     });
 
     // 生成代码
     const code = [codeHead];
+    const codeDeclare = [codeHeadTS];
     const spinner = ora(oraText).start();
     for (const item of parserPluginRunResult) {
       const { documentServer, parsedDocumentList } = item;
       const { dataKey } = documentServer;
       for (const d of parsedDocumentList) {
         try {
-          let str = renderAllApi(d, {
+          const param = {
             ...config,
             ...documentServer,
             codeType: isTS ? 'typescript' : 'javascript',
             dataKey: dataKey,
-            showUpdateTime: !this.isTestEnv,
+            isDeclare: false,
             onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
             onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
-          });
-          if (!str.endsWith('\n')) {
-            str += '\n';
+          };
+
+          let str1 = renderAllApi(d, param as any);
+          if (!str1.endsWith('\n')) {
+            str1 += '\n';
           }
-          code.push(str);
+          code.push(str1);
+          if (!isTS) {
+            param.isDeclare = true;
+            param.codeType = 'typescript';
+            let str2 = renderAllApi(d, param as any);
+            if (!str2.endsWith('\n')) {
+              str2 += '\n';
+            }
+            codeDeclare.push(str2);
+          }
         } catch (e) {
           console.log(e);
         }
@@ -262,21 +288,35 @@ import request from '《requestFilePath》';
     }
     spinner.succeed();
 
-    return await formatCode({
+    result.push(await formatCode({
       sourceCode: code.filter(Boolean).join('\n'),
       formatCodeExtension: isTS ? '.ts' : '.js',
-    }) as string;
+    }) as string);
+
+    if (!isTS) {
+      result.push(await formatCode({
+        sourceCode: codeDeclare.filter(Boolean).join('\n'),
+        formatCodeExtension: '.ts',
+      }) as string);
+    }
+
+    return result;
   }
 
   // 5. 输出
-  private async output(config: Config, code: string) {
+  private async output(config: Config, code: string[]) {
     const oraText = `文件输出`;
     const outputFilename = getOutputFilePath(config, true);
-    const spinner = ora(oraText).start();
+    const outputDeclareFilename = filterDeclareFilename(outputFilename);
+    const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
 
+    const spinner = ora(oraText).start();
     // 输出
     try {
-      await outputFile(outputFilename, code);
+      await outputFile(outputFilename, code[0]);
+      if (!isTS) {
+        await outputFile(outputDeclareFilename, code[1]);
+      }
       spinner.succeed();
       log.info('提示', `Done. 代码生成成功`);
     } catch (error) {
@@ -347,6 +387,23 @@ export default defineConfig({
   }
 }
 
+function filterDeclareFilename(filename: string): string {
+  if (
+    filename.endsWith('.ts') ||
+    filename.endsWith('.js')
+  ) {
+    return `${filename.slice(0, filename.length - 3)}.d.ts`;
+  }
+  if (
+    filename.endsWith('.tsx') ||
+    filename.endsWith('.jsx') ||
+    filename.endsWith('.mjs') ||
+    filename.endsWith('.ejs')
+  ) {
+    return `${filename.slice(0, filename.length - 4)}.d.ts`;
+  }
+  return `${filename}.d.ts`;
+}
 function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }, showDiscardWarn = false): string {
   // 兼容旧版的配置路径
   if (config.output) {
@@ -374,7 +431,7 @@ function getOutputFilePath(config: Pick<Config, 'outputFilePath' | 'requestFunct
 async function getRequestFunctionFilePath(config: Pick<Config, 'onlyTyping' | 'outputFilePath' | 'requestFunctionFilePath'> & { output?: { path: string; filename: string; } }): Promise<string> {
   const outputFilename = getOutputFilePath(config);
   const extensionName = getExtensionName(outputFilename);
-  const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
+  let isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
   config.requestFunctionFilePath = config.requestFunctionFilePath ? config.requestFunctionFilePath : `src/api/request.${isTS?'ts':'js'}`;
   let requestFunctionFilePath = config.requestFunctionFilePath;
   // 兼容旧版配置
@@ -382,6 +439,31 @@ async function getRequestFunctionFilePath(config: Pick<Config, 'onlyTyping' | 'o
     requestFunctionFilePath += extensionName;
   }
   requestFunctionFilePath = resolve(requestFunctionFilePath);
+
+  isTS = requestFunctionFilePath.endsWith('.ts') || requestFunctionFilePath.endsWith('.tsx');
+
+  const requestDeclareFunctionFilePath = filterDeclareFilename(requestFunctionFilePath);
+  // 创建request文件类型申明文件
+  if (
+    !isTS &&
+    !requestFunctionFilePath.endsWith('.ts') &&
+    !requestFunctionFilePath.endsWith('.tsx')
+  ) {
+    try {
+      await stat(resolve(requestDeclareFunctionFilePath));
+    } catch {
+      try {
+        await outputFile(requestDeclareFunctionFilePath,
+`import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+// 自定义配置
+export type RequestOptions = {
+  // 自定义配置属性
+};
+export default function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData>;
+`);
+      } catch {}
+    }
+  }
 
   if (config.onlyTyping) {
     return requestFunctionFilePath;
@@ -395,7 +477,12 @@ async function getRequestFunctionFilePath(config: Pick<Config, 'onlyTyping' | 'o
     await outputFile(requestFunctionFilePath,
       isTS ? `import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 
-export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
+// 自定义配置
+export type RequestOptions = {
+  // 自定义配置属性
+};
+
+export default async function request<T>(config: RequestFunctionConfig, options: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     const { method, data, path } = config;
     console.log(path, method, data);
@@ -406,7 +493,7 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
     }, 1500);
   });
 }
-`: `export default async function request(config) {
+`: `export default async function request(config, options) {
   return new Promise((resolve, reject) => {
     const { method, data, path } = config;
     console.log(path, method, data);
@@ -417,7 +504,7 @@ export default async function request<T>(config: RequestFunctionConfig): Promise
     }, 1500);
   });
 }
-`)
+`);
   } catch {
     log.error('提示', `统一请求文件创建失败：${requestFunctionFilePath}`);
     process.exit(1);

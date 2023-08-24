@@ -19,8 +19,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var template = __importStar(require("../index"));
 var core = __importStar(require("@api-helper/core"));
+var template = __importStar(require("../index"));
 exports.default = {
     core: core,
     template: template,

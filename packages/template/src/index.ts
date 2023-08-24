@@ -1,4 +1,5 @@
 import * as changeCase from 'change-case';
+import * as utils from '@/lib/utils/util';
 import artTemplate from '@/lib/art-template';
 import type { ChangeCase } from '@/lib/types';
 import formatCode from '@/lib/utils/prettier';
@@ -13,6 +14,7 @@ import { renderRequestFunction, renderRequestFunctionName } from '@/lib/render-r
 
 export type { ChangeCase };
 export {
+  utils,
   artTemplate,
   changeCase,
   formatCode,

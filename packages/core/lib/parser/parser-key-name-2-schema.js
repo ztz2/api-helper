@@ -28,9 +28,9 @@ var __read = (this && this.__read) || function (o, n) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParserKeyName2Schema = void 0;
-var src_1 = require("../..");
-var util_1 = require("../../lib/utils/util");
 var lodash_1 = require("lodash");
+var util_1 = require("../../lib/utils/util");
+var src_1 = require("../..");
 // keyName[0].name => Schema
 // [0].updateValue => Schema
 // params.updateValue.name => Schema

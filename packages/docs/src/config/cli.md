@@ -62,7 +62,12 @@ export default defineConfig({
 import axios from 'axios';
 import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
 
-export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
+// 自定义配置
+export type RequestOptions = {
+  // 自定义配置属性
+};
+
+export default async function request<T>(config: RequestFunctionConfig, options: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     axios({
       method: config.method,
@@ -196,7 +201,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 
 ### documentServers.events.onRenderInterfaceName
 * 是否必须：否
-* 数据类型：(schema: APIHelper.Schema | null, api: APIHelper.API, options: { isExtraData?: boolean; paramType: 'request' | 'response'; changeCase: ChangeCase; }): string) => string
+* 数据类型：(api: APIHelper.API, options: { isExtraData?: boolean; paramType: 'request' | 'response'; changeCase: ChangeCase; }): string) => string
 * 默认值：内置规则
 * 说明：
   当生成interface名称时候的事件回调，可用于自定义生成接口名称。
@@ -206,7 +211,7 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 * 数据类型：(api: APIHelper.API, options?: { changeCase: ChangeCase }): string) => string
 * 默认值：内置规则
 * 说明：
-  当生成API函数名称时候的事件回调，可用于自定义生成接口名称。
+  当生成API函数名称时候的事件回调，可用于自定义生成API函数名称。
 
 ### parserPlugins
 * 是否必须：否

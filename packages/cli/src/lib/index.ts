@@ -7,6 +7,8 @@ import {
 import Service from '@/lib/service/Service';
 import formatCode from '@/lib/tools/format-code';
 
+export { checkIsInterface } from '@api-helper/template/lib/utils/util';
+
 export function defineConfig(config: Config | Config[]): Config[] {
   return Array.isArray(config) ? config : [config];
 }

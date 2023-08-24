@@ -34,7 +34,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-import { cloneDeep, uniq, merge } from 'lodash';
+import { uniq, merge, cloneDeep } from 'lodash';
 import { checkType } from './util';
 /**
  * 遍历 tree

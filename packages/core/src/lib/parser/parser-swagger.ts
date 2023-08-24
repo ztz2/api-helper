@@ -1,9 +1,8 @@
-import {OpenAPI} from 'openapi-types';
 import {JSONSchema4} from 'json-schema';
 // @ts-ignore
 import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
 
-import {APIHelper} from '../types';
+import { APIHelper } from '../types';
 
 import {
   isHttp,

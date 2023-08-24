@@ -25,9 +25,9 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import { createSchema } from '../..';
-import { pushArray } from '../../lib/utils/util';
 import { cloneDeep } from 'lodash';
+import { pushArray } from '../../lib/utils/util';
+import { createSchema } from '../..';
 // keyName[0].name => Schema
 // [0].updateValue => Schema
 // params.updateValue.name => Schema

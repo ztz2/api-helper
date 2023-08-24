@@ -49,8 +49,9 @@ export default {
   }
 };`);
     await run(null, configFile, true);
-    const code = await readFile(resolve(__dirname, './__temp__/api.js'));
-    expect(code.toString()).toMatchSnapshot('基于swagger2.0，生成 javascript api 代码');
+    const code1 = await readFile(resolve(__dirname, './__temp__/api.js'));
+    const code2 = await readFile(resolve(__dirname, './__temp__/api.d.ts'));
+    expect([code1, code2].join('\n\n')).toMatchSnapshot('基于swagger2.0，生成 javascript api 代码');
   });
 
   test('基于swagger3.0.1，生成 typescript api 代码', async () => {

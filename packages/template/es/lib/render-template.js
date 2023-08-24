@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import * as _ from 'lodash';
-import { checkType, getErrorMessage } from '@api-helper/core/lib/utils/util';
+import { checkType, getErrorMessage, } from '@api-helper/core/lib/utils/util';
 import _apih from './render-template-apih';
 import formatCodeServer from './utils/format-code-server';
 export default (function (

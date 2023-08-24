@@ -1,12 +1,19 @@
 import to from 'await-to-js';
 import { ParserYapi } from '@api-helper/core';
-import { mergeUrl, getErrorMessage } from '@api-helper/core/lib/utils/util';
+import {
+  mergeUrl,
+  getErrorMessage,
+} from '@api-helper/core/lib/utils/util';
 
+import {
+  AbstractParserPlugin,
+  ParserPluginOptions,
+  ParserPluginRunResult,
+} from '@/lib/types';
 import { Config } from '@/lib';
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
 import { processRequestConfig } from '@/lib/tools/util';
-import {AbstractParserPlugin, ParserPluginOptions, ParserPluginRunResult} from '@/lib/types';
 
 type DocumentServers = Config['documentServers'];
 type DocumentServer = DocumentServers[number];

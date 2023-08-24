@@ -1,4 +1,4 @@
-import { cloneDeep, uniq, merge } from 'lodash';
+import { uniq, merge, cloneDeep } from 'lodash';
 import { checkType } from './util';
 
 /**

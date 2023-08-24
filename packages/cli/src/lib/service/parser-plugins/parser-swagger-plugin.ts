@@ -12,7 +12,6 @@ import {
   ParserPluginRunResult,
 } from '@/lib/types';
 import {
-  checkType,
   processRequestConfig,
 } from '@/lib/tools/util';
 

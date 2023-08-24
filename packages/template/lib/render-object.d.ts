@@ -1,5 +1,5 @@
 import { APIHelper } from '@api-helper/core/lib/types';
-import { ChangeCase } from '../lib/types';
+import type { ChangeCase } from '../lib/types';
 export declare function renderObject(schema: APIHelper.Schema | Array<APIHelper.Schema> | null, api: APIHelper.API, options?: {
     paramType?: 'request' | 'response';
     prefix?: string;
