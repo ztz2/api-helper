@@ -1,3 +1,4 @@
+import path from 'path';
 import to from 'await-to-js';
 import { OpenAPI } from 'openapi-types';
 import { readJson } from 'fs-extra';
@@ -17,6 +18,7 @@ import {
 
 import log from '@/lib/tools/log';
 import request from '@/lib/tools/request';
+import * as process from 'process';
 
 export default class ParserSwaggerPlugin implements AbstractParserPlugin {
   name = 'swagger';
@@ -62,7 +64,8 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
 
   // 本地文件，尝试读取本地文件
   if (!isHttp) {
-    let [e, json] = await to(await readJson(documentServer.url));
+    const filepath = path.isAbsolute(documentServer.url) ? documentServer.url : path.join(process.cwd(), documentServer.url);
+    let [e, json] = await to(readJson(filepath));
     if (e) {
       const errorText = `swagger文件读取失败${getErrorMessage(e, ': ')}${serverUrlText}`;
       log.error('提示', errorText);

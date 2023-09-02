@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,6 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const path_1 = __importDefault(require("path"));
 const await_to_js_1 = __importDefault(require("await-to-js"));
 const fs_extra_1 = require("fs-extra");
 const core_1 = require("@api-helper/core");
@@ -20,6 +40,7 @@ const validator_1 = require("@api-helper/core/lib/utils/validator");
 const util_2 = require("../../../lib/tools/util");
 const log_1 = __importDefault(require("../../../lib/tools/log"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
+const process = __importStar(require("process"));
 class ParserSwaggerPlugin {
     constructor() {
         this.name = 'swagger';
@@ -65,7 +86,8 @@ function getDocument(documentServer) {
         const serverUrlText = isHttp ? `【${documentServer.url}】` : '';
         // 本地文件，尝试读取本地文件
         if (!isHttp) {
-            let [e, json] = yield (0, await_to_js_1.default)(yield (0, fs_extra_1.readJson)(documentServer.url));
+            const filepath = path_1.default.isAbsolute(documentServer.url) ? documentServer.url : path_1.default.join(process.cwd(), documentServer.url);
+            let [e, json] = yield (0, await_to_js_1.default)((0, fs_extra_1.readJson)(filepath));
             if (e) {
                 const errorText = `swagger文件读取失败${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
                 log_1.default.error('提示', errorText);

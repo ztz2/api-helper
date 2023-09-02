@@ -1,8 +1,8 @@
 import { readFile } from 'fs-extra';
-import { join, resolve } from 'path';
+import path, { join, resolve } from 'path';
 
 import { run } from '../src/lib';
-import { createTempFile } from '../src/lib/tools/util';
+import { createTempFile, toUnixPath } from '../src/lib/tools/util';
 
 describe('swagger文档', () => {
   /**
@@ -76,6 +76,31 @@ export default {
     await run(null, configFile, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
     expect(code.toString()).toMatchSnapshot('基于swagger3.0.1，生成 typescript api 代码');
+  });
+
+  test('本地文件代码', async () => {
+    const filepath = toUnixPath(join(__dirname, `../test/resources/open-api-2.0.json`));
+    const configFile = createTempFile(`
+import { resolve } from 'path';
+export default {
+  requiredRequestField: true,
+  requiredResponseField: false,
+  documentServers: [
+    {
+      url: '${filepath}',
+      type: 'swagger',
+      dataKey: ''
+    }
+  ],
+  requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
+  output: {
+    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+    filename: 'api.ts',
+  }
+};`);
+    await run(null, configFile, true);
+    const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    expect(code.toString()).toMatchSnapshot('本地文件代码');
   });
 
   test('只生成类型', async () => {
