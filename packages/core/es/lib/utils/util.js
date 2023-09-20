@@ -39,7 +39,7 @@ var __read = (this && this.__read) || function (o, n) {
 import qs from 'qs';
 import cloneDeep from 'lodash/cloneDeep';
 import isPlainObject from 'lodash/isPlainObject';
-import { LINE_FEED_CODE, COMMENT_END_CODE, COMMENT_START_CODE, } from '../constant';
+import { LINE_FEED_CODE, COMMENT_END_CODE, COMMENT_START_CODE, LINE_FEED_CODE_MAC } from '../constant';
 import { validateSchema } from './validator';
 import { createSchema, transformType } from '../helpers';
 export function pushArray(target, value) {
@@ -117,8 +117,10 @@ export function mergeUrl() {
 export function filterDesc(value) {
     if (value === void 0) { value = ''; }
     value = value == null ? '' : value;
-    // 换行符移除
+    // 换行符移除-windows
     value = value.replace(/\n/gim, LINE_FEED_CODE);
+    // 换行符移除-mac
+    value = value.replace(/\r/gim, LINE_FEED_CODE_MAC);
     // 注释开始符号移除
     value = value.replace(/\/\*/gim, COMMENT_START_CODE);
     // 注释结束符号移除

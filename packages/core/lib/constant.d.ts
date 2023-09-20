@@ -1,4 +1,5 @@
 export declare const LINE_FEED_CODE: string;
+export declare const LINE_FEED_CODE_MAC: string;
 export declare const COMMENT_START_CODE: string;
 export declare const COMMENT_END_CODE: string;
 export declare const UNKNOWN_GROUP_NAME = "\u672A\u77E5\u5206\u7EC4";

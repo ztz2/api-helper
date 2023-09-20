@@ -23135,12 +23135,12 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-2.0文档�
             "label": "",
             "params": [
               NumberSchema {
-                "description": "ID of pet to update",
+                "description": "ID of pet  * 换行符测试 * to update",
                 "enum": [],
                 "examples": [],
                 "id": "",
                 "keyName": "petId",
-                "label": "ID of pet to update",
+                "label": "ID of pet  * 换行符测试 * to update",
                 "params": [],
                 "rules": {
                   "exclusiveMaximum": undefined,

@@ -133,8 +133,10 @@ exports.mergeUrl = mergeUrl;
 function filterDesc(value) {
     if (value === void 0) { value = ''; }
     value = value == null ? '' : value;
-    // 换行符移除
+    // 换行符移除-windows
     value = value.replace(/\n/gim, constant_1.LINE_FEED_CODE);
+    // 换行符移除-mac
+    value = value.replace(/\r/gim, constant_1.LINE_FEED_CODE_MAC);
     // 注释开始符号移除
     value = value.replace(/\/\*/gim, constant_1.COMMENT_START_CODE);
     // 注释结束符号移除
