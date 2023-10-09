@@ -1,506 +1,473 @@
 /**
- * @description 普通body请求-put【请求数据类型定义】
- * @url [ PUT ] /body/bodyPut
+ * @description uploads an image【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969388
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface BodyBodyPutRequestByPut {
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
+export interface V2PetPetIdUploadImageRequestByPost {
+  // ID of pet to update
+  petId: string;
+  // Additional data to pass to server
+  additionalMetadata?: string;
+  // file to upload
+  file?: File;
 }
 /**
- * @description 普通body请求-put【响应数据类型定义】
- * @url [ PUT ] /body/bodyPut
+ * @description uploads an image【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969388
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface BodyBodyPutResponseByPut {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
+export interface V2PetPetIdUploadImageResponseByPost {
+  code: number;
+  type: string;
+  message: string;
 }
 
 /**
- * @description body请求【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
+ * @description Add a new pet to the store【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969390
+ * @url [ POST ] /v2/pet
  */
-export interface UserDeviceIdBodyRequestByPost {
-  // 设备id
-  deviceId: string;
-}
-/**
- * @description body请求【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
- */
-export interface UserDeviceIdBodyResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description body请求1【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
- */
-export interface UserDeviceIdBody1RequestByPost {
-  // 设备id
-  deviceId: string;
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
+export interface V2PetRequestByPost {
+  id?: number;
+  category?: {
+    id?: number;
     name?: string;
   };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: number;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description body请求1【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
+ * @description Add a new pet to the store【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969390
+ * @url [ POST ] /v2/pet
  */
-export interface UserDeviceIdBody1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
+export type V2PetResponseByPost = any;
 
 /**
- * @description json参数查询1【请求数据类型定义】
- * @url [ POST ] /user/getRequest1
+ * @description Update an existing pet【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969392
+ * @url [ PUT ] /v2/pet
  */
-export interface UserGetRequest1RequestByPost {
-  cade: string;
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
+export interface V2PetRequestByPut {
+  id?: number;
+  category?: {
+    id?: number;
     name?: string;
   };
-}
-/**
- * @description json参数查询1【响应数据类型定义】
- * @url [ POST ] /user/getRequest1
- */
-export interface UserGetRequest1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
   name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneRequestByPost {
-  // 主键id
-  id?: string;
-  // 名称
-  name?: string;
-}
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneResponseByPost {
-  // 主键id
-  id: string;
-  // 名称
-  name: string;
-}
-
-/**
- * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOneSchema
- */
-export interface UserCreateOneSchemaRequestByPost {
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: number;
     name?: string;
-  };
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOneSchema
+ * @description Update an existing pet【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969392
+ * @url [ PUT ] /v2/pet
  */
-export interface UserCreateOneSchemaResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
+export type V2PetResponseByPut = any;
+
+/**
+ * @description Finds Pets by status【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969394
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export interface V2PetFindByStatusRequestByGet {
+  // Status values that need to be considered for filter
+  status: string;
+}
+/**
+ * @description Finds Pets by status【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969394
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export type V2PetFindByStatusResponseByGet = Array<{
+  id: number;
+  category: {
+    id: number;
     name: string;
   };
-}
-
-/**
- * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1RequestByPost {
-  id?: string;
-  name?: string;
-}
-/**
- * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1ResponseByPost {
-  // 主键id
-  id: string;
-  // 名称
   name: string;
-}
-
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadRequestByPost {
-  file: File;
-}
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数【请求数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数【响应数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数Header【请求数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Header【响应数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数Path【请求数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Path【响应数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 多文件上传【请求数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export interface FileUploadBatchRequestByPost {
-  files: Array<File>;
-}
-/**
- * @description 多文件上传【响应数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export type FileUploadBatchResponseByPost = Array<// 文件对象
-{
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: number;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
 }>;
 
 /**
- * @description 普通body请求【请求数据类型定义】
- * @url [ POST ] /body/body
+ * @description Finds Pets by tags【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969396
+ * @url [ GET ] /v2/pet/findByTags
  */
-export interface BodyBodyRequestByPost {
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
+export interface V2PetFindByTagsRequestByGet {
+  // Tags to filter by
+  tags: string;
 }
 /**
- * @description 普通body请求【响应数据类型定义】
- * @url [ POST ] /body/body
+ * @description Finds Pets by tags【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969396
+ * @url [ GET ] /v2/pet/findByTags
  */
-export interface BodyBodyResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param【请求数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamRequestByPost {
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param【响应数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param+Header【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param+Header+Path【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header+Path【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description json参数查询【请求数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestRequestByGet {
-  userSchema: {
-    // 注解id-title
-    id?: string;
-    // 名称
-    name?: string;
-    // Part信息
-    partSchema?: {
-      // part部分id
-      id?: string;
-      // part部分名称
-      name?: string;
-    };
-  };
-  cade: string;
-}
-/**
- * @description json参数查询【响应数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestResponseByGet {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
+export type V2PetFindByTagsResponseByGet = Array<{
+  id: number;
+  category: {
+    id: number;
     name: string;
   };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: number;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}>;
+
+/**
+ * @description Find pet by ID【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969398
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByGet {
+  // ID of pet to return
+  petId: string;
+}
+/**
+ * @description Find pet by ID【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969398
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdResponseByGet {
+  id: number;
+  category: {
+    id: number;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: number;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
 }
 
 /**
- * @description 创建用户、根据姓名创建用户【请求数据类型定义】
- * @url [ GET ] /user/create
+ * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969400
+ * @url [ POST ] /v2/pet/{petId}
  */
-export interface UserCreateRequestByGet {
-  name: string;
+export interface V2PetPetIdRequestByPost {
+  // ID of pet that needs to be updated
+  petId: string;
+  // Updated name of the pet
+  name?: string;
+  // Updated status of the pet
+  status?: string;
 }
 /**
- * @description 创建用户、根据姓名创建用户【响应数据类型定义】
- * @url [ GET ] /user/create
+ * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969400
+ * @url [ POST ] /v2/pet/{petId}
  */
-export type UserCreateResponseByGet = string;
+export type V2PetPetIdResponseByPost = any;
+
+/**
+ * @description Deletes a pet【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969402
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByDelete {
+  // Pet id to delete
+  petId: string;
+}
+/**
+ * @description Deletes a pet【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969402
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export type V2PetPetIdResponseByDelete = any;
+
+/**
+ * @description Place an order for a pet【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969404
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderRequestByPost {
+  id?: number;
+  petId?: number;
+  quantity?: number;
+  shipDate?: string;
+  // Order Status
+  status?: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag?: Array<
+    // Order Tag Child
+    Array<{
+      // The password \r\r\n\n for login in clear text.
+      tagName?: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete?: boolean;
+}
+/**
+ * @description Place an order for a pet【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969404
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderResponseByPost {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      // The password \r\r\n\n for login in clear text.
+      tagName: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete: boolean;
+}
+
+/**
+ * @description Find purchase order by ID【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969406
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByGet {
+  // ID of pet that needs to be fetched
+  orderId: string;
+}
+/**
+ * @description Find purchase order by ID【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969406
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdResponseByGet {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  // Order Tag
+  tag: Array<
+    // Order Tag Child
+    Array<{
+      tagName: 'error' | 'waring' | 'info';
+    }>
+  >;
+  complete: boolean;
+}
+
+/**
+ * @description Delete purchase order by ID【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969408
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByDelete {
+  // ID of the order that needs to be deleted
+  orderId: string;
+}
+/**
+ * @description Delete purchase order by ID【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969408
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export type V2StoreOrderOrderIdResponseByDelete = any;
+
+/**
+ * @description Returns pet inventories by status【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969410
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryRequestByGet = any;
+/**
+ * @description Returns pet inventories by status【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969410
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryResponseByGet = any;
+
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969412
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export interface V2UserCreateWithArrayRequestByPost {
+  // The name that needs to be fetched. Use user1 for testing.
+  userId: string;
+  // List of user object
+  userName: string;
+  // The password for login in clear text
+  password: string;
+}
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969412
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969414
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = Array<{
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}>;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969414
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+
+/**
+ * @description Get user by user name【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969416
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByGet {
+  // The name that needs to be fetched. Use user1 for testing.
+  username1: string;
+  username: string;
+}
+/**
+ * @description Get user by user name【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969416
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameResponseByGet {
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+
+/**
+ * @description Updated user【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969418
+ * @url [ PUT ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByPut {
+  // name that need to be updated
+  username: string;
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}
+/**
+ * @description Updated user【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969418
+ * @url [ PUT ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByPut = any;
+
+/**
+ * @description Delete user【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969420
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByDelete {
+  // The name that needs to be deleted
+  username1: string;
+  username: string;
+}
+/**
+ * @description Delete user【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969420
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByDelete = any;
+
+/**
+ * @description Logs user into the system【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969422
+ * @url [ GET ] /v2/user/login
+ */
+export interface V2UserLoginRequestByGet {
+  // The user name for login
+  username: string;
+  // The password \r\r\n\n for login in clear text.
+  password: string;
+}
+/**
+ * @description Logs user into the system【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969422
+ * @url [ GET ] /v2/user/login
+ */
+export type V2UserLoginResponseByGet = string;
+
+/**
+ * @description Logs out current logged in user session【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969424
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutRequestByGet = any;
+/**
+ * @description Logs out current logged in user session【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969424
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutResponseByGet = any;
+
+/**
+ * @description Create user【请求数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969426
+ * @url [ POST ] /v2/user
+ */
+export interface V2UserRequestByPost {
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}
+/**
+ * @description Create user【响应数据类型定义】
+ * @doc https://yapi.pro/project/16095/interface/api/969426
+ * @url [ POST ] /v2/user
+ */
+export type V2UserResponseByPost = any;

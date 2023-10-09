@@ -190,7 +190,7 @@ class Service {
 import {
   RequestFunctionRestArgsType,${isTS ? `
   processRequestFunctionConfig,` : ''}
-} from '@api-helper/core/es/lib/helpers';
+} from '@api-helper/cli/lib/helpers';
 // @ts-ignore
 // prettier-ignore
 import request from '《requestFilePath》';
@@ -206,7 +206,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
-import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+import { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 // prettier-ignore
 import request from '《requestFilePath》';
   《/if》
@@ -408,7 +408,7 @@ function getRequestFunctionFilePath(config) {
             }
             catch (_a) {
                 try {
-                    yield (0, fs_extra_1.outputFile)(requestDeclareFunctionFilePath, `import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+                    yield (0, fs_extra_1.outputFile)(requestDeclareFunctionFilePath, `import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 // 自定义配置
 export type RequestOptions = {
   // 自定义配置属性
@@ -428,14 +428,14 @@ export default function request<ResponseData>(config: RequestFunctionConfig, opt
         }
         catch (_c) { }
         try { // 不可访问，重新创建文件
-            yield (0, fs_extra_1.outputFile)(requestFunctionFilePath, isTS ? `import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+            yield (0, fs_extra_1.outputFile)(requestFunctionFilePath, isTS ? `import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 
 // 自定义配置
 export type RequestOptions = {
   // 自定义配置属性
 };
 
-export default async function request<T>(config: RequestFunctionConfig, options: RequestOptions): Promise<T> {
+export default async function request<T>(config: RequestFunctionConfig, options?: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     const { method, data, path } = config;
     console.log(path, method, data);

@@ -25,10 +25,11 @@ export declare class FormDataItem<T> {
     set(value: T): void;
 }
 export declare function getSchema(schema: APIHelper.Schema | null, path?: string, clearKeyName?: boolean): APIHelper.Schema | null;
+export declare type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
 export declare type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
 export declare type RequestFunctionConfig = {
     path: string;
-    method: string;
+    method: RequestMethod;
     data: Record<string, any> | FormData | undefined;
     hasFormData: boolean;
     rowData: unknown;
@@ -36,7 +37,7 @@ export declare type RequestFunctionConfig = {
 };
 export declare function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
     path: string;
-    method: string;
+    method: RequestMethod | string;
     formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
     pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
     queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];

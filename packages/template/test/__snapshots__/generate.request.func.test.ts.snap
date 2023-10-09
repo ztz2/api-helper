@@ -13,7 +13,7 @@ export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: 
 }
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
@@ -30,7 +30,7 @@ export function v2StoreOrderOrderIdByGet(data: V2StoreOrderOrderIdRequestByGet, 
 }
 v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
@@ -47,7 +47,7 @@ export function v2StoreOrderOrderIdByDelete(data: V2StoreOrderOrderIdRequestByDe
 }
 v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
-  method: 'delete',
+  method: 'DELETE',
   formDataKeyNameList: [],
   pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
@@ -64,7 +64,7 @@ export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet, extraD
 }
 v2StoreInventoryByGet.requestConfig = {
   path: '/v2/store/inventory',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
@@ -84,7 +84,7 @@ export function apiV3StoreInventoryByGet(data: ApiV3StoreInventoryRequestByGet, 
 }
 apiV3StoreInventoryByGet.requestConfig = {
   path: '/api/v3/store/inventory',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: []
@@ -101,7 +101,7 @@ export function apiV3StoreOrderByPost(data: ApiV3StoreOrderRequestByPost, extraD
 }
 apiV3StoreOrderByPost.requestConfig = {
   path: '/api/v3/store/order',
-  method: 'post',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
@@ -118,7 +118,7 @@ export function apiV3StoreOrderOrderIdByGet(data: ApiV3StoreOrderOrderIdRequestB
 }
 apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
-  method: 'get',
+  method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
@@ -135,7 +135,7 @@ export function apiV3StoreOrderOrderIdByDelete(data: ApiV3StoreOrderOrderIdReque
 }
 apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
-  method: 'delete',
+  method: 'DELETE',
   formDataKeyNameList: [],
   pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []

@@ -263,13 +263,15 @@ export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyNa
   return null;
 }
 
+export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+
 export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
 
 export type RequestFunctionConfig = {
   // 请求路径，可以看做是URL
   path: string;
   // HTTP请求方法
-  method: string;
+  method: RequestMethod
   // 经过处理后的请求数据【不包含：路径参数，URL参数，表单数据】，可以看做是post请求，body为JSON的数据
   // 如果有文件上传，就是FormData对象，可以使用 instanceof FormData 来判断是否为表单数据，或者使用hasFormData判断
   data: Record<string, any> | FormData | undefined;
@@ -283,8 +285,10 @@ export type RequestFunctionConfig = {
   rowExtraData?: unknown;
 }
 export function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
+  // 请求资源路径地址
   path: string;
-  method: string;
+  // 请求方法
+  method: RequestMethod | string;
   // 表单参数字段集合
   formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
   // 路径参数字段集合

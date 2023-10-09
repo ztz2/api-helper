@@ -64,7 +64,7 @@ export function renderRequestFunction(
 }
 《requestFunctionName》.requestConfig = {
   path: '《api.path》',
-  method: '《api.method.toLowerCase()》',
+  method: '《api.method.toUpperCase()》',
   formDataKeyNameList: 《formDataKeyNameListStr》,
   pathParamKeyNameList: 《pathParamKeyNameListStr》,
   queryStringKeyNameList: 《queryStringKeyNameListStr》

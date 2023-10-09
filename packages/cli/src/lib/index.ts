@@ -7,6 +7,7 @@ import {
 import Service from '@/lib/service/Service';
 import formatCode from '@/lib/tools/format-code';
 
+export * from './helpers';
 export { checkIsInterface } from '@api-helper/template/lib/utils/util';
 
 export function defineConfig(config: Config | Config[]): Config[] {
@@ -26,6 +27,7 @@ export async function run(cmd: 'init' | null = null, configFilePath?: string, is
 export {
   formatCode
 };
+
 export type {
   Config,
   FormatCodeConfig,

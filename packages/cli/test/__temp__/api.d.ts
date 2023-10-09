@@ -10,7 +10,7 @@
 // prettier-ignore
 import {
   RequestFunctionRestArgsType,
-} from '@api-helper/core/es/lib/helpers';
+} from '@api-helper/cli/lib/helpers';
 // @ts-ignore
 // prettier-ignore
 import request from './request';

@@ -214,7 +214,7 @@ class Service{
 import {
   RequestFunctionRestArgsType,${isTS ? `
   processRequestFunctionConfig,` : ''}
-} from '@api-helper/core/es/lib/helpers';
+} from '@api-helper/cli/lib/helpers';
 // @ts-ignore
 // prettier-ignore
 import request from '《requestFilePath》';
@@ -230,7 +230,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 /* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
 
 // prettier-ignore
-import { processRequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+import { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 // prettier-ignore
 import request from '《requestFilePath》';
   《/if》
@@ -454,7 +454,7 @@ async function getRequestFunctionFilePath(config: Pick<Config, 'onlyTyping' | 'o
     } catch {
       try {
         await outputFile(requestDeclareFunctionFilePath,
-`import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+`import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 // 自定义配置
 export type RequestOptions = {
   // 自定义配置属性
@@ -475,14 +475,14 @@ export default function request<ResponseData>(config: RequestFunctionConfig, opt
   } catch {}
   try {  // 不可访问，重新创建文件
     await outputFile(requestFunctionFilePath,
-      isTS ? `import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+      isTS ? `import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 
 // 自定义配置
 export type RequestOptions = {
   // 自定义配置属性
 };
 
-export default async function request<T>(config: RequestFunctionConfig, options: RequestOptions): Promise<T> {
+export default async function request<T>(config: RequestFunctionConfig, options?: RequestOptions): Promise<T> {
   return new Promise((resolve, reject) => {
     const { method, data, path } = config;
     console.log(path, method, data);
