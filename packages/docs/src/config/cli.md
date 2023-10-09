@@ -10,7 +10,7 @@
 
 ## 安装
 ```shell
-pnpm install @api-helper/cli @api-helper/core
+pnpm install @api-helper/cli
 ```
 
 ## 开始
