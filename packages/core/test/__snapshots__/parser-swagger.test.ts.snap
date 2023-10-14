@@ -23135,12 +23135,12 @@ exports[`swagger-parser OpenAPI-2.0文档解析转换测试: OpenAPI-2.0文档�
             "label": "",
             "params": [
               NumberSchema {
-                "description": "ID of pet  * 换行符测试 * to update",
+                "description": "ID of pet  * 换行符测试 * to update",
                 "enum": [],
                 "examples": [],
                 "id": "",
                 "keyName": "petId",
-                "label": "ID of pet  * 换行符测试 * to update",
+                "label": "ID of pet  * 换行符测试 * to update",
                 "params": [],
                 "rules": {
                   "exclusiveMaximum": undefined,
@@ -32360,7 +32360,7 @@ exports[`swagger-parser OpenAPI-3.0文档解析转换测试: OpenAPI-3.0文档�
       "name": "未知分组",
     },
   ],
-  "description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more aboutSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!You can now help us improve the API whether it's by making changes to the definition itself or to the code.That way, with time, we can improve the API in general, and expose some of the new features in OAS3.Some useful links:- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+  "description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more aboutSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!You can now help us improve the API whether it's by making changes to the definition itself or to the code.That way, with time, we can improve the API in general, and expose some of the new features in OAS3.Some useful links:- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
   "documentServerUrl": "",
   "documentVersion": "3.0.2",
   "id": "",

@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
-import { APIHelper } from '@api-helper/core/es/lib/types';
 import {
   PrettierOptions,
   FormatCodeConfig,
-} from '@api-helper/cli/lib/types';
+} from '@api-helper/core/lib/interface';
 import {
   checkType,
   getErrorMessage,
 } from '@api-helper/core/lib/utils/util';
+import { APIHelper } from '@api-helper/core/es/lib/types';
 
 import _apih from './render-template-apih';
 import formatCodeServer from './utils/format-code-server';

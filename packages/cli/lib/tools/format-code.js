@@ -17,10 +17,10 @@ const merge_1 = __importDefault(require("lodash/merge"));
 const node_child_process_1 = __importDefault(require("node:child_process"));
 const fs_extra_1 = require("fs-extra");
 const util_1 = require("@api-helper/core/lib/utils/util");
+const constant_1 = require("@api-helper/core/lib/constant");
+const interface_1 = require("@api-helper/core/lib/interface");
 const util_2 = require("../../lib/tools/util");
-const constants_1 = require("../../lib/constants");
 const log_1 = __importDefault(require("../../lib/tools/log"));
-const types_1 = require("../../lib/types");
 function formatCode(config) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Array.isArray(config)) {
@@ -42,8 +42,8 @@ function format(config) {
         if (!sourceCode) {
             return resolve(sourceCode);
         }
-        if (!constants_1.FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
-            const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${constants_1.FORMAT_CODE_EXTENSION.toString()}`;
+        if (!constant_1.FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
+            const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${constant_1.FORMAT_CODE_EXTENSION.toString()}`;
             log_1.default.warn('提示', errorText);
             return resolve(errorText);
         }
@@ -54,7 +54,7 @@ function format(config) {
                 (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
         }
         catch (_a) { }
-        const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new types_1.PrettierOptions(), prettierOptions));
+        const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new interface_1.PrettierOptions(), prettierOptions));
         const filepath = (0, util_2.createTempFile)(sourceCode, { postfix: formatCodeExtension });
         const prettierFilePath = (0, util_2.createTempFile)(prettierOptionsStr, { postfix: '.json' });
         const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierFilePath))]); });

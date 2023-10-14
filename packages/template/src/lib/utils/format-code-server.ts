@@ -1,7 +1,7 @@
 import to from 'await-to-js';
 import type { AxiosRequestConfig } from 'axios';
-import { FormatCodeConfig } from '@api-helper/cli/lib/types';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
+import { FormatCodeConfig } from '@api-helper/core/lib/interface';
 
 import request from '@/lib/utils/format-code-request';
 

@@ -461,62 +461,6 @@ export declare const v2StoreInventoryByGet: {
   };
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export declare const v2UserCreateWithArrayByPost: {
-  (
-    data: V2UserCreateWithArrayRequestByPost,
-    extraData?: unknown,
-    ...args: CurrentRequestFunctionRestArgsType
-  ): Promise<V2UserCreateWithArrayResponseByPost>;
-  readonly requestConfig: {
-    path: '/v2/user/createWithArray';
-    method: 'post';
-    formDataKeyNameList: [];
-    pathParamKeyNameList: [];
-    queryStringKeyNameList: [];
-  };
-};
-/**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithList
- */
-export declare const v2UserCreateWithListByPost: {
-  (
-    data: V2UserCreateWithListRequestByPost,
-    extraData?: unknown,
-    ...args: CurrentRequestFunctionRestArgsType
-  ): Promise<V2UserCreateWithListResponseByPost>;
-  readonly requestConfig: {
-    path: '/v2/user/createWithList';
-    method: 'post';
-    formDataKeyNameList: [];
-    pathParamKeyNameList: [];
-    queryStringKeyNameList: [];
-  };
-};
-/**
  * @description Get user by user name【请求数据类型定义】
  * @url [ GET ] /v2/user/{username}
  */
@@ -675,6 +619,62 @@ export declare const v2UserLogoutByGet: {
   readonly requestConfig: {
     path: '/v2/user/logout';
     method: 'get';
+    formDataKeyNameList: [];
+    pathParamKeyNameList: [];
+    queryStringKeyNameList: [];
+  };
+};
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export declare const v2UserCreateWithArrayByPost: {
+  (
+    data: V2UserCreateWithArrayRequestByPost,
+    extraData?: unknown,
+    ...args: CurrentRequestFunctionRestArgsType
+  ): Promise<V2UserCreateWithArrayResponseByPost>;
+  readonly requestConfig: {
+    path: '/v2/user/createWithArray';
+    method: 'post';
+    formDataKeyNameList: [];
+    pathParamKeyNameList: [];
+    queryStringKeyNameList: [];
+  };
+};
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export declare const v2UserCreateWithListByPost: {
+  (
+    data: V2UserCreateWithListRequestByPost,
+    extraData?: unknown,
+    ...args: CurrentRequestFunctionRestArgsType
+  ): Promise<V2UserCreateWithListResponseByPost>;
+  readonly requestConfig: {
+    path: '/v2/user/createWithList';
+    method: 'post';
     formDataKeyNameList: [];
     pathParamKeyNameList: [];
     queryStringKeyNameList: [];

@@ -1,515 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`swagger文档 只生成类型: 只生成类型 1`] = `
-"/**
- * @description 普通body请求-put【请求数据类型定义】
- * @url [ PUT ] /body/bodyPut
- */
-export interface BodyBodyPutRequestByPut {
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求-put【响应数据类型定义】
- * @url [ PUT ] /body/bodyPut
- */
-export interface BodyBodyPutResponseByPut {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description body请求【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
- */
-export interface UserDeviceIdBodyRequestByPost {
-  // 设备id
-  deviceId: string;
-}
-/**
- * @description body请求【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
- */
-export interface UserDeviceIdBodyResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description body请求1【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
- */
-export interface UserDeviceIdBody1RequestByPost {
-  // 设备id
-  deviceId: string;
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description body请求1【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
- */
-export interface UserDeviceIdBody1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description json参数查询1【请求数据类型定义】
- * @url [ POST ] /user/getRequest1
- */
-export interface UserGetRequest1RequestByPost {
-  cade: string;
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description json参数查询1【响应数据类型定义】
- * @url [ POST ] /user/getRequest1
- */
-export interface UserGetRequest1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneRequestByPost {
-  // 主键id
-  id?: string;
-  // 名称
-  name?: string;
-}
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneResponseByPost {
-  // 主键id
-  id: string;
-  // 名称
-  name: string;
-}
-
-/**
- * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOneSchema
- */
-export interface UserCreateOneSchemaRequestByPost {
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOneSchema
- */
-export interface UserCreateOneSchemaResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1RequestByPost {
-  id?: string;
-  name?: string;
-}
-/**
- * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1ResponseByPost {
-  // 主键id
-  id: string;
-  // 名称
-  name: string;
-}
-
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadRequestByPost {
-  file: File;
-}
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数【请求数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数【响应数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数Header【请求数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Header【响应数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 文件上传-带参数Path【请求数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Path【响应数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 多文件上传【请求数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export interface FileUploadBatchRequestByPost {
-  files: Array<File>;
-}
-/**
- * @description 多文件上传【响应数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export type FileUploadBatchResponseByPost = Array<// 文件对象
-{
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}>;
-
-/**
- * @description 普通body请求【请求数据类型定义】
- * @url [ POST ] /body/body
- */
-export interface BodyBodyRequestByPost {
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求【响应数据类型定义】
- * @url [ POST ] /body/body
- */
-export interface BodyBodyResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param【请求数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamRequestByPost {
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param【响应数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param+Header【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description 普通body请求+Param+Header+Path【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 随机名称
-  random?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header+Path【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-
-/**
- * @description json参数查询【请求数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestRequestByGet {
-  userSchema: {
-    // 注解id-title
-    id?: string;
-    // 名称
-    name?: string;
-    // Part信息
-    partSchema?: {
-      // part部分id
-      id?: string;
-      // part部分名称
-      name?: string;
-    };
-  };
-  cade: string;
-}
-/**
- * @description json参数查询【响应数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestResponseByGet {
-  // 用户信息
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-
-/**
- * @description 创建用户、根据姓名创建用户【请求数据类型定义】
- * @url [ GET ] /user/create
- */
-export interface UserCreateRequestByGet {
-  name: string;
-}
-/**
- * @description 创建用户、根据姓名创建用户【响应数据类型定义】
- * @url [ GET ] /user/create
- */
-export type UserCreateResponseByGet = string;
-"
-`;
-
 exports[`swagger文档 基于swagger2.0，生成 javascript api 代码: 基于swagger2.0，生成 javascript api 代码 1`] = `
 "/* eslint-disable */
 /* prettier-ignore-start */
@@ -692,34 +182,6 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithList
- */
-export function v2UserCreateWithListByPost(data, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
-}
-v2UserCreateWithListByPost.requestConfig = {
-  path: '/v2/user/createWithList',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
  * @description Get user by user name
  * @url [ GET ] /v2/user/{username}
  */
@@ -785,6 +247,34 @@ export function v2UserLogoutByGet(data, extraData, ...args) {
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
   method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(data, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -1268,62 +758,6 @@ export declare const v2StoreInventoryByGet: {
   };
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export declare const v2UserCreateWithArrayByPost: {
-  (
-    data: V2UserCreateWithArrayRequestByPost,
-    extraData?: unknown,
-    ...args: CurrentRequestFunctionRestArgsType
-  ): Promise<V2UserCreateWithArrayResponseByPost>;
-  readonly requestConfig: {
-    path: '/v2/user/createWithArray';
-    method: 'post';
-    formDataKeyNameList: [];
-    pathParamKeyNameList: [];
-    queryStringKeyNameList: [];
-  };
-};
-/**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithList
- */
-export declare const v2UserCreateWithListByPost: {
-  (
-    data: V2UserCreateWithListRequestByPost,
-    extraData?: unknown,
-    ...args: CurrentRequestFunctionRestArgsType
-  ): Promise<V2UserCreateWithListResponseByPost>;
-  readonly requestConfig: {
-    path: '/v2/user/createWithList';
-    method: 'post';
-    formDataKeyNameList: [];
-    pathParamKeyNameList: [];
-    queryStringKeyNameList: [];
-  };
-};
-/**
  * @description Get user by user name【请求数据类型定义】
  * @url [ GET ] /v2/user/{username}
  */
@@ -1482,6 +916,62 @@ export declare const v2UserLogoutByGet: {
   readonly requestConfig: {
     path: '/v2/user/logout';
     method: 'get';
+    formDataKeyNameList: [];
+    pathParamKeyNameList: [];
+    queryStringKeyNameList: [];
+  };
+};
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export declare const v2UserCreateWithArrayByPost: {
+  (
+    data: V2UserCreateWithArrayRequestByPost,
+    extraData?: unknown,
+    ...args: CurrentRequestFunctionRestArgsType
+  ): Promise<V2UserCreateWithArrayResponseByPost>;
+  readonly requestConfig: {
+    path: '/v2/user/createWithArray';
+    method: 'post';
+    formDataKeyNameList: [];
+    pathParamKeyNameList: [];
+    queryStringKeyNameList: [];
+  };
+};
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export declare const v2UserCreateWithListByPost: {
+  (
+    data: V2UserCreateWithListRequestByPost,
+    extraData?: unknown,
+    ...args: CurrentRequestFunctionRestArgsType
+  ): Promise<V2UserCreateWithListResponseByPost>;
+  readonly requestConfig: {
+    path: '/v2/user/createWithList';
+    method: 'post';
     formDataKeyNameList: [];
     pathParamKeyNameList: [];
     queryStringKeyNameList: [];
@@ -2000,68 +1490,6 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(
-  data: V2UserCreateWithArrayRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserCreateWithArrayResponseByPost>(
-    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
-    ...args
-  );
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array【请求数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListRequestByPost = any;
-/**
- * @description Creates list of users with given input array【响应数据类型定义】
- * @url [ POST ] /v2/user/createWithList
- */
-export type V2UserCreateWithListResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithList
- */
-export function v2UserCreateWithListByPost(
-  data: V2UserCreateWithListRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserCreateWithListResponseByPost>(
-    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
-    ...args
-  );
-}
-v2UserCreateWithListByPost.requestConfig = {
-  path: '/v2/user/createWithList',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
  * @description Get user by user name【请求数据类型定义】
  * @url [ GET ] /v2/user/{username}
  */
@@ -2221,6 +1649,68 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(
+  data: V2UserCreateWithArrayRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithArrayResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array【请求数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = any;
+/**
+ * @description Creates list of users with given input array【响应数据类型定义】
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(
+  data: V2UserCreateWithListRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithListResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
  * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
  * @url [ POST ] /v2/user
  */
@@ -2253,842 +1743,6 @@ v2UserByPost.requestConfig = {
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
-};
-"
-`;
-
-exports[`swagger文档 基于swagger3.0.1，生成 typescript api 代码: 基于swagger3.0.1，生成 typescript api 代码 1`] = `
-"/* tslint:disable */
-/* eslint-disable */
-/* prettier-ignore-start */
-
-/* 代码生成时间:  */
-/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
-
-// @ts-ignore
-// prettier-ignore
-import {
-  RequestFunctionRestArgsType,
-  processRequestFunctionConfig,
-} from '@api-helper/cli/lib/helpers';
-// @ts-ignore
-// prettier-ignore
-import request from './request';
-// @ts-ignore
-// prettier-ignore
-type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
-
-/**
- * @description 普通body请求-put【请求数据类型定义】
- * @url [ PUT ] /body/bodyPut
- */
-export interface BodyBodyPutRequestByPut {
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-/**
- * @description 普通body请求-put【响应数据类型定义】
- * @url [ PUT ] /body/bodyPut
- */
-export interface BodyBodyPutResponseByPut {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求-put
- * @url [ PUT ] /body/bodyPut
- */
-export function bodyBodyPutByPut(data: BodyBodyPutRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<BodyBodyPutResponseByPut>(processRequestFunctionConfig(data, extraData, bodyBodyPutByPut.requestConfig), ...args);
-}
-bodyBodyPutByPut.requestConfig = {
-  path: '/body/bodyPut',
-  method: 'PUT',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description body请求【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
- */
-export interface UserDeviceIdBodyRequestByPost {
-  // 设备id
-  deviceId: string;
-}
-/**
- * @description body请求【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body
- */
-export interface UserDeviceIdBodyResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description body请求
- * @url [ POST ] /user/{deviceId}/body
- */
-export function userDeviceIdBodyByPost(
-  data: UserDeviceIdBodyRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<UserDeviceIdBodyResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userDeviceIdBodyByPost.requestConfig),
-    ...args
-  );
-}
-userDeviceIdBodyByPost.requestConfig = {
-  path: '/user/{deviceId}/body',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['deviceId'],
-  queryStringKeyNameList: [],
-};
-/**
- * @description body请求1【请求数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
- */
-export interface UserDeviceIdBody1RequestByPost {
-  // 设备id
-  deviceId: string;
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-/**
- * @description body请求1【响应数据类型定义】
- * @url [ POST ] /user/{deviceId}/body1
- */
-export interface UserDeviceIdBody1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description body请求1
- * @url [ POST ] /user/{deviceId}/body1
- */
-export function userDeviceIdBody1ByPost(
-  data: UserDeviceIdBody1RequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<UserDeviceIdBody1ResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userDeviceIdBody1ByPost.requestConfig),
-    ...args
-  );
-}
-userDeviceIdBody1ByPost.requestConfig = {
-  path: '/user/{deviceId}/body1',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['deviceId'],
-  queryStringKeyNameList: [],
-};
-/**
- * @description json参数查询1【请求数据类型定义】
- * @url [ POST ] /user/getRequest1
- */
-export interface UserGetRequest1RequestByPost {
-  cade: string;
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-/**
- * @description json参数查询1【响应数据类型定义】
- * @url [ POST ] /user/getRequest1
- */
-export interface UserGetRequest1ResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description json参数查询1
- * @url [ POST ] /user/getRequest1
- */
-export function userGetRequest1ByPost(
-  data: UserGetRequest1RequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<UserGetRequest1ResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userGetRequest1ByPost.requestConfig),
-    ...args
-  );
-}
-userGetRequest1ByPost.requestConfig = {
-  path: '/user/getRequest1',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['cade'],
-};
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneRequestByPost {
-  // 主键id
-  id: string;
-  // 名称
-  name: string;
-}
-/**
- * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne
- */
-export interface UserCreateOneResponseByPost {
-  // 主键id
-  id?: string;
-  // 名称
-  name?: string;
-}
-/**
- * @description 创建用户-createOne、根据姓名创建用户1
- * @url [ POST ] /user/createOne
- */
-export function userCreateOneByPost(data: UserCreateOneRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<UserCreateOneResponseByPost>(processRequestFunctionConfig(data, extraData, userCreateOneByPost.requestConfig), ...args);
-}
-userCreateOneByPost.requestConfig = {
-  path: '/user/createOne',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOneSchema
- */
-export interface UserCreateOneSchemaRequestByPost {
-  // 注解id-title
-  id: string;
-  // 名称
-  name: string;
-  // Part信息
-  partSchema: {
-    // part部分id
-    id: string;
-    // part部分名称
-    name: string;
-  };
-}
-/**
- * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOneSchema
- */
-export interface UserCreateOneSchemaResponseByPost {
-  // 用户信息
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description 创建用户-Schema、根据姓名创建用户1
- * @url [ POST ] /user/createOneSchema
- */
-export function userCreateOneSchemaByPost(
-  data: UserCreateOneSchemaRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<UserCreateOneSchemaResponseByPost>(
-    processRequestFunctionConfig(data, extraData, userCreateOneSchemaByPost.requestConfig),
-    ...args
-  );
-}
-userCreateOneSchemaByPost.requestConfig = {
-  path: '/user/createOneSchema',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1RequestByPost {
-  id: string;
-  name: string;
-}
-/**
- * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
- * @url [ POST ] /user/createOne1
- */
-export interface UserCreateOne1ResponseByPost {
-  // 主键id
-  id?: string;
-  // 名称
-  name?: string;
-}
-/**
- * @description 创建用户1、根据姓名创建用户1
- * @url [ POST ] /user/createOne1
- */
-export function userCreateOne1ByPost(data: UserCreateOne1RequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<UserCreateOne1ResponseByPost>(processRequestFunctionConfig(data, extraData, userCreateOne1ByPost.requestConfig), ...args);
-}
-userCreateOne1ByPost.requestConfig = {
-  path: '/user/createOne1',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['id', 'name'],
-};
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadRequestByPost {
-  file: File;
-}
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
- * @url [ POST ] /file/upload
- */
-export interface FileUploadResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 单纯文件上传、单纯文件上传，无任何参数
- * @url [ POST ] /file/upload
- */
-export function fileUploadByPost(data: FileUploadRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<FileUploadResponseByPost>(processRequestFunctionConfig(data, extraData, fileUploadByPost.requestConfig), ...args);
-}
-fileUploadByPost.requestConfig = {
-  path: '/file/upload',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 文件上传-带参数【请求数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数【响应数据类型定义】
- * @url [ POST ] /file/uploadParam
- */
-export interface FileUploadParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 文件上传-带参数
- * @url [ POST ] /file/uploadParam
- */
-export function fileUploadParamByPost(
-  data: FileUploadParamRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<FileUploadParamResponseByPost>(
-    processRequestFunctionConfig(data, extraData, fileUploadParamByPost.requestConfig),
-    ...args
-  );
-}
-fileUploadParamByPost.requestConfig = {
-  path: '/file/uploadParam',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description 文件上传-带参数Header【请求数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Header【响应数据类型定义】
- * @url [ POST ] /file/uploadParamHeader
- */
-export interface FileUploadParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 文件上传-带参数Header
- * @url [ POST ] /file/uploadParamHeader
- */
-export function fileUploadParamHeaderByPost(
-  data: FileUploadParamHeaderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<FileUploadParamHeaderResponseByPost>(
-    processRequestFunctionConfig(data, extraData, fileUploadParamHeaderByPost.requestConfig),
-    ...args
-  );
-}
-fileUploadParamHeaderByPost.requestConfig = {
-  path: '/file/uploadParamHeader',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description 文件上传-带参数Path【请求数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 文件
-  file: File;
-}
-/**
- * @description 文件上传-带参数Path【响应数据类型定义】
- * @url [ POST ] /file/uploadParam/{id}
- */
-export interface FileUploadParamIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 文件上传-带参数Path
- * @url [ POST ] /file/uploadParam/{id}
- */
-export function fileUploadParamIdByPost(
-  data: FileUploadParamIdRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<FileUploadParamIdResponseByPost>(
-    processRequestFunctionConfig(data, extraData, fileUploadParamIdByPost.requestConfig),
-    ...args
-  );
-}
-fileUploadParamIdByPost.requestConfig = {
-  path: '/file/uploadParam/{id}',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['id'],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description 多文件上传【请求数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export interface FileUploadBatchRequestByPost {
-  files: Array<File>;
-}
-/**
- * @description 多文件上传【响应数据类型定义】
- * @url [ POST ] /file/uploadBatch
- */
-export type FileUploadBatchResponseByPost = Array<// 文件对象
-{
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}>;
-/**
- * @description 多文件上传
- * @url [ POST ] /file/uploadBatch
- */
-export function fileUploadBatchByPost(
-  data: FileUploadBatchRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<FileUploadBatchResponseByPost>(
-    processRequestFunctionConfig(data, extraData, fileUploadBatchByPost.requestConfig),
-    ...args
-  );
-}
-fileUploadBatchByPost.requestConfig = {
-  path: '/file/uploadBatch',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 普通body请求【请求数据类型定义】
- * @url [ POST ] /body/body
- */
-export interface BodyBodyRequestByPost {
-  // 随机名称
-  random: string;
-  // 文件名称
-  name: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-/**
- * @description 普通body请求【响应数据类型定义】
- * @url [ POST ] /body/body
- */
-export interface BodyBodyResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求
- * @url [ POST ] /body/body
- */
-export function bodyBodyByPost(data: BodyBodyRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<BodyBodyResponseByPost>(processRequestFunctionConfig(data, extraData, bodyBodyByPost.requestConfig), ...args);
-}
-bodyBodyByPost.requestConfig = {
-  path: '/body/body',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 普通body请求+Param【请求数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamRequestByPost {
-  name: string;
-  // 随机名称
-  random: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-/**
- * @description 普通body请求+Param【响应数据类型定义】
- * @url [ POST ] /body/bodyParam
- */
-export interface BodyBodyParamResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param
- * @url [ POST ] /body/bodyParam
- */
-export function bodyBodyParamByPost(data: BodyBodyParamRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<BodyBodyParamResponseByPost>(processRequestFunctionConfig(data, extraData, bodyBodyParamByPost.requestConfig), ...args);
-}
-bodyBodyParamByPost.requestConfig = {
-  path: '/body/bodyParam',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description 普通body请求+Param+Header【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderRequestByPost {
-  // 文件名称
-  name: string;
-  // 随机名称
-  random: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-/**
- * @description 普通body请求+Param+Header【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeader
- */
-export interface BodyBodyParamHeaderResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header
- * @url [ POST ] /body/bodyParamHeader
- */
-export function bodyBodyParamHeaderByPost(
-  data: BodyBodyParamHeaderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<BodyBodyParamHeaderResponseByPost>(
-    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderByPost.requestConfig),
-    ...args
-  );
-}
-bodyBodyParamHeaderByPost.requestConfig = {
-  path: '/body/bodyParamHeader',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description 普通body请求+Param+Header+Path【请求数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdRequestByPost {
-  // 文件id
-  id: string;
-  // 文件名称
-  name: string;
-  // 随机名称
-  random: string;
-  // 文件大小
-  size: number;
-  // 是否上传成功
-  success: boolean;
-}
-/**
- * @description 普通body请求+Param+Header+Path【响应数据类型定义】
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export interface BodyBodyParamHeaderPathIdResponseByPost {
-  // 文件对象
-  // 随机名称
-  random?: string;
-  // 文件名称
-  name?: string;
-  // 文件大小
-  size?: number;
-  // 是否上传成功
-  success?: boolean;
-}
-/**
- * @description 普通body请求+Param+Header+Path
- * @url [ POST ] /body/bodyParamHeaderPath/{id}
- */
-export function bodyBodyParamHeaderPathIdByPost(
-  data: BodyBodyParamHeaderPathIdRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<BodyBodyParamHeaderPathIdResponseByPost>(
-    processRequestFunctionConfig(data, extraData, bodyBodyParamHeaderPathIdByPost.requestConfig),
-    ...args
-  );
-}
-bodyBodyParamHeaderPathIdByPost.requestConfig = {
-  path: '/body/bodyParamHeaderPath/{id}',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['id'],
-  queryStringKeyNameList: ['name'],
-};
-/**
- * @description json参数查询【请求数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestRequestByGet {
-  userSchema: {
-    // 注解id-title
-    id: string;
-    // 名称
-    name: string;
-    // Part信息
-    partSchema: {
-      // part部分id
-      id: string;
-      // part部分名称
-      name: string;
-    };
-  };
-  cade: string;
-}
-/**
- * @description json参数查询【响应数据类型定义】
- * @url [ GET ] /user/getRequest
- */
-export interface UserGetRequestResponseByGet {
-  // 用户信息
-  // 注解id-title
-  id?: string;
-  // 名称
-  name?: string;
-  // Part信息
-  partSchema?: {
-    // part部分id
-    id?: string;
-    // part部分名称
-    name?: string;
-  };
-}
-/**
- * @description json参数查询
- * @url [ GET ] /user/getRequest
- */
-export function userGetRequestByGet(data: UserGetRequestRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<UserGetRequestResponseByGet>(processRequestFunctionConfig(data, extraData, userGetRequestByGet.requestConfig), ...args);
-}
-userGetRequestByGet.requestConfig = {
-  path: '/user/getRequest',
-  method: 'GET',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['userSchema', 'cade'],
-};
-/**
- * @description 创建用户、根据姓名创建用户【请求数据类型定义】
- * @url [ GET ] /user/create
- */
-export interface UserCreateRequestByGet {
-  name: string;
-}
-/**
- * @description 创建用户、根据姓名创建用户【响应数据类型定义】
- * @url [ GET ] /user/create
- */
-export type UserCreateResponseByGet = string;
-/**
- * @description 创建用户、根据姓名创建用户
- * @url [ GET ] /user/create
- */
-export function userCreateByGet(data: UserCreateRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<UserCreateResponseByGet>(processRequestFunctionConfig(data, extraData, userCreateByGet.requestConfig), ...args);
-}
-userCreateByGet.requestConfig = {
-  path: '/user/create',
-  method: 'GET',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: ['name'],
 };
 "
 `;

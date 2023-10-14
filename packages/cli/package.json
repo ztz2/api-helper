@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/cli",
-  "version": "2.3.7",
+  "version": "2.3.13",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "bin": {
     "apih": "bin/index.js"
@@ -9,6 +9,7 @@
   "typings": "lib/index.d.ts",
   "files": [
     "bin",
+    "es",
     "lib",
     "README.md"
   ],
@@ -16,7 +17,8 @@
     "node": ">=14.0.0"
   },
   "scripts": {
-    "build": "npm run lint && npm run test && npm run clean && npm run build:server",
+    "build": "npm run lint && npm run test && npm run clean && npm run build:es && npm run build:server",
+    "build:es": "tsc --project ./tsconfig.es.json && tsc-alias -p tsconfig.es.alias.json",
     "build:server": "tsc --project tsconfig.node.json && npm run build:alias",
     "build:alias": "tsc-alias -p tsconfig.alias.json",
     "clean": "shx rm -rf bin && shx rm -rf lib",
@@ -70,7 +72,7 @@
     "ora": "^3.4.0",
     "prettier": "^2.8.4",
     "prompts": "^2.4.2",
-    "qs": "^6.11.0",
+    "qs": "^5.2.1",
     "shx": "^0.3.4",
     "tmp": "^0.2.1",
     "url-parse": "^1.5.10"

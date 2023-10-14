@@ -22,13 +22,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processRequestFunctionConfig = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.transformType = exports.createSchema = exports.createApi = exports.randomChar = exports.createCategory = exports.createDocument = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
+exports.PrettierOptions = exports.filterSchemaRequired = exports.filterSchemaRoot = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.transformType = exports.createSchema = exports.createApi = exports.randomChar = exports.createCategory = exports.createDocument = exports.getErrorMessage = exports.isSchemaObject = exports.ParserSwagger = exports.ParserYapi = exports.getSchema = exports.utils = void 0;
 var utils = __importStar(require("./lib/utils"));
 exports.utils = utils;
 var parser_yapi_1 = __importDefault(require("./lib/parser/parser-yapi"));
 exports.ParserYapi = parser_yapi_1.default;
 var parser_swagger_1 = __importDefault(require("./lib/parser/parser-swagger"));
 exports.ParserSwagger = parser_swagger_1.default;
+var interface_1 = require("./lib/interface");
+Object.defineProperty(exports, "PrettierOptions", { enumerable: true, get: function () { return interface_1.PrettierOptions; } });
 var util_1 = require("./lib/utils/util");
 Object.defineProperty(exports, "isSchemaObject", { enumerable: true, get: function () { return util_1.isSchemaObject; } });
 Object.defineProperty(exports, "getErrorMessage", { enumerable: true, get: function () { return util_1.getErrorMessage; } });
@@ -44,7 +46,6 @@ Object.defineProperty(exports, "createCategory", { enumerable: true, get: functi
 Object.defineProperty(exports, "createApi", { enumerable: true, get: function () { return helpers_1.createApi; } });
 Object.defineProperty(exports, "createSchema", { enumerable: true, get: function () { return helpers_1.createSchema; } });
 Object.defineProperty(exports, "transformType", { enumerable: true, get: function () { return helpers_1.transformType; } });
-Object.defineProperty(exports, "processRequestFunctionConfig", { enumerable: true, get: function () { return helpers_1.processRequestFunctionConfig; } });
 if (typeof window === 'object' && window != null && !window.process) {
     window.process = {
         cwd: function () {

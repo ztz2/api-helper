@@ -3,17 +3,18 @@ import merge from 'lodash/merge';
 
 import cp from 'node:child_process';
 import { remove, readFile } from 'fs-extra';
+
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
+import { FORMAT_CODE_EXTENSION } from '@api-helper/core/lib/constant';
+import { PrettierOptions, FormatCodeConfig } from '@api-helper/core/lib/interface';
 
 import {
   checkType,
   createTempFile,
 } from '@/lib/tools/util';
 
-import { FORMAT_CODE_EXTENSION } from '@/lib/constants';
-
 import log from '@/lib/tools/log';
-import { PrettierOptions, FormatCodeConfig } from '@/lib/types';
+
 
 export default async function formatCode(config: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]> {
   if (Array.isArray(config)) {

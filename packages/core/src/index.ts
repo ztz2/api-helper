@@ -1,10 +1,4 @@
 import type {
-  FormDataItem,
-  RequestFunctionConfig,
-  RequestFunctionRestArgsType,
-} from './lib/helpers';
-
-import type {
   APIHelper,
   ReturnType,
 } from './lib/types';
@@ -12,6 +6,7 @@ import type {
 import * as utils from './lib/utils';
 import ParserYapi from './lib/parser/parser-yapi';
 import ParserSwagger from './lib/parser/parser-swagger';
+import { PrettierOptions, FormatCodeConfig } from './lib/interface';
 
 import {
   isSchemaObject,
@@ -30,7 +25,6 @@ import {
   createApi,
   createSchema,
   transformType,
-  processRequestFunctionConfig
 } from './lib/helpers';
 
 if (typeof window === 'object' && window != null && !window.process) {
@@ -44,9 +38,7 @@ if (typeof window === 'object' && window != null && !window.process) {
 export type {
   APIHelper,
   ReturnType,
-  FormDataItem,
-  RequestFunctionConfig,
-  RequestFunctionRestArgsType
+  FormatCodeConfig,
 }
 
 export {
@@ -66,5 +58,5 @@ export {
   filterSchemaPrimitiveValue,
   filterSchemaRoot,
   filterSchemaRequired,
-  processRequestFunctionConfig,
+  PrettierOptions,
 }

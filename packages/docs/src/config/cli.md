@@ -60,7 +60,7 @@ export default defineConfig({
 * 统一接口请求实现，可以简单参考下面的以 `axios` 库例子。
 ```typescript
 import axios from 'axios';
-import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+import { RequestFunctionConfig } from '@api-helper/cli/es/lib/helpers';
 
 // 自定义配置
 export type RequestOptions = {

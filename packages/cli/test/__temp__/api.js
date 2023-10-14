@@ -179,34 +179,6 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithList
- */
-export function v2UserCreateWithListByPost(data, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
-}
-v2UserCreateWithListByPost.requestConfig = {
-  path: '/v2/user/createWithList',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
  * @description Get user by user name
  * @url [ GET ] /v2/user/{username}
  */
@@ -272,6 +244,34 @@ export function v2UserLogoutByGet(data, extraData, ...args) {
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
   method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(data, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],

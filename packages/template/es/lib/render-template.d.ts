@@ -1,5 +1,5 @@
+import { PrettierOptions, FormatCodeConfig } from '@api-helper/core/lib/interface';
 import { APIHelper } from '@api-helper/core/es/lib/types';
-import { PrettierOptions, FormatCodeConfig } from '@api-helper/cli/lib/types';
 export declare type RenderApiTemplateParams = {
     apiList: Array<APIHelper.API>;
 };
