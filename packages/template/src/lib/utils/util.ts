@@ -1,4 +1,6 @@
-import { APIHelper } from '@api-helper/core';
+import type { APIHelper } from '@api-helper/core/lib/types';
+import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
+
 import formatCode from '@/lib/utils/prettier';
 
 export function postCode({ code = '', ki = '', commentCode = '' }, { onlyBody = false }) {
@@ -26,4 +28,26 @@ export function checkIsInterface(schema: APIHelper.Schema | null) {
 
 export function isEmptyObject(schema: APIHelper.Schema | null) {
   return schema?.type === 'object' && schema?.params?.length === 0;
+}
+
+export function isEmptySchema(schema: APIHelper.Schema | null): boolean {
+  const exec = (scm: APIHelper.Schema | null) => {
+    if (!scm) {
+      return true;
+    }
+    if (scm.type === 'object' && isEmptyObject(filterSchemaPrimitiveValue(scm))) {
+      return true;
+    }
+    if (scm.type === 'array') {
+      for (const itm of scm.params) {
+        if (exec(itm)) {
+          return true;
+        }
+      }
+      return false;
+    }
+    return false;
+  }
+
+  return exec(schema);
 }

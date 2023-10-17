@@ -5,6 +5,7 @@ import { getSchema } from '@api-helper/core/lib/helpers';
 import { ChangeCase } from '@/lib/types';
 import artTemplate from '@/lib/art-template';
 import { renderInterfaceName } from '@/lib/render-interface';
+import { isEmptyObject, isEmptySchema } from '@/lib/utils/util';
 
 export function renderRequestFunction(
   api: APIHelper.API,
@@ -18,22 +19,26 @@ export function renderRequestFunction(
   if (!api) {
     return '';
   }
-
+  if (api.path.includes('findRefrigerantTypeList')) {
+    console.log(123);
+  }
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
+  const isEmptyRequestData = isEmptySchema(api.requestDataSchema);
+  const emptyRequestDataValue = isEmptyRequestData ? api.requestDataSchema?.type === 'array' ? '[]' : '{}' : '';
   const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
   const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
 
   const templateTenderParams = {
     api,
+    emptyRequestDataValue,
     isTypescript: codeType === 'typescript',
     commentCode: renderRequestFunctionComment(api),
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
     requestFunctionName: onRenderRequestFunctionName(api, {
-
       changeCase: _changeCase,
     }),
     requestDataInterfaceName: onRenderInterfaceName(api, {
@@ -56,7 +61,7 @@ export function renderRequestFunction(
 
   const code = artTemplate.render(
     `《if commentCode》《commentCode》
-《/if》export function 《requestFunctionName》(data《if isTypescript》: 《requestDataInterfaceName》《/if》, extraData《if isTypescript》?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》《/if》, ...args《if isTypescript》: CurrentRequestFunctionRestArgsType《/if》) {
+《/if》export function 《requestFunctionName》(data《if isTypescript》: 《requestDataInterfaceName》《/if》《if emptyRequestDataValue》 = 《emptyRequestDataValue》《/if》, extraData《if isTypescript》?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》《/if》, ...args《if isTypescript》: CurrentRequestFunctionRestArgsType《/if》) {
   return request《if isTypescript》<《responseDataInterfaceName》>《/if》(
     processRequestFunctionConfig(data, extraData, 《requestFunctionName》.requestConfig),
     ...args

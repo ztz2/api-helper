@@ -1,4 +1,4 @@
-import { APIHelper } from '@api-helper/core';
+import type { APIHelper } from '@api-helper/core/lib/types';
 export declare function postCode({ code, ki, commentCode }: {
     code?: string | undefined;
     ki?: string | undefined;
@@ -8,3 +8,4 @@ export declare function postCode({ code, ki, commentCode }: {
 }): string;
 export declare function checkIsInterface(schema: APIHelper.Schema | null): boolean | undefined;
 export declare function isEmptyObject(schema: APIHelper.Schema | null): boolean;
+export declare function isEmptySchema(schema: APIHelper.Schema | null): boolean;

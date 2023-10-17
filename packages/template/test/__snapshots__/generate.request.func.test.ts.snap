@@ -56,7 +56,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
    * @description Returns pet inventories by status、Returns a map of status codes to quantities
    * @url [ GET ] /v2/store/inventory
    */
-export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
   return request<V2StoreInventoryResponseByGet>(
     processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
@@ -76,7 +76,7 @@ exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3
    * @description Returns pet inventories by status、Returns a map of status codes to quantities
    * @url [ GET ] /api/v3/store/inventory
    */
-export function apiV3StoreInventoryByGet(data: ApiV3StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+export function apiV3StoreInventoryByGet(data: ApiV3StoreInventoryRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
   return request<ApiV3StoreInventoryResponseByGet>(
     processRequestFunctionConfig(data, extraData, apiV3StoreInventoryByGet.requestConfig),
     ...args
