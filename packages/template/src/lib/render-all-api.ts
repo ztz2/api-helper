@@ -54,6 +54,7 @@ export function renderAllApi(
       p.push(renderInterface(api.requestDataSchema, api, {
         paramType: 'request',
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        emptyBodyCode: 'Record<string, any>;'
       }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
       p.push(renderInterface(api.requestExtraDataSchema, api, {

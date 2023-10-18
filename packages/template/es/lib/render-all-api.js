@@ -78,6 +78,7 @@ export function renderAllApi(apiDocument, options) {
                 p.push(renderInterface(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    emptyBodyCode: 'Record<string, any>;'
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push(renderInterface(api.requestExtraDataSchema, api, {

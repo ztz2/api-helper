@@ -432,7 +432,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestByGet = any;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
  * @url [ GET ] /v2/store/inventory
@@ -459,7 +459,7 @@ v2StoreInventoryByGet.requestConfig = {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithArray
  */
-export type V2UserCreateWithArrayRequestByPost = any;
+export type V2UserCreateWithArrayRequestByPost = Record<string, any>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithArray
@@ -486,7 +486,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestByPost = any;
+export type V2UserCreateWithListRequestByPost = Record<string, any>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithList
@@ -653,7 +653,7 @@ v2UserLoginByGet.requestConfig = {
  * @description Logs out current logged in user session【请求数据类型定义】
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestByGet = any;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @url [ GET ] /v2/user/logout
@@ -1168,7 +1168,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestByGet = any;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
  * @url [ GET ] /v2/store/inventory
@@ -1229,7 +1229,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestByPost = any;
+export type V2UserCreateWithListRequestByPost = Record<string, any>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithList
@@ -1396,7 +1396,7 @@ v2UserLoginByGet.requestConfig = {
  * @description Logs out current logged in user session【请求数据类型定义】
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestByGet = any;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @url [ GET ] /v2/user/logout
@@ -1878,7 +1878,7 @@ export declare const v2StoreOrderOrderIdByDelete: {
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestByGet = any;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
  * @url [ GET ] /v2/store/inventory
@@ -1933,7 +1933,7 @@ export declare const v2UserCreateWithArrayByPost: {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestByPost = any;
+export type V2UserCreateWithListRequestByPost = Record<string, any>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithList
@@ -2085,7 +2085,7 @@ export declare const v2UserLoginByGet: {
  * @description Logs out current logged in user session【请求数据类型定义】
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestByGet = any;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @url [ GET ] /v2/user/logout
@@ -3286,7 +3286,7 @@ apiV3PetPetIdUploadImageByPost.requestConfig = {
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
  * @url [ GET ] /api/v3/store/inventory
  */
-export type ApiV3StoreInventoryRequestByGet = any;
+export type ApiV3StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
  * @url [ GET ] /api/v3/store/inventory
@@ -3540,7 +3540,7 @@ apiV3UserLoginByGet.requestConfig = {
  * @description Logs out current logged in user session【请求数据类型定义】
  * @url [ GET ] /api/v3/user/logout
  */
-export type ApiV3UserLogoutRequestByGet = any;
+export type ApiV3UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @url [ GET ] /api/v3/user/logout
