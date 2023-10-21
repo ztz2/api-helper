@@ -69,7 +69,7 @@ import {
 } from 'vue';
 import { cloneDeep } from 'lodash';
 import { formatCodeServer } from '@api-helper/template';
-import { PrettierOptions } from '@api-helper/cli/lib/types';
+import { PrettierOptions } from '@api-helper/core/lib/interface';
 
 import { checkType } from '@/utils';
 import { DocumentConfig } from '@/store/document-config/interface';

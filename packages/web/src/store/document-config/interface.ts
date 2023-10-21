@@ -1,5 +1,5 @@
 import { merge } from 'lodash';
-import { PrettierOptions } from '@api-helper/cli/lib/types';
+import { PrettierOptions } from '@api-helper/core/lib/interface';
 
 import {
   DEFAULT_SELECT_API_TPL_ID,

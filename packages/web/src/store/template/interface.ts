@@ -1,7 +1,7 @@
 import { merge } from 'lodash';
 import { checkType } from '@api-helper/core/lib/utils/util';
 import type { SelectOptionData } from '@arco-design/web-vue';
-import type { FormatCodeConfig } from '@api-helper/cli/lib/types';
+import type { FormatCodeConfig } from '@api-helper/core/lib/interface';
 
 export class Template implements SelectOptionData {
   // 模板名称

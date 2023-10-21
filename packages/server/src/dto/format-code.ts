@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { FormatCodeConfig } from '@api-helper/cli/lib/types';
+import { FormatCodeConfig } from '@api-helper/core/lib/interface';
 
 export class FormatCode implements FormatCodeConfig {
   @ApiProperty({

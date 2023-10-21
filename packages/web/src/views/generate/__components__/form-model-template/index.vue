@@ -173,7 +173,7 @@ import { formatCodeServer } from '@api-helper/template';
 import { SelectOptionGroup } from '@arco-design/web-vue';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
-import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
+import { FORMAT_CODE_EXTENSION } from '@api-helper/core/lib/constant';
 
 import { useDocumentConfig } from '@/store';
 import useForm from '@/hooks/use-form';

@@ -114,7 +114,7 @@ import {
   onBeforeUnmount,
 } from 'vue';
 import { formatCodeServer } from '@api-helper/template';
-import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
+import { FORMAT_CODE_EXTENSION } from '@api-helper/core/lib/constant';
 
 import { useDocumentConfig } from '@/store';
 import useForm from '@/hooks/use-form';

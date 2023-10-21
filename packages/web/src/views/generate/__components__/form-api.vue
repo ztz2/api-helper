@@ -85,7 +85,7 @@ import {
 import { cloneDeep, get } from 'lodash';
 import { Message } from '@arco-design/web-vue';
 import { randomChar } from '@api-helper/core/lib/utils/util';
-import { FORMAT_CODE_EXTENSION } from '@api-helper/cli/lib/constants';
+import { FORMAT_CODE_EXTENSION } from '@api-helper/core/lib/constant';
 
 import message from '@/utils/message';
 import { modalConfirm } from '@/utils';
