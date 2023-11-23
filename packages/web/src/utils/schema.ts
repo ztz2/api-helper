@@ -21,6 +21,7 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
     const index = checkIds.indexOf(schema.id);
     // 原始值类型的子属性直接可用
     if (isSchemaPrimitiveValue(schema)) {
+      checkIds.splice(index, 1);
       return true;
     }
     // 子属性不在其中，移除
@@ -29,6 +30,7 @@ function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = [
     }
     // 递归子属性
     schema.params = filterChildren(schema.params, checkIds);
+    checkIds.splice(index, 1);
     return true;
   });
 }
