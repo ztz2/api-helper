@@ -24,7 +24,7 @@ export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNEC
 export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
 
 export type RequestFunctionConfig = {
-  // 请求路径，可以看做是URL
+  // 请求路径，可以看做是URL，该资源路径包含了url参数
   path: string;
   // HTTP请求方法
   method: RequestMethod
@@ -41,7 +41,7 @@ export type RequestFunctionConfig = {
   rowExtraData?: unknown;
 }
 
-export function isMiniProgramEnv(): boolean {
+export function checkMiniProgramEnv(): boolean {
   const ua = navigator.userAgent.toLowerCase() ?? '';
   // 微信小程序环境
   if (
@@ -78,29 +78,38 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   // URL参数字段集合
   queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
 }): RequestFunctionConfig {
-  const requestFunctionConfig = {
-    data: null,
+  const requestFunctionConfig: RequestFunctionConfig = {
+    path: requestConfig.path,
+    method: requestConfig.method as RequestMethod,
+    data: undefined,
     rowData: data,
     rowExtraData: extraData,
-    path: requestConfig.path,
-    method: requestConfig.method
-  } as any;
+    hasFormData: false,
+  };
 
   const queryParams: Recordable = {};
+  const isMiniProgramEnv = checkMiniProgramEnv();
   const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as  Recordable;
   const hasNativeFormData = typeof FormData !== 'undefined';
   const hasNodeFormData = !hasNativeFormData && global?.['process']?.['versions']?.['node'] != null;
   const FormDataPolyfill: typeof FormData | undefined = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
 
-  let formData: unknown;
+  let formData: any;
   let appendFormData = (key: string, val: any) => {};
   if (!isMiniProgramEnv) {
     if (FormDataPolyfill == null) {
       throw new Error('当前环境不支持 FormData');
     }
     formData = new FormDataPolyfill();
-    appendFormData = (key: string, val: any) => {
-      (formData as FormData).append(key, val, val instanceof File ? val.name : val instanceof Blob ? 'blob' : undefined);
+    appendFormData = (key: string, v: any) => {
+      const val = v instanceof FormDataItem ? v.get() : v;
+      if (val instanceof File) {
+        (formData as FormData).append(key, val, val.name);
+      } else if (val instanceof Blob) {
+        (formData as FormData).append(key, val, 'blob');
+      } else {
+        (formData as FormData).append(key, val);
+      }
     }
   }
 
@@ -108,8 +117,9 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   for (const [k, v] of Object.entries(cloneData)) {
     // FormData处理
     if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
-      const val = v.get();
       requestFunctionConfig.hasFormData = true;
+
+      const val = v instanceof FormDataItem ? v.get() : v;
       if (Array.isArray(val)) {
         val.forEach((p, index) => {
           appendFormData(`${k}[${index}]`, p);

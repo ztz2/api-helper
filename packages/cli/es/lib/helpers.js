@@ -54,7 +54,7 @@ var FormDataItem = /** @class */ (function () {
     return FormDataItem;
 }());
 export { FormDataItem };
-export function isMiniProgramEnv() {
+export function checkMiniProgramEnv() {
     var _a;
     var ua = (_a = navigator.userAgent.toLowerCase()) !== null && _a !== void 0 ? _a : '';
     // 微信小程序环境
@@ -80,13 +80,15 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var e_1, _a;
     var _b, _c, _d, _e;
     var requestFunctionConfig = {
-        data: null,
+        path: requestConfig.path,
+        method: requestConfig.method,
+        data: undefined,
         rowData: data,
         rowExtraData: extraData,
-        path: requestConfig.path,
-        method: requestConfig.method
+        hasFormData: false,
     };
     var queryParams = {};
+    var isMiniProgramEnv = checkMiniProgramEnv();
     var cloneData = (checkType(data, 'Object') ? __assign({}, data) : {});
     var hasNativeFormData = typeof FormData !== 'undefined';
     var hasNodeFormData = !hasNativeFormData && ((_c = (_b = global === null || global === void 0 ? void 0 : global['process']) === null || _b === void 0 ? void 0 : _b['versions']) === null || _c === void 0 ? void 0 : _c['node']) != null;
@@ -98,15 +100,24 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             throw new Error('当前环境不支持 FormData');
         }
         formData = new FormDataPolyfill();
-        appendFormData = function (key, val) {
-            formData.append(key, val, val instanceof File ? val.name : val instanceof Blob ? 'blob' : undefined);
+        appendFormData = function (key, v) {
+            var val = v instanceof FormDataItem ? v.get() : v;
+            if (val instanceof File) {
+                formData.append(key, val, val.name);
+            }
+            else if (val instanceof Blob) {
+                formData.append(key, val, 'blob');
+            }
+            else {
+                formData.append(key, val);
+            }
         };
     }
     var _loop_1 = function (k, v) {
         // FormData处理
         if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
-            var val = v.get();
             requestFunctionConfig.hasFormData = true;
+            var val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
                 val.forEach(function (p, index) {
                     appendFormData("".concat(k, "[").concat(index, "]"), p);

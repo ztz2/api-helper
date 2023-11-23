@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processRequestFunctionConfig = exports.isMiniProgramEnv = exports.FormDataItem = void 0;
+exports.processRequestFunctionConfig = exports.checkMiniProgramEnv = exports.FormDataItem = void 0;
 // @ts-ignore
 const stringify_1 = __importDefault(require("qs/lib/stringify"));
 function checkType(value, type) {
@@ -21,7 +21,7 @@ class FormDataItem {
     }
 }
 exports.FormDataItem = FormDataItem;
-function isMiniProgramEnv() {
+function checkMiniProgramEnv() {
     var _a;
     const ua = (_a = navigator.userAgent.toLowerCase()) !== null && _a !== void 0 ? _a : '';
     // 微信小程序环境
@@ -43,17 +43,19 @@ function isMiniProgramEnv() {
     }
     return false;
 }
-exports.isMiniProgramEnv = isMiniProgramEnv;
+exports.checkMiniProgramEnv = checkMiniProgramEnv;
 function processRequestFunctionConfig(data, extraData, requestConfig) {
     var _a, _b, _c, _d;
     const requestFunctionConfig = {
-        data: null,
+        path: requestConfig.path,
+        method: requestConfig.method,
+        data: undefined,
         rowData: data,
         rowExtraData: extraData,
-        path: requestConfig.path,
-        method: requestConfig.method
+        hasFormData: false,
     };
     const queryParams = {};
+    const isMiniProgramEnv = checkMiniProgramEnv();
     const cloneData = (checkType(data, 'Object') ? Object.assign({}, data) : {});
     const hasNativeFormData = typeof FormData !== 'undefined';
     const hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
@@ -65,16 +67,25 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             throw new Error('当前环境不支持 FormData');
         }
         formData = new FormDataPolyfill();
-        appendFormData = (key, val) => {
-            formData.append(key, val, val instanceof File ? val.name : val instanceof Blob ? 'blob' : undefined);
+        appendFormData = (key, v) => {
+            const val = v instanceof FormDataItem ? v.get() : v;
+            if (val instanceof File) {
+                formData.append(key, val, val.name);
+            }
+            else if (val instanceof Blob) {
+                formData.append(key, val, 'blob');
+            }
+            else {
+                formData.append(key, val);
+            }
         };
     }
     // 数据处理
     for (const [k, v] of Object.entries(cloneData)) {
         // FormData处理
         if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
-            const val = v.get();
             requestFunctionConfig.hasFormData = true;
+            const val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
                 val.forEach((p, index) => {
                     appendFormData(`${k}[${index}]`, p);

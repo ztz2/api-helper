@@ -15,7 +15,7 @@ export declare type RequestFunctionConfig = {
     rowData: unknown;
     rowExtraData?: unknown;
 };
-export declare function isMiniProgramEnv(): boolean;
+export declare function checkMiniProgramEnv(): boolean;
 export declare function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
     path: string;
     method: RequestMethod | string;

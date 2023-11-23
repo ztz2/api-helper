@@ -221,7 +221,7 @@ export interface V2StoreOrderRequestByPost {
   tag?: Array<
     // Order Tag Child
     Array<{
-      // The password \\r\\r\\n\\n for login in clear text.
+      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
       tagName?: 'error' | 'waring' | 'info';
     }>
   >;
@@ -243,7 +243,7 @@ export interface V2StoreOrderResponseByPost {
   tag: Array<
     // Order Tag Child
     Array<{
-      // The password \\r\\r\\n\\n for login in clear text.
+      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
       tagName: 'error' | 'waring' | 'info';
     }>
   >;
@@ -302,7 +302,7 @@ export type V2StoreOrderOrderIdResponseByDelete = any;
  * @doc https://yapi.pro/project/16095/interface/api/969410
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestByGet = any;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969410
@@ -429,7 +429,7 @@ export type V2UserUsernameResponseByDelete = any;
 export interface V2UserLoginRequestByGet {
   // The user name for login
   username: string;
-  // The password \\r\\r\\n\\n for login in clear text.
+  // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
   password: string;
 }
 /**
@@ -444,7 +444,7 @@ export type V2UserLoginResponseByGet = string;
  * @doc https://yapi.pro/project/16095/interface/api/969424
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestByGet = any;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969424
@@ -845,7 +845,7 @@ export interface V2StoreOrderRequestByPost {
   tag?: Array<
     // Order Tag Child
     Array<{
-      // The password \\r\\r\\n\\n for login in clear text.
+      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
       tagName?: 'error' | 'waring' | 'info';
     }>
   >;
@@ -867,7 +867,7 @@ export interface V2StoreOrderResponseByPost {
   tag: Array<
     // Order Tag Child
     Array<{
-      // The password \\r\\r\\n\\n for login in clear text.
+      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
       tagName: 'error' | 'waring' | 'info';
     }>
   >;
@@ -982,7 +982,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  * @doc https://yapi.pro/project/16095/interface/api/969410
  * @url [ GET ] /v2/store/inventory
  */
-export type V2StoreInventoryRequestByGet = any;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969410
@@ -995,7 +995,7 @@ export type V2StoreInventoryResponseByGet = any;
  * @url [ GET ] /v2/store/inventory
  */
 export function v2StoreInventoryByGet(
-  data: V2StoreInventoryRequestByGet,
+  data: V2StoreInventoryRequestByGet = {},
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
@@ -1221,7 +1221,7 @@ v2UserUsernameByDelete.requestConfig = {
 export interface V2UserLoginRequestByGet {
   // The user name for login
   username: string;
-  // The password \\r\\r\\n\\n for login in clear text.
+  // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
   password: string;
 }
 /**
@@ -1250,7 +1250,7 @@ v2UserLoginByGet.requestConfig = {
  * @doc https://yapi.pro/project/16095/interface/api/969424
  * @url [ GET ] /v2/user/logout
  */
-export type V2UserLogoutRequestByGet = any;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session【响应数据类型定义】
  * @doc https://yapi.pro/project/16095/interface/api/969424
@@ -1262,7 +1262,7 @@ export type V2UserLogoutResponseByGet = any;
  * @doc https://yapi.pro/project/16095/interface/api/969424
  * @url [ GET ] /v2/user/logout
  */
-export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
   return request<V2UserLogoutResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
 }
 v2UserLogoutByGet.requestConfig = {
