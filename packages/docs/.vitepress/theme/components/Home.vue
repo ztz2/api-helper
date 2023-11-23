@@ -77,7 +77,7 @@ onMounted(async () => {
 
   <section id="sponsors">
     <h2>生成接口函数以及与之对应的请求参数与响应数据interface代码</h2>
-    <img alt="" src="/images/api-code.png" />
+    <img alt="" src="/images/api-code.gif" />
   </section>
 
   <section id="sponsors">

@@ -21,7 +21,7 @@
 - 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
 - 请求参数兼容（对象和数组参数的兼容）
 
-![](../docs/src/public/images/api-code.png)
+![](../docs/src/public/images/api-code.gif)
 
 ## 安装
 ```shell
