@@ -482,23 +482,49 @@ export type RequestOptions = {
   // 自定义配置属性
 };
 
-export default async function request<T>(config: RequestFunctionConfig, options?: RequestOptions): Promise<T> {
+export default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {
   return new Promise((resolve, reject) => {
-    const { method, data, path } = config;
-    console.log(path, method, data);
+    // 以axios为例的请求配置
+    const requestConfig = {
+      url: config.path,
+      method: config.method,
+      data: config.data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    // 处理表单数据请求头
+    if (config.hasFormData) {
+      requestConfig.headers['Content-Type'] = 'multipart/form-data';
+    }
+
+    console.log('请求配置：', requestConfig);
     // TODO待实现具体request请求逻辑...
-    // 先用异步模拟request请求逻辑，具体实现再删除
+    // 先用异步模拟request请求逻辑
     setTimeout(() => {
-      resolve({} as unknown as T);
+      resolve({} as unknown as ResponseData);
     }, 1500);
   });
 }
 `: `export default async function request(config, options) {
   return new Promise((resolve, reject) => {
-    const { method, data, path } = config;
-    console.log(path, method, data);
+    // 以axios为例的请求配置
+    const requestConfig = {
+      url: config.path,
+      method: config.method,
+      data: config.data,
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    // 处理表单数据请求头
+    if (config.hasFormData) {
+      requestConfig.headers['Content-Type'] = 'multipart/form-data';
+    }
+
+    console.log('请求配置：', requestConfig);
     // TODO待实现具体request请求逻辑...
-    // 先用异步模拟request请求逻辑，具体实现再删除
+    // 先用异步模拟request请求逻辑
     setTimeout(() => {
       resolve({});
     }, 1500);
