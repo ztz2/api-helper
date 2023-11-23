@@ -23,13 +23,14 @@
 
 ![](../docs/src/public/images/api-code.gif)
 
+
 ## 安装
 ```shell
 pnpm install @api-helper/cli
 ```
 
 ## 开始
-快速开始，只需要两步步即可。
+快速开始，只需要两步即可。
 
 ### 步骤一
 初始化配置文件，终端输入`npx apih init`命令。初始化完成后，会自动创建`apih.config.(ts|js)`配置文件和`src/api/request.(ts|js)`统一接口请求文件。
@@ -61,15 +62,25 @@ export default defineConfig({
 * 统一接口请求实现，可以简单参考下面的以 `axios` 库例子。
 ```typescript
 import axios from 'axios';
-import { RequestFunctionConfig } from '@api-helper/core/es/lib/helpers';
+import { RequestFunctionConfig } from '@api-helper/core/lib/helpers';
 
 export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
   return new Promise((resolve, reject) => {
-    axios({
-      method: config.method,
+    // 以axios为例的请求配置
+    const requestConfig = {
       url: config.path,
+      method: config.method,
       data: config.data,
-    }).then((res) => {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    // 处理表单数据请求头
+    if (config.hasFormData) {
+      requestConfig.headers['Content-Type'] = 'multipart/form-data';
+    }
+
+    axios(requestConfig).then((res) => {
       // 响应数据处理...
       resolve(res as unknown as T);
     }).catch((error) => {

@@ -28,14 +28,28 @@
 ### 生成前端请求接口函数和TS类型申明
 
 API生成代码展示，[查看这里文档](./packages/cli/README.md)
-![](./packages/docs/src/public/images/api-code.png)
+
+![](./packages/docs/src/public/images/api-code.gif)
 
 ### 基于API的代码生成器
 
-代码生成器，生成代码展示，该功能需本地部署服务，[查看这里文档](./packages/server/README.md)
-![](./packages/docs/src/public/images/map-code.png)
-![](./packages/docs/src/public/images/form-code.png)
-![](./packages/docs/src/public/images/file-directory.png)
+该功能需本地部署服务，[查看这里文档](./packages/server/README.md)
+
+* 通用的模版代码生成器
+  * 生成JS对象代码
+  * 生成Typescript interface代码
+  * 生成实体类代码
+  * 生成表单、表格代码
+  * 自定义模版代码生成等
+
+![](./packages/docs/src/public/images/map-code.gif)
+
+
+* 文件模块生成
+  
+将一个功能模块的接口和指定的模版关联，生成一个功能模块的文件代码。
+  
+![](./packages/docs/src/public/images/file-directory.gif)
 
 ## 许可
 

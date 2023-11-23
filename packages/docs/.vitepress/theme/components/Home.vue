@@ -81,8 +81,8 @@ onMounted(async () => {
   </section>
 
   <section id="sponsors">
-    <h2>生成Jascript对象代码</h2>
-    <img alt="" src="/images/map-code.png" />
+    <h2>生成JS对象代码</h2>
+    <img alt="" src="/images/map-code.gif" />
   </section>
 
 <!--  <section id="sponsors">-->
@@ -90,14 +90,14 @@ onMounted(async () => {
 <!--    <img alt="" src="/images/class-code.png" />-->
 <!--  </section>-->
 
-  <section id="sponsors">
-    <h2>生成表单模板代码</h2>
-    <img alt="" src="/images/form-code.png" />
-  </section>
+<!--  <section id="sponsors">-->
+<!--    <h2>生成表单模板代码</h2>-->
+<!--    <img alt="" src="/images/form-code.png" />-->
+<!--  </section>-->
 
   <section id="sponsors">
     <h2>生成整体文件模块</h2>
-    <img alt="" src="/images/file-directory.png" />
+    <img alt="" src="/images/file-directory.gif" />
   </section>
   <SiteMap />
   <!-- <NewsLetter /> -->

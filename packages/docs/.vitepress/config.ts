@@ -65,6 +65,7 @@ export default defineConfigWithTheme<ThemeConfig>({
   srcDir: 'src',
   srcExclude: ['tutorial/**/description.md'],
   scrollOffset: 'header',
+  ignoreDeadLinks: true,
   outDir: path.resolve(__dirname, '../dist'),
   cacheDir: path.resolve(__dirname, '../.cache'),
   head: [

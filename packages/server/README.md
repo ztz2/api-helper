@@ -30,12 +30,25 @@ windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.ba
 
 ### 步骤3
 * 启动服务，进入server包下，输入命令：`pnpm run start:prod`。
-* 服务启动后访问地址：[http://127.0.0.1:3210](http://127.0.0.1:3210)。
+* 服务启动后访问地址：[http://localhost:3210](http://localhost:3210)。
 * 如果需要更新最新代码运行，需要从步骤1开始，后续启动服务操作，都是步骤3。
 
-![](../docs/src/public/images/map-code.png)
-![](../docs/src/public/images/form-code.png)
-![](../docs/src/public/images/file-directory.png)
+## 功能展示
+* 通用的模版代码生成器
+  * 生成JS对象代码
+  * 生成Typescript interface代码
+  * 生成实体类代码
+  * 生成表单、表格代码
+  * 自定义模版代码生成等
+![](../docs/src/public/images/map-code.gif)
+
+
+* 文件模块生成
+
+将一个功能模块的接口和指定的模版关联，生成一个功能模块的文件代码。
+
+![](../docs/src/public/images/file-directory.gif)
+
 ## 许可
 
 [MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)

@@ -97,7 +97,7 @@
         </a-tab-pane>
         <a-tab-pane key="2" title="字段选择">
           <a-row :gutter="5">
-            <a-col :span="12">
+            <a-col :span="24">
               <a-card style="width: 100%">
                 <template #title>
                   <div class="text-center">请求数据字段</div>
@@ -107,7 +107,7 @@
                 </div>
               </a-card>
             </a-col>
-            <a-col :span="12">
+            <a-col :span="12" style="display: none">
               <a-card style="width: 100%">
                 <template #title>
                   <div class="text-center">响应数据字段</div>
