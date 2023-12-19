@@ -37,8 +37,14 @@ windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.ba
 ![](../docs/src/public/images/form-code.png)
 ![](../docs/src/public/images/file-directory.gif)
 
-## 许可
+## 👏赞助商
+<a href="https://www.jetbrains.com" target="_blank">
+  <img width="64" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+</a>
 
-[MIT](https://opensource.org/licenses/MIT)
+感谢 [JetBrains](https://www.jetbrains.com) 对本项目的支持。
 
-Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
+
+## 📃开源许可
+
+[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)

@@ -99,6 +99,20 @@ onMounted(async () => {
     <h2>生成整体文件模块</h2>
     <img alt="" src="/images/file-directory.gif" />
   </section>
+
+  <section id="sponsors">
+    <h2>👏赞助商</h2>
+    <div>
+      <a href="https://www.jetbrains.com" target="_blank">
+        <img width="64" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+      </a>
+    </div>
+    <div>
+      感谢
+      <a href="https://www.jetbrains.com" target="_blank">JetBrains</a>
+      对本项目的支持。
+    </div>
+  </section>
   <SiteMap />
   <!-- <NewsLetter /> -->
 </template>
