@@ -61,13 +61,15 @@ async function handleSave() {
     const { data, documentList } = res;
     for (const item of documentList) {
       delete item.id;
-      let url = item.documentServerUrl;
-      if (/http(s?):\/\//.test(item.documentServerUrl)) {
-        const urlParsed = urlParse(item.documentServerUrl);
-        if (urlParsed) {
-          url = urlParsed.origin + urlParsed.pathname;
-        }
-      }
+      const url = item.documentServerUrl;
+
+      // fix: query参数丢失问题
+      // if (/http(s?):\/\//.test(item.documentServerUrl)) {
+      //   const urlParsed = urlParse(item.documentServerUrl);
+      //   if (urlParsed) {
+      //     url = urlParsed.origin + urlParsed.pathname;
+      //   }
+      // }
       saveDocumentConfig.value(pick({
         ...data,
         ...item,
