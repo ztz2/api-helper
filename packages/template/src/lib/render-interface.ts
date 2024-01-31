@@ -186,7 +186,7 @@ function renderInterfaceDeepObject(
         schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
         '{',
           // 类型遍历
-          schema.params.map((item) => renderInterfaceDeepObject(item, memo)).join('\n'),
+          schema.params.filter((item) => !(item.keyName?.trim() === '' && item.type === 'object')).map((item) => renderInterfaceDeepObject(item, memo)).join('\n'),
         '}',
       ].filter(Boolean).join('\n');
       break;

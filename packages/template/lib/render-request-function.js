@@ -33,9 +33,6 @@ function renderRequestFunction(api, options) {
     if (!api) {
         return '';
     }
-    if (api.path.includes('findRefrigerantTypeList')) {
-        console.log(123);
-    }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
     var isEmptyRequestData = (0, util_1.isEmptySchema)(api.requestDataSchema);

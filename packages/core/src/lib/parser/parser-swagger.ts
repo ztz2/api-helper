@@ -174,6 +174,10 @@ export default class ParserSwagger {
             const parameters = apiMap.parameters;
             for (let j = 0; j < parameters.length; j++) {
               const parameter = parameters[j];
+              // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+              if (parameter.name?.trim?.() === '') {
+                continue;
+              }
               let keyName = filterKeyName(parameter.name);
               // 路径参数 | url 参数
               if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {

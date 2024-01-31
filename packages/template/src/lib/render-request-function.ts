@@ -19,9 +19,6 @@ export function renderRequestFunction(
   if (!api) {
     return '';
   }
-  if (api.path.includes('findRefrigerantTypeList')) {
-    console.log(123);
-  }
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
   const isEmptyRequestData = isEmptySchema(api.requestDataSchema);

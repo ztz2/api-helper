@@ -117,7 +117,7 @@ function renderInterfaceDeepObject(schema, memo) {
                 schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
                 '{',
                 // 类型遍历
-                schema.params.map(function (item) { return renderInterfaceDeepObject(item, memo); }).join('\n'),
+                schema.params.filter(function (item) { var _a; return !(((_a = item.keyName) === null || _a === void 0 ? void 0 : _a.trim()) === '' && item.type === 'object'); }).map(function (item) { return renderInterfaceDeepObject(item, memo); }).join('\n'),
                 '}',
             ].filter(Boolean).join('\n');
             break;

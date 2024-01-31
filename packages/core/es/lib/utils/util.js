@@ -150,6 +150,12 @@ export function filterSchemaRoot(schemaList) {
 }
 // 预留，用于统一处理keyName，目前不需要进行任何处理。
 export function filterKeyName(v) {
+    // fix: 当字段是一个不合法的变量，将其转成字符串
+    if (((typeof v === 'string' && v.trim() !== '') || (typeof v !== 'string' && v != null))
+        && !v.includes('.')
+        && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
+        v = "\"".concat(v, "\"");
+    }
     return v;
 }
 export function filterSchemaRequired(schemaList) {
@@ -181,7 +187,7 @@ export function filterSchemaRequired(schemaList) {
 }
 export function parserSchema(schema, parentSchema, keyName, memo, options) {
     var e_3, _a;
-    var _b;
+    var _b, _c;
     if (parentSchema === void 0) { parentSchema = {}; }
     if (keyName === void 0) { keyName = ''; }
     if (memo === void 0) { memo = new Map(); }
@@ -251,7 +257,11 @@ export function parserSchema(schema, parentSchema, keyName, memo, options) {
                 if (schema.properties) {
                     var schemaProperties = Object.entries(schema.properties);
                     for (var i = 0; i < schemaProperties.length; i++) {
-                        var _c = __read(schemaProperties[i], 2), childKeyName = _c[0], childSchema = _c[1];
+                        var _d = __read(schemaProperties[i], 2), childKeyName = _d[0], childSchema = _d[1];
+                        // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+                        if (((_c = childKeyName === null || childKeyName === void 0 ? void 0 : childKeyName.trim) === null || _c === void 0 ? void 0 : _c.call(childKeyName)) === '') {
+                            continue;
+                        }
                         if (validateSchema(childSchema)) {
                             var tmp = parserSchema(childSchema, schema, childKeyName, memo, options);
                             tmp && resultSchema.params.push(tmp);
@@ -264,8 +274,8 @@ export function parserSchema(schema, parentSchema, keyName, memo, options) {
                 // 数组内存在多种类型
                 if (Array.isArray(schema.items)) {
                     try {
-                        for (var _d = __values(schema.items), _e = _d.next(); !_e.done; _e = _d.next()) {
-                            var item = _e.value;
+                        for (var _e = __values(schema.items), _f = _e.next(); !_f.done; _f = _e.next()) {
+                            var item = _f.value;
                             if (validateSchema(item)) {
                                 var tmp = parserSchema(item, schema, '', memo, options);
                                 if (tmp) {
@@ -277,7 +287,7 @@ export function parserSchema(schema, parentSchema, keyName, memo, options) {
                     catch (e_3_1) { e_3 = { error: e_3_1 }; }
                     finally {
                         try {
-                            if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+                            if (_f && !_f.done && (_a = _e.return)) _a.call(_e);
                         }
                         finally { if (e_3) throw e_3.error; }
                     }
@@ -453,6 +463,7 @@ export function filterSchemaPrimitiveValue(schema) {
         if (memo.has(scmList)) {
             return memo.get(scmList);
         }
+        debugger;
         var result = [];
         memo.set(scmList, result);
         try {

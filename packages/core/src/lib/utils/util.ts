@@ -119,7 +119,14 @@ export function filterSchemaRoot(schemaList: Array<APIHelper.Schema>) {
 }
 
 // 预留，用于统一处理keyName，目前不需要进行任何处理。
-export function filterKeyName<T>(v: T) {
+export function filterKeyName<T extends string>(v: T): T {
+  // fix: 当字段是一个不合法的变量，将其转成字符串
+  if (
+    ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
+    && !v.includes('.')
+    && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
+    v = `\"${v}\"`;
+  }
   return v;
 }
 
@@ -214,6 +221,10 @@ export function parserSchema(
           const schemaProperties = Object.entries(schema.properties);
           for (let i = 0; i < schemaProperties.length; i++) {
             const [childKeyName, childSchema] = schemaProperties[i];
+            // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+            if (childKeyName?.trim?.() === '') {
+              continue;
+            }
             if (validateSchema(childSchema)) {
               const tmp = parserSchema(
                 childSchema,
@@ -417,6 +428,7 @@ export function filterSchemaPrimitiveValue<T>(schema: APIHelper.Schema | APIHelp
     if (memo.has(scmList)) {
       return memo.get(scmList) as Array<APIHelper.Schema>;
     }
+    debugger;
     const result: Array<APIHelper.Schema> = [];
     memo.set(scmList, result);
     for (const scm of scmList) {

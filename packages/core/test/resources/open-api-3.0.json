@@ -45,6 +45,199 @@
     }
   ],
   "paths": {
+    "/api/ftb/arranging/work": {
+      "get": {
+        "summary": "查看排班列表",
+        "x-apifox-folder": "考勤(新版)/排班/v1",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "/api/ftb",
+        "tags": [
+          "考勤(新版)/排班/v1"
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "考勤组id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "realName",
+            "in": "query",
+            "description": "成员名称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "description": "月份",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "userIds",
+            "in": "query",
+            "description": "用户id集合",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "测试",
+            "example": "{{Authorization}}",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "schedulesVO": {
+                        "type": "object",
+                        "properties": {
+                          "userId": {
+                            "type": "string",
+                            "title": "用户id"
+                          },
+                          "realName": {
+                            "type": "string",
+                            "title": "名称"
+                          },
+                          "delMark": {
+                            "type": "string",
+                            "title": "是否移除(1移除)"
+                          },
+                          "selfGroup": {
+                            "type": "string",
+                            "title": "是否自己的考勤组",
+                            "description": "(0未产生借调 1: 被借调, 2: 借调)"
+                          },
+                          "val": {
+                            "type": "object",
+                            "properties": {
+                              "2023-11-10": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "type": {
+                                      "type": "integer",
+                                      "title": "类型",
+                                      "description": "0无出勤1休息日2正常出勤 3假期(抵扣券) 4假期(兑换券) 5未来的时间不在本组 6迟到 7早退 8缺卡 9缺勤 10外勤 11请假 12加班 13借调 14被借调 15当日有早退且借调情况 16当日有迟到且借调情况 17当日有缺卡且借调情况 18当日有缺勤且借调情况 19当日有打外勤且借调情况,20假 21上班打卡"
+                                    },
+                                    "periodId": {
+                                      "type": "string",
+                                      "title": "时段id"
+                                    },
+                                    "start": {
+                                      "type": "string",
+                                      "title": "开始时间点"
+                                    },
+                                    "end": {
+                                      "type": "string",
+                                      "title": "结束时间点"
+                                    },
+                                    "isEndTomorrow": {
+                                      "type": "string",
+                                      "title": "下班时间是否为次日(1今日 2次日)"
+                                    },
+                                    "selfGroup": {
+                                      "type": "string",
+                                      "description": "(0未产生借调 1: 被借调, 2: 借调)",
+                                      "title": "是否自己的考勤组"
+                                    },
+                                    "sort": {
+                                      "type": "integer",
+                                      "title": "排序",
+                                      "description": "用于颜色展示"
+                                    }
+                                  },
+                                  "x-apifox-orders": [
+                                    "type",
+                                    "periodId",
+                                    "start",
+                                    "end",
+                                    "isEndTomorrow",
+                                    "selfGroup",
+                                    "sort"
+                                  ],
+                                  "required": [
+                                    "type",
+                                    "start",
+                                    "end",
+                                    "periodId",
+                                    "selfGroup",
+                                    "sort",
+                                    "isEndTomorrow"
+                                  ],
+                                  "x-apifox-ignore-properties": []
+                                }
+                              }
+                            },
+                            "x-apifox-orders": [
+                              "2023-11-10"
+                            ],
+                            "x-apifox-ignore-properties": []
+                          }
+                        },
+                        "title": "排班实体",
+                        "x-apifox-orders": [
+                          "userId",
+                          "realName",
+                          "delMark",
+                          "selfGroup",
+                          "val"
+                        ],
+                        "required": [
+                          "realName",
+                          "selfGroup",
+                          "userId",
+                          "val",
+                          "delMark"
+                        ],
+                        "x-apifox-ignore-properties": []
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "schedulesVO"
+                    ],
+                    "required": [
+                      "schedulesVO"
+                    ],
+                    "x-apifox-ignore-properties": []
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/2997535/apis/api-126150002-run",
+        "security": []
+      }
+    },
     "/pet": {
       "put": {
         "tags": [
@@ -1106,6 +1299,57 @@
         ],
         "type": "object",
         "properties": {
+          "": {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "用户id"
+              },
+              "userName": {
+                "type": "string",
+                "description": "用户名"
+              },
+              "userOrgInfoPushVoList": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "userOrgName": {
+                      "type": "string",
+                      "description": "用户所在组织名称"
+                    },
+                    "userPostName": {
+                      "type": "string",
+                      "description": "用户所在岗位名称"
+                    },
+                    "userOfficialRankName": {
+                      "type": "string",
+                      "description": "用户所在职等名称"
+                    }
+                  },
+                  "x-apifox-orders": [
+                    "userOrgName",
+                    "userPostName",
+                    "userOfficialRankName"
+                  ],
+                  "x-apifox-ignore-properties": []
+                },
+                "description": "用户组织信息（人员会存在于多个组织和岗位）"
+              }
+            },
+            "description": "被鉴定人信息(不选择鉴定人的时候)",
+            "x-apifox-orders": [
+              "userId",
+              "userName",
+              "userOrgInfoPushVoList",
+              "01HKFBZNM9PMN97CPD5A8QQF40"
+            ],
+            "required": [
+              "01HKFBZNM9PMN97CPD5A8QQF40"
+            ],
+            "x-apifox-ignore-properties": []
+          },
           "id": {
             "type": "integer",
             "format": "int64",

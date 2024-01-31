@@ -171,11 +171,11 @@ var ParserSwagger = /** @class */ (function () {
     };
     ParserSwagger.prototype.parserPath2API = function (parsedDocumentMap) {
         var e_3, _a, e_4, _b;
-        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9;
+        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11;
         var result = [];
         try {
             for (var parsedDocumentMap_1 = __values(parsedDocumentMap), parsedDocumentMap_1_1 = parsedDocumentMap_1.next(); !parsedDocumentMap_1_1.done; parsedDocumentMap_1_1 = parsedDocumentMap_1.next()) {
-                var _10 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _10[0], openAPIDocument = _10[1];
+                var _12 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _12[0], openAPIDocument = _12[1];
                 var paths = openAPIDocument.paths;
                 if (!paths) {
                     continue;
@@ -183,10 +183,10 @@ var ParserSwagger = /** @class */ (function () {
                 var pathsEntries = Object.entries(paths);
                 var categoryMap = this.parserCategory(openAPIDocument);
                 for (var i = 0; i < pathsEntries.length; i++) {
-                    var _11 = __read(pathsEntries[i], 2), path = _11[0], methodMap = _11[1];
+                    var _13 = __read(pathsEntries[i], 2), path = _13[0], methodMap = _13[1];
                     var methodMapEntries = Object.entries(methodMap);
                     var _loop_1 = function (w) {
-                        var e_5, _13;
+                        var e_5, _15;
                         var method = methodMapEntries[w][0].toLowerCase();
                         var apiMap = methodMapEntries[w][1];
                         // fix: basePath为/，导致//
@@ -226,6 +226,10 @@ var ParserSwagger = /** @class */ (function () {
                             var parameters = apiMap.parameters;
                             for (var j = 0; j < parameters.length; j++) {
                                 var parameter = parameters[j];
+                                // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+                                if (((_h = (_g = parameter.name) === null || _g === void 0 ? void 0 : _g.trim) === null || _h === void 0 ? void 0 : _h.call(_g)) === '') {
+                                    continue;
+                                }
                                 var keyName = (0, util_1.filterKeyName)(parameter.name);
                                 // 路径参数 | url 参数
                                 if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
@@ -286,7 +290,7 @@ var ParserSwagger = /** @class */ (function () {
                             parser_key_name_2_schema_1.default.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
                         }
                         // URL query 参数，query参数必须包含key，不存在不兼容问题
-                        (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, (_j = (_h = (_g = apiMap.requestBody) === null || _g === void 0 ? void 0 : _g.content) === null || _h === void 0 ? void 0 : _h['application/x-www-form-urlencoded']) === null || _j === void 0 ? void 0 : _j.schema, requestKeyNameMemo, {
+                        (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, (_l = (_k = (_j = apiMap.requestBody) === null || _j === void 0 ? void 0 : _j.content) === null || _k === void 0 ? void 0 : _k['application/x-www-form-urlencoded']) === null || _l === void 0 ? void 0 : _l.schema, requestKeyNameMemo, {
                             autoGenerateId: this_1.autoGenerateId,
                             callback: function (parsedSchema) {
                                 // 收集URL query 参数字段
@@ -296,19 +300,19 @@ var ParserSwagger = /** @class */ (function () {
                             }
                         });
                         // 请求 Body 为 json参数
-                        var requestSchemaSource = (_o = (_m = (_l = (_k = apiMap.requestBody) === null || _k === void 0 ? void 0 : _k.content) === null || _l === void 0 ? void 0 : _l['application/json']) === null || _m === void 0 ? void 0 : _m.schema) !== null && _o !== void 0 ? _o : (_r = (_q = (_p = apiMap.requestBody) === null || _p === void 0 ? void 0 : _p.content) === null || _q === void 0 ? void 0 : _q['text/json']) === null || _r === void 0 ? void 0 : _r.schema;
+                        var requestSchemaSource = (_q = (_p = (_o = (_m = apiMap.requestBody) === null || _m === void 0 ? void 0 : _m.content) === null || _o === void 0 ? void 0 : _o['application/json']) === null || _p === void 0 ? void 0 : _p.schema) !== null && _q !== void 0 ? _q : (_t = (_s = (_r = apiMap.requestBody) === null || _r === void 0 ? void 0 : _r.content) === null || _s === void 0 ? void 0 : _s['text/json']) === null || _t === void 0 ? void 0 : _t.schema;
                         requestExtraDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
                             autoGenerateId: this_1.autoGenerateId,
                         });
                         (0, util_1.processRequestSchemaPipeline)(api, requestDataSchema, requestExtraDataSchema, this_1);
                         /****************** 处理请求参数--结束 ******************/
                         /****************** 处理响应参数--开始 ******************/
-                        var responsesSchemaSource = (_4 = (_z = (_u = (_t = (_s = apiMap.responses) === null || _s === void 0 ? void 0 : _s['200']) === null || _t === void 0 ? void 0 : _t.schema) !== null && _u !== void 0 ? _u : (_y = (_x = (_w = (_v = apiMap.responses) === null || _v === void 0 ? void 0 : _v['200']) === null || _w === void 0 ? void 0 : _w.content) === null || _x === void 0 ? void 0 : _x['application/json']) === null || _y === void 0 ? void 0 : _y.schema) !== null && _z !== void 0 ? _z : (_3 = (_2 = (_1 = (_0 = apiMap.responses) === null || _0 === void 0 ? void 0 : _0['200']) === null || _1 === void 0 ? void 0 : _1.content) === null || _2 === void 0 ? void 0 : _2['text/json']) === null || _3 === void 0 ? void 0 : _3.schema) !== null && _4 !== void 0 ? _4 : (_8 = (_7 = (_6 = (_5 = apiMap.responses) === null || _5 === void 0 ? void 0 : _5['200']) === null || _6 === void 0 ? void 0 : _6.content) === null || _7 === void 0 ? void 0 : _7['*/*']) === null || _8 === void 0 ? void 0 : _8.schema;
+                        var responsesSchemaSource = (_6 = (_1 = (_w = (_v = (_u = apiMap.responses) === null || _u === void 0 ? void 0 : _u['200']) === null || _v === void 0 ? void 0 : _v.schema) !== null && _w !== void 0 ? _w : (_0 = (_z = (_y = (_x = apiMap.responses) === null || _x === void 0 ? void 0 : _x['200']) === null || _y === void 0 ? void 0 : _y.content) === null || _z === void 0 ? void 0 : _z['application/json']) === null || _0 === void 0 ? void 0 : _0.schema) !== null && _1 !== void 0 ? _1 : (_5 = (_4 = (_3 = (_2 = apiMap.responses) === null || _2 === void 0 ? void 0 : _2['200']) === null || _3 === void 0 ? void 0 : _3.content) === null || _4 === void 0 ? void 0 : _4['text/json']) === null || _5 === void 0 ? void 0 : _5.schema) !== null && _6 !== void 0 ? _6 : (_10 = (_9 = (_8 = (_7 = apiMap.responses) === null || _7 === void 0 ? void 0 : _7['200']) === null || _8 === void 0 ? void 0 : _8.content) === null || _9 === void 0 ? void 0 : _9['*/*']) === null || _10 === void 0 ? void 0 : _10.schema;
                         if ((0, validator_1.validateSchema)(responsesSchemaSource)) {
                             api.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, {
                                 autoGenerateId: this_1.autoGenerateId
                             });
-                            if (((_9 = api.responseDataSchema) === null || _9 === void 0 ? void 0 : _9.type) === 'object') {
+                            if (((_11 = api.responseDataSchema) === null || _11 === void 0 ? void 0 : _11.type) === 'object') {
                                 api.responseDataSchema.keyName = '';
                             }
                         }
@@ -316,8 +320,8 @@ var ParserSwagger = /** @class */ (function () {
                         try {
                             /****************** 处理响应参数--结束 ******************/
                             // 将该API添加到所依赖的模块中
-                            for (var _14 = (e_5 = void 0, __values(apiMap.tags)), _15 = _14.next(); !_15.done; _15 = _14.next()) {
-                                var tagName = _15.value;
+                            for (var _16 = (e_5 = void 0, __values(apiMap.tags)), _17 = _16.next(); !_17.done; _17 = _16.next()) {
+                                var tagName = _17.value;
                                 var recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(constant_1.UNKNOWN_GROUP_NAME);
                                 recordCategory && recordCategory.apiList.push(api);
                             }
@@ -325,7 +329,7 @@ var ParserSwagger = /** @class */ (function () {
                         catch (e_5_1) { e_5 = { error: e_5_1 }; }
                         finally {
                             try {
-                                if (_15 && !_15.done && (_13 = _14.return)) _13.call(_14);
+                                if (_17 && !_17.done && (_15 = _16.return)) _15.call(_16);
                             }
                             finally { if (e_5) throw e_5.error; }
                         }
@@ -338,7 +342,7 @@ var ParserSwagger = /** @class */ (function () {
                 try {
                     // 将转换完成的分组添加到文档中
                     for (var categoryMap_1 = (e_4 = void 0, __values(categoryMap)), categoryMap_1_1 = categoryMap_1.next(); !categoryMap_1_1.done; categoryMap_1_1 = categoryMap_1.next()) {
-                        var _12 = __read(categoryMap_1_1.value, 2), category = _12[1];
+                        var _14 = __read(categoryMap_1_1.value, 2), category = _14[1];
                         apiDocument.categoryList.push(category);
                     }
                 }
