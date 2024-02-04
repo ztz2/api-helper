@@ -19,7 +19,14 @@ const lib_1 = require("../lib");
 const log_1 = __importDefault(require("../lib/tools/log"));
 const util_1 = require("../lib/tools/util");
 const program = new commander_1.Command();
-const { version } = (0, util_1.loadModule)(path_1.default.join(require.resolve('@api-helper/cli'), '../../package.json'), false);
+const basePath = (0, util_1.createFolder)(path_1.default.join(__dirname, './.cache.load.module'));
+const { version } = (0, util_1.loadModule)(path_1.default.join(require.resolve('@api-helper/cli'), '../../package.json'), {
+    isAsync: false,
+    folder: basePath,
+    callback: () => {
+        (0, util_1.removeFolder)(basePath);
+    }
+});
 // root指令
 program
     .version(version)

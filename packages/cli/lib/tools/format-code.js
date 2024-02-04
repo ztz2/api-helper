@@ -21,6 +21,7 @@ const constant_1 = require("@api-helper/core/lib/constant");
 const interface_1 = require("@api-helper/core/lib/interface");
 const util_2 = require("../../lib/tools/util");
 const log_1 = __importDefault(require("../../lib/tools/log"));
+const path_1 = __importDefault(require("path"));
 function formatCode(config) {
     return __awaiter(this, void 0, void 0, function* () {
         if (Array.isArray(config)) {
@@ -38,6 +39,11 @@ function formatCode(config) {
 exports.default = formatCode;
 function format(config) {
     return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+        const baseFolder = (0, util_2.createFolder)(path_1.default.join(__dirname, './.cache.format.code'));
+        if (config === null || config === void 0 ? void 0 : config.onlyClearTempFolder) {
+            (0, util_2.removeFolder)(baseFolder);
+            return '';
+        }
         const { sourceCode, formatCodeExtension } = config;
         if (!sourceCode) {
             return resolve(sourceCode);
@@ -55,15 +61,18 @@ function format(config) {
         }
         catch (_a) { }
         const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new interface_1.PrettierOptions(), prettierOptions));
-        const filepath = (0, util_2.createTempFile)(sourceCode, { postfix: formatCodeExtension });
-        const prettierFilePath = (0, util_2.createTempFile)(prettierOptionsStr, { postfix: '.json' });
-        const clearTempFile = () => __awaiter(this, void 0, void 0, function* () { yield Promise.all([(0, await_to_js_1.default)((0, fs_extra_1.remove)(filepath)), (0, await_to_js_1.default)((0, fs_extra_1.remove)(prettierFilePath))]); });
+        const filepath = (0, util_2.createTempFileByTMP)(sourceCode, { postfix: formatCodeExtension });
+        const prettierFilePath = (0, util_2.createTempFileByTMP)(prettierOptionsStr, { postfix: '.json' });
+        const clear = () => {
+            (0, util_2.removeFolder)(filepath);
+            (0, util_2.removeFolder)(prettierFilePath);
+        };
         node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
             if (err) {
                 const errorText = `@api-helper/cli/lib/tools/format.ts 格式化代码失败：${(0, util_1.getErrorMessage)(err)}`;
                 log_1.default.warn('提示', errorText);
-                yield clearTempFile();
-                return resolve(errorText);
+                clear();
+                return resolve(config.sourceCode);
             }
             try {
                 const formattedCode = (yield (0, fs_extra_1.readFile)(filepath)).toString();
@@ -72,10 +81,10 @@ function format(config) {
             catch (e) {
                 const errorText = `@api-helper/lib/tools/format.ts 读取临时文件失败：${(0, util_1.getErrorMessage)(e)}`;
                 log_1.default.warn('提示', errorText);
-                return resolve(errorText);
+                return resolve(config.sourceCode);
             }
             finally {
-                yield clearTempFile();
+                clear();
             }
         }));
     }));

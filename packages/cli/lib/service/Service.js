@@ -33,11 +33,13 @@ class Service {
             new parser_yapi_plugin_1.default(),
             new parser_swagger_plugin_1.default(),
         ];
+        this.tempFolder = (0, path_1.join)(__dirname, './.cache.server');
         this.isTestEnv = isTestEnv;
         this.configFilePath = configFilePath;
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
+            yield this.clear();
             const configList = yield this.getConfigFile();
             const len = configList.length;
             // 添加解析插件
@@ -55,6 +57,12 @@ class Service {
                 }
                 catch (_a) { }
             }
+            yield this.clear();
+        });
+    }
+    clear() {
+        return __awaiter(this, void 0, void 0, function* () {
+            (0, util_3.removeFolder)(this.tempFolder);
         });
     }
     injectParserPlugins(configList) {
@@ -86,7 +94,9 @@ class Service {
             const spinner = (0, ora_1.default)(oraText).start();
             // 有配置文件
             if (configFilePath) {
-                const c = yield (0, util_3.loadModule)(configFilePath);
+                const c = yield (0, util_3.loadModule)(configFilePath, {
+                    folder: this.tempFolder
+                });
                 if (c) {
                     spinner.succeed();
                     return Array.isArray(c) ? c : [c];
@@ -95,7 +105,9 @@ class Service {
             // 没有从根目录寻找
             const files = yield (0, fast_glob_1.default)(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
             if (files.length) {
-                const c = yield (0, util_3.loadModule)(files[0]);
+                const c = yield (0, util_3.loadModule)(files[0], {
+                    folder: this.tempFolder
+                });
                 if (c) {
                     spinner.succeed();
                     return Array.isArray(c) ? c : [c];

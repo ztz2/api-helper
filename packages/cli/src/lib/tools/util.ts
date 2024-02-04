@@ -1,6 +1,6 @@
 import qs from 'qs';
 import ora from 'ora';
-import {
+import path, {
   join,
   dirname,
   relative,
@@ -8,12 +8,13 @@ import {
   resolve as pathResolve,
 } from 'path';
 import fs from 'node:fs';
+import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
 import tmp, { FileOptions } from 'tmp';
 import { AxiosRequestConfig } from 'axios';
-import { mergeUrl } from '@api-helper/core/lib/utils/util';
-import esbuild, { BuildOptions, BuildResult } from 'esbuild';
+import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
+import esbuild, { BuildOptions, BuildResult } from 'esbuild'
 
 import {
   Config,
@@ -45,10 +46,47 @@ export function getExtensionName (name: string) {
 /**
  * @description 创建临时文件
  * @param content {string} 文件内容
+ * @param options { object }
+ * @return {string} 临时文件绝对路径
+ */
+export function createTempFile(content: string | null = '', options?: {
+  folder?: string,
+  prefix?: string;
+  postfix?: string;
+  onlyClearTempFolder?: boolean;
+}): string {
+  const currentOptions = merge({
+    folder: '',
+    prefix: 'temp.api.helper.cli',
+    postfix: '.js',
+    onlyClearTempFolder: false,
+  }, options);
+  const tmpFolder = createFolder(currentOptions.folder ? currentOptions.folder : path.join(__dirname, `./.temp`));
+  const fileName = path.join(tmpFolder, `./${currentOptions.prefix}${uuid()}${currentOptions.postfix}`);
+
+  if (currentOptions.onlyClearTempFolder) {
+    try {
+      fsExtra.removeSync(tmpFolder);
+    } catch {}
+    return '';
+  }
+
+  fsExtra.ensureFileSync(fileName);
+
+  if (content) {
+    fs.writeFileSync(fileName, content);
+  }
+
+  return fileName;
+}
+
+/**
+ * @description 创建临时文件
+ * @param content {string} 文件内容
  * @param options {FileOptions}
  * @return {string} 临时文件绝对路径
  */
-export function createTempFile(content?: string, options?: FileOptions): string {
+export function createTempFileByTMP(content?: string, options?: FileOptions): string {
   const currentOptions = merge({
     prefix: 'temp.api.helper.cli',
     postfix: '.js'
@@ -64,13 +102,40 @@ export function checkType<T>(value: T, target: string) {
   return Object.prototype.toString.call(value) === `[object ${target}]`;
 }
 
+export function createFolder(path: string, isFile = false) {
+  if (isFile) {
+    fsExtra.ensureFileSync(path);
+    return path;
+  }
+  fsExtra.ensureDirSync(path);
+  return path;
+}
+
+export function removeFolder(path = '') {
+  try {
+    fsExtra.removeSync(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * @description 模块加载
  * @param file {string} 模块路径，绝对路径。
- * @param isAsync {boolean} 是否异步执行，默认true。
+ * @param options {object} 是否异步执行，默认true。
  * @return {T} 模块默认返回的内容
  */
-export function loadModule<T>(file: string, isAsync = true): Promise<T> | T {
+export function loadModule<T>(file: string, options?: {
+  isAsync?: boolean,
+  folder?: string,
+  callback?: Function,
+}): Promise<T> | T {
+  const { isAsync, folder, callback } = merge({
+    isAsync: true,
+    folder: '',
+    callback: (a: any) => {}
+  }, options);
   file = isAbsolute(file) ? file : resolve(file);
   try {
     fs.accessSync(file, fs.constants.F_OK);
@@ -94,11 +159,13 @@ export function loadModule<T>(file: string, isAsync = true): Promise<T> | T {
     const { outputFiles } = res;
     const [ outputFile ] = outputFiles ?? [];
     const { text } = outputFile;
-    const filePath = createTempFile(text,  { postfix: '.js' });
+    const filePath = createTempFile(text,  { folder: folder, postfix: '.js' });
     const moduleContent = require(filePath);
     if (moduleContent.__esModule) {
+      callback && callback(moduleContent.default);
       return moduleContent.default;
     }
+    callback && callback(moduleContent);
     return moduleContent;
   }
 
@@ -109,6 +176,7 @@ export function loadModule<T>(file: string, isAsync = true): Promise<T> | T {
     });
   }
   const res = esbuild.buildSync(buildParams);
+
   return handleModule(res);
 }
 
@@ -255,3 +323,4 @@ export async function documentServersRunParserPlugins(
   spinner.succeed();
   return result;
 }
+

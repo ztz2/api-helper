@@ -2,8 +2,9 @@ import { readFile } from 'fs-extra';
 import { join, resolve } from 'path';
 
 import { run } from '../src/lib';
-import { createTempFile } from '../src/lib/tools/util';
+import { createTempFile, removeFolder } from '../src/lib/tools/util';
 
+const tempBasePath =  join(__dirname, 'test');
 describe('yapi文档', () => {
 
   test('生成 typescript api 代码', async () => {
@@ -23,9 +24,12 @@ export default {
     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
     filename: 'api.ts',
   }
-};`);
+};`, {
+      folder: tempBasePath,
+    });
     await run(null, configFile, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('生成 typescript api 代码');
   });
   test('只生成类型', async () => {
@@ -46,9 +50,12 @@ export default {
     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
     filename: 'api.ts',
   }
-};`);
+};`, {
+      folder: tempBasePath,
+    });
     await run(null, configFile, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('只生成类型');
   });
 });

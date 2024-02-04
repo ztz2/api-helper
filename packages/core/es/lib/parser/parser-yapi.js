@@ -46,10 +46,10 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import { isHttp, randomId, mergeUrl, filterDesc, parserSchema, filterKeyName, processRequestSchema, processRequestSchemaPipeline, processResponseSchemaPipeline, } from '../utils/util';
-import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../../lib/constant';
+import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../constant';
 import { validateSchema } from '../utils/validator';
 import { createApi, createCategory, createDocument, createSchema, transformType, } from '../helpers';
-import ParserKeyName2Schema from '../../lib/parser/parser-key-name-2-schema';
+import ParserKeyName2Schema from './parser-key-name-2-schema';
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
         var _a, _b;
@@ -125,231 +125,236 @@ var ParserYapi = /** @class */ (function () {
                 path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
             });
-            api.label = api.title ? api.title : api.description ? api.description : '';
-            // API content-type，暂无特殊处理
-            // switch (apiMap.req_body_type) {
-            //   case 'form':
-            //   case 'file':
-            //     // ['multipart/form-data']; //form data required
-            //     break;
-            //   case 'json':
-            //     // ['application/json'];
-            //     break;
-            //   case 'raw':
-            //     //  ['text/plain'];
-            //     break;
-            //   default:
-            //     break;
-            // }
-            // header 和 cookie信息，暂无特殊处理
-            // const req_headers = apiContent.req_headers;
-            // Headers parameters
-            // for (const p of req_headers) {
-            //   // swagger has consumes proprety, so skip proprety 'Content-Type'
-            //   if (p.name === 'Content-Type') {
-            //     continue;
-            //   }
-            //   paramArray.push({
-            //     name: p.name,
-            //     in: 'header',
-            //     description: `${p.name} (Only:${p.value})`,
-            //     required: Number(p.required) === 1,
-            //     type: 'string', //always be type string
-            //     default: p.value
-            //   });
-            // }
-            /****************** 请求参数处理-开始 ******************/
-            var requestDataSchema = createSchema('object', {
-                id: _this.generateId(),
-            });
-            var requestExtraDataSchema = null;
-            // fix: 重复项问题
-            var requestSchemaRecord = [];
-            var parserKeyName2SchemaWrap = [];
-            var requestKeyNameMemo = [];
-            // 路径参数
-            var reqParams = apiContent.req_params;
             try {
-                for (var reqParams_1 = __values(reqParams), reqParams_1_1 = reqParams_1.next(); !reqParams_1_1.done; reqParams_1_1 = reqParams_1.next()) {
-                    var p = reqParams_1_1.value;
-                    var keyName = filterKeyName(p.name);
-                    // 参数字段没有，跳过该字段
-                    if (!keyName || requestKeyNameMemo.includes(keyName)) {
-                        continue;
-                    }
-                    // 字段
-                    var scm = createSchema('string', {
-                        id: _this.generateId(),
-                        description: filterDesc(p.desc),
-                        keyName: keyName,
-                        rules: {
-                            required: true
-                        }
-                    });
-                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                    api.pathParamKeyNameList.push(keyName);
-                    requestKeyNameMemo.push(keyName);
-                    requestDataSchema.params.push(scm);
-                }
-            }
-            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-            finally {
+                api.label = api.title ? api.title : api.description ? api.description : '';
+                // API content-type，暂无特殊处理
+                // switch (apiMap.req_body_type) {
+                //   case 'form':
+                //   case 'file':
+                //     // ['multipart/form-data']; //form data required
+                //     break;
+                //   case 'json':
+                //     // ['application/json'];
+                //     break;
+                //   case 'raw':
+                //     //  ['text/plain'];
+                //     break;
+                //   default:
+                //     break;
+                // }
+                // header 和 cookie信息，暂无特殊处理
+                // const req_headers = apiContent.req_headers;
+                // Headers parameters
+                // for (const p of req_headers) {
+                //   // swagger has consumes proprety, so skip proprety 'Content-Type'
+                //   if (p.name === 'Content-Type') {
+                //     continue;
+                //   }
+                //   paramArray.push({
+                //     name: p.name,
+                //     in: 'header',
+                //     description: `${p.name} (Only:${p.value})`,
+                //     required: Number(p.required) === 1,
+                //     type: 'string', //always be type string
+                //     default: p.value
+                //   });
+                // }
+                /****************** 请求参数处理-开始 ******************/
+                var requestDataSchema = createSchema('object', {
+                    id: _this.generateId(),
+                });
+                var requestExtraDataSchema = null;
+                // fix: 重复项问题
+                var requestSchemaRecord = [];
+                var parserKeyName2SchemaWrap = [];
+                var requestKeyNameMemo = [];
+                // 路径参数
+                var reqParams = apiContent.req_params;
                 try {
-                    if (reqParams_1_1 && !reqParams_1_1.done && (_a = reqParams_1.return)) _a.call(reqParams_1);
-                }
-                finally { if (e_1) throw e_1.error; }
-            }
-            // URL Query 参数
-            var reqQuery = apiContent.req_query;
-            try {
-                for (var reqQuery_1 = __values(reqQuery), reqQuery_1_1 = reqQuery_1.next(); !reqQuery_1_1.done; reqQuery_1_1 = reqQuery_1.next()) {
-                    var p = reqQuery_1_1.value;
-                    var keyName = filterKeyName(p.name);
-                    // 参数字段没有，跳过该字段
-                    if (!keyName || requestKeyNameMemo.includes(keyName)) {
-                        continue;
-                    }
-                    requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
-                    // 字段
-                    var scm = null;
-                    var parserKeyName2SchemaRes = new ParserKeyName2Schema(p.name, 'string').parse();
-                    if (parserKeyName2SchemaRes) {
-                        parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
-                        scm = parserKeyName2SchemaRes.targetSchema;
-                        keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
-                    }
-                    else {
-                        scm = createSchema('string', {
+                    for (var reqParams_1 = __values(reqParams), reqParams_1_1 = reqParams_1.next(); !reqParams_1_1.done; reqParams_1_1 = reqParams_1.next()) {
+                        var p = reqParams_1_1.value;
+                        var keyName = filterKeyName(p.name);
+                        // 参数字段没有，跳过该字段
+                        if (!keyName || requestKeyNameMemo.includes(keyName)) {
+                            continue;
+                        }
+                        // 字段
+                        var scm = createSchema('string', {
                             id: _this.generateId(),
                             description: filterDesc(p.desc),
                             keyName: keyName,
                             rules: {
-                                required: Number(p.required) === 1
+                                required: true
                             }
                         });
-                    }
-                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                    !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
-                    if (!parserKeyName2SchemaRes) {
+                        scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+                        api.pathParamKeyNameList.push(keyName);
+                        requestKeyNameMemo.push(keyName);
                         requestDataSchema.params.push(scm);
                     }
                 }
-            }
-            catch (e_2_1) { e_2 = { error: e_2_1 }; }
-            finally {
-                try {
-                    if (reqQuery_1_1 && !reqQuery_1_1.done && (_b = reqQuery_1.return)) _b.call(reqQuery_1);
-                }
-                finally { if (e_2) throw e_2.error; }
-            }
-            // 合并 name[0].a.rule 属性。
-            ParserKeyName2Schema.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
-            // Body 参数
-            var reqBodyType = apiContent.req_body_type;
-            switch (reqBodyType) {
-                case 'form': {
+                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                finally {
                     try {
-                        // Form Data数据
-                        for (var _g = __values(apiContent.req_body_form), _h = _g.next(); !_h.done; _h = _g.next()) {
-                            var p = _h.value;
-                            var keyName = filterKeyName(p.name);
-                            // 参数字段没有，跳过该字段
-                            if (!keyName || requestKeyNameMemo.includes(keyName)) {
-                                continue;
-                            }
-                            // 字段
-                            var scm = createSchema('string', {
+                        if (reqParams_1_1 && !reqParams_1_1.done && (_a = reqParams_1.return)) _a.call(reqParams_1);
+                    }
+                    finally { if (e_1) throw e_1.error; }
+                }
+                // URL Query 参数
+                var reqQuery = apiContent.req_query;
+                try {
+                    for (var reqQuery_1 = __values(reqQuery), reqQuery_1_1 = reqQuery_1.next(); !reqQuery_1_1.done; reqQuery_1_1 = reqQuery_1.next()) {
+                        var p = reqQuery_1_1.value;
+                        var keyName = filterKeyName(p.name);
+                        // 参数字段没有，跳过该字段
+                        if (!keyName || requestKeyNameMemo.includes(keyName)) {
+                            continue;
+                        }
+                        requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
+                        // 字段
+                        var scm = null;
+                        var parserKeyName2SchemaRes = new ParserKeyName2Schema(p.name, 'string').parse();
+                        if (parserKeyName2SchemaRes) {
+                            parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                            scm = parserKeyName2SchemaRes.targetSchema;
+                            keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
+                        }
+                        else {
+                            scm = createSchema('string', {
                                 id: _this.generateId(),
                                 description: filterDesc(p.desc),
                                 keyName: keyName,
-                                type: 'string',
                                 rules: {
                                     required: Number(p.required) === 1
                                 }
                             });
-                            scm.type = transformType(p.type, undefined, 'string');
-                            scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                            api.formDataKeyNameList.push(keyName);
-                            requestKeyNameMemo.push(keyName);
+                        }
+                        scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+                        !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+                        if (!parserKeyName2SchemaRes) {
                             requestDataSchema.params.push(scm);
                         }
                     }
-                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
-                    finally {
-                        try {
-                            if (_h && !_h.done && (_c = _g.return)) _c.call(_g);
-                        }
-                        finally { if (e_3) throw e_3.error; }
-                    }
-                    break;
                 }
-                case 'json': {
-                    if (apiContent.req_body_other) {
+                catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                finally {
+                    try {
+                        if (reqQuery_1_1 && !reqQuery_1_1.done && (_b = reqQuery_1.return)) _b.call(reqQuery_1);
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                }
+                // 合并 name[0].a.rule 属性。
+                ParserKeyName2Schema.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo);
+                // Body 参数
+                var reqBodyType = apiContent.req_body_type;
+                switch (reqBodyType) {
+                    case 'form': {
                         try {
-                            var jsonParam = JSON.parse(apiContent.req_body_other);
-                            if (jsonParam) {
-                                requestExtraDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, jsonParam, requestKeyNameMemo, {
-                                    autoGenerateId: _this.autoGenerateId
+                            // Form Data数据
+                            for (var _g = __values(apiContent.req_body_form), _h = _g.next(); !_h.done; _h = _g.next()) {
+                                var p = _h.value;
+                                var keyName = filterKeyName(p.name);
+                                // 参数字段没有，跳过该字段
+                                if (!keyName || requestKeyNameMemo.includes(keyName)) {
+                                    continue;
+                                }
+                                // 字段
+                                var scm = createSchema('string', {
+                                    id: _this.generateId(),
+                                    description: filterDesc(p.desc),
+                                    keyName: keyName,
+                                    type: 'string',
+                                    rules: {
+                                        required: Number(p.required) === 1
+                                    }
                                 });
+                                scm.type = transformType(p.type, undefined, 'string');
+                                scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+                                api.formDataKeyNameList.push(keyName);
+                                requestKeyNameMemo.push(keyName);
+                                requestDataSchema.params.push(scm);
                             }
                         }
-                        finally { }
-                    }
-                    break;
-                }
-                // formData
-                case 'file': {
-                    var keyName = filterKeyName('file');
-                    // 参数字段没有，跳过该字段
-                    if (requestKeyNameMemo.includes(keyName)) {
+                        catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                        finally {
+                            try {
+                                if (_h && !_h.done && (_c = _g.return)) _c.call(_g);
+                            }
+                            finally { if (e_3) throw e_3.error; }
+                        }
                         break;
                     }
-                    // 字段
-                    var scm = createSchema('File', {
-                        id: _this.generateId(),
-                        description: filterDesc(apiContent.req_body_other),
-                        keyName: keyName,
-                    });
-                    scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-                    api.formDataKeyNameList.push(keyName);
-                    requestKeyNameMemo.push(keyName);
-                    requestDataSchema.params.push(scm);
-                    break;
-                }
-            }
-            processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, _this);
-            /****************** 请求参数处理-结束 ******************/
-            /****************** 响应参数处理-结束 ******************/
-            try {
-                if (apiContent.res_body_type === 'json' && apiContent.res_body) {
-                    var responsesSchemaSource = JSON.parse(apiContent.res_body);
-                    if (validateSchema(responsesSchemaSource)) {
-                        api.responseDataSchema = parserSchema(responsesSchemaSource, undefined, undefined, undefined, {
-                            autoGenerateId: _this.autoGenerateId
+                    case 'json': {
+                        if (apiContent.req_body_other) {
+                            try {
+                                var jsonParam = JSON.parse(apiContent.req_body_other);
+                                if (jsonParam) {
+                                    requestExtraDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, jsonParam, requestKeyNameMemo, {
+                                        autoGenerateId: _this.autoGenerateId
+                                    });
+                                }
+                            }
+                            finally { }
+                        }
+                        break;
+                    }
+                    // formData
+                    case 'file': {
+                        var keyName = filterKeyName('file');
+                        // 参数字段没有，跳过该字段
+                        if (requestKeyNameMemo.includes(keyName)) {
+                            break;
+                        }
+                        // 字段
+                        var scm = createSchema('File', {
+                            id: _this.generateId(),
+                            description: filterDesc(apiContent.req_body_other),
+                            keyName: keyName,
                         });
-                        if (((_f = api.responseDataSchema) === null || _f === void 0 ? void 0 : _f.type) === 'object') {
-                            api.responseDataSchema.keyName = '';
+                        scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+                        api.formDataKeyNameList.push(keyName);
+                        requestKeyNameMemo.push(keyName);
+                        requestDataSchema.params.push(scm);
+                        break;
+                    }
+                }
+                processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, _this);
+                /****************** 请求参数处理-结束 ******************/
+                /****************** 响应参数处理-结束 ******************/
+                try {
+                    if (apiContent.res_body_type === 'json' && apiContent.res_body) {
+                        var responsesSchemaSource = JSON.parse(apiContent.res_body);
+                        if (validateSchema(responsesSchemaSource)) {
+                            api.responseDataSchema = parserSchema(responsesSchemaSource, undefined, undefined, undefined, {
+                                autoGenerateId: _this.autoGenerateId
+                            });
+                            if (((_f = api.responseDataSchema) === null || _f === void 0 ? void 0 : _f.type) === 'object') {
+                                api.responseDataSchema.keyName = '';
+                            }
                         }
                     }
                 }
-            }
-            finally { }
-            processResponseSchemaPipeline(api, _this);
-            try {
-                /****************** 响应参数处理-结束 ******************/
-                // 将该API添加到所依赖的模块中
-                for (var tag_1 = __values(tag), tag_1_1 = tag_1.next(); !tag_1_1.done; tag_1_1 = tag_1.next()) {
-                    var tagName = tag_1_1.value;
-                    var recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
-                    recordCategory && recordCategory.apiList.push(api);
-                }
-            }
-            catch (e_4_1) { e_4 = { error: e_4_1 }; }
-            finally {
+                finally { }
+                processResponseSchemaPipeline(api, _this);
                 try {
-                    if (tag_1_1 && !tag_1_1.done && (_d = tag_1.return)) _d.call(tag_1);
+                    /****************** 响应参数处理-结束 ******************/
+                    // 将该API添加到所依赖的模块中
+                    for (var tag_1 = __values(tag), tag_1_1 = tag_1.next(); !tag_1_1.done; tag_1_1 = tag_1.next()) {
+                        var tagName = tag_1_1.value;
+                        var recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
+                        recordCategory && recordCategory.apiList.push(api);
+                    }
                 }
-                finally { if (e_4) throw e_4.error; }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (tag_1_1 && !tag_1_1.done && (_d = tag_1.return)) _d.call(tag_1);
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                }
+            }
+            catch (e) {
+                console.log("".concat(method.toUpperCase(), " ").concat(api.path, " \u63A5\u53E3\u89E3\u6790\u5931\u8D25\uFF0C\u8BF7\u8054\u7CFB @api-helper \u4F5C\u8005\u4FEE\u590D\u8BE5\u95EE\u9898\uFF0C\u6216\u63D0\u4EA4issue\uFF0Chttps://github.com/ztz2/api-helper/issues\n\n").concat(e));
             }
         });
         return categoryList;

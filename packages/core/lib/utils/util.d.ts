@@ -141,6 +141,7 @@ export declare function filterSchemaRoot(schemaList: Array<APIHelper.Schema>): (
     enum: (string | number)[];
 })[];
 export declare function filterKeyName<T extends string>(v: T): T;
+export declare function filterDotKeyName(v: string): string;
 export declare function filterSchemaRequired(schemaList: Array<APIHelper.Schema>): (APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema)[];
 export declare function parserSchema(schema: JSONSchema4, parentSchema?: JSONSchema4, keyName?: string, memo?: Map<JSONSchema4, null>, options?: {
     autoGenerateId: boolean;

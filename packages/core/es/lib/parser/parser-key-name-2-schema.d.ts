@@ -1,4 +1,4 @@
-import { APIHelper } from '../..';
+import { APIHelper } from '../../index';
 export declare class ParserKeyName2Schema {
     static deepMergeSchemaList: (schema: APIHelper.SchemaList) => APIHelper.SchemaList;
     static appendSchemeList: (parserKeyName2SchemaWrap: APIHelper.SchemaList, appendSchema: APIHelper.Schema, appendSchemaKeyNameMemo: Array<string>) => void;

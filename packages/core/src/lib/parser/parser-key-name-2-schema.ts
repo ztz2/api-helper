@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 
-import { pushArray } from '@/lib/utils/util';
-import { APIHelper, createSchema } from '@root/src';
+import { pushArray } from '../utils/util';
+import { APIHelper, createSchema } from '../../index';
 
 // keyName[0].name => Schema
 // [0].updateValue => Schema
@@ -80,6 +80,14 @@ export class ParserKeyName2Schema{
           // 不记录[索引]，清空即可
           this.text = '';
           this.status = '';
+          // 结束了
+          if (index === value.length - 1) {
+            this.targetSchema = this.recordSchema;
+            // 还存在默认的类型
+            if (this.valueType && this.targetSchema) {
+              this.targetSchema.params.push(createSchema(this.valueType));
+            }
+          }
           break;
         }
         case DOT_NOTATION: {

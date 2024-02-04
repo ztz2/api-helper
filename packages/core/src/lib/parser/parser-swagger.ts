@@ -12,6 +12,7 @@ import {
   filterDesc,
   parserSchema,
   filterKeyName,
+  filterDotKeyName,
   processRequestSchema,
   processRequestSchemaPipeline,
   processResponseSchemaPipeline,
@@ -30,8 +31,7 @@ import {
   createDocument,
   createSchema, transformType
 } from '../helpers';
-import ParserKeyName2Schema from '@/lib/parser/parser-key-name-2-schema';
-import parserKeyName2Schema from '@/lib/parser/parser-key-name-2-schema';
+import ParserKeyName2Schema from './parser-key-name-2-schema';
 
 export default class ParserSwagger {
   private autoGenerateId = true;
@@ -129,193 +129,214 @@ export default class ParserSwagger {
         for (let w = 0; w < methodMapEntries.length; w++) {
           const method = methodMapEntries[w][0].toLowerCase();
           const apiMap: any = methodMapEntries[w][1];
-          // fix: basePath为/，导致//
-          const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
-          // 接口
-          const api: APIHelper.API = createApi({
-            id: this.generateId(),
-            title: filterDesc(apiMap.summary),
-            description: filterDesc(apiMap.description),
-            path: mPath,
-            method,
-          });
-          api.label = api.title ? api.title : api.description ? api.description : '';
-
-          /****************** 处理请求参数--开始 ******************/
-          let requestExtraDataSchema: APIHelper.Schema | null = null;
-          const requestDataSchema = createSchema('object', {
-            id: this.generateId(),
-          });
-          const requestKeyNameMemo: string[] = [];
-          // fix: 重复项问题
-          const requestSchemaRecord: Array<JSONSchema4> = [];
-          const parserKeyName2SchemaWrap: Array<APIHelper.Schema> = [];
-          // FormData数据
-          const formDataSource = apiMap.requestBody?.content?.['multipart/form-data']?.schema;
-          const formDataSchema = processRequestSchema(
-            requestDataSchema,
-            requestSchemaRecord,
-            formDataSource,
-            undefined,
-            {
-              autoGenerateId: this.autoGenerateId,
-            }
-          );
-
-          // 记录表单数据key
-          if (formDataSchema) {
-            formDataSchema?.params?.forEach(({keyName}) => {
-              api.formDataKeyNameList.push(keyName);
-              requestKeyNameMemo.push(keyName);
+          try {
+            // fix: basePath为/，导致//
+            const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
+            // 接口
+            const api: APIHelper.API = createApi({
+              id: this.generateId(),
+              title: filterDesc(apiMap.summary),
+              description: filterDesc(apiMap.description),
+              path: mPath,
+              method,
             });
-          }
+            api.label = api.title ? api.title : api.description ? api.description : '';
 
-          if ('parameters' in apiMap) {
-            const parameters = apiMap.parameters;
-            for (let j = 0; j < parameters.length; j++) {
-              const parameter = parameters[j];
-              // fix: 当为Object类型，属性为空，导致成为一个异常的对象
-              if (parameter.name?.trim?.() === '') {
-                continue;
+            /****************** 处理请求参数--开始 ******************/
+            let requestExtraDataSchema: APIHelper.Schema | null = null;
+            const requestDataSchema = createSchema('object', {
+              id: this.generateId(),
+            });
+            const requestKeyNameMemo: string[] = [];
+            // fix: 重复项问题
+            const requestSchemaRecord: Array<JSONSchema4> = [];
+            const parserKeyName2SchemaWrap: Array<APIHelper.Schema> = [];
+            // FormData数据
+            const formDataSource = apiMap.requestBody?.content?.['multipart/form-data']?.schema;
+            const formDataSchema = processRequestSchema(
+              requestDataSchema,
+              requestSchemaRecord,
+              formDataSource,
+              undefined,
+              {
+                autoGenerateId: this.autoGenerateId,
               }
-              let keyName = filterKeyName(parameter.name);
-              // 路径参数 | url 参数
-              if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
-                if (requestKeyNameMemo.includes(keyName)) {
+            );
+
+            // 记录表单数据key
+            if (formDataSchema) {
+              formDataSchema?.params?.forEach(({keyName}) => {
+                api.formDataKeyNameList.push(keyName);
+                requestKeyNameMemo.push(keyName);
+              });
+            }
+
+            if ('parameters' in apiMap) {
+              const parameters = apiMap.parameters;
+              if (path.includes('/user/list')) {
+                debugger;
+              }
+              for (let j = 0; j < parameters.length; j++) {
+                const parameter = parameters[j];
+                // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+                if (parameter.name?.trim?.() === '') {
                   continue;
                 }
-                requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
+                let keyName = filterKeyName(parameter.name);
+                // 路径参数 | url 参数
+                if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
+                  if (requestKeyNameMemo.includes(keyName)) {
+                    continue;
+                  }
+                  requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
 
-                const type = transformType(parameter.type, undefined, 'string');
+                  const type = transformType(parameter.type, undefined, 'string');
 
-                let scm = createSchema(type, {
-                  id: this.generateId(),
-                  keyName,
-                });
+                  let scm = createSchema(type, {
+                    id: this.generateId(),
+                    keyName,
+                  });
 
-                const parserKeyName2SchemaRes = new ParserKeyName2Schema(parameter.name, type).parse();
-                if (parserKeyName2SchemaRes) {
-                  parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
-                  scm = parserKeyName2SchemaRes.targetSchema;
-                  keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
-                } else {
-                  // fix: url参数也是一个对象问题.
-                  if (parameter.schema) {
-                    const parsedSchema = parserSchema(
+                  let parserKeyName2SchemaRes = null;
+                  // 存在 Schema 的dot参数
+                  if (checkType(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('['))) {
+                    keyName = filterDotKeyName(keyName);
+                    scm = parserSchema(
                       parameter.schema,
                       undefined,
                       keyName,
                       undefined,
                       {
-                        autoGenerateId: this.autoGenerateId,
+                        autoGenerateId: this.autoGenerateId
                       }
-                    );
-                    if (parsedSchema) {
-                      scm = parsedSchema;
+                    ) as APIHelper.Schema;
+                  } else {
+                    // dot 参数
+                    parserKeyName2SchemaRes = new ParserKeyName2Schema(keyName, type).parse();
+                    if (parserKeyName2SchemaRes) {
+                      parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                      scm = parserKeyName2SchemaRes.targetSchema;
+                      keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
+                    } else { // 普通schema对象
+                      // fix: url参数也是一个对象问题.
+                      if (parameter.schema) {
+                        const parsedSchema = parserSchema(
+                          parameter.schema,
+                          undefined,
+                          keyName,
+                          undefined,
+                          {
+                            autoGenerateId: this.autoGenerateId,
+                          }
+                        );
+                        if (parsedSchema) {
+                          scm = parsedSchema;
+                        }
+                      }
                     }
                   }
-                }
 
-                scm.id = this.generateId();
-                scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
-                scm.description = filterDesc(parameter.description);
-                scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+                  scm.id = this.generateId();
+                  scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
+                  scm.description = filterDesc(parameter.description);
+                  scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
-                // 路径参数
-                if (parameter.in === 'path') {
-                  !api.pathParamKeyNameList.includes(keyName) && api.pathParamKeyNameList.push(keyName);
-                } // URL参数
-                else if (parameter.in === 'query') {
-                  !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
-                } // 表单参数（这个可能不是标准规范）
-                else if (parameter.in === 'formData') {
-                  !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
-                }
-
-                if (!parserKeyName2SchemaRes) {
-                  requestDataSchema.params.push(scm);
-                }
-              } else if (parameter.in === 'body') { // body 参数
-                requestExtraDataSchema = processRequestSchema(
-                  requestDataSchema,
-                  requestSchemaRecord,
-                  parameter.schema,
-                  requestKeyNameMemo,
-                  {
-                    autoGenerateId: this.autoGenerateId,
+                  // 路径参数
+                  if (parameter.in === 'path') {
+                    !api.pathParamKeyNameList.includes(keyName) && api.pathParamKeyNameList.push(keyName);
+                  } // URL参数
+                  else if (parameter.in === 'query') {
+                    !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+                  } // 表单参数（这个可能不是标准规范）
+                  else if (parameter.in === 'formData') {
+                    !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
                   }
-                );
-              } else if (parameter.in === 'header' || parameter.in === 'cookie') {
-                // header 和 cookie信息，暂无特殊处理
-              }
-            }
-            // 合并 name[0].a.rule 属性。
-            ParserKeyName2Schema.appendSchemeList(
-              parserKeyName2SchemaWrap,
-              requestDataSchema,
-              requestKeyNameMemo,
-            );
-          }
 
-          // URL query 参数，query参数必须包含key，不存在不兼容问题
-          processRequestSchema(
-            requestDataSchema,
-            requestSchemaRecord,
-            apiMap.requestBody?.content?.['application/x-www-form-urlencoded']?.schema,
-            requestKeyNameMemo,
-            {
-              autoGenerateId: this.autoGenerateId,
-              callback(parsedSchema: APIHelper.Schema) {
-                // 收集URL query 参数字段
-                if (parsedSchema?.params) {
-                  parsedSchema?.params.forEach((itm) => itm?.keyName && api.queryStringKeyNameList.push(itm.keyName));
+                  requestDataSchema.params.push(scm);
+                } else if (parameter.in === 'body') { // body 参数
+                  requestExtraDataSchema = processRequestSchema(
+                    requestDataSchema,
+                    requestSchemaRecord,
+                    parameter.schema,
+                    requestKeyNameMemo,
+                    {
+                      autoGenerateId: this.autoGenerateId,
+                    }
+                  );
+                } else if (parameter.in === 'header' || parameter.in === 'cookie') {
+                  // header 和 cookie信息，暂无特殊处理
                 }
               }
+              // 合并 name[0].a.rule 属性。
+              ParserKeyName2Schema.appendSchemeList(
+                parserKeyName2SchemaWrap,
+                requestDataSchema,
+                requestKeyNameMemo,
+              );
             }
-          );
 
-          // 请求 Body 为 json参数
-          const requestSchemaSource = apiMap.requestBody?.content?.['application/json']?.schema
-            ?? apiMap.requestBody?.content?.['text/json']?.schema;
-          requestExtraDataSchema = processRequestSchema(
-            requestDataSchema,
-            requestSchemaRecord,
-            requestSchemaSource,
-            undefined,
-            {
-              autoGenerateId: this.autoGenerateId,
-            }
-          );
+            // URL query 参数，query参数必须包含key，不存在不兼容问题
+            processRequestSchema(
+              requestDataSchema,
+              requestSchemaRecord,
+              apiMap.requestBody?.content?.['application/x-www-form-urlencoded']?.schema,
+              requestKeyNameMemo,
+              {
+                autoGenerateId: this.autoGenerateId,
+                callback(parsedSchema: APIHelper.Schema) {
+                  // 收集URL query 参数字段
+                  if (parsedSchema?.params) {
+                    parsedSchema?.params.forEach((itm) => itm?.keyName && api.queryStringKeyNameList.push(itm.keyName));
+                  }
+                }
+              }
+            );
 
-          processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
-          /****************** 处理请求参数--结束 ******************/
-
-          /****************** 处理响应参数--开始 ******************/
-          const responsesSchemaSource = apiMap.responses?.['200']?.schema
-            ?? apiMap.responses?.['200']?.content?.['application/json']?.schema
-            ?? apiMap.responses?.['200']?.content?.['text/json']?.schema
-            ?? apiMap.responses?.['200']?.content?.['*/*']?.schema;
-          if (validateSchema(responsesSchemaSource)) {
-            api.responseDataSchema = parserSchema(
-              responsesSchemaSource,
-              undefined,
-              undefined,
+            // 请求 Body 为 json参数
+            const requestSchemaSource = apiMap.requestBody?.content?.['application/json']?.schema
+              ?? apiMap.requestBody?.content?.['text/json']?.schema;
+            requestExtraDataSchema = processRequestSchema(
+              requestDataSchema,
+              requestSchemaRecord,
+              requestSchemaSource,
               undefined,
               {
-                autoGenerateId: this.autoGenerateId
+                autoGenerateId: this.autoGenerateId,
               }
             );
-            if (api.responseDataSchema?.type === 'object') {
-              api.responseDataSchema.keyName = '';
-            }
-          }
-          processResponseSchemaPipeline(api, this);
-          /****************** 处理响应参数--结束 ******************/
 
-          // 将该API添加到所依赖的模块中
-          for (const tagName of apiMap.tags) {
-            const recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
-            recordCategory && recordCategory.apiList.push(api);
+            processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
+            /****************** 处理请求参数--结束 ******************/
+
+            /****************** 处理响应参数--开始 ******************/
+            const responsesSchemaSource = apiMap.responses?.['200']?.schema
+              ?? apiMap.responses?.['200']?.content?.['application/json']?.schema
+              ?? apiMap.responses?.['200']?.content?.['text/json']?.schema
+              ?? apiMap.responses?.['200']?.content?.['*/*']?.schema;
+            if (validateSchema(responsesSchemaSource)) {
+              api.responseDataSchema = parserSchema(
+                responsesSchemaSource,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  autoGenerateId: this.autoGenerateId
+                }
+              );
+              if (api.responseDataSchema?.type === 'object') {
+                api.responseDataSchema.keyName = '';
+              }
+            }
+            processResponseSchemaPipeline(api, this);
+            /****************** 处理响应参数--结束 ******************/
+
+            // 将该API添加到所依赖的模块中
+            for (const tagName of apiMap.tags) {
+              const recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
+              recordCategory && recordCategory.apiList.push(api);
+            }
+          } catch (e) {
+            console.log(`${method.toUpperCase()} ${path} 接口解析失败，请联系 @api-helper 作者修复该问题，或提交issue，https://github.com/ztz2/api-helper/issues\n\n${e}`);
           }
         }
       }

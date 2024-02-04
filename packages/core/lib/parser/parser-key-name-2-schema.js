@@ -29,8 +29,8 @@ var __read = (this && this.__read) || function (o, n) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParserKeyName2Schema = void 0;
 var lodash_1 = require("lodash");
-var util_1 = require("../../lib/utils/util");
-var src_1 = require("../..");
+var util_1 = require("../utils/util");
+var index_1 = require("../../index");
 // keyName[0].name => Schema
 // [0].updateValue => Schema
 // params.updateValue.name => Schema
@@ -91,6 +91,14 @@ var ParserKeyName2Schema = /** @class */ (function () {
                     // 不记录[索引]，清空即可
                     this.text = '';
                     this.status = '';
+                    // 结束了
+                    if (index === value.length - 1) {
+                        this.targetSchema = this.recordSchema;
+                        // 还存在默认的类型
+                        if (this.valueType && this.targetSchema) {
+                            this.targetSchema.params.push((0, index_1.createSchema)(this.valueType));
+                        }
+                    }
                     break;
                 }
                 case DOT_NOTATION: {
@@ -115,7 +123,7 @@ var ParserKeyName2Schema = /** @class */ (function () {
     };
     ParserKeyName2Schema.prototype.pushSchema = function (isEnd) {
         if (isEnd === void 0) { isEnd = false; }
-        var schema = (0, src_1.createSchema)('string', {
+        var schema = (0, index_1.createSchema)('string', {
             keyName: this.text,
             type: isEnd ? this.valueType : this.getStatusType(),
         });
@@ -131,7 +139,7 @@ var ParserKeyName2Schema = /** @class */ (function () {
             && this.text
             && this.recordSchema
             && this.recordSchema.type !== 'object') {
-            var itm = (0, src_1.createSchema)('object');
+            var itm = (0, index_1.createSchema)('object');
             itm.params.push(schema);
             nextSchema = itm;
         }

@@ -1,8 +1,11 @@
 import { readFile } from 'fs-extra';
-import path, { join, resolve } from 'path';
+import { join, resolve } from 'path';
 
 import { run } from '../src/lib';
-import { createTempFile, toUnixPath } from '../src/lib/tools/util';
+import { createTempFile, removeFolder, toUnixPath } from '../src/lib/tools/util';
+
+const tempBasePath =  join(__dirname, 'test');
+
 
 describe('swagger文档', () => {
   /**
@@ -25,9 +28,38 @@ export default {
     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
     filename: 'api.ts',
   }
-};`);
+};`, {
+      folder: tempBasePath,
+    });
     await run(null, configFile, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
+    expect(code.toString()).toMatchSnapshot('基于swagger2.0，生成 typescript api 代码');
+  });
+
+  test('基于swagger2.0，dot参数', async () => {
+    const filepath = toUnixPath(join(__dirname, `../test/resources/open-api-2.0-dot.json`));
+    const configFile = createTempFile(`
+import { resolve } from 'path';
+export default {
+  documentServers: [
+    {
+      url: '${filepath}',
+      type: 'swagger',
+      dataKey: ''
+    }
+  ],
+  requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
+  output: {
+    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+    filename: 'api.ts',
+  }
+};`, {
+      folder: tempBasePath,
+    });
+    await run(null, configFile, true);
+    const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('基于swagger2.0，生成 typescript api 代码');
   });
 
@@ -47,36 +79,40 @@ export default {
     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
     filename: 'api.js',
   }
-};`);
+};`, {
+      folder: tempBasePath,
+    });
     await run(null, configFile, true);
     const code1 = await readFile(resolve(__dirname, './__temp__/api.js'));
     const code2 = await readFile(resolve(__dirname, './__temp__/api.d.ts'));
+    removeFolder(tempBasePath);
     expect([code1, code2].join('\n\n')).toMatchSnapshot('基于swagger2.0，生成 javascript api 代码');
   });
 
-//   test('基于swagger3.0.1，生成 typescript api 代码', async () => {
-//     const configFile = createTempFile(`
-// import { resolve } from 'path';
-// export default {
-//   requiredRequestField: true,
-//   requiredResponseField: false,
-//   documentServers: [
-//     {
-//       url: 'https://doc.xiaominfo.com/demo/doc.html',
-//       type: 'swagger',
-//       dataKey: ''
-//     }
-//   ],
-//   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-//   output: {
-//     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-//     filename: 'api.ts',
-//   }
-// };`);
-//     await run(null, configFile, true);
-//     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
-//     expect(code.toString()).toMatchSnapshot('基于swagger3.0.1，生成 typescript api 代码');
-//   });
+  test('基于swagger3.0.1，生成 typescript api 代码', async () => {
+    const configFile = createTempFile(`
+import { resolve } from 'path';
+export default {
+  requiredRequestField: true,
+  requiredResponseField: false,
+  documentServers: [
+    {
+      url: 'https://doc.xiaominfo.com/demo/doc.html',
+      type: 'swagger',
+      dataKey: ''
+    }
+  ],
+  requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
+  output: {
+    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+    filename: 'api.ts',
+  }
+};`, { folder: tempBasePath });
+    await run(null, configFile, true);
+    const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
+    expect(code.toString()).toMatchSnapshot('基于swagger3.0.1，生成 typescript api 代码');
+  });
 
   test('本地文件代码', async () => {
     const filepath = toUnixPath(join(__dirname, `../test/resources/open-api-2.0.json`));
@@ -97,9 +133,12 @@ export default {
     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
     filename: 'api.ts',
   }
-};`);
+};`, {
+      folder: tempBasePath,
+    });
     await run(null, configFile, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+    removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('本地文件代码');
   });
 
@@ -120,9 +159,12 @@ export default {
 //     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
 //     filename: 'api.ts',
 //   }
-// };`);
+// };`, {
+//       folder: tempBasePath,
+//     });
 //     await run(null, configFile, true);
 //     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
+//     removeFolder(tempBasePath);
 //     expect(code.toString()).toMatchSnapshot('只生成类型');
 //   });
 });

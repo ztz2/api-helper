@@ -9,18 +9,36 @@ export declare function getExtensionName(name: string): string;
 /**
  * @description 创建临时文件
  * @param content {string} 文件内容
+ * @param options { object }
+ * @return {string} 临时文件绝对路径
+ */
+export declare function createTempFile(content?: string | null, options?: {
+    folder?: string;
+    prefix?: string;
+    postfix?: string;
+    onlyClearTempFolder?: boolean;
+}): string;
+/**
+ * @description 创建临时文件
+ * @param content {string} 文件内容
  * @param options {FileOptions}
  * @return {string} 临时文件绝对路径
  */
-export declare function createTempFile(content?: string, options?: FileOptions): string;
+export declare function createTempFileByTMP(content?: string, options?: FileOptions): string;
 export declare function checkType<T>(value: T, target: string): boolean;
+export declare function createFolder(path: string, isFile?: boolean): string;
+export declare function removeFolder(path?: string): boolean;
 /**
  * @description 模块加载
  * @param file {string} 模块路径，绝对路径。
- * @param isAsync {boolean} 是否异步执行，默认true。
+ * @param options {object} 是否异步执行，默认true。
  * @return {T} 模块默认返回的内容
  */
-export declare function loadModule<T>(file: string, isAsync?: boolean): Promise<T> | T;
+export declare function loadModule<T>(file: string, options?: {
+    isAsync?: boolean;
+    folder?: string;
+    callback?: Function;
+}): Promise<T> | T;
 /**
  * @description 将路径统一为 unix 风格的路径。
  * @param {string} path 路径

@@ -74,12 +74,13 @@ var __values = (this && this.__values) || function(o) {
 };
 import qs from 'qs';
 import ora from 'ora';
-import { join, dirname, relative, isAbsolute, resolve as pathResolve, } from 'path';
+import path, { join, dirname, relative, isAbsolute, resolve as pathResolve, } from 'path';
 import fs from 'node:fs';
+import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
 import tmp from 'tmp';
-import { mergeUrl } from '@api-helper/core/lib/utils/util';
+import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
 import esbuild from 'esbuild';
 import log from '../../lib/tools/log';
 export function resolve(p) {
@@ -100,10 +101,39 @@ export function getExtensionName(name) {
 /**
  * @description 创建临时文件
  * @param content {string} 文件内容
- * @param options {FileOptions}
+ * @param options { object }
  * @return {string} 临时文件绝对路径
  */
 export function createTempFile(content, options) {
+    if (content === void 0) { content = ''; }
+    var currentOptions = merge({
+        folder: '',
+        prefix: 'temp.api.helper.cli',
+        postfix: '.js',
+        onlyClearTempFolder: false,
+    }, options);
+    var tmpFolder = createFolder(currentOptions.folder ? currentOptions.folder : path.join(__dirname, "./.temp"));
+    var fileName = path.join(tmpFolder, "./".concat(currentOptions.prefix).concat(uuid()).concat(currentOptions.postfix));
+    if (currentOptions.onlyClearTempFolder) {
+        try {
+            fsExtra.removeSync(tmpFolder);
+        }
+        catch (_a) { }
+        return '';
+    }
+    fsExtra.ensureFileSync(fileName);
+    if (content) {
+        fs.writeFileSync(fileName, content);
+    }
+    return fileName;
+}
+/**
+ * @description 创建临时文件
+ * @param content {string} 文件内容
+ * @param options {FileOptions}
+ * @return {string} 临时文件绝对路径
+ */
+export function createTempFileByTMP(content, options) {
     var currentOptions = merge({
         prefix: 'temp.api.helper.cli',
         postfix: '.js'
@@ -117,15 +147,38 @@ export function createTempFile(content, options) {
 export function checkType(value, target) {
     return Object.prototype.toString.call(value) === "[object ".concat(target, "]");
 }
+export function createFolder(path, isFile) {
+    if (isFile === void 0) { isFile = false; }
+    if (isFile) {
+        fsExtra.ensureFileSync(path);
+        return path;
+    }
+    fsExtra.ensureDirSync(path);
+    return path;
+}
+export function removeFolder(path) {
+    if (path === void 0) { path = ''; }
+    try {
+        fsExtra.removeSync(path);
+        return true;
+    }
+    catch (_a) {
+        return false;
+    }
+}
 /**
  * @description 模块加载
  * @param file {string} 模块路径，绝对路径。
- * @param isAsync {boolean} 是否异步执行，默认true。
+ * @param options {object} 是否异步执行，默认true。
  * @return {T} 模块默认返回的内容
  */
-export function loadModule(file, isAsync) {
+export function loadModule(file, options) {
     var _this = this;
-    if (isAsync === void 0) { isAsync = true; }
+    var _a = merge({
+        isAsync: true,
+        folder: '',
+        callback: function (a) { }
+    }, options), isAsync = _a.isAsync, folder = _a.folder, callback = _a.callback;
     file = isAbsolute(file) ? file : resolve(file);
     try {
         fs.accessSync(file, fs.constants.F_OK);
@@ -148,11 +201,13 @@ export function loadModule(file, isAsync) {
         var outputFiles = res.outputFiles;
         var _a = __read(outputFiles !== null && outputFiles !== void 0 ? outputFiles : [], 1), outputFile = _a[0];
         var text = outputFile.text;
-        var filePath = createTempFile(text, { postfix: '.js' });
+        var filePath = createTempFile(text, { folder: folder, postfix: '.js' });
         var moduleContent = require(filePath);
         if (moduleContent.__esModule) {
+            callback && callback(moduleContent.default);
             return moduleContent.default;
         }
+        callback && callback(moduleContent);
         return moduleContent;
     };
     if (isAsync) {

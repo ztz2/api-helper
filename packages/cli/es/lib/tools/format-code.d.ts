@@ -1,2 +1,6 @@
 import { FormatCodeConfig } from '@api-helper/core/lib/interface';
-export default function formatCode(config: FormatCodeConfig | FormatCodeConfig[]): Promise<string | string[]>;
+declare type OnlyClearTempFolder = {
+    onlyClearTempFolder?: boolean;
+};
+export default function formatCode(config: FormatCodeConfig & OnlyClearTempFolder | Array<FormatCodeConfig & OnlyClearTempFolder>): Promise<string | string[]>;
+export {};

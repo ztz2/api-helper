@@ -124,10 +124,16 @@ export function filterKeyName<T extends string>(v: T): T {
   if (
     ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
     && !v.includes('.')
+    && !v.includes('[')
     && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
     v = `\"${v}\"`;
   }
   return v;
+}
+
+// 过滤所有dot参数
+export function filterDotKeyName(v: string): string {
+  return v.replace(/\[.*/, '').replace(/\..*/, '');
 }
 
 export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
@@ -428,7 +434,6 @@ export function filterSchemaPrimitiveValue<T>(schema: APIHelper.Schema | APIHelp
     if (memo.has(scmList)) {
       return memo.get(scmList) as Array<APIHelper.Schema>;
     }
-    debugger;
     const result: Array<APIHelper.Schema> = [];
     memo.set(scmList, result);
     for (const scm of scmList) {

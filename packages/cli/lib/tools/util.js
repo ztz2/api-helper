@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -12,11 +31,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.checkType = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
+exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
 const qs_1 = __importDefault(require("qs"));
 const ora_1 = __importDefault(require("ora"));
-const path_1 = require("path");
+const path_1 = __importStar(require("path"));
 const node_fs_1 = __importDefault(require("node:fs"));
+const fs_extra_1 = __importDefault(require("fs-extra"));
 const url_parse_1 = __importDefault(require("url-parse"));
 const lodash_1 = require("lodash");
 const tmp_1 = __importDefault(require("tmp"));
@@ -42,10 +62,39 @@ exports.getExtensionName = getExtensionName;
 /**
  * @description 创建临时文件
  * @param content {string} 文件内容
+ * @param options { object }
+ * @return {string} 临时文件绝对路径
+ */
+function createTempFile(content = '', options) {
+    const currentOptions = (0, lodash_1.merge)({
+        folder: '',
+        prefix: 'temp.api.helper.cli',
+        postfix: '.js',
+        onlyClearTempFolder: false,
+    }, options);
+    const tmpFolder = createFolder(currentOptions.folder ? currentOptions.folder : path_1.default.join(__dirname, `./.temp`));
+    const fileName = path_1.default.join(tmpFolder, `./${currentOptions.prefix}${(0, util_1.uuid)()}${currentOptions.postfix}`);
+    if (currentOptions.onlyClearTempFolder) {
+        try {
+            fs_extra_1.default.removeSync(tmpFolder);
+        }
+        catch (_a) { }
+        return '';
+    }
+    fs_extra_1.default.ensureFileSync(fileName);
+    if (content) {
+        node_fs_1.default.writeFileSync(fileName, content);
+    }
+    return fileName;
+}
+exports.createTempFile = createTempFile;
+/**
+ * @description 创建临时文件
+ * @param content {string} 文件内容
  * @param options {FileOptions}
  * @return {string} 临时文件绝对路径
  */
-function createTempFile(content, options) {
+function createTempFileByTMP(content, options) {
     const currentOptions = (0, lodash_1.merge)({
         prefix: 'temp.api.helper.cli',
         postfix: '.js'
@@ -56,18 +105,42 @@ function createTempFile(content, options) {
     }
     return name;
 }
-exports.createTempFile = createTempFile;
+exports.createTempFileByTMP = createTempFileByTMP;
 function checkType(value, target) {
     return Object.prototype.toString.call(value) === `[object ${target}]`;
 }
 exports.checkType = checkType;
+function createFolder(path, isFile = false) {
+    if (isFile) {
+        fs_extra_1.default.ensureFileSync(path);
+        return path;
+    }
+    fs_extra_1.default.ensureDirSync(path);
+    return path;
+}
+exports.createFolder = createFolder;
+function removeFolder(path = '') {
+    try {
+        fs_extra_1.default.removeSync(path);
+        return true;
+    }
+    catch (_a) {
+        return false;
+    }
+}
+exports.removeFolder = removeFolder;
 /**
  * @description 模块加载
  * @param file {string} 模块路径，绝对路径。
- * @param isAsync {boolean} 是否异步执行，默认true。
+ * @param options {object} 是否异步执行，默认true。
  * @return {T} 模块默认返回的内容
  */
-function loadModule(file, isAsync = true) {
+function loadModule(file, options) {
+    const { isAsync, folder, callback } = (0, lodash_1.merge)({
+        isAsync: true,
+        folder: '',
+        callback: (a) => { }
+    }, options);
     file = (0, path_1.isAbsolute)(file) ? file : resolve(file);
     try {
         node_fs_1.default.accessSync(file, node_fs_1.default.constants.F_OK);
@@ -90,11 +163,13 @@ function loadModule(file, isAsync = true) {
         const { outputFiles } = res;
         const [outputFile] = outputFiles !== null && outputFiles !== void 0 ? outputFiles : [];
         const { text } = outputFile;
-        const filePath = createTempFile(text, { postfix: '.js' });
+        const filePath = createTempFile(text, { folder: folder, postfix: '.js' });
         const moduleContent = require(filePath);
         if (moduleContent.__esModule) {
+            callback && callback(moduleContent.default);
             return moduleContent.default;
         }
+        callback && callback(moduleContent);
         return moduleContent;
     };
     if (isAsync) {

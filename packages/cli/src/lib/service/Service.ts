@@ -21,7 +21,7 @@ import {
   loadModule,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins,
+  documentServersRunParserPlugins, removeFolder,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
@@ -46,12 +46,17 @@ class Service{
   ];
   private configFilePath?: string;
   private isTestEnv: boolean;
+
+  private tempFolder = join(__dirname, './.cache.server');
+
   constructor(configFilePath?: string, isTestEnv = false) {
     this.isTestEnv = isTestEnv;
     this.configFilePath = configFilePath;
   }
 
   async run() {
+    await this.clear();
+
     const configList = await this.getConfigFile();
     const len = configList.length;
 
@@ -73,6 +78,12 @@ class Service{
         await this.output(config, codes);
       } catch {}
     }
+
+    await this.clear();
+  }
+
+  async clear() {
+    removeFolder(this.tempFolder);
   }
 
   private injectParserPlugins(configList: Config[]) {
@@ -105,7 +116,9 @@ class Service{
 
     // 有配置文件
     if (configFilePath) {
-      const c = await loadModule(configFilePath);
+      const c = await loadModule(configFilePath, {
+        folder: this.tempFolder
+      });
       if (c) {
         spinner.succeed();
         return Array.isArray(c) ? c : [c];
@@ -115,7 +128,9 @@ class Service{
     // 没有从根目录寻找
     const files = await fg(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
     if (files.length) {
-      const c = await loadModule(files[0]);
+      const c = await loadModule(files[0], {
+        folder: this.tempFolder
+      });
       if (c) {
         spinner.succeed();
         return Array.isArray(c) ? c : [c];

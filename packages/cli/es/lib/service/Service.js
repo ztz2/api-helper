@@ -64,7 +64,7 @@ import { artTemplate, renderAllApi, } from '@api-helper/template';
 import { formatDate } from '@api-helper/core/lib/utils/util';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 import log from '../../lib/tools/log';
-import { resolve, loadModule, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
+import { resolve, loadModule, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, removeFolder, } from '../tools/util';
 import { formatCode } from '../../lib';
 import { EXTENSIONS } from '../../lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
@@ -78,6 +78,7 @@ var Service = /** @class */ (function () {
             new ParserYapiPlugin(),
             new ParserSwaggerPlugin(),
         ];
+        this.tempFolder = join(__dirname, './.cache.server');
         this.isTestEnv = isTestEnv;
         this.configFilePath = configFilePath;
     }
@@ -86,44 +87,58 @@ var Service = /** @class */ (function () {
             var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.getConfigFile()];
+                    case 0: return [4 /*yield*/, this.clear()];
                     case 1:
+                        _b.sent();
+                        return [4 /*yield*/, this.getConfigFile()];
+                    case 2:
                         configList = _b.sent();
                         len = configList.length;
                         // 添加解析插件
                         this.injectParserPlugins(configList);
                         i = 0;
-                        _b.label = 2;
-                    case 2:
-                        if (!(i < configList.length)) return [3 /*break*/, 10];
                         _b.label = 3;
                     case 3:
-                        _b.trys.push([3, 8, , 9]);
+                        if (!(i < configList.length)) return [3 /*break*/, 11];
+                        _b.label = 4;
+                    case 4:
+                        _b.trys.push([4, 9, , 10]);
                         config = configList[i];
                         if (len > 1) {
                             console.log("\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m\u6B63 \u5728 \u5904 \u7406 ".concat(i + 1, " \u9879\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
-                    case 4:
+                    case 5:
                         parserPluginRunResult = _b.sent();
                         return [4 /*yield*/, this.chooseDocument(parserPluginRunResult)];
-                    case 5:
+                    case 6:
                         chooseDocumentList = _b.sent();
                         return [4 /*yield*/, this.genCode(config, chooseDocumentList)];
-                    case 6:
+                    case 7:
                         codes = _b.sent();
                         return [4 /*yield*/, this.output(config, codes)];
-                    case 7:
-                        _b.sent();
-                        return [3 /*break*/, 9];
                     case 8:
-                        _a = _b.sent();
-                        return [3 /*break*/, 9];
+                        _b.sent();
+                        return [3 /*break*/, 10];
                     case 9:
+                        _a = _b.sent();
+                        return [3 /*break*/, 10];
+                    case 10:
                         i++;
-                        return [3 /*break*/, 2];
-                    case 10: return [2 /*return*/];
+                        return [3 /*break*/, 3];
+                    case 11: return [4 /*yield*/, this.clear()];
+                    case 12:
+                        _b.sent();
+                        return [2 /*return*/];
                 }
+            });
+        });
+    };
+    Service.prototype.clear = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                removeFolder(this.tempFolder);
+                return [2 /*return*/];
             });
         });
     };
@@ -191,7 +206,9 @@ var Service = /** @class */ (function () {
                         oraText = '读取 apih.config.(js|ts) 配置文件';
                         spinner = ora(oraText).start();
                         if (!configFilePath) return [3 /*break*/, 2];
-                        return [4 /*yield*/, loadModule(configFilePath)];
+                        return [4 /*yield*/, loadModule(configFilePath, {
+                                folder: this.tempFolder
+                            })];
                     case 1:
                         c = _a.sent();
                         if (c) {
@@ -203,7 +220,9 @@ var Service = /** @class */ (function () {
                     case 3:
                         files = _a.sent();
                         if (!files.length) return [3 /*break*/, 5];
-                        return [4 /*yield*/, loadModule(files[0])];
+                        return [4 /*yield*/, loadModule(files[0], {
+                                folder: this.tempFolder
+                            })];
                     case 4:
                         c = _a.sent();
                         if (c) {

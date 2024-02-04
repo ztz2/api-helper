@@ -153,10 +153,15 @@ export function filterKeyName(v) {
     // fix: 当字段是一个不合法的变量，将其转成字符串
     if (((typeof v === 'string' && v.trim() !== '') || (typeof v !== 'string' && v != null))
         && !v.includes('.')
+        && !v.includes('[')
         && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
         v = "\"".concat(v, "\"");
     }
     return v;
+}
+// 过滤所有dot参数
+export function filterDotKeyName(v) {
+    return v.replace(/\[.*/, '').replace(/\..*/, '');
 }
 export function filterSchemaRequired(schemaList) {
     if (!schemaList) {
@@ -463,7 +468,6 @@ export function filterSchemaPrimitiveValue(schema) {
         if (memo.has(scmList)) {
             return memo.get(scmList);
         }
-        debugger;
         var result = [];
         memo.set(scmList, result);
         try {

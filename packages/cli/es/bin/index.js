@@ -39,9 +39,16 @@ import path from 'path';
 import { Command } from 'commander';
 import { run } from '../lib';
 import log from '../lib/tools/log';
-import { loadModule } from '../lib/tools/util';
+import { createFolder, loadModule, removeFolder } from '../lib/tools/util';
 var program = new Command();
-var version = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), false).version;
+var basePath = createFolder(path.join(__dirname, './.cache.load.module'));
+var version = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), {
+    isAsync: false,
+    folder: basePath,
+    callback: function () {
+        removeFolder(basePath);
+    }
+}).version;
 // root指令
 program
     .version(version)

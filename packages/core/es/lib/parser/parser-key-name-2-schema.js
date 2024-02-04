@@ -26,8 +26,8 @@ var __read = (this && this.__read) || function (o, n) {
     return ar;
 };
 import { cloneDeep } from 'lodash';
-import { pushArray } from '../../lib/utils/util';
-import { createSchema } from '../..';
+import { pushArray } from '../utils/util';
+import { createSchema } from '../../index';
 // keyName[0].name => Schema
 // [0].updateValue => Schema
 // params.updateValue.name => Schema
@@ -88,6 +88,14 @@ var ParserKeyName2Schema = /** @class */ (function () {
                     // 不记录[索引]，清空即可
                     this.text = '';
                     this.status = '';
+                    // 结束了
+                    if (index === value.length - 1) {
+                        this.targetSchema = this.recordSchema;
+                        // 还存在默认的类型
+                        if (this.valueType && this.targetSchema) {
+                            this.targetSchema.params.push(createSchema(this.valueType));
+                        }
+                    }
                     break;
                 }
                 case DOT_NOTATION: {

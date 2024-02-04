@@ -157,8 +157,16 @@ export interface SystemRoleAuthUserAllocatedListRequestByGet {
   admin?: boolean;
   avatar?: string;
   delFlag?: string;
+  ancestors?: string;
   deptId?: number;
+  deptName?: string;
   email?: string;
+  leader?: string;
+  orderNum?: string;
+  parentId?: number;
+  parentName?: string;
+  phone?: string;
+  status?: string;
   loginDate?: string;
   loginIp?: string;
   nickName?: string;
@@ -168,8 +176,15 @@ export interface SystemRoleAuthUserAllocatedListRequestByGet {
   roleId?: number;
   roleIds?: Array<any>;
   roleName?: string;
+  dataScope?: string;
+  deptCheckStrictly?: boolean;
+  deptIds?: Array<any>;
+  flag?: boolean;
+  menuCheckStrictly?: boolean;
+  menuIds?: Array<any>;
+  roleKey?: string;
+  roleSort?: string;
   sex?: string;
-  status?: string;
   userId?: number;
   userName?: string;
   dept?: {

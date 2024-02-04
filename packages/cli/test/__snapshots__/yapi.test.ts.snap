@@ -221,7 +221,7 @@ export interface V2StoreOrderRequestByPost {
   tag?: Array<
     // Order Tag Child
     Array<{
-      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+      // The password \\r\\r\\n\\n for login in clear text.
       tagName?: 'error' | 'waring' | 'info';
     }>
   >;
@@ -243,7 +243,7 @@ export interface V2StoreOrderResponseByPost {
   tag: Array<
     // Order Tag Child
     Array<{
-      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+      // The password \\r\\r\\n\\n for login in clear text.
       tagName: 'error' | 'waring' | 'info';
     }>
   >;
@@ -429,7 +429,7 @@ export type V2UserUsernameResponseByDelete = any;
 export interface V2UserLoginRequestByGet {
   // The user name for login
   username: string;
-  // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+  // The password \\r\\r\\n\\n for login in clear text.
   password: string;
 }
 /**
@@ -845,7 +845,7 @@ export interface V2StoreOrderRequestByPost {
   tag?: Array<
     // Order Tag Child
     Array<{
-      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+      // The password \\r\\r\\n\\n for login in clear text.
       tagName?: 'error' | 'waring' | 'info';
     }>
   >;
@@ -867,7 +867,7 @@ export interface V2StoreOrderResponseByPost {
   tag: Array<
     // Order Tag Child
     Array<{
-      // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+      // The password \\r\\r\\n\\n for login in clear text.
       tagName: 'error' | 'waring' | 'info';
     }>
   >;
@@ -1221,7 +1221,7 @@ v2UserUsernameByDelete.requestConfig = {
 export interface V2UserLoginRequestByGet {
   // The user name for login
   username: string;
-  // The password \\\\r\\\\r\\\\n\\\\n for login in clear text.
+  // The password \\r\\r\\n\\n for login in clear text.
   password: string;
 }
 /**
