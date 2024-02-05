@@ -5,7 +5,7 @@ import { getSchema } from '@api-helper/core/lib/helpers';
 import { ChangeCase } from '@/lib/types';
 import artTemplate from '@/lib/art-template';
 import { renderInterfaceName } from '@/lib/render-interface';
-import { isEmptyObject, isEmptySchema } from '@/lib/utils/util';
+import { isEmptySchema } from '@/lib/utils/util';
 
 export function renderRequestFunction(
   api: APIHelper.API,
@@ -27,6 +27,26 @@ export function renderRequestFunction(
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
   const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
 
+  const requestFunctionName = onRenderRequestFunctionName(api, {
+    changeCase: _changeCase,
+  });
+  const requestDataInterfaceName = onRenderInterfaceName(api, {
+    paramType: 'request',
+    changeCase: _changeCase,
+    schema: api.requestDataSchema as APIHelper.Schema,
+  });
+  const requestExtraDataInterfaceName = onRenderInterfaceName(api, {
+    isExtraData: true,
+    paramType: 'request',
+    changeCase: _changeCase,
+    schema: api.requestExtraDataSchema as APIHelper.Schema,
+  });
+  const responseDataInterfaceName = onRenderInterfaceName(api, {
+    paramType: 'response',
+    changeCase: _changeCase,
+    schema: responseDataSchema,
+  });
+
   const templateTenderParams = {
     api,
     emptyRequestDataValue,
@@ -35,25 +55,10 @@ export function renderRequestFunction(
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-    requestFunctionName: onRenderRequestFunctionName(api, {
-      changeCase: _changeCase,
-    }),
-    requestDataInterfaceName: onRenderInterfaceName(api, {
-      paramType: 'request',
-      changeCase: _changeCase,
-      schema: api.requestDataSchema as APIHelper.Schema,
-    }),
-    requestExtraDataInterfaceName: onRenderInterfaceName(api, {
-      isExtraData: true,
-      paramType: 'request',
-      changeCase: _changeCase,
-      schema: api.requestExtraDataSchema as APIHelper.Schema,
-    }),
-    responseDataInterfaceName: onRenderInterfaceName(api, {
-      paramType: 'response',
-      changeCase: _changeCase,
-      schema: responseDataSchema,
-    }),
+    requestFunctionName,
+    requestDataInterfaceName,
+    requestExtraDataInterfaceName,
+    responseDataInterfaceName,
   };
 
   const code = artTemplate.render(

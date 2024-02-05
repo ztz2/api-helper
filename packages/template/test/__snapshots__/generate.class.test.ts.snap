@@ -5,7 +5,7 @@ exports[`生成 Class 类测试 OpenAPI-2.0生成 Class 类测试: OpenAPI-2.0�
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestByPost {
+export class V2StoreOrderRequestclassByPost {
   // { number }
   id = 0;
   // { number }
@@ -36,7 +36,7 @@ exports[`生成 Class 类测试 OpenAPI-3.0生成 Class 类测试: OpenAPI-3.00�
  * @description Place an order for a pet、Place a new order in the store【响应数据实体类】
  * @url [ POST ] /api/v3/store/order
  */
-export class ApiV3StoreOrderResponseByPost {
+export class ApiV3StoreOrderResponseclassByPost {
   // { number }
   id = 0;
   // { number }
@@ -54,7 +54,7 @@ export class ApiV3StoreOrderResponseByPost {
 `;
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class dropComment属性测试 1`] = `
-"export class V2StoreOrderRequestByPost {
+"export class V2StoreOrderRequestclassByPost {
   // { number }
   id = 0;
   // { number }
@@ -143,7 +143,7 @@ exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestByPost {
+export class V2StoreOrderRequestclassByPost {
   // { number }
   id = 0;
   // { number }
@@ -174,7 +174,7 @@ exports[`生成 Class 类测试 空属性: OpenAPI-2.0生成 Class null测试 1`
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestByPost {}
+export class V2StoreOrderRequestclassByPost {}
 "
 `;
 
@@ -183,6 +183,6 @@ exports[`生成 Class 类测试 空属性: OpenAPI-2.0生成 Class 空数组测�
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestByPost {}
+export class V2StoreOrderRequestclassByPost {}
 "
 `;

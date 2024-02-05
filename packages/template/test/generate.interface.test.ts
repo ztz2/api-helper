@@ -5,23 +5,23 @@ import { readJsonFile } from './utils/file';
 import { renderInterface } from '../src/lib/render-interface';
 
 describe('生成 interface 测试', () => {
-  test('open-api-2.0-param[0].json', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-param[0].json'));
+  test('open-api-2.0-dot.json', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
-    const category = openAPIDocument.categoryList[8];
-    const api = category.apiList[2];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
     const responseCode = [
       renderInterface(api.requestDataSchema, api),
       renderInterface(api.responseDataSchema, api),
     ].join('\n');
     expect(
       responseCode,
-    ).toMatchSnapshot('open-api-2.0-param[0].json');
+    ).toMatchSnapshot('open-api-2.0-dot.json');
   });
 
   test('OpenAPI-2.0-source生成 interface 测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-source.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-source.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[0];
@@ -36,7 +36,7 @@ describe('生成 interface 测试', () => {
   });
 
   test('OpenAPI-2.0生成 interface 测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
@@ -51,7 +51,7 @@ describe('生成 interface 测试', () => {
   });
 
   test('OpenAPI-3.0生成 interface 测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-3.0.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-3.0.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
@@ -65,7 +65,7 @@ describe('生成 interface 测试', () => {
   });
 
   test('name - prefix - dropComment - onlyBody 属性测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];

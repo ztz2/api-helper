@@ -238,6 +238,10 @@ export function createApi(options) {
     return instance;
 }
 export function transformType(type, format, emptyType) {
+    var _a;
+    if (Array.isArray(type)) {
+        type = (_a = type === null || type === void 0 ? void 0 : type[0]) !== null && _a !== void 0 ? _a : 'string';
+    }
     var typeMap = {
         int: 'number',
         integer: 'number',

@@ -38,7 +38,7 @@ export default {
   });
 
   test('基于swagger2.0，dot参数', async () => {
-    const filepath = toUnixPath(join(__dirname, `../test/resources/open-api-2.0-dot.json`));
+    const filepath = toUnixPath(join(__dirname, `../../core/test/resources/open-api-2.0-dot.json`));
     const configFile = createTempFile(`
 import { resolve } from 'path';
 export default {
@@ -115,7 +115,7 @@ export default {
   });
 
   test('本地文件代码', async () => {
-    const filepath = toUnixPath(join(__dirname, `../test/resources/open-api-2.0.json`));
+    const filepath = toUnixPath(join(__dirname, `../../core/test/resources/open-api-2.0.json`));
     const configFile = createTempFile(`
 import { resolve } from 'path';
 export default {

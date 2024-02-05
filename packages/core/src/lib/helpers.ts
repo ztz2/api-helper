@@ -171,6 +171,9 @@ export function createApi(options?: Partial<APIHelper.API & Recordable>): APIHel
 }
 
 export function transformType(type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: APIHelper.SchemaType): APIHelper.SchemaType {
+  if (Array.isArray(type)) {
+    type = type?.[0] ?? 'string';
+  }
   const typeMap: Record<string, APIHelper.SchemaType> = {
     int: 'number',
     integer: 'number',

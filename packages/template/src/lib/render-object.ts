@@ -18,6 +18,8 @@ export function renderObject(
     prefix?: string,
     // interface 名称
     name?: string;
+    // 名称后缀
+    suffixName?: string;
     // 删除interface注释
     dropComment?: boolean;
     // 只生成类型部分
@@ -30,6 +32,7 @@ export function renderObject(
 ) {
   options = merge({
     prefix: 'export ',
+    suffixName: 'entity',
     onlyBody: false,
     paramType: 'request',
     emptyBodyCode: '{}',
@@ -40,6 +43,7 @@ export function renderObject(
 
   const {
     prefix,
+    suffixName,
     dropComment,
     emptyBodyCode,
     paramType = 'request',
@@ -51,6 +55,7 @@ export function renderObject(
   const onRenderObjectName = options?.onRenderObjectName ? options.onRenderObjectName : renderObjectName;
   let commentCode = onlyBody ? '' : dropComment !== true ? renderObjectComment(api, paramType) : '';
   let objectName = options?.name ? options.name : onRenderObjectName(api, {
+    suffixName,
     paramType,
     changeCase
   });
@@ -150,15 +155,17 @@ export function renderComment(schema: APIHelper.Schema) {
 export function renderObjectName(
   api: APIHelper.API,
   options: {
+    suffixName?: string,
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }) {
+  const suffixName = options?.suffixName ?? 'Entity ';
   const changeCase = options.changeCase ?? _changeCase;
   let name = api.path;
   if (options.paramType) {
     name += ` ${options.paramType}`;
   }
-  name += `By ${api.method}`;
+  name += `${suffixName}By ${api.method}`;
   return changeCase.camelCase(name);
 }
 

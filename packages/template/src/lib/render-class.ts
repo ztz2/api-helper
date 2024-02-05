@@ -16,8 +16,10 @@ export function renderClass(
     paramType?: 'request' | 'response';
     // 前缀
     prefix?: string,
-    // interface 名称
-    name?: string;
+    // 名称
+    name?: string,
+    // 名称后缀
+    suffixName?: string;
     // 删除interface注释
     dropComment?: boolean;
     // 只生成类型部分
@@ -33,6 +35,7 @@ export function renderClass(
     prefix: 'export ',
     paramType: 'request',
     emptyBodyCode: '{}',
+    suffixName: 'class',
   }, options);
 
   schema = cloneDeep(schema);
@@ -41,6 +44,7 @@ export function renderClass(
 
   const {
     prefix,
+    suffixName,
     onlyBody,
     dropComment,
     emptyBodyCode,
@@ -51,6 +55,7 @@ export function renderClass(
   let commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
   let className = options?.name ? options.name : onRenderClassName(api, {
     paramType,
+    suffixName,
     changeCase: _changeCase,
   });
 
@@ -135,15 +140,17 @@ function renderClassDeepObject(
 export function renderClassName(
   api: APIHelper.API,
   options: {
+    suffixName?: string,
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
   }) {
+  const suffixName = options?.suffixName ?? 'Class ';
   const changeCase = options.changeCase ?? _changeCase;
   let name = api.path;
   if (options.paramType) {
     name += ` ${options.paramType}`;
   }
-  name += `By ${api.method}`;
+  name += `${suffixName}By ${api.method}`;
   return changeCase.pascalCase(name);
 }
 

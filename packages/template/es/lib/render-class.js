@@ -22,15 +22,17 @@ export function renderClass(schema, api, options) {
         prefix: 'export ',
         paramType: 'request',
         emptyBodyCode: '{}',
+        suffixName: 'class',
     }, options);
     schema = cloneDeep(schema);
     var schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (_b = (_a = schema) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : []);
-    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
+    var prefix = options.prefix, suffixName = options.suffixName, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
     var keyword = "".concat(prefix, " class");
     var onRenderClassName = (options === null || options === void 0 ? void 0 : options.onRenderClassName) ? options.onRenderClassName : renderClassName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
     var className = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderClassName(api, {
         paramType: paramType,
+        suffixName: suffixName,
         changeCase: _changeCase,
     });
     /**
@@ -114,13 +116,14 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
     return code;
 }
 export function renderClassName(api, options) {
-    var _a;
-    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : _changeCase;
+    var _a, _b;
+    var suffixName = (_a = options === null || options === void 0 ? void 0 : options.suffixName) !== null && _a !== void 0 ? _a : 'Class ';
+    var changeCase = (_b = options.changeCase) !== null && _b !== void 0 ? _b : _changeCase;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
-    name += "By ".concat(api.method);
+    name += "".concat(suffixName, "By ").concat(api.method);
     return changeCase.pascalCase(name);
 }
 function renderClassComment(api, paramType, isExtraData) {

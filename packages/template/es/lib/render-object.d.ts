@@ -4,6 +4,7 @@ export declare function renderObject(schema: APIHelper.Schema | Array<APIHelper.
     paramType?: 'request' | 'response';
     prefix?: string;
     name?: string;
+    suffixName?: string;
     dropComment?: boolean;
     onlyBody?: boolean;
     emptyBodyCode?: string;
@@ -11,6 +12,7 @@ export declare function renderObject(schema: APIHelper.Schema | Array<APIHelper.
 }): string;
 export declare function renderComment(schema: APIHelper.Schema): string;
 export declare function renderObjectName(api: APIHelper.API, options: {
+    suffixName?: string;
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
 }): string;

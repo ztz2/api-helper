@@ -68,7 +68,7 @@ export interface V2PetRequestByPost {
     name?: string;
   };
   name: string;
-  photoUrls: Array<any>;
+  photoUrls: Array<string>;
   tags?: Array<{
     id?: number;
     name?: string;
@@ -106,7 +106,7 @@ export interface V2PetRequestByPut {
     name?: string;
   };
   name: string;
-  photoUrls: Array<any>;
+  photoUrls: Array<string>;
   tags?: Array<{
     id?: number;
     name?: string;
@@ -139,7 +139,7 @@ export declare const v2PetByPut: {
  */
 export interface V2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: Array<any>;
+  status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
@@ -184,7 +184,7 @@ export declare const v2PetFindByStatusByGet: {
  */
 export interface V2PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: Array<any>;
+  tags: Array<string>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
@@ -464,7 +464,17 @@ export declare const v2StoreInventoryByGet: {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithArray
  */
-export type V2UserCreateWithArrayRequestByPost = Record<string, any>;
+export type V2UserCreateWithArrayRequestByPost = Array<{
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithArray
@@ -492,7 +502,17 @@ export declare const v2UserCreateWithArrayByPost: {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestByPost = Record<string, any>;
+export type V2UserCreateWithListRequestByPost = Array<{
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithList

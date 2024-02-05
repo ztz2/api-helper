@@ -173,19 +173,21 @@ export default class ParserSwagger {
 
             if ('parameters' in apiMap) {
               const parameters = apiMap.parameters;
-              if (path.includes('/user/list')) {
-                debugger;
-              }
               for (let j = 0; j < parameters.length; j++) {
                 const parameter = parameters[j];
+
                 // fix: 当为Object类型，属性为空，导致成为一个异常的对象
                 if (parameter.name?.trim?.() === '') {
                   continue;
                 }
+
                 let keyName = filterKeyName(parameter.name);
                 // 路径参数 | url 参数
                 if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
-                  if (requestKeyNameMemo.includes(keyName)) {
+                  if (
+                    requestKeyNameMemo.includes(keyName) &&
+                    api.pathParamKeyNameList.includes(keyName)
+                  ) {
                     continue;
                   }
                   requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
@@ -199,10 +201,15 @@ export default class ParserSwagger {
 
                   let parserKeyName2SchemaRes = null;
                   // 存在 Schema 的dot参数
-                  if (checkType(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('['))) {
+                  if (
+                    // fix: 2.0中array参数问题
+                    parameter?.type === 'array' ||
+                    (checkType(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('[')))
+                  ) {
                     keyName = filterDotKeyName(keyName);
+                    const temp = parameter?.type === 'array' ? parameter : parameter.schema;
                     scm = parserSchema(
-                      parameter.schema,
+                      temp,
                       undefined,
                       keyName,
                       undefined,
@@ -249,6 +256,8 @@ export default class ParserSwagger {
                     !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
                   } // 表单参数（这个可能不是标准规范）
                   else if (parameter.in === 'formData') {
+                    // fix: swagger2.0 文件类型识别失败问题
+                    scm.type = parameter?.format ? transformType(scm.type, parameter?.format, scm.type) : scm.type;
                     !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
                   }
 
@@ -265,6 +274,7 @@ export default class ParserSwagger {
                   );
                 } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                   // header 和 cookie信息，暂无特殊处理
+
                 }
               }
               // 合并 name[0].a.rule 属性。
@@ -295,15 +305,18 @@ export default class ParserSwagger {
             // 请求 Body 为 json参数
             const requestSchemaSource = apiMap.requestBody?.content?.['application/json']?.schema
               ?? apiMap.requestBody?.content?.['text/json']?.schema;
-            requestExtraDataSchema = processRequestSchema(
-              requestDataSchema,
-              requestSchemaRecord,
-              requestSchemaSource,
-              undefined,
-              {
-                autoGenerateId: this.autoGenerateId,
-              }
-            );
+            // fix: requestExtraDataSchema 参数丢失问题
+            if (requestSchemaSource) {
+              requestExtraDataSchema = processRequestSchema(
+                requestDataSchema,
+                requestSchemaRecord,
+                requestSchemaSource,
+                undefined,
+                {
+                  autoGenerateId: this.autoGenerateId,
+                }
+              );
+            }
 
             processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
             /****************** 处理请求参数--结束 ******************/

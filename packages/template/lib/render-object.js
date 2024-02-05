@@ -44,19 +44,21 @@ function renderObject(schema, api, options) {
     var _a, _b, _c;
     options = (0, merge_1.default)({
         prefix: 'export ',
+        suffixName: 'entity',
         onlyBody: false,
         paramType: 'request',
         emptyBodyCode: '{}',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
     var schemaList = (0, util_1.filterSchemaPrimitiveValue)(Array.isArray(schema) ? schema : (_b = (_a = schema) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : []);
-    var prefix = options.prefix, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _d = options.paramType, paramType = _d === void 0 ? 'request' : _d;
+    var prefix = options.prefix, suffixName = options.suffixName, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _d = options.paramType, paramType = _d === void 0 ? 'request' : _d;
     // @ts-ignore
     var onlyBody = (_c = options === null || options === void 0 ? void 0 : options.onlyMap) !== null && _c !== void 0 ? _c : options.onlyBody;
     var keyword = "".concat(prefix, " const");
     var onRenderObjectName = (options === null || options === void 0 ? void 0 : options.onRenderObjectName) ? options.onRenderObjectName : renderObjectName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderObjectComment(api, paramType) : '';
     var objectName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderObjectName(api, {
+        suffixName: suffixName,
         paramType: paramType,
         changeCase: changeCase
     });
@@ -156,13 +158,14 @@ function renderComment(schema) {
 }
 exports.renderComment = renderComment;
 function renderObjectName(api, options) {
-    var _a;
-    var changeCase = (_a = options.changeCase) !== null && _a !== void 0 ? _a : change_case_1.default;
+    var _a, _b;
+    var suffixName = (_a = options === null || options === void 0 ? void 0 : options.suffixName) !== null && _a !== void 0 ? _a : 'Entity ';
+    var changeCase = (_b = options.changeCase) !== null && _b !== void 0 ? _b : change_case_1.default;
     var name = api.path;
     if (options.paramType) {
         name += " ".concat(options.paramType);
     }
-    name += "By ".concat(api.method);
+    name += "".concat(suffixName, "By ").concat(api.method);
     return changeCase.camelCase(name);
 }
 exports.renderObjectName = renderObjectName;

@@ -225,9 +225,6 @@ var ParserSwagger = /** @class */ (function () {
                             }
                             if ('parameters' in apiMap) {
                                 var parameters = apiMap.parameters;
-                                if (path.includes('/user/list')) {
-                                    debugger;
-                                }
                                 for (var j = 0; j < parameters.length; j++) {
                                     var parameter = parameters[j];
                                     // fix: 当为Object类型，属性为空，导致成为一个异常的对象
@@ -237,7 +234,8 @@ var ParserSwagger = /** @class */ (function () {
                                     var keyName = (0, util_1.filterKeyName)(parameter.name);
                                     // 路径参数 | url 参数
                                     if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
-                                        if (requestKeyNameMemo_1.includes(keyName)) {
+                                        if (requestKeyNameMemo_1.includes(keyName) &&
+                                            api_1.pathParamKeyNameList.includes(keyName)) {
                                             continue;
                                         }
                                         requestKeyNameMemo_1.includes(keyName) && requestKeyNameMemo_1.push(keyName);
@@ -248,9 +246,13 @@ var ParserSwagger = /** @class */ (function () {
                                         });
                                         var parserKeyName2SchemaRes = null;
                                         // 存在 Schema 的dot参数
-                                        if ((0, util_1.checkType)(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('['))) {
+                                        if (
+                                        // fix: 2.0中array参数问题
+                                        (parameter === null || parameter === void 0 ? void 0 : parameter.type) === 'array' ||
+                                            ((0, util_1.checkType)(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('[')))) {
                                             keyName = (0, util_1.filterDotKeyName)(keyName);
-                                            scm = (0, util_1.parserSchema)(parameter.schema, undefined, keyName, undefined, {
+                                            var temp = (parameter === null || parameter === void 0 ? void 0 : parameter.type) === 'array' ? parameter : parameter.schema;
+                                            scm = (0, util_1.parserSchema)(temp, undefined, keyName, undefined, {
                                                 autoGenerateId: this_1.autoGenerateId
                                             });
                                         }
@@ -286,6 +288,8 @@ var ParserSwagger = /** @class */ (function () {
                                             !api_1.queryStringKeyNameList.includes(keyName) && api_1.queryStringKeyNameList.push(keyName);
                                         } // 表单参数（这个可能不是标准规范）
                                         else if (parameter.in === 'formData') {
+                                            // fix: swagger2.0 文件类型识别失败问题
+                                            scm.type = (parameter === null || parameter === void 0 ? void 0 : parameter.format) ? (0, helpers_1.transformType)(scm.type, parameter === null || parameter === void 0 ? void 0 : parameter.format, scm.type) : scm.type;
                                             !api_1.formDataKeyNameList.includes(keyName) && api_1.formDataKeyNameList.push(keyName);
                                         }
                                         requestDataSchema.params.push(scm);
@@ -314,9 +318,12 @@ var ParserSwagger = /** @class */ (function () {
                             });
                             // 请求 Body 为 json参数
                             var requestSchemaSource = (_q = (_p = (_o = (_m = apiMap.requestBody) === null || _m === void 0 ? void 0 : _m.content) === null || _o === void 0 ? void 0 : _o['application/json']) === null || _p === void 0 ? void 0 : _p.schema) !== null && _q !== void 0 ? _q : (_t = (_s = (_r = apiMap.requestBody) === null || _r === void 0 ? void 0 : _r.content) === null || _s === void 0 ? void 0 : _s['text/json']) === null || _t === void 0 ? void 0 : _t.schema;
-                            requestExtraDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
-                                autoGenerateId: this_1.autoGenerateId,
-                            });
+                            // fix: requestExtraDataSchema 参数丢失问题
+                            if (requestSchemaSource) {
+                                requestExtraDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
+                                    autoGenerateId: this_1.autoGenerateId,
+                                });
+                            }
                             (0, util_1.processRequestSchemaPipeline)(api_1, requestDataSchema, requestExtraDataSchema, this_1);
                             /****************** 处理请求参数--结束 ******************/
                             /****************** 处理响应参数--开始 ******************/

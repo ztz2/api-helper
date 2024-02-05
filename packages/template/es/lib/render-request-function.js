@@ -15,6 +15,25 @@ export function renderRequestFunction(api, options) {
     var onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
     var onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
     var responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
+    var requestFunctionName = onRenderRequestFunctionName(api, {
+        changeCase: _changeCase,
+    });
+    var requestDataInterfaceName = onRenderInterfaceName(api, {
+        paramType: 'request',
+        changeCase: _changeCase,
+        schema: api.requestDataSchema,
+    });
+    var requestExtraDataInterfaceName = onRenderInterfaceName(api, {
+        isExtraData: true,
+        paramType: 'request',
+        changeCase: _changeCase,
+        schema: api.requestExtraDataSchema,
+    });
+    var responseDataInterfaceName = onRenderInterfaceName(api, {
+        paramType: 'response',
+        changeCase: _changeCase,
+        schema: responseDataSchema,
+    });
     var templateTenderParams = {
         api: api,
         emptyRequestDataValue: emptyRequestDataValue,
@@ -23,25 +42,10 @@ export function renderRequestFunction(api, options) {
         formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
         pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
         queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-        requestFunctionName: onRenderRequestFunctionName(api, {
-            changeCase: _changeCase,
-        }),
-        requestDataInterfaceName: onRenderInterfaceName(api, {
-            paramType: 'request',
-            changeCase: _changeCase,
-            schema: api.requestDataSchema,
-        }),
-        requestExtraDataInterfaceName: onRenderInterfaceName(api, {
-            isExtraData: true,
-            paramType: 'request',
-            changeCase: _changeCase,
-            schema: api.requestExtraDataSchema,
-        }),
-        responseDataInterfaceName: onRenderInterfaceName(api, {
-            paramType: 'response',
-            changeCase: _changeCase,
-            schema: responseDataSchema,
-        }),
+        requestFunctionName: requestFunctionName,
+        requestDataInterfaceName: requestDataInterfaceName,
+        requestExtraDataInterfaceName: requestExtraDataInterfaceName,
+        responseDataInterfaceName: responseDataInterfaceName,
     };
     var code = artTemplate.render("\u300Aif commentCode\u300B\u300AcommentCode\u300B\n\u300A/if\u300Bexport function \u300ArequestFunctionName\u300B(data\u300Aif isTypescript\u300B: \u300ArequestDataInterfaceName\u300B\u300A/if\u300B\u300Aif emptyRequestDataValue\u300B = \u300AemptyRequestDataValue\u300B\u300A/if\u300B, extraData\u300Aif isTypescript\u300B?: \u300Aif api.requestExtraDataSchema\u300B\u300ArequestExtraDataInterfaceName\u300B\u300Aelse\u300Bunknown\u300A/if\u300B\u300A/if\u300B, ...args\u300Aif isTypescript\u300B: CurrentRequestFunctionRestArgsType\u300A/if\u300B) {\n  return request\u300Aif isTypescript\u300B<\u300AresponseDataInterfaceName\u300B>\u300A/if\u300B(\n    processRequestFunctionConfig(data, extraData, \u300ArequestFunctionName\u300B.requestConfig),\n    ...args\n  );\n}\n\u300ArequestFunctionName\u300B.requestConfig = {\n  path: '\u300Aapi.path\u300B',\n  method: '\u300Aapi.method.toUpperCase()\u300B',\n  formDataKeyNameList: \u300AformDataKeyNameListStr\u300B,\n  pathParamKeyNameList: \u300ApathParamKeyNameListStr\u300B,\n  queryStringKeyNameList: \u300AqueryStringKeyNameListStr\u300B\n}", templateTenderParams);
     return code;

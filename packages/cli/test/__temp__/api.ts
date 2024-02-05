@@ -24,7 +24,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageRequestByPost {
-  // ID of pet to update
+  // ID of pet  * 换行符测试 * to update
   petId: number;
   // Additional data to pass to server
   additionalMetadata: string;
@@ -143,7 +143,7 @@ v2PetByPut.requestConfig = {
  */
 export interface V2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: Array<any>;
+  status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
@@ -191,7 +191,7 @@ v2PetFindByStatusByGet.requestConfig = {
  */
 export interface V2PetFindByTagsRequestByGet {
   // Tags to filter by
-  tags: Array<any>;
+  tags: Array<string>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
@@ -535,7 +535,17 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @description Creates list of users with given input array【请求数据类型定义】
  * @url [ POST ] /v2/user/createWithList
  */
-export type V2UserCreateWithListRequestByPost = Record<string, any>;
+export type V2UserCreateWithListRequestByPost = Array<{
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
  * @url [ POST ] /v2/user/createWithList
@@ -546,7 +556,7 @@ export type V2UserCreateWithListResponseByPost = any;
  * @url [ POST ] /v2/user/createWithList
  */
 export function v2UserCreateWithListByPost(
-  data: V2UserCreateWithListRequestByPost = {},
+  data: V2UserCreateWithListRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {

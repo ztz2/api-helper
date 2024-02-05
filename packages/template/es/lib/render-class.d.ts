@@ -4,12 +4,14 @@ export declare function renderClass(schema: APIHelper.Schema | Array<APIHelper.S
     paramType?: 'request' | 'response';
     prefix?: string;
     name?: string;
+    suffixName?: string;
     dropComment?: boolean;
     onlyBody?: boolean;
     emptyBodyCode?: string;
     onRenderClassName?: typeof renderClassName;
 }): string;
 export declare function renderClassName(api: APIHelper.API, options: {
+    suffixName?: string;
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
 }): string;

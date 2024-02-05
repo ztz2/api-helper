@@ -15,6 +15,8 @@ import {
 import { formatDate } from '@api-helper/core/lib/utils/util';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 
+import { cloneDeep } from 'lodash';
+
 import log from '@/lib/tools/log';
 import {
   resolve,
@@ -281,7 +283,6 @@ import request from '《requestFilePath》';
             onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
             onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
           };
-
           let str1 = renderAllApi(d, param as any);
           if (!str1.endsWith('\n')) {
             str1 += '\n';

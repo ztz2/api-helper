@@ -132,135 +132,40 @@ interface V2StoreOrderRequestByPost {
 "
 `;
 
-exports[`生成 interface 测试 open-api-2.0-param[0].json: open-api-2.0-param[0].json 1`] = `
+exports[`生成 interface 测试 open-api-2.0-dot.json: open-api-2.0-dot.json 1`] = `
 "/**
- * @description allocatedList【请求数据类型定义】
- * @url [ GET ] /system/role/authUser/allocatedList
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
  */
-export interface SystemRoleAuthUserAllocatedListRequestByGet {
+export interface SystemUserListRequestByGet {
+  // 创建者
+  '2021-05'?: string;
   // 创建者
   createBy?: string;
+  // ID集合
+  ids?: Array<string>;
+  // 主键id集合
+  pics: Array<string>;
   // 创建时间
   createTime?: string;
-  // 请求参数
-  params?: {
-    [propName: string]: any;
-  };
-  // 备注
-  remark?: string;
-  // 搜索值
-  searchValue?: string;
-  // 更新者
-  updateBy?: string;
-  // 更新时间
-  updateTime?: string;
-  admin?: boolean;
-  avatar?: string;
-  delFlag?: string;
   ancestors?: string;
-  deptId?: number;
-  deptName?: string;
-  email?: string;
-  leader?: string;
-  orderNum?: string;
-  parentId?: number;
-  parentName?: string;
-  phone?: string;
-  status?: string;
-  loginDate?: string;
-  loginIp?: string;
-  nickName?: string;
-  password?: string;
-  phonenumber?: string;
-  postIds?: Array<any>;
-  roleId?: number;
-  roleIds?: Array<any>;
-  roleName?: string;
-  dataScope?: string;
-  deptCheckStrictly?: boolean;
-  deptIds?: Array<any>;
-  flag?: boolean;
-  menuCheckStrictly?: boolean;
-  menuIds?: Array<any>;
-  roleKey?: string;
-  roleSort?: string;
-  sex?: string;
-  userId?: number;
-  userName?: string;
   dept?: {
     // 创建者
     createBy?: string;
-    // 创建时间
-    createTime?: string;
-    // 请求参数
-    params?: {
-      [propName: string]: any;
-    };
-    // 备注
-    remark?: string;
-    // 搜索值
-    searchValue?: string;
-    // 更新者
-    updateBy?: string;
-    // 更新时间
-    updateTime?: string;
     ancestors?: string;
-    delFlag?: string;
-    deptId?: number;
-    deptName?: string;
-    email?: string;
-    leader?: string;
-    orderNum?: string;
-    parentId?: number;
-    parentName?: string;
-    phone?: string;
-    status?: string;
   };
   roles?: Array<{
     // 创建者
     createBy?: string;
     // 创建时间
     createTime?: string;
-    // 请求参数
-    params?: {
-      [propName: string]: any;
-    };
-    // 备注
-    remark?: string;
-    // 搜索值
-    searchValue?: string;
-    // 更新者
-    updateBy?: string;
-    // 更新时间
-    updateTime?: string;
-    admin?: boolean;
-    dataScope?: string;
-    delFlag?: string;
-    deptCheckStrictly?: boolean;
-    deptIds?: Array<any>;
-    flag?: boolean;
-    menuCheckStrictly?: boolean;
-    menuIds?: Array<any>;
-    roleId?: number;
-    roleKey?: string;
-    roleName?: string;
-    roleSort?: string;
-    status?: string;
   }>;
 }
 
 /**
- * @description allocatedList【请求数据类型定义】
- * @url [ GET ] /system/role/authUser/allocatedList
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
  */
-export interface SystemRoleAuthUserAllocatedListRequestByGet {
-  // TableDataInfo
-  code: number;
-  msg: string;
-  rows: Array<{
-    [propName: string]: any;
-  }>;
-  total: number;
-}
+export type SystemUserListRequestByGet = any;
 "
 `;

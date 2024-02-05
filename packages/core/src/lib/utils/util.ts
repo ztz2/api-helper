@@ -196,9 +196,10 @@ export function parserSchema(
     if (schema.enum) {
       resultSchema.enum = schema.enum.filter((t) => !isPlainObject(t)) as string[];
     }
+    const type = Array.isArray(schema.type) ? (schema.type?.[0] ?? 'string') : schema.type;
     // 其他类型处理
     // eslint-disable-next-line default-case
-    switch (schema.type) {
+    switch (type) {
       case 'string':
         const stringRules: APIHelper.IStringSchema['rules'] = {
           required: requiredFieldList.includes(keyName),
@@ -220,6 +221,20 @@ export function parserSchema(
         if (schema.exclusiveMaximum != null) numberRules.exclusiveMaximum = schema.exclusiveMaximum;
 
         resultSchema.rules = numberRules;
+        break;
+      case 'null':
+        const nullRules: APIHelper.INullSchema['rules'] = {
+          required: requiredFieldList.includes(keyName),
+        };
+
+        resultSchema.rules = nullRules;
+        break;
+      case 'boolean':
+        const booleanRules: APIHelper.IBooleanSchema['rules'] = {
+          required: requiredFieldList.includes(keyName),
+        };
+
+        resultSchema.rules = booleanRules;
         break;
       // 对象类型
       case 'object':
@@ -258,10 +273,21 @@ export function parserSchema(
           }
           // 数组单一类型 schema.properties
         } else if (checkType(schema.items, 'Object')) {
-          if (schema.items && validateSchema(schema.items)) {
-            const tmp = parserSchema(schema.items, schema, '', memo, options);
-            if (tmp) {
-              resultSchema.params.push(tmp);
+          if (checkType(schema?.items?.oneOf, 'Array')) {
+            schema?.items?.oneOf?.forEach((itm) => {
+              if (itm && validateSchema(itm)) {
+                const tmp = parserSchema(itm, schema, '', memo, options);
+                if (tmp) {
+                  resultSchema.params.push(tmp);
+                }
+              }
+            });
+          } else {
+            if (schema.items && validateSchema(schema.items)) {
+              const tmp = parserSchema(schema.items, schema, '', memo, options);
+              if (tmp) {
+                resultSchema.params.push(tmp);
+              }
             }
           }
         }
@@ -302,6 +328,8 @@ export function processRequestSchema(
     options
   );
   // 类型相同可以整合，非重复
+  const types = Array.isArray(parsedSchema?.type) ? parsedSchema?.type : [parsedSchema?.type];
+
   if (parsedSchema?.type === 'object' && requestJSONSchemaSource && !requestSchemaRecord.includes(requestJSONSchemaSource)) {
     const requestSchemaList = parsedSchema?.params ?? [];
     requestSchemaList.forEach((item) => {
@@ -429,7 +457,7 @@ export function filterSchemaPrimitiveValue<T>(schema: APIHelper.Schema | APIHelp
   if (!schema) {
     return schema as unknown as T;
   }
-  const schemaList: Array<APIHelper.Schema> = Array.isArray(schema) ? schema : [schema];
+  const schemaList: Array<APIHelper.Schema> = cloneDeep(Array.isArray(schema) ? schema : [schema]);
   const filter = (scmList: Array<APIHelper.Schema>, memo: Map<Array<APIHelper.Schema>, Array<APIHelper.Schema>> = new Map()) => {
     if (memo.has(scmList)) {
       return memo.get(scmList) as Array<APIHelper.Schema>;

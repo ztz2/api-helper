@@ -182,7 +182,7 @@ v2StoreInventoryByGet.requestConfig = {
  * @description Creates list of users with given input array
  * @url [ POST ] /v2/user/createWithArray
  */
-export function v2UserCreateWithArrayByPost(data = {}, extraData, ...args) {
+export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
   return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
 }
 v2UserCreateWithArrayByPost.requestConfig = {
@@ -196,7 +196,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @description Creates list of users with given input array
  * @url [ POST ] /v2/user/createWithList
  */
-export function v2UserCreateWithListByPost(data = {}, extraData, ...args) {
+export function v2UserCreateWithListByPost(data, extraData, ...args) {
   return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig), ...args);
 }
 v2UserCreateWithListByPost.requestConfig = {
