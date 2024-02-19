@@ -28,16 +28,19 @@ var helpers_1 = require("@api-helper/core/lib/helpers");
 var render_request_function_1 = require("../lib/render-request-function");
 var art_template_1 = __importDefault(require("../lib/art-template"));
 var render_interface_1 = require("../lib/render-interface");
+var util_1 = require("../lib/utils/util");
 function renderRequestFunctionDeclare(api, options) {
     if (!api) {
         return '';
     }
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
+    var isEmptyRequestData = (0, util_1.isEmptySchema)(api.requestDataSchema);
     var onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : render_request_function_1.renderRequestFunctionName;
     var onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : render_interface_1.renderInterfaceName;
     var responseDataSchema = dataKey ? (0, helpers_1.getSchema)(api.responseDataSchema, dataKey) : api.responseDataSchema;
     var templateTenderParams = {
         api: api,
+        isEmptyRequestData: isEmptyRequestData,
         commentCode: (0, render_request_function_1.renderRequestFunctionComment)(api),
         formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
         pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
@@ -62,7 +65,7 @@ function renderRequestFunctionDeclare(api, options) {
             schema: responseDataSchema,
         }),
     };
-    var code = art_template_1.default.render("\u300Aif commentCode\u300B\u300AcommentCode\u300B\n\u300A/if\u300Bexport declare const \u300ArequestFunctionName\u300B: {\n  (data: \u300ArequestDataInterfaceName\u300B, extraData?: \u300Aif api.requestExtraDataSchema\u300B\u300ArequestExtraDataInterfaceName\u300B\u300Aelse\u300Bunknown\u300A/if\u300B, ...args: CurrentRequestFunctionRestArgsType): Promise<\u300AresponseDataInterfaceName\u300B>;\n  readonly requestConfig: {\n    path: '\u300Aapi.path\u300B',\n    method: '\u300Aapi.method.toLowerCase()\u300B',\n    formDataKeyNameList: \u300AformDataKeyNameListStr\u300B,\n    pathParamKeyNameList: \u300ApathParamKeyNameListStr\u300B,\n    queryStringKeyNameList: \u300AqueryStringKeyNameListStr\u300B\n  }\n};", templateTenderParams);
+    var code = art_template_1.default.render("\u300Aif commentCode\u300B\u300AcommentCode\u300B\n\u300A/if\u300Bexport declare const \u300ArequestFunctionName\u300B: {\n  (data\u300Aif isEmptyRequestData\u300B?\u300A/if\u300B: \u300ArequestDataInterfaceName\u300B, extraData?: \u300Aif api.requestExtraDataSchema\u300B\u300ArequestExtraDataInterfaceName\u300B\u300Aelse\u300Bunknown\u300A/if\u300B, ...args: CurrentRequestFunctionRestArgsType): Promise<\u300AresponseDataInterfaceName\u300B>;\n  readonly requestConfig: {\n    path: '\u300Aapi.path\u300B',\n    method: '\u300Aapi.method.toLowerCase()\u300B',\n    formDataKeyNameList: \u300AformDataKeyNameListStr\u300B,\n    pathParamKeyNameList: \u300ApathParamKeyNameListStr\u300B,\n    queryStringKeyNameList: \u300AqueryStringKeyNameListStr\u300B\n  }\n};", templateTenderParams);
     return code;
 }
 exports.renderRequestFunctionDeclare = renderRequestFunctionDeclare;

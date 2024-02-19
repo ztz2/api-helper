@@ -1919,7 +1919,7 @@ export type V2StoreInventoryResponseByGet = any;
    * @url [ GET ] /v2/store/inventory
    */
 export declare const v2StoreInventoryByGet: {
-  (data: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
+  (data?: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
   readonly requestConfig: {
     path: '/v2/store/inventory',
     method: 'get',
@@ -2136,7 +2136,7 @@ export type V2UserLogoutResponseByGet = any;
    * @url [ GET ] /v2/user/logout
    */
 export declare const v2UserLogoutByGet: {
-  (data: V2UserLogoutRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLogoutResponseByGet>;
+  (data?: V2UserLogoutRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLogoutResponseByGet>;
   readonly requestConfig: {
     path: '/v2/user/logout',
     method: 'get',

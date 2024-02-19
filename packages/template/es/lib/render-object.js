@@ -16,7 +16,7 @@ import * as changeCase from 'change-case';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
 export function renderObject(schema, api, options) {
-    var _a, _b, _c;
+    var _a, _b;
     options = merge({
         prefix: 'export ',
         suffixName: 'entity',
@@ -25,10 +25,10 @@ export function renderObject(schema, api, options) {
         emptyBodyCode: '{}',
     }, options);
     schema = cloneDeep(schema);
-    var schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (_b = (_a = schema) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : []);
-    var prefix = options.prefix, suffixName = options.suffixName, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _d = options.paramType, paramType = _d === void 0 ? 'request' : _d;
+    var primitiveValueSchema = filterSchemaPrimitiveValue(schema);
+    var prefix = options.prefix, suffixName = options.suffixName, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
     // @ts-ignore
-    var onlyBody = (_c = options === null || options === void 0 ? void 0 : options.onlyMap) !== null && _c !== void 0 ? _c : options.onlyBody;
+    var onlyBody = (_a = options === null || options === void 0 ? void 0 : options.onlyMap) !== null && _a !== void 0 ? _a : options.onlyBody;
     var keyword = "".concat(prefix, " const");
     var onRenderObjectName = (options === null || options === void 0 ? void 0 : options.onRenderObjectName) ? options.onRenderObjectName : renderObjectName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderObjectComment(api, paramType) : '';
@@ -42,11 +42,11 @@ export function renderObject(schema, api, options) {
      */
     var ki = ["".concat(keyword, " ").concat(objectName, " = ")].filter(Boolean).join('\n');
     var bodyCode;
-    if (!schema || (Array.isArray(schema) && schema.length === 0)) {
+    if (!schema || ((_b = schema === null || schema === void 0 ? void 0 : schema.params) === null || _b === void 0 ? void 0 : _b.length) === 0) {
         bodyCode = emptyBodyCode;
     }
     else {
-        bodyCode = renderObjectDeepObject(schemaList);
+        bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true);
     }
     var code = postCode({
         ki: ki,
@@ -62,35 +62,38 @@ export function renderObject(schema, api, options) {
     }
     return code;
 }
-function renderObjectDeepObject(schemaList, parentSchema, memo) {
+function renderObjectDeepObject(schema, memo, isRoot) {
     var e_1, _a;
     var _b;
-    if (parentSchema === void 0) { parentSchema = null; }
     if (memo === void 0) { memo = new Map(); }
-    if (memo.has(schemaList)) {
-        return memo.get(schemaList);
+    if (isRoot === void 0) { isRoot = false; }
+    if (memo.has(schema)) {
+        return memo.get(schema);
     }
-    memo.set(schemaList, 'null');
+    memo.set(schema, 'null');
+    if (isRoot) {
+        debugger;
+    }
     var codeWrap = [];
-    var prefix = (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.type) === 'array' ? '[\n' : '{\n';
-    var postfix = (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.type) === 'array' ? '\n]' : '\n}';
+    var prefix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '[\n' : '{\n';
+    var postfix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '\n]' : '\n}';
     try {
-        for (var schemaList_1 = __values(schemaList), schemaList_1_1 = schemaList_1.next(); !schemaList_1_1.done; schemaList_1_1 = schemaList_1.next()) {
-            var schema = schemaList_1_1.value;
-            var keyName = (_b = schema.keyName) !== null && _b !== void 0 ? _b : '';
-            var type = schema.type;
-            var temporaryCode = [renderComment(schema)];
+        for (var _c = __values(schema.params), _d = _c.next(); !_d.done; _d = _c.next()) {
+            var child = _d.value;
+            var keyName = (_b = child.keyName) !== null && _b !== void 0 ? _b : '';
+            var type = child.type;
+            var temporaryCode = [renderComment(child)];
             var v = "''";
             switch (type) {
                 // 数组类型 | 对象类型
                 case 'array':
                 case 'object':
                     temporaryCode.pop();
-                    temporaryCode.push(renderObjectDeepObject(schema.params, schema));
+                    temporaryCode.push(renderObjectDeepObject(child));
                     break;
                 case 'string':
-                    if ('enum' in schema && schema.enum.length > 0) {
-                        v = "'".concat(schema.enum[0], "'");
+                    if ('enum' in child && child.enum.length > 0) {
+                        v = "'".concat(child.enum[0], "'");
                     }
                     temporaryCode.push("".concat(keyName, ": ").concat(v));
                     break;
@@ -110,15 +113,18 @@ function renderObjectDeepObject(schemaList, parentSchema, memo) {
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (schemaList_1_1 && !schemaList_1_1.done && (_a = schemaList_1.return)) _a.call(schemaList_1);
+            if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
         }
         finally { if (e_1) throw e_1.error; }
     }
+    if (isRoot) {
+        debugger;
+    }
     var code = prefix + codeWrap.join(',\n') + postfix;
-    if (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.keyName) {
+    if (schema === null || schema === void 0 ? void 0 : schema.keyName) {
         code = [
-            renderComment(parentSchema),
-            "".concat(parentSchema.keyName, ": ").concat(code)
+            renderComment(schema),
+            "".concat(schema.keyName, ": ").concat(code)
         ].join('\n');
     }
     return code;

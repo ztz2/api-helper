@@ -9,7 +9,7 @@ import { postCode } from '@/lib/utils/util';
 import type { ChangeCase } from '@/lib/types';
 
 export function renderObject(
-  schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
+  schema: APIHelper.Schema | null,
   api: APIHelper.API,
   options?: {
     // 请求数据还是响应数据
@@ -39,7 +39,7 @@ export function renderObject(
   }, options);
   schema = cloneDeep(schema);
 
-  const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
+  const primitiveValueSchema = filterSchemaPrimitiveValue(schema) as APIHelper.Schema;
 
   const {
     prefix,
@@ -66,10 +66,10 @@ export function renderObject(
   let ki = [`${keyword} ${objectName} = `].filter(Boolean).join('\n');
 
   let bodyCode;
-  if (!schema || (Array.isArray(schema) && schema.length === 0)){
+  if (!schema || schema?.params?.length === 0){
     bodyCode = emptyBodyCode;
   } else {
-    bodyCode = renderObjectDeepObject(schemaList);
+    bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true);
   }
 
   let code = postCode({
@@ -90,32 +90,35 @@ export function renderObject(
 }
 
 function renderObjectDeepObject(
-  schemaList: Array<APIHelper.Schema>,
-  parentSchema: APIHelper.Schema | null = null,
-  memo = new Map<APIHelper.Schema[], string>()
+  schema: APIHelper.Schema,
+  memo = new Map<APIHelper.Schema, string>(),
+  isRoot = false,
 ): string {
-  if (memo.has(schemaList)) {
-    return memo.get(schemaList) as string;
+  if (memo.has(schema)) {
+    return memo.get(schema) as string;
   }
-  memo.set(schemaList, 'null');
+  memo.set(schema, 'null');
+  if (isRoot) {
+    debugger;
+  }
 
   const codeWrap: string[] = [];
-  const prefix = parentSchema?.type === 'array' ? '[\n' : '{\n';
-  const postfix = parentSchema?.type === 'array' ? '\n]' : '\n}';
-  for (const schema of schemaList) {
-    const keyName = schema.keyName ?? '';
-    const type = schema.type;
-    const temporaryCode = [renderComment(schema)];
+  const prefix = schema?.type === 'array' ? '[\n' : '{\n';
+  const postfix = schema?.type === 'array' ? '\n]' : '\n}';
+  for (const child of schema.params) {
+    const keyName = child.keyName ?? '';
+    const type = child.type;
+    const temporaryCode = [renderComment(child)];
     let v = "''";
     switch (type) {
       // 数组类型 | 对象类型
       case 'array': case 'object':
         temporaryCode.pop();
-        temporaryCode.push(renderObjectDeepObject(schema.params, schema));
+        temporaryCode.push(renderObjectDeepObject(child));
         break;
       case 'string':
-        if ('enum' in schema && schema.enum.length > 0) {
-          v = `'${schema.enum[0]}'`;
+        if ('enum' in child && child.enum.length > 0) {
+          v = `'${child.enum[0]}'`;
         }
         temporaryCode.push(`${keyName}: ${v}`);
         break;
@@ -131,13 +134,15 @@ function renderObjectDeepObject(
     }
     codeWrap.push(temporaryCode.join('\n'));
   }
-
+  if (isRoot) {
+    debugger;
+  }
   let code = prefix + codeWrap.join(',\n') + postfix;
 
-  if (parentSchema?.keyName) {
+  if (schema?.keyName) {
     code = [
-      renderComment(parentSchema),
-      `${parentSchema.keyName}: ${code}`
+      renderComment(schema),
+      `${schema.keyName}: ${code}`
     ].join('\n');
   }
 

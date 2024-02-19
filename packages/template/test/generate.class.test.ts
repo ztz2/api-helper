@@ -13,8 +13,7 @@ describe('生成 Class 类测试', () => {
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[0];
-    const schemaList = filterSchemaPrimitiveValue<APIHelper.Schema>(api.responseDataSchema);
-    const code = renderClass(schemaList, api, {
+    const code = renderClass(api.responseDataSchema, api, {
       paramType: 'request'
     });
     expect(
@@ -28,8 +27,7 @@ describe('生成 Class 类测试', () => {
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[1];
-    const schemaList = filterSchemaPrimitiveValue<APIHelper.Schema>(api.requestDataSchema);
-    const code = renderClass(schemaList, api, {
+    const code = renderClass(api.requestDataSchema, api, {
       paramType: 'response'
     });
     expect(
@@ -47,7 +45,7 @@ describe('生成 Class 类测试', () => {
       renderClass(null, api),
     ).toMatchSnapshot('OpenAPI-2.0生成 Class null测试');
     expect(
-      renderClass([], api),
+      renderClass({ type: 'array', params: [] } as unknown as APIHelper.Schema, api),
     ).toMatchSnapshot('OpenAPI-2.0生成 Class 空数组测试');
   });
   test('name - prefix - dropComment - onlyBody 属性测试', async () => {

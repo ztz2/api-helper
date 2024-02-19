@@ -169,3 +169,66 @@ export interface SystemUserListRequestByGet {
 export type SystemUserListRequestByGet = any;
 "
 `;
+
+exports[`生成 interface 测试 open-api-响应参数为List: open-api-响应参数为List 1`] = `
+"/**
+ * @description 获取用户列表信息【请求数据类型定义】
+ * @url [ GET ] /system/Store/listByUserId/{userId}
+ */
+export interface SystemStoreListByUserIdUserIdRequestByGet {
+  userId: string;
+}
+
+/**
+ * @description 获取用户列表信息【请求数据类型定义】
+ * @url [ GET ] /system/Store/listByUserId/{userId}
+ */
+export type SystemStoreListByUserIdUserIdRequestByGet =
+  // 返回值
+  Array<{
+    // 门店名称
+    storename: string;
+    // 所属组织
+    organizeid: string;
+    // 所属组织名称
+    organizename: string;
+    // 门店展示图
+    storepic: string;
+    // 负责人
+    storeheaduserid: string;
+    // 负责人
+    storeheadusername: string;
+    // 定位
+    address: string;
+    // 是否禁用
+    disabled: string;
+    // 经度
+    longitude: string;
+    // 纬度
+    latitude: string;
+    // 距离
+    distance: number;
+    // 用户id
+    users: Array<{
+      // 用户id
+      userid: string;
+      // 门店id
+      storeid: string;
+      // 用户姓名
+      username: string;
+      // 手机号
+      mobilenum: string;
+      // 岗位名称
+      position: string;
+      // 可排班标识
+      shiftsmarks: string;
+      // 账号
+      account: string;
+      // 岗位名称
+      organizeName: string;
+    }>;
+    // 主键
+    id: string;
+  }>;
+"
+`;

@@ -5,6 +5,21 @@ import { readJsonFile } from './utils/file';
 import { renderInterface } from '../src/lib/render-interface';
 
 describe('生成 interface 测试', () => {
+  test('open-api-响应参数为List', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-response-array.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    const responseCode = [
+      renderInterface(api.requestDataSchema, api),
+      renderInterface(api.responseDataSchema, api),
+    ].join('\n');
+    expect(
+      responseCode,
+    ).toMatchSnapshot('open-api-响应参数为List');
+  });
+
   test('open-api-2.0-dot.json', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);

@@ -13214,6 +13214,12 @@ exports[`swagger-parser open-api-2.0-dot特殊参数处理: open-api-2.0-dot特�
     },
     {
       "apiList": [],
+      "description": "App File Controller",
+      "id": "",
+      "name": "用户管理",
+    },
+    {
+      "apiList": [],
       "description": "未设置分组的接口集合",
       "id": "",
       "name": "未知分组",

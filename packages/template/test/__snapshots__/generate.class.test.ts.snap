@@ -174,7 +174,9 @@ exports[`生成 Class 类测试 空属性: OpenAPI-2.0生成 Class null测试 1`
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestclassByPost {}
+export class V2StoreOrderRequestclassByPost {
+  /* 非对象数据，不能生成Class代码**/
+}
 "
 `;
 
@@ -183,6 +185,8 @@ exports[`生成 Class 类测试 空属性: OpenAPI-2.0生成 Class 空数组测�
  * @description Place an order for a pet【请求数据实体类】
  * @url [ POST ] /v2/store/order
  */
-export class V2StoreOrderRequestclassByPost {}
+export class V2StoreOrderRequestclassByPost {
+  /* 非对象数据，不能生成Class代码**/
+}
 "
 `;

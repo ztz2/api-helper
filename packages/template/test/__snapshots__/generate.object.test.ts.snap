@@ -1,5 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`生成 javascript 对象测试 OpenAPI-2.0生成List对象: OpenAPI-2.0生成List对象 1`] = `
+"/**
+ * @description 获取用户列表信息【响应数据实体对象】
+ * @url [ GET ] /system/Store/listByUserId/{userId}
+ */
+export const systemStoreListByUserIdUserIdResponseentityByGet = [
+  {
+    // { string } 门店名称
+    storename: '',
+    // { string } 所属组织
+    organizeid: '',
+    // { string } 所属组织名称
+    organizename: '',
+    // { string } 门店展示图
+    storepic: '',
+    // { string } 负责人
+    storeheaduserid: '',
+    // { string } 负责人
+    storeheadusername: '',
+    // { string } 定位
+    address: '',
+    // { string } 是否禁用
+    disabled: '',
+    // { string } 经度
+    longitude: '',
+    // { string } 纬度
+    latitude: '',
+    // { number } 距离
+    distance: 0,
+    // { array } 用户id
+    users: [
+      {
+        // { string } 用户id
+        userid: '',
+        // { string } 门店id
+        storeid: '',
+        // { string } 用户姓名
+        username: '',
+        // { string } 手机号
+        mobilenum: '',
+        // { string } 岗位名称
+        position: '',
+        // { string } 可排班标识
+        shiftsmarks: '',
+        // { string } 账号
+        account: '',
+        // { string } 岗位名称
+        organizeName: ''
+      }
+    ],
+    // { string } 主键
+    id: ''
+  }
+];
+"
+`;
+
 exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "{
   // { number }

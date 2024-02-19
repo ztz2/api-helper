@@ -8,6 +8,7 @@ import {
 } from '@/lib/render-request-function';
 import artTemplate from '@/lib/art-template';
 import { renderInterfaceName } from '@/lib/render-interface';
+import { isEmptySchema } from '@/lib/utils/util';
 
 export function renderRequestFunctionDeclare(
   api: APIHelper.API,
@@ -21,12 +22,14 @@ export function renderRequestFunctionDeclare(
     return '';
   }
   const dataKey = options?.dataKey;
+  const isEmptyRequestData = isEmptySchema(api.requestDataSchema);
   const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
   const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
   const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
 
   const templateTenderParams = {
     api,
+    isEmptyRequestData,
     commentCode: renderRequestFunctionComment(api),
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
@@ -55,7 +58,7 @@ export function renderRequestFunctionDeclare(
   const code = artTemplate.render(
     `《if commentCode》《commentCode》
 《/if》export declare const 《requestFunctionName》: {
-  (data: 《requestDataInterfaceName》, extraData?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》, ...args: CurrentRequestFunctionRestArgsType): Promise<《responseDataInterfaceName》>;
+  (data《if isEmptyRequestData》?《/if》: 《requestDataInterfaceName》, extraData?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》, ...args: CurrentRequestFunctionRestArgsType): Promise<《responseDataInterfaceName》>;
   readonly requestConfig: {
     path: '《api.path》',
     method: '《api.method.toLowerCase()》',

@@ -41,7 +41,7 @@ var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 var render_object_1 = require("../lib/render-object");
 function renderClass(schema, api, options) {
-    var _a, _b;
+    var _a;
     options = (0, merge_1.default)({
         onlyBody: false,
         prefix: 'export ',
@@ -50,8 +50,9 @@ function renderClass(schema, api, options) {
         suffixName: 'class',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
-    var schemaList = (0, util_1.filterSchemaPrimitiveValue)(Array.isArray(schema) ? schema : (_b = (_a = schema) === null || _a === void 0 ? void 0 : _a.params) !== null && _b !== void 0 ? _b : []);
-    var prefix = options.prefix, suffixName = options.suffixName, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
+    // const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
+    var primitiveValueSchema = (0, util_1.filterSchemaPrimitiveValue)(schema);
+    var prefix = options.prefix, suffixName = options.suffixName, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _b = options.paramType, paramType = _b === void 0 ? 'request' : _b;
     var keyword = "".concat(prefix, " class");
     var onRenderClassName = (options === null || options === void 0 ? void 0 : options.onRenderClassName) ? options.onRenderClassName : renderClassName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderClassComment(api, paramType) : '';
@@ -64,12 +65,15 @@ function renderClass(schema, api, options) {
      * output ->  export class
      */
     var ki = ["".concat(keyword, " ").concat(className, " ")].filter(Boolean).join('\n');
-    var bodyCode;
-    if (!schema || (Array.isArray(schema) && schema.length === 0)) {
-        bodyCode = emptyBodyCode;
+    var bodyCode = '';
+    if (!schema || ((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0 || (schema === null || schema === void 0 ? void 0 : schema.type) !== 'object') {
+        if ((schema === null || schema === void 0 ? void 0 : schema.type) !== 'object') {
+            bodyCode += '/* 非对象数据，不能生成Class代码**/\n';
+        }
+        bodyCode += emptyBodyCode;
     }
     else {
-        bodyCode = renderClassDeepObject(schemaList, null, true);
+        bodyCode = renderClassDeepObject(primitiveValueSchema, true);
     }
     return (0, util_2.postCode)({
         ki: ki,
@@ -78,25 +82,24 @@ function renderClass(schema, api, options) {
     }, { onlyBody: onlyBody });
 }
 exports.renderClass = renderClass;
-function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
+function renderClassDeepObject(schema, isRoot, memo) {
     var e_1, _a;
     var _b;
-    if (parentSchema === void 0) { parentSchema = null; }
     if (isRoot === void 0) { isRoot = false; }
     if (memo === void 0) { memo = new Map(); }
-    if (memo.has(schemaList)) {
-        return memo.get(schemaList);
+    if (memo.has(schema)) {
+        return memo.get(schema);
     }
-    memo.set(schemaList, 'null');
+    memo.set(schema, 'null');
     var codeWrap = [];
-    var prefix = (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.type) === 'array' ? '[\n' : '{\n';
-    var postfix = (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.type) === 'array' ? '\n]' : '\n}';
+    var prefix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '[\n' : '{\n';
+    var postfix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '\n]' : '\n}';
     try {
-        for (var schemaList_1 = __values(schemaList), schemaList_1_1 = schemaList_1.next(); !schemaList_1_1.done; schemaList_1_1 = schemaList_1.next()) {
-            var schema = schemaList_1_1.value;
-            var keyName = (_b = schema.keyName) !== null && _b !== void 0 ? _b : '';
-            var type = schema.type;
-            var temporaryCode = [(0, render_object_1.renderComment)(schema)];
+        for (var _c = __values(schema.params), _d = _c.next(); !_d.done; _d = _c.next()) {
+            var child = _d.value;
+            var keyName = (_b = child.keyName) !== null && _b !== void 0 ? _b : '';
+            var type = child.type;
+            var temporaryCode = [(0, render_object_1.renderComment)(child)];
             var evaluationCode = isRoot ? ' = ' : ': ';
             var v = "''";
             switch (type) {
@@ -104,11 +107,11 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
                 case 'array':
                 case 'object':
                     temporaryCode.pop();
-                    temporaryCode.push(renderClassDeepObject(schema.params, schema));
+                    temporaryCode.push(renderClassDeepObject(child));
                     break;
                 case 'string':
-                    if ('enum' in schema && schema.enum.length > 0) {
-                        v = "'".concat(schema.enum[0], "'");
+                    if ('enum' in child && child.enum.length > 0) {
+                        v = "'".concat(child.enum[0], "'");
                     }
                     temporaryCode.push("".concat(keyName).concat(evaluationCode).concat(v));
                     break;
@@ -128,15 +131,15 @@ function renderClassDeepObject(schemaList, parentSchema, isRoot, memo) {
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (schemaList_1_1 && !schemaList_1_1.done && (_a = schemaList_1.return)) _a.call(schemaList_1);
+            if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
         }
         finally { if (e_1) throw e_1.error; }
     }
     var code = prefix + codeWrap.join(isRoot ? ';\n' : ',\n') + postfix;
-    if (parentSchema === null || parentSchema === void 0 ? void 0 : parentSchema.keyName) {
+    if (schema === null || schema === void 0 ? void 0 : schema.keyName) {
         code = [
-            (0, render_object_1.renderComment)(parentSchema),
-            "".concat(parentSchema.keyName, ": ").concat(code)
+            (0, render_object_1.renderComment)(schema),
+            "".concat(schema.keyName, ": ").concat(code)
         ].join('\n');
     }
     return code;
