@@ -9,6 +9,7 @@ export declare type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' |
 export declare type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
 export declare type RequestFunctionConfig = {
     path: string;
+    sourcePath: string;
     method: RequestMethod;
     data: Record<string, any> | FormData | undefined;
     hasFormData: boolean;

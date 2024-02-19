@@ -24,8 +24,10 @@ export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNEC
 export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
 
 export type RequestFunctionConfig = {
-  // 请求路径，可以看做是URL，该资源路径包含了url参数
+  // 请求路径，可以看做是URL，该资源路径包含了url参数，合并了路径参数等
   path: string;
+  // 源请求路径，没有经过任何处理
+  sourcePath: string;
   // HTTP请求方法
   method: RequestMethod
   // 经过处理后的请求数据【不包含：路径参数，URL参数，表单数据】，可以看做是post请求，body为JSON的数据
@@ -66,6 +68,11 @@ export function checkMiniProgramEnv(): boolean {
   return false;
 }
 
+const hasNativeFormData = typeof FormData !== 'undefined';
+const hasNodeFormData = !hasNativeFormData && global?.['process']?.['versions']?.['node'] != null;
+const FormDataPolyfill: typeof FormData | undefined = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
+const isMiniProgramEnv = checkMiniProgramEnv();
+
 export function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
   // 请求资源路径地址
   path: string;
@@ -80,6 +87,7 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
 }): RequestFunctionConfig {
   const requestFunctionConfig: RequestFunctionConfig = {
     path: requestConfig.path,
+    sourcePath: requestConfig.path,
     method: requestConfig.method as RequestMethod,
     data: undefined,
     rowData: data,
@@ -88,27 +96,25 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   };
 
   const queryParams: Recordable = {};
-  const isMiniProgramEnv = checkMiniProgramEnv();
-  const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as  Recordable;
-  const hasNativeFormData = typeof FormData !== 'undefined';
-  const hasNodeFormData = !hasNativeFormData && global?.['process']?.['versions']?.['node'] != null;
-  const FormDataPolyfill: typeof FormData | undefined = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
+  const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as Recordable;
 
   let formData: any;
   let appendFormData = (key: string, val: any) => {};
   if (!isMiniProgramEnv) {
-    if (FormDataPolyfill == null) {
-      throw new Error('当前环境不支持 FormData');
+    if (FormDataPolyfill != null) {
+      console.error(new Error('当前环境不支持 FormData'));
+      formData = new FormDataPolyfill();
     }
-    formData = new FormDataPolyfill();
     appendFormData = (key: string, v: any) => {
-      const val = v instanceof FormDataItem ? v.get() : v;
-      if (val instanceof File) {
-        (formData as FormData).append(key, val, val.name);
-      } else if (val instanceof Blob) {
-        (formData as FormData).append(key, val, 'blob');
-      } else {
-        (formData as FormData).append(key, val);
+      if (FormDataPolyfill != null) {
+        const val = v instanceof FormDataItem ? v.get() : v;
+        if (val instanceof File) {
+          (formData as FormData).append(key, val, val.name);
+        } else if (val instanceof Blob) {
+          (formData as FormData).append(key, val, 'blob');
+        } else {
+          (formData as FormData).append(key, val);
+        }
       }
     }
   }

@@ -36,6 +36,7 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var _a, _b;
 // @ts-ignore
 import stringify from 'qs/lib/stringify';
 function checkType(value, type) {
@@ -76,11 +77,16 @@ export function checkMiniProgramEnv() {
     }
     return false;
 }
+var hasNativeFormData = typeof FormData !== 'undefined';
+var hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
+var FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval("require('form-data')") : undefined;
+var isMiniProgramEnv = checkMiniProgramEnv();
 export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var e_1, _a;
-    var _b, _c, _d, _e;
+    var _b, _c;
     var requestFunctionConfig = {
         path: requestConfig.path,
+        sourcePath: requestConfig.path,
         method: requestConfig.method,
         data: undefined,
         rowData: data,
@@ -88,28 +94,26 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
         hasFormData: false,
     };
     var queryParams = {};
-    var isMiniProgramEnv = checkMiniProgramEnv();
     var cloneData = (checkType(data, 'Object') ? __assign({}, data) : {});
-    var hasNativeFormData = typeof FormData !== 'undefined';
-    var hasNodeFormData = !hasNativeFormData && ((_c = (_b = global === null || global === void 0 ? void 0 : global['process']) === null || _b === void 0 ? void 0 : _b['versions']) === null || _c === void 0 ? void 0 : _c['node']) != null;
-    var FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval("require('form-data')") : undefined;
     var formData;
     var appendFormData = function (key, val) { };
     if (!isMiniProgramEnv) {
-        if (FormDataPolyfill == null) {
-            throw new Error('当前环境不支持 FormData');
+        if (FormDataPolyfill != null) {
+            console.error(new Error('当前环境不支持 FormData'));
+            formData = new FormDataPolyfill();
         }
-        formData = new FormDataPolyfill();
         appendFormData = function (key, v) {
-            var val = v instanceof FormDataItem ? v.get() : v;
-            if (val instanceof File) {
-                formData.append(key, val, val.name);
-            }
-            else if (val instanceof Blob) {
-                formData.append(key, val, 'blob');
-            }
-            else {
-                formData.append(key, val);
+            if (FormDataPolyfill != null) {
+                var val = v instanceof FormDataItem ? v.get() : v;
+                if (val instanceof File) {
+                    formData.append(key, val, val.name);
+                }
+                else if (val instanceof Blob) {
+                    formData.append(key, val, 'blob');
+                }
+                else {
+                    formData.append(key, val);
+                }
             }
         };
     }
@@ -130,28 +134,28 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             return "continue";
         }
         // 路径参数处理
-        if ((_d = requestConfig.pathParamKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
+        if ((_b = requestConfig.pathParamKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp("{".concat(k, "}"), 'g'), v);
             delete cloneData[k];
         }
         // URL 参数处理
-        if ((_e = requestConfig.queryStringKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)) {
+        if ((_c = requestConfig.queryStringKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
     };
     try {
         // 数据处理
-        for (var _f = __values(Object.entries(cloneData)), _g = _f.next(); !_g.done; _g = _f.next()) {
-            var _h = __read(_g.value, 2), k = _h[0], v = _h[1];
+        for (var _d = __values(Object.entries(cloneData)), _e = _d.next(); !_e.done; _e = _d.next()) {
+            var _f = __read(_e.value, 2), k = _f[0], v = _f[1];
             _loop_1(k, v);
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_g && !_g.done && (_a = _f.return)) _a.call(_f);
+            if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
         }
         finally { if (e_1) throw e_1.error; }
     }

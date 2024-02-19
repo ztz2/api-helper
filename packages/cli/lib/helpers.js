@@ -2,6 +2,7 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.processRequestFunctionConfig = exports.checkMiniProgramEnv = exports.FormDataItem = void 0;
 // @ts-ignore
@@ -44,10 +45,15 @@ function checkMiniProgramEnv() {
     return false;
 }
 exports.checkMiniProgramEnv = checkMiniProgramEnv;
+const hasNativeFormData = typeof FormData !== 'undefined';
+const hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
+const FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
+const isMiniProgramEnv = checkMiniProgramEnv();
 function processRequestFunctionConfig(data, extraData, requestConfig) {
-    var _a, _b, _c, _d;
+    var _a, _b;
     const requestFunctionConfig = {
         path: requestConfig.path,
+        sourcePath: requestConfig.path,
         method: requestConfig.method,
         data: undefined,
         rowData: data,
@@ -55,28 +61,26 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
         hasFormData: false,
     };
     const queryParams = {};
-    const isMiniProgramEnv = checkMiniProgramEnv();
     const cloneData = (checkType(data, 'Object') ? Object.assign({}, data) : {});
-    const hasNativeFormData = typeof FormData !== 'undefined';
-    const hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
-    const FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
     let formData;
     let appendFormData = (key, val) => { };
     if (!isMiniProgramEnv) {
-        if (FormDataPolyfill == null) {
-            throw new Error('当前环境不支持 FormData');
+        if (FormDataPolyfill != null) {
+            console.error(new Error('当前环境不支持 FormData'));
+            formData = new FormDataPolyfill();
         }
-        formData = new FormDataPolyfill();
         appendFormData = (key, v) => {
-            const val = v instanceof FormDataItem ? v.get() : v;
-            if (val instanceof File) {
-                formData.append(key, val, val.name);
-            }
-            else if (val instanceof Blob) {
-                formData.append(key, val, 'blob');
-            }
-            else {
-                formData.append(key, val);
+            if (FormDataPolyfill != null) {
+                const val = v instanceof FormDataItem ? v.get() : v;
+                if (val instanceof File) {
+                    formData.append(key, val, val.name);
+                }
+                else if (val instanceof Blob) {
+                    formData.append(key, val, 'blob');
+                }
+                else {
+                    formData.append(key, val);
+                }
             }
         };
     }
@@ -98,13 +102,13 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             continue;
         }
         // 路径参数处理
-        if ((_c = requestConfig.pathParamKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
+        if ((_a = requestConfig.pathParamKeyNameList) === null || _a === void 0 ? void 0 : _a.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp(`\{${k}\}`, 'g'), v);
             delete cloneData[k];
         }
         // URL 参数处理
-        if ((_d = requestConfig.queryStringKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
+        if ((_b = requestConfig.queryStringKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
