@@ -11,7 +11,7 @@
         class="ztz-spin"
         :loading="loading"
       >
-        <highlightjs :code="currentCode" autodetect />
+        <highlightjs :code="currentCode" :language="language" :autodetect="!language" />
       </a-spin>
     </div>
   </div>
@@ -44,6 +44,7 @@ const props = defineProps({
     type: [String, Number],
     default: '100%',
   },
+  language: String,
 });
 
 const { toClipboard } = useClipboard();

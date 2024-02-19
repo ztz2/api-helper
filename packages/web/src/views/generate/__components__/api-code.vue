@@ -4,7 +4,7 @@
     class="ztz-spin"
     :loading="loading"
   >
-    <apih-code :code="currentCode" />
+    <apih-code :code="currentCode" :language="language" />
   </a-spin>
 </template>
 <script lang="ts" setup>
@@ -41,6 +41,7 @@ const props = defineProps({
     type: [Boolean, null, undefined] as PropType<boolean | null | undefined>,
     default: null,
   },
+  language: String,
 });
 
 const { currentDocumentConfig } = toRefs(useDocumentConfig());
@@ -72,11 +73,11 @@ async function updateCodeContent() {
       break;
     }
     case 'request': {
-      const requestDataSchema = api.value?.requestDataSchema?.params ?? [];
-
+      const requestDataSchema = api.value?.requestDataSchema;
+      const requestDataSchemaList = requestDataSchema ? requestDataSchema.type === 'array' ? [requestDataSchema] : requestDataSchema.params : [];
       const params = {
         api: api.value,
-        requestDataSchemaList: requestDataSchema,
+        requestDataSchemaList,
         responseDataSchemaList: [],
       };
       loading.value = true;
@@ -91,10 +92,12 @@ async function updateCodeContent() {
       if (dataKey) {
         responseDataSchema = getSchema(responseDataSchema, dataKey);
       }
+      const responseDataSchemaList = responseDataSchema ? responseDataSchema.type === 'array' ? [responseDataSchema] : responseDataSchema.params : [];
+
       const params = {
         api: api.value,
         requestDataSchemaList: [],
-        responseDataSchemaList: responseDataSchema?.params ?? [],
+        responseDataSchemaList,
       };
       loading.value = true;
       const res = await renderTemplate(defaultModelTemplate.value, params, currentDocumentConfig.value);

@@ -20,7 +20,8 @@ export default new Template({
   // 请求数据
   let tpl1 = '';
   if (requestDataSchemaList.length > 0) {
-    tpl1 = apih.template.renderObject(requestDataSchemaList, api, {
+    const schema = (requestDataSchemaList.length === 1 && (requestDataSchemaList[0].type === 'array' || requestDataSchemaList[0].type === 'object')) ? requestDataSchemaList[0] : apih.core.createSchema('object', { params: requestDataSchemaList });
+    tpl1 = apih.template.renderObject(schema, api, {
       paramType: 'request',
     });
   } else {
@@ -34,7 +35,8 @@ export default new Template({
   // 响应数据
   let tpl2 = '';
   if (responseDataSchemaList.length > 0) {
-    tpl2 = apih.template.renderObject(responseDataSchemaList, api, {
+    const schema = (responseDataSchemaList.length === 1 && (responseDataSchemaList[0].type === 'array' || responseDataSchemaList[0].type === 'object')) ? responseDataSchemaList[0] : apih.core.createSchema('object', { params: responseDataSchemaList });
+    tpl2 = apih.template.renderObject(schema, api, {
       paramType: 'response',
     });
   } else {

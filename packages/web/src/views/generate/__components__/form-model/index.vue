@@ -97,17 +97,23 @@
         </a-tab-pane>
         <a-tab-pane key="2" title="字段选择">
           <a-row :gutter="5">
-            <a-col :span="24">
+            <a-col :span="12">
               <a-card style="width: 100%">
                 <template #title>
                   <div class="text-center">请求数据字段</div>
                 </template>
                 <div style="width: 100%; height: calc(100vh - 277px)">
-                  <apih-schema-tree v-model:value="formModel.requestDataSchemaIdList" :data="requestDataSchemaList" />
+                  <apih-schema-tree
+                    v-model:value="formModel.requestDataSchemaIdList"
+                    v-model:expanded-keys="requestExpandedKeys"
+                    :data="requestDataSchemaList"
+                    extra-label-key="label"
+                    draggable
+                  />
                 </div>
               </a-card>
             </a-col>
-            <a-col :span="12" style="display: none">
+            <a-col :span="12">
               <a-card style="width: 100%">
                 <template #title>
                   <div class="text-center">响应数据字段</div>
@@ -115,6 +121,7 @@
                 <div style="width: 100%; height: calc(100vh - 277px)">
                   <apih-schema-tree
                     v-model:value="formModel.responseDataSchemaIdList"
+                    v-model:expanded-keys="responseExpandedKeys"
                     :data="responseDataSchemaList"
                     extra-label-key="label"
                     draggable
@@ -222,6 +229,8 @@ const gutter = ref(15);
 const ctrlDrawerModelTemplateRef = ref();
 const selectedTemplate = computed(() => modelTemplateMap.value.get(currentDocumentConfig.value.modelTplId));
 const showDelete = computed(() => selectedTemplate?.value?.builtIn === false);
+const requestExpandedKeys = ref<string[]>([]);
+const responseExpandedKeys = ref<string[]>([]);
 
 const options = ref({
   categoryList: [] as Array<SelectOptionGroup>,
@@ -258,18 +267,42 @@ watch(() => formModel.value.apiId, (val) => {
   formModel.value.requestDataSchemaIdList = [];
   formModel.value.responseDataSchemaIdList = [];
   // 全选根节点上数据
-  treeForEach(api?.requestDataSchema?.params, (item: APIHelper.Schema) => {
-    if (item?.id) {
+  let isFindRequestKey = false;
+  requestExpandedKeys.value.splice(0, requestExpandedKeys.value.length);
+  treeForEach([api?.requestDataSchema].filter(Boolean), (item: APIHelper.Schema, isRoot = false) => {
+    if (isRoot) {
+      requestExpandedKeys.value.splice(0, requestExpandedKeys.value.length);
+    }
+    if (!item.keyName) {
+      requestExpandedKeys.value.push(item.id);
+    } else {
       formModel.value.requestDataSchemaIdList.push(item.id as string);
+      isFindRequestKey = true;
+      return { continue: true };
     }
-  });
+  }, 'params');
+  if (!isFindRequestKey) {
+    requestExpandedKeys.value.splice(0, requestExpandedKeys.value.length);
+  }
   // 全选根节点上数据
-  const responseDataSchemaList = getResponseDataSchema(api, currentDocumentConfig.value.dataKey)?.params ?? [];
-  treeForEach(responseDataSchemaList, (item: APIHelper.Schema) => {
-    if (item?.id) {
-      formModel.value.responseDataSchemaIdList.push(item.id as string);
+  const responseDataSchema = [getResponseDataSchema(api, currentDocumentConfig.value.dataKey)].filter(Boolean);
+  let isFindResponseKey = false;
+  responseExpandedKeys.value.splice(0, responseExpandedKeys.value.length);
+  treeForEach(responseDataSchema, (item: APIHelper.Schema, isRoot = false) => {
+    if (isRoot) {
+      responseExpandedKeys.value.splice(0, responseExpandedKeys.value.length);
     }
-  });
+    if (!item.keyName) {
+      responseExpandedKeys.value.push(item.id);
+    } else {
+      formModel.value.responseDataSchemaIdList.push(item.id as string);
+      isFindResponseKey = true;
+      return { continue: true };
+    }
+  }, 'params');
+  if (!isFindResponseKey) {
+    responseExpandedKeys.value.splice(0, responseExpandedKeys.value.length);
+  }
 }, { immediate: true });
 
 watch(() => formModel.value.requestDataSchemaIdList, (val) => {

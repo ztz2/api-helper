@@ -1,5 +1,5 @@
 import { APIHelper } from '@api-helper/core/es';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, has } from 'lodash';
 import { isSchemaPrimitiveValue } from '@api-helper/core';
 
 export function getSchemaListByIds(ids: string[], record: Map<string, APIHelper.Schema>): APIHelper.SchemaList {
@@ -13,7 +13,36 @@ export function getSchemaListByIds(ids: string[], record: Map<string, APIHelper.
       schemaList.push(row);
     }
   }
-  return schemaList;
+
+  const result = [];
+
+  const checkHasIn = (arr: APIHelper.SchemaList = [], id: string) => {
+    for (const item of arr) {
+      if (item.id === id || checkHasIn(item.params, id)) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  // return schemaList;
+  for (const item of schemaList) {
+    let hasIn = false;
+    for (let i = 0; i < schemaList.length; i++) {
+      const item2 = schemaList[i];
+      if (item === item2) {
+        continue;
+      }
+      if (checkHasIn(item2.params, item.id)) {
+        hasIn = true;
+        break;
+      }
+    }
+    if (!hasIn) {
+      result.push(item);
+    }
+  }
+  return result;
 }
 
 function filterChildren(schemaList: APIHelper.SchemaList, checkIds: string[] = []) {

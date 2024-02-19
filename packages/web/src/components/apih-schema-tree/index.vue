@@ -15,7 +15,7 @@
       <a-tree
           v-bind="$attrs"
           v-model:checkedKeys="checkedKeys"
-          v-model:expandedKeys="expandedKeys"
+          v-model:expandedKeys="currentExpandedKeys"
           :data="treeData"
           :value-key="valueKey"
           @drop="onDrop"
@@ -90,7 +90,7 @@ import { getValueUtil } from '@/components/utils';
 
 type TreeNodeData = ITreeNodeData & APIHelper.Schema;
 
-const emit = defineEmits(['update:value']);
+const emit = defineEmits(['update:value', 'update:expandedKeys']);
 const props = defineProps({
   data: {
     type: Array as PropType<TreeNodeData[]>,
@@ -116,24 +116,34 @@ const props = defineProps({
     type: String,
     default: 'params',
   },
+  expandedKeys: {
+    type: Array as PropType<Array<string>>,
+    default: () => [],
+  },
 });
 
 const checkedKeys = ref<Array<string>>([]);
-const expandedKeys = ref<Array<string>>([]);
+const currentExpandedKeys = ref<Array<string>>([]);
 const treeData = ref<TreeNodeData[]>([]);
 
 watch(() => props.data, () => {
-  const p1 = filterSchemaPrimitiveValue(props.data as unknown as APIHelper.SchemaList) as [];
-  treeForEach(p1, (node: Recordable) => {
+  const temp = filterSchemaPrimitiveValue(props.data as unknown as APIHelper.SchemaList) as [];
+  treeForEach(temp, (node: Recordable) => {
     node.isSchemaObject = isSchemaObject(node as APIHelper.Schema);
     node.key = getValue(node);
     node.title = getLabel(node);
     node.children = node[props.childrenKey];
   }, props.childrenKey);
-  treeData.value = props.data;
+  treeData.value = temp;
 });
 watch(() => props.value, () => checkedKeys.value = props.value, { deep: true });
 watch(() => checkedKeys.value, (val) => emit('update:value', val), { deep: true });
+watch(() => props.expandedKeys, (val) => {
+  currentExpandedKeys.value = val;
+}, { deep: true });
+watch(() => currentExpandedKeys.value, (val) => {
+  emit('update:expandedKeys', val);
+}, { deep: true });
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
   const children = isChildren ? node : node[props.childrenKey];
@@ -162,8 +172,8 @@ function handleSelectAll(node: Recordable, isChildren = false) {
   }
   // 展开该节点-当全选操作
   if (!isSelectedAll) {
-    const index = expandedKeys.value.indexOf(node[props.valueKey]);
-    index === -1 && expandedKeys.value.push(node[props.valueKey]);
+    const index = currentExpandedKeys.value.indexOf(node[props.valueKey]);
+    index === -1 && currentExpandedKeys.value.push(node[props.valueKey]);
   }
 }
 

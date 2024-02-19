@@ -50,8 +50,12 @@ export function getDataSchemaList(api?: APIHelper.API, dataKey = '', onlyRoot = 
   if (!api) {
     return result;
   }
-  result[0] = cloneDeep(api?.requestDataSchema?.params ?? []);
-  result[1] = getResponseDataSchema(api, dataKey)?.params ?? [];
+  const requestDataSchema = api?.requestDataSchema;
+  const responseDataSchema = getResponseDataSchema(api, dataKey);
+  const requestSchemaList = requestDataSchema?.type === 'object' ? requestDataSchema.params : responseDataSchema ? [responseDataSchema] : [];
+  const responseSchemaList = responseDataSchema?.type === 'object' ? responseDataSchema.params : responseDataSchema ? [responseDataSchema] : [];
+  result[0] = cloneDeep(requestSchemaList);
+  result[1] = cloneDeep(responseSchemaList);
   if (onlyRoot) {
     result[0] = filterSchemaRoot(result[0]);
     result[1] = filterSchemaRoot(result[1]);

@@ -131,17 +131,17 @@
                     <apih-collapse expand-icon-position="right">
                       <apih-collapse-item key="3-1" header="接口API函数">
                         <template #default="{isActive}">
-                          <ApiCode type="api" :api="api" :visible="isActive" />
+                          <ApiCode type="api" :api="api" :visible="isActive" language="typescript" />
                         </template>
                       </apih-collapse-item>
                       <apih-collapse-item key="3-2" header="请求参数">
                         <template #default="{isActive}">
-                          <ApiCode type="request" :api="api" :visible="isActive" />
+                          <ApiCode type="request" :api="api" :visible="isActive" language="javascript" />
                         </template>
                       </apih-collapse-item>
                       <apih-collapse-item key="3-3" header="响应数据">
                         <template #default="{isActive}">
-                          <ApiCode type="response" :api="api" :visible="isActive" />
+                          <ApiCode type="response" :api="api" :visible="isActive" language="javascript" />
                         </template>
                       </apih-collapse-item>
                     </apih-collapse>

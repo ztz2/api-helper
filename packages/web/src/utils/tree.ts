@@ -21,11 +21,18 @@ export function treeForEach(tree: any[] = [], cb: Function, children = 'children
   }
 
   // 深度优先遍历 depth first search
-  function DFS(treeData = []) {
+  function DFS(treeData = [], isRoot = false) {
     // eslint-disable-next-line
-        for (const item of treeData) {
-      cb(item);
-
+    for (let i = 0; i < treeData.length; i++) {
+      const item = treeData[i];
+      const isEnd = isRoot && i === treeData.length - 1;
+      const res = cb(item, isRoot, isEnd);
+      if (res?.continue) {
+        continue;
+      }
+      if (res?.break) {
+        break;
+      }
       if (Array.isArray(item?.[children])) {
         DFS(item[children]);
       }
@@ -49,7 +56,7 @@ export function treeForEach(tree: any[] = [], cb: Function, children = 'children
   if (mode === 'BFS') {
     BFS(tree as any);
   } else {
-    DFS(tree as any);
+    DFS(tree as any, true);
   }
 }
 
