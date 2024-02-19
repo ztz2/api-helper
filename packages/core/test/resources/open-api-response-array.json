@@ -1,0 +1,262 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "系统模块接口文档",
+    "contact": {},
+    "license": {
+      "name": "Powered By ruoyi",
+      "url": "https://ruoyi.vip"
+    }
+  },
+  "host": "192.168.0.72:8081",
+  "basePath": "/system",
+  "tags": [
+    {
+      "name": "用户管理",
+      "description": "App File Controller"
+    }
+  ],
+  "paths": {
+    "/Store/listByUserId/{userId}": {
+      "get": {
+        "summary": "获取用户列表信息",
+        "x-apifox-folder": "门店管理",
+        "x-apifox-status": "released",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "用户管理"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "",
+            "example": "bearer dfsdf223423",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Store",
+                    "description": ""
+                  },
+                  "description": "返回值"
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": [
+                      {
+                        "storename": "",
+                        "organizeid": "",
+                        "organizename": "",
+                        "storepic": "",
+                        "storeheaduserid": "",
+                        "storeheadusername": "",
+                        "address": "",
+                        "disabled": "",
+                        "longitude": "",
+                        "latitude": "",
+                        "distance": 0,
+                        "users": [
+                          {
+                            "userid": "",
+                            "storeid": "",
+                            "username": "",
+                            "mobilenum": "",
+                            "position": "",
+                            "shiftsmarks": "",
+                            "account": "",
+                            "organizeName": ""
+                          }
+                        ],
+                        "id": ""
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://apifox.com/web/project/2997535/apis/api-146513826-run",
+        "security": []
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Store": {
+      "type": "object",
+      "properties": {
+        "storename": {
+          "type": "string",
+          "description": "门店名称",
+          "nullable": true
+        },
+        "organizeid": {
+          "type": "string",
+          "description": "所属组织",
+          "nullable": true
+        },
+        "organizename": {
+          "type": "string",
+          "description": "所属组织名称",
+          "nullable": true
+        },
+        "storepic": {
+          "type": "string",
+          "description": "门店展示图",
+          "nullable": true
+        },
+        "storeheaduserid": {
+          "type": "string",
+          "description": "负责人",
+          "nullable": true
+        },
+        "storeheadusername": {
+          "type": "string",
+          "description": "负责人",
+          "nullable": true
+        },
+        "address": {
+          "type": "string",
+          "description": "定位",
+          "nullable": true
+        },
+        "disabled": {
+          "type": "string",
+          "description": "是否禁用",
+          "nullable": true
+        },
+        "longitude": {
+          "type": "string",
+          "description": "经度",
+          "nullable": true
+        },
+        "latitude": {
+          "type": "string",
+          "description": "纬度",
+          "nullable": true
+        },
+        "distance": {
+          "type": "integer",
+          "description": "距离",
+          "nullable": true
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/StoreUser",
+            "description": ""
+          },
+          "description": "用户id",
+          "nullable": true
+        },
+        "id": {
+          "type": "string",
+          "description": "主键",
+          "nullable": true
+        }
+      },
+      "x-apifox-orders": [
+        "storename",
+        "organizeid",
+        "organizename",
+        "storepic",
+        "storeheaduserid",
+        "storeheadusername",
+        "address",
+        "disabled",
+        "longitude",
+        "latitude",
+        "distance",
+        "users",
+        "id"
+      ],
+      "x-apifox-ignore-properties": [],
+      "x-apifox-folder": ""
+    },
+    "StoreUser": {
+      "type": "object",
+      "properties": {
+        "userid": {
+          "type": "string",
+          "description": "用户id",
+          "nullable": true
+        },
+        "storeid": {
+          "type": "string",
+          "description": "门店id",
+          "nullable": true
+        },
+        "username": {
+          "type": "string",
+          "description": "用户姓名",
+          "nullable": true
+        },
+        "mobilenum": {
+          "type": "string",
+          "description": "手机号",
+          "nullable": true
+        },
+        "position": {
+          "type": "string",
+          "description": "岗位名称",
+          "nullable": true
+        },
+        "shiftsmarks": {
+          "type": "string",
+          "description": "可排班标识",
+          "nullable": true
+        },
+        "account": {
+          "type": "string",
+          "description": "账号",
+          "nullable": true
+        },
+        "organizeName": {
+          "type": "string",
+          "description": "岗位名称",
+          "nullable": true
+        }
+      },
+      "x-apifox-orders": [
+        "userid",
+        "storeid",
+        "username",
+        "mobilenum",
+        "position",
+        "shiftsmarks",
+        "account",
+        "organizeName"
+      ],
+      "x-apifox-ignore-properties": [],
+      "x-apifox-folder": ""
+    }
+  }
+}
