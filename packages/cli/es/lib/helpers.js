@@ -99,8 +99,10 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var appendFormData = function (key, val) { };
     if (!isMiniProgramEnv) {
         if (FormDataPolyfill != null) {
-            console.error(new Error('当前环境不支持 FormData'));
             formData = new FormDataPolyfill();
+        }
+        else {
+            console.warn(new Error('当前环境不支持 FormData'));
         }
         appendFormData = function (key, v) {
             if (FormDataPolyfill != null) {
@@ -118,6 +120,12 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
         };
     }
     var _loop_1 = function (k, v) {
+        // 路径参数处理
+        if ((_b = requestConfig.pathParamKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
+            // 合并路径参数
+            requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp("{".concat(k, "}"), 'g'), v);
+            delete cloneData[k];
+        }
         // FormData处理
         if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
             requestFunctionConfig.hasFormData = true;
@@ -132,12 +140,6 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             }
             delete cloneData[k];
             return "continue";
-        }
-        // 路径参数处理
-        if ((_b = requestConfig.pathParamKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
-            // 合并路径参数
-            requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp("{".concat(k, "}"), 'g'), v);
-            delete cloneData[k];
         }
         // URL 参数处理
         if ((_c = requestConfig.queryStringKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {

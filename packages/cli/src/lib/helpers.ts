@@ -102,8 +102,9 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   let appendFormData = (key: string, val: any) => {};
   if (!isMiniProgramEnv) {
     if (FormDataPolyfill != null) {
-      console.error(new Error('当前环境不支持 FormData'));
       formData = new FormDataPolyfill();
+    } else {
+      console.warn(new Error('当前环境不支持 FormData'));
     }
     appendFormData = (key: string, v: any) => {
       if (FormDataPolyfill != null) {
@@ -121,10 +122,15 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
 
   // 数据处理
   for (const [k, v] of Object.entries(cloneData)) {
+    // 路径参数处理
+    if (requestConfig.pathParamKeyNameList?.includes(k)) {
+      // 合并路径参数
+      requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp(`\{${k}\}`, 'g'), v);
+      delete cloneData[k];
+    }
     // FormData处理
     if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
       requestFunctionConfig.hasFormData = true;
-
       const val = v instanceof FormDataItem ? v.get() : v;
       if (Array.isArray(val)) {
         val.forEach((p, index) => {
@@ -135,12 +141,6 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
       }
       delete cloneData[k];
       continue;
-    }
-    // 路径参数处理
-    if (requestConfig.pathParamKeyNameList?.includes(k)) {
-      // 合并路径参数
-      requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp(`\{${k}\}`, 'g'), v);
-      delete cloneData[k];
     }
     // URL 参数处理
     if (requestConfig.queryStringKeyNameList?.includes(k)) {
