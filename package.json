@@ -5,6 +5,7 @@
     "packages/*"
   ],
   "scripts": {
+    "preinstall": "node ./scripts/preinstall.js",
     "build": "pnpm -r run build",
     "watch": "pnpm --parallel -r run watch",
     "publish": "pnpm changeset publish",
