@@ -25,25 +25,38 @@
                 type="primary"
                 @click="ctrlDrawerAPIRef.open({
                   type: 'ADD',
-                  title: '生成(API函数代码)',
+                  title: 'API函数代码生成',
                 }, {
                   apiList: selectApiList
                 })"
               >
-                生成(API函数代码)
+                API函数代码生成
               </a-button>
               <a-button
                 :disabled="selectApiList.length === 0"
                 type="primary"
                 @click="ctrlDrawerModelRef.open({
                   type: 'ADD',
-                  title: '生成(表单代码)'
+                  title: '表单代码生成'
                 }, {
                   categoryList: selectedAhModule,
                   apiList: selectApiList
                 })"
               >
-                生成(表单代码)
+                表单代码生成
+              </a-button>
+              <a-button
+                :disabled="selectApiList.length === 0"
+                type="primary"
+                @click="ctrlDrawerMockRef.open({
+                  type: 'ADD',
+                  title: 'mock数据生成'
+                }, {
+                  categoryList: selectedAhModule,
+                  apiList: selectApiList
+                })"
+              >
+                mock数据生成
               </a-button>
               <a-button
                   type="primary"
@@ -144,6 +157,11 @@
                           <ApiCode type="response" :api="api" :visible="isActive" language="javascript" />
                         </template>
                       </apih-collapse-item>
+                      <apih-collapse-item key="3-4" header="响应数据Mock">
+                        <template #default="{isActive}">
+                          <ApiCode type="mock" :api="api" :visible="isActive" language="javascript" />
+                        </template>
+                      </apih-collapse-item>
                     </apih-collapse>
                   </apih-collapse-item>
                 </apih-collapse>
@@ -157,6 +175,7 @@
 
   <CtrlDrawerAPI ref="ctrlDrawerAPIRef" />
   <CtrlDrawerModel ref="ctrlDrawerModelRef" />
+  <CtrlDrawerMock ref="ctrlDrawerMockRef" />
   <CtrlDrawerImport ref="ctrlDrawerImportRef" />
   <CtrlDrawerPrettier ref="ctrlDrawerPrettierRef" />
   <CtrlDrawerExportFile ref="ctrlDrawerExportFileRef" />
@@ -206,6 +225,7 @@ import ApihCategory from '@/components/apih-category/index.vue';
 
 import CtrlDrawerAPI from './__controller__/ctrl-drawer-api.vue';
 import CtrlDrawerModel from './__controller__/ctrl-drawer-model.vue';
+import CtrlDrawerMock from './__controller__/ctrl-drawer-mock.vue';
 import CtrlDrawerImport from './__controller__/ctrl-drawer-import.vue';
 import CtrlDrawerPrettier from './__controller__/ctrl-drawer-prettier.vue';
 import CtrlDrawerExportFile from './__controller__/ctrl-drawer-export-file.vue';
@@ -221,6 +241,7 @@ const gap = ref(320);
 const loading = ref(true);
 const ctrlDrawerAPIRef = ref();
 const ctrlDrawerModelRef = ref();
+const ctrlDrawerMockRef = ref();
 const ctrlDrawerImportRef = ref();
 const ctrlDrawerPrettierRef = ref();
 const ctrlDrawerExportFileRef = ref();

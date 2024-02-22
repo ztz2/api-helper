@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/Store/listByUserId/{userId}": {
+    "/app/personnels-staff-roster/worker-home-detail/{userId}": {
       "get": {
         "summary": "获取用户列表信息",
         "x-apifox-folder": "门店管理",

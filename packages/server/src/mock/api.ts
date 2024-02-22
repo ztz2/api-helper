@@ -10,7 +10,7 @@ export const swagger20 = {
   basePath: '/api',
   tags: [{ name: '宠物店认证模块', description: 'Tenant Controller' }],
   paths: {
-    '/tenant/auth': {
+    '/{nickName}/auth': {
       post: {
         tags: ['宠物店认证模块'],
         summary: '账户登录',

@@ -82,7 +82,7 @@ import {
   PropType,
   computed,
   defineProps,
-  defineExpose,
+  defineExpose, watch,
 } from 'vue';
 import useForm from '@/hooks/use-form';
 import {
@@ -125,6 +125,12 @@ const {
 } = useForm<FormModelType>(createDocumentConfig(), {
   watchFormModel: toRef(props, 'data'),
 });
+
+watch(() => formModel.value.dataKey, (val) => {
+  if (val) {
+    formModel.value.mockDataKey = val;
+  }
+}, { immediate: true });
 
 const options = ref({
   type: [

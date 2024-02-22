@@ -18,7 +18,7 @@ export const DOCUMENT: APIHelper.Document = {
       description: '账户登录',
       label: '账户登录',
       docURL: '',
-      path: '/api/tenant/auth',
+      path: '/api/{nickName}/auth',
       method: 'post',
       formDataKeyNameList: [],
       pathParamKeyNameList: [],

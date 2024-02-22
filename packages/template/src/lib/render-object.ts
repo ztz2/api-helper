@@ -8,27 +8,30 @@ import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '@/lib/utils/util';
 import type { ChangeCase } from '@/lib/types';
 
+type RenderObjectOptions = {
+  // 请求数据还是响应数据
+  paramType?: 'request' | 'response';
+  // 前缀
+  prefix?: string,
+  // interface 名称
+  name?: string;
+  // 名称后缀
+  suffixName?: string;
+  // 删除interface注释
+  dropComment?: boolean;
+  // 只生成类型部分
+  onlyBody?: boolean;
+  // 当数据为空的body代码
+  emptyBodyCode?: string;
+  // 生成接口名称回调
+  onRenderObjectName?: typeof renderObjectName;
+  // 格式化值
+  formatter?: (schema: APIHelper.Schema) => ({ useDefault?: boolean, value: any })
+};
 export function renderObject(
   schema: APIHelper.Schema | null,
   api: APIHelper.API,
-  options?: {
-    // 请求数据还是响应数据
-    paramType?: 'request' | 'response';
-    // 前缀
-    prefix?: string,
-    // interface 名称
-    name?: string;
-    // 名称后缀
-    suffixName?: string;
-    // 删除interface注释
-    dropComment?: boolean;
-    // 只生成类型部分
-    onlyBody?: boolean;
-    // 当数据为空的body代码
-    emptyBodyCode?: string;
-    // 生成接口名称回调
-    onRenderObjectName?: typeof renderObjectName;
-  }
+  options?: RenderObjectOptions
 ) {
   options = merge({
     prefix: 'export ',
@@ -69,7 +72,7 @@ export function renderObject(
   if (!schema || schema?.params?.length === 0){
     bodyCode = emptyBodyCode;
   } else {
-    bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true);
+    bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true, options);
   }
 
   let code = postCode({
@@ -93,14 +96,12 @@ function renderObjectDeepObject(
   schema: APIHelper.Schema,
   memo = new Map<APIHelper.Schema, string>(),
   isRoot = false,
+  options: RenderObjectOptions = {},
 ): string {
   if (memo.has(schema)) {
     return memo.get(schema) as string;
   }
   memo.set(schema, 'null');
-  if (isRoot) {
-    debugger;
-  }
 
   const codeWrap: string[] = [];
   const prefix = schema?.type === 'array' ? '[\n' : '{\n';
@@ -110,33 +111,76 @@ function renderObjectDeepObject(
     const type = child.type;
     const temporaryCode = [renderComment(child)];
     let v = "''";
+    let currentUseDefault: boolean | undefined = true;
     switch (type) {
       // 数组类型 | 对象类型
       case 'array': case 'object':
         temporaryCode.pop();
-        temporaryCode.push(renderObjectDeepObject(child));
+        temporaryCode.push(renderObjectDeepObject(child, memo, isRoot, options));
         break;
       case 'string':
-        if ('enum' in child && child.enum.length > 0) {
-          v = `'${child.enum[0]}'`;
+        currentUseDefault = true;
+        if (typeof options.formatter === 'function') {
+          const { value, useDefault } = options.formatter(child);
+          currentUseDefault = useDefault;
+          if (currentUseDefault !== true) {
+            v = value;
+          }
+        }
+        if (currentUseDefault !== false) {
+          v = "''";
+          if ('enum' in child && child.enum.length > 0) {
+            v = `'${child.enum[0]}'`;
+          }
         }
         temporaryCode.push(`${keyName}: ${v}`);
         break;
       case 'number':
-        temporaryCode.push(`${keyName}: 0`);
+        currentUseDefault = true;
+        if (typeof options.formatter === 'function') {
+          const { value, useDefault } = options.formatter(child);
+          currentUseDefault = useDefault;
+          if (currentUseDefault !== true) {
+            v = value;
+          }
+        }
+        if (currentUseDefault !== false) {
+          v = '0';
+        }
+        temporaryCode.push(`${keyName}: ${v}`);
         break;
       case 'boolean':
-        temporaryCode.push(`${keyName}: false`);
+        currentUseDefault = true;
+        if (typeof options.formatter === 'function') {
+          const { value, useDefault } = options.formatter(child);
+          currentUseDefault = useDefault;
+          if (currentUseDefault !== true) {
+            v = value;
+          }
+        }
+        if (currentUseDefault !== false) {
+          v = 'false';
+        }
+        temporaryCode.push(`${keyName}: ${v}`);
         break;
       // 其他类型
       default:
-        temporaryCode.push(`${keyName}: null`);
+        currentUseDefault = true;
+        if (typeof options.formatter === 'function') {
+          const { value, useDefault } = options.formatter(child);
+          currentUseDefault = useDefault;
+          if (currentUseDefault !== true) {
+            v = value;
+          }
+        }
+        if (currentUseDefault !== false) {
+          v = 'null';
+        }
+        temporaryCode.push(`${keyName}: ${v}`);
     }
     codeWrap.push(temporaryCode.join('\n'));
   }
-  if (isRoot) {
-    debugger;
-  }
+
   let code = prefix + codeWrap.join(',\n') + postfix;
 
   if (schema?.keyName) {

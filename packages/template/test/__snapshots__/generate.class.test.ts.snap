@@ -134,8 +134,7 @@ exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测
   ];
   // { boolean }
   complete = false;
-}
-"
+}"
 `;
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class prefix属性测试 1`] = `

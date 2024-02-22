@@ -46,7 +46,7 @@ export function renderObject(schema, api, options) {
         bodyCode = emptyBodyCode;
     }
     else {
-        bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true);
+        bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true, options);
     }
     var code = postCode({
         ki: ki,
@@ -62,18 +62,16 @@ export function renderObject(schema, api, options) {
     }
     return code;
 }
-function renderObjectDeepObject(schema, memo, isRoot) {
+function renderObjectDeepObject(schema, memo, isRoot, options) {
     var e_1, _a;
     var _b;
     if (memo === void 0) { memo = new Map(); }
     if (isRoot === void 0) { isRoot = false; }
+    if (options === void 0) { options = {}; }
     if (memo.has(schema)) {
         return memo.get(schema);
     }
     memo.set(schema, 'null');
-    if (isRoot) {
-        debugger;
-    }
     var codeWrap = [];
     var prefix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '[\n' : '{\n';
     var postfix = (schema === null || schema === void 0 ? void 0 : schema.type) === 'array' ? '\n]' : '\n}';
@@ -84,28 +82,73 @@ function renderObjectDeepObject(schema, memo, isRoot) {
             var type = child.type;
             var temporaryCode = [renderComment(child)];
             var v = "''";
+            var currentUseDefault = true;
             switch (type) {
                 // 数组类型 | 对象类型
                 case 'array':
                 case 'object':
                     temporaryCode.pop();
-                    temporaryCode.push(renderObjectDeepObject(child));
+                    temporaryCode.push(renderObjectDeepObject(child, memo, isRoot, options));
                     break;
                 case 'string':
-                    if ('enum' in child && child.enum.length > 0) {
-                        v = "'".concat(child.enum[0], "'");
+                    currentUseDefault = true;
+                    if (typeof options.formatter === 'function') {
+                        var _e = options.formatter(child), value = _e.value, useDefault = _e.useDefault;
+                        currentUseDefault = useDefault;
+                        if (currentUseDefault !== true) {
+                            v = value;
+                        }
+                    }
+                    if (currentUseDefault !== false) {
+                        v = "''";
+                        if ('enum' in child && child.enum.length > 0) {
+                            v = "'".concat(child.enum[0], "'");
+                        }
                     }
                     temporaryCode.push("".concat(keyName, ": ").concat(v));
                     break;
                 case 'number':
-                    temporaryCode.push("".concat(keyName, ": 0"));
+                    currentUseDefault = true;
+                    if (typeof options.formatter === 'function') {
+                        var _f = options.formatter(child), value = _f.value, useDefault = _f.useDefault;
+                        currentUseDefault = useDefault;
+                        if (currentUseDefault !== true) {
+                            v = value;
+                        }
+                    }
+                    if (currentUseDefault !== false) {
+                        v = '0';
+                    }
+                    temporaryCode.push("".concat(keyName, ": ").concat(v));
                     break;
                 case 'boolean':
-                    temporaryCode.push("".concat(keyName, ": false"));
+                    currentUseDefault = true;
+                    if (typeof options.formatter === 'function') {
+                        var _g = options.formatter(child), value = _g.value, useDefault = _g.useDefault;
+                        currentUseDefault = useDefault;
+                        if (currentUseDefault !== true) {
+                            v = value;
+                        }
+                    }
+                    if (currentUseDefault !== false) {
+                        v = 'false';
+                    }
+                    temporaryCode.push("".concat(keyName, ": ").concat(v));
                     break;
                 // 其他类型
                 default:
-                    temporaryCode.push("".concat(keyName, ": null"));
+                    currentUseDefault = true;
+                    if (typeof options.formatter === 'function') {
+                        var _h = options.formatter(child), value = _h.value, useDefault = _h.useDefault;
+                        currentUseDefault = useDefault;
+                        if (currentUseDefault !== true) {
+                            v = value;
+                        }
+                    }
+                    if (currentUseDefault !== false) {
+                        v = 'null';
+                    }
+                    temporaryCode.push("".concat(keyName, ": ").concat(v));
             }
             codeWrap.push(temporaryCode.join('\n'));
         }
@@ -116,9 +159,6 @@ function renderObjectDeepObject(schema, memo, isRoot) {
             if (_d && !_d.done && (_a = _c.return)) _a.call(_c);
         }
         finally { if (e_1) throw e_1.error; }
-    }
-    if (isRoot) {
-        debugger;
     }
     var code = prefix + codeWrap.join(',\n') + postfix;
     if (schema === null || schema === void 0 ? void 0 : schema.keyName) {

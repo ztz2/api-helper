@@ -17,6 +17,7 @@ import {
   onMounted,
   defineProps,
 } from 'vue';
+import { merge } from 'lodash';
 import { APIHelper } from '@api-helper/core';
 import { getSchema } from '@api-helper/core/es/lib/helpers';
 import { renderTemplate } from '@api-helper/template';
@@ -24,7 +25,7 @@ import { renderTemplate } from '@api-helper/template';
 import {
   useDocumentConfig,
   useApiTemplate,
-  useModelTemplate,
+  useModelTemplate, useMockTemplate,
 } from '@/store';
 import { Template } from '@/store/template/interface';
 
@@ -34,7 +35,7 @@ const props = defineProps({
     default: () => ({}),
   },
   type: {
-    type: String as PropType<'api' | 'request' | 'response'>,
+    type: String as PropType<'api' | 'request' | 'response' | 'mock'>,
     default: 'api',
   },
   visible: {
@@ -47,12 +48,14 @@ const props = defineProps({
 const { currentDocumentConfig } = toRefs(useDocumentConfig());
 const { defaultApiTemplate } = toRefs(useApiTemplate());
 const { defaultModelTemplate } = toRefs(useModelTemplate());
+const { defaultMockTemplate } = toRefs(useMockTemplate());
 
 const loading = ref(false);
 const currentCode = ref('');
 const api = toRef(props, 'api');
 let isBindListener = false;
 async function updateCodeContent() {
+  let list: any = [];
   switch (props.type) {
     case 'api': {
       if (Object.keys(api.value).length === 0) {
@@ -105,6 +108,23 @@ async function updateCodeContent() {
       currentCode.value = res?.[1]?.content ?? '';
       break;
     }
+    case 'mock':
+      loading.value = true;
+      list = await renderTemplate(defaultMockTemplate.value as Template, {
+        apiList: [api.value],
+      }, merge({
+        ...currentDocumentConfig.value,
+        prettierOptions: {
+          semi: false,
+          bracketSameLine: false,
+        },
+      }));
+      list.forEach((item: any) => {
+        item.content = item.content.startsWith(';') ? item.content.slice(1, item.content.length) : item.content;
+      });
+      loading.value = false;
+      currentCode.value = list?.[0]?.content ?? '';
+      break;
   }
 }
 
@@ -122,6 +142,11 @@ function bindListener() {
       }
       case 'response': {
         watch(() => api.value.responseDataSchema, updateCodeContent, { immediate: true });
+        break;
+      }
+      case 'mock': {
+        watch(() => api.value.responseDataSchema, updateCodeContent, { immediate: true });
+        break;
       }
     }
     // 项目配置变化更新代码

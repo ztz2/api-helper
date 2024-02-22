@@ -99,13 +99,12 @@ export interface 自定义名称 {
 `;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - onlyBody属性测试 1`] = `
-"interface RuleForm {
+"{
   // 手机号
   phone: string;
   // 账户名
   username: string;
-}
-"
+}"
 `;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - prefix属性测试 1`] = `
@@ -173,17 +172,17 @@ export type SystemUserListRequestByGet = any;
 exports[`生成 interface 测试 open-api-响应参数为List: open-api-响应参数为List 1`] = `
 "/**
  * @description 获取用户列表信息【请求数据类型定义】
- * @url [ GET ] /system/Store/listByUserId/{userId}
+ * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
  */
-export interface SystemStoreListByUserIdUserIdRequestByGet {
+export interface SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet {
   userId: string;
 }
 
 /**
  * @description 获取用户列表信息【请求数据类型定义】
- * @url [ GET ] /system/Store/listByUserId/{userId}
+ * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
  */
-export type SystemStoreListByUserIdUserIdRequestByGet =
+export type SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet =
   // 返回值
   Array<{
     // 门店名称

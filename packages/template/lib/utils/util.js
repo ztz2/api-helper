@@ -30,7 +30,9 @@ function postCode(_a, _b) {
     });
     // 如果只输出body部分，移除 export xxx 部分
     if (onlyBody) {
-        code = code.replace(ki, '');
+        var currentKi = ki.trim();
+        code = code.replace(currentKi, '');
+        code = code.trim();
     }
     // 合并注释代码输出
     return [commentCode, code].filter(Boolean).join('\n');

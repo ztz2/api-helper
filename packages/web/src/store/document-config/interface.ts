@@ -3,6 +3,7 @@ import { PrettierOptions } from '@api-helper/core/lib/interface';
 
 import {
   DEFAULT_SELECT_API_TPL_ID,
+  DEFAULT_SELECT_MOCK_TPL_ID,
   DEFAULT_SELECT_FILE_DIRECTORY_ID,
   DEFAULT_SELECT_MODEL_TPL_ID,
 } from '@/constants';
@@ -32,6 +33,8 @@ export class DocumentConfig {
   fileDirectoryExportPath = '';
   // API选择的模版ID
   apiTplId = DEFAULT_SELECT_API_TPL_ID;
+  // API选择的模版ID
+  mockTplId = DEFAULT_SELECT_MOCK_TPL_ID;
   // 模型选择的模版ID
   modelTplId = DEFAULT_SELECT_MODEL_TPL_ID;
   // 头部代码
@@ -48,6 +51,11 @@ export class DocumentConfig {
   generateLabel = false;
   // prettier配置对象
   prettierOptions: PrettierOptions = new PrettierOptions();
+  // mock数据生成，获取响应数据的dataKey，与dataKey类似
+  mockDataKey = '';
+  mockStringValue = '@city';
+  mockNumberValue = 3;
+  mockBooleanValue = false;
   /** 以下属性是基于项目级别的通用配置项 - 结束 * */
   constructor(id?: string | Partial<DocumentConfig>) {
     if (typeof id === 'string') {

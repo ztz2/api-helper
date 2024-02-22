@@ -1,12 +1,63 @@
 import { join } from 'path';
 import { APIHelper } from '@api-helper/core/es/lib/types';
 import ParserSwagger from '@api-helper/core/es/lib/parser/parser-swagger';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { readJsonFile } from './utils/file';
 import { renderObject } from '../src/lib/render-object';
 
 describe('生成 javascript 对象测试', () => {
+  test('formatter', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-response-array.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0] as APIHelper.API;
+    const code = renderObject(api.responseDataSchema, api, {
+      onlyBody: true,
+      paramType: 'response',
+      formatter(schema) {
+        const result = { useDefault: true, value: '""' };
+        switch (schema.type) {
+          case 'string':
+            result.useDefault = false;
+            result.value = '"字符串"';
+            return result;
+        }
+
+        return result;
+      }
+    });
+    expect(
+      code,
+    ).toMatchSnapshot('formatter');
+  });
+
+  test('formatter-null', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-response-array.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0] as APIHelper.API;
+    const code = renderObject(null, api, {
+      onlyBody: true,
+      paramType: 'response',
+      emptyBodyCode: 'null',
+      formatter(schema) {
+        const result = { useDefaults: true, value: '' };
+        switch (schema.type) {
+          case 'string':
+            result.useDefaults = false;
+            result.value = '"字符串"';
+            return result;
+        }
+        return result;
+      }
+    });
+    expect(
+      code,
+    ).toMatchSnapshot('formatter-null');
+  });
+
   test('OpenAPI-2.0生成List对象', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-response-array.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);

@@ -9,6 +9,8 @@ export default function genEmptyModelTemplate() {
     content: `${COMMON_HEAD}
   console.log('数据参数: ', params);
   console.log('文档配置信息: ', documentConfig);
+  console.log('API-Helper工具函数: ', apih);
+  console.log('lodash工具函数: ', lodash);
 
   // 返回模板集合.
   const result = [];
