@@ -15,7 +15,7 @@
     "changeset:pre-beta": "changeset pre enter beta",
     "changeset:pre-rc": "changeset pre enter rc",
     "changeset:pre-next": "changeset pre enter next",
-    "publish:apih beta": "npm run changeset:pre-beta && npm run changeset:exit && npm run changeset:version && npm run publish"
+    "publish:beta": "npm run changeset:pre-beta && npm run changeset:exit && npm run changeset:version && npm run publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.26.0"
