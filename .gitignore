@@ -40,5 +40,6 @@ lerna-debug.log*
 !.pre.json
 !.README.md
 
+/run-template-server-only.bat
 packages/core/tests/resources/swaggerApi.json
 packages/cli/tests/__folder__
