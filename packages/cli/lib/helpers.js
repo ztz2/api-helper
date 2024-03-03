@@ -23,24 +23,29 @@ class FormDataItem {
 }
 exports.FormDataItem = FormDataItem;
 function checkMiniProgramEnv() {
-    var _a;
-    const ua = (_a = navigator.userAgent.toLowerCase()) !== null && _a !== void 0 ? _a : '';
-    // 微信小程序环境
-    if ((ua.match(/micromessenger/i) && ua.match(/miniprogram/i)) || // @ts-ignore
-        (window === null || window === void 0 ? void 0 : window.__wxjs_environment) === 'miniprogram') {
-        return true;
+    var _a, _b;
+    try {
+        const ua = (_b = (_a = navigator === null || navigator === void 0 ? void 0 : navigator.userAgent) === null || _a === void 0 ? void 0 : _a.toLowerCase()) !== null && _b !== void 0 ? _b : '';
+        // 微信小程序环境
+        if ((ua.match(/micromessenger/i) && ua.match(/miniprogram/i)) || // @ts-ignore
+            (window === null || window === void 0 ? void 0 : window.__wxjs_environment) === 'miniprogram') {
+            return true;
+        }
+        // 百度小程序
+        if (/swan\//.test(ua) || /^webswan-/.test(window === null || window === void 0 ? void 0 : window.name)) {
+            return true;
+        }
+        // 支付宝小程序
+        if (/alipayclient/i.test(ua)) {
+            return true;
+        }
+        // 抖音小程序
+        if (/toutiaomicroapp/i.test(ua)) {
+            return true;
+        }
     }
-    // 百度小程序
-    if (/swan\//.test(ua) || /^webswan-/.test(window.name)) {
-        return true;
-    }
-    // 支付宝小程序
-    if (/alipayclient/i.test(ua)) {
-        return true;
-    }
-    // 抖音小程序
-    if (/toutiaomicroapp/i.test(ua)) {
-        return true;
+    catch (e) {
+        return false;
     }
     return false;
 }

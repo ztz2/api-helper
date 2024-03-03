@@ -44,25 +44,29 @@ export type RequestFunctionConfig = {
 }
 
 export function checkMiniProgramEnv(): boolean {
-  const ua = navigator.userAgent.toLowerCase() ?? '';
-  // 微信小程序环境
-  if (
-    (ua.match(/micromessenger/i) && ua.match(/miniprogram/i)) || // @ts-ignore
-    window?.__wxjs_environment === 'miniprogram'
-  ) {
-     return true;
-  }
-  // 百度小程序
-  if (/swan\//.test(ua) || /^webswan-/.test(window.name)) {
-    return true;
-  }
-  // 支付宝小程序
-  if (/alipayclient/i.test(ua)) {
-    return true;
-  }
-  // 抖音小程序
-  if (/toutiaomicroapp/i.test(ua)) {
-    return true;
+  try {
+    const ua = navigator?.userAgent?.toLowerCase() ?? '';
+    // 微信小程序环境
+    if (
+      (ua.match(/micromessenger/i) && ua.match(/miniprogram/i)) || // @ts-ignore
+      window?.__wxjs_environment === 'miniprogram'
+    ) {
+      return true;
+    }
+    // 百度小程序
+    if (/swan\//.test(ua) || /^webswan-/.test(window?.name)) {
+      return true;
+    }
+    // 支付宝小程序
+    if (/alipayclient/i.test(ua)) {
+      return true;
+    }
+    // 抖音小程序
+    if (/toutiaomicroapp/i.test(ua)) {
+      return true;
+    }
+  } catch (e) {
+    return false;
   }
 
   return false;
