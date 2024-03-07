@@ -88,7 +88,7 @@ export default new Template({
     const api = apiList[i];
     const url = api.path;
     const path = api.path;
-    const pathReg = path.replace(/\\{.*?\\}/gim, '(.*)');
+    const pathReg = path.replace(/\\{(.*?)\\}/gim, function(match, p1) { return ':' + p1; });
     const methodUpperCase = api.method.toUpperCase();
     const responseDataSchema = apih.core.getSchema(api.responseDataSchema, mockDataKey);
 
@@ -112,7 +112,7 @@ export default new Template({
                   { value: randomIDNo(), label: '身份证', keyName: 'idCard' },
                   { value: '@cword(50, 1000)', label: '备注|描述|摘要', keyName: 'remark|description|doc' },
                   { value: '@cname', label: '姓名|名字|昵称', keyName: 'name' },
-                  { value: \`@image('520x520', '#55efc4', '#fff', 'png', 'API Helper')\`, label: 'URL地址|图片|相片|照片', keyName: 'url' },
+                  { value: 'https://t.mwm.moe/pc', label: 'URL地址|图片|相片|照片', keyName: 'url' },
                   { value: pickDirective(['.png', '.jpg', '.jpeg']), label: '后缀名', keyName: 'extension' },
                   { value: '@date()', label: '日期', keyName: 'date' },
                   { value: '@datetime()', label: '时间', keyName: 'time' },

@@ -21,7 +21,7 @@ export default new Template({
     const api = apiList[i];
     const url = api.path;
     const path = api.path;
-    const pathReg = path.replace(/\\{.*?\\}/gim, '(.*)');
+    const pathReg = path.replace(/\\{(.*?)\\}/gim, function(match, p1) { return ':' + p1; });
     const methodUpperCase = api.method.toUpperCase();
     const responseDataSchema = apih.core.getSchema(api.responseDataSchema, mockDataKey);
 
