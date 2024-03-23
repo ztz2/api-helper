@@ -47,6 +47,7 @@ module.exports = {
     'default-param-last': 0,
     'import/no-unresolved': 0,
     'lines-between-class-members': 0,
+    'import/no-extraneous-dependencies': 0,
     'linebreak-style': [0, 'error', 'window'],
     'no-underscore-dangle': 0,
     'max-classes-per-file': 0,
