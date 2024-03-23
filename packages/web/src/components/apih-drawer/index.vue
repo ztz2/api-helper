@@ -2,7 +2,7 @@
 import {
   useSlots,
   Component,
-  defineComponent,
+  defineComponent, watch,
 } from 'vue';
 import { Drawer } from '@arco-design/web-vue';
 import {
@@ -11,8 +11,9 @@ import {
 } from '../apih-modal/use-dialog';
 
 export default defineComponent({
+  name: 'apih-drawer',
   props: defaultDialogProps,
-  emits: ['success'],
+  emits: ['success', 'update:visible'],
   setup(props, { attrs, expose, emit }) {
     const {
       title,
@@ -27,6 +28,12 @@ export default defineComponent({
       renderFormComponent,
     } = useDialog(props as any, emit);
     const slots = useSlots();
+    watch(() => props.visible, (v) => {
+      currentVisible.value = v;
+    });
+    watch(() => currentVisible.value, (v) => {
+      emit('update:visible', v);
+    });
 
     expose({
       open,
@@ -47,7 +54,10 @@ export default defineComponent({
       }
       return (
         <Drawer
-          class="apih-drawer"
+          class={{
+            'apih-drawer': true,
+            'apih-drawer--hide-footer': props.hideFooter,
+          }}
           {...attrs}
           {...currentDialogProps.value as any}
           width={props.width}
@@ -85,6 +95,11 @@ export default defineComponent({
 .apih-drawer{
   .arco-drawer-body{
     background-color: #eee;
+  }
+}
+.apih-drawer--hide-footer{
+  .arco-drawer-footer{
+    display: none;
   }
 }
 </style>

@@ -5,8 +5,9 @@
       <a-spin tip="加载中..." class="loading-detail" :loading="loading">
         <div :style="{width: `${gap}px`}" class="generate-left-side">
           <ApihCategory
-            :data="ahProject.categoryList"
             v-model:selected-keys="selectedKeys"
+            :data="ahProject.categoryList"
+            @click-module="handleClickModule"
             style="height: calc(100vh - 106px)"
           />
         </div>
@@ -100,7 +101,11 @@
               </a-button>
             </a-space>
           </div>
-          <div class="generate-content" style="position: relative;z-index: 1;">
+          <div
+            class="generate-content"
+            style="position: relative;z-index: 1;"
+            :key="refreshKey"
+          >
             <a-empty v-if="selectedAhModule.length === 0" style="margin-top: 20px">
               <template #image>
                 <icon-face-smile-fill />
@@ -138,16 +143,33 @@
                         <a-tooltip content="点击复制接口路径">
                           <span @click.stop="handleCopyPath(api.path)">{{api.path}}</span>
                         </a-tooltip>
-                        <small><strong>{{api.label}}</strong></small>
+                        <small>
+                          <a-tooltip content="点击复制接口标题">
+                            <strong @click.stop="handleCopyPath(api.label)" style="font-size: 16px">{{api.label}}</strong>
+                          </a-tooltip>
+                        </small>
                       </a-space>
                     </template>
-                    <apih-collapse expand-icon-position="right">
+                    <apih-collapse expand-icon-position="right" :default-active-key="['3-2', '3-3']">
                       <apih-collapse-item key="3-1" header="接口API函数">
                         <template #default="{isActive}">
                           <ApiCode type="api" :api="api" :visible="isActive" language="typescript" />
                         </template>
                       </apih-collapse-item>
-                      <apih-collapse-item key="3-2" header="请求参数">
+                      <apih-collapse-item key="3-2">
+                        <template #header>
+                          <a-space>
+                            <span>请求参数</span>
+                            <template v-if="getRequestSchemaNum(api) > 0">
+                              <a-button type="text" size="small" @click.stop="handleMatchParams(api)">参数匹配</a-button>
+                            </template>
+                            <template v-else>
+                              <a-tooltip content="当前接口没有请求参数，无需进行参数匹配校验">
+                                <a-button type="text" size="small" @click.stop disabled>参数匹配</a-button>
+                              </a-tooltip>
+                            </template>
+                          </a-space>
+                        </template>
                         <template #default="{isActive}">
                           <ApiCode type="request" :api="api" :visible="isActive" language="javascript" />
                         </template>
@@ -179,6 +201,7 @@
   <CtrlDrawerImport ref="ctrlDrawerImportRef" />
   <CtrlDrawerPrettier ref="ctrlDrawerPrettierRef" />
   <CtrlDrawerExportFile ref="ctrlDrawerExportFileRef" />
+  <CtrlDrawerMatch ref="ctrlDrawerMatchRef" />
 </template>
 
 <script lang="ts">
@@ -217,7 +240,7 @@ import {
 } from '@/constants';
 import { getDocs } from '@/api';
 import { aes } from '@/utils/crypto';
-import { modalConfirm } from '@/utils';
+import { checkType, modalConfirm } from '@/utils';
 import ApiCode from './__components__/api-code.vue';
 import { Template } from '@/store/template/interface';
 import { DocumentConfig } from '@/store/document-config/interface';
@@ -229,6 +252,7 @@ import CtrlDrawerMock from './__controller__/ctrl-drawer-mock.vue';
 import CtrlDrawerImport from './__controller__/ctrl-drawer-import.vue';
 import CtrlDrawerPrettier from './__controller__/ctrl-drawer-prettier.vue';
 import CtrlDrawerExportFile from './__controller__/ctrl-drawer-export-file.vue';
+import CtrlDrawerMatch from './__controller__/ctrl-drawer-match.vue';
 
 const route = useRoute();
 const { toClipboard } = useClipboard();
@@ -245,6 +269,8 @@ const ctrlDrawerMockRef = ref();
 const ctrlDrawerImportRef = ref();
 const ctrlDrawerPrettierRef = ref();
 const ctrlDrawerExportFileRef = ref();
+const ctrlDrawerMatchRef = ref();
+const refreshKey = ref('1711219604628');
 const isEmpty = computed(() => !documentConfig.value);
 const hasExportData = computed(() => customApiTemplateList.value.length
   || customModelTemplateList.value.length
@@ -275,9 +301,25 @@ const selectApiList = computed<APIHelper.Category['apiList']>(() => {
   return res;
 });
 
+function handleMatchParams(api: APIHelper.API) {
+  ctrlDrawerMatchRef.value.open({
+    title: '参数匹配',
+  }, {
+    api,
+  });
+}
+
 function handleCopyPath(path: string) {
   toClipboard(path);
   Message.success('已复制到剪切板');
+}
+
+function handleClickModule() {
+  const htmlNode = document.querySelector('html');
+  if (htmlNode) {
+    htmlNode.scrollTop = 0;
+  }
+  refreshKey.value = Date.now().toString();
 }
 
 async function handleExport() {
@@ -302,6 +344,15 @@ async function handleExport() {
   document.body.appendChild(eleLink);
   eleLink.click();
   document.body.removeChild(eleLink);
+}
+
+function getRequestSchemaNum(api: APIHelper.API) {
+  return api.requestDataSchema?.params?.reduce?.((val, node) => {
+    if (checkType(node, 'Object') && node.type !== 'File' && node.keyName) {
+      val++;
+    }
+    return val;
+  }, 0) ?? 0;
 }
 
 onMounted(async () => {
@@ -413,12 +464,13 @@ $fixed-x: 20px;
       }
     }
   }
+
   @at-root .generate-collapse-item--get{ // 二级栏目
     $border-color: rgb(97, 175, 254);
     $background-color: rgb(97, 175, 254, .1);
 
     border: 1px solid $border-color!important;
-    .arco-tag{ background-color: $border-color; }
+    .arco-tag{ background-color: $border-color;}
     &-active > .arco-collapse-item-header{
       border-bottom: 1px solid $border-color;
     }

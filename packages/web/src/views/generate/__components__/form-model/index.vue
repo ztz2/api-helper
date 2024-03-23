@@ -102,11 +102,12 @@
                 <template #title>
                   <div class="text-center">请求数据字段</div>
                 </template>
-                <div style="width: 100%; height: calc(100vh - 277px)">
+                <div style="width: 100%;">
                   <apih-schema-tree
                     v-model:value="formModel.requestDataSchemaIdList"
                     v-model:expanded-keys="requestExpandedKeys"
                     :data="requestDataSchemaList"
+                    height="calc(100vh - 308px)"
                     extra-label-key="label"
                     draggable
                   />
@@ -118,12 +119,13 @@
                 <template #title>
                   <div class="text-center">响应数据字段</div>
                 </template>
-                <div style="width: 100%; height: calc(100vh - 277px)">
+                <div style="width: 100%;">
                   <apih-schema-tree
                     v-model:value="formModel.responseDataSchemaIdList"
                     v-model:expanded-keys="responseExpandedKeys"
                     :data="responseDataSchemaList"
                     extra-label-key="label"
+                    height="calc(100vh - 308px)"
                     draggable
                   />
                 </div>

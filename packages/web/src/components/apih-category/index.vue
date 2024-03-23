@@ -92,6 +92,7 @@ import { randomChar } from '@api-helper/core/lib/utils/util';
 import { log } from '@/utils';
 
 const emit = defineEmits([
+  'click-module',
   'update:selectedKeys',
   'update:expandedKeys',
 ]);
@@ -199,6 +200,7 @@ function handleSelectModule(module: APIHelper.Category) {
   module.apiList.forEach((itm) => {
     currentSelectedKeys.value.push(itm.id);
   });
+  emit('click-module');
   handleExpand(module, true);
 }
 function handleSelectAPI(api: APIHelper.API) {

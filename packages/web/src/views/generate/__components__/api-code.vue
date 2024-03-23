@@ -160,7 +160,7 @@ onMounted(() => {
       if (val) {
         bindListener();
       }
-    });
+    }, { immediate: true });
   } else {
     bindListener();
   }

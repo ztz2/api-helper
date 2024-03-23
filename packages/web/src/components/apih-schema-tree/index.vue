@@ -2,7 +2,7 @@
   <div class="apih-schema-tree">
     <template v-if="treeData.length === 0"><a-empty></a-empty></template>
     <template v-else>
-      <div>
+      <div style="display: flex; justify-content: space-between;">
         <div class="apih-tree__select-root" @click="handleSelectAll(treeData, true)">
           <icon-check-circle-fill
               :size="16"
@@ -11,8 +11,19 @@
 <!--          <span>{{checkNodeSelectedAll(treeData, true) ? '取消全选根节点' : '全选根节点'}}</span>-->
           <span>全选根节点</span>
         </div>
+        <div
+          :style="{
+            'cursor': checkedKeys.length > 0 ? 'pointer' : 'not-allowed',
+            'margin-right': '4px',
+            color: checkedKeys.length > 0 ? '#165dff' : '#c9cdd4',
+          }"
+          @click="clearSelected"
+        >
+          <span>清空已选</span>
+        </div>
       </div>
-      <a-tree
+      <div :style="{height: height, overflow: 'auto'}">
+        <a-tree
           v-bind="$attrs"
           v-model:checkedKeys="checkedKeys"
           v-model:expandedKeys="currentExpandedKeys"
@@ -21,41 +32,42 @@
           @drop="onDrop"
           blockNode
           draggable
-      >
-        <template #title="node">
-          <div class="apih-schema-tree__node">
-            <div class="apih-schema-tree__node-label" @click="handleClickNode(node)">
-              <div class="apih-schema-tree__node-label-text">
-                <a-checkbox
-                  :model-value="checkedKeys.includes(node[valueKey])"
-                >
-                  <a-space :size="4">
-                    <a-tooltip v-if="node.isSchemaObject" :content="`数据类型包装节点，当前数据类型为：${pascalCase(node.type)}`">
-                      <icon-info-circle-fill style="color: #666" />
-                    </a-tooltip>
-                    <span>{{getLabel(node)}}</span>
-                  </a-space>
-                </a-checkbox>
+        >
+          <template #title="node">
+            <div class="apih-schema-tree__node">
+              <div class="apih-schema-tree__node-label" @click="handleClickNode(node)">
+                <div class="apih-schema-tree__node-label-text">
+                  <a-checkbox
+                    :model-value="checkedKeys.includes(node[valueKey])"
+                  >
+                    <a-space :size="4">
+                      <a-tooltip v-if="node.isSchemaObject" :content="`数据类型包装节点，当前数据类型为：${pascalCase(node.type)}`">
+                        <icon-info-circle-fill style="color: #666" />
+                      </a-tooltip>
+                      <span>{{getLabel(node)}}</span>
+                    </a-space>
+                  </a-checkbox>
+                </div>
+                <div class="apih-schema-tree__node-label-des" v-if="extraLabelKey">
+                  {{getValueUtil(node, extraLabelKey)}}
+                </div>
               </div>
-              <div class="apih-schema-tree__node-label-des" v-if="extraLabelKey">
-                {{getValueUtil(node, extraLabelKey)}}
+              <div class="apih-schema-tree__node-handle">
+                <template v-if="node[childrenKey] && node[childrenKey].length > 0">
+                  <a-tooltip :content="checkNodeSelectedAll(node) ? '取消全选子节点' : '全选子节点'">
+                    <div @click="handleSelectAll(node)">
+                      <icon-check-circle-fill
+                        :size="16"
+                        :style="{color: checkNodeSelectedAll(node) ? '#4b88ed' : '#c9cdd4'}"
+                      />
+                    </div>
+                  </a-tooltip>
+                </template>
               </div>
             </div>
-            <div class="apih-schema-tree__node-handle">
-              <template v-if="node[childrenKey] && node[childrenKey].length > 0">
-                <a-tooltip :content="checkNodeSelectedAll(node) ? '取消全选子节点' : '全选子节点'">
-                  <div @click="handleSelectAll(node)">
-                    <icon-check-circle-fill
-                      :size="16"
-                      :style="{color: checkNodeSelectedAll(node) ? '#4b88ed' : '#c9cdd4'}"
-                    />
-                  </div>
-                </a-tooltip>
-              </template>
-            </div>
-          </div>
-        </template>
-      </a-tree>
+          </template>
+        </a-tree>
+      </div>
     </template>
   </div>
 </template>
@@ -120,6 +132,10 @@ const props = defineProps({
     type: Array as PropType<Array<string>>,
     default: () => [],
   },
+  height: {
+    type: String,
+    default: 'auto',
+  },
 });
 
 const checkedKeys = ref<Array<string>>([]);
@@ -144,6 +160,10 @@ watch(() => props.expandedKeys, (val) => {
 watch(() => currentExpandedKeys.value, (val) => {
   emit('update:expandedKeys', val);
 }, { deep: true });
+
+function clearSelected() {
+  checkedKeys.value.splice(0, checkedKeys.value.length);
+}
 
 function checkNodeSelectedAll(node: Recordable, isChildren = false) {
   const children = isChildren ? node : node[props.childrenKey];
@@ -332,7 +352,7 @@ function isSiblingNode(dragNode: TreeNodeData, dropNode: TreeNodeData) {
             }
             @at-root .apih-schema-tree__node-label-des{
               padding-left: 22px;
-              font-size: 8px;
+              font-size: 12px;
               color: rgb(134,144,156);
               line-height: 16px;
               margin-top: 4px;

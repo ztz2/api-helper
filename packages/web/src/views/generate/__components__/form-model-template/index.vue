@@ -5,7 +5,7 @@
     :loading="loading"
   >
     <a-row :gutter="gutter">
-      <a-col :span="7">
+      <a-col :span="9">
         <a-form
           ref="formRef"
           :model="formModel"
@@ -100,8 +100,12 @@
                     <template #title>
                       <div class="text-center">请求数据字段</div>
                     </template>
-                    <div style="width: 100%; height: calc(100vh - 277px)">
-                      <apih-schema-tree v-model:value="baseInfo.requestDataSchemaIdList" :data="requestFieldTree" />
+                    <div style="width: 100%;">
+                      <apih-schema-tree
+                        v-model:value="baseInfo.requestDataSchemaIdList"
+                        :data="requestFieldTree"
+                        height="calc(100vh - 306px)"
+                      />
                     </div>
                   </a-card>
                 </a-col>
@@ -110,8 +114,12 @@
                     <template #title>
                       <div class="text-center">响应数据字段</div>
                     </template>
-                    <div style="width: 100%; height: calc(100vh - 277px)">
-                      <apih-schema-tree v-model:value="baseInfo.responseDataSchemaIdList" :data="responseFieldTree" />
+                    <div style="width: 100%;">
+                      <apih-schema-tree
+                        v-model:value="baseInfo.responseDataSchemaIdList"
+                        :data="responseFieldTree"
+                        height="calc(100vh - 306px)"
+                      />
                     </div>
                   </a-card>
                 </a-col>
@@ -120,9 +128,9 @@
           </a-tabs>
         </a-form>
       </a-col>
-      <a-col :span="17">
+      <a-col :span="15">
         <a-row :gutter="gutter">
-          <a-col :span="12">
+          <a-col :span="24">
             <a-card>
               <template #title>
                 <a-space>
@@ -134,17 +142,6 @@
                 </a-space>
               </template>
               <apih-code-mirror v-model="formModel.content" height="calc(100vh - 218px)" />
-            </a-card>
-          </a-col>
-          <a-col :span="12">
-            <a-card title="预览编辑模版内容">
-              <a-spin
-                tip="加载中..."
-                class="ztz-spin"
-                :loading="loadingPreview"
-              >
-                <apih-code :code="templateContent" height="calc(100vh - 218px)"></apih-code>
-              </a-spin>
             </a-card>
           </a-col>
         </a-row>

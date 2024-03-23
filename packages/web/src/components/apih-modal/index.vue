@@ -41,7 +41,10 @@ export default defineComponent({
 
       return (
         <Modal
-          class="apih-modal"
+          class={{
+            'apih-modal': true,
+            'apih-modal--hide-footer': props.hideFooter,
+          }}
           {...attrs}
           {...currentDialogProps.value as any}
           width={props.width}
@@ -81,4 +84,9 @@ export default defineComponent({
 //    background-color: #eee;
 //  }
 //}
+.apih-modal--hide-footer{
+  .arco-modal-footer{
+    display: none;
+  }
+}
 </style>

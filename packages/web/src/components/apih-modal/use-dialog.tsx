@@ -14,6 +14,7 @@ import { randomChar } from '@api-helper/core/lib/utils/util';
 import { noop } from '@/utils';
 
 export const defaultDialogProps = {
+  visible: Boolean,
   formComponent: {
     type: Object as PropType<Component>,
   },
@@ -23,6 +24,7 @@ export const defaultDialogProps = {
   width: String,
   successMsg: String,
   hideOk: Boolean,
+  hideFooter: Boolean,
   hideCancel: Boolean,
   okText: String,
   cancelText: String,
