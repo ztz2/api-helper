@@ -41,7 +41,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.formatDate = exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterSchemaRequired = exports.filterDotKeyName = exports.filterKeyName = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.randomChar = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = exports.pushArray = void 0;
+exports.processKeyName = exports.formatDate = exports.getErrorMessage = exports.filterSchemaPrimitiveValue = exports.isSchemaPrimitiveValue = exports.isSchemaObject = exports.processResponseSchemaPipeline = exports.processRequestSchemaPipeline = exports.deepAddSchemaRules = exports.uniqueRequestDataRootSchema = exports.processRequestSchema = exports.parserSchema = exports.filterSchemaRequired = exports.filterDotKeyName = exports.filterKeyName = exports.filterSchemaRoot = exports.filterDesc = exports.mergeUrl = exports.randomId = exports.randomChar = exports.uuid = exports.arrayUniquePush = exports.Try = exports.filterEmpty = exports.isHttp = exports.checkType = exports.pushArray = void 0;
 var qs_1 = __importDefault(require("qs"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var isPlainObject_1 = __importDefault(require("lodash/isPlainObject"));
@@ -168,13 +168,13 @@ function filterSchemaRoot(schemaList) {
 exports.filterSchemaRoot = filterSchemaRoot;
 // 预留，用于统一处理keyName，目前不需要进行任何处理。
 function filterKeyName(v) {
-    // fix: 当字段是一个不合法的变量，将其转成字符串
-    if (((typeof v === 'string' && v.trim() !== '') || (typeof v !== 'string' && v != null))
-        && !v.includes('.')
-        && !v.includes('[')
-        && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
-        v = "\"".concat(v, "\"");
-    }
+    // if (
+    //   ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
+    //   && !v.includes('.')
+    //   && !v.includes('[')
+    //   && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
+    //   v = `\"${v}\"`;
+    // }
     return v;
 }
 exports.filterKeyName = filterKeyName;
@@ -597,3 +597,11 @@ function formatDate(date, format) {
     return format;
 }
 exports.formatDate = formatDate;
+// 处理keyName，如果不是合法的变量，添加""
+function processKeyName(keyName) {
+    if (!(0, validator_1.validateKeyName)(keyName)) {
+        return "\"".concat(keyName, "\"");
+    }
+    return keyName;
+}
+exports.processKeyName = processKeyName;

@@ -503,7 +503,7 @@ export interface V2UserCreateWithArrayRequestByPost {
   // The password for login in clear text
   password: string;
   // The name that needs to be fetched. Use user1 for testing.
-  userId: string;
+  userId: number;
 }
 /**
  * @description Creates list of users with given input array【响应数据类型定义】

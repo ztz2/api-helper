@@ -43,10 +43,10 @@ describe('生成 Class 类测试', () => {
 
     expect(
       renderClass(null, api),
-    ).toMatchSnapshot('OpenAPI-2.0生成 Class null测试');
+    ).toMatchSnapshot('空属性');
     expect(
       renderClass({ type: 'array', params: [] } as unknown as APIHelper.Schema, api),
-    ).toMatchSnapshot('OpenAPI-2.0生成 Class 空数组测试');
+    ).toMatchSnapshot('空数组');
   });
   test('name - prefix - dropComment - onlyBody 属性测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0.json'));
@@ -79,5 +79,38 @@ describe('生成 Class 类测试', () => {
         onlyBody: true,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 Class onlyBody属性测试');
+  });
+
+  test('array单参数', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    expect(
+      renderClass(api.requestDataSchema?.params?.find?.((item) => item.keyName === 'storeIds') ?? null, api),
+    ).toMatchSnapshot('array单参数');
+  });
+
+  test('array单参数2', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    expect(
+      renderClass({
+        'id': 'bc2f818f91624c8c',
+        'type': 'array',
+        'keyName': 'storeIds',
+        'title': '',
+        'description': '',
+        'label': '',
+        'rules': { 'required': true },
+        'examples': [],
+        'params': [],
+        'enum': [],
+      }, api),
+    ).toMatchSnapshot('array单参数2');
   });
 });

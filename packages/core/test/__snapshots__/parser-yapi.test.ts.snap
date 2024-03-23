@@ -1,41 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解析转换测试 1`] = `
-[
-  {
+Array [
+  Object {
     "basePath": "/v2",
-    "categoryList": [
-      {
-        "apiList": [
-          {
+    "categoryList": Array [
+      Object {
+        "apiList": Array [
+          Object {
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": [],
+            "formDataKeyNameList": Array [],
             "id": "",
             "label": "Finds Pets by status",
             "method": "get",
             "path": "/v2/pet/findByStatus",
-            "pathParamKeyNameList": [],
-            "queryStringKeyNameList": [
+            "pathParamKeyNameList": Array [],
+            "queryStringKeyNameList": Array [
               "status",
             ],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": [],
-              "examples": [],
+              "enum": Array [],
+              "examples": Array [],
               "id": "",
               "keyName": "",
               "label": "",
-              "params": [
+              "params": Array [
                 StringSchema {
                   "description": "Status values that need to be considered for filter",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "status",
                   "label": "Status values that need to be considered for filter",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -45,7 +45,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "type": "string",
                 },
               ],
-              "rules": {
+              "rules": Object {
                 "required": false,
               },
               "title": "",
@@ -54,29 +54,29 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             "requestExtraDataSchema": null,
             "responseDataSchema": ArraySchema {
               "description": "",
-              "enum": [],
-              "examples": [],
+              "enum": Array [],
+              "examples": Array [],
               "id": "",
               "keyName": "",
               "label": "",
-              "params": [
+              "params": Array [
                 ObjectSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "",
                   "label": "",
-                  "params": [
+                  "params": Array [
                     NumberSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "id",
                       "label": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "exclusiveMaximum": undefined,
                         "exclusiveMinimum": undefined,
                         "maximum": undefined,
@@ -89,21 +89,21 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     ObjectSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "category",
                       "label": "",
-                      "params": [
+                      "params": Array [
                         NumberSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "id",
                           "label": "",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "exclusiveMaximum": undefined,
                             "exclusiveMinimum": undefined,
                             "maximum": undefined,
@@ -116,20 +116,20 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                         },
                         StringSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "name",
                           "label": "",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "required": true,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": {
+                      "rules": Object {
                         "required": true,
                       },
                       "title": "",
@@ -137,13 +137,13 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     StringSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "name",
                       "label": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": true,
                       },
                       "title": "",
@@ -151,28 +151,28 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     ArraySchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "photoUrls",
                       "label": "",
-                      "params": [
+                      "params": Array [
                         StringSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "",
                           "label": "",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "required": true,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": {
+                      "rules": Object {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "required": true,
@@ -183,29 +183,29 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     ArraySchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "tags",
                       "label": "",
-                      "params": [
+                      "params": Array [
                         ObjectSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "",
                           "label": "",
-                          "params": [
+                          "params": Array [
                             NumberSchema {
                               "description": "",
-                              "enum": [],
-                              "examples": [],
+                              "enum": Array [],
+                              "examples": Array [],
                               "id": "",
                               "keyName": "id",
                               "label": "",
-                              "params": [],
-                              "rules": {
+                              "params": Array [],
+                              "rules": Object {
                                 "exclusiveMaximum": undefined,
                                 "exclusiveMinimum": undefined,
                                 "maximum": undefined,
@@ -218,27 +218,27 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                             },
                             StringSchema {
                               "description": "",
-                              "enum": [],
-                              "examples": [],
+                              "enum": Array [],
+                              "examples": Array [],
                               "id": "",
                               "keyName": "name",
                               "label": "",
-                              "params": [],
-                              "rules": {
+                              "params": Array [],
+                              "rules": Object {
                                 "required": true,
                               },
                               "title": "",
                               "type": "string",
                             },
                           ],
-                          "rules": {
+                          "rules": Object {
                             "required": true,
                           },
                           "title": "",
                           "type": "object",
                         },
                       ],
-                      "rules": {
+                      "rules": Object {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "required": true,
@@ -249,31 +249,31 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     StringSchema {
                       "description": "pet status in the store",
-                      "enum": [
+                      "enum": Array [
                         "available",
                         "pending",
                         "sold",
                       ],
-                      "examples": [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "status",
                       "label": "pet status in the store",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": true,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
                   "type": "object",
                 },
               ],
-              "rules": {
+              "rules": Object {
                 "maxLength": undefined,
                 "minLength": undefined,
                 "required": true,
@@ -284,10 +284,10 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             },
             "title": "Finds Pets by status",
           },
-          {
+          Object {
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": [
+            "formDataKeyNameList": Array [
               "additionalMetadata",
               "file",
             ],
@@ -295,27 +295,27 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             "label": "uploads an image",
             "method": "post",
             "path": "/v2/pet/{petId}/uploadImage",
-            "pathParamKeyNameList": [
+            "pathParamKeyNameList": Array [
               "petId",
             ],
-            "queryStringKeyNameList": [],
+            "queryStringKeyNameList": Array [],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": [],
-              "examples": [],
+              "enum": Array [],
+              "examples": Array [],
               "id": "",
               "keyName": "",
               "label": "",
-              "params": [
+              "params": Array [
                 StringSchema {
                   "description": "ID of pet to update",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "petId",
                   "label": "ID of pet to update",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -326,13 +326,13 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "Additional data to pass to server",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "additionalMetadata",
                   "label": "Additional data to pass to server",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -343,13 +343,13 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "file to upload",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "file",
                   "label": "file to upload",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -359,7 +359,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "type": "File",
                 },
               ],
-              "rules": {
+              "rules": Object {
                 "required": false,
               },
               "title": "",
@@ -368,21 +368,21 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             "requestExtraDataSchema": null,
             "responseDataSchema": ObjectSchema {
               "description": "",
-              "enum": [],
-              "examples": [],
+              "enum": Array [],
+              "examples": Array [],
               "id": "",
               "keyName": "",
               "label": "",
-              "params": [
+              "params": Array [
                 NumberSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "code",
                   "label": "",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "exclusiveMaximum": undefined,
                     "exclusiveMinimum": undefined,
                     "maximum": undefined,
@@ -395,13 +395,13 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "type",
                   "label": "",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
@@ -409,20 +409,20 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "message",
                   "label": "",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
                   "type": "string",
                 },
               ],
-              "rules": {
+              "rules": Object {
                 "required": true,
               },
               "title": "",
@@ -430,33 +430,33 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
             },
             "title": "uploads an image",
           },
-          {
+          Object {
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": [],
+            "formDataKeyNameList": Array [],
             "id": "",
             "label": "Add a new pet to the store",
             "method": "post",
             "path": "/v2/pet",
-            "pathParamKeyNameList": [],
-            "queryStringKeyNameList": [],
+            "pathParamKeyNameList": Array [],
+            "queryStringKeyNameList": Array [],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": [],
-              "examples": [],
+              "enum": Array [],
+              "examples": Array [],
               "id": "",
               "keyName": "",
               "label": "",
-              "params": [
+              "params": Array [
                 NumberSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "id",
                   "label": "",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "exclusiveMaximum": undefined,
                     "exclusiveMinimum": undefined,
                     "maximum": undefined,
@@ -469,21 +469,21 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 ObjectSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "category",
                   "label": "",
-                  "params": [
+                  "params": Array [
                     NumberSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "id",
                       "label": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "exclusiveMaximum": undefined,
                         "exclusiveMinimum": undefined,
                         "maximum": undefined,
@@ -496,20 +496,20 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                     },
                     StringSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "name",
                       "label": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
@@ -517,13 +517,13 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "name",
                   "label": "",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": true,
                   },
                   "title": "",
@@ -531,28 +531,28 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 ArraySchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "photoUrls",
                   "label": "",
-                  "params": [
+                  "params": Array [
                     StringSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": [],
-                      "rules": {
+                      "params": Array [],
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "required": true,
@@ -563,29 +563,29 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 ArraySchema {
                   "description": "",
-                  "enum": [],
-                  "examples": [],
+                  "enum": Array [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "tags",
                   "label": "",
-                  "params": [
+                  "params": Array [
                     ObjectSchema {
                       "description": "",
-                      "enum": [],
-                      "examples": [],
+                      "enum": Array [],
+                      "examples": Array [],
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": [
+                      "params": Array [
                         NumberSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "id",
                           "label": "",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "exclusiveMaximum": undefined,
                             "exclusiveMinimum": undefined,
                             "maximum": undefined,
@@ -598,27 +598,27 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                         },
                         StringSchema {
                           "description": "",
-                          "enum": [],
-                          "examples": [],
+                          "enum": Array [],
+                          "examples": Array [],
                           "id": "",
                           "keyName": "name",
                           "label": "",
-                          "params": [],
-                          "rules": {
+                          "params": Array [],
+                          "rules": Object {
                             "required": false,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": {
+                      "rules": Object {
                         "required": false,
                       },
                       "title": "",
                       "type": "object",
                     },
                   ],
-                  "rules": {
+                  "rules": Object {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "required": false,
@@ -629,24 +629,24 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                 },
                 StringSchema {
                   "description": "pet status in the store",
-                  "enum": [
+                  "enum": Array [
                     "available",
                     "pending",
                     "sold",
                   ],
-                  "examples": [],
+                  "examples": Array [],
                   "id": "",
                   "keyName": "status",
                   "label": "pet status in the store",
-                  "params": [],
-                  "rules": {
+                  "params": Array [],
+                  "rules": Object {
                     "required": false,
                   },
                   "title": "",
                   "type": "string",
                 },
               ],
-              "rules": {
+              "rules": Object {
                 "required": false,
               },
               "title": "",
@@ -661,8 +661,8 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
         "id": "",
         "name": "pet",
       },
-      {
-        "apiList": [],
+      Object {
+        "apiList": Array [],
         "description": "未设置分组的接口集合",
         "id": "",
         "name": "未知分组",

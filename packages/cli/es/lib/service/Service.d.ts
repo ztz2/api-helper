@@ -1,5 +1,7 @@
+import './worker-thread';
 declare class Service {
     static init: () => void;
+    private startDate;
     private parserPlugins;
     private configFilePath?;
     private isTestEnv;

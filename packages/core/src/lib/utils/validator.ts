@@ -30,3 +30,15 @@ export function validateOpenAPIDocument(document: OpenAPI.Document): boolean {
 export function validateSchema(schema: JSONSchema4 = {}) {
   return schema && Object.keys(schema).length > 0;
 }
+
+// 校验字段是否为一个合法的变量
+export function validateKeyName(v: string) {
+  if (
+    ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
+    && !v.includes('.')
+    && !v.includes('[')
+    && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
+    return false;
+  }
+  return true;
+}

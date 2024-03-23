@@ -40,6 +40,28 @@
             "type": "string"
           },
           {
+            "name": "storeIds",
+            "in": "query",
+            "description": "门店id",
+            "required": false,
+            "example": "459371857875880965",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "有分页参数的话就加,根据你的实际查询参数编写",
+            "in": "query",
+            "description": "有分页参数的话就加,根据你的实际查询参数编写",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "dept.createBy",
             "in": "query",
             "description": "创建者",

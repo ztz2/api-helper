@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
+import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { postCode } from '@/lib/utils/util';
 import { ChangeCase } from '@/lib/types';
@@ -64,10 +64,9 @@ export function renderClass(
    * output ->  export class
    */
   let ki = [`${keyword} ${className} `].filter(Boolean).join('\n');
-
   let bodyCode = '';
-  if (!schema || schema?.params?.length === 0 || schema?.type !== 'object'){
-    if (schema?.type !== 'object') {
+  if (!schema || (schema?.params?.length === 0 && !schema?.keyName) || (schema?.type !== 'object' && schema?.type !== 'array')){
+    if (schema?.type !== 'object' && schema?.type !== 'array') {
       bodyCode += '/* 非对象数据，不能生成Class代码**/\n';
     }
     bodyCode += emptyBodyCode;
@@ -107,23 +106,23 @@ function renderClassDeepObject(
       // 数组类型 | 对象类型
       case 'array': case 'object':
         temporaryCode.pop();
-        temporaryCode.push(renderClassDeepObject(child));
+        temporaryCode.push(renderClassDeepObject(child, false, memo));
         break;
       case 'string':
         if ('enum' in child && child.enum.length > 0) {
           v = `'${child.enum[0]}'`;
         }
-        temporaryCode.push(`${keyName}${evaluationCode}${v}`);
+        temporaryCode.push(`${processKeyName(keyName)}${evaluationCode}${v}`);
         break;
       case 'number':
-        temporaryCode.push(`${keyName}${evaluationCode}0`);
+        temporaryCode.push(`${processKeyName(keyName)}${evaluationCode}0`);
         break;
       case 'boolean':
-        temporaryCode.push(`${keyName}${evaluationCode}false`);
+        temporaryCode.push(`${processKeyName(keyName)}${evaluationCode}false`);
         break;
       // 其他类型
       default:
-        temporaryCode.push(`${keyName}${evaluationCode}null`);
+        temporaryCode.push(`${processKeyName(keyName)}${evaluationCode}null`);
     }
     codeWrap.push(temporaryCode.join('\n'));
   }
@@ -131,10 +130,14 @@ function renderClassDeepObject(
   let code = prefix + codeWrap.join(isRoot ? ';\n' : ',\n') + postfix;
 
   if (schema?.keyName) {
+    const evaluationCode = isRoot ? ' = ' : ': ';
     code = [
       renderComment(schema),
-      `${schema.keyName}: ${code}`
+      `${processKeyName(schema.keyName)}${evaluationCode} ${code}`
     ].join('\n');
+    if (isRoot && schema.type !== 'object') {
+      code = `{ \n ${code} \n } \n`;
+    }
   }
 
   return code;

@@ -58,22 +58,27 @@ var __values = (this && this.__values) || function(o) {
 };
 import ora from 'ora';
 import fg from 'fast-glob';
+import os from 'node:os';
 import { join, isAbsolute, } from 'path';
 import { stat, outputFile, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
 import { formatDate } from '@api-helper/core/lib/utils/util';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 import log from '../../lib/tools/log';
-import { resolve, loadModule, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, removeFolder, } from '../tools/util';
+import { resolve, loadModule, removeFolder, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
+import './worker-thread';
 import { formatCode } from '../../lib';
 import { EXTENSIONS } from '../../lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
 var prompts = require('prompts');
+var cpus = os.cpus().length;
+var CHUNK_NUM = 30;
 var outputDiscardWarn = false;
 var Service = /** @class */ (function () {
     function Service(configFilePath, isTestEnv) {
         if (isTestEnv === void 0) { isTestEnv = false; }
+        this.startDate = 0;
         this.parserPlugins = [
             new ParserYapiPlugin(),
             new ParserSwaggerPlugin(),
@@ -87,7 +92,9 @@ var Service = /** @class */ (function () {
             var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, this.clear()];
+                    case 0:
+                        this.startDate = Date.now();
+                        return [4 /*yield*/, this.clear()];
                     case 1:
                         _b.sent();
                         return [4 /*yield*/, this.getConfigFile()];
@@ -364,8 +371,64 @@ var Service = /** @class */ (function () {
                                 try {
                                     for (parsedDocumentList_1 = (e_6 = void 0, __values(parsedDocumentList)), parsedDocumentList_1_1 = parsedDocumentList_1.next(); !parsedDocumentList_1_1.done; parsedDocumentList_1_1 = parsedDocumentList_1.next()) {
                                         d = parsedDocumentList_1_1.value;
+                                        param = __assign(__assign(__assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName });
+                                        // let workerStartError = false;
+                                        // const categoryListLength = d.categoryList.length;
+                                        // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+                                        // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+                                        // // 使用多线程生成
+                                        // if (enableParallel) {
+                                        //   const categoryWrap: Array<APIHelper.CategoryList> = [];
+                                        //   const chunkSize = Math.abs(categoryListLength / cpus);
+                                        //   let temp: APIHelper.CategoryList = [];
+                                        //   for (let i = 0; i < d.categoryList.length; i++) {
+                                        //     temp.push(d.categoryList[i]);
+                                        //     if (temp.length >= chunkSize || (i === categoryListLength - 1 && temp.length > 0)) {
+                                        //       categoryWrap.push([...temp]);
+                                        //       temp = [];
+                                        //     }
+                                        //   }
+                                        //   const parallelResult: Array<{code: string; codeDeclare: string;}> = [];
+                                        //   await Promise.all(categoryWrap.map((categoryList, index) => new Promise((resolve) => {
+                                        //     try{
+                                        //       const worker = new Worker(processTSFile(join(__filename, '../worker-thread.ts')), {
+                                        //         workerData: {
+                                        //           isTS,
+                                        //           param,
+                                        //           categoryList,
+                                        //         }
+                                        //       });
+                                        //       worker.on('message', (res) => {
+                                        //         parallelResult[index] = res;
+                                        //         console.log('完成');
+                                        //         resolve(1);
+                                        //       });
+                                        //       worker.on('error', (e) => {
+                                        //         console.error(e);
+                                        //         resolve(1);
+                                        //       });
+                                        //       worker.on('exit', (code) => {
+                                        //         resolve(1);
+                                        //       });
+                                        //     } catch (e) {
+                                        //       resolve(1);
+                                        //       workerStartError = true;
+                                        //     }
+                                        //   })));
+                                        //   for (const item of parallelResult) {
+                                        //     if (item && 'code' in item) {
+                                        //       code.push(item.code);
+                                        //       if (!isTS) {
+                                        //         codeDeclare.push(item.codeDeclare);
+                                        //       }
+                                        //     }
+                                        //   }
+                                        //   if (!workerStartError) {
+                                        //     break;
+                                        //   }
+                                        // }
+                                        // 普通模式
                                         try {
-                                            param = __assign(__assign(__assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName });
                                             str1 = renderAllApi(d, param);
                                             if (!str1.endsWith('\n')) {
                                                 str1 += '\n';
@@ -382,7 +445,7 @@ var Service = /** @class */ (function () {
                                             }
                                         }
                                         catch (e) {
-                                            console.log(e);
+                                            console.error(e);
                                         }
                                     }
                                 }
@@ -449,7 +512,8 @@ var Service = /** @class */ (function () {
                         _a.label = 4;
                     case 4:
                         spinner.succeed();
-                        log.info('提示', "Done. \u4EE3\u7801\u751F\u6210\u6210\u529F");
+                        // 耗时：${((Date.now() - this.startDate) / 1000).toFixed(2)}秒
+                        log.info('提示', "Done. \u4EE3\u7801\u751F\u6210\u6210\u529F. ");
                         return [3 /*break*/, 6];
                     case 5:
                         error_1 = _a.sent();
@@ -617,7 +681,7 @@ function getRequestFunctionFilePath(config) {
                     return [3 /*break*/, 12];
                 case 12:
                     _e.trys.push([12, 14, , 15]);
-                    return [4 /*yield*/, outputFile(requestFunctionFilePath, isTS ? "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n\n// \u81EA\u5B9A\u4E49\u914D\u7F6E\nexport type RequestOptions = {\n  // \u81EA\u5B9A\u4E49\u914D\u7F6E\u5C5E\u6027\n};\n\nexport default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n\n    console.log('\u8BF7\u6C42\u914D\u7F6E\uFF1A', requestConfig);\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({} as unknown as ResponseData);\n    }, 1500);\n  });\n}\n" : "export default async function request(config, options) {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n\n    console.log('\u8BF7\u6C42\u914D\u7F6E\uFF1A', requestConfig);\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({});\n    }, 1500);\n  });\n}\n")];
+                    return [4 /*yield*/, outputFile(requestFunctionFilePath, isTS ? "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n\n// \u81EA\u5B9A\u4E49\u914D\u7F6E\nexport type RequestOptions = {\n  // \u81EA\u5B9A\u4E49\u914D\u7F6E\u5C5E\u6027\n};\n\nexport default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({} as unknown as ResponseData);\n    }, 1500);\n  });\n}\n" : "export default async function request(config, options) {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n\n    console.log('\u8BF7\u6C42\u914D\u7F6E\uFF1A', requestConfig);\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({});\n    }, 1500);\n  });\n}\n")];
                 case 13:
                     _e.sent();
                     return [3 /*break*/, 15];

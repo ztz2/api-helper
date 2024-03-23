@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
+exports.processTSFile = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
 const qs_1 = __importDefault(require("qs"));
 const ora_1 = __importDefault(require("ora"));
 const path_1 = __importStar(require("path"));
@@ -294,3 +294,11 @@ function documentServersRunParserPlugins(documentServers, parserPlugins, options
     });
 }
 exports.documentServersRunParserPlugins = documentServersRunParserPlugins;
+function processTSFile(filename) {
+    // @ts-ignore // check if code is not running under ts-node
+    if (!process[Symbol.for('ts-node.register.instance')]) {
+        return filename.replace('.ts', '.js');
+    }
+    return filename;
+}
+exports.processTSFile = processTSFile;

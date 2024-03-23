@@ -29,6 +29,10 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 export interface SystemUserListRequestByGet {
   // 创建者
   '2021-05'?: string;
+  // 门店id
+  storeIds?: Array<string>;
+  // 有分页参数的话就加,根据你的实际查询参数编写
+  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
   // 创建者
   createBy?: string;
   // ID集合
@@ -67,7 +71,7 @@ systemUserListByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['"2021-05"', 'dept', 'ids', 'pics', 'roles'],
+  queryStringKeyNameList: ['2021-05', 'storeIds', '有分页参数的话就加,根据你的实际查询参数编写', 'dept', 'ids', 'pics', 'roles'],
 };
 "
 `;
@@ -1612,7 +1616,7 @@ export interface V2UserCreateWithArrayRequestByPost {
   // The password for login in clear text
   password: string;
   // The name that needs to be fetched. Use user1 for testing.
-  userId: string;
+  userId: number;
 }
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
@@ -1906,6 +1910,10 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 export interface SystemUserListRequestByGet {
   // 创建者
   '2021-05'?: string;
+  // 门店id
+  storeIds?: Array<string>;
+  // 有分页参数的话就加,根据你的实际查询参数编写
+  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
   // 创建者
   createBy?: string;
   // ID集合
@@ -1944,7 +1952,7 @@ systemUserListByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['"2021-05"', 'dept', 'ids', 'pics', 'roles'],
+  queryStringKeyNameList: ['2021-05', 'storeIds', '有分页参数的话就加,根据你的实际查询参数编写', 'dept', 'ids', 'pics', 'roles'],
 };
 "
 `;
@@ -2455,7 +2463,7 @@ export interface V2UserCreateWithArrayRequestByPost {
   // The password for login in clear text
   password: string;
   // The name that needs to be fetched. Use user1 for testing.
-  userId: string;
+  userId: number;
 }
 /**
  * @description Creates list of users with given input array【响应数据类型定义】

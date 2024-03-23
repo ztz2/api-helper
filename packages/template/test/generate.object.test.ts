@@ -16,7 +16,7 @@ describe('生成 javascript 对象测试', () => {
       onlyBody: true,
       paramType: 'response',
       formatter(schema) {
-        const result = { useDefault: true, value: '""' };
+        const result = {useDefault: true, value: '""'};
         switch (schema.type) {
           case 'string':
             result.useDefault = false;
@@ -25,7 +25,7 @@ describe('生成 javascript 对象测试', () => {
         }
 
         return result;
-      }
+      },
     });
     expect(
       code,
@@ -43,7 +43,7 @@ describe('生成 javascript 对象测试', () => {
       paramType: 'response',
       emptyBodyCode: 'null',
       formatter(schema) {
-        const result = { useDefaults: true, value: '' };
+        const result = {useDefaults: true, value: ''};
         switch (schema.type) {
           case 'string':
             result.useDefaults = false;
@@ -51,7 +51,7 @@ describe('生成 javascript 对象测试', () => {
             return result;
         }
         return result;
-      }
+      },
     });
     expect(
       code,
@@ -65,7 +65,7 @@ describe('生成 javascript 对象测试', () => {
     const category = openAPIDocument.categoryList[0];
     const api = category.apiList[0] as APIHelper.API;
     const code = renderObject(api.responseDataSchema, api, {
-      paramType: 'response'
+      paramType: 'response',
     });
     expect(
       code,
@@ -80,7 +80,7 @@ describe('生成 javascript 对象测试', () => {
     const api = category.apiList[0];
     const code = renderObject(api.responseDataSchema, api, {
       paramType: 'request',
-      onlyBody: true
+      onlyBody: true,
     });
     expect(
       code,
@@ -94,7 +94,7 @@ describe('生成 javascript 对象测试', () => {
     const category = openAPIDocument.categoryList[1];
     const api = category.apiList[1];
     const code = renderObject(api.requestDataSchema, api, {
-      paramType: 'response'
+      paramType: 'response',
     });
     expect(
       code,
@@ -110,25 +110,25 @@ describe('生成 javascript 对象测试', () => {
     expect(
       renderObject(api.responseDataSchema, api, {
         paramType: 'request',
-        name: '自定义名称'
+        name: '自定义名称',
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 name测试');
     expect(
       renderObject(api.responseDataSchema, api, {
         paramType: 'request',
-        prefix: 'export'
+        prefix: 'export',
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 prefix测试');
     expect(
       renderObject(api.responseDataSchema, api, {
         paramType: 'request',
-        dropComment: true
+        dropComment: true,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 dropComment测试');
     expect(
       renderObject(api.responseDataSchema, api, {
         paramType: 'request',
-        onlyBody: true
+        onlyBody: true,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 onlyBody测试');
   });
@@ -143,7 +143,52 @@ describe('生成 javascript 对象测试', () => {
       renderObject(null, api),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 null 属性');
     expect(
-      renderObject({ params: [], type: 'object' } as unknown as APIHelper.Schema, api),
+      renderObject({params: [], type: 'object'} as unknown as APIHelper.Schema, api),
     ).toMatchSnapshot('OpenAPI-2.0生成 对象 空数组');
+  });
+
+  test('array单参数', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    expect(
+      renderObject(api.requestDataSchema?.params?.find?.((item) => item.keyName === 'storeIds') ?? null, api),
+    ).toMatchSnapshot('array单参数');
+  });
+  test('array单参数2', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    expect(
+      renderObject({
+        'id': 'bc2f818f91624c8c',
+        'type': 'array',
+        'keyName': 'storeIds',
+        'title': '',
+        'description': '',
+        'label': '',
+        'rules': { 'required': true },
+        'examples': [],
+        'params': [],
+        'enum': [],
+      }, api),
+    ).toMatchSnapshot('array单参数2');
+  });
+  test('open-api-2.0-dot', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    expect(
+      renderObject(api.requestDataSchema, api),
+    ).toMatchSnapshot('OpenAPI-2.0生成 对象 null 属性');
+    expect(
+      renderObject({params: [], type: 'object'} as unknown as APIHelper.Schema, api),
+    ).toMatchSnapshot('open-api-2.0-dot');
   });
 });

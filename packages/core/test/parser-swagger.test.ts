@@ -39,4 +39,10 @@ describe('swagger-parser', () => {
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('OpenAPI-3.1文档解析转换测试');
   });
+  test('open-api-response-array', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0.json'));
+    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocument = ahDocumentList[0];
+    expect(ahDocument).toMatchSnapshot('open-api-response-array');
+  });
 });

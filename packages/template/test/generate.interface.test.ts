@@ -20,21 +20,6 @@ describe('生成 interface 测试', () => {
     ).toMatchSnapshot('open-api-响应参数为List');
   });
 
-  test('open-api-2.0-dot.json', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
-    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
-    const openAPIDocument = openAPIDocumentList[0];
-    const category = openAPIDocument.categoryList[0];
-    const api = category.apiList[0];
-    const responseCode = [
-      renderInterface(api.requestDataSchema, api),
-      renderInterface(api.responseDataSchema, api),
-    ].join('\n');
-    expect(
-      responseCode,
-    ).toMatchSnapshot('open-api-2.0-dot.json');
-  });
-
   test('OpenAPI-2.0-source生成 interface 测试', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-source.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
@@ -110,5 +95,62 @@ describe('生成 interface 测试', () => {
         onlyBody: true,
       }),
     ).toMatchSnapshot('OpenAPI-2.0生成 interface - onlyBody属性测试');
+  });
+
+  test('array单参数', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    const responseCode = [
+      renderInterface(api.requestDataSchema?.params?.find?.((item) => item.keyName === 'storeIds') ?? null, api),
+      renderInterface(api.responseDataSchema, api),
+    ].join('\n');
+    expect(
+      responseCode,
+    ).toMatchSnapshot('array单参数');
+  });
+
+  test('array单参数2', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    const responseCode = [
+      renderInterface({
+        'id': 'bc2f818f91624c8c',
+        'type': 'array',
+        'keyName': 'storeIds',
+        'title': '',
+        'description': '',
+        'label': '',
+        'rules': { 'required': true },
+        'examples': [],
+        'params': [],
+        'enum': [],
+      }, api),
+      renderInterface(api.responseDataSchema, api),
+    ].join('\n');
+    expect(
+      responseCode,
+    ).toMatchSnapshot('array单参数2');
+  });
+
+
+  test('open-api-2.0-dot.json', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0-dot.json'));
+    const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const openAPIDocument = openAPIDocumentList[0];
+    const category = openAPIDocument.categoryList[0];
+    const api = category.apiList[0];
+    const responseCode = [
+      renderInterface(api.requestDataSchema, api),
+      renderInterface(api.responseDataSchema, api),
+    ].join('\n');
+    expect(
+      responseCode,
+    ).toMatchSnapshot('open-api-2.0-dot.json');
   });
 });

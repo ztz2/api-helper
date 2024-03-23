@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ora_1 = __importDefault(require("ora"));
 const fast_glob_1 = __importDefault(require("fast-glob"));
+const node_os_1 = __importDefault(require("node:os"));
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const template_1 = require("@api-helper/template");
@@ -21,14 +22,18 @@ const util_1 = require("@api-helper/core/lib/utils/util");
 const util_2 = require("@api-helper/core/lib/utils/util");
 const log_1 = __importDefault(require("../../lib/tools/log"));
 const util_3 = require("../tools/util");
+require("./worker-thread");
 const lib_1 = require("../../lib");
 const const_1 = require("../../lib/service/const");
 const parser_yapi_plugin_1 = __importDefault(require("./parser-plugins/parser-yapi-plugin"));
 const parser_swagger_plugin_1 = __importDefault(require("./parser-plugins/parser-swagger-plugin"));
 const prompts = require('prompts');
+const cpus = node_os_1.default.cpus().length;
+const CHUNK_NUM = 30;
 let outputDiscardWarn = false;
 class Service {
     constructor(configFilePath, isTestEnv = false) {
+        this.startDate = 0;
         this.parserPlugins = [
             new parser_yapi_plugin_1.default(),
             new parser_swagger_plugin_1.default(),
@@ -39,6 +44,7 @@ class Service {
     }
     run() {
         return __awaiter(this, void 0, void 0, function* () {
+            this.startDate = Date.now();
             yield this.clear();
             const configList = yield this.getConfigFile();
             const len = configList.length;
@@ -243,8 +249,64 @@ import request from '《requestFilePath》';
                 const { documentServer, parsedDocumentList } = item;
                 const { dataKey } = documentServer;
                 for (const d of parsedDocumentList) {
+                    const param = Object.assign(Object.assign(Object.assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName });
+                    // let workerStartError = false;
+                    // const categoryListLength = d.categoryList.length;
+                    // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+                    // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+                    // // 使用多线程生成
+                    // if (enableParallel) {
+                    //   const categoryWrap: Array<APIHelper.CategoryList> = [];
+                    //   const chunkSize = Math.abs(categoryListLength / cpus);
+                    //   let temp: APIHelper.CategoryList = [];
+                    //   for (let i = 0; i < d.categoryList.length; i++) {
+                    //     temp.push(d.categoryList[i]);
+                    //     if (temp.length >= chunkSize || (i === categoryListLength - 1 && temp.length > 0)) {
+                    //       categoryWrap.push([...temp]);
+                    //       temp = [];
+                    //     }
+                    //   }
+                    //   const parallelResult: Array<{code: string; codeDeclare: string;}> = [];
+                    //   await Promise.all(categoryWrap.map((categoryList, index) => new Promise((resolve) => {
+                    //     try{
+                    //       const worker = new Worker(processTSFile(join(__filename, '../worker-thread.ts')), {
+                    //         workerData: {
+                    //           isTS,
+                    //           param,
+                    //           categoryList,
+                    //         }
+                    //       });
+                    //       worker.on('message', (res) => {
+                    //         parallelResult[index] = res;
+                    //         console.log('完成');
+                    //         resolve(1);
+                    //       });
+                    //       worker.on('error', (e) => {
+                    //         console.error(e);
+                    //         resolve(1);
+                    //       });
+                    //       worker.on('exit', (code) => {
+                    //         resolve(1);
+                    //       });
+                    //     } catch (e) {
+                    //       resolve(1);
+                    //       workerStartError = true;
+                    //     }
+                    //   })));
+                    //   for (const item of parallelResult) {
+                    //     if (item && 'code' in item) {
+                    //       code.push(item.code);
+                    //       if (!isTS) {
+                    //         codeDeclare.push(item.codeDeclare);
+                    //       }
+                    //     }
+                    //   }
+                    //   if (!workerStartError) {
+                    //     break;
+                    //   }
+                    // }
+                    // 普通模式
                     try {
-                        const param = Object.assign(Object.assign(Object.assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName });
                         let str1 = (0, template_1.renderAllApi)(d, param);
                         if (!str1.endsWith('\n')) {
                             str1 += '\n';
@@ -261,7 +323,7 @@ import request from '《requestFilePath》';
                         }
                     }
                     catch (e) {
-                        console.log(e);
+                        console.error(e);
                     }
                 }
             }
@@ -294,7 +356,8 @@ import request from '《requestFilePath》';
                     yield (0, fs_extra_1.outputFile)(outputDeclareFilename, code[1]);
                 }
                 spinner.succeed();
-                log_1.default.info('提示', `Done. 代码生成成功`);
+                // 耗时：${((Date.now() - this.startDate) / 1000).toFixed(2)}秒
+                log_1.default.info('提示', `Done. 代码生成成功. `);
             }
             catch (error) {
                 const failText = oraText + `【失败：${(0, util_2.getErrorMessage)(error)}】`;
@@ -462,8 +525,6 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
     if (config.hasFormData) {
       requestConfig.headers['Content-Type'] = 'multipart/form-data';
     }
-
-    console.log('请求配置：', requestConfig);
     // TODO待实现具体request请求逻辑...
     // 先用异步模拟request请求逻辑
     setTimeout(() => {

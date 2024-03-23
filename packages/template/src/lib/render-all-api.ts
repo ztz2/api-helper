@@ -13,8 +13,12 @@ import {
   renderRequestFunctionDeclare,
 } from '@/lib/render-request-function-declare';
 
+export function checkDocument(document: any) {
+  return 'version' in document && 'documentVersion' in document && 'categoryList' in document;
+}
+
 export function renderAllApi(
-  apiDocument: APIHelper.Document,
+  apiDocument: APIHelper.Document | APIHelper.CategoryList,
   options?: {
     dataKey?: string;
     codeType?: 'typescript' | 'javascript';
@@ -35,7 +39,7 @@ export function renderAllApi(
   const isTS = codeType === 'typescript';
   const isDeclare = options?.isDeclare ?? false;
 
-  const categoryList: APIHelper.CategoryList = apiDocument.categoryList;
+  const categoryList: APIHelper.CategoryList = checkDocument(apiDocument) ? (apiDocument as APIHelper.Document).categoryList : apiDocument as APIHelper.CategoryList;
   let allApi: APIHelper.APIList = [];
 
   for (const category of categoryList) {

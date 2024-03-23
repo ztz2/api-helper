@@ -25,7 +25,7 @@ export declare const v2StoreOrderOrderIdByGet: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -39,7 +39,7 @@ export declare const v2StoreOrderOrderIdByDelete: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -85,7 +85,7 @@ export declare const apiV3StoreOrderByPost: {
     method: 'post',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+    queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
   }
 };
 /**
@@ -98,7 +98,7 @@ export declare const apiV3StoreOrderOrderIdByGet: {
     path: '/api/v3/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -112,7 +112,7 @@ export declare const apiV3StoreOrderOrderIdByDelete: {
     path: '/api/v3/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };"

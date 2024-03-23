@@ -1,5 +1,7 @@
 import ora from 'ora';
 import fg from 'fast-glob';
+import os from 'node:os';
+import { Worker } from 'node:worker_threads';
 import {
   join,
   isAbsolute,
@@ -12,23 +14,25 @@ import {
   artTemplate,
   renderAllApi,
 } from '@api-helper/template';
+import { APIHelper } from '@api-helper/core/lib/types';
 import { formatDate } from '@api-helper/core/lib/utils/util';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';
-
-import { cloneDeep } from 'lodash';
 
 import log from '@/lib/tools/log';
 import {
   resolve,
   loadModule,
+  removeFolder,
+  processTSFile,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins, removeFolder,
+  documentServersRunParserPlugins,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib/types';
+import './worker-thread';
 import { Config, formatCode } from '@/lib';
 import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
@@ -37,11 +41,14 @@ import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
 type DocumentServers = Config['documentServers'];
 
 const prompts = require('prompts');
+const cpus = os.cpus().length;
+const CHUNK_NUM = 30;
 
 let outputDiscardWarn = false;
 
 class Service{
   static init: () => void;
+  private startDate = 0;
   private parserPlugins: AbstractParserPlugin[] = [
     new ParserYapiPlugin(),
     new ParserSwaggerPlugin(),
@@ -57,6 +64,7 @@ class Service{
   }
 
   async run() {
+    this.startDate = Date.now();
     await this.clear();
 
     const configList = await this.getConfigFile();
@@ -205,7 +213,6 @@ class Service{
     const outputFilename = getOutputFilePath(config);
     const isTS = outputFilename.endsWith('.ts') || outputFilename.endsWith('.tsx');
     let requestFilePath = getNormalizedRelativePath(outputFilename, await getRequestFunctionFilePath(config));
-
     // 移除request文件后缀名
     for (const extension of EXTENSIONS) {
       if (requestFilePath.endsWith(extension)) {
@@ -269,20 +276,78 @@ import request from '《requestFilePath》';
     const code = [codeHead];
     const codeDeclare = [codeHeadTS];
     const spinner = ora(oraText).start();
+
     for (const item of parserPluginRunResult) {
       const { documentServer, parsedDocumentList } = item;
       const { dataKey } = documentServer;
       for (const d of parsedDocumentList) {
+        const param = {
+          ...config,
+          ...documentServer,
+          codeType: isTS ? 'typescript' : 'javascript',
+          dataKey: dataKey,
+          isDeclare: false,
+          onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
+          onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
+        };
+
+        // let workerStartError = false;
+        // const categoryListLength = d.categoryList.length;
+        // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+        // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
+        // // 使用多线程生成
+        // if (enableParallel) {
+        //   const categoryWrap: Array<APIHelper.CategoryList> = [];
+        //   const chunkSize = Math.abs(categoryListLength / cpus);
+        //   let temp: APIHelper.CategoryList = [];
+        //   for (let i = 0; i < d.categoryList.length; i++) {
+        //     temp.push(d.categoryList[i]);
+        //     if (temp.length >= chunkSize || (i === categoryListLength - 1 && temp.length > 0)) {
+        //       categoryWrap.push([...temp]);
+        //       temp = [];
+        //     }
+        //   }
+        //   const parallelResult: Array<{code: string; codeDeclare: string;}> = [];
+        //   await Promise.all(categoryWrap.map((categoryList, index) => new Promise((resolve) => {
+        //     try{
+        //       const worker = new Worker(processTSFile(join(__filename, '../worker-thread.ts')), {
+        //         workerData: {
+        //           isTS,
+        //           param,
+        //           categoryList,
+        //         }
+        //       });
+        //       worker.on('message', (res) => {
+        //         parallelResult[index] = res;
+        //         console.log('完成');
+        //         resolve(1);
+        //       });
+        //       worker.on('error', (e) => {
+        //         console.error(e);
+        //         resolve(1);
+        //       });
+        //       worker.on('exit', (code) => {
+        //         resolve(1);
+        //       });
+        //     } catch (e) {
+        //       resolve(1);
+        //       workerStartError = true;
+        //     }
+        //   })));
+        //   for (const item of parallelResult) {
+        //     if (item && 'code' in item) {
+        //       code.push(item.code);
+        //       if (!isTS) {
+        //         codeDeclare.push(item.codeDeclare);
+        //       }
+        //     }
+        //   }
+        //   if (!workerStartError) {
+        //     break;
+        //   }
+        // }
+        // 普通模式
         try {
-          const param = {
-            ...config,
-            ...documentServer,
-            codeType: isTS ? 'typescript' : 'javascript',
-            dataKey: dataKey,
-            isDeclare: false,
-            onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
-            onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
-          };
           let str1 = renderAllApi(d, param as any);
           if (!str1.endsWith('\n')) {
             str1 += '\n';
@@ -298,7 +363,7 @@ import request from '《requestFilePath》';
             codeDeclare.push(str2);
           }
         } catch (e) {
-          console.log(e);
+          console.error(e);
         }
       }
     }
@@ -334,7 +399,8 @@ import request from '《requestFilePath》';
         await outputFile(outputDeclareFilename, code[1]);
       }
       spinner.succeed();
-      log.info('提示', `Done. 代码生成成功`);
+      // 耗时：${((Date.now() - this.startDate) / 1000).toFixed(2)}秒
+      log.info('提示', `Done. 代码生成成功. `);
     } catch (error) {
       const failText = oraText + `【失败：${getErrorMessage(error as Error)}】`;
       spinner.fail(failText);
@@ -513,8 +579,6 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
     if (config.hasFormData) {
       requestConfig.headers['Content-Type'] = 'multipart/form-data';
     }
-
-    console.log('请求配置：', requestConfig);
     // TODO待实现具体request请求逻辑...
     // 先用异步模拟request请求逻辑
     setTimeout(() => {

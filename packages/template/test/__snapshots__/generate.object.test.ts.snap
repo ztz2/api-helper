@@ -106,6 +106,30 @@ export const apiV3StoreOrderResponseentityByPost = {
 "
 `;
 
+exports[`生成 javascript 对象测试 array单参数: array单参数 1`] = `
+"/**
+ * @description list【请求数据实体对象】
+ * @url [ GET ] /system/user/list
+ */
+export const systemUserListRequestentityByGet = {
+  // { array } 门店id
+  storeIds: []
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 array单参数2: array单参数2 1`] = `
+"/**
+ * @description list【请求数据实体对象】
+ * @url [ GET ] /system/user/list
+ */
+export const systemUserListRequestentityByGet = {
+  // { array }
+  storeIds: []
+};
+"
+`;
+
 exports[`生成 javascript 对象测试 formatter: formatter 1`] = `
 "[
     {
@@ -272,6 +296,57 @@ export const v2StoreOrderRequestentityByPost = {
   // { boolean }
   complete: false
 };
+"
+`;
+
+exports[`生成 javascript 对象测试 open-api-2.0-dot: OpenAPI-2.0生成 对象 null 属性 1`] = `
+"/**
+ * @description list【请求数据实体对象】
+ * @url [ GET ] /system/user/list
+ */
+export const systemUserListRequestentityByGet = {
+  // { string } 创建者
+  '2021-05': '',
+  // { array } 门店id
+  storeIds: [],
+  // { string } 有分页参数的话就加,根据你的实际查询参数编写
+  '有分页参数的话就加,根据你的实际查询参数编写': '',
+  // { string } 创建者
+  createBy: '',
+  // { array } ID集合
+  ids: [],
+  // { array } 主键id集合
+  pics: [],
+  // { string } 创建时间
+  createTime: '',
+  // { string }
+  ancestors: '',
+  // { object }
+  dept: {
+    // { string } 创建者
+    createBy: '',
+    // { string }
+    ancestors: ''
+  },
+  // { array }
+  roles: [
+    {
+      // { string } 创建者
+      createBy: '',
+      // { string } 创建时间
+      createTime: ''
+    }
+  ]
+};
+"
+`;
+
+exports[`生成 javascript 对象测试 open-api-2.0-dot: open-api-2.0-dot 1`] = `
+"/**
+ * @description list【请求数据实体对象】
+ * @url [ GET ] /system/user/list
+ */
+export const systemUserListRequestentityByGet = {};
 "
 `;
 

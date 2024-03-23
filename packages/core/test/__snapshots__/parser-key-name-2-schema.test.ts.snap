@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`parser-key-name-2-schema .searchValue: .searchValue 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "searchValue",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -21,21 +21,21 @@ exports[`parser-key-name-2-schema .searchValue: .searchValue 1`] = `
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "searchValue",
         "label": "",
-        "params": [],
-        "rules": {
+        "params": Array [],
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -45,7 +45,7 @@ exports[`parser-key-name-2-schema .searchValue: .searchValue 1`] = `
         "type": "number",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -58,16 +58,16 @@ exports[`parser-key-name-2-schema .searchValue: .searchValue 1`] = `
 `;
 
 exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.updateBy[0].time 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "time",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -78,53 +78,53 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "",
         "label": "",
-        "params": [
+        "params": Array [
           StringSchema {
             "description": "",
-            "enum": [],
-            "examples": [],
+            "enum": Array [],
+            "examples": Array [],
             "id": "",
             "keyName": "params",
             "label": "",
-            "params": [
+            "params": Array [
               StringSchema {
                 "description": "",
-                "enum": [],
-                "examples": [],
+                "enum": Array [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "updateBy",
                 "label": "",
-                "params": [
+                "params": Array [
                   StringSchema {
                     "description": "",
-                    "enum": [],
-                    "examples": [],
+                    "enum": Array [],
+                    "examples": Array [],
                     "id": "",
                     "keyName": "",
                     "label": "",
-                    "params": [
+                    "params": Array [
                       StringSchema {
                         "description": "",
-                        "enum": [],
-                        "examples": [],
+                        "enum": Array [],
+                        "examples": Array [],
                         "id": "",
                         "keyName": "time",
                         "label": "",
-                        "params": [],
-                        "rules": {
+                        "params": Array [],
+                        "rules": Object {
                           "maxLength": undefined,
                           "minLength": undefined,
                           "pattern": undefined,
@@ -134,7 +134,7 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
                         "type": "null",
                       },
                     ],
-                    "rules": {
+                    "rules": Object {
                       "maxLength": undefined,
                       "minLength": undefined,
                       "pattern": undefined,
@@ -144,7 +144,7 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
                     "type": "object",
                   },
                 ],
-                "rules": {
+                "rules": Object {
                   "maxLength": undefined,
                   "minLength": undefined,
                   "pattern": undefined,
@@ -154,7 +154,7 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
                 "type": "array",
               },
             ],
-            "rules": {
+            "rules": Object {
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
@@ -164,7 +164,7 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
             "type": "object",
           },
         ],
-        "rules": {
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -174,7 +174,7 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
         "type": "object",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -187,16 +187,16 @@ exports[`parser-key-name-2-schema [0].params.updateBy[0].time: [0].params.update
 `;
 
 exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.username 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "username",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -207,29 +207,29 @@ exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.us
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "dept",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "searchValue",
         "label": "",
-        "params": [
+        "params": Array [
           StringSchema {
             "description": "",
-            "enum": [],
-            "examples": [],
+            "enum": Array [],
+            "examples": Array [],
             "id": "",
             "keyName": "username",
             "label": "",
-            "params": [],
-            "rules": {
+            "params": Array [],
+            "rules": Object {
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
@@ -239,7 +239,7 @@ exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.us
             "type": "string",
           },
         ],
-        "rules": {
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -249,7 +249,7 @@ exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.us
         "type": "object",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -262,16 +262,16 @@ exports[`parser-key-name-2-schema dept.searchValue.username: dept.searchValue.us
 `;
 
 exports[`parser-key-name-2-schema dept.searchValue: dept.searchValue 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "searchValue",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -282,21 +282,21 @@ exports[`parser-key-name-2-schema dept.searchValue: dept.searchValue 1`] = `
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "dept",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "searchValue",
         "label": "",
-        "params": [],
-        "rules": {
+        "params": Array [],
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -306,7 +306,7 @@ exports[`parser-key-name-2-schema dept.searchValue: dept.searchValue 1`] = `
         "type": "number",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -319,16 +319,16 @@ exports[`parser-key-name-2-schema dept.searchValue: dept.searchValue 1`] = `
 `;
 
 exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.updateBy 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "updateBy",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -339,37 +339,37 @@ exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.upda
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "roles",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "",
         "label": "",
-        "params": [
+        "params": Array [
           StringSchema {
             "description": "",
-            "enum": [],
-            "examples": [],
+            "enum": Array [],
+            "examples": Array [],
             "id": "",
             "keyName": "params",
             "label": "",
-            "params": [
+            "params": Array [
               StringSchema {
                 "description": "",
-                "enum": [],
-                "examples": [],
+                "enum": Array [],
+                "examples": Array [],
                 "id": "",
                 "keyName": "updateBy",
                 "label": "",
-                "params": [],
-                "rules": {
+                "params": Array [],
+                "rules": Object {
                   "maxLength": undefined,
                   "minLength": undefined,
                   "pattern": undefined,
@@ -379,7 +379,7 @@ exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.upda
                 "type": "unknown",
               },
             ],
-            "rules": {
+            "rules": Object {
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
@@ -389,7 +389,7 @@ exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.upda
             "type": "object",
           },
         ],
-        "rules": {
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -399,7 +399,7 @@ exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.upda
         "type": "object",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -412,16 +412,16 @@ exports[`parser-key-name-2-schema roles[0].params.updateBy: roles[0].params.upda
 `;
 
 exports[`parser-key-name-2-schema roles[0].params: roles[0].params 1`] = `
-{
+Object {
   "targetSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "params",
     "label": "",
-    "params": [],
-    "rules": {
+    "params": Array [],
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,
@@ -432,29 +432,29 @@ exports[`parser-key-name-2-schema roles[0].params: roles[0].params 1`] = `
   },
   "wrapSchema": StringSchema {
     "description": "",
-    "enum": [],
-    "examples": [],
+    "enum": Array [],
+    "examples": Array [],
     "id": "",
     "keyName": "roles",
     "label": "",
-    "params": [
+    "params": Array [
       StringSchema {
         "description": "",
-        "enum": [],
-        "examples": [],
+        "enum": Array [],
+        "examples": Array [],
         "id": "",
         "keyName": "",
         "label": "",
-        "params": [
+        "params": Array [
           StringSchema {
             "description": "",
-            "enum": [],
-            "examples": [],
+            "enum": Array [],
+            "examples": Array [],
             "id": "",
             "keyName": "params",
             "label": "",
-            "params": [],
-            "rules": {
+            "params": Array [],
+            "rules": Object {
               "maxLength": undefined,
               "minLength": undefined,
               "pattern": undefined,
@@ -464,7 +464,7 @@ exports[`parser-key-name-2-schema roles[0].params: roles[0].params 1`] = `
             "type": "boolean",
           },
         ],
-        "rules": {
+        "rules": Object {
           "maxLength": undefined,
           "minLength": undefined,
           "pattern": undefined,
@@ -474,7 +474,7 @@ exports[`parser-key-name-2-schema roles[0].params: roles[0].params 1`] = `
         "type": "object",
       },
     ],
-    "rules": {
+    "rules": Object {
       "maxLength": undefined,
       "minLength": undefined,
       "pattern": undefined,

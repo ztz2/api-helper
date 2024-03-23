@@ -67,7 +67,7 @@ function renderObject(schema, api, options) {
      */
     var ki = ["".concat(keyword, " ").concat(objectName, " = ")].filter(Boolean).join('\n');
     var bodyCode;
-    if (!schema || ((_b = schema === null || schema === void 0 ? void 0 : schema.params) === null || _b === void 0 ? void 0 : _b.length) === 0) {
+    if (!schema || (((_b = schema === null || schema === void 0 ? void 0 : schema.params) === null || _b === void 0 ? void 0 : _b.length) === 0 && !(schema === null || schema === void 0 ? void 0 : schema.keyName))) {
         bodyCode = emptyBodyCode;
     }
     else {
@@ -114,7 +114,7 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
                 case 'array':
                 case 'object':
                     temporaryCode.pop();
-                    temporaryCode.push(renderObjectDeepObject(child, memo, isRoot, options));
+                    temporaryCode.push(renderObjectDeepObject(child, memo, false, options));
                     break;
                 case 'string':
                     currentUseDefault = true;
@@ -131,7 +131,7 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
                             v = "'".concat(child.enum[0], "'");
                         }
                     }
-                    temporaryCode.push("".concat(keyName, ": ").concat(v));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName), ": ").concat(v));
                     break;
                 case 'number':
                     currentUseDefault = true;
@@ -145,7 +145,7 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
                     if (currentUseDefault !== false) {
                         v = '0';
                     }
-                    temporaryCode.push("".concat(keyName, ": ").concat(v));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName), ": ").concat(v));
                     break;
                 case 'boolean':
                     currentUseDefault = true;
@@ -159,7 +159,7 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
                     if (currentUseDefault !== false) {
                         v = 'false';
                     }
-                    temporaryCode.push("".concat(keyName, ": ").concat(v));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName), ": ").concat(v));
                     break;
                 // 其他类型
                 default:
@@ -174,7 +174,7 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
                     if (currentUseDefault !== false) {
                         v = 'null';
                     }
-                    temporaryCode.push("".concat(keyName, ": ").concat(v));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName), ": ").concat(v));
             }
             codeWrap.push(temporaryCode.join('\n'));
         }
@@ -190,8 +190,11 @@ function renderObjectDeepObject(schema, memo, isRoot, options) {
     if (schema === null || schema === void 0 ? void 0 : schema.keyName) {
         code = [
             renderComment(schema),
-            "".concat(schema.keyName, ": ").concat(code)
+            "".concat((0, util_1.processKeyName)(schema.keyName), ": ").concat(code)
         ].join('\n');
+        if (isRoot && schema.type !== 'object') {
+            code = "{ \n ".concat(code, " \n } \n");
+        }
     }
     return code;
 }

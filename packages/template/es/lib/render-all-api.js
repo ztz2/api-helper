@@ -38,6 +38,9 @@ import { getSchema } from '@api-helper/core/lib/helpers';
 import { renderInterface, } from '../lib/render-interface';
 import { renderRequestFunction, } from '../lib/render-request-function';
 import { renderRequestFunctionDeclare, } from '../lib/render-request-function-declare';
+export function checkDocument(document) {
+    return 'version' in document && 'documentVersion' in document && 'categoryList' in document;
+}
 export function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
     var _c;
@@ -49,7 +52,7 @@ export function renderAllApi(apiDocument, options) {
     var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
     var isTS = codeType === 'typescript';
     var isDeclare = (_c = options === null || options === void 0 ? void 0 : options.isDeclare) !== null && _c !== void 0 ? _c : false;
-    var categoryList = apiDocument.categoryList;
+    var categoryList = checkDocument(apiDocument) ? apiDocument.categoryList : apiDocument;
     var allApi = [];
     try {
         for (var categoryList_1 = __values(categoryList), categoryList_1_1 = categoryList_1.next(); !categoryList_1_1.done; categoryList_1_1 = categoryList_1.next()) {

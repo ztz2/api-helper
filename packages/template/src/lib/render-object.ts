@@ -3,7 +3,7 @@ import _changeCase from 'change-case';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
+import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
 import { postCode } from '@/lib/utils/util';
 import type { ChangeCase } from '@/lib/types';
@@ -41,9 +41,7 @@ export function renderObject(
     emptyBodyCode: '{}',
   }, options);
   schema = cloneDeep(schema);
-
   const primitiveValueSchema = filterSchemaPrimitiveValue(schema) as APIHelper.Schema;
-
   const {
     prefix,
     suffixName,
@@ -69,7 +67,7 @@ export function renderObject(
   let ki = [`${keyword} ${objectName} = `].filter(Boolean).join('\n');
 
   let bodyCode;
-  if (!schema || schema?.params?.length === 0){
+  if (!schema || (schema?.params?.length === 0 && !schema?.keyName)){
     bodyCode = emptyBodyCode;
   } else {
     bodyCode = renderObjectDeepObject(primitiveValueSchema, undefined, true, options);
@@ -116,7 +114,7 @@ function renderObjectDeepObject(
       // 数组类型 | 对象类型
       case 'array': case 'object':
         temporaryCode.pop();
-        temporaryCode.push(renderObjectDeepObject(child, memo, isRoot, options));
+        temporaryCode.push(renderObjectDeepObject(child, memo, false, options));
         break;
       case 'string':
         currentUseDefault = true;
@@ -133,7 +131,7 @@ function renderObjectDeepObject(
             v = `'${child.enum[0]}'`;
           }
         }
-        temporaryCode.push(`${keyName}: ${v}`);
+        temporaryCode.push(`${processKeyName(keyName)}: ${v}`);
         break;
       case 'number':
         currentUseDefault = true;
@@ -147,7 +145,7 @@ function renderObjectDeepObject(
         if (currentUseDefault !== false) {
           v = '0';
         }
-        temporaryCode.push(`${keyName}: ${v}`);
+        temporaryCode.push(`${processKeyName(keyName)}: ${v}`);
         break;
       case 'boolean':
         currentUseDefault = true;
@@ -161,7 +159,7 @@ function renderObjectDeepObject(
         if (currentUseDefault !== false) {
           v = 'false';
         }
-        temporaryCode.push(`${keyName}: ${v}`);
+        temporaryCode.push(`${processKeyName(keyName)}: ${v}`);
         break;
       // 其他类型
       default:
@@ -176,7 +174,7 @@ function renderObjectDeepObject(
         if (currentUseDefault !== false) {
           v = 'null';
         }
-        temporaryCode.push(`${keyName}: ${v}`);
+        temporaryCode.push(`${processKeyName(keyName)}: ${v}`);
     }
     codeWrap.push(temporaryCode.join('\n'));
   }
@@ -186,8 +184,11 @@ function renderObjectDeepObject(
   if (schema?.keyName) {
     code = [
       renderComment(schema),
-      `${schema.keyName}: ${code}`
+      `${processKeyName(schema.keyName)}: ${code}`
     ].join('\n');
+    if (isRoot && schema.type !== 'object') {
+      code = `{ \n ${code} \n } \n`;
+    }
   }
 
   return code;

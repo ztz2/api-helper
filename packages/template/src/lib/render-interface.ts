@@ -4,7 +4,7 @@ import * as _changeCase from 'change-case';
 import { ChangeCase } from '@/lib/types';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { createSchema } from '@api-helper/core/lib/helpers';
-import { randomChar } from '@api-helper/core/lib/utils/util';
+import { randomChar, processKeyName } from '@api-helper/core/lib/utils/util';
 
 import {
   postCode,
@@ -99,7 +99,7 @@ export function renderInterface(
   return postCode({
     ki,
     commentCode,
-    code: renderInterfaceDeepObject(schema as APIHelper.Schema)
+    code: renderInterfaceDeepObject(schema as APIHelper.Schema, true)
   }, { onlyBody });
 }
 
@@ -149,6 +149,7 @@ function requiredChar(schema: APIHelper.Schema) {
 
 function renderInterfaceDeepObject(
   schema: APIHelper.Schema,
+  isRoot = false,
   memo = new Map<APIHelper.Schema, string>()
 ): string {
   if (!schema) {
@@ -157,7 +158,6 @@ function renderInterfaceDeepObject(
   if (memo.has(schema)) {
     return memo.get(schema) as string;
   }
-
   memo.set(schema, 'null');
 
   const { type } = schema;
@@ -170,7 +170,7 @@ function renderInterfaceDeepObject(
   if (isEmptyObject(schema)) {
     return [
       bannerCommentText,
-      schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
+      schema.keyName ? `${processKeyName(schema.keyName)}${requiredChar(schema)}: ` : '',
       '{',
         '[propName: string]: any',
       '}',
@@ -183,20 +183,20 @@ function renderInterfaceDeepObject(
     case 'object':
       code = [
         bannerCommentText,
-        schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
+        schema.keyName ? `${processKeyName(schema.keyName)}${requiredChar(schema)}: ` : '',
         '{',
           // 类型遍历
-          schema.params.filter((item) => !(item.keyName?.trim() === '' && item.type === 'object')).map((item) => renderInterfaceDeepObject(item, memo)).join('\n'),
+          schema.params.filter((item) => !(item.keyName?.trim() === '' && item.type === 'object')).map((item) => renderInterfaceDeepObject(item, false, memo)).join('\n'),
         '}',
       ].filter(Boolean).join('\n');
       break;
     // 数据类型
     case 'array':
-      let child = schema.params.map((item) => renderInterfaceDeepObject(item, memo)).join(' | ');
+      let child = schema.params.map((item) => renderInterfaceDeepObject(item, false, memo)).join(' | ');
       child = child || 'any';
       code = [
         bannerCommentText,
-        schema.keyName ? `${schema.keyName}${requiredChar(schema)}: ` : '',
+        schema.keyName ? `${processKeyName(schema.keyName)}${requiredChar(schema)}: ` : '',
         // 类型遍历
         `Array<${child}>`,
       ].filter(Boolean).join('\n');
@@ -209,10 +209,14 @@ function renderInterfaceDeepObject(
         typeCode = schema.enum.map((item) => `'${item}'`).join(' | ');
       }
       if (schema.keyName) {
-        code = [bannerCommentText, `${schema.keyName}${requiredChar(schema)}: ${typeCode}`].filter(Boolean).join('\n');
+        code = [bannerCommentText, `${processKeyName(schema.keyName)}${requiredChar(schema)}: ${typeCode}`].filter(Boolean).join('\n');
       } else {
         code = typeCode;
       }
+  }
+
+  if (isRoot && schema.type !== 'object' && schema.keyName) {
+    code = `{ \n ${code} \n } \n`;
   }
 
   return code;

@@ -36,11 +36,15 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderAllApi = void 0;
+exports.renderAllApi = exports.checkDocument = void 0;
 var helpers_1 = require("@api-helper/core/lib/helpers");
 var render_interface_1 = require("../lib/render-interface");
 var render_request_function_1 = require("../lib/render-request-function");
 var render_request_function_declare_1 = require("../lib/render-request-function-declare");
+function checkDocument(document) {
+    return 'version' in document && 'documentVersion' in document && 'categoryList' in document;
+}
+exports.checkDocument = checkDocument;
 function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
     var _c;
@@ -52,7 +56,7 @@ function renderAllApi(apiDocument, options) {
     var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
     var isTS = codeType === 'typescript';
     var isDeclare = (_c = options === null || options === void 0 ? void 0 : options.isDeclare) !== null && _c !== void 0 ? _c : false;
-    var categoryList = apiDocument.categoryList;
+    var categoryList = checkDocument(apiDocument) ? apiDocument.categoryList : apiDocument;
     var allApi = [];
     try {
         for (var categoryList_1 = __values(categoryList), categoryList_1_1 = categoryList_1.next(); !categoryList_1_1.done; categoryList_1_1 = categoryList_1.next()) {

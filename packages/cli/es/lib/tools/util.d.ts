@@ -65,4 +65,5 @@ export declare function documentServersRunParserPlugins(documentServers: Documen
     noParserPluginNames: string[];
     parserPluginRunResult: ParserPluginRunResult;
 }>;
+export declare function processTSFile(filename: string): string;
 export {};

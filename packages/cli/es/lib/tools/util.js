@@ -379,3 +379,10 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
         });
     });
 }
+export function processTSFile(filename) {
+    // @ts-ignore // check if code is not running under ts-node
+    if (!process[Symbol.for('ts-node.register.instance')]) {
+        return filename.replace('.ts', '.js');
+    }
+    return filename;
+}

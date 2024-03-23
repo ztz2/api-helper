@@ -74,7 +74,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             formData = new FormDataPolyfill();
         }
         else {
-            console.warn(new Error('当前环境不支持 FormData'));
+            console.warn('提示：当前环境不支持 FormData，自动忽略FormData字段处理！');
         }
         appendFormData = (key, v) => {
             if (FormDataPolyfill != null) {

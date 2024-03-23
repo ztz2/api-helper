@@ -54,6 +54,41 @@ export interface ApiV3StoreOrderResponseByPost {
 "
 `;
 
+exports[`生成 interface 测试 array单参数: array单参数 1`] = `
+"/**
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
+ */
+export type SystemUserListRequestByGet = {
+  // 门店id
+  storeIds?: Array<string>;
+};
+
+/**
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
+ */
+export type SystemUserListRequestByGet = any;
+"
+`;
+
+exports[`生成 interface 测试 array单参数2: array单参数2 1`] = `
+"/**
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
+ */
+export type SystemUserListRequestByGet = {
+  storeIds: Array<any>;
+};
+
+/**
+ * @description list【请求数据类型定义】
+ * @url [ GET ] /system/user/list
+ */
+export type SystemUserListRequestByGet = any;
+"
+`;
+
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `
 "export interface V2StoreOrderRequestByPost {
   id: number;
@@ -139,6 +174,10 @@ exports[`生成 interface 测试 open-api-2.0-dot.json: open-api-2.0-dot.json 1`
 export interface SystemUserListRequestByGet {
   // 创建者
   '2021-05'?: string;
+  // 门店id
+  storeIds?: Array<string>;
+  // 有分页参数的话就加,根据你的实际查询参数编写
+  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
   // 创建者
   createBy?: string;
   // ID集合

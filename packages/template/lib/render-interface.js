@@ -81,7 +81,7 @@ function renderInterface(schema, api, options) {
     return (0, util_2.postCode)({
         ki: ki,
         commentCode: commentCode,
-        code: renderInterfaceDeepObject(schema)
+        code: renderInterfaceDeepObject(schema, true)
     }, { onlyBody: onlyBody });
 }
 exports.renderInterface = renderInterface;
@@ -111,7 +111,8 @@ function requiredChar(schema) {
     var _a;
     return !((_a = schema === null || schema === void 0 ? void 0 : schema.rules) === null || _a === void 0 ? void 0 : _a.required) ? '?' : '';
 }
-function renderInterfaceDeepObject(schema, memo) {
+function renderInterfaceDeepObject(schema, isRoot, memo) {
+    if (isRoot === void 0) { isRoot = false; }
     if (memo === void 0) { memo = new Map(); }
     if (!schema) {
         return '';
@@ -129,7 +130,7 @@ function renderInterfaceDeepObject(schema, memo) {
     if ((0, util_2.isEmptyObject)(schema)) {
         return [
             bannerCommentText,
-            schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
+            schema.keyName ? "".concat((0, util_1.processKeyName)(schema.keyName)).concat(requiredChar(schema), ": ") : '',
             '{',
             '[propName: string]: any',
             '}',
@@ -141,20 +142,20 @@ function renderInterfaceDeepObject(schema, memo) {
         case 'object':
             code = [
                 bannerCommentText,
-                schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
+                schema.keyName ? "".concat((0, util_1.processKeyName)(schema.keyName)).concat(requiredChar(schema), ": ") : '',
                 '{',
                 // 类型遍历
-                schema.params.filter(function (item) { var _a; return !(((_a = item.keyName) === null || _a === void 0 ? void 0 : _a.trim()) === '' && item.type === 'object'); }).map(function (item) { return renderInterfaceDeepObject(item, memo); }).join('\n'),
+                schema.params.filter(function (item) { var _a; return !(((_a = item.keyName) === null || _a === void 0 ? void 0 : _a.trim()) === '' && item.type === 'object'); }).map(function (item) { return renderInterfaceDeepObject(item, false, memo); }).join('\n'),
                 '}',
             ].filter(Boolean).join('\n');
             break;
         // 数据类型
         case 'array':
-            var child = schema.params.map(function (item) { return renderInterfaceDeepObject(item, memo); }).join(' | ');
+            var child = schema.params.map(function (item) { return renderInterfaceDeepObject(item, false, memo); }).join(' | ');
             child = child || 'any';
             code = [
                 bannerCommentText,
-                schema.keyName ? "".concat(schema.keyName).concat(requiredChar(schema), ": ") : '',
+                schema.keyName ? "".concat((0, util_1.processKeyName)(schema.keyName)).concat(requiredChar(schema), ": ") : '',
                 // 类型遍历
                 "Array<".concat(child, ">"),
             ].filter(Boolean).join('\n');
@@ -167,11 +168,14 @@ function renderInterfaceDeepObject(schema, memo) {
                 typeCode = schema.enum.map(function (item) { return "'".concat(item, "'"); }).join(' | ');
             }
             if (schema.keyName) {
-                code = [bannerCommentText, "".concat(schema.keyName).concat(requiredChar(schema), ": ").concat(typeCode)].filter(Boolean).join('\n');
+                code = [bannerCommentText, "".concat((0, util_1.processKeyName)(schema.keyName)).concat(requiredChar(schema), ": ").concat(typeCode)].filter(Boolean).join('\n');
             }
             else {
                 code = typeCode;
             }
+    }
+    if (isRoot && schema.type !== 'object' && schema.keyName) {
+        code = "{ \n ".concat(code, " \n } \n");
     }
     return code;
 }

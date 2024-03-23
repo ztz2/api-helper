@@ -175,17 +175,22 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
     type = type?.[0] ?? 'string';
   }
   const typeMap: Record<string, APIHelper.SchemaType> = {
+    number: 'number',
+    byte: 'number',
+    short: 'number',
     int: 'number',
     integer: 'number',
-    double: 'number',
-    short: 'number',
-    float: 'number',
-    bigdecimal: 'number',
 
+    float: 'number',
+    double: 'number',
+
+    // 原则上下面三个类型都属于number类型，但是在他们最大精度位数上时，会超出js精度，导致精度丢失，故以字符串处理
+    bigdecimal: 'string',
     long: 'string',
-    char: 'string',
+    'long long': 'string',
+
     string: 'string',
-    byte: 'string',
+    char: 'string',
     date: 'string',
     dateTime: 'string',
     password: 'string',
@@ -194,6 +199,7 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
     boolean: 'boolean',
 
     void: 'null',
+    null: 'null',
 
     array: 'array',
     object: 'object',

@@ -10,7 +10,7 @@ import {
   COMMENT_START_CODE,
   LINE_FEED_CODE_MAC
 } from '../constant';
-import { validateSchema } from './validator';
+import { validateKeyName, validateSchema } from './validator';
 import { createSchema, transformType } from '../helpers';
 
 export function pushArray<T, R>(target: T, value: R): T {
@@ -120,14 +120,13 @@ export function filterSchemaRoot(schemaList: Array<APIHelper.Schema>) {
 
 // 预留，用于统一处理keyName，目前不需要进行任何处理。
 export function filterKeyName<T extends string>(v: T): T {
-  // fix: 当字段是一个不合法的变量，将其转成字符串
-  if (
-    ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
-    && !v.includes('.')
-    && !v.includes('[')
-    && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
-    v = `\"${v}\"`;
-  }
+  // if (
+  //   ((typeof v === 'string' && (v as unknown as string).trim() !== '') || (typeof v !== 'string' && v != null))
+  //   && !v.includes('.')
+  //   && !v.includes('[')
+  //   && !/^([^\x00-\xff]|[a-zA-Z_$])([^\x00-\xff]|[a-zA-Z0-9_$])*$/.test(v)) { // @ts-ignore
+  //   v = `\"${v}\"`;
+  // }
   return v;
 }
 
@@ -521,4 +520,12 @@ export function formatDate(date: number | string | Date, format = 'YYYY-MM-dd HH
     }
   }
   return format;
+}
+
+// 处理keyName，如果不是合法的变量，添加""
+export function processKeyName(keyName: string) {
+  if (!validateKeyName(keyName)) {
+    return `"${keyName}"`;
+  }
+  return keyName;
 }

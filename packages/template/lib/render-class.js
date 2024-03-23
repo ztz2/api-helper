@@ -66,8 +66,8 @@ function renderClass(schema, api, options) {
      */
     var ki = ["".concat(keyword, " ").concat(className, " ")].filter(Boolean).join('\n');
     var bodyCode = '';
-    if (!schema || ((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0 || (schema === null || schema === void 0 ? void 0 : schema.type) !== 'object') {
-        if ((schema === null || schema === void 0 ? void 0 : schema.type) !== 'object') {
+    if (!schema || (((_a = schema === null || schema === void 0 ? void 0 : schema.params) === null || _a === void 0 ? void 0 : _a.length) === 0 && !(schema === null || schema === void 0 ? void 0 : schema.keyName)) || ((schema === null || schema === void 0 ? void 0 : schema.type) !== 'object' && (schema === null || schema === void 0 ? void 0 : schema.type) !== 'array')) {
+        if ((schema === null || schema === void 0 ? void 0 : schema.type) !== 'object' && (schema === null || schema === void 0 ? void 0 : schema.type) !== 'array') {
             bodyCode += '/* 非对象数据，不能生成Class代码**/\n';
         }
         bodyCode += emptyBodyCode;
@@ -107,23 +107,23 @@ function renderClassDeepObject(schema, isRoot, memo) {
                 case 'array':
                 case 'object':
                     temporaryCode.pop();
-                    temporaryCode.push(renderClassDeepObject(child));
+                    temporaryCode.push(renderClassDeepObject(child, false, memo));
                     break;
                 case 'string':
                     if ('enum' in child && child.enum.length > 0) {
                         v = "'".concat(child.enum[0], "'");
                     }
-                    temporaryCode.push("".concat(keyName).concat(evaluationCode).concat(v));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName)).concat(evaluationCode).concat(v));
                     break;
                 case 'number':
-                    temporaryCode.push("".concat(keyName).concat(evaluationCode, "0"));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName)).concat(evaluationCode, "0"));
                     break;
                 case 'boolean':
-                    temporaryCode.push("".concat(keyName).concat(evaluationCode, "false"));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName)).concat(evaluationCode, "false"));
                     break;
                 // 其他类型
                 default:
-                    temporaryCode.push("".concat(keyName).concat(evaluationCode, "null"));
+                    temporaryCode.push("".concat((0, util_1.processKeyName)(keyName)).concat(evaluationCode, "null"));
             }
             codeWrap.push(temporaryCode.join('\n'));
         }
@@ -137,10 +137,14 @@ function renderClassDeepObject(schema, isRoot, memo) {
     }
     var code = prefix + codeWrap.join(isRoot ? ';\n' : ',\n') + postfix;
     if (schema === null || schema === void 0 ? void 0 : schema.keyName) {
+        var evaluationCode = isRoot ? ' = ' : ': ';
         code = [
             (0, render_object_1.renderComment)(schema),
-            "".concat(schema.keyName, ": ").concat(code)
+            "".concat((0, util_1.processKeyName)(schema.keyName)).concat(evaluationCode, " ").concat(code)
         ].join('\n');
+        if (isRoot && schema.type !== 'object') {
+            code = "{ \n ".concat(code, " \n } \n");
+        }
     }
     return code;
 }

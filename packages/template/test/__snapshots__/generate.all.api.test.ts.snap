@@ -35,8 +35,8 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: ["additionalMetadata","file"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -163,7 +163,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
@@ -207,7 +207,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet【请求数据类型定义】
@@ -250,7 +250,7 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -283,8 +283,8 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ["name","status"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"name\\",\\"status\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -314,7 +314,7 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -395,7 +395,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -425,7 +425,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -566,7 +566,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -604,7 +604,7 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -634,7 +634,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -667,7 +667,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session【请求数据类型定义】
@@ -770,8 +770,8 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: ["additionalMetadata","file"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -898,7 +898,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
@@ -942,7 +942,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet【请求数据类型定义】
@@ -985,7 +985,7 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1018,8 +1018,8 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ["name","status"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"name\\",\\"status\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1049,7 +1049,7 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1151,7 +1151,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1181,7 +1181,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1221,7 +1221,7 @@ export interface V2UserCreateWithArrayRequestByPost {
   // The password for login in clear text
   password: string;
   // The name that needs to be fetched. Use user1 for testing.
-  userId: string;
+  userId: number;
 }
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
@@ -1242,8 +1242,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["userId"],
-  queryStringKeyNameList: ["userName","password"]
+  pathParamKeyNameList: [\\"userId\\"],
+  queryStringKeyNameList: [\\"userName\\",\\"password\\"]
 }
 /**
  * @description Creates list of users with given input array【请求数据类型定义】
@@ -1319,7 +1319,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1357,7 +1357,7 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1387,7 +1387,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1420,7 +1420,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session【请求数据类型定义】
@@ -1519,8 +1519,8 @@ export declare const v2PetPetIdUploadImageByPost: {
   readonly requestConfig: {
     path: '/v2/pet/{petId}/uploadImage',
     method: 'post',
-    formDataKeyNameList: ["additionalMetadata","file"],
-    pathParamKeyNameList: ["petId"],
+    formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1638,7 +1638,7 @@ export declare const v2PetFindByStatusByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["status"]
+    queryStringKeyNameList: [\\"status\\"]
   }
 };
 /**
@@ -1679,7 +1679,7 @@ export declare const v2PetFindByTagsByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["tags"]
+    queryStringKeyNameList: [\\"tags\\"]
   }
 };
 /**
@@ -1719,7 +1719,7 @@ export declare const v2PetPetIdByGet: {
     path: '/v2/pet/{petId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["petId"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1749,8 +1749,8 @@ export declare const v2PetPetIdByPost: {
   readonly requestConfig: {
     path: '/v2/pet/{petId}',
     method: 'post',
-    formDataKeyNameList: ["name","status"],
-    pathParamKeyNameList: ["petId"],
+    formDataKeyNameList: [\\"name\\",\\"status\\"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1777,7 +1777,7 @@ export declare const v2PetPetIdByDelete: {
     path: '/v2/pet/{petId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["petId"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1873,7 +1873,7 @@ export declare const v2StoreOrderOrderIdByGet: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1900,7 +1900,7 @@ export declare const v2StoreOrderOrderIdByDelete: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -1938,7 +1938,7 @@ export interface V2UserCreateWithArrayRequestByPost {
   // The password for login in clear text
   password: string;
   // The name that needs to be fetched. Use user1 for testing.
-  userId: string;
+  userId: number;
 }
 /**
  * @description Creates list of users with given input array【响应数据类型定义】
@@ -1955,8 +1955,8 @@ export declare const v2UserCreateWithArrayByPost: {
     path: '/v2/user/createWithArray',
     method: 'post',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["userId"],
-    queryStringKeyNameList: ["userName","password"]
+    pathParamKeyNameList: [\\"userId\\"],
+    queryStringKeyNameList: [\\"userName\\",\\"password\\"]
   }
 };
 /**
@@ -2026,7 +2026,7 @@ export declare const v2UserUsernameByGet: {
     path: '/v2/user/{username}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username1"],
+    pathParamKeyNameList: [\\"username1\\"],
     queryStringKeyNameList: []
   }
 };
@@ -2061,7 +2061,7 @@ export declare const v2UserUsernameByPut: {
     path: '/v2/user/{username}',
     method: 'put',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username"],
+    pathParamKeyNameList: [\\"username\\"],
     queryStringKeyNameList: []
   }
 };
@@ -2088,7 +2088,7 @@ export declare const v2UserUsernameByDelete: {
     path: '/v2/user/{username}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username1"],
+    pathParamKeyNameList: [\\"username1\\"],
     queryStringKeyNameList: []
   }
 };
@@ -2118,7 +2118,7 @@ export declare const v2UserLoginByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["username","password"]
+    queryStringKeyNameList: [\\"username\\",\\"password\\"]
   }
 };
 /**
@@ -2242,6 +2242,8 @@ export interface UserDeviceIdBodyRequestByPost {
  */
 export interface UserDeviceIdBodyResponseByPost {
   // 用户信息
+  // 已领数量
+  receiveNumber: number;
   // 注解id-title
   id: string;
   // 名称
@@ -2268,7 +2270,7 @@ userDeviceIdBodyByPost.requestConfig = {
   path: '/user/{deviceId}/body',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["deviceId"],
+  pathParamKeyNameList: [\\"deviceId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2278,6 +2280,8 @@ userDeviceIdBodyByPost.requestConfig = {
 export interface UserDeviceIdBody1RequestByPost {
   // 设备id
   deviceId: string;
+  // 已领数量
+  receiveNumber?: number;
   // 注解id-title
   id?: string;
   // 名称
@@ -2296,6 +2300,8 @@ export interface UserDeviceIdBody1RequestByPost {
  */
 export interface UserDeviceIdBody1ResponseByPost {
   // 用户信息
+  // 已领数量
+  receiveNumber: number;
   // 注解id-title
   id: string;
   // 名称
@@ -2322,7 +2328,7 @@ userDeviceIdBody1ByPost.requestConfig = {
   path: '/user/{deviceId}/body1',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["deviceId"],
+  pathParamKeyNameList: [\\"deviceId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2331,6 +2337,8 @@ userDeviceIdBody1ByPost.requestConfig = {
  */
 export interface UserGetRequest1RequestByPost {
   cade: string;
+  // 已领数量
+  receiveNumber?: number;
   // 注解id-title
   id?: string;
   // 名称
@@ -2349,6 +2357,8 @@ export interface UserGetRequest1RequestByPost {
  */
 export interface UserGetRequest1ResponseByPost {
   // 用户信息
+  // 已领数量
+  receiveNumber: number;
   // 注解id-title
   id: string;
   // 名称
@@ -2376,7 +2386,7 @@ userGetRequest1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["cade"]
+  queryStringKeyNameList: [\\"cade\\"]
 }
 /**
  * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
@@ -2420,6 +2430,8 @@ userCreateOneByPost.requestConfig = {
  * @url [ POST ] /user/createOneSchema
  */
 export interface UserCreateOneSchemaRequestByPost {
+  // 已领数量
+  receiveNumber?: number;
   // 注解id-title
   id?: string;
   // 名称
@@ -2438,6 +2450,8 @@ export interface UserCreateOneSchemaRequestByPost {
  */
 export interface UserCreateOneSchemaResponseByPost {
   // 用户信息
+  // 已领数量
+  receiveNumber: number;
   // 注解id-title
   id: string;
   // 名称
@@ -2500,7 +2514,7 @@ userCreateOne1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\"]
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
@@ -2581,7 +2595,7 @@ fileUploadParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 文件上传-带参数Header【请求数据类型定义】
@@ -2623,7 +2637,7 @@ fileUploadParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 文件上传-带参数Path【请求数据类型定义】
@@ -2666,8 +2680,8 @@ fileUploadParamIdByPost.requestConfig = {
   path: '/file/uploadParam/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["id"],
-  queryStringKeyNameList: ["name"]
+  pathParamKeyNameList: [\\"id\\"],
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 多文件上传【请求数据类型定义】
@@ -2797,7 +2811,7 @@ bodyBodyParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 普通body请求+Param+Header【请求数据类型定义】
@@ -2843,7 +2857,7 @@ bodyBodyParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 普通body请求+Param+Header+Path【请求数据类型定义】
@@ -2890,8 +2904,8 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
   path: '/body/bodyParamHeaderPath/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["id"],
-  queryStringKeyNameList: ["name"]
+  pathParamKeyNameList: [\\"id\\"],
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description json参数查询【请求数据类型定义】
@@ -2899,6 +2913,8 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
  */
 export interface UserGetRequestRequestByGet {
   userSchema: {
+    // 已领数量
+    receiveNumber?: number;
     // 注解id-title
     id?: string;
     // 名称
@@ -2919,6 +2935,8 @@ export interface UserGetRequestRequestByGet {
  */
 export interface UserGetRequestResponseByGet {
   // 用户信息
+  // 已领数量
+  receiveNumber: number;
   // 注解id-title
   id: string;
   // 名称
@@ -2946,7 +2964,7 @@ userGetRequestByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["userSchema","cade"]
+  queryStringKeyNameList: [\\"userSchema\\",\\"cade\\"]
 }
 /**
  * @description 创建用户、根据姓名创建用户【请求数据类型定义】
@@ -2975,7 +2993,7 @@ userCreateByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }"
 `;
 
@@ -3033,7 +3051,7 @@ apiV3PetByPut.requestConfig = {
   method: 'PUT',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
 }
 /**
  * @description Add a new pet to the store、Add a new pet to the store【请求数据类型定义】
@@ -3088,7 +3106,7 @@ apiV3PetByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
@@ -3132,7 +3150,7 @@ apiV3PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
@@ -3176,7 +3194,7 @@ apiV3PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet【请求数据类型定义】
@@ -3219,7 +3237,7 @@ apiV3PetPetIdByGet.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3253,8 +3271,8 @@ apiV3PetPetIdByPost.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
-  queryStringKeyNameList: ["name","status"]
+  pathParamKeyNameList: [\\"petId\\"],
+  queryStringKeyNameList: [\\"name\\",\\"status\\"]
 }
 /**
  * @description Deletes a pet【请求数据类型定义】
@@ -3283,7 +3301,7 @@ apiV3PetPetIdByDelete.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3319,8 +3337,8 @@ apiV3PetPetIdUploadImageByPost.requestConfig = {
   path: '/api/v3/pet/{petId}/uploadImage',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
-  queryStringKeyNameList: ["additionalMetadata"]
+  pathParamKeyNameList: [\\"petId\\"],
+  queryStringKeyNameList: [\\"additionalMetadata\\"]
 }
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
@@ -3390,7 +3408,7 @@ apiV3StoreOrderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+  queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.【请求数据类型定义】
@@ -3427,7 +3445,7 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3457,7 +3475,7 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3495,7 +3513,7 @@ apiV3UserByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
+  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
 }
 /**
  * @description Creates list of users with given input array、Creates list of users with given input array【请求数据类型定义】
@@ -3574,7 +3592,7 @@ apiV3UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session【请求数据类型定义】
@@ -3640,7 +3658,7 @@ apiV3UserUsernameByGet.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3679,8 +3697,8 @@ apiV3UserUsernameByPut.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
+  pathParamKeyNameList: [\\"username1\\"],
+  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
 }
 /**
  * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
@@ -3709,7 +3727,7 @@ apiV3UserUsernameByDelete.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3776,6 +3794,6 @@ apiV3ApiFtbArrangingWorkByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["groupId","realName","month","userIds"]
+  queryStringKeyNameList: [\\"groupId\\",\\"realName\\",\\"month\\",\\"userIds\\"]
 }"
 `;

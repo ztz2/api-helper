@@ -174,3 +174,4 @@ export declare function getErrorMessage<T extends string | Error & {
     msg?: string;
 }>(error: T, prefix?: string, postfix?: string): string;
 export declare function formatDate(date: number | string | Date, format?: string): string;
+export declare function processKeyName(keyName: string): string;

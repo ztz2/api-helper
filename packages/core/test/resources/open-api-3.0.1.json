@@ -850,6 +850,12 @@
       "UserSchema": {
         "type": "object",
         "properties": {
+          "receiveNumber": {
+            "type": "number",
+            "description": "已领数量",
+            "format": "double",
+            "refType": null
+          },
           "id": {
             "title": "注解id-title",
             "type": "string",
