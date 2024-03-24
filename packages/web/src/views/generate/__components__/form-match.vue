@@ -73,12 +73,17 @@
                 :key="item.id"
                 class="field"
               >
+                <div v-if="item && item.rules && item.rules.required" class="field--required">
+                  <a-tooltip content="这是一个必填字段">
+                    <icon-exclamation-circle-fill :size="20" :stroke-width="2" />
+                  </a-tooltip>
+                </div>
                 <template v-if="item.status===1">
                   <div class="field-left">
                     <a-tooltip content="校验通过">
-                      <div class="field-notice">
-                        <icon-check-circle :size="30" :stroke-width="2" style="color: #23c343" />
-                        <div style="color: #23c343">校验通过</div>
+                      <div class="field-notice" style="color: #23c343">
+                        <icon-check-circle :size="30" :stroke-width="2" />
+                        <div>校验通过</div>
                       </div>
                     </a-tooltip>
                   </div>
@@ -99,9 +104,9 @@
                 <template v-else-if="item.status < 0">
                   <div class="field-left">
                     <a-tooltip :content="getErrorText(item.status)">
-                      <div class="field-notice">
-                        <icon-close-circle :size="30" style="color: rgb(245,63,63)" />
-                        <div style="color: rgb(245,63,63)">{{getErrorText(item.status)}}</div>
+                      <div class="field-notice" style="color: rgb(245,63,63)">
+                        <icon-close-circle :size="30"/>
+                        <div>{{getErrorText(item.status)}}</div>
                       </div>
                     </a-tooltip>
                   </div>
@@ -117,10 +122,10 @@
                 </template>
                 <template v-else>
                   <div class="field-left">
-                    <a-tooltip :content="`等待校验${item.rules && item.rules.required ? '(必填项)' : ''}`">
+                    <a-tooltip content="等待校验">
                       <div class="field-notice">
                         <icon-clock-circle :size="30" :stroke-width="2" />
-                        <div style="position: relative;"><span v-if="item.rules && item.rules.required" style="color: rgb(245,63,63); position: absolute; left: -10px; top: -1px;font-size: 16px; font-weight: bold;">*</span>等待校验</div>
+                        <div>等待校验</div>
                       </div>
                     </a-tooltip>
                   </div>
@@ -334,6 +339,7 @@ function matchFields() {
   display: flex;
   flex-wrap: wrap;
   margin-top: -14px;
+
   > .field{
     border: 1px solid #dcdcdc;
     padding: 0 16px 0 12px;
@@ -345,6 +351,14 @@ function matchFields() {
     align-items: center;
     margin-right: 14px;
     margin-top: 14px;
+    position: relative;
+    >.field--required{
+      position: absolute;
+      left: 4px;
+      top: 3px;
+      color: rgb(245,63,63);
+      z-index: 2;
+    }
     .field-left{
       margin-right: 10px;
     }
