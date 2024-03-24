@@ -84,13 +84,13 @@
                   </div>
                   <div class="field-right">
                     <div class="field-name">
-                      <a-tooltip content="点击复制">
+                      <a-tooltip content="点击复制该字段">
                         <span @click.stop="handleCopyPath(item.keyName)">{{item.keyName}}</span>
                       </a-tooltip>
                     </div>
                     <div class="field-title">{{item.label}}</div>
                     <div class="field-value">
-                      <a-tooltip content="点击复制">
+                      <a-tooltip content="点击复制该值">
                         <span @click.stop="handleCopyPath(item.sourceValue)" style="cursor: pointer;">值: {{item.value}}</span>
                       </a-tooltip>
                     </div>
@@ -107,31 +107,31 @@
                   </div>
                   <div class="field-right">
                     <div class="field-name">
-                      <a-tooltip content="点击复制">
+                      <a-tooltip content="点击复制该字段">
                         <span @click.stop="handleCopyPath(item.keyName)">{{item.keyName}}</span>
                       </a-tooltip>
                     </div>
                     <div class="field-title">{{item.label}}</div>
-                    <div class="field-value">值: 未知</div>
+                    <div class="field-value">值: {{item.value}}</div>
                   </div>
                 </template>
                 <template v-else>
                   <div class="field-left">
-                    <a-tooltip content="等待校验">
+                    <a-tooltip :content="`等待校验${item.rules && item.rules.required ? '(必填项)' : ''}`">
                       <div class="field-notice">
                         <icon-clock-circle :size="30" :stroke-width="2" />
-                        <div>等待校验</div>
+                        <div style="position: relative;"><span v-if="item.rules && item.rules.required" style="color: rgb(245,63,63); position: absolute; left: -10px; top: -1px;font-size: 16px; font-weight: bold;">*</span>等待校验</div>
                       </div>
                     </a-tooltip>
                   </div>
                   <div class="field-right">
                     <div class="field-name">
-                      <a-tooltip content="点击复制">
+                      <a-tooltip content="点击复制该字段">
                         <span @click.stop="handleCopyPath(item.keyName)">{{item.keyName}}</span>
                       </a-tooltip>
                     </div>
                     <div class="field-title">{{item.label}}</div>
-                    <div class="field-value">值: 待匹配</div>
+                    <div class="field-value">值: 未知</div>
                   </div>
                 </template>
               </div>
@@ -236,7 +236,7 @@ watch(() => selectFields.value, (val) => {
 function getErrorText(status: number) {
   switch (status) {
     case -2:
-      return 'required项';
+      return '必填项';
     default:
       return '缺少字段';
   }
@@ -278,7 +278,8 @@ function matchFields() {
       }
       if (!hasInput) {
         try {
-          entity = qs.parse(text);
+          entity = qs.parse(text, { allowPrototypes: true });
+          console.log(entity);
           if (checkType(entity, 'Object')) {
             hasInput = true;
           } else {
@@ -306,6 +307,8 @@ function matchFields() {
           item.value = '[object Object]';
         } else if (checkType(value, 'Array')) {
           item.value = '[object Array]';
+        } else if (checkType(value, 'Null')) {
+          item.value = 'null';
         } else if (checkType(value, 'Undefined')) {
           item.value = 'undefined';
         } else if (typeof value === 'string') {
@@ -319,7 +322,7 @@ function matchFields() {
         item.sourceValue = value;
       } else {
         item.sourceValue = '';
-        item.value = 'unknown';
+        item.value = '未知';
       }
       item.status = status;
     });
@@ -353,7 +356,7 @@ function matchFields() {
       cursor: pointer;
     }
     .field-notice{
-      width: 72px; display: flex;align-items: center;flex-direction: column;
+      width: 60px; display: flex;align-items: center;flex-direction: column;
       color: #86909c;
       >div:last-child{
         font-size: 12px;
