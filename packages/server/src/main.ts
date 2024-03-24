@@ -29,6 +29,10 @@ async function bootstrap() {
   // 将web作为静态文件路径
   app.useStaticAssets(join(__dirname, '../../', 'web/dist'));
 
+  app.enableCors({
+    origin: '*',
+  });
+
   await app.listen(port);
   console.log(`启动成功：http://localhost:${port}`);
 }
