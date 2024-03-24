@@ -5,7 +5,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
-    port: 3211,
+    port: 3220,
     proxy: {
       '/app': {
         ws: true,
