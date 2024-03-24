@@ -25,11 +25,11 @@
             <a-space>
               <a-tag style="color: #fff; font-weight: bold;">{{api.method.toUpperCase()}}</a-tag>
               <a-tooltip content="点击复制接口路径">
-                <span @click.stop="handleCopyPath(api.path)">{{api.path}}</span>
+                <span @click.stop="handleCopyPath(api.path)" style="cursor: pointer">{{api.path}}</span>
               </a-tooltip>
               <small>
                 <a-tooltip content="点击复制接口标题">
-                  <strong @click.stop="handleCopyPath(api.label)" style="font-size: 16px">{{api.label}}</strong>
+                  <strong @click.stop="handleCopyPath(api.label)" style="font-size: 16px;cursor: pointer">{{api.label}}</strong>
                 </a-tooltip>
               </small>
             </a-space>
@@ -41,7 +41,7 @@
                 <strong>{{selectFieldSchemaList.length}}</strong>
               </span>
               <span>
-                校验成功字段总数:
+                校验成功:
                 <template v-if="content.trim().length > 0">
                   <strong v-if="validateSuccessNum > 0" style="color: #23c343">{{validateSuccessNum}}</strong>
                   <strong v-else>{{validateSuccessNum}}</strong>
@@ -49,7 +49,7 @@
                 <template v-else>待校验</template>
               </span>
               <span>
-                校验失败字段总数:
+                校验失败:
                 <template v-if="content.trim().length > 0">
                   <strong v-if="validateErrorNum > 0" style="color: rgb(245,63,63)">{{validateErrorNum}}</strong>
                   <strong v-else>{{validateErrorNum}}</strong>
@@ -76,7 +76,10 @@
                 <template v-if="item.status===1">
                   <div class="field-left">
                     <a-tooltip content="校验通过">
-                      <icon-check-circle :size="30" :stroke-width="2" style="color: #23c343" />
+                      <div class="field-notice">
+                        <icon-check-circle :size="30" :stroke-width="2" style="color: #23c343" />
+                        <div style="color: #23c343">校验通过</div>
+                      </div>
                     </a-tooltip>
                   </div>
                   <div class="field-right">
@@ -93,10 +96,13 @@
                     </div>
                   </div>
                 </template>
-                <template v-else-if="item.status===-1">
+                <template v-else-if="item.status < 0">
                   <div class="field-left">
-                    <a-tooltip content="缺少字段">
-                      <icon-close-circle :size="30" style="color: rgb(245,63,63)" />
+                    <a-tooltip :content="getErrorText(item.status)">
+                      <div class="field-notice">
+                        <icon-close-circle :size="30" style="color: rgb(245,63,63)" />
+                        <div style="color: rgb(245,63,63)">{{getErrorText(item.status)}}</div>
+                      </div>
                     </a-tooltip>
                   </div>
                   <div class="field-right">
@@ -106,13 +112,16 @@
                       </a-tooltip>
                     </div>
                     <div class="field-title">{{item.label}}</div>
-                    <div class="field-value">值: 缺少该字段，未知</div>
+                    <div class="field-value">值: 未知</div>
                   </div>
                 </template>
                 <template v-else>
                   <div class="field-left">
                     <a-tooltip content="等待校验">
-                      <icon-clock-circle :size="30" :stroke-width="2" />
+                      <div class="field-notice">
+                        <icon-clock-circle :size="30" :stroke-width="2" />
+                        <div>等待校验</div>
+                      </div>
                     </a-tooltip>
                   </div>
                   <div class="field-right">
@@ -224,6 +233,15 @@ watch(() => selectFields.value, (val) => {
   }).filter(Boolean) as any;
 }, { immediate: true, deep: true });
 
+function getErrorText(status: number) {
+  switch (status) {
+    case -2:
+      return 'required项';
+    default:
+      return '缺少字段';
+  }
+}
+
 function handleCopyPath(path: string) {
   if (path && typeof path === 'object') {
     path = JSON.stringify(path);
@@ -280,8 +298,9 @@ function matchFields() {
         item.sourceValue = '';
         return item.status = 0;
       }
-      const status = (item.keyName in entity) ? 1 : -1;
+      let status = (item.keyName in entity) ? 1 : -1;
       if (status === 1) {
+        const required = !!item?.rules?.required;
         const value = (entity as any)[item.keyName];
         if (checkType(value, 'Object')) {
           item.value = '[object Object]';
@@ -289,12 +308,13 @@ function matchFields() {
           item.value = '[object Array]';
         } else if (checkType(value, 'Undefined')) {
           item.value = 'undefined';
-        } else if (value?.trim?.() === '') {
-          item.value = '""';
         } else if (typeof value === 'string') {
           item.value = `"${value}"`;
         } else {
           item.value = value;
+        }
+        if (required && (value === '' || value == null || (Array.isArray(value) && value.length === 0))) {
+          status = -2;
         }
         item.sourceValue = value;
       } else {
@@ -331,6 +351,13 @@ function matchFields() {
       font-size: 18px;
       color: #111;
       cursor: pointer;
+    }
+    .field-notice{
+      width: 72px; display: flex;align-items: center;flex-direction: column;
+      color: #86909c;
+      >div:last-child{
+        font-size: 12px;
+      }
     }
     .field-title{
       color: #86909c;
