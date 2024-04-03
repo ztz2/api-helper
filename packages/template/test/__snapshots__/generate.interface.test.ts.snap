@@ -19,8 +19,8 @@ exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0
  * @url [ POST ] /v2/store/order
  */
 export interface 安逗和黑子 {
-  id: number;
-  petId: number;
+  id: string;
+  petId: string;
   quantity: number;
   shipDate: string;
   // Order Status
@@ -43,8 +43,8 @@ exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0
  * @url [ POST ] /api/v3/store/order
  */
 export interface ApiV3StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
+  id?: string;
+  petId?: string;
   quantity?: number;
   shipDate?: string;
   // Order Status
@@ -91,8 +91,8 @@ export type SystemUserListRequestByGet = any;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `
 "export interface V2StoreOrderRequestByPost {
-  id: number;
-  petId: number;
+  id: string;
+  petId: string;
   quantity: number;
   shipDate: string;
   // Order Status
@@ -115,8 +115,8 @@ exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性�
  * @url [ POST ] /v2/store/order
  */
 export interface 自定义名称 {
-  id: number;
-  petId: number;
+  id: string;
+  petId: string;
   quantity: number;
   shipDate: string;
   // Order Status
@@ -148,8 +148,8 @@ exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性�
  * @url [ POST ] /v2/store/order
  */
 interface V2StoreOrderRequestByPost {
-  id: number;
-  petId: number;
+  id: string;
+  petId: string;
   quantity: number;
   shipDate: string;
   // Order Status

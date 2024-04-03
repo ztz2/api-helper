@@ -29,7 +29,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to update",
                 "enum": Array [],
                 "examples": Array [],
@@ -38,15 +38,13 @@ Object {
                 "label": "ID of pet to update",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Additional data to pass to server",
@@ -169,7 +167,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -178,15 +176,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -196,7 +192,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -205,15 +201,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -298,7 +292,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -307,15 +301,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -395,7 +387,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -404,15 +396,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -422,7 +412,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -431,15 +421,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -524,7 +512,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -533,15 +521,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -683,7 +669,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -692,15 +678,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -710,7 +694,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -719,15 +703,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -812,7 +794,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -821,15 +803,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -975,7 +955,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -984,15 +964,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -1002,7 +980,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -1011,15 +989,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -1104,7 +1080,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -1113,15 +1089,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -1211,7 +1185,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to return",
                 "enum": Array [],
                 "examples": Array [],
@@ -1220,15 +1194,13 @@ Object {
                 "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -1246,7 +1218,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1255,15 +1227,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -1273,7 +1243,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -1282,15 +1252,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -1375,7 +1343,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -1384,15 +1352,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -1475,7 +1441,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be updated",
                 "enum": Array [],
                 "examples": Array [],
@@ -1484,15 +1450,13 @@ Object {
                 "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Updated name of the pet",
@@ -1559,7 +1523,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "Pet id to delete",
                 "enum": Array [],
                 "examples": Array [],
@@ -1568,15 +1532,13 @@ Object {
                 "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -1614,7 +1576,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1623,17 +1585,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1642,15 +1602,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -1733,7 +1691,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1742,17 +1700,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1761,15 +1717,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -1865,7 +1819,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be fetched",
                 "enum": Array [],
                 "examples": Array [],
@@ -1874,15 +1828,13 @@ Object {
                 "label": "ID of pet that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -1900,7 +1852,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1909,17 +1861,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -1928,15 +1878,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -2032,7 +1980,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of the order that needs to be deleted",
                 "enum": Array [],
                 "examples": Array [],
@@ -2041,15 +1989,13 @@ Object {
                 "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -2123,7 +2069,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -2132,15 +2078,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -2292,7 +2236,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -2301,15 +2245,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -2488,7 +2430,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -2497,15 +2439,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -2656,7 +2596,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -2665,15 +2605,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -2935,7 +2873,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -2944,15 +2882,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -3118,7 +3054,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet  * 换行符测试 * to update",
                 "enum": Array [],
                 "examples": Array [],
@@ -3127,15 +3063,13 @@ Object {
                 "label": "ID of pet  * 换行符测试 * to update",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Additional data to pass to server",
@@ -3258,7 +3192,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -3267,15 +3201,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -3285,7 +3217,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -3294,15 +3226,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -3387,7 +3317,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -3396,15 +3326,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -3484,7 +3412,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -3493,15 +3421,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -3511,7 +3437,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -3520,15 +3446,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -3613,7 +3537,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -3622,15 +3546,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -3772,7 +3694,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -3781,15 +3703,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -3799,7 +3719,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -3808,15 +3728,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -3901,7 +3819,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -3910,15 +3828,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -4064,7 +3980,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -4073,15 +3989,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -4091,7 +4005,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -4100,15 +4014,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -4193,7 +4105,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -4202,15 +4114,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -4300,7 +4210,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to return",
                 "enum": Array [],
                 "examples": Array [],
@@ -4309,15 +4219,13 @@ Object {
                 "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -4335,7 +4243,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -4344,15 +4252,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -4362,7 +4268,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -4371,15 +4277,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -4464,7 +4368,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -4473,15 +4377,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -4564,7 +4466,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be updated",
                 "enum": Array [],
                 "examples": Array [],
@@ -4573,15 +4475,13 @@ Object {
                 "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Updated name of the pet",
@@ -4648,7 +4548,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "Pet id to delete",
                 "enum": Array [],
                 "examples": Array [],
@@ -4657,15 +4557,13 @@ Object {
                 "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -4703,7 +4601,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -4712,17 +4610,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -4731,15 +4627,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -4891,7 +4785,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -4900,17 +4794,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -4919,15 +4811,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -5092,7 +4982,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be fetched",
                 "enum": Array [],
                 "examples": Array [],
@@ -5101,15 +4991,13 @@ Object {
                 "label": "ID of pet that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -5127,7 +5015,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -5136,17 +5024,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -5155,15 +5041,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -5328,7 +5212,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of the order that needs to be deleted",
                 "enum": Array [],
                 "examples": Array [],
@@ -5337,15 +5221,13 @@ Object {
                 "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -5521,7 +5403,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -5530,15 +5412,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -5717,7 +5597,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -5726,15 +5606,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -5885,7 +5763,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -5894,15 +5772,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -6164,7 +6040,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -6173,15 +6049,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -6370,7 +6244,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -6379,15 +6253,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -6447,7 +6319,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -6456,15 +6328,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -7523,7 +7393,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              StringSchema {
+              FileSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -7581,7 +7451,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -7590,15 +7460,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -7657,7 +7525,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              StringSchema {
+              FileSchema {
                 "description": "文件",
                 "enum": Array [],
                 "examples": Array [],
@@ -7715,7 +7583,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -7724,15 +7592,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -7791,7 +7657,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              StringSchema {
+              FileSchema {
                 "description": "文件",
                 "enum": Array [],
                 "examples": Array [],
@@ -7849,7 +7715,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -7858,15 +7724,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -7941,7 +7805,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              StringSchema {
+              FileSchema {
                 "description": "文件",
                 "enum": Array [],
                 "examples": Array [],
@@ -7999,7 +7863,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8008,15 +7872,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8067,7 +7929,7 @@ Object {
                 "keyName": "files",
                 "label": "",
                 "params": Array [
-                  StringSchema {
+                  FileSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -8143,7 +8005,7 @@ Object {
                     "title": "",
                     "type": "string",
                   },
-                  NumberSchema {
+                  StringSchema {
                     "description": "文件大小",
                     "enum": Array [],
                     "examples": Array [],
@@ -8152,15 +8014,13 @@ Object {
                     "label": "文件大小",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   BooleanSchema {
                     "description": "是否上传成功",
@@ -8241,7 +8101,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8250,15 +8110,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8318,7 +8176,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8327,15 +8185,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8408,7 +8264,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8417,15 +8273,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8485,7 +8339,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8494,15 +8348,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8575,7 +8427,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8584,15 +8436,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8652,7 +8502,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8661,15 +8511,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8758,7 +8606,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8767,15 +8615,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -8835,7 +8681,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "文件大小",
                 "enum": Array [],
                 "examples": Array [],
@@ -8844,15 +8690,13 @@ Object {
                 "label": "文件大小",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               BooleanSchema {
                 "description": "是否上传成功",
@@ -9226,7 +9070,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -9235,15 +9079,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -9267,7 +9109,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -9276,15 +9118,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -9355,7 +9195,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -9364,15 +9204,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -9439,7 +9277,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -9448,15 +9286,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -9480,7 +9316,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -9489,15 +9325,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -9568,7 +9402,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -9577,15 +9411,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -9670,7 +9502,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -9679,15 +9511,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -9711,7 +9541,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -9720,15 +9550,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -9799,7 +9627,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -9808,15 +9636,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -9883,7 +9709,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -9892,15 +9718,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -9924,7 +9748,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -9933,15 +9757,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -10012,7 +9834,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -10021,15 +9843,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -10151,7 +9971,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -10160,15 +9980,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -10192,7 +10010,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -10201,15 +10019,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -10280,7 +10096,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -10289,15 +10105,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -10443,7 +10257,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -10452,15 +10266,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -10484,7 +10296,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -10493,15 +10305,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -10572,7 +10382,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -10581,15 +10391,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -10679,7 +10487,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to return",
                 "enum": Array [],
                 "examples": Array [],
@@ -10688,15 +10496,13 @@ Object {
                 "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -10714,7 +10520,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -10723,15 +10529,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -10755,7 +10559,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -10764,15 +10568,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -10843,7 +10645,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -10852,15 +10654,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -10943,7 +10743,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be updated",
                 "enum": Array [],
                 "examples": Array [],
@@ -10952,15 +10752,13 @@ Object {
                 "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Name of pet that needs to be updated",
@@ -11021,7 +10819,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "Pet id to delete",
                 "enum": Array [],
                 "examples": Array [],
@@ -11030,15 +10828,13 @@ Object {
                 "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -11073,7 +10869,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to update",
                 "enum": Array [],
                 "examples": Array [],
@@ -11082,15 +10878,13 @@ Object {
                 "label": "ID of pet to update",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Additional Metadata",
@@ -11238,7 +11032,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11247,17 +11041,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11266,15 +11058,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -11357,7 +11147,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11366,17 +11156,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11385,15 +11173,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -11489,7 +11275,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of order that needs to be fetched",
                 "enum": Array [],
                 "examples": Array [],
@@ -11498,15 +11284,13 @@ Object {
                 "label": "ID of order that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -11524,7 +11308,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11533,17 +11317,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11552,15 +11334,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -11656,7 +11436,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of the order that needs to be deleted",
                 "enum": Array [],
                 "examples": Array [],
@@ -11665,15 +11445,13 @@ Object {
                 "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -11720,7 +11498,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -11729,15 +11507,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -11879,7 +11655,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -11888,15 +11664,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -12027,7 +11801,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -12036,15 +11810,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -12296,7 +12068,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -12305,15 +12077,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -12470,7 +12240,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -12479,15 +12249,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -13439,7 +13207,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet  * 换行符测试 * to update",
                 "enum": Array [],
                 "examples": Array [],
@@ -13448,15 +13216,13 @@ Object {
                 "label": "ID of pet  * 换行符测试 * to update",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Additional data to pass to server",
@@ -13579,7 +13345,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -13588,15 +13354,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -13606,7 +13370,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -13615,15 +13379,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -13708,7 +13470,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -13717,15 +13479,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -13805,7 +13565,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -13814,15 +13574,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -13832,7 +13590,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -13841,15 +13599,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -13934,7 +13690,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -13943,15 +13699,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -14093,7 +13847,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -14102,15 +13856,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -14120,7 +13872,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -14129,15 +13881,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -14222,7 +13972,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -14231,15 +13981,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -14385,7 +14133,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -14394,15 +14142,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   ObjectSchema {
                     "description": "",
@@ -14412,7 +14158,7 @@ Object {
                     "keyName": "category",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -14421,15 +14167,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -14514,7 +14258,7 @@ Object {
                         "keyName": "",
                         "label": "",
                         "params": Array [
-                          NumberSchema {
+                          StringSchema {
                             "description": "",
                             "enum": Array [],
                             "examples": Array [],
@@ -14523,15 +14267,13 @@ Object {
                             "label": "",
                             "params": Array [],
                             "rules": Object {
-                              "exclusiveMaximum": undefined,
-                              "exclusiveMinimum": undefined,
-                              "maximum": undefined,
-                              "minimum": undefined,
-                              "multipleOf": undefined,
+                              "maxLength": undefined,
+                              "minLength": undefined,
+                              "pattern": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "number",
+                            "type": "string",
                           },
                           StringSchema {
                             "description": "",
@@ -14621,7 +14363,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet to return",
                 "enum": Array [],
                 "examples": Array [],
@@ -14630,15 +14372,13 @@ Object {
                 "label": "ID of pet to return",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -14656,7 +14396,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -14665,15 +14405,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               ObjectSchema {
                 "description": "",
@@ -14683,7 +14421,7 @@ Object {
                 "keyName": "category",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -14692,15 +14430,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -14785,7 +14521,7 @@ Object {
                     "keyName": "",
                     "label": "",
                     "params": Array [
-                      NumberSchema {
+                      StringSchema {
                         "description": "",
                         "enum": Array [],
                         "examples": Array [],
@@ -14794,15 +14530,13 @@ Object {
                         "label": "",
                         "params": Array [],
                         "rules": Object {
-                          "exclusiveMaximum": undefined,
-                          "exclusiveMinimum": undefined,
-                          "maximum": undefined,
-                          "minimum": undefined,
-                          "multipleOf": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "pattern": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "number",
+                        "type": "string",
                       },
                       StringSchema {
                         "description": "",
@@ -14885,7 +14619,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be updated",
                 "enum": Array [],
                 "examples": Array [],
@@ -14894,15 +14628,13 @@ Object {
                 "label": "ID of pet that needs to be updated",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "Updated name of the pet",
@@ -14969,7 +14701,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "Pet id to delete",
                 "enum": Array [],
                 "examples": Array [],
@@ -14978,15 +14710,13 @@ Object {
                 "label": "Pet id to delete",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -15024,7 +14754,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15033,17 +14763,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15052,15 +14780,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -15212,7 +14938,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15221,17 +14947,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15240,15 +14964,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -15413,7 +15135,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of pet that needs to be fetched",
                 "enum": Array [],
                 "examples": Array [],
@@ -15422,15 +15144,13 @@ Object {
                 "label": "ID of pet that needs to be fetched",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -15448,7 +15168,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15457,17 +15177,15 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -15476,15 +15194,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               NumberSchema {
                 "description": "",
@@ -15649,7 +15365,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "ID of the order that needs to be deleted",
                 "enum": Array [],
                 "examples": Array [],
@@ -15658,15 +15374,13 @@ Object {
                 "label": "ID of the order that needs to be deleted",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
             ],
             "rules": Object {
@@ -15842,7 +15556,7 @@ Object {
                 "keyName": "",
                 "label": "",
                 "params": Array [
-                  NumberSchema {
+                  StringSchema {
                     "description": "",
                     "enum": Array [],
                     "examples": Array [],
@@ -15851,15 +15565,13 @@ Object {
                     "label": "",
                     "params": Array [],
                     "rules": Object {
-                      "exclusiveMaximum": undefined,
-                      "exclusiveMinimum": undefined,
-                      "maximum": undefined,
-                      "minimum": undefined,
-                      "multipleOf": undefined,
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "pattern": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "number",
+                    "type": "string",
                   },
                   StringSchema {
                     "description": "",
@@ -16038,7 +15750,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -16047,15 +15759,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -16206,7 +15916,7 @@ Object {
                 "title": "",
                 "type": "string",
               },
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -16215,15 +15925,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",
@@ -16485,7 +16193,7 @@ Object {
             "keyName": "",
             "label": "",
             "params": Array [
-              NumberSchema {
+              StringSchema {
                 "description": "",
                 "enum": Array [],
                 "examples": Array [],
@@ -16494,15 +16202,13 @@ Object {
                 "label": "",
                 "params": Array [],
                 "rules": Object {
-                  "exclusiveMaximum": undefined,
-                  "exclusiveMinimum": undefined,
-                  "maximum": undefined,
-                  "minimum": undefined,
-                  "multipleOf": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "number",
+                "type": "string",
               },
               StringSchema {
                 "description": "",

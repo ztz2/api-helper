@@ -12,6 +12,7 @@ import {
   checkIsInterface,
 } from '@/lib/utils/util';
 import artTemplate from '@/lib/art-template';
+import { precessArraySchema } from '@/lib/render-object';
 
 export function renderInterface(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
@@ -42,6 +43,8 @@ export function renderInterface(
   }, options);
 
   schema = cloneDeep(schema);
+  schema = precessArraySchema(schema);
+
   const sourceSchema = schema;
 
   const {

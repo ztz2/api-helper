@@ -14,7 +14,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import * as _changeCase from 'change-case';
 import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
-import { renderComment } from '../lib/render-object';
+import { precessArraySchema, renderComment } from '../lib/render-object';
 export function renderClass(schema, api, options) {
     var _a;
     options = merge({
@@ -25,6 +25,7 @@ export function renderClass(schema, api, options) {
         suffixName: 'class',
     }, options);
     schema = cloneDeep(schema);
+    schema = precessArraySchema(schema);
     // const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
     var primitiveValueSchema = filterSchemaPrimitiveValue(schema);
     var prefix = options.prefix, suffixName = options.suffixName, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _b = options.paramType, paramType = _b === void 0 ? 'request' : _b;

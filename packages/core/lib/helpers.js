@@ -282,6 +282,9 @@ function transformType(type, format, emptyType) {
     if (format === 'binary') {
         return 'File';
     }
+    if (format === 'int64') {
+        return 'string';
+    }
     var typeValue = typeMap[type];
     return typeValue ? typeValue : emptyType ? emptyType : 'unknown';
 }

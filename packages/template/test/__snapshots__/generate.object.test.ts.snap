@@ -60,10 +60,10 @@ export const systemAppPersonnelsStaffRosterWorkerHomeDetailUserIdResponseentityB
 
 exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "{
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }
@@ -90,10 +90,10 @@ exports[`生成 javascript 对象测试 OpenAPI-3.0生成对象测试: OpenAPI-3
  * @url [ POST ] /api/v3/store/order
  */
 export const apiV3StoreOrderResponseentityByPost = {
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }
@@ -186,10 +186,10 @@ exports[`生成 javascript 对象测试 formatter-null: formatter-null 1`] = `"n
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 dropComment测试 1`] = `
 "export const v2StoreOrderRequestentityByPost = {
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }
@@ -217,10 +217,10 @@ exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody �
  * @url [ POST ] /v2/store/order
  */
 export const 自定义名称 = {
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }
@@ -244,10 +244,10 @@ export const 自定义名称 = {
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 onlyBody测试 1`] = `
 "{
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }
@@ -274,10 +274,10 @@ exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody �
  * @url [ POST ] /v2/store/order
  */
 export const v2StoreOrderRequestentityByPost = {
-  // { number }
-  id: 0,
-  // { number }
-  petId: 0,
+  // { string }
+  id: '',
+  // { string }
+  petId: '',
   // { number }
   quantity: 0,
   // { string }

@@ -3,7 +3,11 @@ import _changeCase from 'change-case';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
 import { APIHelper } from '@api-helper/core/lib/types';
-import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
+import { createSchema } from '@api-helper/core/lib/helpers';
+import {
+  processKeyName,
+  filterSchemaPrimitiveValue,
+} from '@api-helper/core/lib/utils/util';
 
 import { postCode } from '@/lib/utils/util';
 import type { ChangeCase } from '@/lib/types';
@@ -28,8 +32,9 @@ type RenderObjectOptions = {
   // 格式化值
   formatter?: (schema: APIHelper.Schema) => ({ useDefault?: boolean, value: any })
 };
+
 export function renderObject(
-  schema: APIHelper.Schema | null,
+  schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
   options?: RenderObjectOptions
 ) {
@@ -41,6 +46,7 @@ export function renderObject(
     emptyBodyCode: '{}',
   }, options);
   schema = cloneDeep(schema);
+  schema = precessArraySchema(schema);
   const primitiveValueSchema = filterSchemaPrimitiveValue(schema) as APIHelper.Schema;
   const {
     prefix,
@@ -230,4 +236,15 @@ function renderObjectComment(
  * @url [ ${api.method.toUpperCase()} ] ${api.path}
  */`;
   return commentText;
+}
+
+export function precessArraySchema(schema: APIHelper.Schema | Array<APIHelper.Schema> | null) {
+  if (Array.isArray(schema)) {
+    if (schema.length === 1 && (schema[0].type === 'array' || schema[0].type === 'object')) {
+      schema = schema[0];
+    } else {
+      schema = createSchema('object', { params: schema });
+    }
+  }
+  return schema;
 }

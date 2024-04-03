@@ -50,6 +50,7 @@ function renderClass(schema, api, options) {
         suffixName: 'class',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
+    schema = (0, render_object_1.precessArraySchema)(schema);
     // const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
     var primitiveValueSchema = (0, util_1.filterSchemaPrimitiveValue)(schema);
     var prefix = options.prefix, suffixName = options.suffixName, onlyBody = options.onlyBody, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _b = options.paramType, paramType = _b === void 0 ? 'request' : _b;

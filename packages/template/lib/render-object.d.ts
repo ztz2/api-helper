@@ -14,11 +14,12 @@ declare type RenderObjectOptions = {
         value: any;
     });
 };
-export declare function renderObject(schema: APIHelper.Schema | null, api: APIHelper.API, options?: RenderObjectOptions): string;
+export declare function renderObject(schema: APIHelper.Schema | Array<APIHelper.Schema> | null, api: APIHelper.API, options?: RenderObjectOptions): string;
 export declare function renderComment(schema: APIHelper.Schema): string;
 export declare function renderObjectName(api: APIHelper.API, options: {
     suffixName?: string;
     paramType: 'request' | 'response';
     changeCase: ChangeCase;
 }): string;
+export declare function precessArraySchema(schema: APIHelper.Schema | Array<APIHelper.Schema> | null): APIHelper.Schema | null;
 export {};

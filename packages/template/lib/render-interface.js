@@ -30,6 +30,7 @@ var helpers_1 = require("@api-helper/core/lib/helpers");
 var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 var art_template_1 = __importDefault(require("../lib/art-template"));
+var render_object_1 = require("../lib/render-object");
 function renderInterface(schema, api, options) {
     options = (0, merge_1.default)({
         onlyBody: false,
@@ -38,6 +39,7 @@ function renderInterface(schema, api, options) {
         emptyBodyCode: 'any;',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
+    schema = (0, render_object_1.precessArraySchema)(schema);
     var sourceSchema = schema;
     var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
     if (Array.isArray(schema)) {

@@ -124,6 +124,7 @@ type ParserYapiParams = {
         required: number | string
       }>,
       'req_body_form': Array<{
+        format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password';
         name: string
         desc: string
         type: string
@@ -352,7 +353,7 @@ export default class ParserYapi {
                   required: Number(p.required) === 1
                 }
               });
-              scm.type = transformType(p.type, undefined, 'string');
+              scm.type = transformType(p.type, p?.format, 'string');
               scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
               api.formDataKeyNameList.push(keyName);

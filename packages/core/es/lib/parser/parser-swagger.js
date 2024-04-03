@@ -234,7 +234,7 @@ var ParserSwagger = /** @class */ (function () {
                                             continue;
                                         }
                                         requestKeyNameMemo_1.includes(keyName) && requestKeyNameMemo_1.push(keyName);
-                                        var type = transformType(parameter.type, undefined, 'string');
+                                        var type = transformType(parameter.type, parameter === null || parameter === void 0 ? void 0 : parameter.format, 'string');
                                         var scm = createSchema(type, {
                                             id: this_1.generateId(),
                                             keyName: keyName,

@@ -33,11 +33,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderObjectName = exports.renderComment = exports.renderObject = void 0;
+exports.precessArraySchema = exports.renderObjectName = exports.renderComment = exports.renderObject = void 0;
 var merge_1 = __importDefault(require("lodash/merge"));
 var change_case_1 = __importDefault(require("change-case"));
 var cloneDeep_1 = __importDefault(require("lodash/cloneDeep"));
 var changeCase = __importStar(require("change-case"));
+var helpers_1 = require("@api-helper/core/lib/helpers");
 var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 function renderObject(schema, api, options) {
@@ -50,6 +51,7 @@ function renderObject(schema, api, options) {
         emptyBodyCode: '{}',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
+    schema = precessArraySchema(schema);
     var primitiveValueSchema = (0, util_1.filterSchemaPrimitiveValue)(schema);
     var prefix = options.prefix, suffixName = options.suffixName, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
     // @ts-ignore
@@ -223,3 +225,15 @@ function renderObjectComment(api, paramType, isExtraData) {
     var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u5B9E\u4F53\u5BF9\u8C61\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
     return commentText;
 }
+function precessArraySchema(schema) {
+    if (Array.isArray(schema)) {
+        if (schema.length === 1 && (schema[0].type === 'array' || schema[0].type === 'object')) {
+            schema = schema[0];
+        }
+        else {
+            schema = (0, helpers_1.createSchema)('object', { params: schema });
+        }
+    }
+    return schema;
+}
+exports.precessArraySchema = precessArraySchema;

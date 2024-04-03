@@ -6,10 +6,11 @@ import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib
 
 import { postCode } from '@/lib/utils/util';
 import { ChangeCase } from '@/lib/types';
-import { renderComment } from '@/lib/render-object';
+import { precessArraySchema, renderComment } from '@/lib/render-object';
+import { createSchema } from '@api-helper/core';
 
 export function renderClass(
-  schema: APIHelper.Schema | null,
+  schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
   options?: {
     // 请求数据还是响应数据
@@ -39,6 +40,7 @@ export function renderClass(
   }, options);
 
   schema = cloneDeep(schema);
+  schema = precessArraySchema(schema);
 
   // const schemaList = filterSchemaPrimitiveValue(Array.isArray(schema) ? schema : (schema as APIHelper.Schema)?.params ?? []) as APIHelper.SchemaList;
   const primitiveValueSchema = filterSchemaPrimitiveValue(schema) as APIHelper.Schema;

@@ -192,7 +192,7 @@ export default class ParserSwagger {
                   }
                   requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
 
-                  const type = transformType(parameter.type, undefined, 'string');
+                  const type = transformType(parameter.type, parameter?.format, 'string');
 
                   let scm = createSchema(type, {
                     id: this.generateId(),

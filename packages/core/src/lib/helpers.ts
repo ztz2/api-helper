@@ -211,6 +211,9 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
   if (format === 'binary') {
     return 'File';
   }
+  if (format === 'int64') {
+    return 'string';
+  }
   const typeValue = typeMap[type];
   return typeValue ? typeValue : emptyType ? emptyType : 'unknown';
 }

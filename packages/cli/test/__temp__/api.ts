@@ -25,7 +25,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
  */
 export interface V2PetPetIdUploadImageRequestByPost {
   // ID of pet  * 换行符测试 * to update
-  petId: number;
+  petId: string;
   // Additional data to pass to server
   additionalMetadata: string;
   // file to upload
@@ -66,15 +66,15 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  * @url [ POST ] /v2/pet
  */
 export interface V2PetRequestByPost {
-  id: number;
+  id: string;
   category: {
-    id: number;
+    id: string;
     name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id: number;
+    id: string;
     name: string;
   }>;
   // pet status in the store
@@ -104,15 +104,15 @@ v2PetByPost.requestConfig = {
  * @url [ PUT ] /v2/pet
  */
 export interface V2PetRequestByPut {
-  id: number;
+  id: string;
   category: {
-    id: number;
+    id: string;
     name: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags: Array<{
-    id: number;
+    id: string;
     name: string;
   }>;
   // pet status in the store
@@ -150,15 +150,15 @@ export interface V2PetFindByStatusRequestByGet {
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseByGet = Array<{
-  id?: number;
+  id?: string;
   category?: {
-    id?: number;
+    id?: string;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags?: Array<{
-    id?: number;
+    id?: string;
     name?: string;
   }>;
   // pet status in the store
@@ -198,15 +198,15 @@ export interface V2PetFindByTagsRequestByGet {
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseByGet = Array<{
-  id?: number;
+  id?: string;
   category?: {
-    id?: number;
+    id?: string;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags?: Array<{
-    id?: number;
+    id?: string;
     name?: string;
   }>;
   // pet status in the store
@@ -232,22 +232,22 @@ v2PetFindByTagsByGet.requestConfig = {
  */
 export interface V2PetPetIdRequestByGet {
   // ID of pet to return
-  petId: number;
+  petId: string;
 }
 /**
  * @description Find pet by ID、Returns a single pet【响应数据类型定义】
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdResponseByGet {
-  id?: number;
+  id?: string;
   category?: {
-    id?: number;
+    id?: string;
     name?: string;
   };
   name: string;
   photoUrls: Array<string>;
   tags?: Array<{
-    id?: number;
+    id?: string;
     name?: string;
   }>;
   // pet status in the store
@@ -273,7 +273,7 @@ v2PetPetIdByGet.requestConfig = {
  */
 export interface V2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
-  petId: number;
+  petId: string;
   // Updated name of the pet
   name: string;
   // Updated status of the pet
@@ -304,7 +304,7 @@ v2PetPetIdByPost.requestConfig = {
  */
 export interface V2PetPetIdRequestByDelete {
   // Pet id to delete
-  petId: number;
+  petId: string;
 }
 /**
  * @description Deletes a pet【响应数据类型定义】
@@ -330,8 +330,8 @@ v2PetPetIdByDelete.requestConfig = {
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderRequestByPost {
-  id: number;
-  petId: number;
+  id: string;
+  petId: string;
   quantity: number;
   shipDate: string;
   // Order Status
@@ -350,8 +350,8 @@ export interface V2StoreOrderRequestByPost {
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderResponseByPost {
-  id?: number;
-  petId?: number;
+  id?: string;
+  petId?: string;
   quantity?: number;
   shipDate?: string;
   // Order Status
@@ -385,15 +385,15 @@ v2StoreOrderByPost.requestConfig = {
  */
 export interface V2StoreOrderOrderIdRequestByGet {
   // ID of pet that needs to be fetched
-  orderId: number;
+  orderId: string;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
+  id?: string;
+  petId?: string;
   quantity?: number;
   shipDate?: string;
   // Order Status
@@ -434,7 +434,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
  */
 export interface V2StoreOrderOrderIdRequestByDelete {
   // ID of the order that needs to be deleted
-  orderId: number;
+  orderId: string;
 }
 /**
  * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
@@ -536,7 +536,7 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestByPost = Array<{
-  id: number;
+  id: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -585,7 +585,7 @@ export interface V2UserUsernameRequestByGet {
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameResponseByGet {
-  id?: number;
+  id?: string;
   username?: string;
   firstName?: string;
   lastName?: string;
@@ -616,7 +616,7 @@ v2UserUsernameByGet.requestConfig = {
 export interface V2UserUsernameRequestByPut {
   // name that need to be updated
   username: string;
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -736,7 +736,7 @@ v2UserLogoutByGet.requestConfig = {
  * @url [ POST ] /v2/user
  */
 export interface V2UserRequestByPost {
-  id: number;
+  id: string;
   username: string;
   firstName: string;
   lastName: string;

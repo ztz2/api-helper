@@ -5,6 +5,7 @@ import { createSchema } from '@api-helper/core/lib/helpers';
 import { randomChar, processKeyName } from '@api-helper/core/lib/utils/util';
 import { postCode, isEmptyObject, checkIsInterface, } from '../lib/utils/util';
 import artTemplate from '../lib/art-template';
+import { precessArraySchema } from '../lib/render-object';
 export function renderInterface(schema, api, options) {
     options = merge({
         onlyBody: false,
@@ -13,6 +14,7 @@ export function renderInterface(schema, api, options) {
         emptyBodyCode: 'any;',
     }, options);
     schema = cloneDeep(schema);
+    schema = precessArraySchema(schema);
     var sourceSchema = schema;
     var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
     if (Array.isArray(schema)) {

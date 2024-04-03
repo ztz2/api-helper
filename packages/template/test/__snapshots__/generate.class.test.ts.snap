@@ -6,10 +6,10 @@ exports[`生成 Class 类测试 OpenAPI-2.0生成 Class 类测试: OpenAPI-2.0�
  * @url [ POST ] /v2/store/order
  */
 export class V2StoreOrderRequestclassByPost {
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }
@@ -37,10 +37,10 @@ exports[`生成 Class 类测试 OpenAPI-3.0生成 Class 类测试: OpenAPI-3.00�
  * @url [ POST ] /api/v3/store/order
  */
 export class ApiV3StoreOrderResponseclassByPost {
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }
@@ -79,10 +79,10 @@ export class SystemUserListRequestclassByGet {
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class dropComment属性测试 1`] = `
 "export class V2StoreOrderRequestclassByPost {
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }
@@ -110,10 +110,10 @@ exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测
  * @url [ POST ] /v2/store/order
  */
 export class 自定义名称 {
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }
@@ -137,10 +137,10 @@ export class 自定义名称 {
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class onlyBody属性测试 1`] = `
 "{
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }
@@ -167,10 +167,10 @@ exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测
  * @url [ POST ] /v2/store/order
  */
 export class V2StoreOrderRequestclassByPost {
-  // { number }
-  id = 0;
-  // { number }
-  petId = 0;
+  // { string }
+  id = '';
+  // { string }
+  petId = '';
   // { number }
   quantity = 0;
   // { string }

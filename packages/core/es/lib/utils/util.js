@@ -209,7 +209,7 @@ export function parserSchema(schema, parentSchema, keyName, memo, options) {
     keyName = filterKeyName(keyName);
     var requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []);
     // 定义数据，收集类型，对象类型在下面在进行单独处理
-    var resultSchema = createSchema(transformType(schema.type), {
+    var resultSchema = createSchema(transformType(schema.type, schema.format), {
         id: options.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),

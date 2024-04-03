@@ -95,6 +95,7 @@ declare type ParserYapiParams = {
                 required: number | string;
             }>;
             'req_body_form': Array<{
+                format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password';
                 name: string;
                 desc: string;
                 type: string;

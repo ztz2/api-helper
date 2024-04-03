@@ -268,7 +268,7 @@ var ParserYapi = /** @class */ (function () {
                                         required: Number(p.required) === 1
                                     }
                                 });
-                                scm.type = transformType(p.type, undefined, 'string');
+                                scm.type = transformType(p.type, p === null || p === void 0 ? void 0 : p.format, 'string');
                                 scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                                 api.formDataKeyNameList.push(keyName);
                                 requestKeyNameMemo.push(keyName);

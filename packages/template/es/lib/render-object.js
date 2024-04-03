@@ -13,7 +13,8 @@ import merge from 'lodash/merge';
 import _changeCase from 'change-case';
 import cloneDeep from 'lodash/cloneDeep';
 import * as changeCase from 'change-case';
-import { processKeyName, filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
+import { createSchema } from '@api-helper/core/lib/helpers';
+import { processKeyName, filterSchemaPrimitiveValue, } from '@api-helper/core/lib/utils/util';
 import { postCode } from '../lib/utils/util';
 export function renderObject(schema, api, options) {
     var _a, _b;
@@ -25,6 +26,7 @@ export function renderObject(schema, api, options) {
         emptyBodyCode: '{}',
     }, options);
     schema = cloneDeep(schema);
+    schema = precessArraySchema(schema);
     var primitiveValueSchema = filterSchemaPrimitiveValue(schema);
     var prefix = options.prefix, suffixName = options.suffixName, dropComment = options.dropComment, emptyBodyCode = options.emptyBodyCode, _c = options.paramType, paramType = _c === void 0 ? 'request' : _c;
     // @ts-ignore
@@ -194,4 +196,15 @@ function renderObjectComment(api, paramType, isExtraData) {
     if (isExtraData === void 0) { isExtraData = false; }
     var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u5B9E\u4F53\u5BF9\u8C61\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
     return commentText;
+}
+export function precessArraySchema(schema) {
+    if (Array.isArray(schema)) {
+        if (schema.length === 1 && (schema[0].type === 'array' || schema[0].type === 'object')) {
+            schema = schema[0];
+        }
+        else {
+            schema = createSchema('object', { params: schema });
+        }
+    }
+    return schema;
 }

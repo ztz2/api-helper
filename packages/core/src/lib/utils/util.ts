@@ -177,7 +177,7 @@ export function parserSchema(
   const requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []) as string[];
 
   // 定义数据，收集类型，对象类型在下面在进行单独处理
-  const resultSchema = createSchema(transformType(schema.type as string), {
+  const resultSchema = createSchema(transformType(schema.type as string, schema.format), {
     id: options.autoGenerateId ? randomId() : '',
     title: filterDesc(schema.title),
     description: filterDesc(schema.description),
