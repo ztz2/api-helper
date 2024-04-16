@@ -1,4 +1,11 @@
 {
+  "name": "@api-helper/docs",
+  "version": "0.0.1",
+  "author": {
+    "name": "ztz2",
+    "email": "448941273@qq.com",
+    "url": "https://github.com/ztz2"
+  },
   "engines": {
     "node": ">=14.0.0"
   },
