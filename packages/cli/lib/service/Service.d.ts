@@ -1,12 +1,21 @@
 import './worker-thread';
+export declare type ServerOptions = {
+    config: string;
+    url?: string;
+    outputPath?: string;
+    target?: string;
+    type?: string;
+    authToken?: string;
+};
 declare class Service {
-    static init: () => void;
+    static init: (options: ServerOptions) => void;
     private startDate;
     private parserPlugins;
+    private readonly isTestEnv;
     private configFilePath?;
-    private isTestEnv;
     private tempFolder;
-    constructor(configFilePath?: string, isTestEnv?: boolean);
+    private constructorOptions;
+    constructor(options?: ServerOptions, isTestEnv?: boolean);
     run(): Promise<void>;
     clear(): Promise<void>;
     private injectParserPlugins;

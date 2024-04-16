@@ -21,7 +21,7 @@ import {
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib';
-import log from '@/lib/tools/log';
+import logger from '@/lib/tools/logger';
 import { ParserPluginOptions } from "@/lib/types";
 
 type DocumentServers = Config['documentServers'];
@@ -275,11 +275,10 @@ export async function documentServersRunParserPlugins(
   };
 
   const execParserPluginMap = new Map();
-  const oraText = '文档获取与解析';
-  const spinner = ora(oraText).start();
+  const spinner = ora('文档获取与解析，这可能需要等待一段时间...').start();
   for (const documentServer of documentServers) {
     if (!documentServer.url) {
-      log.error('提示', `documentServers.url 不可为空!`);
+      logger.error(`documentServers.url 不可为空!`);
       continue;
     }
 
@@ -311,13 +310,13 @@ export async function documentServersRunParserPlugins(
   } catch {}
 
   if (result.noParserPluginNames.length > 0) {
-    log.error('提示', `文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
+    logger.error(`文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
   }
 
   if (result.parserPluginRunResult.length === 0) {
-    const failText = oraText + '【程序终止，没有获取或者解析出文档】';
-    spinner.fail(failText);
-    return Promise.reject(failText);
+    spinner.fail();
+    logger.error('没有获取或者解析到文档');
+    return Promise.reject('没有获取或者解析到文档');
   }
 
   spinner.succeed();

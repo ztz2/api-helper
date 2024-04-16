@@ -31,7 +31,7 @@ export default {
 };`, {
       folder: tempBasePath,
     });
-    await run(null, configFile, true);
+    await run(null, { config: configFile }, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
     removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('基于swagger2.0，生成 typescript api 代码');
@@ -57,7 +57,7 @@ export default {
 };`, {
       folder: tempBasePath,
     });
-    await run(null, configFile, true);
+    await run(null, { config: configFile }, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
     removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('基于swagger2.0，生成 typescript api 代码');
@@ -82,7 +82,7 @@ export default {
 };`, {
       folder: tempBasePath,
     });
-    await run(null, configFile, true);
+    await run(null, { config: configFile }, true);
     const code1 = await readFile(resolve(__dirname, './__temp__/api.js'));
     const code2 = await readFile(resolve(__dirname, './__temp__/api.d.ts'));
     removeFolder(tempBasePath);
@@ -108,7 +108,7 @@ export default {
     filename: 'api.ts',
   }
 };`, { folder: tempBasePath });
-    await run(null, configFile, true);
+    await run(null, { config: configFile }, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
     removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('基于swagger3.0.1，生成 typescript api 代码');
@@ -136,7 +136,7 @@ export default {
 };`, {
       folder: tempBasePath,
     });
-    await run(null, configFile, true);
+    await run(null, { config: configFile }, true);
     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
     removeFolder(tempBasePath);
     expect(code.toString()).toMatchSnapshot('本地文件代码');
@@ -162,7 +162,7 @@ export default {
 // };`, {
 //       folder: tempBasePath,
 //     });
-//     await run(null, configFile, true);
+//     await run(null, { config: configFile }, true);
 //     const code = await readFile(resolve(__dirname, './__temp__/api.ts'));
 //     removeFolder(tempBasePath);
 //     expect(code.toString()).toMatchSnapshot('只生成类型');

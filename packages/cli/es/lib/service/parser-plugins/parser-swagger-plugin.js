@@ -79,7 +79,7 @@ import { ParserSwagger } from '@api-helper/core';
 import { mergeUrl, getErrorMessage } from '@api-helper/core/lib/utils/util';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
 import { processRequestConfig, } from '../../../lib/tools/util';
-import log from '../../../lib/tools/log';
+import logger from '../../../lib/tools/logger';
 import request from '../../../lib/tools/request';
 import * as process from 'process';
 var ParserSwaggerPlugin = /** @class */ (function () {
@@ -110,14 +110,14 @@ var ParserSwaggerPlugin = /** @class */ (function () {
                                         case 1:
                                             openAPIDocumentList = _a.sent();
                                             if (openAPIDocumentList.length === 0) {
-                                                log.error('提示', "\u6CA1\u6709\u83B7\u53D6\u5230swagger\u914D\u7F6E\u6587\u6863".concat(serverUrlText));
+                                                logger.error("\u6CA1\u6709\u83B7\u53D6\u5230swagger\u914D\u7F6E\u6587\u6863".concat(serverUrlText));
                                                 return [2 /*return*/];
                                             }
                                             return [4 /*yield*/, new ParserSwagger(options).parser(openAPIDocumentList)];
                                         case 2:
                                             parsedDocumentList = _a.sent();
                                             if (parsedDocumentList.length === 0) {
-                                                log.error('提示', "\u89E3\u6790swagger\u914D\u7F6E\u5931\u8D25".concat(serverUrlText));
+                                                logger.error("\u89E3\u6790swagger\u914D\u7F6E\u5931\u8D25".concat(serverUrlText));
                                                 return [2 /*return*/];
                                             }
                                             result.push({
@@ -172,7 +172,7 @@ function getDocument(documentServer) {
                     _c = __read.apply(void 0, [_j.sent(), 2]), e = _c[0], json = _c[1];
                     if (e) {
                         errorText = "swagger\u6587\u4EF6\u8BFB\u53D6\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(serverUrlText);
-                        log.error('提示', errorText);
+                        logger.error(errorText);
                         return [2 /*return*/, Promise.reject(errorText)];
                     }
                     json = (Array.isArray(json) ? json : [json]);

@@ -23,14 +23,14 @@ function defineConfig(config) {
     return Array.isArray(config) ? config : [config];
 }
 exports.defineConfig = defineConfig;
-function run(cmd = null, configFilePath, isTestEnv = false) {
+function run(cmd = null, config = {}, isTestEnv = false) {
     return __awaiter(this, void 0, void 0, function* () {
         switch (cmd) {
             case 'init':
-                Service_1.default.init();
+                Service_1.default.init(config);
                 break;
             default:
-                yield new Service_1.default(configFilePath, isTestEnv).run();
+                yield new Service_1.default(config, isTestEnv).run();
         }
     });
 }

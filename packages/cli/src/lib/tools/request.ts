@@ -5,7 +5,7 @@ import axios, {
 } from 'axios';
 import { REQUEST_TIMEOUT } from '@api-helper/core/lib/constant';
 
-import log from '@/lib/tools/log';
+import log from '@/lib/tools/logger';
 
 
 const request = axios.create({

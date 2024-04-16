@@ -20,7 +20,7 @@ const util_1 = require("@api-helper/core/lib/utils/util");
 const constant_1 = require("@api-helper/core/lib/constant");
 const interface_1 = require("@api-helper/core/lib/interface");
 const util_2 = require("../../lib/tools/util");
-const log_1 = __importDefault(require("../../lib/tools/log"));
+const logger_1 = __importDefault(require("../../lib/tools/logger"));
 const path_1 = __importDefault(require("path"));
 function formatCode(config) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -38,54 +38,58 @@ function formatCode(config) {
 }
 exports.default = formatCode;
 function format(config) {
-    return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-        const baseFolder = (0, util_2.createFolder)(path_1.default.join(__dirname, './.cache.format.code'));
-        if (config === null || config === void 0 ? void 0 : config.onlyClearTempFolder) {
-            (0, util_2.removeFolder)(baseFolder);
-            return '';
-        }
-        const { sourceCode, formatCodeExtension } = config;
-        if (!sourceCode) {
-            return resolve(sourceCode);
-        }
-        if (!constant_1.FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
-            const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${constant_1.FORMAT_CODE_EXTENSION.toString()}`;
-            log_1.default.warn('提示', errorText);
-            return resolve(errorText);
-        }
-        let prettierOptions = {};
-        try {
-            prettierOptions = (0, util_2.checkType)(config.prettierOptions, 'Object') ?
-                config.prettierOptions :
-                (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
-        }
-        catch (_a) { }
-        const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new interface_1.PrettierOptions(), prettierOptions));
-        const filepath = (0, util_2.createTempFileByTMP)(sourceCode, { postfix: formatCodeExtension });
-        const prettierFilePath = (0, util_2.createTempFileByTMP)(prettierOptionsStr, { postfix: '.json' });
-        const clear = () => {
-            (0, util_2.removeFolder)(filepath);
-            (0, util_2.removeFolder)(prettierFilePath);
-        };
-        node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
-            if (err) {
-                const errorText = `@api-helper/cli/lib/tools/format.ts 格式化代码失败：${(0, util_1.getErrorMessage)(err)}`;
-                log_1.default.warn('提示', errorText);
-                clear();
-                return resolve(config.sourceCode);
-            }
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
+            const { sourceCode, formatCodeExtension } = config;
+            const baseFolder = config.tempFilePath ? config.tempFilePath : (0, util_2.createFolder)(path_1.default.join(__dirname, './.cache.format.code'));
+            let prettierOptions = {};
             try {
-                const formattedCode = (yield (0, fs_extra_1.readFile)(filepath)).toString();
-                resolve(formattedCode);
+                prettierOptions = (0, util_2.checkType)(config.prettierOptions, 'Object') ?
+                    config.prettierOptions :
+                    (0, util_2.checkType)(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
             }
-            catch (e) {
-                const errorText = `@api-helper/lib/tools/format.ts 读取临时文件失败：${(0, util_1.getErrorMessage)(e)}`;
-                log_1.default.warn('提示', errorText);
-                return resolve(config.sourceCode);
+            catch (_a) { }
+            if (!config.tempFilePath && (config === null || config === void 0 ? void 0 : config.onlyClearTempFolder)) {
+                (0, util_2.removeFolder)(baseFolder);
+                return '';
             }
-            finally {
-                clear();
+            if (!sourceCode) {
+                return resolve(sourceCode);
             }
+            if (!constant_1.FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
+                const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${constant_1.FORMAT_CODE_EXTENSION.toString()}`;
+                logger_1.default.warn('提示', errorText);
+                return resolve(errorText);
+            }
+            const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new interface_1.PrettierOptions(), prettierOptions));
+            const filepath = config.tempFilePath ? config.tempFilePath : (0, util_2.createTempFileByTMP)(sourceCode, { postfix: formatCodeExtension });
+            const prettierFilePath = config.tempPrettierFilePath ? config.tempPrettierFilePath : (0, util_2.createTempFileByTMP)(prettierOptionsStr, { postfix: '.json' });
+            const clear = () => {
+                !config.tempFilePath && (0, util_2.removeFolder)(filepath);
+                !config.tempPrettierFilePath && (0, util_2.removeFolder)(prettierFilePath);
+            };
+            node_child_process_1.default.exec(`npx prettier --write ${filepath} --config ${prettierFilePath}`, (err) => __awaiter(this, void 0, void 0, function* () {
+                if (err) {
+                    resolve(config.sourceCode);
+                    const errorText = `\n@api-helper/cli/lib/tools/format.ts 格式化代码失败：\n${(0, util_1.getErrorMessage)(err)}`;
+                    console.log('\n');
+                    logger_1.default.warn('提示', errorText);
+                    return clear();
+                }
+                try {
+                    const formattedCode = (yield (0, fs_extra_1.readFile)(filepath)).toString();
+                    resolve(formattedCode);
+                }
+                catch (e) {
+                    resolve(config.sourceCode);
+                    const errorText = `\n@api-helper/lib/tools/format.ts 读取临时文件失败：\n${(0, util_1.getErrorMessage)(e)}`;
+                    console.log('\n');
+                    logger_1.default.warn('提示', errorText);
+                }
+                finally {
+                    clear();
+                }
+            }));
         }));
-    }));
+    });
 }

@@ -35,7 +35,7 @@ export function renderAllApi(
   }
   const codeType = options?.codeType || 'typescript';
   const dataKey = options?.dataKey;
-  const onlyTyping = options?.onlyTyping;
+  const onlyTyping = options?.onlyTyping && options.codeType === 'typescript';
   const isTS = codeType === 'typescript';
   const isDeclare = options?.isDeclare ?? false;
 
@@ -58,18 +58,21 @@ export function renderAllApi(
       p.push(renderInterface(api.requestDataSchema, api, {
         paramType: 'request',
         onRenderInterfaceName: options?.onRenderInterfaceName,
-        emptyBodyCode: 'Record<string, any>;'
+        emptyBodyCode: 'Record<string, any>;',
+        prefix: isDeclare ? 'declare ' : 'export ',
       }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
       p.push(renderInterface(api.requestExtraDataSchema, api, {
         paramType: 'request',
         isExtraData: true,
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        prefix: isDeclare ? 'declare ' : 'export ',
       }));
       // 2. 生成interface-响应数据
       p.push(renderInterface(responseDataSchema, api, {
         paramType: 'response',
         onRenderInterfaceName: options?.onRenderInterfaceName,
+        prefix: isDeclare ? 'declare ' : 'export ',
       }));
     }
 
@@ -81,14 +84,15 @@ export function renderAllApi(
           onRenderInterfaceName: options?.onRenderInterfaceName,
           onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
         }));
-      } else {
-        p.push(renderRequestFunction(api, {
-          dataKey,
-          codeType,
-          onRenderInterfaceName: options?.onRenderInterfaceName,
-          onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
-        }));
       }
+    }
+    if (!(onlyTyping && codeType === 'typescript')) {
+      p.push(renderRequestFunction(api, {
+        dataKey,
+        codeType,
+        onRenderInterfaceName: options?.onRenderInterfaceName,
+        onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
+      }));
     }
 
     code.push(p.join(''));

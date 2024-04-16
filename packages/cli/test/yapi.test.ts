@@ -1,5 +1,6 @@
 import { readFile } from 'fs-extra';
 import { join, resolve } from 'path';
+import { pinyin } from 'pinyin-pro';
 
 import { run } from '../src/lib';
 import { createTempFile, removeFolder } from '../src/lib/tools/util';

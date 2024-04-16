@@ -42,7 +42,7 @@ const lodash_1 = require("lodash");
 const tmp_1 = __importDefault(require("tmp"));
 const util_1 = require("@api-helper/core/lib/utils/util");
 const esbuild_1 = __importDefault(require("esbuild"));
-const log_1 = __importDefault(require("../../lib/tools/log"));
+const logger_1 = __importDefault(require("../../lib/tools/logger"));
 function resolve(p = '') {
     const args = Array.from(arguments);
     if ((0, path_1.isAbsolute)(p)) {
@@ -251,11 +251,10 @@ function documentServersRunParserPlugins(documentServers, parserPlugins, options
             parserPluginRunResult: [],
         };
         const execParserPluginMap = new Map();
-        const oraText = '文档获取与解析';
-        const spinner = (0, ora_1.default)(oraText).start();
+        const spinner = (0, ora_1.default)('文档获取与解析，这可能需要等待一段时间...').start();
         for (const documentServer of documentServers) {
             if (!documentServer.url) {
-                log_1.default.error('提示', `documentServers.url 不可为空!`);
+                logger_1.default.error(`documentServers.url 不可为空!`);
                 continue;
             }
             if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
@@ -282,12 +281,12 @@ function documentServersRunParserPlugins(documentServers, parserPlugins, options
         }
         catch (_a) { }
         if (result.noParserPluginNames.length > 0) {
-            log_1.default.error('提示', `文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
+            logger_1.default.error(`文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
         }
         if (result.parserPluginRunResult.length === 0) {
-            const failText = oraText + '【程序终止，没有获取或者解析出文档】';
-            spinner.fail(failText);
-            return Promise.reject(failText);
+            spinner.fail();
+            logger_1.default.error('没有获取或者解析到文档');
+            return Promise.reject('没有获取或者解析到文档');
         }
         spinner.succeed();
         return result;

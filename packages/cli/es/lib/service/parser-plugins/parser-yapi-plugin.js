@@ -59,7 +59,7 @@ var __values = (this && this.__values) || function(o) {
 import to from 'await-to-js';
 import { ParserYapi } from '@api-helper/core';
 import { mergeUrl, getErrorMessage, } from '@api-helper/core/lib/utils/util';
-import log from '../../../lib/tools/log';
+import logger from '../../../lib/tools/logger';
 import request from '../../../lib/tools/request';
 import { processRequestConfig } from '../../../lib/tools/util';
 var PROJECT_API = '/api/project/get';
@@ -93,20 +93,20 @@ var ParserYapiPlugin = /** @class */ (function () {
                                 return __generator(this, function (_b) {
                                     switch (_b.label) {
                                         case 0: return [4 /*yield*/, fetchProjectInfo(documentServer).catch(function (e) {
-                                                log.error('提示', "\u83B7\u53D6\u9879\u76EE\u57FA\u672C\u4FE1\u606F\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                logger.error("\u83B7\u53D6\u9879\u76EE\u57FA\u672C\u4FE1\u606F\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                 return Promise.reject(e);
                                             })];
                                         case 1:
                                             projectInfo = _b.sent();
                                             projectId = projectInfo._id;
                                             return [4 /*yield*/, fetchMenuList(documentServer, { projectId: projectId }).catch(function (e) {
-                                                    log.error('提示', "\u83B7\u53D6\u83DC\u5355\u5217\u8868\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                    logger.error("\u83B7\u53D6\u83DC\u5355\u5217\u8868\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                     return Promise.reject(e);
                                                 })];
                                         case 2:
                                             categoryList = _b.sent();
                                             return [4 /*yield*/, fetchApiList(documentServer, { projectId: projectId }).catch(function (e) {
-                                                    log.error('提示', "\u83B7\u53D6\u63A5\u53E3\u5217\u8868\u6570\u636E\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                    logger.error("\u83B7\u53D6\u63A5\u53E3\u5217\u8868\u6570\u636E\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                     return Promise.reject(e);
                                                 })];
                                         case 3:
@@ -142,14 +142,14 @@ var ParserYapiPlugin = /** @class */ (function () {
                                         case 4:
                                             _b.sent();
                                             if (errorApi.length === apiList.length) {
-                                                log.verbose('error', "\u63A5\u53E3\u8BE6\u60C5\u83B7\u53D6\u5931\u8D25".concat(errorServerText));
+                                                logger.warn("\u63A5\u53E3\u8BE6\u60C5\u83B7\u53D6\u5931\u8D25".concat(errorServerText));
                                                 return [2 /*return*/, Promise.reject("\u63A5\u53E3\u8BE6\u60C5\u83B7\u53D6\u5931\u8D25".concat(errorServerText))];
                                             }
                                             return [4 /*yield*/, new ParserYapi(__assign(__assign({}, options), { apiList: apiList, projectInfo: projectInfo, categoryList: categoryList })).parser()];
                                         case 5:
                                             parsedDocumentList = _b.sent();
                                             if (parsedDocumentList.length === 0) {
-                                                log.error('提示', "".concat(documentServer.url, " \u89E3\u6790yapi\u914D\u7F6E\u5931\u8D25").concat(errorServerText));
+                                                logger.error("".concat(documentServer.url, " \u89E3\u6790yapi\u914D\u7F6E\u5931\u8D25").concat(errorServerText));
                                             }
                                             result.push({
                                                 documentServer: documentServer,

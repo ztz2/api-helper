@@ -57,7 +57,7 @@ export function renderRequestFunctionDeclare(
 
   const code = artTemplate.render(
     `《if commentCode》《commentCode》
-《/if》export declare const 《requestFunctionName》: {
+《/if》declare const 《requestFunctionName》: {
   (data《if isEmptyRequestData》?《/if》: 《requestDataInterfaceName》, extraData?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》, ...args: CurrentRequestFunctionRestArgsType): Promise<《responseDataInterfaceName》>;
   readonly requestConfig: {
     path: '《api.path》',

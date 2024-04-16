@@ -11,7 +11,7 @@ import {
   ParserPluginRunResult,
 } from '@/lib/types';
 import { Config } from '@/lib';
-import log from '@/lib/tools/log';
+import logger from '@/lib/tools/logger';
 import request from '@/lib/tools/request';
 import { processRequestConfig } from '@/lib/tools/util';
 
@@ -39,20 +39,20 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
       dsTasks.push((async () => {
         // 获取项目基本信息
         const projectInfo: Recordable = await fetchProjectInfo(documentServer).catch((e) => {
-          log.error('提示', `获取项目基本信息失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`获取项目基本信息失败${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
         const projectId = projectInfo._id;
 
         // 获取所有分类
         const categoryList = await fetchMenuList(documentServer, { projectId }).catch((e) => {
-          log.error('提示', `获取菜单列表失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`获取菜单列表失败${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
 
         // 获取所有接口
         const apiList = await fetchApiList(documentServer, { projectId }).catch((e) => {
-          log.error('提示', `获取接口列表数据失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`获取接口列表数据失败${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
 
@@ -78,7 +78,7 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         await to(Promise.all(tasks));
 
         if (errorApi.length === apiList.length) {
-          log.verbose('error', `接口详情获取失败${errorServerText}`);
+          logger.warn(`接口详情获取失败${errorServerText}`);
           return Promise.reject(`接口详情获取失败${errorServerText}`);
         }
 
@@ -90,7 +90,7 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         }).parser();
 
         if (parsedDocumentList.length === 0) {
-          log.error('提示', `${documentServer.url} 解析yapi配置失败${errorServerText}`);
+          logger.error(`${documentServer.url} 解析yapi配置失败${errorServerText}`);
         }
 
         result.push({

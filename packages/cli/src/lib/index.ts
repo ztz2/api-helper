@@ -5,7 +5,7 @@ import {
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib/types';
-import Service from '@/lib/service/Service';
+import Service, { ServerOptions } from '@/lib/service/Service';
 import formatCode from '@/lib/tools/format-code';
 
 export type { RequestMethod } from './helpers';
@@ -16,13 +16,13 @@ export function defineConfig(config: Config | Config[]): Config[] {
   return Array.isArray(config) ? config : [config];
 }
 
-export async function run(cmd: 'init' | null = null, configFilePath?: string, isTestEnv = false) {
+export async function run(cmd: 'init' | null = null, config: ServerOptions = {} as ServerOptions, isTestEnv = false) {
   switch (cmd) {
     case 'init':
-      Service.init();
+      Service.init(config);
       break;
     default:
-      await new Service(configFilePath, isTestEnv).run();
+      await new Service(config, isTestEnv).run();
   }
 }
 

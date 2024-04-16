@@ -16,7 +16,7 @@ import {
   processRequestConfig,
 } from '@/lib/tools/util';
 
-import log from '@/lib/tools/log';
+import logger from '@/lib/tools/logger';
 import request from '@/lib/tools/request';
 import * as process from 'process';
 
@@ -35,12 +35,12 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
       tasks.push((async () => {
         const openAPIDocumentList = await getDocument(documentServer);
         if (openAPIDocumentList.length === 0) {
-          log.error('提示', `没有获取到swagger配置文档${serverUrlText}`);
+          logger.error(`没有获取到swagger配置文档${serverUrlText}`);
           return;
         }
         const parsedDocumentList = await new ParserSwagger(options).parser(openAPIDocumentList as any);
         if (parsedDocumentList.length === 0) {
-          log.error('提示', `解析swagger配置失败${serverUrlText}`);
+          logger.error(`解析swagger配置失败${serverUrlText}`);
           return;
         }
         result.push({
@@ -68,7 +68,7 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
     let [e, json] = await to(readJson(filepath));
     if (e) {
       const errorText = `swagger文件读取失败${getErrorMessage(e, ': ')}${serverUrlText}`;
-      log.error('提示', errorText);
+      logger.error(errorText);
       return Promise.reject(errorText);
     }
     json = (Array.isArray(json) ? json : [json]);

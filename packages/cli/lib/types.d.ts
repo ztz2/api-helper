@@ -13,14 +13,18 @@ export declare abstract class AbstractParserPlugin {
     abstract run(documentServers: DocumentServers, options?: ParserPluginOptions): Promise<ParserPluginRunResult>;
 }
 export declare type Config = {
-    outputFilePath: string;
-    requestFunctionFilePath: string;
+    group?: boolean;
     onlyTyping?: boolean;
+    outputPath: string;
+    outputFilePath?: string;
+    target?: 'javascript' | 'typescript';
+    requestFunctionFilePath: string;
     requiredRequestField?: boolean;
     requiredResponseField?: boolean;
     documentServers: Array<{
         url: string;
         type: 'swagger' | 'yapi' | string;
+        name?: string;
         dataKey?: string;
         auth?: {
             username: string;

@@ -82,7 +82,7 @@ import { merge } from 'lodash';
 import tmp from 'tmp';
 import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
 import esbuild from 'esbuild';
-import log from '../../lib/tools/log';
+import logger from '../../lib/tools/logger';
 export function resolve(p) {
     if (p === void 0) { p = ''; }
     var args = Array.from(arguments);
@@ -285,7 +285,7 @@ export function processRequestConfig(documentServer, options) {
 export function documentServersRunParserPlugins(documentServers, parserPlugins, options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, oraText, spinner, documentServers_1, documentServers_1_1, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b, failText;
+        var parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, spinner, documentServers_1, documentServers_1_1, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b;
         var e_1, _c, e_2, _d, e_3, _e;
         return __generator(this, function (_f) {
             switch (_f.label) {
@@ -309,13 +309,12 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                         parserPluginRunResult: [],
                     };
                     execParserPluginMap = new Map();
-                    oraText = '文档获取与解析';
-                    spinner = ora(oraText).start();
+                    spinner = ora('文档获取与解析，这可能需要等待一段时间...').start();
                     try {
                         for (documentServers_1 = __values(documentServers), documentServers_1_1 = documentServers_1.next(); !documentServers_1_1.done; documentServers_1_1 = documentServers_1.next()) {
                             documentServer = documentServers_1_1.value;
                             if (!documentServer.url) {
-                                log.error('提示', "documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!");
+                                logger.error("documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!");
                                 continue;
                             }
                             if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
@@ -366,12 +365,12 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                     return [3 /*break*/, 4];
                 case 4:
                     if (result.noParserPluginNames.length > 0) {
-                        log.error('提示', "\u6587\u6863\uFF1A".concat(result.noParserPluginNames.join('、'), "\uFF0C\u7F3A\u5C11\u5BF9\u5E94\u7C7B\u578B\u7684\u89E3\u6790\u63D2\u4EF6\u3002"));
+                        logger.error("\u6587\u6863\uFF1A".concat(result.noParserPluginNames.join('、'), "\uFF0C\u7F3A\u5C11\u5BF9\u5E94\u7C7B\u578B\u7684\u89E3\u6790\u63D2\u4EF6\u3002"));
                     }
                     if (result.parserPluginRunResult.length === 0) {
-                        failText = oraText + '【程序终止，没有获取或者解析出文档】';
-                        spinner.fail(failText);
-                        return [2 /*return*/, Promise.reject(failText)];
+                        spinner.fail();
+                        logger.error('没有获取或者解析到文档');
+                        return [2 /*return*/, Promise.reject('没有获取或者解析到文档')];
                     }
                     spinner.succeed();
                     return [2 /*return*/, result];

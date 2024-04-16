@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const https_1 = __importDefault(require("https"));
 const axios_1 = __importDefault(require("axios"));
 const constant_1 = require("@api-helper/core/lib/constant");
-const log_1 = __importDefault(require("../../lib/tools/log"));
+const logger_1 = __importDefault(require("../../lib/tools/logger"));
 const request = axios_1.default.create({
     timeout: constant_1.REQUEST_TIMEOUT,
 });
@@ -49,7 +49,7 @@ request.interceptors.response.use((response) => {
     if (errorMsg) {
         if (!uniqueStatusMesMemo.includes(uniqueStatus)) {
             uniqueStatusMesMemo.push(uniqueStatus);
-            log_1.default.error('提示', `${status} ${errorMsg}${documentServerUrl}`);
+            logger_1.default.error('提示', `${status} ${errorMsg}${documentServerUrl}`);
         }
     }
     return Promise.reject(error);

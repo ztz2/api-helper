@@ -1,7 +1,7 @@
 import https from 'https';
 import axios from 'axios';
 import { REQUEST_TIMEOUT } from '@api-helper/core/lib/constant';
-import log from '../../lib/tools/log';
+import log from '../../lib/tools/logger';
 var request = axios.create({
     timeout: REQUEST_TIMEOUT,
 });

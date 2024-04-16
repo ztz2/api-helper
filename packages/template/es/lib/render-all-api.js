@@ -49,7 +49,7 @@ export function renderAllApi(apiDocument, options) {
     }
     var codeType = (options === null || options === void 0 ? void 0 : options.codeType) || 'typescript';
     var dataKey = options === null || options === void 0 ? void 0 : options.dataKey;
-    var onlyTyping = options === null || options === void 0 ? void 0 : options.onlyTyping;
+    var onlyTyping = (options === null || options === void 0 ? void 0 : options.onlyTyping) && options.codeType === 'typescript';
     var isTS = codeType === 'typescript';
     var isDeclare = (_c = options === null || options === void 0 ? void 0 : options.isDeclare) !== null && _c !== void 0 ? _c : false;
     var categoryList = checkDocument(apiDocument) ? apiDocument.categoryList : apiDocument;
@@ -81,18 +81,21 @@ export function renderAllApi(apiDocument, options) {
                 p.push(renderInterface(api.requestDataSchema, api, {
                     paramType: 'request',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    emptyBodyCode: 'Record<string, any>;'
+                    emptyBodyCode: 'Record<string, any>;',
+                    prefix: isDeclare ? 'declare ' : 'export ',
                 }));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
                 p.push(renderInterface(api.requestExtraDataSchema, api, {
                     paramType: 'request',
                     isExtraData: true,
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    prefix: isDeclare ? 'declare ' : 'export ',
                 }));
                 // 2. 生成interface-响应数据
                 p.push(renderInterface(responseDataSchema, api, {
                     paramType: 'response',
                     onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    prefix: isDeclare ? 'declare ' : 'export ',
                 }));
             }
             // 3. 生成请求函数
@@ -104,14 +107,14 @@ export function renderAllApi(apiDocument, options) {
                         onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
                     }));
                 }
-                else {
-                    p.push(renderRequestFunction(api, {
-                        dataKey: dataKey,
-                        codeType: codeType,
-                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-                    }));
-                }
+            }
+            if (!(onlyTyping && codeType === 'typescript')) {
+                p.push(renderRequestFunction(api, {
+                    dataKey: dataKey,
+                    codeType: codeType,
+                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
+                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
+                }));
             }
             code.push(p.join(''));
         }

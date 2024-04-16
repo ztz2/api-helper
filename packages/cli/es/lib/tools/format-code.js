@@ -42,7 +42,7 @@ import { getErrorMessage } from '@api-helper/core/lib/utils/util';
 import { FORMAT_CODE_EXTENSION } from '@api-helper/core/lib/constant';
 import { PrettierOptions } from '@api-helper/core/lib/interface';
 import { checkType, createFolder, createTempFileByTMP, removeFolder, } from '../../lib/tools/util';
-import log from '../../lib/tools/log';
+import log from '../../lib/tools/logger';
 import path from 'path';
 export default function formatCode(config) {
     return __awaiter(this, void 0, void 0, function () {
@@ -70,71 +70,78 @@ export default function formatCode(config) {
     });
 }
 function format(config) {
-    var _this = this;
-    return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
-        var baseFolder, sourceCode, formatCodeExtension, errorText, prettierOptions, prettierOptionsStr, filepath, prettierFilePath, clear;
+    return __awaiter(this, void 0, void 0, function () {
         var _this = this;
         return __generator(this, function (_a) {
-            baseFolder = createFolder(path.join(__dirname, './.cache.format.code'));
-            if (config === null || config === void 0 ? void 0 : config.onlyClearTempFolder) {
-                removeFolder(baseFolder);
-                return [2 /*return*/, ''];
-            }
-            sourceCode = config.sourceCode, formatCodeExtension = config.formatCodeExtension;
-            if (!sourceCode) {
-                return [2 /*return*/, resolve(sourceCode)];
-            }
-            if (!FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
-                errorText = "@api-helper/cli/lib/tools/format.ts \u672A\u77E5\u7684\u6587\u4EF6\u7C7B\u578B".concat(formatCodeExtension, "\u3002\u5141\u8BB8\u7684\u7C7B\u578B\uFF1A").concat(FORMAT_CODE_EXTENSION.toString());
-                log.warn('提示', errorText);
-                return [2 /*return*/, resolve(errorText)];
-            }
-            prettierOptions = {};
-            try {
-                prettierOptions = checkType(config.prettierOptions, 'Object') ?
-                    config.prettierOptions :
-                    checkType(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
-            }
-            catch (_b) { }
-            prettierOptionsStr = JSON.stringify(merge(new PrettierOptions(), prettierOptions));
-            filepath = createTempFileByTMP(sourceCode, { postfix: formatCodeExtension });
-            prettierFilePath = createTempFileByTMP(prettierOptionsStr, { postfix: '.json' });
-            clear = function () {
-                removeFolder(filepath);
-                removeFolder(prettierFilePath);
-            };
-            cp.exec("npx prettier --write ".concat(filepath, " --config ").concat(prettierFilePath), function (err) { return __awaiter(_this, void 0, void 0, function () {
-                var errorText, formattedCode, e_1, errorText;
-                return __generator(this, function (_a) {
-                    switch (_a.label) {
-                        case 0:
-                            if (err) {
-                                errorText = "@api-helper/cli/lib/tools/format.ts \u683C\u5F0F\u5316\u4EE3\u7801\u5931\u8D25\uFF1A".concat(getErrorMessage(err));
-                                log.warn('提示', errorText);
-                                clear();
-                                return [2 /*return*/, resolve(config.sourceCode)];
-                            }
-                            _a.label = 1;
-                        case 1:
-                            _a.trys.push([1, 3, 4, 5]);
-                            return [4 /*yield*/, readFile(filepath)];
-                        case 2:
-                            formattedCode = (_a.sent()).toString();
-                            resolve(formattedCode);
-                            return [3 /*break*/, 5];
-                        case 3:
-                            e_1 = _a.sent();
-                            errorText = "@api-helper/lib/tools/format.ts \u8BFB\u53D6\u4E34\u65F6\u6587\u4EF6\u5931\u8D25\uFF1A".concat(getErrorMessage(e_1));
+            return [2 /*return*/, new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
+                    var sourceCode, formatCodeExtension, baseFolder, prettierOptions, errorText, prettierOptionsStr, filepath, prettierFilePath, clear;
+                    var _this = this;
+                    return __generator(this, function (_a) {
+                        sourceCode = config.sourceCode, formatCodeExtension = config.formatCodeExtension;
+                        baseFolder = config.tempFilePath ? config.tempFilePath : createFolder(path.join(__dirname, './.cache.format.code'));
+                        prettierOptions = {};
+                        try {
+                            prettierOptions = checkType(config.prettierOptions, 'Object') ?
+                                config.prettierOptions :
+                                checkType(config.prettierOptions, 'String') ? JSON.parse(config.prettierOptions) : {};
+                        }
+                        catch (_b) { }
+                        if (!config.tempFilePath && (config === null || config === void 0 ? void 0 : config.onlyClearTempFolder)) {
+                            removeFolder(baseFolder);
+                            return [2 /*return*/, ''];
+                        }
+                        if (!sourceCode) {
+                            return [2 /*return*/, resolve(sourceCode)];
+                        }
+                        if (!FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
+                            errorText = "@api-helper/cli/lib/tools/format.ts \u672A\u77E5\u7684\u6587\u4EF6\u7C7B\u578B".concat(formatCodeExtension, "\u3002\u5141\u8BB8\u7684\u7C7B\u578B\uFF1A").concat(FORMAT_CODE_EXTENSION.toString());
                             log.warn('提示', errorText);
-                            return [2 /*return*/, resolve(config.sourceCode)];
-                        case 4:
-                            clear();
-                            return [7 /*endfinally*/];
-                        case 5: return [2 /*return*/];
-                    }
-                });
-            }); });
-            return [2 /*return*/];
+                            return [2 /*return*/, resolve(errorText)];
+                        }
+                        prettierOptionsStr = JSON.stringify(merge(new PrettierOptions(), prettierOptions));
+                        filepath = config.tempFilePath ? config.tempFilePath : createTempFileByTMP(sourceCode, { postfix: formatCodeExtension });
+                        prettierFilePath = config.tempPrettierFilePath ? config.tempPrettierFilePath : createTempFileByTMP(prettierOptionsStr, { postfix: '.json' });
+                        clear = function () {
+                            !config.tempFilePath && removeFolder(filepath);
+                            !config.tempPrettierFilePath && removeFolder(prettierFilePath);
+                        };
+                        cp.exec("npx prettier --write ".concat(filepath, " --config ").concat(prettierFilePath), function (err) { return __awaiter(_this, void 0, void 0, function () {
+                            var errorText, formattedCode, e_1, errorText;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        if (err) {
+                                            resolve(config.sourceCode);
+                                            errorText = "\n@api-helper/cli/lib/tools/format.ts \u683C\u5F0F\u5316\u4EE3\u7801\u5931\u8D25\uFF1A\n".concat(getErrorMessage(err));
+                                            console.log('\n');
+                                            log.warn('提示', errorText);
+                                            return [2 /*return*/, clear()];
+                                        }
+                                        _a.label = 1;
+                                    case 1:
+                                        _a.trys.push([1, 3, 4, 5]);
+                                        return [4 /*yield*/, readFile(filepath)];
+                                    case 2:
+                                        formattedCode = (_a.sent()).toString();
+                                        resolve(formattedCode);
+                                        return [3 /*break*/, 5];
+                                    case 3:
+                                        e_1 = _a.sent();
+                                        resolve(config.sourceCode);
+                                        errorText = "\n@api-helper/lib/tools/format.ts \u8BFB\u53D6\u4E34\u65F6\u6587\u4EF6\u5931\u8D25\uFF1A\n".concat(getErrorMessage(e_1));
+                                        console.log('\n');
+                                        log.warn('提示', errorText);
+                                        return [3 /*break*/, 5];
+                                    case 4:
+                                        clear();
+                                        return [7 /*endfinally*/];
+                                    case 5: return [2 /*return*/];
+                                }
+                            });
+                        }); });
+                        return [2 /*return*/];
+                    });
+                }); })];
         });
-    }); });
+    });
 }

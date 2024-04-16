@@ -21,199 +21,126 @@
 - 自定义解析扩展（支持自定义解析，不限制文档类型，更好的功能扩展）
 - 请求参数兼容（对象和数组参数的兼容）
 
-![](../docs/src/public/images/api-code.gif)
-
 
 ## 安装
 ```shell
 pnpm install @api-helper/cli
 ```
 
-## 开始
-快速开始，只需要两步即可。
+## 使用CLI
 
-### 步骤一
-初始化配置文件，终端输入`npx apih init`命令。初始化完成后，会自动创建`apih.config.(ts|js)`配置文件和`src/api/request.(ts|js)`统一接口请求文件。
-* 在生成的`apih.config.(ts|js)`配置文件中找到`documentServers.url`属性，填写**项目文档地址**。
-```javascript
-import { join } from 'path';
+![API代码](/images/api-code-cli.gif)
+
+### 例子
+```sh
+$ npx apih -u http://接口文档地址.com
+# or
+$ npx apih -u ./local-openapi.json
+```
+
+### CLI 配置说明
+指令说明
+```sh
+Usage: apih [options]
+Options:
+  -u, --url <string> 接口文档地址【当type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
+  -o, --output-path <path> 代码生成后的输出路径
+  --target <string> 生成的目标代码类型，默认: typescript
+  --type <string> 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'
+  --auth-token <string> 访问文档可能需要认证信息，通过使用token访问，yapi的验证token
+```
+
+
+## 使用配置文件
+
+![](../docs/src/public/images/api-code.gif)
+
+### 初始化配置
+输入下面指令，初始化配置
+```sh
+$ npx apih init
+```
+
+指令说明
+```sh
+Usage: apih init [options]
+Options:
+  -c, --config-path <path> 自定义配置文件的路径
+```
+
+### 运行生成API
+
+* 打开 **apih.config.ts** 或 **apih.config.ts** 文件进行配置。
+* 完成配置之后，输入下面指令，即可生成API。
+
+```sh
+$ npx apih 
+```
+
+指令说明
+```sh
+Usage: apih [options]
+Options:
+  -c, --config-path <path> 自定义配置文件的路径
+```
+
+### apih.config 配置文件说明
+```typescript
+import type { Config } from '@api-helper/cli';
 import { defineConfig } from '@api-helper/cli';
-
-export default defineConfig({
-  // 输出信息
-  outputFilePath: 'src/api/index.ts',
-  // 请求函数文件路径
-  requestFunctionFilePath: 'src/tools/request.ts',
-  // 响应数据所有字段设置成必有属性
-  requiredResponseField: true,
-  // 接口文档服务配置
-  documentServers: [
-    {
-      // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
-      url: 'http://需要填写的项目文档地址',
-      // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
-      type: 'swagger',
-      // 获取数据的key，body[dataKey]
-      dataKey: '',
-    },
-  ],
-});
-```
-* 统一接口请求实现，可以简单参考下面的以 `axios` 库例子。
-```typescript
-import axios from 'axios';
-import { RequestFunctionConfig } from '@api-helper/core/lib/helpers';
-
-export default async function request<T>(config: RequestFunctionConfig): Promise<T> {
-  return new Promise((resolve, reject) => {
-    // 以axios为例的请求配置
-    const requestConfig = {
-      url: config.path,
-      method: config.method,
-      data: config.data,
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    };
-    // 处理表单数据请求头
-    if (config.hasFormData) {
-      requestConfig.headers['Content-Type'] = 'multipart/form-data';
-    }
-
-    axios(requestConfig).then((res) => {
-      // 响应数据处理...
-      resolve(res as unknown as T);
-    }).catch((error) => {
-        // 异常处理，500，301 等
-        return reject(error);
-    });
-  });
-}
-```
-
-### 步骤二
-终端输入`npx apih`命令执行接口生成，即可生成文档全部API。
-
-## Config 对象文档说明
-```typescript
-import { defineConfig, Config } from '@api-helper/cli';
 ```
 defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
 
-### outputFilePath
-  * 是否必须：<font color=#ff5722>**是**</font>
-  * 数据类型：string
-  * 说明：
-代码生成后的输出路径，会根据后缀名(.js|.ts)判断是生成TS还是JS文件。
+```typescript
+import { defineConfig } from '@api-helper/cli';
 
-### requestFunctionFilePath
-  * 是否必须：<font color=#ff5722>**是**</font>
-  * 数据类型：string
-  * 说明：
-    接口请求函数文件路径。
+export default defineConfig({
+  // 使用分组功能，启用该功能后，按照分组多文件代码生成
+  group: false,
+  // 是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
+  onlyTyping: false,
+  // 代码生成后的输出路径
+  outputPath: 'src/api/index.ts',
+  // 生成的目标代码类型。默认: typescript
+  target: 'typescript',
+  // request请求工具函数文件路径。
+  requestFunctionFilePath: 'src/api/request.ts',
+  // 请求数据所有字段设置成必有属性，默认: false
+  requiredRequestField: false,
+  // 响应数据所有字段设置成必有属性，默认：true
+  requiredResponseField: true,
+  // 接口文档服务配置
+  documentServers: [{
+    // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
+    url: 'http://接口文档地址.com',
+    // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+    type: 'swagger',
+    // 当前接口文档服务名称，有值的情况下，文件输出变成 -> 路径/当前name
+    name: '',
+    // 获取响应数据的key，body[dataKey]
+    dataKey: '',
+    // 访问文档可能需要认证信息，http auth 验证方式
+    auth: {
+      username: '',
+      password: '',
+    },
+    // 访问文档可能需要认证信息，通过使用token访问，yapi的验证token
+    authToken: '',
+    // 访问接口文档时候，自定义的一些请求头
+    headers: {},
+    // 执行过程的钩子事件
+    events: {
+      // 当生成interface名称时候事件回调，返回值作为新的InterfaceName，用于自定义InterfaceName
+      // onRenderInterfaceName(api, options) {},
+      // 当生成API名称时候事件回调，返回值作为新的RequestFunctionName，用于自定义RequestFunctionName
+      // onRenderRequestFunctionName(api, options) {},
+    },
+  }],
+  // 解析扩展插件，用于自定义解析
+  parserPlugins: [],
+});
 
-### onlyTyping
-* 是否必须：否
-* 数据类型：boolean
-* 默认值：false
-* 说明：
-  是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
-
-### requiredRequestField
-  * 是否必须：否
-  * 数据类型：boolean
-  * 默认值：false
-  * 说明：
-    请求数据所有字段设置成必有属性。
-
-### requiredResponseField
-  * 是否必须：否
-  * 数据类型：boolean
-  * 默认值：true
-  * 说明：
-    响应数据所有字段设置成必有属性。
-
-### documentServers
-  * 是否必须：<font color=#ff5722>**是**</font>
-  * 数据类型：Array&lt;object&gt;
-  * 说明：
-    接口文档服务配置。
-
-### documentServers.url
-  * 是否必须：<font color=#ff5722>**是**</font>
-  * 数据类型：string
-  * 说明：
-    文档地址【当documentServers.type为'swagger'类型时，可以读取本地文件，这里就是一个本地文件路径】
-
-### documentServers.type
-  * 是否必须：<font color=#ff5722>**是**</font>
-  * 数据类型：'swagger' | 'yapi' | string
-  * 默认值：'swagger'
-  * 说明：
-    文档类型('swagger'或'yapi')，根据文档类型，调用内置的解析器，默认值: 'swagger'。【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
-
-### documentServers.dataKey
-  * 是否必须：否
-  * 数据类型：string
-  * 默认值：''
-  * 说明：
-    获取响应数据的key，body[dataKey]。
-
-### documentServers.auth
-  * 是否必须：否
-  * 数据类型：object
-  * 默认值：{}
-  * 说明：
-    访问文档可能需要认证信息，http auth验证方式
-
-### documentServers.auth.username
-  * 是否必须：否
-  * 数据类型：string
-  * 默认值：''
-  * 说明：
-    用户名。
-
-### documentServers.auth.password
-  * 是否必须：否
-  * 数据类型：string
-  * 默认值：''
-  * 说明：
-    密码。
-
-### documentServers.authToken
-  * 是否必须：否
-  * 数据类型：string
-  * 默认值：''
-  * 说明：
-    token验证，访问文档可能需要认证信息，yapi使用的该认证方式。
-
-### documentServers.events
-  * 是否必须：否
-  * 数据类型：object
-  * 默认值：{}
-  * 说明：
-    执行过程的事件回调。
-
-### documentServers.events.onRenderInterfaceName
-  * 是否必须：否
-  * 数据类型：(api: APIHelper.API, options: { isExtraData?: boolean; paramType: 'request' | 'response'; changeCase: ChangeCase; }): string) => string
-  * 默认值：内置规则
-  * 说明：
-    当生成interface名称时候的事件回调，可用于自定义生成接口名称。
-
-### documentServers.events.onRenderRequestFunctionName
-  * 是否必须：否
-  * 数据类型：(api: APIHelper.API, options?: { changeCase: ChangeCase }): string) => string
-  * 默认值：内置规则
-  * 说明：
-    当生成API函数名称时候的事件回调，可用于自定义生成API函数名称。
-
-### parserPlugins
-  * 是否必须：否
-  * 数据类型：Array&lt;AbstractParserPlugin&gt;
-  * 默认值：[]
-  * 说明：
-    文档解析插件，当documentServers.type不是'swagger'和'yapi'，则需要定一个解析插件处理文档。详细参考：AbstractParserPlugin 抽象类注释说明。
+```
 
 ## 👏赞助商
 <a href="https://www.jetbrains.com" target="_blank">
@@ -221,7 +148,6 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 </a>
 
 感谢 [JetBrains](https://www.jetbrains.com) 对本项目的支持。
-
 
 ## 📃开源许可
 

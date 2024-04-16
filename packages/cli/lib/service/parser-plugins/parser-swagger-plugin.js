@@ -38,7 +38,7 @@ const core_1 = require("@api-helper/core");
 const util_1 = require("@api-helper/core/lib/utils/util");
 const validator_1 = require("@api-helper/core/lib/utils/validator");
 const util_2 = require("../../../lib/tools/util");
-const log_1 = __importDefault(require("../../../lib/tools/log"));
+const logger_1 = __importDefault(require("../../../lib/tools/logger"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
 const process = __importStar(require("process"));
 class ParserSwaggerPlugin {
@@ -57,12 +57,12 @@ class ParserSwaggerPlugin {
                 tasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     const openAPIDocumentList = yield getDocument(documentServer);
                     if (openAPIDocumentList.length === 0) {
-                        log_1.default.error('提示', `没有获取到swagger配置文档${serverUrlText}`);
+                        logger_1.default.error(`没有获取到swagger配置文档${serverUrlText}`);
                         return;
                     }
                     const parsedDocumentList = yield new core_1.ParserSwagger(options).parser(openAPIDocumentList);
                     if (parsedDocumentList.length === 0) {
-                        log_1.default.error('提示', `解析swagger配置失败${serverUrlText}`);
+                        logger_1.default.error(`解析swagger配置失败${serverUrlText}`);
                         return;
                     }
                     result.push({
@@ -90,7 +90,7 @@ function getDocument(documentServer) {
             let [e, json] = yield (0, await_to_js_1.default)((0, fs_extra_1.readJson)(filepath));
             if (e) {
                 const errorText = `swagger文件读取失败${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
-                log_1.default.error('提示', errorText);
+                logger_1.default.error(errorText);
                 return Promise.reject(errorText);
             }
             json = (Array.isArray(json) ? json : [json]);
