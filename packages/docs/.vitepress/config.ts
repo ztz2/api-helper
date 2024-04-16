@@ -69,10 +69,10 @@ export default defineConfigWithTheme<ThemeConfig>({
   description: 'API Helper',
   srcDir: 'src',
   srcExclude: ['tutorial/**/description.md'],
-
+  ignoreDeadLinks: true,
   head: [
     ['meta', { name: 'theme-color', content: '#ff5722' }],
-    // ['meta', { property: 'og:url', content: 'https://vuejs.org/' }],
+    // ['meta', { property: 'og:url', content: 'https://github.com/ztz2/api-helper' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:title', content: 'API Helper' }],
     [
