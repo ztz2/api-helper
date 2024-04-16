@@ -1,29 +1,34 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { SponsorData, data, base, load } from './sponsors'
 
 type Placement = 'aside' | 'page' | 'landing'
 
-const { tier, placement = 'aside' } = defineProps<{
-  tier: keyof SponsorData
-  placement?: Placement
-}>()
+const props = withDefaults(
+  defineProps<{
+    tier: keyof SponsorData
+    placement?: Placement
+  }>(),
+  {
+    placement: 'aside'
+  }
+)
 
-let container = $ref<HTMLElement>()
-let visible = $ref(false)
+const container = ref<HTMLElement>()
+const visible = ref(false)
 
 onMounted(async () => {
   // only render when entering view
   const observer = new IntersectionObserver(
     (entries) => {
       if (entries[0].isIntersecting) {
-        visible = true
+        visible.value = true
         observer.disconnect()
       }
     },
     { rootMargin: '0px 0px 300px 0px' }
   )
-  observer.observe(container!)
+  observer.observe(container.value!)
   onUnmounted(() => observer.disconnect())
 
   // load data
@@ -38,7 +43,23 @@ const eventMap: Record<Placement, string> = {
 }
 
 function track(interest?: boolean) {
-  fathom.trackGoal(interest ? `Y2BVYNT2` : eventMap[placement], 0)
+  fathom.trackGoal(interest ? `Y2BVYNT2` : eventMap[props.placement], 0)
+}
+
+function resolveList(data: SponsorData) {
+  let currentTier = data[props.tier]
+  // in aside, treat platinum+priority as special
+  if (props.placement === 'aside') {
+    if (props.tier === 'platinum') {
+      currentTier = currentTier.filter((s) => !s.priority)
+    } else if (props.tier === 'special') {
+      currentTier = [
+        ...currentTier,
+        ...data.platinum.filter((s) => s.priority)
+      ]
+    }
+  }
+  return currentTier
 }
 </script>
 
@@ -50,7 +71,7 @@ function track(interest?: boolean) {
   >
     <template v-if="data && visible">
       <a
-        v-for="{ url, img, name } of data[tier]"
+        v-for="{ url, img, name } of resolveList(data)"
         class="sponsor-item"
         :href="url"
         target="_blank"
@@ -67,13 +88,17 @@ function track(interest?: boolean) {
         <img v-else :src="`${base}/images/${img}`" :alt="name" />
       </a>
     </template>
-<!--    <a-->
-<!--      v-if="placement !== 'page' && tier !== 'special'"-->
-<!--      href="/sponsor/"-->
-<!--      class="sponsor-item action"-->
-<!--      @click="track(true)"-->
-<!--      >Your logo</a-->
-<!--    >-->
+    <a
+      v-if="placement !== 'page' && tier !== 'special'"
+      target="_blank"
+      title="jetbrains"
+      class="sponsor-item action"
+      href="https://www.jetbrains.com"
+      style="background: url('https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png')"
+      >
+      <img width="64" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+      <div>感谢 JetBrains 对本项目的支持。</div>
+    </a>
   </div>
 </template>
 
@@ -99,19 +124,21 @@ function track(interest?: boolean) {
   margin: 2px 0;
   background-color: var(--vt-c-white-soft);
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   border-radius: 2px;
   transition: background-color 0.2s ease;
-  height: calc(var(--max-width) / 2 - 6px);
+  flex-direction: column;
+  //height: calc(var(--max-width) / 2 - 6px);
 }
 .sponsor-item.action {
   font-size: 11px;
-  color: var(--vt-c-text-3);
+  color: var(--vt-c-text-2);
 }
 .sponsor-item img {
-  max-width: calc(var(--max-width) - 30px);
-  max-height: calc(var(--max-width) / 2 - 20px);
+  //max-width: calc(var(--max-width) - 30px);
+  //max-height: calc(var(--max-width) / 2 - 20px);
+  filter: none!important;
 }
 .special .sponsor-item {
   height: 160px;
@@ -156,7 +183,8 @@ function track(interest?: boolean) {
   height: 60px;
 }
 .aside .special .sponsor-item img {
-  width: 120px;
+  max-width: 120px;
+  max-height: 48px;
 }
 .aside .platinum .sponsor-item {
   width: 111px;

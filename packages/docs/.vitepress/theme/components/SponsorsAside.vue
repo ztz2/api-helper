@@ -6,8 +6,8 @@ const { frontmatter } = useData()
 
 <template>
   <div v-if="frontmatter.sponsors !== false">
-<!--    <a class="sponsors-aside-text" href="/sponsor/">Sponsors</a>-->
-    <SponsorsGroup tier="special" />
+    <a class="sponsors-aside-text" href="javascript:void(0)" style="cursor: initial">赞助商</a>
+<!--    <SponsorsGroup tier="special" />-->
     <SponsorsGroup tier="platinum" />
   </div>
 </template>

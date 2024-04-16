@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import SiteMap from './SiteMap.vue';
+import SiteMap from './SiteMap.vue'
 // import NewsLetter from './NewsLetter.vue'
 import { load, data, base } from './sponsors'
 import SponsorsGroup from './SponsorsGroup.vue'
@@ -15,12 +15,13 @@ onMounted(async () => {
   <section id="hero">
     <h1 class="tagline">
       <span class="accent">API Helper</span>
-      <br />帮助开发者生成interface、类、对象等代码模板
+      <br />帮助开发者生成interface、类、对象代码
     </h1>
     <p class="description">
       一个用于构建 Web API 、代码模板的多功能工具库。
     </p>
     <p class="actions">
+<!--      <VueMasteryModal />-->
       <a class="get-started" href="/guide/introduction.html">
         指南
         <svg
@@ -35,36 +36,45 @@ onMounted(async () => {
           />
         </svg>
       </a>
+<!--      <a class="setup" href="/guide/quick-start.html">Install</a>-->
     </p>
   </section>
 
-<!--  <section id="special-sponsor">-->
-<!--    <span class="lead">Special Sponsor</span>-->
-<!--    <template v-if="data && data.special">-->
-<!--      <template v-for="{ url, img, name, description } of data.special">-->
-<!--        <a :href="url" target="_blank" rel="sponsored noopener">-->
-<!--          <picture v-if="img.endsWith('png')">-->
-<!--            <source type="image/avif" :srcset="`${base}/images/${img.replace(/\.png$/, '.avif')}`" />-->
-<!--            <img :src="`${base}/images/${img}`" :alt="name" />-->
-<!--          </picture>-->
-<!--          <img v-else :src="`${base}/images/${img}`" :alt="name" />-->
-<!--        </a>-->
-<!--        <span>{{ description }}</span>-->
-<!--      </template>-->
-<!--    </template>-->
-<!--  </section>-->
+  <section v-if="data && data.special" id="special-sponsor">
+    <span class="lead">Special Sponsor</span>
+    <template v-for="{ url, img, name, description } of data.special">
+      <a :href="url" target="_blank" rel="sponsored noopener">
+        <picture v-if="img.endsWith('png')">
+          <source
+            type="image/avif"
+            :srcset="`${base}/images/${img.replace(/\.png$/, '.avif')}`"
+          />
+          <img :src="`${base}/images/${img}`" :alt="name" />
+        </picture>
+        <img
+          width="168"
+          height="42"
+          v-else
+          :src="`${base}/images/${img}`"
+          :alt="name"
+        />
+      </a>
+      <span>{{ description }}</span>
+    </template>
+  </section>
 
   <section id="highlights" class="vt-box-container">
     <div class="vt-box">
-      <h2>支持多个API项目</h2>
+      <h2>支持多个接口文档</h2>
       <p>
-        依赖多个API项目，一次性生成
+        多个API项目，一次性生成
       </p>
     </div>
     <div class="vt-box">
-      <h2>自定义解析</h2>
+      <h2>更好的接口文档解析</h2>
+      <p>内置openapi2.0、openapi3.0、openapi3.0以及yapi解析</p>
       <p>
-        支持自定义解析，不限制文档类型，更好的功能扩展
+        自定义解析，不限制文档类型，更好的功能扩展
       </p>
     </div>
     <div class="vt-box">
@@ -75,45 +85,37 @@ onMounted(async () => {
     </div>
   </section>
 
-  <section id="sponsors">
+  <section class="example">
     <h2>生成接口函数以及与之对应的请求参数与响应数据interface代码</h2>
     <img alt="" src="/images/api-code.gif" />
   </section>
 
-  <section id="sponsors">
+  <section class="example">
     <h2>生成JS对象代码</h2>
     <img alt="" src="/images/map-code.gif" />
   </section>
 
-<!--  <section id="sponsors">-->
-<!--    <h2>生成Javascript实体类代码</h2>-->
-<!--    <img alt="" src="/images/class-code.png" />-->
-<!--  </section>-->
+  <!--  <section>-->
+  <!--    <h2>生成Javascript实体类代码</h2>-->
+  <!--    <img alt="" src="/images/class-code.png" />-->
+  <!--  </section>-->
 
-<!--  <section id="sponsors">-->
-<!--    <h2>生成表单模板代码</h2>-->
-<!--    <img alt="" src="/images/form-code.png" />-->
-<!--  </section>-->
+  <!--  <section>-->
+  <!--    <h2>生成表单模板代码</h2>-->
+  <!--    <img alt="" src="/images/form-code.png" />-->
+  <!--  </section>-->
 
-  <section id="sponsors">
+  <section class="example">
     <h2>生成整体文件模块</h2>
     <img alt="" src="/images/file-directory.gif" />
   </section>
 
   <section id="sponsors">
-    <h2>👏赞助商</h2>
-    <div>
-      <a href="https://www.jetbrains.com" target="_blank">
-        <img width="64" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
-      </a>
-    </div>
-    <div>
-      感谢
-      <a href="https://www.jetbrains.com" target="_blank">JetBrains</a>
-      对本项目的支持。
-    </div>
+    <h2>赞助商</h2>
+    <SponsorsGroup tier="platinum" placement="landing" />
   </section>
-  <SiteMap />
+
+<!--  <SiteMap />-->
   <!-- <NewsLetter /> -->
 </template>
 
@@ -138,7 +140,7 @@ section {
 
 html:not(.dark) .accent,
 .dark .tagline {
-  /*background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);*/
+  //background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
   background: -webkit-linear-gradient(315deg, rgb(255,87,34) 0%, #fee140 100%);
   background-clip: text;
   -webkit-background-clip: text;
@@ -260,12 +262,12 @@ html:not(.dark) .accent,
   background-color: transparent;
 }
 
-#sponsors {
+#sponsors, .example {
   max-width: 900px;
   margin: 0px auto;
 }
 
-#sponsors h2 {
+#sponsors h2, .example h2 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 1em;
@@ -273,6 +275,10 @@ html:not(.dark) .accent,
 
 #sponsors .sponsor-container {
   margin-bottom: 3em;
+}
+
+.example h2{
+  text-align: center;
 }
 
 @media (max-width: 960px) {
@@ -295,7 +301,7 @@ html:not(.dark) .accent,
 
 @media (max-width: 576px) {
   #hero {
-    padding: 64px 32px;
+    padding: 56px 32px;
   }
   .description {
     font-size: 16px;
@@ -318,7 +324,7 @@ html:not(.dark) .accent,
     padding: 20px 36px;
   }
   .actions a {
-    margin: 0.5em 0;
+    margin: 18px 0;
   }
 }
 

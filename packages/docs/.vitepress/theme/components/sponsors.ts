@@ -13,6 +13,7 @@ export interface Sponsor {
   img: string
   name: string
   description?: string
+  priority?: boolean
 }
 
 export interface SponsorData {
@@ -32,6 +33,6 @@ export const base = `https://sponsors.vuejs.org`
 export const load = async () => {
   if (!pending.value) {
     pending.value = true
-    data.value = await (await fetch(`${base}/data.json`)).json()
+    // data.value = await (await fetch(`${base}/data.json`)).json()
   }
 }

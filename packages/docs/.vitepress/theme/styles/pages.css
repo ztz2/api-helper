@@ -13,3 +13,44 @@
 .vt-doc.sponsor h3 .header-anchor {
   display: none;
 }
+
+.VPCarbonAds{
+  display: none;
+}
+
+.VPNavBarTitle{
+  > svg{
+    display: none;
+  }
+  > .text{
+    display: none;
+  }
+  &:after{
+    content: 'API Helper';
+  }
+  &:before{
+    content: '';
+    width: 32px;
+    height: 32px;
+    background: url("/images/logo-red.svg");
+    background-size: cover;
+    margin-right: 6px;
+  }
+  &:hover{
+    color: #ff5722;
+  }
+}
+
+:root{
+  /*--vt-c-green: #42b883;*/
+  /*--vt-c-green-light: #42d392;*/
+  /*--vt-c-green-lighter: #35eb9a;*/
+  /*--vt-c-green-dark: #33a06f;*/
+  /*--vt-c-green-darker: #155f3e;*/
+
+  --vt-c-green: #ff5722!important;
+  --vt-c-green-light: #ff5722!important;
+  --vt-c-green-lighter: #ff5722!important;
+  --vt-c-green-dark: #ff5722!important;
+  --vt-c-green-darker: #ff5722!important;
+}

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { VTLink } from '@vue/theme'
+import { useData } from 'vitepress'
 
-const items = [{
-  text: '友情链接',
-  items: [{
-    link: 'https://www.bing.com',
-    text: 'bing'
-  }]
-}];
+const data = useData()
+const nav = data.site.value.themeConfig.nav
+const ecosystem = nav.find((i: any) => i.activeMatch?.includes('ecosystem'))
+const items = nav
+  .filter((i: any) => i !== ecosystem && i.items)
+  .concat(ecosystem.items)
 </script>
 
 <template>
@@ -28,15 +28,13 @@ const items = [{
 <style>
 #sitemap {
   background: var(--vt-c-bg-soft);
-  padding-bottom: 0;
 }
 
 #sitemap .container {
   max-width: 900px;
   margin: 0 auto;
   columns: 1;
-  display: flex;
-  justify-content: center;
+  padding: 24px 32px;
 }
 
 @media (min-width: 768px) {
@@ -58,16 +56,8 @@ const items = [{
 }
 
 .sitemap-col {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   break-inside: avoid;
-  display: flex;
-  flex-wrap: wrap;
-}
-.sitemap-col ul {
-  margin-left: 10px;
-}
-.sitemap-col li {
-  margin-right: 10px;
 }
 
 #sitemap .vt-link {

@@ -15,6 +15,7 @@
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
+.idea
 
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -95,8 +96,9 @@ pnpm-global
 # rollup.js default build output
 dist/
 
-# vuepress build output
-.vuepress/dist
+# vitepress build output
+.vitepress/dist
+.vitepress/cache
 
 # Serverless directories
 .serverless/
@@ -104,7 +106,6 @@ dist/
 # Temporary folders
 tmp/
 temp/
-.temp
 TODOs.md
 src/api/index.json
 src/examples/data.json
