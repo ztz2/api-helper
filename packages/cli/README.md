@@ -29,7 +29,7 @@ pnpm install @api-helper/cli
 
 ## 使用CLI
 
-![API代码](/images/api-code-cli.gif)
+![API代码](../docs/src/public/images/api-code-cli.gif)
 
 ### 例子
 ```sh
