@@ -41,8 +41,9 @@ export { checkIsInterface } from '@api-helper/template/lib/utils/util';
 export function defineConfig(config) {
     return Array.isArray(config) ? config : [config];
 }
-export function run(cmd, configFilePath, isTestEnv) {
+export function run(cmd, config, isTestEnv) {
     if (cmd === void 0) { cmd = null; }
+    if (config === void 0) { config = {}; }
     if (isTestEnv === void 0) { isTestEnv = false; }
     return __awaiter(this, void 0, void 0, function () {
         var _a;
@@ -55,9 +56,9 @@ export function run(cmd, configFilePath, isTestEnv) {
                     }
                     return [3 /*break*/, 2];
                 case 1:
-                    Service.init();
+                    Service.init(config);
                     return [3 /*break*/, 4];
-                case 2: return [4 /*yield*/, new Service(configFilePath, isTestEnv).run()];
+                case 2: return [4 /*yield*/, new Service(config, isTestEnv).run()];
                 case 3:
                     _b.sent();
                     _b.label = 4;
