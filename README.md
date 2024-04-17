@@ -24,34 +24,149 @@
 - ⚙️ 单元测试
 - 💻 本地部署
 
-## 📦功能介绍
+## 📄API生成
 
-### 生成前端请求接口函数和TS类型
-* 根据接口文档生成请求参数以及响应数据的Typescript类型
-* 内置的统一接口请求函数自动处理路径参数，URL参数，FormData参数
+### 使用CLI方式
 
-[更多详细文档查看这里](./packages/cli/README.md)
+![API代码](./packages/docs/src/public/images/api-code-cli.gif)
+### 例子
+```sh
+$ npx apih -u http://接口文档地址.com
+# or
+$ npx apih -u ./local-openapi.json
+```
+
+### CLI 配置说明
+指令说明
+```sh
+Usage: apih [options]
+Options:
+  -u, --url <string> 接口文档地址【当type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
+  -o, --output-path <path> 代码生成后的输出路径
+  --target <string> 生成的目标代码类型，默认: typescript
+  --type <string> 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'
+  --auth-token <string> 访问文档可能需要认证信息，通过使用token访问，yapi的验证token
+```
+
+
+## 使用配置文件
 
 ![](./packages/docs/src/public/images/api-code.gif)
 
-### 基于API的代码生成器
+### 初始化配置文件
+输入下面指令，初始化配置文件
+```sh
+$ npx apih init
+```
 
-该功能需本地部署服务，[更多详细文档查看这里](./packages/server/README.md)
+指令说明
+```sh
+Usage: apih init [options]
+Options:
+  -c, --config-path <path> 自定义配置文件的路径
+```
 
-#### 通用的模版代码生成器
-* 生成JS对象代码
-* 生成Typescript interface代码
-* 生成实体类代码
-* 生成表单、表格代码
-* 自定义模版代码生成等
+### 运行生成API
 
+* 打开 **apih.config.ts** 或 **apih.config.ts** 文件进行配置。
+* 完成配置之后，输入下面指令，即可生成API。
+
+```sh
+$ npx apih 
+```
+
+指令说明
+```sh
+Usage: apih [options]
+Options:
+  -c, --config-path <path> 自定义配置文件的路径
+```
+
+### apih.config 配置文件说明
+```typescript
+import type { Config } from '@api-helper/cli';
+import { defineConfig } from '@api-helper/cli';
+```
+defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个API文件的时候，可以使用数组方式，以下文档时对Config对象的补充说明文档。
+
+```typescript
+import { defineConfig } from '@api-helper/cli';
+
+export default defineConfig({
+  // 使用分组功能，启用该功能后，按照分组多文件代码生成
+  group: false,
+  // 是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
+  onlyTyping: false,
+  // 代码生成后的输出路径
+  outputPath: 'src/api/index.ts',
+  // 生成的目标代码类型。默认: typescript
+  target: 'typescript',
+  // request请求工具函数文件路径。
+  requestFunctionFilePath: 'src/api/request.ts',
+  // 请求数据所有字段设置成必有属性，默认: false
+  requiredRequestField: false,
+  // 响应数据所有字段设置成必有属性，默认：true
+  requiredResponseField: true,
+  // 接口文档服务配置
+  documentServers: [{
+    // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
+    url: 'http://接口文档地址.com',
+    // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+    type: 'swagger',
+    // 当前接口文档服务名称，有值的情况下，文件输出变成 -> 路径/当前name
+    name: '',
+    // 获取响应数据的key，body[dataKey]
+    dataKey: '',
+    // 访问文档可能需要认证信息，http auth 验证方式
+    auth: {
+      username: '',
+      password: '',
+    },
+    // 访问文档可能需要认证信息，通过使用token访问，yapi的验证token
+    authToken: '',
+    // 访问接口文档时候，自定义的一些请求头
+    headers: {},
+    // 执行过程的钩子事件
+    events: {
+      // 当生成interface名称时候事件回调，返回值作为新的InterfaceName，用于自定义InterfaceName
+      // onRenderInterfaceName(api, options) {},
+      // 当生成API名称时候事件回调，返回值作为新的RequestFunctionName，用于自定义RequestFunctionName
+      // onRenderRequestFunctionName(api, options) {},
+    },
+  }],
+  // 解析扩展插件，用于自定义解析
+  parserPlugins: [],
+});
+
+```
+
+## web服务
+
+web服务提供了基于接口的自定义代码生成，提供了前端操作页面，使得代码生成更加方便。
+* web服务功能的应用场景在于，重复性的表单或者表格页面，根据接口生成统一的代码模板。
+* web服务功能本质上就是一个B/S架构的产物，需自行本地部署。
+    * 浏览器端代码在web包下。
+    * 服务器端代码在server包下。
+
+### 部署说明
+windows环境，请先安装 `pnpm`，然后双击运行 **run-web-server.bat** 文件即可。下面是手动部署。
+
+#### 步骤1：下载项目代码
+下载或者使用git拉取整个项目代码
+```sh
+git clone https://github.com/ztz2/api-helper.git
+```
+#### 步骤2：打包
+* 打包浏览器代码，进入web包下，输入命令：`pnpm run build`。
+* 打包服务器端代码，进入server包下，输入命令：`pnpm run build`。
+
+#### 步骤3：启动服务
+* 启动服务，进入server包下，输入命令：`pnpm run start:prod`。
+* 服务启动后访问地址：[http://localhost:3210](http://localhost:3210)。
+* 如果需要更新最新代码运行，需要从步骤1开始，后续启动服务操作，都是步骤3。
+
+![](./packages/docs/src/public/images/api-code.gif)
 ![](./packages/docs/src/public/images/map-code.gif)
-
-
-#### 文件模块生成
-
-将一个功能模块的接口和指定的模版关联，生成一个功能模块的文件代码。
-  
 ![](./packages/docs/src/public/images/file-directory.gif)
 
 ## 👏赞助商
@@ -60,7 +175,6 @@
 </a>
 
 感谢 [JetBrains](https://www.jetbrains.com) 对本项目的支持。
-
 
 ## 📃开源许可
 
