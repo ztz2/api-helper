@@ -55,8 +55,8 @@ Options:
 
 ![](../docs/src/public/images/api-code.gif)
 
-### 初始化配置
-输入下面指令，初始化配置
+### 初始化配置文件
+输入下面指令，初始化配置文件
 ```sh
 $ npx apih init
 ```
@@ -68,7 +68,7 @@ Options:
   -c, --config-path <path> 自定义配置文件的路径
 ```
 
-### 运行生成API
+### 执行API生成
 
 * 打开 **apih.config.ts** 或 **apih.config.ts** 文件进行配置。
 * 完成配置之后，输入下面指令，即可生成API。

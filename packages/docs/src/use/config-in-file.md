@@ -46,8 +46,8 @@ import { VTCodeGroup, VTCodeGroupTab } from '@vue/theme'
 ## 开始
 快速开始，只需要两步即可。
 
-### 步骤一：初始化配置
-输入下面指令，初始化配置
+### 步骤一：初始化配置文件
+输入下面指令，初始化配置文件
 ```sh
 $ npx apih init
 ```
@@ -59,7 +59,7 @@ Options:
   -c, --config-path <path> 自定义配置文件的路径
 ```
 
-### 步骤二：运行生成API
+### 步骤二：执行API生成
 
 * 打开 **apih.config.ts** 或 **apih.config.ts** 文件进行配置。
 * 完成配置之后，输入下面指令，即可生成API。
