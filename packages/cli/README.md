@@ -70,7 +70,7 @@ Options:
 
 ### 执行API生成
 
-* 打开 **apih.config.ts** 或 **apih.config.ts** 文件进行配置。
+* 打开 **apih.config.js** 或 **apih.config.ts** 文件进行配置。
 * 完成配置之后，输入下面指令，即可生成API。
 
 ```sh
