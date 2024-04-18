@@ -28,7 +28,7 @@
     "change-case": "^4.1.2",
     "clipboard": "^2.0.11",
     "codemirror": "^6.0.1",
-    "core-js": "^3.8.3",
+    "core-js": "^3.37.0",
     "crypto-js": "^4.1.1",
     "highlight.js": "^11.8.0",
     "http": "0.0.1-security",
