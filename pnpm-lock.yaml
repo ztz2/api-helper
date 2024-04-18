@@ -45,6 +45,9 @@ importers:
       json-schema:
         specifier: ^0.4.0
         version: 0.4.0
+      lcid:
+        specifier: ^4.0.1
+        version: 4.0.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -576,8 +579,8 @@ importers:
         specifier: ^6.0.1
         version: 6.0.1(@lezer/common@1.2.1)
       core-js:
-        specifier: ^3.8.3
-        version: 3.8.3
+        specifier: ^3.37.0
+        version: 3.37.0
       crypto-js:
         specifier: ^4.1.1
         version: 4.1.1
@@ -677,7 +680,7 @@ importers:
         version: 0.53.6(rollup@2.79.1)(webpack@5.91.0)
       '@vue/cli-plugin-babel':
         specifier: ~5.0.0
-        version: 5.0.0(@vue/cli-service@5.0.1)(core-js@3.8.3)(vue@3.2.45)
+        version: 5.0.0(@vue/cli-service@5.0.1)(core-js@3.37.0)(vue@3.2.45)
       '@vue/cli-plugin-eslint':
         specifier: ~5.0.0
         version: 5.0.0(@vue/cli-service@5.0.1)(eslint@7.32.0)
@@ -6825,7 +6828,7 @@ packages:
       svg-tags: 1.0.0
     dev: true
 
-  /@vue/babel-preset-app@5.0.8(@babel/core@7.21.8)(core-js@3.8.3)(vue@3.2.45):
+  /@vue/babel-preset-app@5.0.8(@babel/core@7.21.8)(core-js@3.37.0)(vue@3.2.45):
     resolution: {integrity: sha512-yl+5qhpjd8e1G4cMXfORkkBlvtPCIgmRf3IYCWYDKIQ7m+PPa5iTm4feiNmCMD6yGqQWMhhK/7M3oWGL9boKwg==}
     peerDependencies:
       '@babel/core': '*'
@@ -6850,7 +6853,7 @@ packages:
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.21.8)
       '@vue/babel-preset-jsx': 1.4.0(@babel/core@7.21.8)(vue@3.2.45)
       babel-plugin-dynamic-import-node: 2.3.3
-      core-js: 3.8.3
+      core-js: 3.37.0
       core-js-compat: 3.30.1
       semver: 7.5.0
       vue: 3.2.45
@@ -6944,13 +6947,13 @@ packages:
     resolution: {integrity: sha512-KmtievE/B4kcXp6SuM2gzsnSd8WebkQpg3XaB6GmFh1BJGRqa1UiW9up7L/Q67uOdTigHxr5Ar2lZms4RcDjwQ==}
     dev: true
 
-  /@vue/cli-plugin-babel@5.0.0(@vue/cli-service@5.0.1)(core-js@3.8.3)(vue@3.2.45):
+  /@vue/cli-plugin-babel@5.0.0(@vue/cli-service@5.0.1)(core-js@3.37.0)(vue@3.2.45):
     resolution: {integrity: sha512-7otBeEWbv2IBbuDNrGdYpe2+RjnG4jYrsak8zW2LCQJaQhCIvkPEOBF3YEsgBfFvssAwpl0ySOXvNPIQXGhBQA==}
     peerDependencies:
       '@vue/cli-service': ^3.0.0 || ^4.0.0 || ^5.0.0-0
     dependencies:
       '@babel/core': 7.21.8
-      '@vue/babel-preset-app': 5.0.8(@babel/core@7.21.8)(core-js@3.8.3)(vue@3.2.45)
+      '@vue/babel-preset-app': 5.0.8(@babel/core@7.21.8)(core-js@3.37.0)(vue@3.2.45)
       '@vue/cli-service': 5.0.1(@babel/core@7.24.4)(@vue/compiler-sfc@3.0.0-alpha.11)(lodash@4.17.21)(prettier@2.8.4)(sass-loader@12.0.0)(vue@3.2.45)
       '@vue/cli-shared-utils': 5.0.8
       babel-loader: 8.3.0(@babel/core@7.21.8)(webpack@5.82.0)
@@ -9151,8 +9154,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001609
-      electron-to-chromium: 1.4.736
+      caniuse-lite: 1.0.30001611
+      electron-to-chromium: 1.4.740
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: true
@@ -9301,8 +9304,8 @@ packages:
     resolution: {integrity: sha512-KCqHwRnaa1InZBtqXzP98LPg0ajCVujMKjqKDhZEthIpAsJl/YEIa3YvXjGXPVqzZVguccuu7ga9KOE1J9rKPQ==}
     dev: true
 
-  /caniuse-lite@1.0.30001609:
-    resolution: {integrity: sha512-JFPQs34lHKx1B5t1EpQpWH4c+29zIyn/haGsbpfq3suuV9v56enjFt23zqijxGTMwy1p/4H2tjnQMY+p1WoAyA==}
+  /caniuse-lite@1.0.30001611:
+    resolution: {integrity: sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==}
     dev: true
 
   /capital-case@1.0.4:
@@ -10034,9 +10037,8 @@ packages:
       browserslist: 4.21.5
     dev: true
 
-  /core-js@3.8.3:
-    resolution: {integrity: sha512-KPYXeVZYemC2TkNEkX/01I+7yd+nX3KddKwZ1Ww7SKWdI2wQprSgLmrTddT8nw92AjEklTsPBoSdQBhbI1bQ6Q==}
-    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+  /core-js@3.37.0:
+    resolution: {integrity: sha512-fu5vHevQ8ZG4og+LXug8ulUtVxjOcEYvifJr7L5Bfq9GOztVqsKd9/59hUk2ZSbCrS3BqUr3EpaYGIYzq7g3Ug==}
     requiresBuild: true
 
   /core-util-is@1.0.3:
@@ -10737,8 +10739,8 @@ packages:
     resolution: {integrity: sha512-H3BYG6DW5Z+l0xcfXaicJGxrpA4kMlCxnN71+iNX+dBLkRMOdVJqFJiAmbNZZKA1zISpRg17JR03qGifXNsJtw==}
     dev: true
 
-  /electron-to-chromium@1.4.736:
-    resolution: {integrity: sha512-Rer6wc3ynLelKNM4lOCg7/zPQj8tPOCB2hzD32PX9wd3hgRRi9MxEbmkFCokzcEhRVMiOVLjnL9ig9cefJ+6+Q==}
+  /electron-to-chromium@1.4.740:
+    resolution: {integrity: sha512-Yvg5i+iyv7Xm18BRdVPVm8lc7kgxM3r6iwqCH2zB7QZy1kZRNmd0Zqm0zcD9XoFREE5/5rwIuIAOT+/mzGcnZg==}
     dev: true
 
   /elegant-spinner@1.0.1:
@@ -12758,6 +12760,11 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: true
 
+  /invert-kv@3.0.1:
+    resolution: {integrity: sha512-CYdFeFexxhv/Bcny+Q0BfOV+ltRlJcd4BBZBYFX/O0u4npJrgZtIcjokegtiSMAvlMTJ+Koq0GBCc//3bueQxw==}
+    engines: {node: '>=8'}
+    dev: false
+
   /ipaddr.js@1.9.1:
     resolution: {integrity: sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==}
     engines: {node: '>= 0.10'}
@@ -14642,6 +14649,13 @@ packages:
       picocolors: 1.0.0
       shell-quote: 1.8.1
     dev: true
+
+  /lcid@4.0.1:
+    resolution: {integrity: sha512-qI4sQt7g19ZWtaodPKBUvym/pen9/lZzqyl2qeItTFPwJptXllVhe3KI+mV9xmBa4cnZoik8m1obToxqFbVIZQ==}
+    engines: {node: '>=14.16'}
+    dependencies:
+      invert-kv: 3.0.1
+    dev: false
 
   /lebab@3.2.3:
     resolution: {integrity: sha512-mwS5d96W+KlfChffQcbd8TT/93qpshhreHtx30bwSHFejZ/271pNCcpfiRydNMg+Dx2jIz54OK8GM6krBFxO1Q==}
