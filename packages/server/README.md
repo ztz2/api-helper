@@ -1,62 +1,13 @@
-<h1
-    style="background: -webkit-linear-gradient(315deg, rgb(255,87,34) 0%, #fee140 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent"
->
-    <a href="https://github.com/ztz2/api-helper" target="_blank">
-        API Helper
-    </a>
-</h1>
-<p>
-    <a href="https://www.npmjs.com/org/api-helper">
-        <img src="https://img.shields.io/npm/l/@api-helper/core" alt="Package License" />
-    </a>
-</p>
+<div align="center">
+  <a href="https://github.com/ztz2/api-helper" target="_blank">
+      <h1>API Helper</h1>
+  </a> 
+</div>
 
-* 模板功能的应用场景在于，重复性的表单或者表格页面，根据接口生成统一的代码模板。
-* 模板功能本质上就是一个B/S架构的产物，需自行本地部署。
-  * 浏览器端代码在web包下。
-  * 服务器端代码在server包下。
+<div align="center">
 
-## 部署说明
-windows环境，请先安装 `pnpm`，然后双击运行 `run-template-server.bat` 即可。下面是手动部署。
+A tool to help developers in generating code for interfaces, classes, objects, form templates, and more.
 
-### 步骤1
-打包浏览器代码，进入web包下，输入命令：`pnpm run build`。
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ztz2/api-helper/blob/main/LICENSE)
 
-### 步骤2
-打包服务器端代码，进入server包下，输入命令：`pnpm run build`。
-
-### 步骤3
-* 启动服务，进入server包下，输入命令：`pnpm run start:prod`。
-* 服务启动后访问地址：[http://localhost:3210](http://localhost:3210)。
-* 如果需要更新最新代码运行，需要从步骤1开始，后续启动服务操作，都是步骤3。
-
-## 功能展示
-* 通用的模版代码生成器
-  * 生成JS对象代码
-  * 生成Typescript interface代码
-  * 生成实体类代码
-  * 生成表单、表格代码
-  * 自定义模版代码生成等
-![](../docs/src/public/images/map-code.gif)
-
-
-* 文件模块生成
-
-将一个功能模块的接口和指定的模版关联，生成一个功能模块的文件代码。
-
-![](../docs/src/public/images/file-directory.gif)
-
-## 👏赞助商
-<a href="https://www.jetbrains.com" target="_blank">
-  <img width="64" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
-</a>
-
-感谢 [JetBrains](https://www.jetbrains.com) 对本项目的支持。
-
-
-## 📃开源许可
-
-[MIT](https://opensource.org/licenses/MIT) Copyright (c) 2023-present, [ztz2](https://github.com/ztz2)
+</div>
