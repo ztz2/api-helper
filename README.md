@@ -32,7 +32,7 @@ English | [简体中文](./README.zh-CN.md)
 
 ### Usage CLI
 
-![API代码](./packages/docs/src/public/images/api-code-cli.gif)
+![API代码](./packages/docs/src/public/images/example/en/api-code-cli.gif)
 ### Examples
 ```sh
 $ npx apih -u http://your-api-documentation-address.com
@@ -52,7 +52,7 @@ Options:
 
 ## Usage config in file
 
-![](./packages/docs/src/public/images/api-code.gif)
+![](./packages/docs/src/public/images/example/en/api-code.gif)
 
 ### Initialize Configuration File
 Enter the following command to initialize the configuration file.
