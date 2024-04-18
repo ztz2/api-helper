@@ -18,20 +18,22 @@ import {
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 
-import logger from '@/lib/tools/logger';
 import {
   resolve,
+  toUnixPath,
   loadModule,
   removeFolder,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins, toUnixPath,
+  documentServersRunParserPlugins,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
   ParserPluginRunResult,
-} from '../types';
-import './worker-thread';
+} from '@/lib';
+// import './worker-thread';
+import Locales from '@/lib/locales';
+import logger from '@/lib/tools/logger';
 import { Config, formatCode } from '@/lib';
 import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
@@ -72,15 +74,20 @@ class Service{
 
   private constructorOptions: ServerOptions;
 
+  private locales: Locales;
+
   constructor(options: ServerOptions = {} as ServerOptions, isTestEnv = false) {
     this.isTestEnv = isTestEnv;
     this.configFilePath = options.config;
     this.constructorOptions = options;
+    this.locales = new Locales();
   }
 
   async run() {
-    this.startDate = Date.now();
 
+    await this.locales.init();
+
+    this.startDate = Date.now();
     const configList = await this.getConfigFile();
     const len = configList.length;
 
@@ -91,7 +98,7 @@ class Service{
       try {
         const config = configList[i];
         if (len > 1) {
-          logger.info(`\n———————————————————— \x1B[34m正 在 处 理 ${i + 1} 项\x1B[0m ————————————————————`);
+          logger.info(`\n———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
         }
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
@@ -116,7 +123,7 @@ class Service{
       for (const parserPlugin of parserPlugins) {
         const parserPluginMap = this.getParserPluginMap();
         if (parserPluginMap.has(parserPlugin.name)) {
-          logger.warn(`${parserPlugin.name}插件已经存在.`);
+          logger.warn(this.locales.$t('插件已经注册').replace('%0', parserPlugin.name));
           continue;
         }
         this.parserPlugins.push(parserPlugin);
@@ -156,7 +163,7 @@ class Service{
     }
 
     const { configFilePath } = this;
-    const spinner = ora('读取配置文件').start();
+    const spinner = ora(this.locales.$t('读取配置文件')).start();
 
     // 有配置文件
     if (configFilePath) {
@@ -188,7 +195,7 @@ class Service{
     }
 
     spinner.fail();
-    logger.error('配置文件不存在，程序退出');
+    logger.error(this.locales.$t('配置文件不存在，程序退出'));
     process.exit(1);
   }
 
@@ -226,7 +233,7 @@ class Service{
         choices: choicesDocumentListOptions,
       }]);
       if (answers.documentList.length === 0) {
-        const failText = '未选择接口文档';
+        const failText = this.locales.$t('未选择接口文档');
         logger.error(failText);
         return Promise.reject(failText);
       }
@@ -237,7 +244,7 @@ class Service{
     }
 
     if (parserPluginRunResult.length === 0) {
-      const failText = '未选择接口文档';
+      const failText = this.locales.$t('未选择接口文档');
       logger.error(failText);
       return Promise.reject(failText);
     }
@@ -248,11 +255,11 @@ class Service{
   // 4. 生成代码
   private async genCode(config: Config, parserPluginRunResult: ParserPluginRunResult): Promise<GenCodeType> {
     const result: GenCodeType = [];
-    const outputFilePath = getOutputPath(config);
-    const isTS = checkOutputTS(config);
+    const outputFilePath = await getOutputPath(config);
+    const isTS = await checkOutputTS(config);
 
     // 生成代码
-    const spinner = ora('代码生成，这可能需要等待一段时间...').start();
+    const spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
     const genCode = (documentList: APIHelper.Document | APIHelper.CategoryList, params: Recordable) => {
       params = {...params};
       let code: string = renderAllApi(documentList, params) || '';
@@ -397,7 +404,7 @@ class Service{
                 ...renderHeaderParams,
                 isTS: true,
                 onlyTyping: config.onlyTyping
-              });
+              }, this.locales);
               result.push({
                 outputFilePath: currentOutputFilePath,
                 code: code ? `${codeHead}${code}` : '',
@@ -441,7 +448,7 @@ class Service{
             ...renderHeaderParams,
             isTS: true,
   onlyTyping: config.onlyTyping
-          });
+          }, this.locales);
           const [code2, codeDeclare2] = await formatResultCode([codeHead, code],  [codeHeadDeclare, codeDeclare]);
           result.push({
             outputFilePath: currentOutputFilePath,
@@ -461,9 +468,9 @@ class Service{
 
   // 5. 输出
   private async output(config: Config, genCodes: GenCodeType) {
-    const isTS = checkOutputTS(config);
+    const isTS = await checkOutputTS(config);
 
-    const spinner = ora('文件输出').start();
+    const spinner = ora(this.locales.$t('文件输出')).start();
     try {
       for (const genCode of genCodes) {
         const outputFilePath = genCode.outputFilePath;
@@ -475,7 +482,7 @@ class Service{
       }
       spinner.succeed();
       // 耗时：${((Date.now() - this.startDate) / 1000).toFixed(2)}秒
-      logger.info(`Done. 代码生成成功. `);
+      logger.info(this.locales.$t('Done. 代码生成成功.'));
     } catch (error: any) {
       spinner.fail();
       logger.error(error);
@@ -485,6 +492,8 @@ class Service{
 }
 
 Service.init = async function (options: ServerOptions = {} as ServerOptions) {
+  const locales = await new Locales().init();
+
   let configFile: string;
   if (options?.config) {
     if (isAbsolute(options.config)) {
@@ -496,7 +505,7 @@ Service.init = async function (options: ServerOptions = {} as ServerOptions) {
     const answers = await prompts([{
       type: 'select',
       name: 'codeType',
-      message: '请选择配置文件类型？',
+      message: locales.$t('请选择配置文件类型？'),
       choices: [
         { title: 'JavaScript', description: 'apih.config.js', value: 'apih.config.js' },
         { title: 'TypeScript', description: 'apih.config.ts', value: 'apih.config.ts' },
@@ -514,7 +523,7 @@ Service.init = async function (options: ServerOptions = {} as ServerOptions) {
     const overrideAnswer = await prompts([{
       type: 'confirm',
       name: 'override',
-      message: '检测到已经存在配置文件，是否覆盖已有配置文件？'
+      message: locales.$t('检测到已经存在配置文件，是否覆盖已有配置文件？')
     }]);
     if (!overrideAnswer.override) {
       return;
@@ -525,36 +534,36 @@ Service.init = async function (options: ServerOptions = {} as ServerOptions) {
     `import { defineConfig } from '@api-helper/cli';
 
 export default defineConfig({
-  // 使用分组功能，启用该功能后，按照分组多文件代码生成
+  // ${locales.$t('group')}
   group: false,
-  // 是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
+  // ${locales.$t('onlyTyping')}
   onlyTyping: false,
-  // 代码生成后的输出路径
+  // ${locales.$t('outputPath')}
   outputPath: 'src/api/index.ts',
-  // 生成的目标代码类型。默认: typescript
+  // ${locales.$t('target')}
   target: 'typescript',
-  // request请求工具函数文件路径。
+  // ${locales.$t('requestFunctionFilePath')}
   requestFunctionFilePath: 'src/api/request.ts',
-  // 请求数据所有字段设置成必有属性，默认: false
+  // ${locales.$t('requiredRequestField')}
   requiredRequestField: false,
-  // 响应数据所有字段设置成必有属性，默认：true
+  // ${locales.$t('requiredResponseField')}
   requiredResponseField: true,
-  // 接口文档服务配置
+  // ${locales.$t('documentServers')}
   documentServers: [{
-    // 文档地址【当下面的type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
-    url: 'http://接口文档地址.com',
-    // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
+    // ${locales.$t('url')}
+    url: '${locales.$t('urlValue')}',
+    // ${locales.$t('type')}
     type: 'swagger',
-    // 当前接口文档服务名称，有值的情况下，文件输出变成 -> 路径/当前name
+    // ${locales.$t('name')}
     name: '',
-    // 获取响应数据的key，body[dataKey]
+    // ${locales.$t('dataKey')}
     dataKey: '',
-    // 访问文档可能需要认证信息，http auth 验证方式
+    // ${locales.$t('auth')}
     auth: {
       username: '',
       password: '',
     },
-    // 访问文档可能需要认证信息，通过使用token访问，yapi的验证token
+    // ${locales.$t('authToken')}
     authToken: '',
   }],
 });
@@ -562,21 +571,21 @@ export default defineConfig({
   try {
     await outputFile(configFile, code);
     await getRequestFunctionFilePath({ outputFilePath: 'src/api/index.ts' } as any);
-    logger.info('已生成配置文件.');
+    logger.info(locales.$t('已生成配置文件.'));
   } catch (e) {
-    return logger.error('配置文件生成失败.');
+    return logger.error(locales.$t('配置文件生成失败.'));
   }
 }
 
-function renderHeader(isTestEnv = false, options1: Recordable = {}, options2: Recordable = {}) {
+function renderHeader(isTestEnv = false, options1: Recordable = {}, options2: Recordable = {}, locales: Locales) {
   const genTimeStr = isTestEnv ? '' : formatDate(Date.now());
   const codeHeadTpl = `《if onlyTyping !== true》《if isTS》/* tslint:disable */
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 代码生成时间: ${genTimeStr} */
-/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
+/* ${locales.$t('代码生成时间：')}${genTimeStr} */
+/* ${locales.$t('提示：该文件由 API Helper CLI 自动生成，请勿直接修改。')} */
+/* ${locales.$t('文档参考：')}https://github.com/ztz2/api-helper */
 
 // @ts-ignore
 // prettier-ignore
@@ -594,9 +603,9 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 代码生成时间: ${genTimeStr} */
-/* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
+/* ${locales.$t('代码生成时间：')}${genTimeStr} */
+/* ${locales.$t('提示：该文件由 API Helper CLI 自动生成，请勿直接修改。')} */
+/* ${locales.$t('文档参考：')}https://github.com/ztz2/api-helper */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';
@@ -621,21 +630,22 @@ function filterDeclareFilename(filename: string): string {
   }
   return `${filename}.d.ts`;
 }
-function checkOutputTS(config: Config) {
-  const outputFilePath = getOutputPath(config);
+async function checkOutputTS(config: Config) {
+  const outputFilePath = await getOutputPath(config);
   if (config.target != null) {
     return config.target !== 'javascript';
   }
   return !(outputFilePath.endsWith('.js') || outputFilePath.endsWith('.jsx'));
 }
-function getOutputPath(config: Config & { output?: { path: string; filename: string; } }, showDiscardWarn = false): string {
+async function getOutputPath(config: Config & { output?: { path: string; filename: string; } }, showDiscardWarn = false): Promise<string> {
+  const locales = await new Locales().init();
   const outputPath = config.outputPath ?? config.outputFilePath;
   // 兼容旧版的配置路径
   if (config.outputFilePath) {
     if (showDiscardWarn) {
       if (!outputDiscardWarn) {
         outputDiscardWarn = true;
-        logger.warn('documentServers.outputFilePath 属性已经废弃，请使用 documentServers.outputPath');
+        logger.warn(locales.$t('documentServers.outputFilePath 属性已经废弃，请使用 documentServers.outputPath'));
       }
     }
   }
@@ -644,7 +654,7 @@ function getOutputPath(config: Config & { output?: { path: string; filename: str
     if (showDiscardWarn) {
       if (!outputDiscardWarn) {
         outputDiscardWarn = true;
-        logger.warn('documentServers.output 属性已经废弃，请使用 documentServers.outputPath');
+        logger.warn(locales.$t('documentServers.output 属性已经废弃，请使用 documentServers.outputPath'));
       }
     }
     if (isAbsolute(config.output.filename)) {
@@ -672,9 +682,10 @@ function removeExtensionName(filepath = '', extensions: Array<string> = []) {
 }
 
 async function getRequestFunctionFilePath(config: Config & { output?: { path: string; filename: string; } }): Promise<string> {
-  const outputFilename = getOutputPath(config);
+  const locales = await new Locales().init();
+  const outputFilename = await getOutputPath(config);
   const extensionName = getExtensionName(outputFilename);
-  let isTS = checkOutputTS(config);
+  let isTS = await checkOutputTS(config);
   config.requestFunctionFilePath = config.requestFunctionFilePath ? config.requestFunctionFilePath : `src/api/request.${isTS?'ts':'js'}`;
   let requestFunctionFilePath = config.requestFunctionFilePath;
   // 兼容旧版配置
@@ -702,9 +713,9 @@ async function getRequestFunctionFilePath(config: Config & { output?: { path: st
       try {
         await outputFile(requestDeclareFunctionFilePath,
 `import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
-// 自定义配置
+// ${locales.$t('自定义配置')}
 export type RequestOptions = {
-  // 自定义配置属性
+  //
 };
 export default function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData>;
 `);
@@ -724,14 +735,14 @@ export default function request<ResponseData>(config: RequestFunctionConfig, opt
     await outputFile(requestFunctionFilePath,
       isTS ? `import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';
 
-// 自定义配置
+// ${locales.$t('自定义配置')}
 export type RequestOptions = {
-  // 自定义配置属性
+  //
 };
 
 export default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {
   return new Promise((resolve, reject) => {
-    // 以axios为例的请求配置
+    // ${locales.$t('以axios为例的请求配置')}
     const requestConfig = {
       url: config.path,
       method: config.method,
@@ -740,12 +751,19 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-    // 处理表单数据请求头
+    // ${locales.$t('处理表单数据请求头')}
     if (config.hasFormData) {
       requestConfig.headers['Content-Type'] = 'multipart/form-data';
     }
-    // TODO待实现具体request请求逻辑...
-    // 先用异步模拟request请求逻辑
+    console.log('${locales.$t('请求配置：')}', requestConfig);
+    // ${locales.$t('TODO 待实现具体request请求逻辑...')}
+    /**
+      // axios example
+      axios(requestConfig).then((res) => {
+        resolve(res as unknown as ResponseData);
+      }).catch(reject);
+    */
+    // ${locales.$t('先用异步模拟request请求逻辑')}
     setTimeout(() => {
       resolve({} as unknown as ResponseData);
     }, 1500);
@@ -753,7 +771,7 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
 }
 `: `export default async function request(config, options) {
   return new Promise((resolve, reject) => {
-    // 以axios为例的请求配置
+    // ${locales.$t('以axios为例的请求配置')}
     const requestConfig = {
       url: config.path,
       method: config.method,
@@ -762,14 +780,20 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-    // 处理表单数据请求头
+    // ${locales.$t('处理表单数据请求头')}
     if (config.hasFormData) {
       requestConfig.headers['Content-Type'] = 'multipart/form-data';
     }
 
-    console.log('请求配置：', requestConfig);
-    // TODO待实现具体request请求逻辑...
-    // 先用异步模拟request请求逻辑
+    console.log('${locales.$t('请求配置：')}', requestConfig);
+    // ${locales.$t('TODO 待实现具体request请求逻辑...')}
+    /**
+      // axios example
+      axios(requestConfig).then((res) => {
+        resolve(res as unknown as ResponseData);
+      }).catch(reject);
+    */
+    // ${locales.$t('先用异步模拟request请求逻辑')}
     setTimeout(() => {
       resolve({});
     }, 1500);
@@ -777,7 +801,7 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
 }
 `);
   } catch {
-    logger.error(`统一请求文件创建失败：${requestFunctionFilePath}`);
+    logger.error(`${locales.$t('请求文件创建失败：')}${requestFunctionFilePath}`);
     process.exit(1);
   }
   return requestFunctionFilePath;

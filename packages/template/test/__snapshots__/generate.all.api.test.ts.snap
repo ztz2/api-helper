@@ -2,7 +2,8 @@
 
 exports[`生成全部API函数 OpenAPI-2.0-source生成全部API函数: OpenAPI-2.0-source生成全部API函数 1`] = `
 "/**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageRequestByPost {
@@ -14,7 +15,8 @@ export interface V2PetPetIdUploadImageRequestByPost {
   file?: File;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageResponseByPost {
@@ -35,12 +37,13 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["additionalMetadata","file"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /v2/pet
  */
 export interface V2PetRequestByPost {
@@ -59,7 +62,8 @@ export interface V2PetRequestByPost {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /v2/pet
  */
 export type V2PetResponseByPost = any;
@@ -81,7 +85,8 @@ v2PetByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Update an existing pet【请求数据类型定义】
+ * @description Update an existing pet
+ * @summary Request data types
  * @url [ PUT ] /v2/pet
  */
 export interface V2PetRequestByPut {
@@ -100,7 +105,8 @@ export interface V2PetRequestByPut {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet【响应数据类型定义】
+ * @description Update an existing pet
+ * @summary Response data types
  * @url [ PUT ] /v2/pet
  */
 export type V2PetResponseByPut = any;
@@ -122,7 +128,8 @@ v2PetByPut.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export interface V2PetFindByStatusRequestByGet {
@@ -130,7 +137,8 @@ export interface V2PetFindByStatusRequestByGet {
   status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseByGet = Array<{
@@ -163,10 +171,11 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"status\\"]
+  queryStringKeyNameList: ["status"]
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export interface V2PetFindByTagsRequestByGet {
@@ -174,7 +183,8 @@ export interface V2PetFindByTagsRequestByGet {
   tags: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseByGet = Array<{
@@ -207,10 +217,11 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"tags\\"]
+  queryStringKeyNameList: ["tags"]
 }
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByGet {
@@ -218,7 +229,8 @@ export interface V2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdResponseByGet {
@@ -250,11 +262,12 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByPost {
@@ -266,7 +279,8 @@ export interface V2PetPetIdRequestByPost {
   status?: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByPost = any;
@@ -283,12 +297,13 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: [\\"name\\",\\"status\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["name","status"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByDelete {
@@ -296,7 +311,8 @@ export interface V2PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByDelete = any;
@@ -314,11 +330,12 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderRequestByPost {
@@ -331,7 +348,8 @@ export interface V2StoreOrderRequestByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet【响应数据类型定义】
+ * @description Place an order for a pet
+ * @summary Response data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderResponseByPost {
@@ -361,7 +379,8 @@ v2StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByGet {
@@ -369,7 +388,8 @@ export interface V2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdResponseByGet {
@@ -395,11 +415,12 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByDelete {
@@ -407,7 +428,8 @@ export interface V2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export type V2StoreOrderOrderIdResponseByDelete = any;
@@ -425,16 +447,18 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryResponseByGet = any;
@@ -456,7 +480,8 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayRequestByPost = Array<{
@@ -471,7 +496,8 @@ export type V2UserCreateWithArrayRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayResponseByPost = any;
@@ -493,7 +519,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestByPost = Array<{
@@ -508,7 +535,8 @@ export type V2UserCreateWithListRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListResponseByPost = any;
@@ -530,7 +558,8 @@ v2UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByGet {
@@ -538,7 +567,8 @@ export interface V2UserUsernameRequestByGet {
   username: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameResponseByGet {
@@ -566,11 +596,12 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByPut {
@@ -586,7 +617,8 @@ export interface V2UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByPut = any;
@@ -604,11 +636,12 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByDelete {
@@ -616,7 +649,8 @@ export interface V2UserUsernameRequestByDelete {
   username: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByDelete = any;
@@ -634,11 +668,12 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /v2/user/login
  */
 export interface V2UserLoginRequestByGet {
@@ -648,7 +683,8 @@ export interface V2UserLoginRequestByGet {
   password: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /v2/user/login
  */
 export type V2UserLoginResponseByGet = string;
@@ -667,15 +703,17 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"username\\",\\"password\\"]
+  queryStringKeyNameList: ["username","password"]
 }
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutResponseByGet = any;
@@ -697,7 +735,8 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /v2/user
  */
 export interface V2UserRequestByPost {
@@ -712,7 +751,8 @@ export interface V2UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /v2/user
  */
 export type V2UserResponseByPost = any;
@@ -737,7 +777,8 @@ v2UserByPost.requestConfig = {
 
 exports[`生成全部API函数 OpenAPI-2.0生成全部API函数: OpenAPI-2.0生成全部API函数 1`] = `
 "/**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageRequestByPost {
@@ -749,7 +790,8 @@ export interface V2PetPetIdUploadImageRequestByPost {
   file?: File;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageResponseByPost {
@@ -770,12 +812,13 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["additionalMetadata","file"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /v2/pet
  */
 export interface V2PetRequestByPost {
@@ -794,7 +837,8 @@ export interface V2PetRequestByPost {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /v2/pet
  */
 export type V2PetResponseByPost = any;
@@ -816,7 +860,8 @@ v2PetByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Update an existing pet【请求数据类型定义】
+ * @description Update an existing pet
+ * @summary Request data types
  * @url [ PUT ] /v2/pet
  */
 export interface V2PetRequestByPut {
@@ -835,7 +880,8 @@ export interface V2PetRequestByPut {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet【响应数据类型定义】
+ * @description Update an existing pet
+ * @summary Response data types
  * @url [ PUT ] /v2/pet
  */
 export type V2PetResponseByPut = any;
@@ -857,7 +903,8 @@ v2PetByPut.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export interface V2PetFindByStatusRequestByGet {
@@ -865,7 +912,8 @@ export interface V2PetFindByStatusRequestByGet {
   status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseByGet = Array<{
@@ -898,10 +946,11 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"status\\"]
+  queryStringKeyNameList: ["status"]
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export interface V2PetFindByTagsRequestByGet {
@@ -909,7 +958,8 @@ export interface V2PetFindByTagsRequestByGet {
   tags: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseByGet = Array<{
@@ -942,10 +992,11 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"tags\\"]
+  queryStringKeyNameList: ["tags"]
 }
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByGet {
@@ -953,7 +1004,8 @@ export interface V2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdResponseByGet {
@@ -985,11 +1037,12 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByPost {
@@ -1001,7 +1054,8 @@ export interface V2PetPetIdRequestByPost {
   status?: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByPost = any;
@@ -1018,12 +1072,13 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: [\\"name\\",\\"status\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["name","status"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByDelete {
@@ -1031,7 +1086,8 @@ export interface V2PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByDelete = any;
@@ -1049,11 +1105,12 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderRequestByPost {
@@ -1073,7 +1130,8 @@ export interface V2StoreOrderRequestByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet【响应数据类型定义】
+ * @description Place an order for a pet
+ * @summary Response data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderResponseByPost {
@@ -1110,7 +1168,8 @@ v2StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByGet {
@@ -1118,7 +1177,8 @@ export interface V2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdResponseByGet {
@@ -1151,11 +1211,12 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByDelete {
@@ -1163,7 +1224,8 @@ export interface V2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export type V2StoreOrderOrderIdResponseByDelete = any;
@@ -1181,16 +1243,18 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryResponseByGet = any;
@@ -1212,7 +1276,8 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export interface V2UserCreateWithArrayRequestByPost {
@@ -1224,7 +1289,8 @@ export interface V2UserCreateWithArrayRequestByPost {
   userId: number;
 }
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayResponseByPost = any;
@@ -1242,11 +1308,12 @@ v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"userId\\"],
-  queryStringKeyNameList: [\\"userName\\",\\"password\\"]
+  pathParamKeyNameList: ["userId"],
+  queryStringKeyNameList: ["userName","password"]
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestByPost = Array<{
@@ -1261,7 +1328,8 @@ export type V2UserCreateWithListRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListResponseByPost = any;
@@ -1283,7 +1351,8 @@ v2UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByGet {
@@ -1291,7 +1360,8 @@ export interface V2UserUsernameRequestByGet {
   username1: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameResponseByGet {
@@ -1319,11 +1389,12 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
+  pathParamKeyNameList: ["username1"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByPut {
@@ -1339,7 +1410,8 @@ export interface V2UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByPut = any;
@@ -1357,11 +1429,12 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByDelete {
@@ -1369,7 +1442,8 @@ export interface V2UserUsernameRequestByDelete {
   username1: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByDelete = any;
@@ -1387,11 +1461,12 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
+  pathParamKeyNameList: ["username1"],
   queryStringKeyNameList: []
 }
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /v2/user/login
  */
 export interface V2UserLoginRequestByGet {
@@ -1401,7 +1476,8 @@ export interface V2UserLoginRequestByGet {
   password: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /v2/user/login
  */
 export type V2UserLoginResponseByGet = string;
@@ -1420,15 +1496,17 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"username\\",\\"password\\"]
+  queryStringKeyNameList: ["username","password"]
 }
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutResponseByGet = any;
@@ -1450,7 +1528,8 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /v2/user
  */
 export interface V2UserRequestByPost {
@@ -1465,7 +1544,8 @@ export interface V2UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /v2/user
  */
 export type V2UserResponseByPost = any;
@@ -1490,7 +1570,8 @@ v2UserByPost.requestConfig = {
 
 exports[`生成全部API函数 OpenAPI-2.0生成全部类型申明: OpenAPI-2.0生成全部类型申明 1`] = `
 "/**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 declare interface V2PetPetIdUploadImageRequestByPost {
@@ -1502,7 +1583,8 @@ declare interface V2PetPetIdUploadImageRequestByPost {
   file?: File;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 declare interface V2PetPetIdUploadImageResponseByPost {
@@ -1519,8 +1601,8 @@ declare const v2PetPetIdUploadImageByPost: {
   readonly requestConfig: {
     path: '/v2/pet/{petId}/uploadImage',
     method: 'post',
-    formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
-    pathParamKeyNameList: [\\"petId\\"],
+    formDataKeyNameList: ["additionalMetadata","file"],
+    pathParamKeyNameList: ["petId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1536,12 +1618,13 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["additionalMetadata","file"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /v2/pet
  */
 declare interface V2PetRequestByPost {
@@ -1560,7 +1643,8 @@ declare interface V2PetRequestByPost {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /v2/pet
  */
 declare type V2PetResponseByPost = any;
@@ -1595,7 +1679,8 @@ v2PetByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Update an existing pet【请求数据类型定义】
+ * @description Update an existing pet
+ * @summary Request data types
  * @url [ PUT ] /v2/pet
  */
 declare interface V2PetRequestByPut {
@@ -1614,7 +1699,8 @@ declare interface V2PetRequestByPut {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet【响应数据类型定义】
+ * @description Update an existing pet
+ * @summary Response data types
  * @url [ PUT ] /v2/pet
  */
 declare type V2PetResponseByPut = any;
@@ -1649,7 +1735,8 @@ v2PetByPut.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 declare interface V2PetFindByStatusRequestByGet {
@@ -1657,7 +1744,8 @@ declare interface V2PetFindByStatusRequestByGet {
   status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 declare type V2PetFindByStatusResponseByGet = Array<{
@@ -1686,7 +1774,7 @@ declare const v2PetFindByStatusByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: [\\"status\\"]
+    queryStringKeyNameList: ["status"]
   }
 };/**
    * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -1703,10 +1791,11 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"status\\"]
+  queryStringKeyNameList: ["status"]
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByTags
  */
 declare interface V2PetFindByTagsRequestByGet {
@@ -1714,7 +1803,8 @@ declare interface V2PetFindByTagsRequestByGet {
   tags: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByTags
  */
 declare type V2PetFindByTagsResponseByGet = Array<{
@@ -1743,7 +1833,7 @@ declare const v2PetFindByTagsByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: [\\"tags\\"]
+    queryStringKeyNameList: ["tags"]
   }
 };/**
    * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -1760,10 +1850,11 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"tags\\"]
+  queryStringKeyNameList: ["tags"]
 }
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByGet {
@@ -1771,7 +1862,8 @@ declare interface V2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdResponseByGet {
@@ -1799,7 +1891,7 @@ declare const v2PetPetIdByGet: {
     path: '/v2/pet/{petId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"petId\\"],
+    pathParamKeyNameList: ["petId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1816,11 +1908,12 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByPost {
@@ -1832,7 +1925,8 @@ declare interface V2PetPetIdRequestByPost {
   status?: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}
  */
 declare type V2PetPetIdResponseByPost = any;
@@ -1845,8 +1939,8 @@ declare const v2PetPetIdByPost: {
   readonly requestConfig: {
     path: '/v2/pet/{petId}',
     method: 'post',
-    formDataKeyNameList: [\\"name\\",\\"status\\"],
-    pathParamKeyNameList: [\\"petId\\"],
+    formDataKeyNameList: ["name","status"],
+    pathParamKeyNameList: ["petId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1862,12 +1956,13 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: [\\"name\\",\\"status\\"],
-  pathParamKeyNameList: [\\"petId\\"],
+  formDataKeyNameList: ["name","status"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByDelete {
@@ -1875,7 +1970,8 @@ declare interface V2PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 declare type V2PetPetIdResponseByDelete = any;
@@ -1889,7 +1985,7 @@ declare const v2PetPetIdByDelete: {
     path: '/v2/pet/{petId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"petId\\"],
+    pathParamKeyNameList: ["petId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1906,11 +2002,12 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 declare interface V2StoreOrderRequestByPost {
@@ -1930,7 +2027,8 @@ declare interface V2StoreOrderRequestByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet【响应数据类型定义】
+ * @description Place an order for a pet
+ * @summary Response data types
  * @url [ POST ] /v2/store/order
  */
 declare interface V2StoreOrderResponseByPost {
@@ -1980,7 +2078,8 @@ v2StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdRequestByGet {
@@ -1988,7 +2087,8 @@ declare interface V2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdResponseByGet {
@@ -2017,7 +2117,7 @@ declare const v2StoreOrderOrderIdByGet: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2034,11 +2134,12 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdRequestByDelete {
@@ -2046,7 +2147,8 @@ declare interface V2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 declare type V2StoreOrderOrderIdResponseByDelete = any;
@@ -2060,7 +2162,7 @@ declare const v2StoreOrderOrderIdByDelete: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2077,16 +2179,18 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /v2/store/inventory
  */
 declare type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /v2/store/inventory
  */
 declare type V2StoreInventoryResponseByGet = any;
@@ -2121,7 +2225,8 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithArray
  */
 declare interface V2UserCreateWithArrayRequestByPost {
@@ -2133,7 +2238,8 @@ declare interface V2UserCreateWithArrayRequestByPost {
   userId: number;
 }
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithArray
  */
 declare type V2UserCreateWithArrayResponseByPost = any;
@@ -2147,8 +2253,8 @@ declare const v2UserCreateWithArrayByPost: {
     path: '/v2/user/createWithArray',
     method: 'post',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"userId\\"],
-    queryStringKeyNameList: [\\"userName\\",\\"password\\"]
+    pathParamKeyNameList: ["userId"],
+    queryStringKeyNameList: ["userName","password"]
   }
 };/**
    * @description Creates list of users with given input array
@@ -2164,11 +2270,12 @@ v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"userId\\"],
-  queryStringKeyNameList: [\\"userName\\",\\"password\\"]
+  pathParamKeyNameList: ["userId"],
+  queryStringKeyNameList: ["userName","password"]
 }
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
  */
 declare type V2UserCreateWithListRequestByPost = Array<{
@@ -2183,7 +2290,8 @@ declare type V2UserCreateWithListRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithList
  */
 declare type V2UserCreateWithListResponseByPost = any;
@@ -2218,7 +2326,8 @@ v2UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByGet {
@@ -2226,7 +2335,8 @@ declare interface V2UserUsernameRequestByGet {
   username1: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /v2/user/{username}
  */
 declare interface V2UserUsernameResponseByGet {
@@ -2250,7 +2360,7 @@ declare const v2UserUsernameByGet: {
     path: '/v2/user/{username}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"username1\\"],
+    pathParamKeyNameList: ["username1"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2267,11 +2377,12 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
+  pathParamKeyNameList: ["username1"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByPut {
@@ -2287,7 +2398,8 @@ declare interface V2UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /v2/user/{username}
  */
 declare type V2UserUsernameResponseByPut = any;
@@ -2301,7 +2413,7 @@ declare const v2UserUsernameByPut: {
     path: '/v2/user/{username}',
     method: 'put',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"username\\"],
+    pathParamKeyNameList: ["username"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2318,11 +2430,12 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByDelete {
@@ -2330,7 +2443,8 @@ declare interface V2UserUsernameRequestByDelete {
   username1: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /v2/user/{username}
  */
 declare type V2UserUsernameResponseByDelete = any;
@@ -2344,7 +2458,7 @@ declare const v2UserUsernameByDelete: {
     path: '/v2/user/{username}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"username1\\"],
+    pathParamKeyNameList: ["username1"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2361,11 +2475,12 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
+  pathParamKeyNameList: ["username1"],
   queryStringKeyNameList: []
 }
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /v2/user/login
  */
 declare interface V2UserLoginRequestByGet {
@@ -2375,7 +2490,8 @@ declare interface V2UserLoginRequestByGet {
   password: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /v2/user/login
  */
 declare type V2UserLoginResponseByGet = string;
@@ -2390,7 +2506,7 @@ declare const v2UserLoginByGet: {
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: [\\"username\\",\\"password\\"]
+    queryStringKeyNameList: ["username","password"]
   }
 };/**
    * @description Logs user into the system
@@ -2407,15 +2523,17 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"username\\",\\"password\\"]
+  queryStringKeyNameList: ["username","password"]
 }
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /v2/user/logout
  */
 declare type V2UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /v2/user/logout
  */
 declare type V2UserLogoutResponseByGet = any;
@@ -2450,7 +2568,8 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /v2/user
  */
 declare interface V2UserRequestByPost {
@@ -2465,7 +2584,8 @@ declare interface V2UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /v2/user
  */
 declare type V2UserResponseByPost = any;
@@ -2503,7 +2623,8 @@ v2UserByPost.requestConfig = {
 
 exports[`生成全部API函数 OpenAPI-3.0.1生成全部API函数: OpenAPI-3.0.1生成全部API函数 1`] = `
 "/**
- * @description 普通body请求-put【请求数据类型定义】
+ * @description 普通body请求-put
+ * @summary Request data types
  * @url [ PUT ] /body/bodyPut
  */
 export interface BodyBodyPutRequestByPut {
@@ -2517,7 +2638,8 @@ export interface BodyBodyPutRequestByPut {
   success?: boolean;
 }
 /**
- * @description 普通body请求-put【响应数据类型定义】
+ * @description 普通body请求-put
+ * @summary Response data types
  * @url [ PUT ] /body/bodyPut
  */
 export interface BodyBodyPutResponseByPut {
@@ -2549,7 +2671,8 @@ bodyBodyPutByPut.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description body请求【请求数据类型定义】
+ * @description body请求
+ * @summary Request data types
  * @url [ POST ] /user/{deviceId}/body
  */
 export interface UserDeviceIdBodyRequestByPost {
@@ -2557,7 +2680,8 @@ export interface UserDeviceIdBodyRequestByPost {
   deviceId: string;
 }
 /**
- * @description body请求【响应数据类型定义】
+ * @description body请求
+ * @summary Response data types
  * @url [ POST ] /user/{deviceId}/body
  */
 export interface UserDeviceIdBodyResponseByPost {
@@ -2590,11 +2714,12 @@ userDeviceIdBodyByPost.requestConfig = {
   path: '/user/{deviceId}/body',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"deviceId\\"],
+  pathParamKeyNameList: ["deviceId"],
   queryStringKeyNameList: []
 }
 /**
- * @description body请求1【请求数据类型定义】
+ * @description body请求1
+ * @summary Request data types
  * @url [ POST ] /user/{deviceId}/body1
  */
 export interface UserDeviceIdBody1RequestByPost {
@@ -2615,7 +2740,8 @@ export interface UserDeviceIdBody1RequestByPost {
   };
 }
 /**
- * @description body请求1【响应数据类型定义】
+ * @description body请求1
+ * @summary Response data types
  * @url [ POST ] /user/{deviceId}/body1
  */
 export interface UserDeviceIdBody1ResponseByPost {
@@ -2648,11 +2774,12 @@ userDeviceIdBody1ByPost.requestConfig = {
   path: '/user/{deviceId}/body1',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"deviceId\\"],
+  pathParamKeyNameList: ["deviceId"],
   queryStringKeyNameList: []
 }
 /**
- * @description json参数查询1【请求数据类型定义】
+ * @description json参数查询1
+ * @summary Request data types
  * @url [ POST ] /user/getRequest1
  */
 export interface UserGetRequest1RequestByPost {
@@ -2672,7 +2799,8 @@ export interface UserGetRequest1RequestByPost {
   };
 }
 /**
- * @description json参数查询1【响应数据类型定义】
+ * @description json参数查询1
+ * @summary Response data types
  * @url [ POST ] /user/getRequest1
  */
 export interface UserGetRequest1ResponseByPost {
@@ -2706,10 +2834,11 @@ userGetRequest1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"cade\\"]
+  queryStringKeyNameList: ["cade"]
 }
 /**
- * @description 创建用户-createOne、根据姓名创建用户1【请求数据类型定义】
+ * @description 创建用户-createOne、根据姓名创建用户1
+ * @summary Request data types
  * @url [ POST ] /user/createOne
  */
 export interface UserCreateOneRequestByPost {
@@ -2719,7 +2848,8 @@ export interface UserCreateOneRequestByPost {
   name?: string;
 }
 /**
- * @description 创建用户-createOne、根据姓名创建用户1【响应数据类型定义】
+ * @description 创建用户-createOne、根据姓名创建用户1
+ * @summary Response data types
  * @url [ POST ] /user/createOne
  */
 export interface UserCreateOneResponseByPost {
@@ -2746,7 +2876,8 @@ userCreateOneByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description 创建用户-Schema、根据姓名创建用户1【请求数据类型定义】
+ * @description 创建用户-Schema、根据姓名创建用户1
+ * @summary Request data types
  * @url [ POST ] /user/createOneSchema
  */
 export interface UserCreateOneSchemaRequestByPost {
@@ -2765,7 +2896,8 @@ export interface UserCreateOneSchemaRequestByPost {
   };
 }
 /**
- * @description 创建用户-Schema、根据姓名创建用户1【响应数据类型定义】
+ * @description 创建用户-Schema、根据姓名创建用户1
+ * @summary Response data types
  * @url [ POST ] /user/createOneSchema
  */
 export interface UserCreateOneSchemaResponseByPost {
@@ -2802,7 +2934,8 @@ userCreateOneSchemaByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description 创建用户1、根据姓名创建用户1【请求数据类型定义】
+ * @description 创建用户1、根据姓名创建用户1
+ * @summary Request data types
  * @url [ POST ] /user/createOne1
  */
 export interface UserCreateOne1RequestByPost {
@@ -2810,7 +2943,8 @@ export interface UserCreateOne1RequestByPost {
   name?: string;
 }
 /**
- * @description 创建用户1、根据姓名创建用户1【响应数据类型定义】
+ * @description 创建用户1、根据姓名创建用户1
+ * @summary Response data types
  * @url [ POST ] /user/createOne1
  */
 export interface UserCreateOne1ResponseByPost {
@@ -2834,17 +2968,19 @@ userCreateOne1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"name\\"]
+  queryStringKeyNameList: ["id","name"]
 }
 /**
- * @description 单纯文件上传、单纯文件上传，无任何参数【请求数据类型定义】
+ * @description 单纯文件上传、单纯文件上传，无任何参数
+ * @summary Request data types
  * @url [ POST ] /file/upload
  */
 export interface FileUploadRequestByPost {
   file: File;
 }
 /**
- * @description 单纯文件上传、单纯文件上传，无任何参数【响应数据类型定义】
+ * @description 单纯文件上传、单纯文件上传，无任何参数
+ * @summary Response data types
  * @url [ POST ] /file/upload
  */
 export interface FileUploadResponseByPost {
@@ -2876,7 +3012,8 @@ fileUploadByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description 文件上传-带参数【请求数据类型定义】
+ * @description 文件上传-带参数
+ * @summary Request data types
  * @url [ POST ] /file/uploadParam
  */
 export interface FileUploadParamRequestByPost {
@@ -2886,7 +3023,8 @@ export interface FileUploadParamRequestByPost {
   file: File;
 }
 /**
- * @description 文件上传-带参数【响应数据类型定义】
+ * @description 文件上传-带参数
+ * @summary Response data types
  * @url [ POST ] /file/uploadParam
  */
 export interface FileUploadParamResponseByPost {
@@ -2915,10 +3053,11 @@ fileUploadParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"name\\"]
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description 文件上传-带参数Header【请求数据类型定义】
+ * @description 文件上传-带参数Header
+ * @summary Request data types
  * @url [ POST ] /file/uploadParamHeader
  */
 export interface FileUploadParamHeaderRequestByPost {
@@ -2928,7 +3067,8 @@ export interface FileUploadParamHeaderRequestByPost {
   file: File;
 }
 /**
- * @description 文件上传-带参数Header【响应数据类型定义】
+ * @description 文件上传-带参数Header
+ * @summary Response data types
  * @url [ POST ] /file/uploadParamHeader
  */
 export interface FileUploadParamHeaderResponseByPost {
@@ -2957,10 +3097,11 @@ fileUploadParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"name\\"]
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description 文件上传-带参数Path【请求数据类型定义】
+ * @description 文件上传-带参数Path
+ * @summary Request data types
  * @url [ POST ] /file/uploadParam/{id}
  */
 export interface FileUploadParamIdRequestByPost {
@@ -2972,7 +3113,8 @@ export interface FileUploadParamIdRequestByPost {
   file: File;
 }
 /**
- * @description 文件上传-带参数Path【响应数据类型定义】
+ * @description 文件上传-带参数Path
+ * @summary Response data types
  * @url [ POST ] /file/uploadParam/{id}
  */
 export interface FileUploadParamIdResponseByPost {
@@ -3000,18 +3142,20 @@ fileUploadParamIdByPost.requestConfig = {
   path: '/file/uploadParam/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"id\\"],
-  queryStringKeyNameList: [\\"name\\"]
+  pathParamKeyNameList: ["id"],
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description 多文件上传【请求数据类型定义】
+ * @description 多文件上传
+ * @summary Request data types
  * @url [ POST ] /file/uploadBatch
  */
 export interface FileUploadBatchRequestByPost {
   files: Array<File>;
 }
 /**
- * @description 多文件上传【响应数据类型定义】
+ * @description 多文件上传
+ * @summary Response data types
  * @url [ POST ] /file/uploadBatch
  */
 export type FileUploadBatchResponseByPost = Array<// 文件对象
@@ -3043,7 +3187,8 @@ fileUploadBatchByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description 普通body请求【请求数据类型定义】
+ * @description 普通body请求
+ * @summary Request data types
  * @url [ POST ] /body/body
  */
 export interface BodyBodyRequestByPost {
@@ -3057,7 +3202,8 @@ export interface BodyBodyRequestByPost {
   success?: boolean;
 }
 /**
- * @description 普通body请求【响应数据类型定义】
+ * @description 普通body请求
+ * @summary Response data types
  * @url [ POST ] /body/body
  */
 export interface BodyBodyResponseByPost {
@@ -3089,7 +3235,8 @@ bodyBodyByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description 普通body请求+Param【请求数据类型定义】
+ * @description 普通body请求+Param
+ * @summary Request data types
  * @url [ POST ] /body/bodyParam
  */
 export interface BodyBodyParamRequestByPost {
@@ -3102,7 +3249,8 @@ export interface BodyBodyParamRequestByPost {
   success?: boolean;
 }
 /**
- * @description 普通body请求+Param【响应数据类型定义】
+ * @description 普通body请求+Param
+ * @summary Response data types
  * @url [ POST ] /body/bodyParam
  */
 export interface BodyBodyParamResponseByPost {
@@ -3131,10 +3279,11 @@ bodyBodyParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"name\\"]
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description 普通body请求+Param+Header【请求数据类型定义】
+ * @description 普通body请求+Param+Header
+ * @summary Request data types
  * @url [ POST ] /body/bodyParamHeader
  */
 export interface BodyBodyParamHeaderRequestByPost {
@@ -3148,7 +3297,8 @@ export interface BodyBodyParamHeaderRequestByPost {
   success?: boolean;
 }
 /**
- * @description 普通body请求+Param+Header【响应数据类型定义】
+ * @description 普通body请求+Param+Header
+ * @summary Response data types
  * @url [ POST ] /body/bodyParamHeader
  */
 export interface BodyBodyParamHeaderResponseByPost {
@@ -3177,10 +3327,11 @@ bodyBodyParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"name\\"]
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description 普通body请求+Param+Header+Path【请求数据类型定义】
+ * @description 普通body请求+Param+Header+Path
+ * @summary Request data types
  * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
 export interface BodyBodyParamHeaderPathIdRequestByPost {
@@ -3196,7 +3347,8 @@ export interface BodyBodyParamHeaderPathIdRequestByPost {
   success?: boolean;
 }
 /**
- * @description 普通body请求+Param+Header+Path【响应数据类型定义】
+ * @description 普通body请求+Param+Header+Path
+ * @summary Response data types
  * @url [ POST ] /body/bodyParamHeaderPath/{id}
  */
 export interface BodyBodyParamHeaderPathIdResponseByPost {
@@ -3224,11 +3376,12 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
   path: '/body/bodyParamHeaderPath/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"id\\"],
-  queryStringKeyNameList: [\\"name\\"]
+  pathParamKeyNameList: ["id"],
+  queryStringKeyNameList: ["name"]
 }
 /**
- * @description json参数查询【请求数据类型定义】
+ * @description json参数查询
+ * @summary Request data types
  * @url [ GET ] /user/getRequest
  */
 export interface UserGetRequestRequestByGet {
@@ -3250,7 +3403,8 @@ export interface UserGetRequestRequestByGet {
   cade: string;
 }
 /**
- * @description json参数查询【响应数据类型定义】
+ * @description json参数查询
+ * @summary Response data types
  * @url [ GET ] /user/getRequest
  */
 export interface UserGetRequestResponseByGet {
@@ -3284,17 +3438,19 @@ userGetRequestByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"userSchema\\",\\"cade\\"]
+  queryStringKeyNameList: ["userSchema","cade"]
 }
 /**
- * @description 创建用户、根据姓名创建用户【请求数据类型定义】
+ * @description 创建用户、根据姓名创建用户
+ * @summary Request data types
  * @url [ GET ] /user/create
  */
 export interface UserCreateRequestByGet {
   name: string;
 }
 /**
- * @description 创建用户、根据姓名创建用户【响应数据类型定义】
+ * @description 创建用户、根据姓名创建用户
+ * @summary Response data types
  * @url [ GET ] /user/create
  */
 export type UserCreateResponseByGet = string;
@@ -3313,13 +3469,14 @@ userCreateByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"name\\"]
+  queryStringKeyNameList: ["name"]
 }"
 `;
 
 exports[`生成全部API函数 OpenAPI-3.0生成全部API函数: OpenAPI-3.0生成全部API函数 1`] = `
 "/**
- * @description Update an existing pet、Update an existing pet by Id【请求数据类型定义】
+ * @description Update an existing pet、Update an existing pet by Id
+ * @summary Request data types
  * @url [ PUT ] /api/v3/pet
  */
 export interface ApiV3PetRequestByPut {
@@ -3338,7 +3495,8 @@ export interface ApiV3PetRequestByPut {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet、Update an existing pet by Id【响应数据类型定义】
+ * @description Update an existing pet、Update an existing pet by Id
+ * @summary Response data types
  * @url [ PUT ] /api/v3/pet
  */
 export interface ApiV3PetResponseByPut {
@@ -3371,10 +3529,11 @@ apiV3PetByPut.requestConfig = {
   method: 'PUT',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
+  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
 }
 /**
- * @description Add a new pet to the store、Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store、Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /api/v3/pet
  */
 export interface ApiV3PetRequestByPost {
@@ -3393,7 +3552,8 @@ export interface ApiV3PetRequestByPost {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store、Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store、Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /api/v3/pet
  */
 export interface ApiV3PetResponseByPost {
@@ -3426,10 +3586,11 @@ apiV3PetByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
+  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /api/v3/pet/findByStatus
  */
 export interface ApiV3PetFindByStatusRequestByGet {
@@ -3437,7 +3598,8 @@ export interface ApiV3PetFindByStatusRequestByGet {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /api/v3/pet/findByStatus
  */
 export type ApiV3PetFindByStatusResponseByGet = Array<{
@@ -3470,10 +3632,11 @@ apiV3PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"status\\"]
+  queryStringKeyNameList: ["status"]
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /api/v3/pet/findByTags
  */
 export interface ApiV3PetFindByTagsRequestByGet {
@@ -3481,7 +3644,8 @@ export interface ApiV3PetFindByTagsRequestByGet {
   tags?: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /api/v3/pet/findByTags
  */
 export type ApiV3PetFindByTagsResponseByGet = Array<{
@@ -3514,10 +3678,11 @@ apiV3PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"tags\\"]
+  queryStringKeyNameList: ["tags"]
 }
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /api/v3/pet/{petId}
  */
 export interface ApiV3PetPetIdRequestByGet {
@@ -3525,7 +3690,8 @@ export interface ApiV3PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /api/v3/pet/{petId}
  */
 export interface ApiV3PetPetIdResponseByGet {
@@ -3557,11 +3723,12 @@ apiV3PetPetIdByGet.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /api/v3/pet/{petId}
  */
 export interface ApiV3PetPetIdRequestByPost {
@@ -3573,7 +3740,8 @@ export interface ApiV3PetPetIdRequestByPost {
   status?: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /api/v3/pet/{petId}
  */
 export type ApiV3PetPetIdResponseByPost = any;
@@ -3591,11 +3759,12 @@ apiV3PetPetIdByPost.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
-  queryStringKeyNameList: [\\"name\\",\\"status\\"]
+  pathParamKeyNameList: ["petId"],
+  queryStringKeyNameList: ["name","status"]
 }
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /api/v3/pet/{petId}
  */
 export interface ApiV3PetPetIdRequestByDelete {
@@ -3603,7 +3772,8 @@ export interface ApiV3PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /api/v3/pet/{petId}
  */
 export type ApiV3PetPetIdResponseByDelete = any;
@@ -3621,11 +3791,12 @@ apiV3PetPetIdByDelete.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
+  pathParamKeyNameList: ["petId"],
   queryStringKeyNameList: []
 }
 /**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /api/v3/pet/{petId}/uploadImage
  */
 export interface ApiV3PetPetIdUploadImageRequestByPost {
@@ -3635,7 +3806,8 @@ export interface ApiV3PetPetIdUploadImageRequestByPost {
   additionalMetadata?: string;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /api/v3/pet/{petId}/uploadImage
  */
 export interface ApiV3PetPetIdUploadImageResponseByPost {
@@ -3657,16 +3829,18 @@ apiV3PetPetIdUploadImageByPost.requestConfig = {
   path: '/api/v3/pet/{petId}/uploadImage',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"petId\\"],
-  queryStringKeyNameList: [\\"additionalMetadata\\"]
+  pathParamKeyNameList: ["petId"],
+  queryStringKeyNameList: ["additionalMetadata"]
 }
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /api/v3/store/inventory
  */
 export type ApiV3StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /api/v3/store/inventory
  */
 export type ApiV3StoreInventoryResponseByGet = any;
@@ -3688,7 +3862,8 @@ apiV3StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Place an order for a pet、Place a new order in the store【请求数据类型定义】
+ * @description Place an order for a pet、Place a new order in the store
+ * @summary Request data types
  * @url [ POST ] /api/v3/store/order
  */
 export interface ApiV3StoreOrderRequestByPost {
@@ -3701,7 +3876,8 @@ export interface ApiV3StoreOrderRequestByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet、Place a new order in the store【响应数据类型定义】
+ * @description Place an order for a pet、Place a new order in the store
+ * @summary Response data types
  * @url [ POST ] /api/v3/store/order
  */
 export interface ApiV3StoreOrderResponseByPost {
@@ -3728,10 +3904,11 @@ apiV3StoreOrderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
+  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @summary Request data types
  * @url [ GET ] /api/v3/store/order/{orderId}
  */
 export interface ApiV3StoreOrderOrderIdRequestByGet {
@@ -3739,7 +3916,8 @@ export interface ApiV3StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @summary Response data types
  * @url [ GET ] /api/v3/store/order/{orderId}
  */
 export interface ApiV3StoreOrderOrderIdResponseByGet {
@@ -3765,11 +3943,12 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /api/v3/store/order/{orderId}
  */
 export interface ApiV3StoreOrderOrderIdRequestByDelete {
@@ -3777,7 +3956,8 @@ export interface ApiV3StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /api/v3/store/order/{orderId}
  */
 export type ApiV3StoreOrderOrderIdResponseByDelete = any;
@@ -3795,11 +3975,12 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
+  pathParamKeyNameList: ["orderId"],
   queryStringKeyNameList: []
 }
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /api/v3/user
  */
 export interface ApiV3UserRequestByPost {
@@ -3814,7 +3995,8 @@ export interface ApiV3UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /api/v3/user
  */
 export type ApiV3UserResponseByPost = any;
@@ -3833,10 +4015,11 @@ apiV3UserByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
+  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
 }
 /**
- * @description Creates list of users with given input array、Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array、Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /api/v3/user/createWithList
  */
 export type ApiV3UserCreateWithListRequestByPost = Array<{
@@ -3851,7 +4034,8 @@ export type ApiV3UserCreateWithListRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array、Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array、Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /api/v3/user/createWithList
  */
 export interface ApiV3UserCreateWithListResponseByPost {
@@ -3883,7 +4067,8 @@ apiV3UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /api/v3/user/login
  */
 export interface ApiV3UserLoginRequestByGet {
@@ -3893,7 +4078,8 @@ export interface ApiV3UserLoginRequestByGet {
   password?: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /api/v3/user/login
  */
 export type ApiV3UserLoginResponseByGet = string;
@@ -3912,15 +4098,17 @@ apiV3UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"username\\",\\"password\\"]
+  queryStringKeyNameList: ["username","password"]
 }
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /api/v3/user/logout
  */
 export type ApiV3UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /api/v3/user/logout
  */
 export type ApiV3UserLogoutResponseByGet = any;
@@ -3942,7 +4130,8 @@ apiV3UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: []
 }
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /api/v3/user/{username}
  */
 export interface ApiV3UserUsernameRequestByGet {
@@ -3950,7 +4139,8 @@ export interface ApiV3UserUsernameRequestByGet {
   username1: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /api/v3/user/{username}
  */
 export interface ApiV3UserUsernameResponseByGet {
@@ -3978,11 +4168,12 @@ apiV3UserUsernameByGet.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
+  pathParamKeyNameList: ["username1"],
   queryStringKeyNameList: []
 }
 /**
- * @description Update user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Update user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /api/v3/user/{username}
  */
 export interface ApiV3UserUsernameRequestByPut {
@@ -3999,7 +4190,8 @@ export interface ApiV3UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @description Update user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Update user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /api/v3/user/{username}
  */
 export type ApiV3UserUsernameResponseByPut = any;
@@ -4017,11 +4209,12 @@ apiV3UserUsernameByPut.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username1\\"],
-  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
+  pathParamKeyNameList: ["username1"],
+  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /api/v3/user/{username}
  */
 export interface ApiV3UserUsernameRequestByDelete {
@@ -4029,7 +4222,8 @@ export interface ApiV3UserUsernameRequestByDelete {
   username: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /api/v3/user/{username}
  */
 export type ApiV3UserUsernameResponseByDelete = any;
@@ -4047,11 +4241,12 @@ apiV3UserUsernameByDelete.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"username\\"],
+  pathParamKeyNameList: ["username"],
   queryStringKeyNameList: []
 }
 /**
- * @description 查看排班列表、/api/ftb【请求数据类型定义】
+ * @description 查看排班列表、/api/ftb
+ * @summary Request data types
  * @url [ GET ] /api/v3/api/ftb/arranging/work
  */
 export interface ApiV3ApiFtbArrangingWorkRequestByGet {
@@ -4065,7 +4260,8 @@ export interface ApiV3ApiFtbArrangingWorkRequestByGet {
   userIds?: Array<string>;
 }
 /**
- * @description 查看排班列表、/api/ftb【响应数据类型定义】
+ * @description 查看排班列表、/api/ftb
+ * @summary Response data types
  * @url [ GET ] /api/v3/api/ftb/arranging/work
  */
 export type ApiV3ApiFtbArrangingWorkResponseByGet = Array<{
@@ -4114,6 +4310,6 @@ apiV3ApiFtbArrangingWorkByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"groupId\\",\\"realName\\",\\"month\\",\\"userIds\\"]
+  queryStringKeyNameList: ["groupId","realName","month","userIds"]
 }"
 `;

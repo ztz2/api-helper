@@ -1,7 +1,8 @@
 import path from 'path';
 import to from 'await-to-js';
-import { OpenAPI } from 'openapi-types';
+import * as process from 'process';
 import { readJson } from 'fs-extra';
+import { OpenAPI } from 'openapi-types';
 import { ParserSwagger } from '@api-helper/core';
 import { mergeUrl, getErrorMessage } from '@api-helper/core/lib/utils/util';
 import { validateOpenAPIDocument } from '@api-helper/core/lib/utils/validator';
@@ -16,13 +17,14 @@ import {
   processRequestConfig,
 } from '@/lib/tools/util';
 
+import Locales from '@/lib/locales';
 import logger from '@/lib/tools/logger';
 import request from '@/lib/tools/request';
-import * as process from 'process';
 
 export default class ParserSwaggerPlugin implements AbstractParserPlugin {
   name = 'swagger';
   async run(documentServers: DocumentServers, options: ParserPluginOptions = {}){
+    const locales = await new Locales().init();
     const result: ParserPluginRunResult = [];
 
     if (documentServers.length === 0) {
@@ -35,12 +37,12 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
       tasks.push((async () => {
         const openAPIDocumentList = await getDocument(documentServer);
         if (openAPIDocumentList.length === 0) {
-          logger.error(`没有获取到swagger配置文档${serverUrlText}`);
+          logger.error(`${locales.$t('没有获取到swagger配置文档：')}${serverUrlText}`);
           return;
         }
         const parsedDocumentList = await new ParserSwagger(options).parser(openAPIDocumentList as any);
         if (parsedDocumentList.length === 0) {
-          logger.error(`解析swagger配置失败${serverUrlText}`);
+          logger.error(`${locales.$t('解析swagger配置失败：')}${serverUrlText}`);
           return;
         }
         result.push({
@@ -57,6 +59,7 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
 }
 
 async function getDocument(documentServer: DocumentServers[number]): Promise<Array<OpenAPI.Document>> {
+  const locales = await new Locales().init();
   const requestConfig = processRequestConfig(documentServer);
   const openAPIDocumentList: Array<OpenAPI.Document> = [];
   const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
@@ -67,7 +70,7 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
     const filepath = path.isAbsolute(documentServer.url) ? documentServer.url : path.join(process.cwd(), documentServer.url);
     let [e, json] = await to(readJson(filepath));
     if (e) {
-      const errorText = `swagger文件读取失败${getErrorMessage(e, ': ')}${serverUrlText}`;
+      const errorText = `${locales.$t('swagger文件读取失败：')}${getErrorMessage(e, ': ')}${serverUrlText}`;
       logger.error(errorText);
       return Promise.reject(errorText);
     }

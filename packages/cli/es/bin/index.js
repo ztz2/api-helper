@@ -39,6 +39,7 @@ import path from 'path';
 import { Command } from 'commander';
 import { loadModule, createFolder, removeFolder, } from '../lib/tools/util';
 import { run } from '../lib';
+import Locales from '../lib/locales';
 var program = new Command();
 var basePath = createFolder(path.join(__dirname, './.cache.load.module'));
 var version = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), {
@@ -48,53 +49,65 @@ var version = loadModule(path.join(require.resolve('@api-helper/cli'), '../../pa
         removeFolder(basePath);
     }
 }).version;
-// root指令
-program
-    .version(version)
-    .description('API生成工具')
-    .option('-D, --debug', '调试模式')
-    .option('-c, --config <string>', '配置文件')
-    .option('-u, --url <string>', "\u63A5\u53E3\u6587\u6863\u5730\u5740\u3010\u5F53type\u4E3A'swagger'\u7C7B\u578B\u65F6\uFF0C\u53EF\u4EE5\u8BFB\u53D6\u672C\u5730\u6587\u4EF6\uFF0C\u8FD9\u91CC\u5C31\u53EF\u4EE5\u4E00\u4E2A\u672C\u5730\u6587\u4EF6\u8DEF\u5F84\u3011")
-    .option('-o, --output-path <path>', '代码生成后的输出路径')
-    .option('--target <string>', '生成的目标代码类型，默认: typescript')
-    .option('--type <string>', "\u6587\u6863\u7C7B\u578B\uFF0C\u6839\u636E\u6587\u6863\u7C7B\u578B\uFF0C\u8C03\u7528\u5185\u7F6E\u7684\u89E3\u6790\u5668\uFF0C\u9ED8\u8BA4\u503C: 'swagger'")
-    .option('--auth-token <string>', '访问文档可能需要认证信息，通过使用token访问，yapi的验证token')
-    .action(function () {
+function main() {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
+        var locales;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0:
-                    options = program.opts();
-                    return [4 /*yield*/, run(null, options)];
+                case 0: return [4 /*yield*/, new Locales().init()];
                 case 1:
-                    _a.sent();
+                    locales = _a.sent();
+                    // root指令
+                    program
+                        .version(version)
+                        .description(locales.$t('API生成工具'))
+                        .option('-c, --config <string>', locales.$t('自定义配置文件路径'))
+                        .option('-u, --url <string>', locales.$t("\u63A5\u53E3\u6587\u6863\u5730\u5740\u3010\u5F53type\u4E3A'swagger'\u7C7B\u578B\u65F6\uFF0C\u53EF\u4EE5\u8BFB\u53D6\u672C\u5730\u6587\u4EF6\uFF0C\u8FD9\u91CC\u5C31\u53EF\u4EE5\u4E00\u4E2A\u672C\u5730\u6587\u4EF6\u8DEF\u5F84\u3011"))
+                        .option('-o, --output-path <path>', locales.$t('代码生成后的输出路径'))
+                        .option('--target <string>', locales.$t('生成的目标代码类型，默认: typescript'))
+                        .option('--type <string>', locales.$t('文档类型，根据文档类型，调用内置的解析器，默认值: \'swagger\''))
+                        .option('--auth-token <string>', locales.$t('访问文档可能需要认证信息，通过使用token访问，yapi的验证token'))
+                        .action(function () {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var options;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        options = program.opts();
+                                        return [4 /*yield*/, run(null, options)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    });
+                    // 帮助信息
+                    program.addHelpText('after', locales.$t('帮助信息'));
+                    // 初始化配置
+                    program
+                        .command('init')
+                        .description(locales.$t('初始化配置'))
+                        .option('-c, --config <string>', locales.$t('自定义配置文件路径'))
+                        .action(function () {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var options;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        options = program.opts();
+                                        return [4 /*yield*/, run('init', options)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    });
+                    program.parse();
                     return [2 /*return*/];
             }
         });
     });
-});
-// 帮助信息
-program.addHelpText('after', "\n\u8BE6\u7EC6\u547D\u4EE4\u8BF4\u660E:\n\u521D\u59CB\u5316\u914D\u7F6E\u6587\u4EF6: apih init\n\u521D\u59CB\u5316\u914D\u7F6E\u6587\u4EF6(\u6307\u5B9A\u914D\u7F6E\u6587\u4EF6\u8DEF\u5F84): apih init -c \u8DEF\u5F84/\u914D\u7F6E\u6587\u4EF6.ts\n\u751F\u6210\u4EE3\u7801: apih\n\u751F\u6210\u4EE3\u7801(\u6307\u5B9A\u914D\u7F6E\u6587\u4EF6): apih -c \u8DEF\u5F84/\u914D\u7F6E\u6587\u4EF6.ts\n\u67E5\u770B\u5E2E\u52A9: apih -h\n\n# GitHub\nhttps://github.com/ztz2/api-helper\n");
-// 初始化配置
-program
-    .command('init')
-    .description('初始化配置')
-    .option('-D, --debug', '调试模式')
-    .option('-c, --config <string>', '自定义配置文件路径')
-    .action(function () {
-    return __awaiter(this, void 0, void 0, function () {
-        var options;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    options = program.opts();
-                    return [4 /*yield*/, run('init', options)];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
-    });
-});
-program.parse();
+}
+main();

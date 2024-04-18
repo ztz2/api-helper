@@ -11,6 +11,7 @@ import {
   ParserPluginRunResult,
 } from '@/lib/types';
 import { Config } from '@/lib';
+import Locales from '@/lib/locales';
 import logger from '@/lib/tools/logger';
 import request from '@/lib/tools/request';
 import { processRequestConfig } from '@/lib/tools/util';
@@ -26,6 +27,7 @@ const API_DETAIL = '/api/interface/get';
 export default class ParserYapiPlugin implements AbstractParserPlugin {
   name = 'yapi';
   async run(documentServers: DocumentServers, options: ParserPluginOptions = {}){
+    const locales = await new Locales().init();
     const result: ParserPluginRunResult = [];
 
     if (documentServers.length === 0) {
@@ -39,25 +41,25 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
       dsTasks.push((async () => {
         // 获取项目基本信息
         const projectInfo: Recordable = await fetchProjectInfo(documentServer).catch((e) => {
-          logger.error(`获取项目基本信息失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`${locales.$t('获取项目基本信息失败：')}${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
         const projectId = projectInfo._id;
 
         // 获取所有分类
         const categoryList = await fetchMenuList(documentServer, { projectId }).catch((e) => {
-          logger.error(`获取菜单列表失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`${locales.$t('获取菜单列表失败：')}${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
 
         // 获取所有接口
         const apiList = await fetchApiList(documentServer, { projectId }).catch((e) => {
-          logger.error(`获取接口列表数据失败${getErrorMessage(e, ': ')}${errorServerText}`);
+          logger.error(`${locales.$t('获取接口列表数据失败：')}${getErrorMessage(e, ': ')}${errorServerText}`);
           return Promise.reject(e);
         });
 
         if (apiList.length === 0) {
-          return Promise.reject(`项目接口为空${errorServerText}`);
+          return Promise.reject(`${locales.$t('项目接口为空：')}${errorServerText}`);
         }
 
         // 获取所有接口的详情
@@ -78,8 +80,9 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         await to(Promise.all(tasks));
 
         if (errorApi.length === apiList.length) {
-          logger.warn(`接口详情获取失败${errorServerText}`);
-          return Promise.reject(`接口详情获取失败${errorServerText}`);
+          const errorText = `${locales.$t('接口详情获取失败：')}${errorServerText}`;
+          logger.warn(errorText);
+          return Promise.reject(errorText);
         }
 
         const parsedDocumentList = await new ParserYapi({
@@ -90,7 +93,7 @@ export default class ParserYapiPlugin implements AbstractParserPlugin {
         }).parser();
 
         if (parsedDocumentList.length === 0) {
-          logger.error(`${documentServer.url} 解析yapi配置失败${errorServerText}`);
+          logger.error(`${locales.$t('解析yapi配置失败：')} ${documentServer.url} ${errorServerText}`);
         }
 
         result.push({

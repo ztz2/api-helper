@@ -102,11 +102,16 @@ exports.renderInterfaceName = renderInterfaceName;
 function renderInterfaceComment(api, paramType, isExtraData, updateTime) {
     if (isExtraData === void 0) { isExtraData = false; }
     if (updateTime === void 0) { updateTime = ''; }
-    return art_template_1.default.render("/**\n * @description \u300Adescription\u300B\u300Aif docURL\u300B\n * @doc \u300AdocURL\u300B\u300A/if\u300B\n * @url \u300Aurl\u300B\u300Aif updateTime\u300B\n * @update \u300AupdateTime\u300B\u300A/if\u300B\n */", {
-        description: "".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u7C7B\u578B\u5B9A\u4E49\u3011"),
+    var summary = isExtraData ? 'Incompatible request data' : paramType === 'request' ? 'Request data' : paramType === 'response' ? 'Response data' : '';
+    if (summary) {
+        summary += ' types';
+    }
+    return art_template_1.default.render("/**\n * @description \u300Adescription\u300B\u300Aif summary\u300B\n * @summary \u300Asummary\u300B\u300A/if\u300B\u300Aif docURL\u300B\n * @doc \u300AdocURL\u300B\u300A/if\u300B\n * @url \u300Aurl\u300B\u300Aif updateTime\u300B\n * @update \u300AupdateTime\u300B\u300A/if\u300B\n */", {
+        description: "".concat([api.title, api.description].filter(Boolean).join('、')),
         docURL: api.docURL,
         url: "[ ".concat(api.method.toUpperCase(), " ] ").concat(api.path),
-        updateTime: updateTime
+        summary: summary,
+        updateTime: updateTime,
     });
 }
 function requiredChar(schema) {

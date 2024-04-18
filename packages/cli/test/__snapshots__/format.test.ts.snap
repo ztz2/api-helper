@@ -2,48 +2,48 @@
 
 exports[`format 格式化Vue代码: format.格式化Vue代码 1`] = `
 "<template>
-  <div class=\\"app-container\\">
-    <div class=\\"app-header\\">
-      <div class=\\"app-header__left\\">
+  <div class="app-container">
+    <div class="app-header">
+      <div class="app-header__left">
         <a
-          href=\\"/\\"
-          class=\\"app-header__label\\"
-          @mouseenter=\\"linkColor = 'var(--vt-c-primary)'\\"
-          @mouseleave=\\"linkColor = 'var(--vt-c-text-1)'\\"
+          href="/"
+          class="app-header__label"
+          @mouseenter="linkColor = 'var(--vt-c-primary)'"
+          @mouseleave="linkColor = 'var(--vt-c-text-1)'"
         >
-          <apih-logo :color=\\"linkColor\\" />
-          <span style=\\"margin-left: 4px\\">API HELPER</span>
+          <apih-logo :color="linkColor" />
+          <span style="margin-left: 4px">API HELPER</span>
         </a>
       </div>
-      <div class=\\"app-header__right\\">
-        <a-space :size=\\"20\\">
-          <a href=\\"https://apih.andou.live\\" target=\\"_blank\\">文档</a>
-          <a href=\\"https://apih.andou.live/config/cli.html\\" target=\\"_blank\\">CLI</a>
-          <a href=\\"https://github.com/ztz2/api-helper\\" target=\\"_blank\\">
-            <icon-github :size=\\"24\\" />
+      <div class="app-header__right">
+        <a-space :size="20">
+          <a href="https://apih.andou.live" target="_blank">文档</a>
+          <a href="https://apih.andou.live/config/cli.html" target="_blank">CLI</a>
+          <a href="https://github.com/ztz2/api-helper" target="_blank">
+            <icon-github :size="24" />
           </a>
         </a-space>
       </div>
     </div>
-    <div class=\\"app-content\\">
+    <div class="app-content">
       <router-view />
     </div>
-    <div class=\\"app-footer\\"></div>
+    <div class="app-footer"></div>
   </div>
 </template>
 
-<script lang=\\"ts\\" setup>
-import { ref } from \\"vue\\"
-import { useCheckUpdateTemplate } from \\"@/hooks/use-check-update-template\\"
-import AhLogo from \\"@/components/apih-logo/index.vue\\"
+<script lang="ts" setup>
+import { ref } from "vue"
+import { useCheckUpdateTemplate } from "@/hooks/use-check-update-template"
+import AhLogo from "@/components/apih-logo/index.vue"
 
-const linkColor = ref(\\"rgba(0,0,0,.8509803922)\\")
+const linkColor = ref("rgba(0,0,0,.8509803922)")
 
 useCheckUpdateTemplate()
 </script>
 
-<style lang=\\"scss\\">
-@import \\"./style/variable.scss\\";
+<style lang="scss">
+@import "./style/variable.scss";
 
 .app-header {
   height: 64px;

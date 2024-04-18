@@ -132,17 +132,26 @@ function renderInterfaceComment(
   isExtraData = false,
   updateTime = '',
 ) {
+
+  let summary =  isExtraData ? 'Incompatible request data' : paramType === 'request' ? 'Request data' : paramType === 'response' ? 'Response data' : '';
+
+  if (summary) {
+    summary += ' types';
+  }
+
   return artTemplate.render(
     `/**
- * @description 《description》《if docURL》
+ * @description 《description》《if summary》
+ * @summary 《summary》《/if》《if docURL》
  * @doc 《docURL》《/if》
  * @url 《url》《if updateTime》
  * @update 《updateTime》《/if》
  */`, {
-      description: `${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}类型定义】`,
+      description: `${[api.title, api.description].filter(Boolean).join('、')}`,
       docURL: api.docURL,
       url: `[ ${api.method.toUpperCase()} ] ${api.path}`,
-      updateTime
+      summary,
+      updateTime,
     })
 }
 

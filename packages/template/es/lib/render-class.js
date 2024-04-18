@@ -136,6 +136,10 @@ export function renderClassName(api, options) {
 }
 function renderClassComment(api, paramType, isExtraData) {
     if (isExtraData === void 0) { isExtraData = false; }
-    var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、'), "\u3010").concat(isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : '', "\u5B9E\u4F53\u7C7B\u3011").concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
+    var summary = isExtraData ? 'Incompatible request data' : paramType === 'request' ? 'Request data' : paramType === 'response' ? 'Response data' : '';
+    if (summary) {
+        summary += ' entity class';
+    }
+    var commentText = "/**\n * @description ".concat([api.title, api.description].filter(Boolean).join('、')).concat(summary ? "\n * @summary ".concat(summary) : '').concat(api.docURL ? "\n * @doc ".concat(api.docURL) : '', "\n * @url [ ").concat(api.method.toUpperCase(), " ] ").concat(api.path, "\n */");
     return commentText;
 }

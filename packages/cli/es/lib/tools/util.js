@@ -82,6 +82,7 @@ import { merge } from 'lodash';
 import tmp from 'tmp';
 import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
 import esbuild from 'esbuild';
+import Locales from '../../lib/locales';
 import logger from '../../lib/tools/logger';
 export function resolve(p) {
     if (p === void 0) { p = ''; }
@@ -285,11 +286,13 @@ export function processRequestConfig(documentServer, options) {
 export function documentServersRunParserPlugins(documentServers, parserPlugins, options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, spinner, documentServers_1, documentServers_1_1, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b;
+        var locales, parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, spinner, documentServers_1, documentServers_1_1, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b, errorText;
         var e_1, _c, e_2, _d, e_3, _e;
         return __generator(this, function (_f) {
             switch (_f.label) {
-                case 0:
+                case 0: return [4 /*yield*/, new Locales().init()];
+                case 1:
+                    locales = _f.sent();
                     parserPluginMap = new Map();
                     try {
                         for (parserPlugins_1 = __values(parserPlugins), parserPlugins_1_1 = parserPlugins_1.next(); !parserPlugins_1_1.done; parserPlugins_1_1 = parserPlugins_1.next()) {
@@ -309,12 +312,12 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                         parserPluginRunResult: [],
                     };
                     execParserPluginMap = new Map();
-                    spinner = ora('文档获取与解析，这可能需要等待一段时间...').start();
+                    spinner = ora(locales.$t('文档获取与解析，这可能需要等待一段时间...')).start();
                     try {
                         for (documentServers_1 = __values(documentServers), documentServers_1_1 = documentServers_1.next(); !documentServers_1_1.done; documentServers_1_1 = documentServers_1.next()) {
                             documentServer = documentServers_1_1.value;
                             if (!documentServer.url) {
-                                logger.error("documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!");
+                                logger.error(locales.$t("documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!"));
                                 continue;
                             }
                             if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
@@ -353,24 +356,25 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                         }
                         finally { if (e_3) throw e_3.error; }
                     }
-                    _f.label = 1;
-                case 1:
-                    _f.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, Promise.all(tasks)];
+                    _f.label = 2;
                 case 2:
-                    _f.sent();
-                    return [3 /*break*/, 4];
+                    _f.trys.push([2, 4, , 5]);
+                    return [4 /*yield*/, Promise.all(tasks)];
                 case 3:
-                    _b = _f.sent();
-                    return [3 /*break*/, 4];
+                    _f.sent();
+                    return [3 /*break*/, 5];
                 case 4:
+                    _b = _f.sent();
+                    return [3 /*break*/, 5];
+                case 5:
                     if (result.noParserPluginNames.length > 0) {
-                        logger.error("\u6587\u6863\uFF1A".concat(result.noParserPluginNames.join('、'), "\uFF0C\u7F3A\u5C11\u5BF9\u5E94\u7C7B\u578B\u7684\u89E3\u6790\u63D2\u4EF6\u3002"));
+                        logger.error("".concat(locales.$t('接口文档缺少对应类型的解析插件：')).concat(result.noParserPluginNames.join('、')));
                     }
                     if (result.parserPluginRunResult.length === 0) {
                         spinner.fail();
-                        logger.error('没有获取或者解析到文档');
-                        return [2 /*return*/, Promise.reject('没有获取或者解析到文档')];
+                        errorText = locales.$t('没有获取或者解析到文档');
+                        logger.error(errorText);
+                        return [2 /*return*/, Promise.reject(errorText)];
                     }
                     spinner.succeed();
                     return [2 /*return*/, result];

@@ -2,9 +2,9 @@
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 代码生成时间:  */
+/* 代码生成时间： */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
+/* 文档参考：https://github.com/ztz2/api-helper */
 
 // @ts-ignore
 // prettier-ignore
@@ -20,7 +20,8 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageRequestByPost {
@@ -32,7 +33,8 @@ export interface V2PetPetIdUploadImageRequestByPost {
   file: File;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageResponseByPost {
@@ -62,7 +64,8 @@ v2PetPetIdUploadImageByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /v2/pet
  */
 export interface V2PetRequestByPost {
@@ -81,7 +84,8 @@ export interface V2PetRequestByPost {
   status: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /v2/pet
  */
 export type V2PetResponseByPost = any;
@@ -100,7 +104,8 @@ v2PetByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Update an existing pet【请求数据类型定义】
+ * @description Update an existing pet
+ * @summary Request data types
  * @url [ PUT ] /v2/pet
  */
 export interface V2PetRequestByPut {
@@ -119,7 +124,8 @@ export interface V2PetRequestByPut {
   status: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet【响应数据类型定义】
+ * @description Update an existing pet
+ * @summary Response data types
  * @url [ PUT ] /v2/pet
  */
 export type V2PetResponseByPut = any;
@@ -138,7 +144,8 @@ v2PetByPut.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export interface V2PetFindByStatusRequestByGet {
@@ -146,7 +153,8 @@ export interface V2PetFindByStatusRequestByGet {
   status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseByGet = Array<{
@@ -186,7 +194,8 @@ v2PetFindByStatusByGet.requestConfig = {
   queryStringKeyNameList: ['status'],
 };
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export interface V2PetFindByTagsRequestByGet {
@@ -194,7 +203,8 @@ export interface V2PetFindByTagsRequestByGet {
   tags: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseByGet = Array<{
@@ -227,7 +237,8 @@ v2PetFindByTagsByGet.requestConfig = {
   queryStringKeyNameList: ['tags'],
 };
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByGet {
@@ -235,7 +246,8 @@ export interface V2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdResponseByGet {
@@ -268,7 +280,8 @@ v2PetPetIdByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByPost {
@@ -280,7 +293,8 @@ export interface V2PetPetIdRequestByPost {
   status: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByPost = any;
@@ -299,7 +313,8 @@ v2PetPetIdByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export interface V2PetPetIdRequestByDelete {
@@ -307,7 +322,8 @@ export interface V2PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 export type V2PetPetIdResponseByDelete = any;
@@ -326,7 +342,8 @@ v2PetPetIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderRequestByPost {
@@ -346,7 +363,8 @@ export interface V2StoreOrderRequestByPost {
   complete: boolean;
 }
 /**
- * @description Place an order for a pet【响应数据类型定义】
+ * @description Place an order for a pet
+ * @summary Response data types
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderResponseByPost {
@@ -380,7 +398,8 @@ v2StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByGet {
@@ -388,7 +407,8 @@ export interface V2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdResponseByGet {
@@ -429,7 +449,8 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdRequestByDelete {
@@ -437,7 +458,8 @@ export interface V2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 export type V2StoreOrderOrderIdResponseByDelete = any;
@@ -463,12 +485,14 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /v2/store/inventory
  */
 export type V2StoreInventoryResponseByGet = any;
@@ -494,7 +518,8 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export interface V2UserCreateWithArrayRequestByPost {
@@ -506,7 +531,8 @@ export interface V2UserCreateWithArrayRequestByPost {
   userId: number;
 }
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayResponseByPost = any;
@@ -532,7 +558,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   queryStringKeyNameList: ['userName', 'password'],
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestByPost = Array<{
@@ -547,7 +574,8 @@ export type V2UserCreateWithListRequestByPost = Array<{
   userStatus: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListResponseByPost = any;
@@ -573,7 +601,8 @@ v2UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByGet {
@@ -581,7 +610,8 @@ export interface V2UserUsernameRequestByGet {
   username1: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameResponseByGet {
@@ -610,7 +640,8 @@ v2UserUsernameByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Updated user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByPut {
@@ -626,7 +657,8 @@ export interface V2UserUsernameRequestByPut {
   userStatus: number;
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByPut = any;
@@ -645,7 +677,8 @@ v2UserUsernameByPut.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export interface V2UserUsernameRequestByDelete {
@@ -653,7 +686,8 @@ export interface V2UserUsernameRequestByDelete {
   username1: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /v2/user/{username}
  */
 export type V2UserUsernameResponseByDelete = any;
@@ -679,7 +713,8 @@ v2UserUsernameByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /v2/user/login
  */
 export interface V2UserLoginRequestByGet {
@@ -689,7 +724,8 @@ export interface V2UserLoginRequestByGet {
   password: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /v2/user/login
  */
 export type V2UserLoginResponseByGet = string;
@@ -708,12 +744,14 @@ v2UserLoginByGet.requestConfig = {
   queryStringKeyNameList: ['username', 'password'],
 };
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /v2/user/logout
  */
 export type V2UserLogoutResponseByGet = any;
@@ -732,7 +770,8 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /v2/user
  */
 export interface V2UserRequestByPost {
@@ -747,7 +786,8 @@ export interface V2UserRequestByPost {
   userStatus: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /v2/user
  */
 export type V2UserResponseByPost = any;

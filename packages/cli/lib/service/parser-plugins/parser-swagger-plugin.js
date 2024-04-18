@@ -33,20 +33,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const path_1 = __importDefault(require("path"));
 const await_to_js_1 = __importDefault(require("await-to-js"));
+const process = __importStar(require("process"));
 const fs_extra_1 = require("fs-extra");
 const core_1 = require("@api-helper/core");
 const util_1 = require("@api-helper/core/lib/utils/util");
 const validator_1 = require("@api-helper/core/lib/utils/validator");
 const util_2 = require("../../../lib/tools/util");
+const locales_1 = __importDefault(require("../../../lib/locales"));
 const logger_1 = __importDefault(require("../../../lib/tools/logger"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
-const process = __importStar(require("process"));
 class ParserSwaggerPlugin {
     constructor() {
         this.name = 'swagger';
     }
     run(documentServers, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
+            const locales = yield new locales_1.default().init();
             const result = [];
             if (documentServers.length === 0) {
                 return result;
@@ -57,12 +59,12 @@ class ParserSwaggerPlugin {
                 tasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     const openAPIDocumentList = yield getDocument(documentServer);
                     if (openAPIDocumentList.length === 0) {
-                        logger_1.default.error(`没有获取到swagger配置文档${serverUrlText}`);
+                        logger_1.default.error(`${locales.$t('没有获取到swagger配置文档：')}${serverUrlText}`);
                         return;
                     }
                     const parsedDocumentList = yield new core_1.ParserSwagger(options).parser(openAPIDocumentList);
                     if (parsedDocumentList.length === 0) {
-                        logger_1.default.error(`解析swagger配置失败${serverUrlText}`);
+                        logger_1.default.error(`${locales.$t('解析swagger配置失败：')}${serverUrlText}`);
                         return;
                     }
                     result.push({
@@ -80,6 +82,7 @@ exports.default = ParserSwaggerPlugin;
 function getDocument(documentServer) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
+        const locales = yield new locales_1.default().init();
         const requestConfig = (0, util_2.processRequestConfig)(documentServer);
         const openAPIDocumentList = [];
         const isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
@@ -89,7 +92,7 @@ function getDocument(documentServer) {
             const filepath = path_1.default.isAbsolute(documentServer.url) ? documentServer.url : path_1.default.join(process.cwd(), documentServer.url);
             let [e, json] = yield (0, await_to_js_1.default)((0, fs_extra_1.readJson)(filepath));
             if (e) {
-                const errorText = `swagger文件读取失败${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
+                const errorText = `${locales.$t('swagger文件读取失败：')}${(0, util_1.getErrorMessage)(e, ': ')}${serverUrlText}`;
                 logger_1.default.error(errorText);
                 return Promise.reject(errorText);
             }

@@ -59,6 +59,7 @@ var __values = (this && this.__values) || function(o) {
 import to from 'await-to-js';
 import { ParserYapi } from '@api-helper/core';
 import { mergeUrl, getErrorMessage, } from '@api-helper/core/lib/utils/util';
+import Locales from '../../../lib/locales';
 import logger from '../../../lib/tools/logger';
 import request from '../../../lib/tools/request';
 import { processRequestConfig } from '../../../lib/tools/util';
@@ -73,12 +74,14 @@ var ParserYapiPlugin = /** @class */ (function () {
     ParserYapiPlugin.prototype.run = function (documentServers, options) {
         if (options === void 0) { options = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var result, dsTasks, _loop_1, documentServers_1, documentServers_1_1, documentServer;
+            var locales, result, dsTasks, _loop_1, documentServers_1, documentServers_1_1, documentServer;
             var e_1, _a;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
+                    case 0: return [4 /*yield*/, new Locales().init()];
+                    case 1:
+                        locales = _b.sent();
                         result = [];
                         if (documentServers.length === 0) {
                             return [2 /*return*/, result];
@@ -88,31 +91,31 @@ var ParserYapiPlugin = /** @class */ (function () {
                             var errorServerText = "\u3010".concat(documentServer.url, "\u3011");
                             var requestConfig = processRequestConfig(documentServer);
                             dsTasks.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var projectInfo, projectId, categoryList, apiList, tasks, errorApi, _loop_2, apiList_1, apiList_1_1, api, parsedDocumentList;
+                                var projectInfo, projectId, categoryList, apiList, tasks, errorApi, _loop_2, apiList_1, apiList_1_1, api, errorText, parsedDocumentList;
                                 var e_2, _a;
                                 return __generator(this, function (_b) {
                                     switch (_b.label) {
                                         case 0: return [4 /*yield*/, fetchProjectInfo(documentServer).catch(function (e) {
-                                                logger.error("\u83B7\u53D6\u9879\u76EE\u57FA\u672C\u4FE1\u606F\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                logger.error("".concat(locales.$t('获取项目基本信息失败：')).concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                 return Promise.reject(e);
                                             })];
                                         case 1:
                                             projectInfo = _b.sent();
                                             projectId = projectInfo._id;
                                             return [4 /*yield*/, fetchMenuList(documentServer, { projectId: projectId }).catch(function (e) {
-                                                    logger.error("\u83B7\u53D6\u83DC\u5355\u5217\u8868\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                    logger.error("".concat(locales.$t('获取菜单列表失败：')).concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                     return Promise.reject(e);
                                                 })];
                                         case 2:
                                             categoryList = _b.sent();
                                             return [4 /*yield*/, fetchApiList(documentServer, { projectId: projectId }).catch(function (e) {
-                                                    logger.error("\u83B7\u53D6\u63A5\u53E3\u5217\u8868\u6570\u636E\u5931\u8D25".concat(getErrorMessage(e, ': ')).concat(errorServerText));
+                                                    logger.error("".concat(locales.$t('获取接口列表数据失败：')).concat(getErrorMessage(e, ': ')).concat(errorServerText));
                                                     return Promise.reject(e);
                                                 })];
                                         case 3:
                                             apiList = _b.sent();
                                             if (apiList.length === 0) {
-                                                return [2 /*return*/, Promise.reject("\u9879\u76EE\u63A5\u53E3\u4E3A\u7A7A".concat(errorServerText))];
+                                                return [2 /*return*/, Promise.reject("".concat(locales.$t('项目接口为空：')).concat(errorServerText))];
                                             }
                                             tasks = [];
                                             errorApi = [];
@@ -142,14 +145,15 @@ var ParserYapiPlugin = /** @class */ (function () {
                                         case 4:
                                             _b.sent();
                                             if (errorApi.length === apiList.length) {
-                                                logger.warn("\u63A5\u53E3\u8BE6\u60C5\u83B7\u53D6\u5931\u8D25".concat(errorServerText));
-                                                return [2 /*return*/, Promise.reject("\u63A5\u53E3\u8BE6\u60C5\u83B7\u53D6\u5931\u8D25".concat(errorServerText))];
+                                                errorText = "".concat(locales.$t('接口详情获取失败：')).concat(errorServerText);
+                                                logger.warn(errorText);
+                                                return [2 /*return*/, Promise.reject(errorText)];
                                             }
                                             return [4 /*yield*/, new ParserYapi(__assign(__assign({}, options), { apiList: apiList, projectInfo: projectInfo, categoryList: categoryList })).parser()];
                                         case 5:
                                             parsedDocumentList = _b.sent();
                                             if (parsedDocumentList.length === 0) {
-                                                logger.error("".concat(documentServer.url, " \u89E3\u6790yapi\u914D\u7F6E\u5931\u8D25").concat(errorServerText));
+                                                logger.error("".concat(locales.$t('解析yapi配置失败：'), " ").concat(documentServer.url, " ").concat(errorServerText));
                                             }
                                             result.push({
                                                 documentServer: documentServer,
@@ -174,7 +178,7 @@ var ParserYapiPlugin = /** @class */ (function () {
                             finally { if (e_1) throw e_1.error; }
                         }
                         return [4 /*yield*/, to(Promise.all(dsTasks))];
-                    case 1:
+                    case 2:
                         _b.sent();
                         return [2 /*return*/, result];
                 }

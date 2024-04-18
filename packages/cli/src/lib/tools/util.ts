@@ -21,6 +21,7 @@ import {
   AbstractParserPlugin,
   ParserPluginRunResult,
 } from '@/lib';
+import Locales from '@/lib/locales';
 import logger from '@/lib/tools/logger';
 import { ParserPluginOptions } from "@/lib/types";
 
@@ -264,6 +265,7 @@ export async function documentServersRunParserPlugins(
   noParserPluginNames: string[],
   parserPluginRunResult: ParserPluginRunResult
 }> {
+  const locales = await new Locales().init();
   const parserPluginMap = new Map();
   for (const parserPlugin of parserPlugins) {
     parserPluginMap.set(parserPlugin.name, parserPlugin);
@@ -275,10 +277,10 @@ export async function documentServersRunParserPlugins(
   };
 
   const execParserPluginMap = new Map();
-  const spinner = ora('文档获取与解析，这可能需要等待一段时间...').start();
+  const spinner = ora(locales.$t('文档获取与解析，这可能需要等待一段时间...')).start();
   for (const documentServer of documentServers) {
     if (!documentServer.url) {
-      logger.error(`documentServers.url 不可为空!`);
+      logger.error(locales.$t(`documentServers.url 不可为空!`));
       continue;
     }
 
@@ -310,13 +312,14 @@ export async function documentServersRunParserPlugins(
   } catch {}
 
   if (result.noParserPluginNames.length > 0) {
-    logger.error(`文档：${result.noParserPluginNames.join('、')}，缺少对应类型的解析插件。`);
+    logger.error(`${locales.$t('接口文档缺少对应类型的解析插件：')}${result.noParserPluginNames.join('、')}`);
   }
 
   if (result.parserPluginRunResult.length === 0) {
     spinner.fail();
-    logger.error('没有获取或者解析到文档');
-    return Promise.reject('没有获取或者解析到文档');
+    const errorText = locales.$t('没有获取或者解析到文档');
+    logger.error(errorText);
+    return Promise.reject(errorText);
   }
 
   spinner.succeed();

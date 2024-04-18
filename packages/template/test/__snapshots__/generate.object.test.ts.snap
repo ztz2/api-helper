@@ -2,7 +2,8 @@
 
 exports[`生成 javascript 对象测试 OpenAPI-2.0生成List对象: OpenAPI-2.0生成List对象 1`] = `
 "/**
- * @description 获取用户列表信息【响应数据实体对象】
+ * @description 获取用户列表信息
+ * @summary Response data entity object
  * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
  */
 export const systemAppPersonnelsStaffRosterWorkerHomeDetailUserIdResponseentityByGet =
@@ -86,7 +87,8 @@ exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2
 
 exports[`生成 javascript 对象测试 OpenAPI-3.0生成对象测试: OpenAPI-3.00生成对象测试 1`] = `
 "/**
- * @description Place an order for a pet、Place a new order in the store【响应数据实体对象】
+ * @description Place an order for a pet、Place a new order in the store
+ * @summary Response data entity object
  * @url [ POST ] /api/v3/store/order
  */
 export const apiV3StoreOrderResponseentityByPost = {
@@ -108,7 +110,8 @@ export const apiV3StoreOrderResponseentityByPost = {
 
 exports[`生成 javascript 对象测试 array单参数: array单参数 1`] = `
 "/**
- * @description list【请求数据实体对象】
+ * @description list
+ * @summary Request data entity object
  * @url [ GET ] /system/user/list
  */
 export const systemUserListRequestentityByGet = {
@@ -120,7 +123,8 @@ export const systemUserListRequestentityByGet = {
 
 exports[`生成 javascript 对象测试 array单参数2: array单参数2 1`] = `
 "/**
- * @description list【请求数据实体对象】
+ * @description list
+ * @summary Request data entity object
  * @url [ GET ] /system/user/list
  */
 export const systemUserListRequestentityByGet = {
@@ -213,7 +217,8 @@ exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody �
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 name测试 1`] = `
 "/**
- * @description Place an order for a pet【请求数据实体对象】
+ * @description Place an order for a pet
+ * @summary Request data entity object
  * @url [ POST ] /v2/store/order
  */
 export const 自定义名称 = {
@@ -270,7 +275,8 @@ exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody �
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 prefix测试 1`] = `
 "/**
- * @description Place an order for a pet【请求数据实体对象】
+ * @description Place an order for a pet
+ * @summary Request data entity object
  * @url [ POST ] /v2/store/order
  */
 export const v2StoreOrderRequestentityByPost = {
@@ -301,7 +307,8 @@ export const v2StoreOrderRequestentityByPost = {
 
 exports[`生成 javascript 对象测试 open-api-2.0-dot: OpenAPI-2.0生成 对象 null 属性 1`] = `
 "/**
- * @description list【请求数据实体对象】
+ * @description list
+ * @summary Request data entity object
  * @url [ GET ] /system/user/list
  */
 export const systemUserListRequestentityByGet = {
@@ -343,7 +350,8 @@ export const systemUserListRequestentityByGet = {
 
 exports[`生成 javascript 对象测试 open-api-2.0-dot: open-api-2.0-dot 1`] = `
 "/**
- * @description list【请求数据实体对象】
+ * @description list
+ * @summary Request data entity object
  * @url [ GET ] /system/user/list
  */
 export const systemUserListRequestentityByGet = {};
@@ -352,7 +360,8 @@ export const systemUserListRequestentityByGet = {};
 
 exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 null 属性 1`] = `
 "/**
- * @description Place an order for a pet【请求数据实体对象】
+ * @description Place an order for a pet
+ * @summary Request data entity object
  * @url [ POST ] /v2/store/order
  */
 export const v2StoreOrderRequestentityByPost = {};
@@ -361,7 +370,8 @@ export const v2StoreOrderRequestentityByPost = {};
 
 exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 空数组 1`] = `
 "/**
- * @description Place an order for a pet【请求数据实体对象】
+ * @description Place an order for a pet
+ * @summary Request data entity object
  * @url [ POST ] /v2/store/order
  */
 export const v2StoreOrderRequestentityByPost = {};

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const await_to_js_1 = __importDefault(require("await-to-js"));
 const core_1 = require("@api-helper/core");
 const util_1 = require("@api-helper/core/lib/utils/util");
+const locales_1 = __importDefault(require("../../../lib/locales"));
 const logger_1 = __importDefault(require("../../../lib/tools/logger"));
 const request_1 = __importDefault(require("../../../lib/tools/request"));
 const util_2 = require("../../../lib/tools/util");
@@ -28,6 +29,7 @@ class ParserYapiPlugin {
     }
     run(documentServers, options = {}) {
         return __awaiter(this, void 0, void 0, function* () {
+            const locales = yield new locales_1.default().init();
             const result = [];
             if (documentServers.length === 0) {
                 return result;
@@ -39,22 +41,22 @@ class ParserYapiPlugin {
                 dsTasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     // 获取项目基本信息
                     const projectInfo = yield fetchProjectInfo(documentServer).catch((e) => {
-                        logger_1.default.error(`获取项目基本信息失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        logger_1.default.error(`${locales.$t('获取项目基本信息失败：')}${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     const projectId = projectInfo._id;
                     // 获取所有分类
                     const categoryList = yield fetchMenuList(documentServer, { projectId }).catch((e) => {
-                        logger_1.default.error(`获取菜单列表失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        logger_1.default.error(`${locales.$t('获取菜单列表失败：')}${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     // 获取所有接口
                     const apiList = yield fetchApiList(documentServer, { projectId }).catch((e) => {
-                        logger_1.default.error(`获取接口列表数据失败${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
+                        logger_1.default.error(`${locales.$t('获取接口列表数据失败：')}${(0, util_1.getErrorMessage)(e, ': ')}${errorServerText}`);
                         return Promise.reject(e);
                     });
                     if (apiList.length === 0) {
-                        return Promise.reject(`项目接口为空${errorServerText}`);
+                        return Promise.reject(`${locales.$t('项目接口为空：')}${errorServerText}`);
                     }
                     // 获取所有接口的详情
                     const tasks = [];
@@ -70,12 +72,13 @@ class ParserYapiPlugin {
                     }
                     yield (0, await_to_js_1.default)(Promise.all(tasks));
                     if (errorApi.length === apiList.length) {
-                        logger_1.default.warn(`接口详情获取失败${errorServerText}`);
-                        return Promise.reject(`接口详情获取失败${errorServerText}`);
+                        const errorText = `${locales.$t('接口详情获取失败：')}${errorServerText}`;
+                        logger_1.default.warn(errorText);
+                        return Promise.reject(errorText);
                     }
                     const parsedDocumentList = yield new core_1.ParserYapi(Object.assign(Object.assign({}, options), { apiList, projectInfo: projectInfo, categoryList: categoryList })).parser();
                     if (parsedDocumentList.length === 0) {
-                        logger_1.default.error(`${documentServer.url} 解析yapi配置失败${errorServerText}`);
+                        logger_1.default.error(`${locales.$t('解析yapi配置失败：')} ${documentServer.url} ${errorServerText}`);
                     }
                     result.push({
                         documentServer,

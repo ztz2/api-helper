@@ -1,4 +1,3 @@
-import './worker-thread';
 export declare type ServerOptions = {
     config: string;
     url?: string;
@@ -15,6 +14,7 @@ declare class Service {
     private configFilePath?;
     private tempFolder;
     private constructorOptions;
+    private locales;
     constructor(options?: ServerOptions, isTestEnv?: boolean);
     run(): Promise<void>;
     clear(): Promise<void>;

@@ -2,7 +2,8 @@
 
 exports[`生成 interface 测试 OpenAPI-2.0-source生成 interface 测试: OpenAPI-2.0-source生成 interface 测试 1`] = `
 "/**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface 安逗和黑子 {
@@ -15,7 +16,8 @@ export interface 安逗和黑子 {
 
 exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "/**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 export interface 安逗和黑子 {
@@ -39,7 +41,8 @@ export interface 安逗和黑子 {
 
 exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0生成 interface 测试 1`] = `
 "/**
- * @description Place an order for a pet、Place a new order in the store【响应数据类型定义】
+ * @description Place an order for a pet、Place a new order in the store
+ * @summary Response data types
  * @url [ POST ] /api/v3/store/order
  */
 export interface ApiV3StoreOrderResponseByPost {
@@ -56,7 +59,8 @@ export interface ApiV3StoreOrderResponseByPost {
 
 exports[`生成 interface 测试 array单参数: array单参数 1`] = `
 "/**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export type SystemUserListRequestByGet = {
@@ -65,7 +69,8 @@ export type SystemUserListRequestByGet = {
 };
 
 /**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export type SystemUserListRequestByGet = any;
@@ -74,7 +79,8 @@ export type SystemUserListRequestByGet = any;
 
 exports[`生成 interface 测试 array单参数2: array单参数2 1`] = `
 "/**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export type SystemUserListRequestByGet = {
@@ -82,7 +88,8 @@ export type SystemUserListRequestByGet = {
 };
 
 /**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export type SystemUserListRequestByGet = any;
@@ -111,7 +118,8 @@ exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性�
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - name属性测试 1`] = `
 "/**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 export interface 自定义名称 {
@@ -144,7 +152,8 @@ exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性�
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - prefix属性测试 1`] = `
 "/**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 interface V2StoreOrderRequestByPost {
@@ -168,7 +177,8 @@ interface V2StoreOrderRequestByPost {
 
 exports[`生成 interface 测试 open-api-2.0-dot.json: open-api-2.0-dot.json 1`] = `
 "/**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export interface SystemUserListRequestByGet {
@@ -201,7 +211,8 @@ export interface SystemUserListRequestByGet {
 }
 
 /**
- * @description list【请求数据类型定义】
+ * @description list
+ * @summary Request data types
  * @url [ GET ] /system/user/list
  */
 export type SystemUserListRequestByGet = any;
@@ -210,7 +221,8 @@ export type SystemUserListRequestByGet = any;
 
 exports[`生成 interface 测试 open-api-响应参数为List: open-api-响应参数为List 1`] = `
 "/**
- * @description 获取用户列表信息【请求数据类型定义】
+ * @description 获取用户列表信息
+ * @summary Request data types
  * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
  */
 export interface SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet {
@@ -218,7 +230,8 @@ export interface SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGe
 }
 
 /**
- * @description 获取用户列表信息【请求数据类型定义】
+ * @description 获取用户列表信息
+ * @summary Request data types
  * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
  */
 export type SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet =

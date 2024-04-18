@@ -123,6 +123,20 @@ v2PetPetIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
+ */
+export function v2StoreInventoryByGet(data = {}, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig), ...args);
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
  * @description Place an order for a pet
  * @url [ POST ] /v2/store/order
  */
@@ -162,34 +176,6 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   method: 'DELETE',
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @url [ GET ] /v2/store/inventory
- */
-export function v2StoreInventoryByGet(data = {}, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig), ...args);
-}
-v2StoreInventoryByGet.requestConfig = {
-  path: '/v2/store/inventory',
-  method: 'GET',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
-  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
 /**
@@ -272,6 +258,20 @@ export function v2UserLogoutByGet(data = {}, extraData, ...args) {
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
   method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(data, extraData, ...args) {
+  return request(processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig), ...args);
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],

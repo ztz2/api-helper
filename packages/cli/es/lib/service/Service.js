@@ -90,9 +90,10 @@ import { join, isAbsolute, } from 'path';
 import { stat, outputFile, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
+import { resolve, toUnixPath, loadModule, removeFolder, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
+// import './worker-thread';
+import Locales from '../../lib/locales';
 import logger from '../../lib/tools/logger';
-import { resolve, loadModule, removeFolder, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, toUnixPath, } from '../tools/util';
-import './worker-thread';
 import { formatCode } from '../../lib';
 import { EXTENSIONS } from '../../lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
@@ -114,52 +115,55 @@ var Service = /** @class */ (function () {
         this.isTestEnv = isTestEnv;
         this.configFilePath = options.config;
         this.constructorOptions = options;
+        this.locales = new Locales();
     }
     Service.prototype.run = function () {
         return __awaiter(this, void 0, void 0, function () {
             var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
+                    case 0: return [4 /*yield*/, this.locales.init()];
+                    case 1:
+                        _b.sent();
                         this.startDate = Date.now();
                         return [4 /*yield*/, this.getConfigFile()];
-                    case 1:
+                    case 2:
                         configList = _b.sent();
                         len = configList.length;
                         // 添加解析插件
                         this.injectParserPlugins(configList);
                         i = 0;
-                        _b.label = 2;
-                    case 2:
-                        if (!(i < configList.length)) return [3 /*break*/, 10];
                         _b.label = 3;
                     case 3:
-                        _b.trys.push([3, 8, , 9]);
+                        if (!(i < configList.length)) return [3 /*break*/, 11];
+                        _b.label = 4;
+                    case 4:
+                        _b.trys.push([4, 9, , 10]);
                         config = configList[i];
                         if (len > 1) {
-                            logger.info("\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m\u6B63 \u5728 \u5904 \u7406 ".concat(i + 1, " \u9879\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
+                            logger.info("\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
-                    case 4:
+                    case 5:
                         parserPluginRunResult = _b.sent();
                         return [4 /*yield*/, this.chooseDocument(parserPluginRunResult)];
-                    case 5:
+                    case 6:
                         chooseDocumentList = _b.sent();
                         return [4 /*yield*/, this.genCode(config, chooseDocumentList)];
-                    case 6:
+                    case 7:
                         codes = _b.sent();
                         return [4 /*yield*/, this.output(config, codes)];
-                    case 7:
-                        _b.sent();
-                        return [3 /*break*/, 9];
                     case 8:
-                        _a = _b.sent();
-                        return [3 /*break*/, 9];
+                        _b.sent();
+                        return [3 /*break*/, 10];
                     case 9:
+                        _a = _b.sent();
+                        return [3 /*break*/, 10];
+                    case 10:
                         i++;
-                        return [3 /*break*/, 2];
-                    case 10: return [4 /*yield*/, this.clear()];
-                    case 11:
+                        return [3 /*break*/, 3];
+                    case 11: return [4 /*yield*/, this.clear()];
+                    case 12:
                         _b.sent();
                         return [2 /*return*/];
                 }
@@ -186,7 +190,7 @@ var Service = /** @class */ (function () {
                         var parserPlugin = parserPlugins_1_1.value;
                         var parserPluginMap = this.getParserPluginMap();
                         if (parserPluginMap.has(parserPlugin.name)) {
-                            logger.warn("".concat(parserPlugin.name, "\u63D2\u4EF6\u5DF2\u7ECF\u5B58\u5728."));
+                            logger.warn(this.locales.$t('插件已经注册').replace('%0', parserPlugin.name));
                             continue;
                         }
                         this.parserPlugins.push(parserPlugin);
@@ -256,7 +260,7 @@ var Service = /** @class */ (function () {
                                     }]];
                         }
                         configFilePath = this.configFilePath;
-                        spinner = ora('读取配置文件').start();
+                        spinner = ora(this.locales.$t('读取配置文件')).start();
                         if (!configFilePath) return [3 /*break*/, 4];
                         _d.label = 1;
                     case 1:
@@ -293,7 +297,7 @@ var Service = /** @class */ (function () {
                         _d.label = 7;
                     case 7:
                         spinner.fail();
-                        logger.error('配置文件不存在，程序退出');
+                        logger.error(this.locales.$t('配置文件不存在，程序退出'));
                         process.exit(1);
                         return [2 /*return*/];
                 }
@@ -347,7 +351,7 @@ var Service = /** @class */ (function () {
                     case 1:
                         answers_1 = _a.sent();
                         if (answers_1.documentList.length === 0) {
-                            failText = '未选择接口文档';
+                            failText = this.locales.$t('未选择接口文档');
                             logger.error(failText);
                             return [2 /*return*/, Promise.reject(failText)];
                         }
@@ -358,7 +362,7 @@ var Service = /** @class */ (function () {
                         _a.label = 2;
                     case 2:
                         if (parserPluginRunResult.length === 0) {
-                            failText = '未选择接口文档';
+                            failText = this.locales.$t('未选择接口文档');
                             logger.error(failText);
                             return [2 /*return*/, Promise.reject(failText)];
                         }
@@ -377,9 +381,13 @@ var Service = /** @class */ (function () {
                 switch (_b.label) {
                     case 0:
                         result = [];
-                        outputFilePath = getOutputPath(config);
-                        isTS = checkOutputTS(config);
-                        spinner = ora('代码生成，这可能需要等待一段时间...').start();
+                        return [4 /*yield*/, getOutputPath(config)];
+                    case 1:
+                        outputFilePath = _b.sent();
+                        return [4 /*yield*/, checkOutputTS(config)];
+                    case 2:
+                        isTS = _b.sent();
+                        spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
                         genCode = function (documentList, params) {
                             params = __assign({}, params);
                             var code = renderAllApi(documentList, params) || '';
@@ -502,7 +510,7 @@ var Service = /** @class */ (function () {
                                                                                         requestFilePath: requestFilePath,
                                                                                         onlyTyping: config.onlyTyping && isTS
                                                                                     };
-                                                                                    _f = __read(renderHeader(this.isTestEnv, renderHeaderParams, __assign(__assign({}, renderHeaderParams), { isTS: true, onlyTyping: config.onlyTyping })), 2), codeHead = _f[0], codeHeadDeclare = _f[1];
+                                                                                    _f = __read(renderHeader(this.isTestEnv, renderHeaderParams, __assign(__assign({}, renderHeaderParams), { isTS: true, onlyTyping: config.onlyTyping }), this.locales), 2), codeHead = _f[0], codeHeadDeclare = _f[1];
                                                                                     result.push({
                                                                                         outputFilePath: currentOutputFilePath,
                                                                                         code: code ? "".concat(codeHead).concat(code) : '',
@@ -555,7 +563,7 @@ var Service = /** @class */ (function () {
                                                                 requestFilePath: requestFilePath,
                                                                 onlyTyping: config.onlyTyping && isTS
                                                             };
-                                                            _h = __read(renderHeader(this.isTestEnv, renderHeaderParams, __assign(__assign({}, renderHeaderParams), { isTS: true, onlyTyping: config.onlyTyping })), 2), codeHead = _h[0], codeHeadDeclare = _h[1];
+                                                            _h = __read(renderHeader(this.isTestEnv, renderHeaderParams, __assign(__assign({}, renderHeaderParams), { isTS: true, onlyTyping: config.onlyTyping }), this.locales), 2), codeHead = _h[0], codeHeadDeclare = _h[1];
                                                             return [4 /*yield*/, formatResultCode([codeHead, code], [codeHeadDeclare, codeDeclare])];
                                                         case 9:
                                                             _j = __read.apply(void 0, [_p.sent(), 2]), code2 = _j[0], codeDeclare2 = _j[1];
@@ -579,33 +587,33 @@ var Service = /** @class */ (function () {
                                 }
                             });
                         };
-                        _b.label = 1;
-                    case 1:
-                        _b.trys.push([1, 6, 7, 8]);
-                        parserPluginRunResult_1 = __values(parserPluginRunResult), parserPluginRunResult_1_1 = parserPluginRunResult_1.next();
-                        _b.label = 2;
-                    case 2:
-                        if (!!parserPluginRunResult_1_1.done) return [3 /*break*/, 5];
-                        item = parserPluginRunResult_1_1.value;
-                        return [5 /*yield**/, _loop_1(item)];
+                        _b.label = 3;
                     case 3:
-                        _b.sent();
+                        _b.trys.push([3, 8, 9, 10]);
+                        parserPluginRunResult_1 = __values(parserPluginRunResult), parserPluginRunResult_1_1 = parserPluginRunResult_1.next();
                         _b.label = 4;
                     case 4:
-                        parserPluginRunResult_1_1 = parserPluginRunResult_1.next();
-                        return [3 /*break*/, 2];
-                    case 5: return [3 /*break*/, 8];
+                        if (!!parserPluginRunResult_1_1.done) return [3 /*break*/, 7];
+                        item = parserPluginRunResult_1_1.value;
+                        return [5 /*yield**/, _loop_1(item)];
+                    case 5:
+                        _b.sent();
+                        _b.label = 6;
                     case 6:
+                        parserPluginRunResult_1_1 = parserPluginRunResult_1.next();
+                        return [3 /*break*/, 4];
+                    case 7: return [3 /*break*/, 10];
+                    case 8:
                         e_5_1 = _b.sent();
                         e_5 = { error: e_5_1 };
-                        return [3 /*break*/, 8];
-                    case 7:
+                        return [3 /*break*/, 10];
+                    case 9:
                         try {
                             if (parserPluginRunResult_1_1 && !parserPluginRunResult_1_1.done && (_a = parserPluginRunResult_1.return)) _a.call(parserPluginRunResult_1);
                         }
                         finally { if (e_5) throw e_5.error; }
                         return [7 /*endfinally*/];
-                    case 8:
+                    case 10:
                         spinner.succeed();
                         return [2 /*return*/, result];
                 }
@@ -619,55 +627,56 @@ var Service = /** @class */ (function () {
             var e_8, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0:
-                        isTS = checkOutputTS(config);
-                        spinner = ora('文件输出').start();
-                        _b.label = 1;
+                    case 0: return [4 /*yield*/, checkOutputTS(config)];
                     case 1:
-                        _b.trys.push([1, 11, , 12]);
+                        isTS = _b.sent();
+                        spinner = ora(this.locales.$t('文件输出')).start();
                         _b.label = 2;
                     case 2:
-                        _b.trys.push([2, 8, 9, 10]);
-                        genCodes_1 = __values(genCodes), genCodes_1_1 = genCodes_1.next();
+                        _b.trys.push([2, 12, , 13]);
                         _b.label = 3;
                     case 3:
-                        if (!!genCodes_1_1.done) return [3 /*break*/, 7];
+                        _b.trys.push([3, 9, 10, 11]);
+                        genCodes_1 = __values(genCodes), genCodes_1_1 = genCodes_1.next();
+                        _b.label = 4;
+                    case 4:
+                        if (!!genCodes_1_1.done) return [3 /*break*/, 8];
                         genCode = genCodes_1_1.value;
                         outputFilePath = genCode.outputFilePath;
                         return [4 /*yield*/, outputFile(outputFilePath, genCode.code)];
-                    case 4:
-                        _b.sent();
-                        if (!!isTS) return [3 /*break*/, 6];
-                        declareFilePath = filterDeclareFilename(outputFilePath);
-                        return [4 /*yield*/, outputFile(declareFilePath, genCode.codeDeclare)];
                     case 5:
                         _b.sent();
-                        _b.label = 6;
+                        if (!!isTS) return [3 /*break*/, 7];
+                        declareFilePath = filterDeclareFilename(outputFilePath);
+                        return [4 /*yield*/, outputFile(declareFilePath, genCode.codeDeclare)];
                     case 6:
+                        _b.sent();
+                        _b.label = 7;
+                    case 7:
                         genCodes_1_1 = genCodes_1.next();
-                        return [3 /*break*/, 3];
-                    case 7: return [3 /*break*/, 10];
-                    case 8:
+                        return [3 /*break*/, 4];
+                    case 8: return [3 /*break*/, 11];
+                    case 9:
                         e_8_1 = _b.sent();
                         e_8 = { error: e_8_1 };
-                        return [3 /*break*/, 10];
-                    case 9:
+                        return [3 /*break*/, 11];
+                    case 10:
                         try {
                             if (genCodes_1_1 && !genCodes_1_1.done && (_a = genCodes_1.return)) _a.call(genCodes_1);
                         }
                         finally { if (e_8) throw e_8.error; }
                         return [7 /*endfinally*/];
-                    case 10:
+                    case 11:
                         spinner.succeed();
                         // 耗时：${((Date.now() - this.startDate) / 1000).toFixed(2)}秒
-                        logger.info("Done. \u4EE3\u7801\u751F\u6210\u6210\u529F. ");
-                        return [3 /*break*/, 12];
-                    case 11:
+                        logger.info(this.locales.$t('Done. 代码生成成功.'));
+                        return [3 /*break*/, 13];
+                    case 12:
                         error_1 = _b.sent();
                         spinner.fail();
                         logger.error(error_1);
                         return [2 /*return*/, Promise.reject(error_1)];
-                    case 12: return [2 /*return*/];
+                    case 13: return [2 /*return*/];
                 }
             });
         });
@@ -677,81 +686,83 @@ var Service = /** @class */ (function () {
 Service.init = function (options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var configFile, answers, overrideAnswer, _a, code, e_9;
+        var locales, configFile, answers, overrideAnswer, _a, code, e_9;
         return __generator(this, function (_b) {
             switch (_b.label) {
-                case 0:
-                    if (!(options === null || options === void 0 ? void 0 : options.config)) return [3 /*break*/, 1];
+                case 0: return [4 /*yield*/, new Locales().init()];
+                case 1:
+                    locales = _b.sent();
+                    if (!(options === null || options === void 0 ? void 0 : options.config)) return [3 /*break*/, 2];
                     if (isAbsolute(options.config)) {
                         configFile = options.config;
                     }
                     else {
                         configFile = join(process.cwd(), options.config);
                     }
-                    return [3 /*break*/, 3];
-                case 1: return [4 /*yield*/, prompts([{
+                    return [3 /*break*/, 4];
+                case 2: return [4 /*yield*/, prompts([{
                             type: 'select',
                             name: 'codeType',
-                            message: '请选择配置文件类型？',
+                            message: locales.$t('请选择配置文件类型？'),
                             choices: [
                                 { title: 'JavaScript', description: 'apih.config.js', value: 'apih.config.js' },
                                 { title: 'TypeScript', description: 'apih.config.ts', value: 'apih.config.ts' },
                             ],
                         }])];
-                case 2:
+                case 3:
                     answers = _b.sent();
                     if (!answers.codeType) {
                         return [2 /*return*/];
                     }
                     configFile = join(process.cwd(), answers.codeType);
-                    _b.label = 3;
-                case 3:
-                    _b.trys.push([3, 6, , 7]);
-                    return [4 /*yield*/, stat(configFile)];
+                    _b.label = 4;
                 case 4:
+                    _b.trys.push([4, 7, , 8]);
+                    return [4 /*yield*/, stat(configFile)];
+                case 5:
                     _b.sent();
                     return [4 /*yield*/, prompts([{
                                 type: 'confirm',
                                 name: 'override',
-                                message: '检测到已经存在配置文件，是否覆盖已有配置文件？'
+                                message: locales.$t('检测到已经存在配置文件，是否覆盖已有配置文件？')
                             }])];
-                case 5:
+                case 6:
                     overrideAnswer = _b.sent();
                     if (!overrideAnswer.override) {
                         return [2 /*return*/];
                     }
-                    return [3 /*break*/, 7];
-                case 6:
-                    _a = _b.sent();
-                    return [3 /*break*/, 7];
+                    return [3 /*break*/, 8];
                 case 7:
-                    code = "import { defineConfig } from '@api-helper/cli';\n\nexport default defineConfig({\n  // \u4F7F\u7528\u5206\u7EC4\u529F\u80FD\uFF0C\u542F\u7528\u8BE5\u529F\u80FD\u540E\uFF0C\u6309\u7167\u5206\u7EC4\u591A\u6587\u4EF6\u4EE3\u7801\u751F\u6210\n  group: false,\n  // \u662F\u5426\u53EA\u751F\u6210\u63A5\u53E3\u8BF7\u6C42\u6570\u636E\u548C\u8FD4\u56DE\u6570\u636E\u7684 TypeScript \u7C7B\u578B\u3002\u662F\uFF0C\u5219\u8BF7\u6C42\u6587\u4EF6\u548C\u8BF7\u6C42\u51FD\u6570\u90FD\u4E0D\u4F1A\u751F\u6210\u3002\n  onlyTyping: false,\n  // \u4EE3\u7801\u751F\u6210\u540E\u7684\u8F93\u51FA\u8DEF\u5F84\n  outputPath: 'src/api/index.ts',\n  // \u751F\u6210\u7684\u76EE\u6807\u4EE3\u7801\u7C7B\u578B\u3002\u9ED8\u8BA4: typescript\n  target: 'typescript',\n  // request\u8BF7\u6C42\u5DE5\u5177\u51FD\u6570\u6587\u4EF6\u8DEF\u5F84\u3002\n  requestFunctionFilePath: 'src/api/request.ts',\n  // \u8BF7\u6C42\u6570\u636E\u6240\u6709\u5B57\u6BB5\u8BBE\u7F6E\u6210\u5FC5\u6709\u5C5E\u6027\uFF0C\u9ED8\u8BA4: false\n  requiredRequestField: false,\n  // \u54CD\u5E94\u6570\u636E\u6240\u6709\u5B57\u6BB5\u8BBE\u7F6E\u6210\u5FC5\u6709\u5C5E\u6027\uFF0C\u9ED8\u8BA4\uFF1Atrue\n  requiredResponseField: true,\n  // \u63A5\u53E3\u6587\u6863\u670D\u52A1\u914D\u7F6E\n  documentServers: [{\n    // \u6587\u6863\u5730\u5740\u3010\u5F53\u4E0B\u9762\u7684type\u4E3A'swagger'\u7C7B\u578B\u65F6\uFF0C\u53EF\u4EE5\u8BFB\u53D6\u672C\u5730\u6587\u4EF6\uFF0C\u8FD9\u91CC\u5C31\u53EF\u4EE5\u4E00\u4E2A\u672C\u5730\u6587\u4EF6\u8DEF\u5F84\u3011\n    url: 'http://\u63A5\u53E3\u6587\u6863\u5730\u5740.com',\n    // \u6587\u6863\u7C7B\u578B\uFF0C\u6839\u636E\u6587\u6863\u7C7B\u578B\uFF0C\u8C03\u7528\u5185\u7F6E\u7684\u89E3\u6790\u5668\uFF0C\u9ED8\u8BA4\u503C: 'swagger'\u3010\u5185\u7F6Eyapi\u548Cswagger\u7684\u89E3\u6790\uFF0C\u5176\u4ED6\u6587\u6863\u7C7B\u578B\uFF0C\u6DFB\u52A0parserPlugins\u81EA\u884C\u5B9E\u73B0\u6587\u6863\u89E3\u6790\u3011\n    type: 'swagger',\n    // \u5F53\u524D\u63A5\u53E3\u6587\u6863\u670D\u52A1\u540D\u79F0\uFF0C\u6709\u503C\u7684\u60C5\u51B5\u4E0B\uFF0C\u6587\u4EF6\u8F93\u51FA\u53D8\u6210 -> \u8DEF\u5F84/\u5F53\u524Dname\n    name: '',\n    // \u83B7\u53D6\u54CD\u5E94\u6570\u636E\u7684key\uFF0Cbody[dataKey]\n    dataKey: '',\n    // \u8BBF\u95EE\u6587\u6863\u53EF\u80FD\u9700\u8981\u8BA4\u8BC1\u4FE1\u606F\uFF0Chttp auth \u9A8C\u8BC1\u65B9\u5F0F\n    auth: {\n      username: '',\n      password: '',\n    },\n    // \u8BBF\u95EE\u6587\u6863\u53EF\u80FD\u9700\u8981\u8BA4\u8BC1\u4FE1\u606F\uFF0C\u901A\u8FC7\u4F7F\u7528token\u8BBF\u95EE\uFF0Cyapi\u7684\u9A8C\u8BC1token\n    authToken: '',\n  }],\n});\n";
-                    _b.label = 8;
+                    _a = _b.sent();
+                    return [3 /*break*/, 8];
                 case 8:
-                    _b.trys.push([8, 11, , 12]);
-                    return [4 /*yield*/, outputFile(configFile, code)];
+                    code = "import { defineConfig } from '@api-helper/cli';\n\nexport default defineConfig({\n  // ".concat(locales.$t('group'), "\n  group: false,\n  // ").concat(locales.$t('onlyTyping'), "\n  onlyTyping: false,\n  // ").concat(locales.$t('outputPath'), "\n  outputPath: 'src/api/index.ts',\n  // ").concat(locales.$t('target'), "\n  target: 'typescript',\n  // ").concat(locales.$t('requestFunctionFilePath'), "\n  requestFunctionFilePath: 'src/api/request.ts',\n  // ").concat(locales.$t('requiredRequestField'), "\n  requiredRequestField: false,\n  // ").concat(locales.$t('requiredResponseField'), "\n  requiredResponseField: true,\n  // ").concat(locales.$t('documentServers'), "\n  documentServers: [{\n    // ").concat(locales.$t('url'), "\n    url: '").concat(locales.$t('urlValue'), "',\n    // ").concat(locales.$t('type'), "\n    type: 'swagger',\n    // ").concat(locales.$t('name'), "\n    name: '',\n    // ").concat(locales.$t('dataKey'), "\n    dataKey: '',\n    // ").concat(locales.$t('auth'), "\n    auth: {\n      username: '',\n      password: '',\n    },\n    // ").concat(locales.$t('authToken'), "\n    authToken: '',\n  }],\n});\n");
+                    _b.label = 9;
                 case 9:
-                    _b.sent();
-                    return [4 /*yield*/, getRequestFunctionFilePath({ outputFilePath: 'src/api/index.ts' })];
+                    _b.trys.push([9, 12, , 13]);
+                    return [4 /*yield*/, outputFile(configFile, code)];
                 case 10:
                     _b.sent();
-                    logger.info('已生成配置文件.');
-                    return [3 /*break*/, 12];
+                    return [4 /*yield*/, getRequestFunctionFilePath({ outputFilePath: 'src/api/index.ts' })];
                 case 11:
+                    _b.sent();
+                    logger.info(locales.$t('已生成配置文件.'));
+                    return [3 /*break*/, 13];
+                case 12:
                     e_9 = _b.sent();
-                    return [2 /*return*/, logger.error('配置文件生成失败.')];
-                case 12: return [2 /*return*/];
+                    return [2 /*return*/, logger.error(locales.$t('配置文件生成失败.'))];
+                case 13: return [2 /*return*/];
             }
         });
     });
 };
-function renderHeader(isTestEnv, options1, options2) {
+function renderHeader(isTestEnv, options1, options2, locales) {
     var _a, _b, _c, _d, _e, _f;
     if (isTestEnv === void 0) { isTestEnv = false; }
     if (options1 === void 0) { options1 = {}; }
     if (options2 === void 0) { options2 = {}; }
     var genTimeStr = isTestEnv ? '' : formatDate(Date.now());
-    var codeHeadTpl = "\u300Aif onlyTyping !== true\u300B\u300Aif isTS\u300B/* tslint:disable */\n/* eslint-disable */\n/* prettier-ignore-start */\n\n/* \u4EE3\u7801\u751F\u6210\u65F6\u95F4: ".concat(genTimeStr, " */\n/* \u63D0\u793A\uFF1A\u8BE5\u6587\u4EF6\u7531 API Helper CLI \u81EA\u52A8\u751F\u6210\uFF0C\u8BF7\u52FF\u76F4\u63A5\u4FEE\u6539\u3002 */\n/* \u6587\u6863\u53C2\u8003\uFF1Ahttps://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */\n\n// @ts-ignore\n// prettier-ignore\nimport {\n  RequestFunctionRestArgsType,\u300Aif isTS && !onlyTyping\u300B\n  processRequestFunctionConfig,\u300A/if\u300B\n} from '@api-helper/cli/lib/helpers';\n// @ts-ignore\n// prettier-ignore\nimport request from '\u300ArequestFilePath\u300B';\u300Aif isTS && !onlyTyping\u300B\n// @ts-ignore\n// prettier-ignore\ntype CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;\u300A/if\u300B\n  \u300Aelse\u300B\n/* eslint-disable */\n/* prettier-ignore-start */\n\n/* \u4EE3\u7801\u751F\u6210\u65F6\u95F4: ").concat(genTimeStr, " */\n/* \u63D0\u793A\uFF1A\u8BE5\u6587\u4EF6\u7531 API Helper CLI \u81EA\u52A8\u751F\u6210\uFF0C\u8BF7\u52FF\u76F4\u63A5\u4FEE\u6539\u3002 */\n/* \u6587\u6863\u53C2\u8003\uFF1Ahttps://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */\n\n// prettier-ignore\nimport { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n// prettier-ignore\nimport request from '\u300ArequestFilePath\u300B';\n  \u300A/if\u300B\n\u300A/if\u300B\n\n");
+    var codeHeadTpl = "\u300Aif onlyTyping !== true\u300B\u300Aif isTS\u300B/* tslint:disable */\n/* eslint-disable */\n/* prettier-ignore-start */\n\n/* ".concat(locales.$t('代码生成时间：')).concat(genTimeStr, " */\n/* ").concat(locales.$t('提示：该文件由 API Helper CLI 自动生成，请勿直接修改。'), " */\n/* ").concat(locales.$t('文档参考：'), "https://github.com/ztz2/api-helper */\n\n// @ts-ignore\n// prettier-ignore\nimport {\n  RequestFunctionRestArgsType,\u300Aif isTS && !onlyTyping\u300B\n  processRequestFunctionConfig,\u300A/if\u300B\n} from '@api-helper/cli/lib/helpers';\n// @ts-ignore\n// prettier-ignore\nimport request from '\u300ArequestFilePath\u300B';\u300Aif isTS && !onlyTyping\u300B\n// @ts-ignore\n// prettier-ignore\ntype CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;\u300A/if\u300B\n  \u300Aelse\u300B\n/* eslint-disable */\n/* prettier-ignore-start */\n\n/* ").concat(locales.$t('代码生成时间：')).concat(genTimeStr, " */\n/* ").concat(locales.$t('提示：该文件由 API Helper CLI 自动生成，请勿直接修改。'), " */\n/* ").concat(locales.$t('文档参考：'), "https://github.com/ztz2/api-helper */\n\n// prettier-ignore\nimport { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n// prettier-ignore\nimport request from '\u300ArequestFilePath\u300B';\n  \u300A/if\u300B\n\u300A/if\u300B\n\n");
     var codeHead = (_c = (_b = (_a = artTemplate.render(codeHeadTpl, options1)) === null || _a === void 0 ? void 0 : _a.trim) === null || _b === void 0 ? void 0 : _b.call(_a)) !== null && _c !== void 0 ? _c : '';
     var codeHeadDeclare = (_f = (_e = (_d = artTemplate.render(codeHeadTpl, options2)) === null || _d === void 0 ? void 0 : _d.trim) === null || _e === void 0 ? void 0 : _e.call(_d)) !== null && _f !== void 0 ? _f : '';
     codeHead = codeHead ? codeHead + '\n\n' : codeHead;
@@ -767,45 +778,64 @@ function filterDeclareFilename(filename) {
     return "".concat(filename, ".d.ts");
 }
 function checkOutputTS(config) {
-    var outputFilePath = getOutputPath(config);
-    if (config.target != null) {
-        return config.target !== 'javascript';
-    }
-    return !(outputFilePath.endsWith('.js') || outputFilePath.endsWith('.jsx'));
+    return __awaiter(this, void 0, void 0, function () {
+        var outputFilePath;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, getOutputPath(config)];
+                case 1:
+                    outputFilePath = _a.sent();
+                    if (config.target != null) {
+                        return [2 /*return*/, config.target !== 'javascript'];
+                    }
+                    return [2 /*return*/, !(outputFilePath.endsWith('.js') || outputFilePath.endsWith('.jsx'))];
+            }
+        });
+    });
 }
 function getOutputPath(config, showDiscardWarn) {
     var _a;
     if (showDiscardWarn === void 0) { showDiscardWarn = false; }
-    var outputPath = (_a = config.outputPath) !== null && _a !== void 0 ? _a : config.outputFilePath;
-    // 兼容旧版的配置路径
-    if (config.outputFilePath) {
-        if (showDiscardWarn) {
-            if (!outputDiscardWarn) {
-                outputDiscardWarn = true;
-                logger.warn('documentServers.outputFilePath 属性已经废弃，请使用 documentServers.outputPath');
+    return __awaiter(this, void 0, void 0, function () {
+        var locales, outputPath;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0: return [4 /*yield*/, new Locales().init()];
+                case 1:
+                    locales = _b.sent();
+                    outputPath = (_a = config.outputPath) !== null && _a !== void 0 ? _a : config.outputFilePath;
+                    // 兼容旧版的配置路径
+                    if (config.outputFilePath) {
+                        if (showDiscardWarn) {
+                            if (!outputDiscardWarn) {
+                                outputDiscardWarn = true;
+                                logger.warn(locales.$t('documentServers.outputFilePath 属性已经废弃，请使用 documentServers.outputPath'));
+                            }
+                        }
+                    }
+                    if (config.output) {
+                        // 使用旧版配置，警告提示该配置已经废弃
+                        if (showDiscardWarn) {
+                            if (!outputDiscardWarn) {
+                                outputDiscardWarn = true;
+                                logger.warn(locales.$t('documentServers.output 属性已经废弃，请使用 documentServers.outputPath'));
+                            }
+                        }
+                        if (isAbsolute(config.output.filename)) {
+                            return [2 /*return*/, config.output.filename];
+                        }
+                        if (isAbsolute(config.output.path)) {
+                            join(config.output.path, config.output.filename);
+                        }
+                        return [2 /*return*/, join(resolve(config.output.path), config.output.filename)];
+                    }
+                    if (outputPath && isAbsolute(outputPath)) {
+                        return [2 /*return*/, outputPath];
+                    }
+                    return [2 /*return*/, resolve(outputPath)];
             }
-        }
-    }
-    if (config.output) {
-        // 使用旧版配置，警告提示该配置已经废弃
-        if (showDiscardWarn) {
-            if (!outputDiscardWarn) {
-                outputDiscardWarn = true;
-                logger.warn('documentServers.output 属性已经废弃，请使用 documentServers.outputPath');
-            }
-        }
-        if (isAbsolute(config.output.filename)) {
-            return config.output.filename;
-        }
-        if (isAbsolute(config.output.path)) {
-            join(config.output.path, config.output.filename);
-        }
-        return join(resolve(config.output.path), config.output.filename);
-    }
-    if (outputPath && isAbsolute(outputPath)) {
-        return outputPath;
-    }
-    return resolve(outputPath);
+        });
+    });
 }
 function removeExtensionName(filepath, extensions) {
     var e_10, _a;
@@ -831,13 +861,19 @@ function removeExtensionName(filepath, extensions) {
 }
 function getRequestFunctionFilePath(config) {
     return __awaiter(this, void 0, void 0, function () {
-        var outputFilename, extensionName, isTS, requestFunctionFilePath, requestDeclareFunctionFilePath, _a, _b, _c, _d;
+        var locales, outputFilename, extensionName, isTS, requestFunctionFilePath, requestDeclareFunctionFilePath, _a, _b, _c, _d;
         return __generator(this, function (_e) {
             switch (_e.label) {
-                case 0:
-                    outputFilename = getOutputPath(config);
+                case 0: return [4 /*yield*/, new Locales().init()];
+                case 1:
+                    locales = _e.sent();
+                    return [4 /*yield*/, getOutputPath(config)];
+                case 2:
+                    outputFilename = _e.sent();
                     extensionName = getExtensionName(outputFilename);
-                    isTS = checkOutputTS(config);
+                    return [4 /*yield*/, checkOutputTS(config)];
+                case 3:
+                    isTS = _e.sent();
                     config.requestFunctionFilePath = config.requestFunctionFilePath ? config.requestFunctionFilePath : "src/api/request.".concat(isTS ? 'ts' : 'js');
                     requestFunctionFilePath = config.requestFunctionFilePath;
                     // 兼容旧版配置
@@ -852,53 +888,53 @@ function getRequestFunctionFilePath(config) {
                     requestDeclareFunctionFilePath = filterDeclareFilename(requestFunctionFilePath);
                     if (!(!isTS &&
                         !requestFunctionFilePath.endsWith('.ts') &&
-                        !requestFunctionFilePath.endsWith('.tsx'))) return [3 /*break*/, 8];
-                    _e.label = 1;
-                case 1:
-                    _e.trys.push([1, 3, , 8]);
-                    return [4 /*yield*/, stat(resolve(requestDeclareFunctionFilePath))];
-                case 2:
-                    _e.sent();
-                    return [3 /*break*/, 8];
-                case 3:
-                    _a = _e.sent();
+                        !requestFunctionFilePath.endsWith('.tsx'))) return [3 /*break*/, 11];
                     _e.label = 4;
                 case 4:
-                    _e.trys.push([4, 6, , 7]);
-                    return [4 /*yield*/, outputFile(requestDeclareFunctionFilePath, "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n// \u81EA\u5B9A\u4E49\u914D\u7F6E\nexport type RequestOptions = {\n  // \u81EA\u5B9A\u4E49\u914D\u7F6E\u5C5E\u6027\n};\nexport default function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData>;\n")];
+                    _e.trys.push([4, 6, , 11]);
+                    return [4 /*yield*/, stat(resolve(requestDeclareFunctionFilePath))];
                 case 5:
                     _e.sent();
-                    return [3 /*break*/, 7];
+                    return [3 /*break*/, 11];
                 case 6:
-                    _b = _e.sent();
-                    return [3 /*break*/, 7];
-                case 7: return [3 /*break*/, 8];
+                    _a = _e.sent();
+                    _e.label = 7;
+                case 7:
+                    _e.trys.push([7, 9, , 10]);
+                    return [4 /*yield*/, outputFile(requestDeclareFunctionFilePath, "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n// ".concat(locales.$t('自定义配置'), "\nexport type RequestOptions = {\n  //\n};\nexport default function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData>;\n"))];
                 case 8:
+                    _e.sent();
+                    return [3 /*break*/, 10];
+                case 9:
+                    _b = _e.sent();
+                    return [3 /*break*/, 10];
+                case 10: return [3 /*break*/, 11];
+                case 11:
                     if (config.onlyTyping && isTS) {
                         return [2 /*return*/, requestFunctionFilePath];
                     }
-                    _e.label = 9;
-                case 9:
-                    _e.trys.push([9, 11, , 12]);
-                    return [4 /*yield*/, stat(resolve(requestFunctionFilePath))];
-                case 10:
-                    _e.sent();
-                    return [2 /*return*/, requestFunctionFilePath];
-                case 11:
-                    _c = _e.sent();
-                    return [3 /*break*/, 12];
+                    _e.label = 12;
                 case 12:
                     _e.trys.push([12, 14, , 15]);
-                    return [4 /*yield*/, outputFile(requestFunctionFilePath, isTS ? "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n\n// \u81EA\u5B9A\u4E49\u914D\u7F6E\nexport type RequestOptions = {\n  // \u81EA\u5B9A\u4E49\u914D\u7F6E\u5C5E\u6027\n};\n\nexport default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({} as unknown as ResponseData);\n    }, 1500);\n  });\n}\n" : "export default async function request(config, options) {\n  return new Promise((resolve, reject) => {\n    // \u4EE5axios\u4E3A\u4F8B\u7684\u8BF7\u6C42\u914D\u7F6E\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // \u5904\u7406\u8868\u5355\u6570\u636E\u8BF7\u6C42\u5934\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n\n    console.log('\u8BF7\u6C42\u914D\u7F6E\uFF1A', requestConfig);\n    // TODO\u5F85\u5B9E\u73B0\u5177\u4F53request\u8BF7\u6C42\u903B\u8F91...\n    // \u5148\u7528\u5F02\u6B65\u6A21\u62DFrequest\u8BF7\u6C42\u903B\u8F91\n    setTimeout(() => {\n      resolve({});\n    }, 1500);\n  });\n}\n")];
+                    return [4 /*yield*/, stat(resolve(requestFunctionFilePath))];
                 case 13:
                     _e.sent();
-                    return [3 /*break*/, 15];
+                    return [2 /*return*/, requestFunctionFilePath];
                 case 14:
-                    _d = _e.sent();
-                    logger.error("\u7EDF\u4E00\u8BF7\u6C42\u6587\u4EF6\u521B\u5EFA\u5931\u8D25\uFF1A".concat(requestFunctionFilePath));
-                    process.exit(1);
+                    _c = _e.sent();
                     return [3 /*break*/, 15];
-                case 15: return [2 /*return*/, requestFunctionFilePath];
+                case 15:
+                    _e.trys.push([15, 17, , 18]);
+                    return [4 /*yield*/, outputFile(requestFunctionFilePath, isTS ? "import { RequestFunctionConfig } from '@api-helper/cli/lib/helpers';\n\n// ".concat(locales.$t('自定义配置'), "\nexport type RequestOptions = {\n  //\n};\n\nexport default async function request<ResponseData>(config: RequestFunctionConfig, options?: RequestOptions): Promise<ResponseData> {\n  return new Promise((resolve, reject) => {\n    // ").concat(locales.$t('以axios为例的请求配置'), "\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // ").concat(locales.$t('处理表单数据请求头'), "\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n    console.log('").concat(locales.$t('请求配置：'), "', requestConfig);\n    // ").concat(locales.$t('TODO 待实现具体request请求逻辑...'), "\n    /**\n      // axios example\n      axios(requestConfig).then((res) => {\n        resolve(res as unknown as ResponseData);\n      }).catch(reject);\n    */\n    // ").concat(locales.$t('先用异步模拟request请求逻辑'), "\n    setTimeout(() => {\n      resolve({} as unknown as ResponseData);\n    }, 1500);\n  });\n}\n") : "export default async function request(config, options) {\n  return new Promise((resolve, reject) => {\n    // ".concat(locales.$t('以axios为例的请求配置'), "\n    const requestConfig = {\n      url: config.path,\n      method: config.method,\n      data: config.data,\n      headers: {\n        'Content-Type': 'application/x-www-form-urlencoded',\n      },\n    };\n    // ").concat(locales.$t('处理表单数据请求头'), "\n    if (config.hasFormData) {\n      requestConfig.headers['Content-Type'] = 'multipart/form-data';\n    }\n\n    console.log('").concat(locales.$t('请求配置：'), "', requestConfig);\n    // ").concat(locales.$t('TODO 待实现具体request请求逻辑...'), "\n    /**\n      // axios example\n      axios(requestConfig).then((res) => {\n        resolve(res as unknown as ResponseData);\n      }).catch(reject);\n    */\n    // ").concat(locales.$t('先用异步模拟request请求逻辑'), "\n    setTimeout(() => {\n      resolve({});\n    }, 1500);\n  });\n}\n"))];
+                case 16:
+                    _e.sent();
+                    return [3 /*break*/, 18];
+                case 17:
+                    _d = _e.sent();
+                    logger.error("".concat(locales.$t('请求文件创建失败：')).concat(requestFunctionFilePath));
+                    process.exit(1);
+                    return [3 /*break*/, 18];
+                case 18: return [2 /*return*/, requestFunctionFilePath];
             }
         });
     });

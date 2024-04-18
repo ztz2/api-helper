@@ -167,9 +167,13 @@ function renderClassComment(
   paramType: 'request' | 'response',
   isExtraData = false
 ) {
+  let summary =  isExtraData ? 'Incompatible request data' : paramType === 'request' ? 'Request data' : paramType === 'response' ? 'Response data' : '';
+  if (summary) {
+    summary += ' entity class';
+  }
   const commentText =
     `/**
- * @description ${[api.title, api.description].filter(Boolean).join('、')}【${isExtraData ? '不兼容的请求数据' : paramType === 'request' ? '请求数据' : paramType === 'response' ? '响应数据' : ''}实体类】${api.docURL ? `\n * @doc ${api.docURL}` : ''}
+ * @description ${[api.title, api.description].filter(Boolean).join('、')}${summary ? `\n * @summary ${summary}` : ''}${api.docURL ? `\n * @doc ${api.docURL}` : ''}
  * @url [ ${api.method.toUpperCase()} ] ${api.path}
  */`;
   return commentText;
