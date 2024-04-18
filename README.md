@@ -124,7 +124,7 @@ export default defineConfig({
     },
     // Accessing the document may require authentication information, which can be accessed using a token, such as Yapi's authentication token.
     authToken: '',
-    // Some custom request headers when accessing the interface document.，自定义的一些请求头
+    // Request headers when fetching the interface document with AJAX.
     headers: {},
     // Hook events in the execution process.
     events: {
