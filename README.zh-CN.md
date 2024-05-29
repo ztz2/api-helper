@@ -30,18 +30,26 @@
 
 ## 📄 API生成
 
+### 安装
+```sh
+$ pnpm i @api-helper/cli
+# or
+$ npm i @api-helper/cli
+# or
+$ yarn add @api-helper/cli
+```
+
 ### 使用CLI方式
 
 ![API代码](./packages/docs/src/public/images/api-code-cli.gif)
-### 例子
+#### 例子
 ```sh
 $ npx apih -u http://接口文档地址.com
 # or
 $ npx apih -u ./local-openapi.json
 ```
 
-### CLI 配置说明
-指令说明
+#### CLI 配置说明
 ```sh
 Usage: apih [options]
 Options:
@@ -53,11 +61,11 @@ Options:
 ```
 
 
-## 使用配置文件
+### 使用配置文件【推荐】
 
 ![](./packages/docs/src/public/images/api-code.gif)
 
-### 初始化配置文件
+#### 初始化配置文件
 输入下面指令，初始化配置文件
 ```sh
 $ npx apih init
@@ -70,7 +78,7 @@ Options:
   -c, --config-path <path> 自定义配置文件的路径
 ```
 
-### 运行生成API
+#### 运行生成API
 
 * 打开 **apih.config.js** 或 **apih.config.ts** 文件进行配置。
 * 完成配置之后，输入下面指令，即可生成API。
@@ -86,7 +94,7 @@ Options:
   -c, --config-path <path> 自定义配置文件的路径
 ```
 
-### apih.config 配置文件说明
+#### apih.config 配置文件说明
 ```typescript
 import type { Config } from '@api-helper/cli';
 import { defineConfig } from '@api-helper/cli';
