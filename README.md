@@ -30,16 +30,26 @@ English | [简体中文](./README.zh-CN.md)
 
 ## 📄 API Generation
 
+### Install
+```sh
+$ pnpm i @api-helper/cli
+# or
+$ npm i @api-helper/cli
+# or
+$ yarn add @api-helper/cli
+```
+
 ### Usage CLI
 
 ![API代码](./packages/docs/src/public/images/example/en/api-code-cli.gif)
-### Examples
+#### Examples
 ```sh
 $ npx apih -u http://your-api-documentation-address.com
 # or
 $ npx apih -u ./local-openapi.json
 ```
 
+#### CLI Configuration Guide
 ```sh
 Usage: apih [options]
 Options:
@@ -50,11 +60,11 @@ Options:
   --auth-token <string> Accessing documents may require authentication information, accessed through using token, yapi's validation token
 ```
 
-## Usage config in file
+### Usage config in file【Recommended】
 
 ![](./packages/docs/src/public/images/example/en/api-code.gif)
 
-### Initialize Configuration File
+#### Initialize Configuration File
 Enter the following command to initialize the configuration file.
 ```sh
 $ npx apih init
@@ -67,7 +77,7 @@ Options:
   -c, --config-path <path> Custom configuration file path.
 ```
 
-### Execute to generate API
+#### Execute to generate API
 
 * Open the apih.config.js or apih.config.ts file for configuration.
 * After completing the configuration, enter the following command to generate the API.
