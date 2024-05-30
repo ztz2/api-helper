@@ -245,6 +245,7 @@ var ParserSwagger = /** @class */ (function () {
                                             keyName: keyName,
                                         });
                                         var parserKeyName2SchemaRes = null;
+                                        var parserKeyName2SchemaTarget = null;
                                         // 存在 Schema 的dot参数
                                         if (
                                         // fix: 2.0中array参数问题
@@ -261,7 +262,11 @@ var ParserSwagger = /** @class */ (function () {
                                             parserKeyName2SchemaRes = new parser_key_name_2_schema_1.default(keyName, type).parse();
                                             if (parserKeyName2SchemaRes) {
                                                 parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
-                                                scm = parserKeyName2SchemaRes.targetSchema;
+                                                // fix: 当为路径参数时候，必填项
+                                                if (parameter.in === 'path') {
+                                                    parserKeyName2SchemaRes.wrapSchema.rules.required = true;
+                                                }
+                                                scm = parserKeyName2SchemaTarget = parserKeyName2SchemaRes.targetSchema;
                                                 keyName = (0, util_1.filterKeyName)(parserKeyName2SchemaRes.wrapSchema.keyName);
                                             }
                                             else { // 普通schema对象
@@ -277,7 +282,12 @@ var ParserSwagger = /** @class */ (function () {
                                             }
                                         }
                                         scm.id = this_1.generateId();
-                                        scm.rules.required = parameter.in === 'path' ? true : (0, util_1.checkType)(parameter.required, 'Boolean') ? parameter.required : false;
+                                        if (parserKeyName2SchemaTarget == null) {
+                                            scm.rules.required = parameter.in === 'path' ? true : (0, util_1.checkType)(parameter.required, 'Boolean') ? parameter.required : false;
+                                        }
+                                        else {
+                                            scm.rules.required = (0, util_1.checkType)(parameter.required, 'Boolean') ? parameter.required : false;
+                                        }
                                         scm.description = (0, util_1.filterDesc)(parameter.description);
                                         scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                                         // 路径参数
@@ -292,7 +302,10 @@ var ParserSwagger = /** @class */ (function () {
                                             scm.type = (parameter === null || parameter === void 0 ? void 0 : parameter.format) ? (0, helpers_1.transformType)(scm.type, parameter === null || parameter === void 0 ? void 0 : parameter.format, scm.type) : scm.type;
                                             !api_1.formDataKeyNameList.includes(keyName) && api_1.formDataKeyNameList.push(keyName);
                                         }
-                                        requestDataSchema.params.push(scm);
+                                        // fix: dot参数属性不应该提取到根节点上的问题
+                                        if (parserKeyName2SchemaTarget == null) {
+                                            requestDataSchema.params.push(scm);
+                                        }
                                     }
                                     else if (parameter.in === 'body') { // body 参数
                                         requestExtraDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, parameter.schema, requestKeyNameMemo_1, {

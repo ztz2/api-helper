@@ -200,6 +200,7 @@ export default class ParserSwagger {
                   });
 
                   let parserKeyName2SchemaRes = null;
+                  let parserKeyName2SchemaTarget = null;
                   // 存在 Schema 的dot参数
                   if (
                     // fix: 2.0中array参数问题
@@ -222,7 +223,11 @@ export default class ParserSwagger {
                     parserKeyName2SchemaRes = new ParserKeyName2Schema(keyName, type).parse();
                     if (parserKeyName2SchemaRes) {
                       parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
-                      scm = parserKeyName2SchemaRes.targetSchema;
+                      // fix: 当为路径参数时候，必填项
+                      if (parameter.in === 'path') {
+                        parserKeyName2SchemaRes.wrapSchema.rules.required = true;
+                      }
+                      scm = parserKeyName2SchemaTarget = parserKeyName2SchemaRes.targetSchema;
                       keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
                     } else { // 普通schema对象
                       // fix: url参数也是一个对象问题.
@@ -244,7 +249,11 @@ export default class ParserSwagger {
                   }
 
                   scm.id = this.generateId();
-                  scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
+                  if (parserKeyName2SchemaTarget == null) {
+                    scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
+                  } else {
+                    scm.rules.required = checkType(parameter.required, 'Boolean') ? parameter.required : false;
+                  }
                   scm.description = filterDesc(parameter.description);
                   scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
@@ -261,7 +270,10 @@ export default class ParserSwagger {
                     !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
                   }
 
-                  requestDataSchema.params.push(scm);
+                  // fix: dot参数属性不应该提取到根节点上的问题
+                  if (parserKeyName2SchemaTarget == null) {
+                    requestDataSchema.params.push(scm);
+                  }
                 } else if (parameter.in === 'body') { // body 参数
                   requestExtraDataSchema = processRequestSchema(
                     requestDataSchema,
@@ -274,7 +286,6 @@ export default class ParserSwagger {
                   );
                 } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                   // header 和 cookie信息，暂无特殊处理
-
                 }
               }
               // 合并 name[0].a.rule 属性。
