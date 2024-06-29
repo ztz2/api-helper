@@ -45,4 +45,10 @@ describe('swagger-parser', () => {
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('open-api-response-array');
   });
+  test('open-api-2.0-lost-body-param.json', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api-2.0-lost-body-param.json'));
+    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocument = ahDocumentList[0];
+    expect(ahDocument).toMatchSnapshot('open-api-2.0-lost-body-param.json');
+  });
 });

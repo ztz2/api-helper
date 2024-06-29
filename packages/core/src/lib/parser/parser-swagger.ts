@@ -275,15 +275,24 @@ export default class ParserSwagger {
                     requestDataSchema.params.push(scm);
                   }
                 } else if (parameter.in === 'body') { // body 参数
-                  requestExtraDataSchema = processRequestSchema(
-                    requestDataSchema,
-                    requestSchemaRecord,
-                    parameter.schema,
-                    requestKeyNameMemo,
-                    {
-                      autoGenerateId: this.autoGenerateId,
-                    }
-                  );
+                  if (parameter.schema?.type === 'object' || parameter.schema?.type === 'array') {
+                    requestExtraDataSchema = processRequestSchema(
+                      requestDataSchema,
+                      requestSchemaRecord,
+                      parameter.schema,
+                      requestKeyNameMemo,
+                      {
+                        autoGenerateId: this.autoGenerateId,
+                      }
+                    );
+                    // 普通属性，合并平台属性，整理成一个对象
+                  } else if (parameter.schema?.type && parameter?.name) {
+                    requestDataSchema.params.push(createSchema(parameter.schema.type, {
+                      id: this.generateId(),
+                      keyName: parameter?.name,
+                      required: !!parameter.schema?.required,
+                    }));
+                  }
                 } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                   // header 和 cookie信息，暂无特殊处理
                 }

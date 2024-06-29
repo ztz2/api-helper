@@ -13127,6 +13127,156 @@ Object {
 }
 `;
 
+exports[`swagger-parser open-api-2.0-lost-body-param.json: open-api-2.0-lost-body-param.json 1`] = `
+Object {
+  "basePath": "/system",
+  "categoryList": Array [
+    Object {
+      "apiList": Array [
+        Object {
+          "description": "",
+          "docURL": "",
+          "formDataKeyNameList": Array [],
+          "id": "",
+          "label": "左侧目录树册、分册的下载(返回下载路径)",
+          "method": "post",
+          "path": "/system/elecArchive/documentDownload",
+          "pathParamKeyNameList": Array [],
+          "queryStringKeyNameList": Array [],
+          "requestDataSchema": ObjectSchema {
+            "description": "",
+            "enum": Array [],
+            "examples": Array [],
+            "id": "",
+            "keyName": "",
+            "label": "",
+            "params": Array [
+              StringSchema {
+                "description": "",
+                "enum": Array [],
+                "examples": Array [],
+                "id": "",
+                "keyName": "id",
+                "label": "",
+                "params": Array [],
+                "required": false,
+                "rules": Object {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                  "required": false,
+                },
+                "title": "",
+                "type": "string",
+              },
+              AbstractSchema {
+                "description": "",
+                "enum": Array [],
+                "examples": Array [],
+                "id": "",
+                "keyName": "level",
+                "label": "",
+                "params": Array [],
+                "required": false,
+                "rules": Object {
+                  "required": false,
+                },
+                "title": "",
+                "type": "",
+              },
+            ],
+            "rules": Object {
+              "required": false,
+            },
+            "title": "",
+            "type": "object",
+          },
+          "requestExtraDataSchema": null,
+          "responseDataSchema": ObjectSchema {
+            "description": "",
+            "enum": Array [],
+            "examples": Array [],
+            "id": "",
+            "keyName": "",
+            "label": "ResponseData«string»",
+            "params": Array [
+              StringSchema {
+                "description": "",
+                "enum": Array [],
+                "examples": Array [],
+                "id": "",
+                "keyName": "data",
+                "label": "",
+                "params": Array [],
+                "rules": Object {
+                  "required": true,
+                },
+                "title": "",
+                "type": "string",
+              },
+              StringSchema {
+                "description": "",
+                "enum": Array [],
+                "examples": Array [],
+                "id": "",
+                "keyName": "message",
+                "label": "",
+                "params": Array [],
+                "rules": Object {
+                  "required": true,
+                },
+                "title": "",
+                "type": "string",
+              },
+              NumberSchema {
+                "description": "",
+                "enum": Array [],
+                "examples": Array [],
+                "id": "",
+                "keyName": "state",
+                "label": "",
+                "params": Array [],
+                "rules": Object {
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
+                  "required": true,
+                },
+                "title": "",
+                "type": "number",
+              },
+            ],
+            "rules": Object {
+              "required": true,
+            },
+            "title": "ResponseData«string»",
+            "type": "object",
+          },
+          "title": "左侧目录树册、分册的下载(返回下载路径)",
+        },
+      ],
+      "description": "App File Controller",
+      "id": "",
+      "name": "用户管理",
+    },
+    Object {
+      "apiList": Array [],
+      "description": "未设置分组的接口集合",
+      "id": "",
+      "name": "未知分组",
+    },
+  ],
+  "description": "",
+  "documentServerUrl": "",
+  "documentVersion": "2.0",
+  "id": "",
+  "title": "系统模块接口文档",
+  "version": "",
+}
+`;
+
 exports[`swagger-parser open-api-response-array: open-api-response-array 1`] = `
 Object {
   "basePath": "/v2",

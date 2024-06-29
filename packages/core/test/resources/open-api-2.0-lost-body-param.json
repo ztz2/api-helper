@@ -1,0 +1,104 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "系统模块接口文档",
+    "contact": {},
+    "license": {
+      "name": "Powered By ruoyi",
+      "url": "https://ruoyi.vip"
+    }
+  },
+  "host": "192.168.0.72:8081",
+  "basePath": "/system",
+  "tags": [
+    {
+      "name": "用户管理",
+      "description": "App File Controller"
+    }
+  ],
+  "paths": {
+    "/elecArchive/documentDownload": {
+      "post": {
+        "tags": [
+          "用户管理"
+        ],
+        "summary": "左侧目录树册、分册的下载(返回下载路径)",
+        "operationId": "documentDownloadUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "id",
+            "description": "册、分册主键id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "level",
+            "description": "册、分册level",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ResponseData«string»",
+              "originalRef": "ResponseData«string»"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-order": "4"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "ResponseData«string»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "state": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "ResponseData«string»"
+    }
+  }
+}
