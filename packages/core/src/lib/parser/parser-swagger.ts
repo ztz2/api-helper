@@ -254,6 +254,7 @@ export default class ParserSwagger {
                   } else {
                     scm.rules.required = checkType(parameter.required, 'Boolean') ? parameter.required : false;
                   }
+
                   scm.description = filterDesc(parameter.description);
                   scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
@@ -287,11 +288,20 @@ export default class ParserSwagger {
                     );
                     // 普通属性，合并平台属性，整理成一个对象
                   } else if (parameter.schema?.type && parameter?.name) {
-                    requestDataSchema.params.push(createSchema(parameter.schema.type, {
+                    const t = transformType(parameter.schema.type, parameter?.schema?.format, 'string');
+                    const temp = createSchema(t, {
                       id: this.generateId(),
                       keyName: parameter?.name,
-                      required: !!parameter.schema?.required,
-                    }));
+                      title: filterDesc(parameter?.title),
+                      description: filterDesc(parameter?.description),
+                      type: t,
+                      examples: parameter.examples ?? [],
+                      rules: {
+                        required: !!parameter?.required || !!parameter.schema?.required,
+                      }
+                    });
+                    temp.label = temp.title ? temp.title : temp.description ? temp.description : '';
+                    requestDataSchema.params.push(temp);
                   }
                 } else if (parameter.in === 'header' || parameter.in === 'cookie') {
                   // header 和 cookie信息，暂无特殊处理

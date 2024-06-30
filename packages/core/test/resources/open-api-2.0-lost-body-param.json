@@ -17,6 +17,51 @@
     }
   ],
   "paths": {
+    "/scheduleTask/delete": {
+      "post": {
+        "tags": [
+          "协同管理-定时任务"
+        ],
+        "summary": "删除定时任务",
+        "operationId": "deleteUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "id",
+            "description": "任务id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        },
+        "x-order": "5"
+      }
+    },
     "/elecArchive/documentDownload": {
       "post": {
         "tags": [

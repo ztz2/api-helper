@@ -318,16 +318,8 @@ export const systemUserListRequestentityByGet = {
   storeIds: [],
   // { string } 有分页参数的话就加,根据你的实际查询参数编写
   '有分页参数的话就加,根据你的实际查询参数编写': '',
-  // { string } 创建者
-  createBy: '',
-  // { array } ID集合
-  ids: [],
   // { array } 主键id集合
   pics: [],
-  // { string } 创建时间
-  createTime: '',
-  // { string }
-  ancestors: '',
   // { object }
   dept: {
     // { string } 创建者
@@ -335,6 +327,8 @@ export const systemUserListRequestentityByGet = {
     // { string }
     ancestors: ''
   },
+  // { array } ID集合
+  ids: [],
   // { array }
   roles: [
     {

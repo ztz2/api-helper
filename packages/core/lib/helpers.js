@@ -188,6 +188,9 @@ function createSchema(type, options) {
             instance = new UnknownSchema();
             break;
         }
+        default: {
+            instance = new StringSchema();
+        }
     }
     if (Object.prototype.toString.call(options) === '[object Object]') {
         instance = (0, merge_1.default)(instance, options);

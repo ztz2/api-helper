@@ -171,11 +171,11 @@ var ParserSwagger = /** @class */ (function () {
     };
     ParserSwagger.prototype.parserPath2API = function (parsedDocumentMap) {
         var e_3, _a, e_4, _b;
-        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15;
+        var _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16, _17;
         var result = [];
         try {
             for (var parsedDocumentMap_1 = __values(parsedDocumentMap), parsedDocumentMap_1_1 = parsedDocumentMap_1.next(); !parsedDocumentMap_1_1.done; parsedDocumentMap_1_1 = parsedDocumentMap_1.next()) {
-                var _16 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _16[0], openAPIDocument = _16[1];
+                var _18 = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _18[0], openAPIDocument = _18[1];
                 var paths = openAPIDocument.paths;
                 if (!paths) {
                     continue;
@@ -183,10 +183,10 @@ var ParserSwagger = /** @class */ (function () {
                 var pathsEntries = Object.entries(paths);
                 var categoryMap = this.parserCategory(openAPIDocument);
                 for (var i = 0; i < pathsEntries.length; i++) {
-                    var _17 = __read(pathsEntries[i], 2), path = _17[0], methodMap = _17[1];
+                    var _19 = __read(pathsEntries[i], 2), path = _19[0], methodMap = _19[1];
                     var methodMapEntries = Object.entries(methodMap);
                     var _loop_1 = function (w) {
-                        var e_5, _19;
+                        var e_5, _21;
                         var method = methodMapEntries[w][0].toLowerCase();
                         var apiMap = methodMapEntries[w][1];
                         try {
@@ -315,11 +315,20 @@ var ParserSwagger = /** @class */ (function () {
                                             // 普通属性，合并平台属性，整理成一个对象
                                         }
                                         else if (((_l = parameter.schema) === null || _l === void 0 ? void 0 : _l.type) && (parameter === null || parameter === void 0 ? void 0 : parameter.name)) {
-                                            requestDataSchema.params.push((0, helpers_1.createSchema)(parameter.schema.type, {
+                                            var t = (0, helpers_1.transformType)(parameter.schema.type, (_m = parameter === null || parameter === void 0 ? void 0 : parameter.schema) === null || _m === void 0 ? void 0 : _m.format, 'string');
+                                            var temp = (0, helpers_1.createSchema)(t, {
                                                 id: this_1.generateId(),
                                                 keyName: parameter === null || parameter === void 0 ? void 0 : parameter.name,
-                                                required: !!((_m = parameter.schema) === null || _m === void 0 ? void 0 : _m.required),
-                                            }));
+                                                title: (0, util_1.filterDesc)(parameter === null || parameter === void 0 ? void 0 : parameter.title),
+                                                description: (0, util_1.filterDesc)(parameter === null || parameter === void 0 ? void 0 : parameter.description),
+                                                type: t,
+                                                examples: (_o = parameter.examples) !== null && _o !== void 0 ? _o : [],
+                                                rules: {
+                                                    required: !!(parameter === null || parameter === void 0 ? void 0 : parameter.required) || !!((_p = parameter.schema) === null || _p === void 0 ? void 0 : _p.required),
+                                                }
+                                            });
+                                            temp.label = temp.title ? temp.title : temp.description ? temp.description : '';
+                                            requestDataSchema.params.push(temp);
                                         }
                                     }
                                     else if (parameter.in === 'header' || parameter.in === 'cookie') {
@@ -330,7 +339,7 @@ var ParserSwagger = /** @class */ (function () {
                                 parser_key_name_2_schema_1.default.appendSchemeList(parserKeyName2SchemaWrap, requestDataSchema, requestKeyNameMemo_1);
                             }
                             // URL query 参数，query参数必须包含key，不存在不兼容问题
-                            (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, (_q = (_p = (_o = apiMap.requestBody) === null || _o === void 0 ? void 0 : _o.content) === null || _p === void 0 ? void 0 : _p['application/x-www-form-urlencoded']) === null || _q === void 0 ? void 0 : _q.schema, requestKeyNameMemo_1, {
+                            (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, (_s = (_r = (_q = apiMap.requestBody) === null || _q === void 0 ? void 0 : _q.content) === null || _r === void 0 ? void 0 : _r['application/x-www-form-urlencoded']) === null || _s === void 0 ? void 0 : _s.schema, requestKeyNameMemo_1, {
                                 autoGenerateId: this_1.autoGenerateId,
                                 callback: function (parsedSchema) {
                                     // 收集URL query 参数字段
@@ -340,7 +349,7 @@ var ParserSwagger = /** @class */ (function () {
                                 }
                             });
                             // 请求 Body 为 json参数
-                            var requestSchemaSource = (_u = (_t = (_s = (_r = apiMap.requestBody) === null || _r === void 0 ? void 0 : _r.content) === null || _s === void 0 ? void 0 : _s['application/json']) === null || _t === void 0 ? void 0 : _t.schema) !== null && _u !== void 0 ? _u : (_x = (_w = (_v = apiMap.requestBody) === null || _v === void 0 ? void 0 : _v.content) === null || _w === void 0 ? void 0 : _w['text/json']) === null || _x === void 0 ? void 0 : _x.schema;
+                            var requestSchemaSource = (_w = (_v = (_u = (_t = apiMap.requestBody) === null || _t === void 0 ? void 0 : _t.content) === null || _u === void 0 ? void 0 : _u['application/json']) === null || _v === void 0 ? void 0 : _v.schema) !== null && _w !== void 0 ? _w : (_z = (_y = (_x = apiMap.requestBody) === null || _x === void 0 ? void 0 : _x.content) === null || _y === void 0 ? void 0 : _y['text/json']) === null || _z === void 0 ? void 0 : _z.schema;
                             // fix: requestExtraDataSchema 参数丢失问题
                             if (requestSchemaSource) {
                                 requestExtraDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
@@ -350,12 +359,12 @@ var ParserSwagger = /** @class */ (function () {
                             (0, util_1.processRequestSchemaPipeline)(api_1, requestDataSchema, requestExtraDataSchema, this_1);
                             /****************** 处理请求参数--结束 ******************/
                             /****************** 处理响应参数--开始 ******************/
-                            var responsesSchemaSource = (_10 = (_5 = (_0 = (_z = (_y = apiMap.responses) === null || _y === void 0 ? void 0 : _y['200']) === null || _z === void 0 ? void 0 : _z.schema) !== null && _0 !== void 0 ? _0 : (_4 = (_3 = (_2 = (_1 = apiMap.responses) === null || _1 === void 0 ? void 0 : _1['200']) === null || _2 === void 0 ? void 0 : _2.content) === null || _3 === void 0 ? void 0 : _3['application/json']) === null || _4 === void 0 ? void 0 : _4.schema) !== null && _5 !== void 0 ? _5 : (_9 = (_8 = (_7 = (_6 = apiMap.responses) === null || _6 === void 0 ? void 0 : _6['200']) === null || _7 === void 0 ? void 0 : _7.content) === null || _8 === void 0 ? void 0 : _8['text/json']) === null || _9 === void 0 ? void 0 : _9.schema) !== null && _10 !== void 0 ? _10 : (_14 = (_13 = (_12 = (_11 = apiMap.responses) === null || _11 === void 0 ? void 0 : _11['200']) === null || _12 === void 0 ? void 0 : _12.content) === null || _13 === void 0 ? void 0 : _13['*/*']) === null || _14 === void 0 ? void 0 : _14.schema;
+                            var responsesSchemaSource = (_12 = (_7 = (_2 = (_1 = (_0 = apiMap.responses) === null || _0 === void 0 ? void 0 : _0['200']) === null || _1 === void 0 ? void 0 : _1.schema) !== null && _2 !== void 0 ? _2 : (_6 = (_5 = (_4 = (_3 = apiMap.responses) === null || _3 === void 0 ? void 0 : _3['200']) === null || _4 === void 0 ? void 0 : _4.content) === null || _5 === void 0 ? void 0 : _5['application/json']) === null || _6 === void 0 ? void 0 : _6.schema) !== null && _7 !== void 0 ? _7 : (_11 = (_10 = (_9 = (_8 = apiMap.responses) === null || _8 === void 0 ? void 0 : _8['200']) === null || _9 === void 0 ? void 0 : _9.content) === null || _10 === void 0 ? void 0 : _10['text/json']) === null || _11 === void 0 ? void 0 : _11.schema) !== null && _12 !== void 0 ? _12 : (_16 = (_15 = (_14 = (_13 = apiMap.responses) === null || _13 === void 0 ? void 0 : _13['200']) === null || _14 === void 0 ? void 0 : _14.content) === null || _15 === void 0 ? void 0 : _15['*/*']) === null || _16 === void 0 ? void 0 : _16.schema;
                             if ((0, validator_1.validateSchema)(responsesSchemaSource)) {
                                 api_1.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, {
                                     autoGenerateId: this_1.autoGenerateId
                                 });
-                                if (((_15 = api_1.responseDataSchema) === null || _15 === void 0 ? void 0 : _15.type) === 'object') {
+                                if (((_17 = api_1.responseDataSchema) === null || _17 === void 0 ? void 0 : _17.type) === 'object') {
                                     api_1.responseDataSchema.keyName = '';
                                 }
                             }
@@ -363,8 +372,8 @@ var ParserSwagger = /** @class */ (function () {
                             try {
                                 /****************** 处理响应参数--结束 ******************/
                                 // 将该API添加到所依赖的模块中
-                                for (var _20 = (e_5 = void 0, __values(apiMap.tags)), _21 = _20.next(); !_21.done; _21 = _20.next()) {
-                                    var tagName = _21.value;
+                                for (var _22 = (e_5 = void 0, __values(apiMap.tags)), _23 = _22.next(); !_23.done; _23 = _22.next()) {
+                                    var tagName = _23.value;
                                     var recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(constant_1.UNKNOWN_GROUP_NAME);
                                     recordCategory && recordCategory.apiList.push(api_1);
                                 }
@@ -372,7 +381,7 @@ var ParserSwagger = /** @class */ (function () {
                             catch (e_5_1) { e_5 = { error: e_5_1 }; }
                             finally {
                                 try {
-                                    if (_21 && !_21.done && (_19 = _20.return)) _19.call(_20);
+                                    if (_23 && !_23.done && (_21 = _22.return)) _21.call(_22);
                                 }
                                 finally { if (e_5) throw e_5.error; }
                             }
@@ -389,7 +398,7 @@ var ParserSwagger = /** @class */ (function () {
                 try {
                     // 将转换完成的分组添加到文档中
                     for (var categoryMap_1 = (e_4 = void 0, __values(categoryMap)), categoryMap_1_1 = categoryMap_1.next(); !categoryMap_1_1.done; categoryMap_1_1 = categoryMap_1.next()) {
-                        var _18 = __read(categoryMap_1_1.value, 2), category = _18[1];
+                        var _20 = __read(categoryMap_1_1.value, 2), category = _20[1];
                         apiDocument.categoryList.push(category);
                     }
                 }

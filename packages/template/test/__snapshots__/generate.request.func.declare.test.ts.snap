@@ -7,7 +7,7 @@ exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2
    */
 declare const v2StoreOrderByPost: {
   (data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order',
     method: 'post',
     formDataKeyNameList: [],
@@ -21,11 +21,11 @@ declare const v2StoreOrderByPost: {
    */
 declare const v2StoreOrderOrderIdByGet: {
   (data: V2StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -35,11 +35,11 @@ declare const v2StoreOrderOrderIdByGet: {
    */
 declare const v2StoreOrderOrderIdByDelete: {
   (data: V2StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -49,7 +49,7 @@ declare const v2StoreOrderOrderIdByDelete: {
    */
 declare const v2StoreInventoryByGet: {
   (data?: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/inventory',
     method: 'get',
     formDataKeyNameList: [],
@@ -66,7 +66,7 @@ exports[`生成接口函数测试 OpenAPI-3.0生成接口函数测试: OpenAPI-3
    */
 declare const apiV3StoreInventoryByGet: {
   (data?: ApiV3StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreInventoryResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/api/v3/store/inventory',
     method: 'get',
     formDataKeyNameList: [],
@@ -80,12 +80,12 @@ declare const apiV3StoreInventoryByGet: {
    */
 declare const apiV3StoreOrderByPost: {
   (data: ApiV3StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/api/v3/store/order',
     method: 'post',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+    queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
   }
 };
 /**
@@ -94,11 +94,11 @@ declare const apiV3StoreOrderByPost: {
    */
 declare const apiV3StoreOrderOrderIdByGet: {
   (data: ApiV3StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderOrderIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/api/v3/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };
@@ -108,11 +108,11 @@ declare const apiV3StoreOrderOrderIdByGet: {
    */
 declare const apiV3StoreOrderOrderIdByDelete: {
   (data: ApiV3StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<ApiV3StoreOrderOrderIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/api/v3/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };"

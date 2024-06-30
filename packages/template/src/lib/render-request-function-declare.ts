@@ -59,7 +59,7 @@ export function renderRequestFunctionDeclare(
     `《if commentCode》《commentCode》
 《/if》declare const 《requestFunctionName》: {
   (data《if isEmptyRequestData》?《/if》: 《requestDataInterfaceName》, extraData?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》, ...args: CurrentRequestFunctionRestArgsType): Promise<《responseDataInterfaceName》>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '《api.path》',
     method: '《api.method.toLowerCase()》',
     formDataKeyNameList: 《formDataKeyNameListStr》,

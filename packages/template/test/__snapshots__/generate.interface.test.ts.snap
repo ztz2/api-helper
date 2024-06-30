@@ -188,20 +188,15 @@ export interface SystemUserListRequestByGet {
   storeIds?: Array<string>;
   // 有分页参数的话就加,根据你的实际查询参数编写
   '有分页参数的话就加,根据你的实际查询参数编写'?: string;
-  // 创建者
-  createBy?: string;
-  // ID集合
-  ids?: Array<string>;
   // 主键id集合
   pics: Array<string>;
-  // 创建时间
-  createTime?: string;
-  ancestors?: string;
   dept?: {
     // 创建者
     createBy?: string;
     ancestors?: string;
   };
+  // ID集合
+  ids?: Array<string>;
   roles?: Array<{
     // 创建者
     createBy?: string;

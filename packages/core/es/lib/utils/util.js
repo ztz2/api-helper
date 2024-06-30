@@ -209,12 +209,12 @@ export function parserSchema(schema, parentSchema, keyName, memo, options) {
     keyName = filterKeyName(keyName);
     var requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []);
     // 定义数据，收集类型，对象类型在下面在进行单独处理
-    var resultSchema = createSchema(transformType(schema.type, schema.format), {
+    var resultSchema = createSchema(transformType(schema.type, schema.format, 'string'), {
         id: options.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),
         keyName: keyName,
-        type: transformType(schema.type, schema.format),
+        type: transformType(schema.type, schema.format, 'string'),
         examples: (_b = schema.examples) !== null && _b !== void 0 ? _b : [],
         rules: {
             required: requiredFieldList.includes(keyName),

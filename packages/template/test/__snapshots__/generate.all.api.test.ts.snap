@@ -37,8 +37,8 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: ["additionalMetadata","file"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -171,7 +171,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -217,7 +217,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -262,7 +262,7 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -297,8 +297,8 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ["name","status"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"name\\",\\"status\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -330,7 +330,7 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -415,7 +415,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -447,7 +447,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -596,7 +596,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -636,7 +636,7 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -668,7 +668,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -703,7 +703,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session
@@ -812,8 +812,8 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: ["additionalMetadata","file"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -946,7 +946,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -992,7 +992,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -1037,7 +1037,7 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1072,8 +1072,8 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ["name","status"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"name\\",\\"status\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1105,7 +1105,7 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1211,7 +1211,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1243,7 +1243,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1308,8 +1308,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["userId"],
-  queryStringKeyNameList: ["userName","password"]
+  pathParamKeyNameList: [\\"userId\\"],
+  queryStringKeyNameList: [\\"userName\\",\\"password\\"]
 }
 /**
  * @description Creates list of users with given input array
@@ -1389,7 +1389,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1429,7 +1429,7 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1461,7 +1461,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1496,7 +1496,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session
@@ -1598,11 +1598,11 @@ declare interface V2PetPetIdUploadImageResponseByPost {
    */
 declare const v2PetPetIdUploadImageByPost: {
   (data: V2PetPetIdUploadImageRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdUploadImageResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}/uploadImage',
     method: 'post',
-    formDataKeyNameList: ["additionalMetadata","file"],
-    pathParamKeyNameList: ["petId"],
+    formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1618,8 +1618,8 @@ export function v2PetPetIdUploadImageByPost(data: V2PetPetIdUploadImageRequestBy
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  formDataKeyNameList: ["additionalMetadata","file"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"additionalMetadata\\",\\"file\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1654,7 +1654,7 @@ declare type V2PetResponseByPost = any;
    */
 declare const v2PetByPost: {
   (data: V2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet',
     method: 'post',
     formDataKeyNameList: [],
@@ -1710,7 +1710,7 @@ declare type V2PetResponseByPut = any;
    */
 declare const v2PetByPut: {
   (data: V2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetResponseByPut>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet',
     method: 'put',
     formDataKeyNameList: [],
@@ -1769,12 +1769,12 @@ declare type V2PetFindByStatusResponseByGet = Array<{
    */
 declare const v2PetFindByStatusByGet: {
   (data: V2PetFindByStatusRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetFindByStatusResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/findByStatus',
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["status"]
+    queryStringKeyNameList: [\\"status\\"]
   }
 };/**
    * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -1791,7 +1791,7 @@ v2PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -1828,12 +1828,12 @@ declare type V2PetFindByTagsResponseByGet = Array<{
    */
 declare const v2PetFindByTagsByGet: {
   (data: V2PetFindByTagsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetFindByTagsResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/findByTags',
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["tags"]
+    queryStringKeyNameList: [\\"tags\\"]
   }
 };/**
    * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -1850,7 +1850,7 @@ v2PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -1887,11 +1887,11 @@ declare interface V2PetPetIdResponseByGet {
    */
 declare const v2PetPetIdByGet: {
   (data: V2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["petId"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1908,7 +1908,7 @@ v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1936,11 +1936,11 @@ declare type V2PetPetIdResponseByPost = any;
    */
 declare const v2PetPetIdByPost: {
   (data: V2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}',
     method: 'post',
-    formDataKeyNameList: ["name","status"],
-    pathParamKeyNameList: ["petId"],
+    formDataKeyNameList: [\\"name\\",\\"status\\"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -1956,8 +1956,8 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ["name","status"],
-  pathParamKeyNameList: ["petId"],
+  formDataKeyNameList: [\\"name\\",\\"status\\"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -1981,11 +1981,11 @@ declare type V2PetPetIdResponseByDelete = any;
    */
 declare const v2PetPetIdByDelete: {
   (data: V2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["petId"],
+    pathParamKeyNameList: [\\"petId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2002,7 +2002,7 @@ v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2053,7 +2053,7 @@ declare interface V2StoreOrderResponseByPost {
    */
 declare const v2StoreOrderByPost: {
   (data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order',
     method: 'post',
     formDataKeyNameList: [],
@@ -2113,11 +2113,11 @@ declare interface V2StoreOrderOrderIdResponseByGet {
    */
 declare const v2StoreOrderOrderIdByGet: {
   (data: V2StoreOrderOrderIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2134,7 +2134,7 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2158,11 +2158,11 @@ declare type V2StoreOrderOrderIdResponseByDelete = any;
    */
 declare const v2StoreOrderOrderIdByDelete: {
   (data: V2StoreOrderOrderIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderOrderIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["orderId"],
+    pathParamKeyNameList: [\\"orderId\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2179,7 +2179,7 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2200,7 +2200,7 @@ declare type V2StoreInventoryResponseByGet = any;
    */
 declare const v2StoreInventoryByGet: {
   (data?: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/inventory',
     method: 'get',
     formDataKeyNameList: [],
@@ -2249,12 +2249,12 @@ declare type V2UserCreateWithArrayResponseByPost = any;
    */
 declare const v2UserCreateWithArrayByPost: {
   (data: V2UserCreateWithArrayRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserCreateWithArrayResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/createWithArray',
     method: 'post',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["userId"],
-    queryStringKeyNameList: ["userName","password"]
+    pathParamKeyNameList: [\\"userId\\"],
+    queryStringKeyNameList: [\\"userName\\",\\"password\\"]
   }
 };/**
    * @description Creates list of users with given input array
@@ -2270,8 +2270,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["userId"],
-  queryStringKeyNameList: ["userName","password"]
+  pathParamKeyNameList: [\\"userId\\"],
+  queryStringKeyNameList: [\\"userName\\",\\"password\\"]
 }
 /**
  * @description Creates list of users with given input array
@@ -2301,7 +2301,7 @@ declare type V2UserCreateWithListResponseByPost = any;
    */
 declare const v2UserCreateWithListByPost: {
   (data: V2UserCreateWithListRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserCreateWithListResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/createWithList',
     method: 'post',
     formDataKeyNameList: [],
@@ -2356,11 +2356,11 @@ declare interface V2UserUsernameResponseByGet {
    */
 declare const v2UserUsernameByGet: {
   (data: V2UserUsernameRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserUsernameResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username1"],
+    pathParamKeyNameList: [\\"username1\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2377,7 +2377,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2409,11 +2409,11 @@ declare type V2UserUsernameResponseByPut = any;
    */
 declare const v2UserUsernameByPut: {
   (data: V2UserUsernameRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserUsernameResponseByPut>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}',
     method: 'put',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username"],
+    pathParamKeyNameList: [\\"username\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2430,7 +2430,7 @@ v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2454,11 +2454,11 @@ declare type V2UserUsernameResponseByDelete = any;
    */
 declare const v2UserUsernameByDelete: {
   (data: V2UserUsernameRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserUsernameResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: ["username1"],
+    pathParamKeyNameList: [\\"username1\\"],
     queryStringKeyNameList: []
   }
 };/**
@@ -2475,7 +2475,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2501,12 +2501,12 @@ declare type V2UserLoginResponseByGet = string;
    */
 declare const v2UserLoginByGet: {
   (data: V2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLoginResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/login',
     method: 'get',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["username","password"]
+    queryStringKeyNameList: [\\"username\\",\\"password\\"]
   }
 };/**
    * @description Logs user into the system
@@ -2523,7 +2523,7 @@ v2UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session
@@ -2543,7 +2543,7 @@ declare type V2UserLogoutResponseByGet = any;
    */
 declare const v2UserLogoutByGet: {
   (data?: V2UserLogoutRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLogoutResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/logout',
     method: 'get',
     formDataKeyNameList: [],
@@ -2595,7 +2595,7 @@ declare type V2UserResponseByPost = any;
    */
 declare const v2UserByPost: {
   (data: V2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user',
     method: 'post',
     formDataKeyNameList: [],
@@ -2714,7 +2714,7 @@ userDeviceIdBodyByPost.requestConfig = {
   path: '/user/{deviceId}/body',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["deviceId"],
+  pathParamKeyNameList: [\\"deviceId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2774,7 +2774,7 @@ userDeviceIdBody1ByPost.requestConfig = {
   path: '/user/{deviceId}/body1',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["deviceId"],
+  pathParamKeyNameList: [\\"deviceId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -2834,7 +2834,7 @@ userGetRequest1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["cade"]
+  queryStringKeyNameList: [\\"cade\\"]
 }
 /**
  * @description 创建用户-createOne、根据姓名创建用户1
@@ -2968,7 +2968,7 @@ userCreateOne1ByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\"]
 }
 /**
  * @description 单纯文件上传、单纯文件上传，无任何参数
@@ -3053,7 +3053,7 @@ fileUploadParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 文件上传-带参数Header
@@ -3097,7 +3097,7 @@ fileUploadParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 文件上传-带参数Path
@@ -3142,8 +3142,8 @@ fileUploadParamIdByPost.requestConfig = {
   path: '/file/uploadParam/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["id"],
-  queryStringKeyNameList: ["name"]
+  pathParamKeyNameList: [\\"id\\"],
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 多文件上传
@@ -3279,7 +3279,7 @@ bodyBodyParamByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 普通body请求+Param+Header
@@ -3327,7 +3327,7 @@ bodyBodyParamHeaderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description 普通body请求+Param+Header+Path
@@ -3376,8 +3376,8 @@ bodyBodyParamHeaderPathIdByPost.requestConfig = {
   path: '/body/bodyParamHeaderPath/{id}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["id"],
-  queryStringKeyNameList: ["name"]
+  pathParamKeyNameList: [\\"id\\"],
+  queryStringKeyNameList: [\\"name\\"]
 }
 /**
  * @description json参数查询
@@ -3438,7 +3438,7 @@ userGetRequestByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["userSchema","cade"]
+  queryStringKeyNameList: [\\"userSchema\\",\\"cade\\"]
 }
 /**
  * @description 创建用户、根据姓名创建用户
@@ -3469,7 +3469,7 @@ userCreateByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["name"]
+  queryStringKeyNameList: [\\"name\\"]
 }"
 `;
 
@@ -3529,7 +3529,7 @@ apiV3PetByPut.requestConfig = {
   method: 'PUT',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
 }
 /**
  * @description Add a new pet to the store、Add a new pet to the store
@@ -3586,7 +3586,7 @@ apiV3PetByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"]
+  queryStringKeyNameList: [\\"id\\",\\"name\\",\\"category\\",\\"photoUrls\\",\\"tags\\",\\"status\\"]
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -3632,7 +3632,7 @@ apiV3PetFindByStatusByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["status"]
+  queryStringKeyNameList: [\\"status\\"]
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -3678,7 +3678,7 @@ apiV3PetFindByTagsByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["tags"]
+  queryStringKeyNameList: [\\"tags\\"]
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -3723,7 +3723,7 @@ apiV3PetPetIdByGet.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3759,8 +3759,8 @@ apiV3PetPetIdByPost.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
-  queryStringKeyNameList: ["name","status"]
+  pathParamKeyNameList: [\\"petId\\"],
+  queryStringKeyNameList: [\\"name\\",\\"status\\"]
 }
 /**
  * @description Deletes a pet
@@ -3791,7 +3791,7 @@ apiV3PetPetIdByDelete.requestConfig = {
   path: '/api/v3/pet/{petId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
+  pathParamKeyNameList: [\\"petId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3829,8 +3829,8 @@ apiV3PetPetIdUploadImageByPost.requestConfig = {
   path: '/api/v3/pet/{petId}/uploadImage',
   method: 'POST',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["petId"],
-  queryStringKeyNameList: ["additionalMetadata"]
+  pathParamKeyNameList: [\\"petId\\"],
+  queryStringKeyNameList: [\\"additionalMetadata\\"]
 }
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities
@@ -3904,7 +3904,7 @@ apiV3StoreOrderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+  queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
@@ -3943,7 +3943,7 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -3975,7 +3975,7 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["orderId"],
+  pathParamKeyNameList: [\\"orderId\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -4015,7 +4015,7 @@ apiV3UserByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
+  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
 }
 /**
  * @description Creates list of users with given input array、Creates list of users with given input array
@@ -4098,7 +4098,7 @@ apiV3UserLoginByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["username","password"]
+  queryStringKeyNameList: [\\"username\\",\\"password\\"]
 }
 /**
  * @description Logs out current logged in user session
@@ -4168,7 +4168,7 @@ apiV3UserUsernameByGet.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
+  pathParamKeyNameList: [\\"username1\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -4209,8 +4209,8 @@ apiV3UserUsernameByPut.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'PUT',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username1"],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"]
+  pathParamKeyNameList: [\\"username1\\"],
+  queryStringKeyNameList: [\\"id\\",\\"username\\",\\"firstName\\",\\"lastName\\",\\"email\\",\\"password\\",\\"phone\\",\\"userStatus\\"]
 }
 /**
  * @description Delete user、This can only be done by the logged in user.
@@ -4241,7 +4241,7 @@ apiV3UserUsernameByDelete.requestConfig = {
   path: '/api/v3/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ["username"],
+  pathParamKeyNameList: [\\"username\\"],
   queryStringKeyNameList: []
 }
 /**
@@ -4310,6 +4310,6 @@ apiV3ApiFtbArrangingWorkByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["groupId","realName","month","userIds"]
+  queryStringKeyNameList: [\\"groupId\\",\\"realName\\",\\"month\\",\\"userIds\\"]
 }"
 `;
