@@ -1,0 +1,9 @@
+/.changeset/
+node_modules
+**/node_modules
+packages/docs
+npm-debug.log
+.DS_Store
+.git
+.vscode/*
+.idea/*

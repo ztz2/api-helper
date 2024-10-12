@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  api_helper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "api_helper/server:latest"
+    ports:
+      - "3210:3210"
+    command: ["pm2-runtime", "main.js"]
