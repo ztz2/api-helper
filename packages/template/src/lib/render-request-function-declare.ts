@@ -12,28 +12,38 @@ import { isEmptySchema } from '@/lib/utils/util';
 
 export function renderRequestFunctionDeclare(
   api: APIHelper.API,
-  options?: {
+  options: {
     dataKey?: string | undefined;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
-  }
+  } = {}
 ) {
   if (!api) {
     return '';
   }
   const dataKey = options?.dataKey;
   const isEmptyRequestData = isEmptySchema(api.requestDataSchema);
-  const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
-  const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
+  const onRenderRequestFunctionName = options?.onRenderRequestFunctionName ?? renderRequestFunctionName;
+  const onRenderInterfaceName = options?.onRenderInterfaceName ?? renderInterfaceName;
   const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
-
+  const headers = api.headers?.params?.map?.((item) => item.keyName)?.filter?.(Boolean) ?? [];
+  const cookies = api.cookies?.params?.map?.((item) =>  item.keyName)?.filter?.(Boolean) ?? [];
   const templateTenderParams = {
     api,
+    options,
     isEmptyRequestData,
     commentCode: renderRequestFunctionComment(api),
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
+    headersStr: JSON.stringify(headers),
+    cookiesStr: JSON.stringify(cookies),
+    requestContentTypeStr: JSON.stringify(api.requestContentType ?? []),
+    responseContentTypeStr: JSON.stringify(api.responseContentType ?? []),
     requestFunctionName: onRenderRequestFunctionName(api, {
       changeCase: _changeCase,
     }),
@@ -61,7 +71,11 @@ export function renderRequestFunctionDeclare(
   (data《if isEmptyRequestData》?《/if》: 《requestDataInterfaceName》, extraData?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》, ...args: CurrentRequestFunctionRestArgsType): Promise<《responseDataInterfaceName》>;
   requestConfig: {
     path: '《api.path》',
-    method: '《api.method.toLowerCase()》',
+    method: '《api.method.toLowerCase()》',《if options.genHeaders》
+    headers: 《headersStr》,《/if》《if options.genCookies》
+    cookies: 《cookiesStr》,《/if》《if options.genRequestContentType》
+    requestContentType: 《requestContentTypeStr》,《/if》《if options.genResponseContentType》
+    responseContentType: 《responseContentTypeStr》,《/if》
     formDataKeyNameList: 《formDataKeyNameListStr》,
     pathParamKeyNameList: 《pathParamKeyNameListStr》,
     queryStringKeyNameList: 《queryStringKeyNameListStr》

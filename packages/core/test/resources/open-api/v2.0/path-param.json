@@ -1,0 +1,55 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/path/{param}": {
+      "get": {
+        "summary": "请求参数 路径参数",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "param",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+
+              }
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {
+
+  },
+  "securityDefinitions": {
+
+  },
+  "x-components": {
+
+  }
+}

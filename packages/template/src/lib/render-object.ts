@@ -36,7 +36,7 @@ type RenderObjectOptions = {
 export function renderObject(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
-  options?: RenderObjectOptions
+  options: RenderObjectOptions = {}
 ) {
   options = merge({
     prefix: 'export ',

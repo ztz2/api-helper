@@ -13,6 +13,12 @@ class AbstractSchema implements APIHelper.IAbstractSchema{
   examples = [] as APIHelper.IAbstractSchema['examples'];
   params = [] as APIHelper.IAbstractSchema['params'];
   enum = [] as APIHelper.IAbstractSchema['enum'];
+  // 原始类型，没有经过 transformType 函数处理
+  rawType = '';
+  // 特定数字类型的提示:
+  // number类型：float、double、int32、int64
+  // File类型：binary、byte
+  format = '';
 }
 
 class StringSchema extends AbstractSchema implements APIHelper.IStringSchema{
@@ -39,10 +45,12 @@ class NumberSchema extends AbstractSchema implements APIHelper.INumberSchema{
 
 class ObjectSchema extends AbstractSchema implements APIHelper.IObjectSchema{
   type = 'object' as 'object';
+  rawType = 'object';
 }
 
 class ArraySchema extends AbstractSchema implements APIHelper.IArraySchema{
   type = 'array' as 'array';
+  rawType = 'array';
   rules = {
     required: false,
     minLength: undefined,
@@ -53,10 +61,12 @@ class ArraySchema extends AbstractSchema implements APIHelper.IArraySchema{
 
 class BooleanSchema extends AbstractSchema implements APIHelper.IBooleanSchema{
   type = 'boolean' as 'boolean';
+  rawType = 'boolean';
 }
 
 class NullSchema extends AbstractSchema implements APIHelper.INullSchema{
   type = 'null' as 'null';
+  rawType = 'null';
 }
 
 class FileSchema extends AbstractSchema implements APIHelper.IFileSchema{
@@ -65,17 +75,19 @@ class FileSchema extends AbstractSchema implements APIHelper.IFileSchema{
 
 class AnySchema extends AbstractSchema implements APIHelper.IAnySchema{
   type = 'any' as 'any';
+  rawType = 'any';
 }
 
 class UnknownSchema extends AbstractSchema implements APIHelper.IUnknownSchema{
   type = 'unknown' as 'unknown';
+  rawType = 'unknown';
 }
 
 export function createSchema(
   type: APIHelper.SchemaType | 'enum' | 'file',
-  options?: Partial<AbstractSchema & Recordable>
+  options?: Partial<AbstractSchema>
 ): APIHelper.Schema {
-  let instance = new AbstractSchema();
+  let instance: AbstractSchema;
   switch (type) {
     case 'string': case 'enum' :{
       instance = new StringSchema();
@@ -120,6 +132,7 @@ export function createSchema(
   if (Object.prototype.toString.call(options) === '[object Object]') {
     instance = merge(instance, options);
   }
+  instance.label = instance.title || instance.description || '';
   return instance as APIHelper.Schema;
 }
 
@@ -166,6 +179,10 @@ export function createApi(options?: Partial<APIHelper.API & Recordable>): APIHel
     requestDataSchema: null,
     requestExtraDataSchema: null,
     responseDataSchema: null,
+    requestContentType: [],
+    responseContentType: [],
+    cookies: null,
+    headers: null,
   };
   if (Object.prototype.toString.call(options) === '[object Object]') {
     instance = merge(instance, options);

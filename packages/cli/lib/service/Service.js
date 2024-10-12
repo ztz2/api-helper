@@ -20,6 +20,7 @@ const pinyin_pro_1 = require("pinyin-pro");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const template_1 = require("@api-helper/template");
+const lodash_1 = require("lodash");
 const util_1 = require("@api-helper/core/lib/utils/util");
 const util_2 = require("../tools/util");
 // import './worker-thread';
@@ -58,7 +59,7 @@ class Service {
                 try {
                     const config = configList[i];
                     if (len > 1) {
-                        logger_1.default.info(`\n———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
+                        logger_1.default.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
                     }
                     const parserPluginRunResult = yield this.parserDocument(config.documentServers, config);
                     const chooseDocumentList = yield this.chooseDocument(parserPluginRunResult);
@@ -214,7 +215,7 @@ class Service {
             const isTS = yield checkOutputTS(config);
             // 生成代码
             const spinner = (0, ora_1.default)(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
-            const genCode = (documentList, params) => {
+            const _genCode = (documentList, params) => {
                 params = Object.assign({}, params);
                 let code = (0, template_1.renderAllApi)(documentList, params) || '';
                 let codeDeclare = '';
@@ -250,8 +251,12 @@ class Service {
                 const { dataKey } = documentServer;
                 const serverName = documentServer.name ? (0, pinyin_pro_1.pinyin)(documentServer.name, { toneType: 'none', type: 'array' }).join('') : '';
                 yield Promise.all(parsedDocumentList.map((d) => __awaiter(this, void 0, void 0, function* () {
-                    var _a, _b, _c, _d;
-                    const param = Object.assign(Object.assign(Object.assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_a = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _a === void 0 ? void 0 : _a.onRenderInterfaceName, onRenderRequestFunctionName: (_b = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _b === void 0 ? void 0 : _b.onRenderRequestFunctionName });
+                    var _a, _b;
+                    const mgConfig = mergeConfig(config, documentServer);
+                    const eventTemp = mgConfig.events;
+                    delete mgConfig.events;
+                    Object.assign(mgConfig, eventTemp);
+                    const param = Object.assign(Object.assign({}, mgConfig), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false });
                     // let workerStartError = false;
                     // const categoryListLength = d.categoryList.length;
                     // const enableParallel = config.parallel !== false && cpus > 1 && categoryListLength > CHUNK_NUM;
@@ -313,10 +318,10 @@ class Service {
                         const codeDeclares = [];
                         const fileNameMap = {};
                         yield Promise.all(d.categoryList.map((category) => __awaiter(this, void 0, void 0, function* () {
-                            var _e;
+                            var _c;
                             try {
-                                const [code, codeDeclare] = genCode([category], param);
-                                const lastName = (_e = category.name.split('/').filter(Boolean).pop()) === null || _e === void 0 ? void 0 : _e.replace(/[.\s]/gim, '');
+                                const [code, codeDeclare] = _genCode([category], param);
+                                const lastName = (_c = category.name.split('/').filter(Boolean).pop()) === null || _c === void 0 ? void 0 : _c.replace(/[.\s]/gim, '');
                                 const fileNameBase = (0, pinyin_pro_1.pinyin)(lastName, { toneType: 'none', type: 'array' }).join('');
                                 fileNameRecord[fileNameBase] = fileNameRecord[fileNameBase] ? fileNameRecord[fileNameBase] + 1 : 1;
                                 const fileName = (fileNameRecord[fileNameBase] > 1 ? `${fileNameBase}${fileNameRecord[fileNameBase]}` : fileNameBase) + `${isTS ? '.ts' : '.js'}`;
@@ -333,11 +338,11 @@ class Service {
                         try {
                             const [code2 = '', codeDeclare2 = ''] = yield formatResultCode(codes, codeDeclares);
                             yield Promise.all(Object.entries(fileNameMap).map(([item, currentOutputFilePath], index) => __awaiter(this, void 0, void 0, function* () {
-                                var _f, _g, _h, _j;
+                                var _d, _e, _f, _g;
                                 const rex = new RegExp(`\/\/模块分组-开始:${item}([\\s\\S]*)\/\/模块分组-结束:${item}`, 'gim');
-                                const code = ((_g = (_f = rex === null || rex === void 0 ? void 0 : rex.exec(code2)) === null || _f === void 0 ? void 0 : _f[1]) !== null && _g !== void 0 ? _g : '').trim();
+                                const code = ((_e = (_d = rex === null || rex === void 0 ? void 0 : rex.exec(code2)) === null || _d === void 0 ? void 0 : _d[1]) !== null && _e !== void 0 ? _e : '').trim();
                                 rex.lastIndex = 0;
-                                const codeDeclare = ((_j = (_h = rex === null || rex === void 0 ? void 0 : rex.exec(codeDeclare2)) === null || _h === void 0 ? void 0 : _h[1]) !== null && _j !== void 0 ? _j : '').trim();
+                                const codeDeclare = ((_g = (_f = rex === null || rex === void 0 ? void 0 : rex.exec(codeDeclare2)) === null || _f === void 0 ? void 0 : _f[1]) !== null && _g !== void 0 ? _g : '').trim();
                                 const requestFilePath = removeExtensionName((0, util_2.getNormalizedRelativePath)(currentOutputFilePath, yield getRequestFunctionFilePath(config)), const_1.EXTENSIONS);
                                 const renderHeaderParams = {
                                     isTS,
@@ -359,7 +364,7 @@ class Service {
                         return;
                     }
                     try {
-                        const [code, codeDeclare] = genCode(d, param);
+                        const [code, codeDeclare] = _genCode(d, param);
                         let currentOutputFilePath = outputFilePath;
                         if (serverName) {
                             const outputFilePathList = (0, util_2.toUnixPath)(outputFilePath).split('/');
@@ -376,7 +381,7 @@ class Service {
                             currentOutputFilePath = outputFilePathList.join('/');
                         }
                         const outputFilePathList = (0, util_2.toUnixPath)(currentOutputFilePath).split('/');
-                        if (((_d = (_c = outputFilePathList.pop()) === null || _c === void 0 ? void 0 : _c.includes) === null || _d === void 0 ? void 0 : _d.call(_c, '.')) === false) {
+                        if (((_b = (_a = outputFilePathList.pop()) === null || _a === void 0 ? void 0 : _a.includes) === null || _b === void 0 ? void 0 : _b.call(_a, '.')) === false) {
                             currentOutputFilePath += isTS ? '.ts' : '.js';
                         }
                         const requestFilePath = removeExtensionName((0, util_2.getNormalizedRelativePath)(currentOutputFilePath, yield getRequestFunctionFilePath(config)), const_1.EXTENSIONS);
@@ -744,5 +749,17 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
         }
         return requestFunctionFilePath;
     });
+}
+function mergeConfig(rootConfig, serverConfig) {
+    return Object.assign({}, (0, lodash_1.merge)(serverConfig, (0, lodash_1.pick)(rootConfig, [
+        'genHeaders',
+        'genCookies',
+        'genRequestContentType',
+        'genResponseContentType',
+        'requestFunctionFilePath',
+        'requiredRequestField',
+        'requiredResponseField',
+        'events',
+    ])));
 }
 exports.default = Service;

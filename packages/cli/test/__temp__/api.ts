@@ -25,7 +25,7 @@ type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof req
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageRequestByPost {
-  // ID of pet  * 换行符测试 * to update
+  // ID of pet to update
   petId: string;
   // Additional data to pass to server
   additionalMetadata: string;
@@ -308,7 +308,7 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ['name', 'status'],
+  formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
@@ -342,6 +342,39 @@ v2PetPetIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryRequestByGet = Record<string, any>;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryResponseByGet = any;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
+ */
+export function v2StoreInventoryByGet(
+  data: V2StoreInventoryRequestByGet = {},
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
  * @description Place an order for a pet
  * @summary Request data types
  * @url [ POST ] /v2/store/order
@@ -353,13 +386,6 @@ export interface V2StoreOrderRequestByPost {
   shipDate: string;
   // Order Status
   status: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag: Array<
-    // Order Tag Child
-    Array<{
-      tagName: 'error' | 'waring' | 'info';
-    }>
-  >;
   complete: boolean;
 }
 /**
@@ -374,13 +400,6 @@ export interface V2StoreOrderResponseByPost {
   shipDate?: string;
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag?: Array<
-    // Order Tag Child
-    Array<{
-      tagName?: 'error' | 'waring' | 'info';
-    }>
-  >;
   complete?: boolean;
 }
 /**
@@ -418,13 +437,6 @@ export interface V2StoreOrderOrderIdResponseByGet {
   shipDate?: string;
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag?: Array<
-    // Order Tag Child
-    Array<{
-      tagName?: 'error' | 'waring' | 'info';
-    }>
-  >;
   complete?: boolean;
 }
 /**
@@ -485,79 +497,6 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @summary Request data types
- * @url [ GET ] /v2/store/inventory
- */
-export type V2StoreInventoryRequestByGet = Record<string, any>;
-/**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @summary Response data types
- * @url [ GET ] /v2/store/inventory
- */
-export type V2StoreInventoryResponseByGet = any;
-/**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @url [ GET ] /v2/store/inventory
- */
-export function v2StoreInventoryByGet(
-  data: V2StoreInventoryRequestByGet = {},
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2StoreInventoryResponseByGet>(
-    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
-    ...args
-  );
-}
-v2StoreInventoryByGet.requestConfig = {
-  path: '/v2/store/inventory',
-  method: 'GET',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array
- * @summary Request data types
- * @url [ POST ] /v2/user/createWithArray
- */
-export interface V2UserCreateWithArrayRequestByPost {
-  // List of user object
-  userName: Array<string>;
-  // The password for login in clear text
-  password: string;
-  // The name that needs to be fetched. Use user1 for testing.
-  userId: number;
-}
-/**
- * @description Creates list of users with given input array
- * @summary Response data types
- * @url [ POST ] /v2/user/createWithArray
- */
-export type V2UserCreateWithArrayResponseByPost = any;
-/**
- * @description Creates list of users with given input array
- * @url [ POST ] /v2/user/createWithArray
- */
-export function v2UserCreateWithArrayByPost(
-  data: V2UserCreateWithArrayRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<V2UserCreateWithArrayResponseByPost>(
-    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
-    ...args
-  );
-}
-v2UserCreateWithArrayByPost.requestConfig = {
-  path: '/v2/user/createWithArray',
-  method: 'POST',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['userId'],
-  queryStringKeyNameList: ['userName', 'password'],
-};
-/**
  * @description Creates list of users with given input array
  * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
@@ -607,7 +546,7 @@ v2UserCreateWithListByPost.requestConfig = {
  */
 export interface V2UserUsernameRequestByGet {
   // The name that needs to be fetched. Use user1 for testing.
-  username1: string;
+  username: string;
 }
 /**
  * @description Get user by user name
@@ -636,7 +575,7 @@ v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
+  pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
 /**
@@ -683,7 +622,7 @@ v2UserUsernameByPut.requestConfig = {
  */
 export interface V2UserUsernameRequestByDelete {
   // The name that needs to be deleted
-  username1: string;
+  username: string;
 }
 /**
  * @description Delete user、This can only be done by the logged in user.
@@ -709,7 +648,7 @@ v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
+  pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
 /**
@@ -765,6 +704,49 @@ export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
   method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @summary Request data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
+/**
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(
+  data: V2UserCreateWithArrayRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithArrayResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],

@@ -6,7 +6,7 @@ import { renderRequestFunctionDeclare } from '../src/lib/render-request-function
 
 describe('生成接口函数测试', () => {
   test('OpenAPI-2.0生成接口函数测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-2.0.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api/v2.0/petstore.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];
@@ -20,7 +20,7 @@ describe('生成接口函数测试', () => {
   });
 
   test('OpenAPI-3.0生成接口函数测试', async () => {
-    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api-3.0.json'));
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, '../../core/test/resources/open-api/v3.0/petstore.json'));
     const openAPIDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
     const openAPIDocument = openAPIDocumentList[0];
     const category = openAPIDocument.categoryList[1];

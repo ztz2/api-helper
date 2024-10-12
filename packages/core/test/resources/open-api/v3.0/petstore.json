@@ -45,13 +45,13 @@
     }
   ],
   "paths": {
-    "/api/ftb/arranging/work": {
+    "/api/tbf/arranging/work": {
       "get": {
         "summary": "查看排班列表",
         "x-apifox-folder": "考勤(新版)/排班/v1",
         "x-apifox-status": "developing",
         "deprecated": false,
-        "description": "/api/ftb",
+        "description": "/api/tbt",
         "tags": [
           "考勤(新版)/排班/v1"
         ],

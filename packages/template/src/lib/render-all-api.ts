@@ -19,16 +19,20 @@ export function checkDocument(document: any) {
 
 export function renderAllApi(
   apiDocument: APIHelper.Document | APIHelper.CategoryList,
-  options?: {
+  options: {
     dataKey?: string;
     codeType?: 'typescript' | 'javascript';
     // 生成的是类型申明代码，默认false
     isDeclare?: boolean;
     // 是否只生成接口请求数据和返回数据的 TypeScript 类型
     onlyTyping?: boolean;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName,
     onRenderRequestFunctionName?: typeof renderRequestFunctionName,
-  }
+  } = {}
 ) {
   if (!apiDocument) {
     return '';
@@ -56,6 +60,7 @@ export function renderAllApi(
       }
       // 1. 生成interface-请求数据
       p.push(renderInterface(api.requestDataSchema, api, {
+        ...options,
         paramType: 'request',
         onRenderInterfaceName: options?.onRenderInterfaceName,
         emptyBodyCode: 'Record<string, any>;',
@@ -63,6 +68,7 @@ export function renderAllApi(
       }));
       // 2. 生成interface-请求数据（特殊不兼容数据类型）
       p.push(renderInterface(api.requestExtraDataSchema, api, {
+        ...options,
         paramType: 'request',
         isExtraData: true,
         onRenderInterfaceName: options?.onRenderInterfaceName,
@@ -70,6 +76,7 @@ export function renderAllApi(
       }));
       // 2. 生成interface-响应数据
       p.push(renderInterface(responseDataSchema, api, {
+        ...options,
         paramType: 'response',
         onRenderInterfaceName: options?.onRenderInterfaceName,
         prefix: isDeclare ? 'declare ' : 'export ',
@@ -80,6 +87,7 @@ export function renderAllApi(
     if (onlyTyping !== true) {
       if (isDeclare) {
         p.push(renderRequestFunctionDeclare(api, {
+          ...options,
           dataKey,
           onRenderInterfaceName: options?.onRenderInterfaceName,
           onRenderRequestFunctionName: options?.onRenderRequestFunctionName,
@@ -88,6 +96,7 @@ export function renderAllApi(
     }
     if (!(onlyTyping && codeType === 'typescript')) {
       p.push(renderRequestFunction(api, {
+        ...options,
         dataKey,
         codeType,
         onRenderInterfaceName: options?.onRenderInterfaceName,

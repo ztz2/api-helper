@@ -1,6 +1,6 @@
-import {JSONSchema4} from 'json-schema';
-// @ts-ignore
-import SwaggerParser from 'bundle-shims/lib/apidevtools.swagger-parser';
+import { OpenAPI } from 'openapi-types';
+import { JSONSchema4 } from 'json-schema';
+import { dereference } from '@apidevtools/json-schema-ref-parser';
 
 import { APIHelper } from '../types';
 
@@ -12,7 +12,7 @@ import {
   filterDesc,
   parserSchema,
   filterKeyName,
-  filterDotKeyName,
+  deepMergeSchema,
   processRequestSchema,
   processRequestSchemaPipeline,
   processResponseSchemaPipeline,
@@ -29,7 +29,8 @@ import {
   createApi,
   createCategory,
   createDocument,
-  createSchema, transformType
+  createSchema,
+  transformType
 } from '../helpers';
 import ParserKeyName2Schema from './parser-key-name-2-schema';
 
@@ -64,7 +65,7 @@ export default class ParserSwagger {
     for (const document of documentList) {
       if (validateOpenAPIDocument(document)) {
         try {
-          const openAPIDocument = await new SwaggerParser().dereference(document);
+          const openAPIDocument = (await dereference(document)) as OpenAPI.Document;
           if (validateOpenAPIDocument(openAPIDocument)) {
             openAPIDocumentList.push(openAPIDocument);
           }
@@ -120,18 +121,29 @@ export default class ParserSwagger {
         continue;
       }
 
+      const isV2 = apiDocument.documentVersion?.startsWith?.('2') ?? false;
+
       const pathsEntries = Object.entries(paths);
       const categoryMap = this.parserCategory(openAPIDocument);
       for (let i = 0; i < pathsEntries.length; i++) {
         const [path, methodMap] = pathsEntries[i];
         const methodMapEntries = Object.entries(methodMap);
-
         for (let w = 0; w < methodMapEntries.length; w++) {
           const method = methodMapEntries[w][0].toLowerCase();
           const apiMap: any = methodMapEntries[w][1];
           try {
+            const requestKeyNameMemo: string[] = [];
+            // fix: 重复项问题
+            const requestSchemaRecord: Array<JSONSchema4> = [];
+            const parserKeyName2SchemaWrap: Array<APIHelper.Schema> = [];
             // fix: basePath为/，导致//
             const mPath = mergeUrl(isHttp(apiDocument.basePath) ? '' : apiDocument.basePath, path);
+            // 请求 body 数据都在这个wrap对象中
+            const requestExtraDataSchemaWrap: { value: APIHelper.Schema | null } = { value: null };
+            const requestDataSchema = createSchema('object', {
+              id: this.generateId(),
+            });
+
             // 接口
             const api: APIHelper.API = createApi({
               id: this.generateId(),
@@ -142,244 +154,33 @@ export default class ParserSwagger {
             });
             api.label = api.title ? api.title : api.description ? api.description : '';
 
-            /****************** 处理请求参数--开始 ******************/
-            let requestExtraDataSchema: APIHelper.Schema | null = null;
-            const requestDataSchema = createSchema('object', {
-              id: this.generateId(),
-            });
-            const requestKeyNameMemo: string[] = [];
-            // fix: 重复项问题
-            const requestSchemaRecord: Array<JSONSchema4> = [];
-            const parserKeyName2SchemaWrap: Array<APIHelper.Schema> = [];
-            // FormData数据
-            const formDataSource = apiMap.requestBody?.content?.['multipart/form-data']?.schema;
-            const formDataSchema = processRequestSchema(
-              requestDataSchema,
-              requestSchemaRecord,
-              formDataSource,
-              undefined,
-              {
-                autoGenerateId: this.autoGenerateId,
-              }
-            );
-
-            // 记录表单数据key
-            if (formDataSchema) {
-              formDataSchema?.params?.forEach(({keyName}) => {
-                api.formDataKeyNameList.push(keyName);
-                requestKeyNameMemo.push(keyName);
-              });
+            this.parseCommonParam({ apiDocument, api, apiMap, requestDataSchema, requestKeyNameMemo, parserKeyName2SchemaWrap });
+            if (isV2) {
+              this.parseV2Param({ api, apiMap, requestExtraDataSchemaWrap, requestDataSchema, requestKeyNameMemo, requestSchemaRecord, parserKeyName2SchemaWrap });
+            } else {
+              this.parseV3Param({ api, apiMap, requestExtraDataSchemaWrap, requestDataSchema, requestKeyNameMemo, requestSchemaRecord });
             }
 
-            if ('parameters' in apiMap) {
-              const parameters = apiMap.parameters;
-              for (let j = 0; j < parameters.length; j++) {
-                const parameter = parameters[j];
-
-                // fix: 当为Object类型，属性为空，导致成为一个异常的对象
-                if (parameter.name?.trim?.() === '') {
-                  continue;
-                }
-
-                let keyName = filterKeyName(parameter.name);
-                // 路径参数 | url 参数
-                if (parameter.in === 'path' || parameter.in === 'query' || parameter.in === 'formData') {
-                  if (
-                    requestKeyNameMemo.includes(keyName) &&
-                    api.pathParamKeyNameList.includes(keyName)
-                  ) {
-                    continue;
-                  }
-                  requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
-
-                  const type = transformType(parameter.type, parameter?.format, 'string');
-
-                  let scm = createSchema(type, {
-                    id: this.generateId(),
-                    keyName,
-                  });
-
-                  let parserKeyName2SchemaRes = null;
-                  let parserKeyName2SchemaTarget = null;
-                  // 存在 Schema 的dot参数
-                  if (
-                    // fix: 2.0中array参数问题
-                    parameter?.type === 'array' ||
-                    (checkType(parameter.schema, 'Object') && (keyName.includes('.') || keyName.includes('[')))
-                  ) {
-                    keyName = filterDotKeyName(keyName);
-                    const temp = parameter?.type === 'array' ? parameter : parameter.schema;
-                    scm = parserSchema(
-                      temp,
-                      undefined,
-                      keyName,
-                      undefined,
-                      {
-                        autoGenerateId: this.autoGenerateId
-                      }
-                    ) as APIHelper.Schema;
-                  } else {
-                    // dot 参数
-                    parserKeyName2SchemaRes = new ParserKeyName2Schema(keyName, type).parse();
-                    if (parserKeyName2SchemaRes) {
-                      parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
-                      // fix: 当为路径参数时候，必填项
-                      if (parameter.in === 'path') {
-                        parserKeyName2SchemaRes.wrapSchema.rules.required = true;
-                      }
-                      scm = parserKeyName2SchemaTarget = parserKeyName2SchemaRes.targetSchema;
-                      keyName = filterKeyName(parserKeyName2SchemaRes.wrapSchema.keyName);
-                    } else { // 普通schema对象
-                      // fix: url参数也是一个对象问题.
-                      if (parameter.schema) {
-                        const parsedSchema = parserSchema(
-                          parameter.schema,
-                          undefined,
-                          keyName,
-                          undefined,
-                          {
-                            autoGenerateId: this.autoGenerateId,
-                          }
-                        );
-                        if (parsedSchema) {
-                          scm = parsedSchema;
-                        }
-                      }
-                    }
-                  }
-
-                  scm.id = this.generateId();
-                  if (parserKeyName2SchemaTarget == null) {
-                    scm.rules.required = parameter.in === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
-                  } else {
-                    scm.rules.required = checkType(parameter.required, 'Boolean') ? parameter.required : false;
-                  }
-
-                  scm.description = filterDesc(parameter.description);
-                  scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
-
-                  // 路径参数
-                  if (parameter.in === 'path') {
-                    !api.pathParamKeyNameList.includes(keyName) && api.pathParamKeyNameList.push(keyName);
-                  } // URL参数
-                  else if (parameter.in === 'query') {
-                    !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
-                  } // 表单参数（这个可能不是标准规范）
-                  else if (parameter.in === 'formData') {
-                    // fix: swagger2.0 文件类型识别失败问题
-                    scm.type = parameter?.format ? transformType(scm.type, parameter?.format, scm.type) : scm.type;
-                    !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
-                  }
-
-                  // fix: dot参数属性不应该提取到根节点上的问题
-                  if (parserKeyName2SchemaTarget == null) {
-                    requestDataSchema.params.push(scm);
-                  }
-                } else if (parameter.in === 'body') { // body 参数
-                  if (parameter.schema?.type === 'object' || parameter.schema?.type === 'array') {
-                    requestExtraDataSchema = processRequestSchema(
-                      requestDataSchema,
-                      requestSchemaRecord,
-                      parameter.schema,
-                      requestKeyNameMemo,
-                      {
-                        autoGenerateId: this.autoGenerateId,
-                      }
-                    );
-                    // 普通属性，合并平台属性，整理成一个对象
-                  } else if (parameter.schema?.type && parameter?.name) {
-                    const t = transformType(parameter.schema.type, parameter?.schema?.format, 'string');
-                    const temp = createSchema(t, {
-                      id: this.generateId(),
-                      keyName: parameter?.name,
-                      title: filterDesc(parameter?.title),
-                      description: filterDesc(parameter?.description),
-                      type: t,
-                      examples: parameter.examples ?? [],
-                      rules: {
-                        required: !!parameter?.required || !!parameter.schema?.required,
-                      }
-                    });
-                    temp.label = temp.title ? temp.title : temp.description ? temp.description : '';
-                    requestDataSchema.params.push(temp);
-                  }
-                } else if (parameter.in === 'header' || parameter.in === 'cookie') {
-                  // header 和 cookie信息，暂无特殊处理
-                }
-              }
-              // 合并 name[0].a.rule 属性。
-              ParserKeyName2Schema.appendSchemeList(
-                parserKeyName2SchemaWrap,
-                requestDataSchema,
-                requestKeyNameMemo,
-              );
-            }
-
-            // URL query 参数，query参数必须包含key，不存在不兼容问题
-            processRequestSchema(
-              requestDataSchema,
-              requestSchemaRecord,
-              apiMap.requestBody?.content?.['application/x-www-form-urlencoded']?.schema,
-              requestKeyNameMemo,
-              {
-                autoGenerateId: this.autoGenerateId,
-                callback(parsedSchema: APIHelper.Schema) {
-                  // 收集URL query 参数字段
-                  if (parsedSchema?.params) {
-                    parsedSchema?.params.forEach((itm) => itm?.keyName && api.queryStringKeyNameList.push(itm.keyName));
-                  }
-                }
-              }
-            );
-
-            // 请求 Body 为 json参数
-            const requestSchemaSource = apiMap.requestBody?.content?.['application/json']?.schema
-              ?? apiMap.requestBody?.content?.['text/json']?.schema;
-            // fix: requestExtraDataSchema 参数丢失问题
-            if (requestSchemaSource) {
-              requestExtraDataSchema = processRequestSchema(
-                requestDataSchema,
-                requestSchemaRecord,
-                requestSchemaSource,
-                undefined,
-                {
-                  autoGenerateId: this.autoGenerateId,
-                }
-              );
-            }
-
-            processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchema, this);
-            /****************** 处理请求参数--结束 ******************/
-
-            /****************** 处理响应参数--开始 ******************/
-            const responsesSchemaSource = apiMap.responses?.['200']?.schema
-              ?? apiMap.responses?.['200']?.content?.['application/json']?.schema
-              ?? apiMap.responses?.['200']?.content?.['text/json']?.schema
-              ?? apiMap.responses?.['200']?.content?.['*/*']?.schema;
-            if (validateSchema(responsesSchemaSource)) {
-              api.responseDataSchema = parserSchema(
-                responsesSchemaSource,
-                undefined,
-                undefined,
-                undefined,
-                {
-                  autoGenerateId: this.autoGenerateId
-                }
-              );
-              if (api.responseDataSchema?.type === 'object') {
-                api.responseDataSchema.keyName = '';
-              }
-            }
+            processRequestSchemaPipeline(api, requestDataSchema, requestExtraDataSchemaWrap.value, this);
             processResponseSchemaPipeline(api, this);
-            /****************** 处理响应参数--结束 ******************/
+
+            // 没有获取到请求ContentType，根据参数类型进行推断
+            if (!api?.requestContentType?.length) {
+              if (api.formDataKeyNameList?.length) {
+                api.requestContentType = ['multipart/form-data'];
+              } else if (api.queryStringKeyNameList?.length) {
+                api.requestContentType = ['application/x-www-form-urlencoded'];
+              }
+            }
 
             // 将该API添加到所依赖的模块中
-            for (const tagName of apiMap.tags) {
+            const apiTags = apiMap?.tags?.length > 0 ? apiMap.tags : [UNKNOWN_GROUP_NAME];
+            for (const tagName of apiTags) {
               const recordCategory = categoryMap.has(tagName) ? categoryMap.get(tagName) : categoryMap.get(UNKNOWN_GROUP_NAME);
               recordCategory && recordCategory.apiList.push(api);
             }
           } catch (e) {
-            console.log(`${method.toUpperCase()} ${path} 接口解析失败，请联系 @api-helper 作者修复该问题，或提交issue，https://github.com/ztz2/api-helper/issues\n\n${e}`);
+            console.log(`${method.toUpperCase()} ${path} 接口解析失败，请联系 @api-helper 作者修复该问题，或提交issue，https://github.com/ztz2/api-helper/issues\n${e}`);
           }
         }
       }
@@ -393,6 +194,374 @@ export default class ParserSwagger {
     }
 
     return result;
+  }
+
+  // 解析：路径参数、查询字符串参数(v2[x-www-form-urlencoded])、响应数据。预留header、cookie
+  private parseCommonParam ({ apiDocument, api, apiMap, requestDataSchema, requestKeyNameMemo, parserKeyName2SchemaWrap }: {
+    apiDocument: APIHelper.Document,
+    api: APIHelper.API,
+    apiMap: any,
+    requestDataSchema: APIHelper.Schema,
+    requestKeyNameMemo: string[],
+    parserKeyName2SchemaWrap: APIHelper.Schema[],
+  }) {
+    const parameters = apiMap.parameters;
+    const cookieSchema = createSchema('object');
+    const headerSchema = createSchema('object');
+    const isV2 = apiDocument.documentVersion.startsWith('2');
+    // parameters 包含了：路径参数、query-params、headers、cookies
+    if (parameters?.length > 0) {
+      for (let j = 0; j < parameters.length; j++) {
+        const parameter = parameters[j];
+        // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+        // name是一个字段名称，没有字段名称，属于无效的属性
+        if (parameter.name?.trim?.() === '') {
+          continue;
+        }
+        const parameterIn = parameter?.in ?? '';
+        let keyName = filterKeyName(parameter.name);
+        // parameter?.type 为 'array' 类型对象，例子数据源：v2.0/petstore.json  [ GET ] /v2/pet/findByStatus status字段
+        // 通过直接 parameter.schema 获取类型对象，V3
+        // v2 通过 parameter?.type 判断
+        const parameterSchema = isV2 ? parameter : parameter.schema;
+        switch (parameterIn) {
+          case 'path': case 'query': {
+            if (requestKeyNameMemo.includes(keyName)) {
+              continue;
+            }
+            const type = transformType(parameter.type, parameter?.format, 'string');
+            let scm = parserSchema(
+              parameterSchema,
+              undefined,
+              keyName,
+              undefined,
+              {
+                autoGenerateId: this.autoGenerateId,
+              }
+            );
+
+            let parserKeyName2SchemaWrapNode = null;
+
+            // dot 参数
+            if (keyName.includes('.') || keyName.includes('[')) {
+              const parserKeyName2SchemaRes = new ParserKeyName2Schema(keyName, type).parse();
+              // dot 对象
+              if (parserKeyName2SchemaRes) {
+                parserKeyName2SchemaWrap.push(parserKeyName2SchemaRes.wrapSchema);
+                // fix: 当为路径参数时候，必填项
+                if (parameter.in === 'path') {
+                  parserKeyName2SchemaRes.wrapSchema.rules.required = true;
+                }
+                parserKeyName2SchemaWrapNode = parserKeyName2SchemaRes.wrapSchema;
+                scm = parserKeyName2SchemaRes.targetSchema;
+                keyName = filterKeyName(parserKeyName2SchemaWrapNode.keyName);
+              }
+            }
+
+            if (scm == null) {
+              break;
+            }
+
+            if (!scm.id && this.autoGenerateId) {
+              scm.id = this.generateId();
+            }
+
+            if (parserKeyName2SchemaWrapNode == null) {
+              scm.rules.required = parameterIn === 'path' ? true : checkType(parameter.required, 'Boolean') ? parameter.required : false;
+            } else {
+              scm.rules.required = checkType(parameter.required, 'Boolean') ? parameter.required : false;
+            }
+
+            scm.description = filterDesc(parameter.description);
+            scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
+
+            // 路径参数
+            if (parameterIn === 'path') {
+              !api.pathParamKeyNameList.includes(keyName) && api.pathParamKeyNameList.push(keyName);
+            } // URL参数
+            else if (parameterIn === 'query') {
+              !api.queryStringKeyNameList.includes(keyName) && api.queryStringKeyNameList.push(keyName);
+            }
+
+            // 最后处理完scm，如果该dot参数包装根节点存在，将scm指向它
+            if (parserKeyName2SchemaWrapNode) {
+              scm = parserKeyName2SchemaWrapNode;
+            }
+
+            // fix: 重复提取到根节点问题
+            const previousSchema = requestDataSchema.params.find((item) => item.keyName === keyName && item.type === scm?.type);
+            // 存在相同节点，进行合并
+            if (previousSchema) {
+              deepMergeSchema(previousSchema, scm);
+            } else {
+              requestDataSchema.params.push(scm);
+            }
+
+            !requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
+            break;
+          }
+          case 'header': case 'cookie': {
+            const temp = parserSchema(
+              parameterSchema,
+              undefined,
+              keyName,
+              undefined,
+              {
+                autoGenerateId: this.autoGenerateId,
+              }
+            );
+            if (temp) {
+              if (parameterIn === 'cookie') {
+                cookieSchema.params.push(temp);
+              } else {
+                headerSchema.params.push(temp);
+              }
+            }
+            break;
+          }
+        }
+      }
+      if (cookieSchema.params.length > 0) {
+        api.cookies = cookieSchema;
+      }
+      if (headerSchema.params.length > 0) {
+        api.headers = headerSchema;
+      }
+      // 合并 name[0].a.rule 属性。
+      ParserKeyName2Schema.appendSchemeList(
+        parserKeyName2SchemaWrap,
+        requestDataSchema,
+        requestKeyNameMemo,
+      );
+    }
+    // V2-响应Content-Type获取
+    if (isV2 && apiMap.produces) {
+      api.responseContentType = apiMap.produces;
+    }
+    // 响应数据：V2
+    let responsesSchemaSource = apiMap.responses?.['200']?.schema;
+    // 响应数据：V3，同时获取对于的Content-Type
+    if (!responsesSchemaSource){
+      const responsesSchemaTypes = [
+        'application/json',
+        'text/json',
+        'application/xml',
+        'text/plain',
+        '*/*',
+      ];
+      responsesSchemaTypes.find((item) => {
+        const temp = apiMap.responses?.['200']?.content?.[item]?.schema;
+        if (temp) {
+          api.requestContentType = [item];
+          responsesSchemaSource = temp;
+          return temp;
+        }
+      });
+    }
+    if (responsesSchemaSource && validateSchema(responsesSchemaSource)) {
+      api.responseDataSchema = parserSchema(
+        responsesSchemaSource,
+        undefined,
+        undefined,
+        undefined,
+        { autoGenerateId: this.autoGenerateId }
+      );
+      if (api.responseDataSchema?.type === 'object') {
+        api.responseDataSchema.keyName = '';
+      }
+    }
+  }
+
+  // 解析v2：请求json数据、formData
+  private parseV2Param ({ api, apiMap, requestExtraDataSchemaWrap, requestDataSchema, requestKeyNameMemo, requestSchemaRecord, parserKeyName2SchemaWrap }: {
+    api: APIHelper.API,
+    apiMap: any,
+    requestExtraDataSchemaWrap: { value: APIHelper.Schema | null },
+    requestDataSchema: APIHelper.Schema,
+    requestKeyNameMemo: string[],
+    requestSchemaRecord: JSONSchema4[],
+    parserKeyName2SchemaWrap: APIHelper.Schema[],
+  }) {
+    if (apiMap?.consumes) {
+      api.requestContentType = apiMap?.consumes;
+    }
+    if (apiMap?.parameters?.length > 0) {
+      const parameters = apiMap.parameters;
+      for (let j = 0; j < parameters.length; j++) {
+        const parameter = parameters[j];
+        // fix: 当为Object类型，属性为空，导致成为一个异常的对象
+        if (parameter.name?.trim?.() === '') {
+          continue;
+        }
+        const parameterIn = parameter?.in ?? '';
+        let keyName = filterKeyName(parameter.name);
+        // 路径参数 | url 参数
+        switch (parameterIn) {
+          // 兼容这个非标准的写法
+          case 'formData': {
+            if (requestKeyNameMemo.includes(keyName)) {
+              continue;
+            }
+            const scm = parserSchema(
+              parameter,
+              undefined,
+              keyName,
+              undefined,
+              {
+                autoGenerateId: this.autoGenerateId,
+              }
+            );
+            if (scm == null) {
+              break;
+            }
+            scm.label = filterDesc(scm.title ? scm.title : scm.description ? scm.description : '');
+            // application/x-www-form-urlencoded 类型不属于真正的formData，这是v2独有的特征
+            if (!apiMap.consumes?.includes?.('application/x-www-form-urlencoded')) {
+              !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
+            }
+            !requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
+            requestDataSchema.params.push(scm);
+            break;
+          }
+          case 'body': {
+            if (parameter.schema?.type === 'object' || parameter.schema?.type === 'array') {
+              requestExtraDataSchemaWrap.value = processRequestSchema(
+                requestDataSchema,
+                requestSchemaRecord,
+                parameter.schema,
+                requestKeyNameMemo,
+                {
+                  autoGenerateId: this.autoGenerateId,
+                }
+              );
+              // application/json 数据
+              // 如果是普通属性，合并平台属性，整理成一个对象
+              // 还有可能是 'text/plain' 数据
+              // { in: 'body', name: 'body' }
+            } else if (parameter.schema?.type && parameter?.name) {
+              const isTextPlain = apiMap.consumes?.includes('text/plain');
+              const isOctetStream = apiMap.consumes?.includes('application/octet-stream');
+              const isRootBody = isTextPlain || isOctetStream;
+              const t = transformType(parameter.schema.type, parameter?.schema?.format, 'string');
+              const temp = parserSchema(
+                parameter.schema,
+                undefined,
+                undefined,
+                undefined,
+                {
+                  autoGenerateId: this.autoGenerateId
+                }
+              );
+              if (isRootBody) {
+                requestExtraDataSchemaWrap.value = temp;
+              } else {
+                requestDataSchema.params.push(createSchema('object', {
+                  params: temp ? [temp] : [],
+                  id: this.generateId(),
+                  keyName: parameter?.name,
+                  title: filterDesc(parameter?.title),
+                  description: filterDesc(parameter?.description),
+                  type: t,
+                  examples: parameter.examples ?? [],
+                  rules: {
+                    required: !!parameter?.required || !!parameter.schema?.required,
+                  },
+                  rawType: 'object',
+                  format: parameter?.format ?? '',
+                }));
+              }
+            }
+            break;
+          }
+        }
+      }
+      // 合并 name[0].a.rule 属性。
+      ParserKeyName2Schema.appendSchemeList(
+        parserKeyName2SchemaWrap,
+        requestDataSchema,
+        requestKeyNameMemo,
+      );
+    }
+  }
+
+  // 请求参数
+  private parseV3Param ({ api, apiMap, requestExtraDataSchemaWrap, requestDataSchema, requestKeyNameMemo, requestSchemaRecord }: {
+    api: APIHelper.API,
+    apiMap: any,
+    requestExtraDataSchemaWrap: { value: APIHelper.Schema | null },
+    requestDataSchema: APIHelper.Schema,
+    requestKeyNameMemo: string[],
+    requestSchemaRecord: JSONSchema4[],
+  }) {
+    // FormData数据
+    const formDataSource = apiMap.requestBody?.content?.['multipart/form-data']?.schema;
+    if (formDataSource) {
+      api.requestContentType = ['multipart/form-data'];
+      const formDataSchema = processRequestSchema(
+        requestDataSchema,
+        requestSchemaRecord,
+        formDataSource,
+        undefined,
+        {
+          autoGenerateId: this.autoGenerateId,
+        }
+      );
+      // 记录表单数据key
+      if (formDataSchema) {
+        formDataSchema?.params?.forEach(({keyName}) => {
+          api.formDataKeyNameList.push(keyName);
+          requestKeyNameMemo.push(keyName);
+        });
+      }
+    }
+    // x-www-form-urlencoded 类型参数
+    const wwwFormUrlencodedSchema = apiMap.requestBody?.content?.['application/x-www-form-urlencoded']?.schema;
+    if (wwwFormUrlencodedSchema) {
+      api.requestContentType = ['application/x-www-form-urlencoded'];
+      processRequestSchema(
+        requestDataSchema,
+        requestSchemaRecord,
+        wwwFormUrlencodedSchema,
+        requestKeyNameMemo,
+        {
+          autoGenerateId: this.autoGenerateId,
+          callback(parsedSchema: APIHelper.Schema) {
+            // 收集URL query 参数字段
+            if (parsedSchema?.params) {
+              parsedSchema?.params.forEach((itm) => itm?.keyName && api.queryStringKeyNameList.push(itm.keyName));
+            }
+          }
+        }
+      );
+    }
+    const requestSchemaTypes = [
+      'application/json',
+      'text/json',
+      'text/plain',
+      'application/xml',
+      'application/octet-stream',
+    ];
+    let requestSchemaSource = null;
+    requestSchemaTypes.find((item) => {
+      const temp = apiMap.requestBody?.content?.[item]?.schema;
+      if (temp) {
+        api.requestContentType = [item];
+        requestSchemaSource = temp;
+        return temp;
+      }
+    });
+    // fix: requestExtraDataSchema 参数丢失问题
+    if (requestSchemaSource) {
+      requestExtraDataSchemaWrap.value = processRequestSchema(
+        requestDataSchema,
+        requestSchemaRecord,
+        requestSchemaSource,
+        undefined,
+        {
+          autoGenerateId: this.autoGenerateId,
+        }
+      );
+    }
   }
 
   private parserCategory(openAPIDocument: APIHelper.OpenAPIDocument): Map<string, APIHelper.Category>{

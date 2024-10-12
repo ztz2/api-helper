@@ -2,6 +2,23 @@
 
 exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
 "/**
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /v2/store/inventory
+   */
+export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'GET',
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+}
+/**
    * @description Place an order for a pet
    * @url [ POST ] /v2/store/order
    */
@@ -16,7 +33,7 @@ v2StoreOrderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 }
 /**
    * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
@@ -32,8 +49,8 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
-  queryStringKeyNameList: []
+  pathParamKeyNameList: ["orderId"],
+  queryStringKeyNameList: [],
 }
 /**
    * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
@@ -49,25 +66,8 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
-  queryStringKeyNameList: []
-}
-/**
-   * @description Returns pet inventories by status、Returns a map of status codes to quantities
-   * @url [ GET ] /v2/store/inventory
-   */
-export function v2StoreInventoryByGet(data: V2StoreInventoryRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<V2StoreInventoryResponseByGet>(
-    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
-    ...args
-  );
-}
-v2StoreInventoryByGet.requestConfig = {
-  path: '/v2/store/inventory',
-  method: 'GET',
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  pathParamKeyNameList: ["orderId"],
+  queryStringKeyNameList: [],
 }"
 `;
 
@@ -87,7 +87,7 @@ apiV3StoreInventoryByGet.requestConfig = {
   method: 'GET',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: []
+  queryStringKeyNameList: [],
 }
 /**
    * @description Place an order for a pet、Place a new order in the store
@@ -104,7 +104,7 @@ apiV3StoreOrderByPost.requestConfig = {
   method: 'POST',
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
+  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"],
 }
 /**
    * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
@@ -120,8 +120,8 @@ apiV3StoreOrderOrderIdByGet.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'GET',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
-  queryStringKeyNameList: []
+  pathParamKeyNameList: ["orderId"],
+  queryStringKeyNameList: [],
 }
 /**
    * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
@@ -137,7 +137,71 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   path: '/api/v3/store/order/{orderId}',
   method: 'DELETE',
   formDataKeyNameList: [],
-  pathParamKeyNameList: [\\"orderId\\"],
-  queryStringKeyNameList: []
+  pathParamKeyNameList: ["orderId"],
+  queryStringKeyNameList: [],
+}"
+`;
+
+exports[`生成接口函数测试 生成 content-type: header-param.json 1`] = `
+"/**
+   * @description 请求参数 查询字符串
+   * @url [ GET ] /query-params
+   */
+export function queryParamsByGet(data: QueryParamsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<QueryParamsResponseByGet>(
+    processRequestFunctionConfig(data, extraData, queryParamsByGet.requestConfig),
+    ...args
+  );
+}
+queryParamsByGet.requestConfig = {
+  path: '/query-params',
+  method: 'GET',
+  requestContentType: ["application/x-www-form-urlencoded"],
+  responseContentType: ["application/json"],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ["username","phone"],
+}"
+`;
+
+exports[`生成接口函数测试 生成 cookie: header-param.json 1`] = `
+"/**
+   * @description Cookies
+   * @url [ GET ] /cookies
+   */
+export function cookiesByGet(data: CookiesRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<CookiesResponseByGet>(
+    processRequestFunctionConfig(data, extraData, cookiesByGet.requestConfig),
+    ...args
+  );
+}
+cookiesByGet.requestConfig = {
+  path: '/cookies',
+  method: 'GET',
+  cookies: ["buid","token"],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+}"
+`;
+
+exports[`生成接口函数测试 生成 header: header-param.json 1`] = `
+"/**
+   * @description Headers
+   * @url [ GET ] /headers
+   */
+export function headersByGet(data: HeadersRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<HeadersResponseByGet>(
+    processRequestFunctionConfig(data, extraData, headersByGet.requestConfig),
+    ...args
+  );
+}
+headersByGet.requestConfig = {
+  path: '/headers',
+  method: 'GET',
+  headers: ["token","header2"],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
 }"
 `;

@@ -2,9 +2,9 @@
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 代码生成时间:  */
+/* 代码生成时间： */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
+/* 文档参考：https://github.com/ztz2/api-helper */
 
 // @ts-ignore
 // prettier-ignore
@@ -20,7 +20,8 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @description uploads an image【请求数据类型定义】
+ * @description uploads an image
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 declare interface V2PetPetIdUploadImageRequestByPost {
@@ -32,7 +33,8 @@ declare interface V2PetPetIdUploadImageRequestByPost {
   file?: File;
 }
 /**
- * @description uploads an image【响应数据类型定义】
+ * @description uploads an image
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 declare interface V2PetPetIdUploadImageResponseByPost {
@@ -50,7 +52,7 @@ declare const v2PetPetIdUploadImageByPost: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2PetPetIdUploadImageResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}/uploadImage';
     method: 'post';
     formDataKeyNameList: ['additionalMetadata', 'file'];
@@ -80,7 +82,8 @@ v2PetPetIdUploadImageByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Add a new pet to the store【请求数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Request data types
  * @url [ POST ] /v2/pet
  */
 declare interface V2PetRequestByPost {
@@ -99,7 +102,8 @@ declare interface V2PetRequestByPost {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Add a new pet to the store【响应数据类型定义】
+ * @description Add a new pet to the store
+ * @summary Response data types
  * @url [ POST ] /v2/pet
  */
 declare type V2PetResponseByPost = any;
@@ -109,7 +113,7 @@ declare type V2PetResponseByPost = any;
  */
 declare const v2PetByPost: {
   (data: V2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet';
     method: 'post';
     formDataKeyNameList: [];
@@ -132,7 +136,8 @@ v2PetByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Update an existing pet【请求数据类型定义】
+ * @description Update an existing pet
+ * @summary Request data types
  * @url [ PUT ] /v2/pet
  */
 declare interface V2PetRequestByPut {
@@ -151,7 +156,8 @@ declare interface V2PetRequestByPut {
   status?: 'available' | 'pending' | 'sold';
 }
 /**
- * @description Update an existing pet【响应数据类型定义】
+ * @description Update an existing pet
+ * @summary Response data types
  * @url [ PUT ] /v2/pet
  */
 declare type V2PetResponseByPut = any;
@@ -161,7 +167,7 @@ declare type V2PetResponseByPut = any;
  */
 declare const v2PetByPut: {
   (data: V2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetResponseByPut>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet';
     method: 'put';
     formDataKeyNameList: [];
@@ -184,7 +190,8 @@ v2PetByPut.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【请求数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 declare interface V2PetFindByStatusRequestByGet {
@@ -192,7 +199,8 @@ declare interface V2PetFindByStatusRequestByGet {
   status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
- * @description Finds Pets by status、Multiple status values can be provided with comma separated strings【响应数据类型定义】
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByStatus
  */
 declare type V2PetFindByStatusResponseByGet = Array<{
@@ -220,7 +228,7 @@ declare const v2PetFindByStatusByGet: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2PetFindByStatusResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/findByStatus';
     method: 'get';
     formDataKeyNameList: [];
@@ -250,7 +258,8 @@ v2PetFindByStatusByGet.requestConfig = {
   queryStringKeyNameList: ['status'],
 };
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【请求数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
  * @url [ GET ] /v2/pet/findByTags
  */
 declare interface V2PetFindByTagsRequestByGet {
@@ -258,7 +267,8 @@ declare interface V2PetFindByTagsRequestByGet {
   tags: Array<string>;
 }
 /**
- * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.【响应数据类型定义】
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
  * @url [ GET ] /v2/pet/findByTags
  */
 declare type V2PetFindByTagsResponseByGet = Array<{
@@ -286,7 +296,7 @@ declare const v2PetFindByTagsByGet: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2PetFindByTagsResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/findByTags';
     method: 'get';
     formDataKeyNameList: [];
@@ -309,7 +319,8 @@ v2PetFindByTagsByGet.requestConfig = {
   queryStringKeyNameList: ['tags'],
 };
 /**
- * @description Find pet by ID、Returns a single pet【请求数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
  * @url [ GET ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByGet {
@@ -317,7 +328,8 @@ declare interface V2PetPetIdRequestByGet {
   petId: string;
 }
 /**
- * @description Find pet by ID、Returns a single pet【响应数据类型定义】
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
  * @url [ GET ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdResponseByGet {
@@ -341,7 +353,7 @@ declare interface V2PetPetIdResponseByGet {
  */
 declare const v2PetPetIdByGet: {
   (data: V2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}';
     method: 'get';
     formDataKeyNameList: [];
@@ -364,7 +376,8 @@ v2PetPetIdByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Updates a pet in the store with form data【请求数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByPost {
@@ -376,7 +389,8 @@ declare interface V2PetPetIdRequestByPost {
   status?: string;
 }
 /**
- * @description Updates a pet in the store with form data【响应数据类型定义】
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
  * @url [ POST ] /v2/pet/{petId}
  */
 declare type V2PetPetIdResponseByPost = any;
@@ -386,10 +400,10 @@ declare type V2PetPetIdResponseByPost = any;
  */
 declare const v2PetPetIdByPost: {
   (data: V2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}';
     method: 'post';
-    formDataKeyNameList: ['name', 'status'];
+    formDataKeyNameList: [];
     pathParamKeyNameList: ['petId'];
     queryStringKeyNameList: [];
   };
@@ -404,12 +418,13 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ['name', 'status'],
+  formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };
 /**
- * @description Deletes a pet【请求数据类型定义】
+ * @description Deletes a pet
+ * @summary Request data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 declare interface V2PetPetIdRequestByDelete {
@@ -417,7 +432,8 @@ declare interface V2PetPetIdRequestByDelete {
   petId: string;
 }
 /**
- * @description Deletes a pet【响应数据类型定义】
+ * @description Deletes a pet
+ * @summary Response data types
  * @url [ DELETE ] /v2/pet/{petId}
  */
 declare type V2PetPetIdResponseByDelete = any;
@@ -427,7 +443,7 @@ declare type V2PetPetIdResponseByDelete = any;
  */
 declare const v2PetPetIdByDelete: {
   (data: V2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2PetPetIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/pet/{petId}';
     method: 'delete';
     formDataKeyNameList: [];
@@ -450,12 +466,14 @@ v2PetPetIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【请求数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
  * @url [ GET ] /v2/store/inventory
  */
 declare type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
- * @description Returns pet inventories by status、Returns a map of status codes to quantities【响应数据类型定义】
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
  * @url [ GET ] /v2/store/inventory
  */
 declare type V2StoreInventoryResponseByGet = any;
@@ -469,7 +487,7 @@ declare const v2StoreInventoryByGet: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2StoreInventoryResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/inventory';
     method: 'get';
     formDataKeyNameList: [];
@@ -499,7 +517,8 @@ v2StoreInventoryByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Place an order for a pet【请求数据类型定义】
+ * @description Place an order for a pet
+ * @summary Request data types
  * @url [ POST ] /v2/store/order
  */
 declare interface V2StoreOrderRequestByPost {
@@ -512,7 +531,8 @@ declare interface V2StoreOrderRequestByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet【响应数据类型定义】
+ * @description Place an order for a pet
+ * @summary Response data types
  * @url [ POST ] /v2/store/order
  */
 declare interface V2StoreOrderResponseByPost {
@@ -530,7 +550,7 @@ declare interface V2StoreOrderResponseByPost {
  */
 declare const v2StoreOrderByPost: {
   (data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreOrderResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order';
     method: 'post';
     formDataKeyNameList: [];
@@ -553,7 +573,8 @@ v2StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【请求数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdRequestByGet {
@@ -561,7 +582,8 @@ declare interface V2StoreOrderOrderIdRequestByGet {
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions【响应数据类型定义】
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
  * @url [ GET ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdResponseByGet {
@@ -583,7 +605,7 @@ declare const v2StoreOrderOrderIdByGet: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2StoreOrderOrderIdResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}';
     method: 'get';
     formDataKeyNameList: [];
@@ -613,7 +635,8 @@ v2StoreOrderOrderIdByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【请求数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 declare interface V2StoreOrderOrderIdRequestByDelete {
@@ -621,7 +644,8 @@ declare interface V2StoreOrderOrderIdRequestByDelete {
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors【响应数据类型定义】
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
  * @url [ DELETE ] /v2/store/order/{orderId}
  */
 declare type V2StoreOrderOrderIdResponseByDelete = any;
@@ -635,7 +659,7 @@ declare const v2StoreOrderOrderIdByDelete: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2StoreOrderOrderIdResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/store/order/{orderId}';
     method: 'delete';
     formDataKeyNameList: [];
@@ -665,7 +689,8 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithList
  */
 declare type V2UserCreateWithListRequestByPost = Array<{
@@ -680,7 +705,8 @@ declare type V2UserCreateWithListRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithList
  */
 declare type V2UserCreateWithListResponseByPost = any;
@@ -694,7 +720,7 @@ declare const v2UserCreateWithListByPost: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2UserCreateWithListResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/createWithList';
     method: 'post';
     formDataKeyNameList: [];
@@ -724,7 +750,8 @@ v2UserCreateWithListByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Get user by user name【请求数据类型定义】
+ * @description Get user by user name
+ * @summary Request data types
  * @url [ GET ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByGet {
@@ -732,7 +759,8 @@ declare interface V2UserUsernameRequestByGet {
   username: string;
 }
 /**
- * @description Get user by user name【响应数据类型定义】
+ * @description Get user by user name
+ * @summary Response data types
  * @url [ GET ] /v2/user/{username}
  */
 declare interface V2UserUsernameResponseByGet {
@@ -756,7 +784,7 @@ declare const v2UserUsernameByGet: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2UserUsernameResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}';
     method: 'get';
     formDataKeyNameList: [];
@@ -779,7 +807,8 @@ v2UserUsernameByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Updated user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ PUT ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByPut {
@@ -795,7 +824,8 @@ declare interface V2UserUsernameRequestByPut {
   userStatus?: number;
 }
 /**
- * @description Updated user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ PUT ] /v2/user/{username}
  */
 declare type V2UserUsernameResponseByPut = any;
@@ -809,7 +839,7 @@ declare const v2UserUsernameByPut: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2UserUsernameResponseByPut>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}';
     method: 'put';
     formDataKeyNameList: [];
@@ -832,7 +862,8 @@ v2UserUsernameByPut.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Delete user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ DELETE ] /v2/user/{username}
  */
 declare interface V2UserUsernameRequestByDelete {
@@ -840,7 +871,8 @@ declare interface V2UserUsernameRequestByDelete {
   username: string;
 }
 /**
- * @description Delete user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ DELETE ] /v2/user/{username}
  */
 declare type V2UserUsernameResponseByDelete = any;
@@ -854,7 +886,7 @@ declare const v2UserUsernameByDelete: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2UserUsernameResponseByDelete>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/{username}';
     method: 'delete';
     formDataKeyNameList: [];
@@ -884,7 +916,8 @@ v2UserUsernameByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Logs user into the system【请求数据类型定义】
+ * @description Logs user into the system
+ * @summary Request data types
  * @url [ GET ] /v2/user/login
  */
 declare interface V2UserLoginRequestByGet {
@@ -894,7 +927,8 @@ declare interface V2UserLoginRequestByGet {
   password: string;
 }
 /**
- * @description Logs user into the system【响应数据类型定义】
+ * @description Logs user into the system
+ * @summary Response data types
  * @url [ GET ] /v2/user/login
  */
 declare type V2UserLoginResponseByGet = string;
@@ -904,7 +938,7 @@ declare type V2UserLoginResponseByGet = string;
  */
 declare const v2UserLoginByGet: {
   (data: V2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLoginResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/login';
     method: 'get';
     formDataKeyNameList: [];
@@ -927,12 +961,14 @@ v2UserLoginByGet.requestConfig = {
   queryStringKeyNameList: ['username', 'password'],
 };
 /**
- * @description Logs out current logged in user session【请求数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Request data types
  * @url [ GET ] /v2/user/logout
  */
 declare type V2UserLogoutRequestByGet = Record<string, any>;
 /**
- * @description Logs out current logged in user session【响应数据类型定义】
+ * @description Logs out current logged in user session
+ * @summary Response data types
  * @url [ GET ] /v2/user/logout
  */
 declare type V2UserLogoutResponseByGet = any;
@@ -942,7 +978,7 @@ declare type V2UserLogoutResponseByGet = any;
  */
 declare const v2UserLogoutByGet: {
   (data?: V2UserLogoutRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserLogoutResponseByGet>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/logout';
     method: 'get';
     formDataKeyNameList: [];
@@ -965,7 +1001,8 @@ v2UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Creates list of users with given input array【请求数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Request data types
  * @url [ POST ] /v2/user/createWithArray
  */
 declare type V2UserCreateWithArrayRequestByPost = Array<{
@@ -980,7 +1017,8 @@ declare type V2UserCreateWithArrayRequestByPost = Array<{
   userStatus?: number;
 }>;
 /**
- * @description Creates list of users with given input array【响应数据类型定义】
+ * @description Creates list of users with given input array
+ * @summary Response data types
  * @url [ POST ] /v2/user/createWithArray
  */
 declare type V2UserCreateWithArrayResponseByPost = any;
@@ -994,7 +1032,7 @@ declare const v2UserCreateWithArrayByPost: {
     extraData?: unknown,
     ...args: CurrentRequestFunctionRestArgsType
   ): Promise<V2UserCreateWithArrayResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user/createWithArray';
     method: 'post';
     formDataKeyNameList: [];
@@ -1024,7 +1062,8 @@ v2UserCreateWithArrayByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Create user、This can only be done by the logged in user.【请求数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
  * @url [ POST ] /v2/user
  */
 declare interface V2UserRequestByPost {
@@ -1039,7 +1078,8 @@ declare interface V2UserRequestByPost {
   userStatus?: number;
 }
 /**
- * @description Create user、This can only be done by the logged in user.【响应数据类型定义】
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
  * @url [ POST ] /v2/user
  */
 declare type V2UserResponseByPost = any;
@@ -1049,7 +1089,7 @@ declare type V2UserResponseByPost = any;
  */
 declare const v2UserByPost: {
   (data: V2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2UserResponseByPost>;
-  readonly requestConfig: {
+  requestConfig: {
     path: '/v2/user';
     method: 'post';
     formDataKeyNameList: [];

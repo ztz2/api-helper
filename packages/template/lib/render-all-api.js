@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -48,6 +59,7 @@ exports.checkDocument = checkDocument;
 function renderAllApi(apiDocument, options) {
     var e_1, _a, e_2, _b;
     var _c;
+    if (options === void 0) { options = {}; }
     if (!apiDocument) {
         return '';
     }
@@ -82,43 +94,20 @@ function renderAllApi(apiDocument, options) {
                     responseDataSchema = (0, helpers_1.getSchema)(api.responseDataSchema, dataKey);
                 }
                 // 1. 生成interface-请求数据
-                p.push((0, render_interface_1.renderInterface)(api.requestDataSchema, api, {
-                    paramType: 'request',
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    emptyBodyCode: 'Record<string, any>;',
-                    prefix: isDeclare ? 'declare ' : 'export ',
-                }));
+                p.push((0, render_interface_1.renderInterface)(api.requestDataSchema, api, __assign(__assign({}, options), { paramType: 'request', onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, emptyBodyCode: 'Record<string, any>;', prefix: isDeclare ? 'declare ' : 'export ' })));
                 // 2. 生成interface-请求数据（特殊不兼容数据类型）
-                p.push((0, render_interface_1.renderInterface)(api.requestExtraDataSchema, api, {
-                    paramType: 'request',
-                    isExtraData: true,
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    prefix: isDeclare ? 'declare ' : 'export ',
-                }));
+                p.push((0, render_interface_1.renderInterface)(api.requestExtraDataSchema, api, __assign(__assign({}, options), { paramType: 'request', isExtraData: true, onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, prefix: isDeclare ? 'declare ' : 'export ' })));
                 // 2. 生成interface-响应数据
-                p.push((0, render_interface_1.renderInterface)(responseDataSchema, api, {
-                    paramType: 'response',
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    prefix: isDeclare ? 'declare ' : 'export ',
-                }));
+                p.push((0, render_interface_1.renderInterface)(responseDataSchema, api, __assign(__assign({}, options), { paramType: 'response', onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, prefix: isDeclare ? 'declare ' : 'export ' })));
             }
             // 3. 生成请求函数
             if (onlyTyping !== true) {
                 if (isDeclare) {
-                    p.push((0, render_request_function_declare_1.renderRequestFunctionDeclare)(api, {
-                        dataKey: dataKey,
-                        onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                        onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-                    }));
+                    p.push((0, render_request_function_declare_1.renderRequestFunctionDeclare)(api, __assign(__assign({}, options), { dataKey: dataKey, onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName })));
                 }
             }
             if (!(onlyTyping && codeType === 'typescript')) {
-                p.push((0, render_request_function_1.renderRequestFunction)(api, {
-                    dataKey: dataKey,
-                    codeType: codeType,
-                    onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName,
-                    onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName,
-                }));
+                p.push((0, render_request_function_1.renderRequestFunction)(api, __assign(__assign({}, options), { dataKey: dataKey, codeType: codeType, onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName })));
             }
             code.push(p.join(''));
         }

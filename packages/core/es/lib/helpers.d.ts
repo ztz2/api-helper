@@ -12,8 +12,10 @@ declare class AbstractSchema implements APIHelper.IAbstractSchema {
     examples: string[];
     params: APIHelper.Schema[];
     enum: (string | number)[];
+    rawType: string;
+    format: string;
 }
-export declare function createSchema(type: APIHelper.SchemaType | 'enum' | 'file', options?: Partial<AbstractSchema & Recordable>): APIHelper.Schema;
+export declare function createSchema(type: APIHelper.SchemaType | 'enum' | 'file', options?: Partial<AbstractSchema>): APIHelper.Schema;
 export declare function createDocument(options?: Partial<APIHelper.Document & Recordable>): APIHelper.Document;
 export declare function createCategory(options?: Partial<APIHelper.Category & Recordable>): APIHelper.Category;
 export declare function createApi(options?: Partial<APIHelper.API & Recordable>): APIHelper.API;

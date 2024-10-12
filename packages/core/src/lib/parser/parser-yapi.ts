@@ -117,6 +117,8 @@ type ParserYapiParams = {
         name: string
         value: string
         required: number | string
+        example: string,
+        desc: string,
       }>,
       'req_params': Array<{
         name: string
@@ -222,8 +224,41 @@ export default class ParserYapi {
         docURL: apiMap.docURL ?? '',
       });
 
+      const headerSchema = createSchema('object');
+      apiContent?.req_headers?.forEach((item) => {
+        if (!item?.value) {
+          return;
+        }
+        switch (item.value) {
+          // 请求数据类型
+          case 'Content-Type': {
+            api.requestContentType = [item.value];
+            break;
+          }
+          // 其他请求头信息
+          default: {
+            headerSchema.params.push(createSchema('string', {
+              keyName: item.value,
+              title: filterDesc(item.desc) ?? '',
+              rules: {
+                required: ['1', 1].includes(item.required),
+              }
+            }));
+          }
+        }
+      });
+
+      if (headerSchema.params.length) {
+        api.headers = headerSchema;
+      }
+
+      // 响应数据类型
+      if (apiContent?.res_body_type) {
+        api.responseContentType = [apiContent?.res_body_type];
+      }
+
       try {
-        api.label = api.title ? api.title : api.description ? api.description : '';
+        api.label = api.title || api.description || '';
 
         // API content-type，暂无特殊处理
         // switch (apiMap.req_body_type) {
@@ -351,7 +386,9 @@ export default class ParserYapi {
                 type: 'string',
                 rules: {
                   required: Number(p.required) === 1
-                }
+                },
+                rawType: p.type,
+                format: p?.format ?? '',
               });
               scm.type = transformType(p.type, p?.format, 'string');
               scm.label = scm.title ? scm.title : scm.description ? scm.description : '';

@@ -2,6 +2,9 @@
 import stringify from 'qs/lib/stringify';
 import type { APIHelper } from '@api-helper/core/lib/types';
 
+export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
+
 function checkType<T>(value: T, type: string): boolean{
   return Object.prototype.toString.call(value) === `[object ${type}]`;
 }
@@ -19,28 +22,24 @@ export class FormDataItem<T> {
   }
 }
 
-export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
-
-export type RequestFunctionRestArgsType<T> = T extends (params: any, ...args: infer K) => any ? K : any;
-
 export type RequestFunctionConfig = {
   // 请求路径，可以看做是URL，该资源路径包含了url参数，合并了路径参数等
   path: string;
   // 源请求路径，没有经过任何处理
-  sourcePath: string;
+  rawPath: string;
   // HTTP请求方法
   method: RequestMethod
   // 经过处理后的请求数据【不包含：路径参数，URL参数，表单数据】，可以看做是post请求，body为JSON的数据
   // 如果有文件上传，就是FormData对象，可以使用 instanceof FormData 来判断是否为表单数据，或者使用hasFormData判断
-  data: Record<string, any> | FormData | undefined;
+  data: string | number | boolean | null | undefined | Record<any, any> | FormData;
   // 是否包含表单数据
   hasFormData: boolean;
   // 原始数据对象
-  rowData: unknown;
+  rawData: unknown;
   // 和上面不兼容冲突的额外数据。
   // 例子上面数据是URL参数，用对象表示 { username: 'ztz2' }，不巧的是，还有body参数Array<string>类型，此时对象和数组不能合并到一起，body数据将会提取到 extraData 中
-  // 所有当 rowExtraData 存在值的时候，说明参数不能兼容到一个对象中，建议重新设计接口参数，确保能符合JSON规范
-  rowExtraData?: unknown;
+  // 所有当 rawExtraData 存在值的时候，说明参数不能兼容到一个对象中，建议重新设计接口参数，确保能符合JSON规范
+  rawExtraData?: unknown;
 }
 
 export function checkMiniProgramEnv(): boolean {
@@ -77,7 +76,7 @@ const hasNodeFormData = !hasNativeFormData && global?.['process']?.['versions']?
 const FormDataPolyfill: typeof FormData | undefined = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
 const isMiniProgramEnv = checkMiniProgramEnv();
 
-export function processRequestFunctionConfig<T extends object, R>(data: T, extraData: R, requestConfig: {
+type RequestConfig = {
   // 请求资源路径地址
   path: string;
   // 请求方法
@@ -88,16 +87,23 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
   // URL参数字段集合
   queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
-}): RequestFunctionConfig {
+};
+
+export function processRequestFunctionConfig<T, R>(data: T, extraData: R, requestConfig: RequestConfig) {
   const requestFunctionConfig: RequestFunctionConfig = {
     path: requestConfig.path,
-    sourcePath: requestConfig.path,
+    rawPath: requestConfig.path,
     method: requestConfig.method as RequestMethod,
-    data: undefined,
-    rowData: data,
-    rowExtraData: extraData,
+    data: undefined as any,
+    rawData: data,
+    rawExtraData: extraData,
     hasFormData: false,
   };
+
+  if (data == null || typeof data !== 'object') {
+    requestFunctionConfig.data = data;
+    return requestFunctionConfig;
+  }
 
   const queryParams: Recordable = {};
   const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as Recordable;
@@ -133,7 +139,7 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
       delete cloneData[k];
     }
     // FormData处理
-    if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
+    if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList?.includes(k))) {
       requestFunctionConfig.hasFormData = true;
       const val = v instanceof FormDataItem ? v.get() : v;
       if (Array.isArray(val)) {
@@ -162,8 +168,9 @@ export function processRequestFunctionConfig<T extends object, R>(data: T, extra
   // 合并Data
   if (requestFunctionConfig.hasFormData) {
     requestFunctionConfig.data = formData;
-  } else if (extraData) {
-    requestFunctionConfig.data = extraData;
+    // @ts-ignore
+  } else if (data instanceof FormDataPolyfill) {
+    requestFunctionConfig.data = data;
   } else {
     requestFunctionConfig.data = cloneData;
   }

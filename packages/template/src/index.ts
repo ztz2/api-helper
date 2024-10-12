@@ -2,7 +2,6 @@ import * as changeCase from 'change-case';
 import * as utils from '@/lib/utils/util';
 import artTemplate from '@/lib/art-template';
 import type { ChangeCase } from '@/lib/types';
-import formatCode from '@/lib/utils/prettier';
 import formatCodeServer from '@/lib/utils/format-code-server';
 
 import renderTemplate from '@/lib/render-template';
@@ -17,7 +16,6 @@ export {
   utils,
   artTemplate,
   changeCase,
-  formatCode,
   formatCodeServer,
   renderAllApi,
   renderClass,

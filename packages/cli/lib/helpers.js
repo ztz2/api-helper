@@ -55,16 +55,20 @@ const hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || gl
 const FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
 const isMiniProgramEnv = checkMiniProgramEnv();
 function processRequestFunctionConfig(data, extraData, requestConfig) {
-    var _a, _b;
+    var _a, _b, _c;
     const requestFunctionConfig = {
         path: requestConfig.path,
-        sourcePath: requestConfig.path,
+        rawPath: requestConfig.path,
         method: requestConfig.method,
         data: undefined,
-        rowData: data,
-        rowExtraData: extraData,
+        rawData: data,
+        rawExtraData: extraData,
         hasFormData: false,
     };
+    if (data == null || typeof data !== 'object') {
+        requestFunctionConfig.data = data;
+        return requestFunctionConfig;
+    }
     const queryParams = {};
     const cloneData = (checkType(data, 'Object') ? Object.assign({}, data) : {});
     let formData;
@@ -100,7 +104,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_b = requestConfig.formDataKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             const val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -115,7 +119,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             continue;
         }
         // URL 参数处理
-        if ((_b = requestConfig.queryStringKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
+        if ((_c = requestConfig.queryStringKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
@@ -128,9 +132,10 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
     // 合并Data
     if (requestFunctionConfig.hasFormData) {
         requestFunctionConfig.data = formData;
+        // @ts-ignore
     }
-    else if (extraData) {
-        requestFunctionConfig.data = extraData;
+    else if (data instanceof FormDataPolyfill) {
+        requestFunctionConfig.data = data;
     }
     else {
         requestFunctionConfig.data = cloneData;

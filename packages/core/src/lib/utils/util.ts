@@ -186,7 +186,9 @@ export function parserSchema(
     examples: schema.examples ?? [],
     rules: {
       required: requiredFieldList.includes(keyName),
-    }
+    },
+    rawType: schema.type as string,
+    format: schema?.format ?? '',
   })
   resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
 
@@ -200,9 +202,8 @@ export function parserSchema(
     // eslint-disable-next-line default-case
     switch (type) {
       case 'string':
-        const stringRules: APIHelper.IStringSchema['rules'] = {
-          required: requiredFieldList.includes(keyName),
-        };
+        const stringRules: APIHelper.IStringSchema['rules'] = createSchema('string').rules;
+        stringRules.required = requiredFieldList.includes(keyName);
         if (schema.minLength != null) stringRules.minLength = schema.minLength;
         if (schema.maxLength != null) stringRules.maxLength = schema.maxLength;
         if (schema.pattern != null) stringRules.pattern = schema.pattern;
@@ -210,9 +211,8 @@ export function parserSchema(
         resultSchema.rules = stringRules;
         break;
       case 'number':
-        const numberRules: APIHelper.INumberSchema['rules'] = {
-          required: requiredFieldList.includes(keyName),
-        };
+        const numberRules: APIHelper.INumberSchema['rules'] = createSchema('number').rules;
+        numberRules.required = requiredFieldList.includes(keyName);
         if (schema.multipleOf != null) numberRules.multipleOf = schema.multipleOf;
         if (schema.minimum != null) numberRules.minimum = schema.minimum;
         if (schema.maximum != null) numberRules.maximum = schema.maximum;
@@ -222,17 +222,14 @@ export function parserSchema(
         resultSchema.rules = numberRules;
         break;
       case 'null':
-        const nullRules: APIHelper.INullSchema['rules'] = {
-          required: requiredFieldList.includes(keyName),
-        };
+        const nullRules: APIHelper.INullSchema['rules'] = createSchema('null').rules;
+        nullRules.required = requiredFieldList.includes(keyName);
 
         resultSchema.rules = nullRules;
         break;
       case 'boolean':
-        const booleanRules: APIHelper.IBooleanSchema['rules'] = {
-          required: requiredFieldList.includes(keyName),
-        };
-
+        const booleanRules: APIHelper.IBooleanSchema['rules'] = createSchema('boolean').rules;
+        booleanRules.required = requiredFieldList.includes(keyName);
         resultSchema.rules = booleanRules;
         break;
       // 对象类型
@@ -290,12 +287,12 @@ export function parserSchema(
             }
           }
         }
-        const arrayRules: APIHelper.IArraySchema['rules'] = {
-          required: requiredFieldList.includes(keyName),
-        };
+        const arrayRules: APIHelper.IArraySchema['rules'] = createSchema('array').rules;
+        arrayRules.required = requiredFieldList.includes(keyName);
         if (schema.minItems != null) arrayRules.minLength = schema.minItems;
         if (schema.maxItems != null) arrayRules.maxLength = schema.maxItems;
         if (schema.uniqueItems != null) arrayRules.uniqueItems = schema.uniqueItems;
+        resultSchema.rules = arrayRules;
         break;
     }
   } catch (e) {}
@@ -528,4 +525,40 @@ export function processKeyName(keyName: string) {
     return `"${keyName}"`;
   }
   return keyName;
+}
+
+// 深度合并两个节点，
+// 合并到source节点中
+export function deepMergeSchema(source: APIHelper.Schema | null, other: APIHelper.Schema | null): APIHelper.Schema | null {
+  function dfs(s: APIHelper.Schema | null = null, o: APIHelper.Schema | null = null): APIHelper.Schema | null {
+    if (s == null) {
+      return o;
+    }
+    if (o == null) {
+      return s;
+    }
+    if (!(s.keyName === o.keyName && s.type === o.type)) {
+      return s;
+    }
+    const memoOtherMap: { [k: string]: APIHelper.Schema } = {};
+    o.params.forEach((item) => {
+      memoOtherMap[`${item.keyName}${item.type}`] = item;
+    });
+    s.params.forEach((item, index) => {
+      const key = `${item.keyName}${item.type}`;
+      const memoOther = memoOtherMap[key];
+      // 存在相同节点，需要进行合并
+      if (memoOther) {
+        const otherIndex = o.params.indexOf(memoOther);
+        s.params.splice(index, 1, dfs(item, memoOther)!);
+        o.params.splice(otherIndex, 1);
+      }
+    });
+    // 还存在其他节点，直接复制
+    if (o.params.length) {
+      s.params.push(...o.params);
+    }
+    return s;
+  }
+  return dfs(source, other) ?? null;
 }

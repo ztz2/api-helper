@@ -12,30 +12,37 @@ export declare abstract class AbstractParserPlugin {
     abstract name: string;
     abstract run(documentServers: DocumentServers, options?: ParserPluginOptions): Promise<ParserPluginRunResult>;
 }
-export declare type Config = {
+export interface CommonConfig {
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
+    requestFunctionFilePath: string;
+    requiredRequestField?: boolean;
+    requiredResponseField?: boolean;
+    events?: {
+        onRenderInterfaceName?: typeof renderInterfaceName;
+        onRenderRequestFunctionName?: typeof renderRequestFunctionName;
+    };
+    type?: 'swagger' | 'yapi' | string;
+    name?: string;
+    dataKey?: string;
+    auth?: {
+        username: string;
+        password: string;
+    };
+    authToken?: '';
+    headers?: AxiosHeaders;
+}
+export interface ServerConfig extends CommonConfig {
+    url: string;
+}
+export interface Config extends CommonConfig {
     group?: boolean;
     onlyTyping?: boolean;
     outputPath: string;
     outputFilePath?: string;
     target?: 'javascript' | 'typescript';
-    requestFunctionFilePath: string;
-    requiredRequestField?: boolean;
-    requiredResponseField?: boolean;
-    documentServers: Array<{
-        url: string;
-        type: 'swagger' | 'yapi' | string;
-        name?: string;
-        dataKey?: string;
-        auth?: {
-            username: string;
-            password: string;
-        };
-        authToken?: '';
-        headers?: AxiosHeaders;
-        events?: {
-            onRenderInterfaceName?: typeof renderInterfaceName;
-            onRenderRequestFunctionName?: typeof renderRequestFunctionName;
-        };
-    }>;
+    documentServers: Array<ServerConfig>;
     parserPlugins?: AbstractParserPlugin[];
-};
+}

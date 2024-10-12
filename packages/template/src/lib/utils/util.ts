@@ -1,17 +1,16 @@
 import type { APIHelper } from '@api-helper/core/lib/types';
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
 
-import formatCode from '@/lib/utils/prettier';
-
 export function postCode({ code = '', ki = '', commentCode = '' }, { onlyBody = false }) {
   // 移除多个空格
   ki = ki.replace(/\s(\s+)/gim, ' ');
   // 移除双换行符。
   code = code.replace(/\n\n/gim, '\n');
+  code = ki + code;
   // 格式化代码
-  code = formatCode(ki + code, {
-    parser: 'typescript'
-  });
+  // code = formatCode(code, {
+  //   parser: 'typescript'
+  // });
   // 如果只输出body部分，移除 export xxx 部分
   if (onlyBody) {
     const currentKi = ki.trim();

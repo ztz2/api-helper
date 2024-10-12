@@ -1,6 +1,6 @@
 {
   "name": "@api-helper/core",
-  "version": "2.5.4",
+  "version": "3.0.0",
   "description": "根据 Swagger 的接口定义生成 TypeScript/JavaScript 的接口类型及其请求函数代码。",
   "module": "es/index.js",
   "browser": "api-helper-core.js",
@@ -57,10 +57,11 @@
   },
   "homepage": "https://github.com/ztz2/api-helper#readme",
   "dependencies": {
-    "bundle-shims": "^0.0.3",
+    "@apidevtools/json-schema-ref-parser": "^11.7.2",
+    "browserify-fs": "^1.0.0",
     "change-case": "^3.0.2",
     "lodash": "^4.17.21",
-    "prettier": "^3.0.3",
+    "path-browserify": "^1.0.1",
     "qs": "^5.2.1",
     "url": "^0.11.0",
     "uuid": "^9.0.0"
@@ -90,6 +91,7 @@
     "lebab": "^3.2.3",
     "lint-staged": "^10",
     "openapi-types": "^12.1.0",
+    "prettier": "^3.0.3",
     "shx": "^0.3.4",
     "terser-webpack-plugin": "^5.3.7",
     "ts-jest": "29.0.3",

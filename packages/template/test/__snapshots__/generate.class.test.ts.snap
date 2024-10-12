@@ -2,220 +2,55 @@
 
 exports[`生成 Class 类测试 OpenAPI-2.0生成 Class 类测试: OpenAPI-2.0生成 Class 类测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity class
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export class V2StoreOrderRequestclassByPost {
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error';
-      }
-    ]
-  ];
-  // { boolean }
-  complete = false;
-}
-"
+export class V2StoreInventoryRequestClassByGet {}"
 `;
 
 exports[`生成 Class 类测试 OpenAPI-3.0生成 Class 类测试: OpenAPI-3.00生成 Class 类测试 1`] = `
 "/**
- * @description Place an order for a pet、Place a new order in the store
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Response data entity class
- * @url [ POST ] /api/v3/store/order
+ * @url [ GET ] /api/v3/store/inventory
  */
-export class ApiV3StoreOrderResponseclassByPost {
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { boolean }
-  complete = false;
-}
-"
+export class ApiV3StoreInventoryResponseClassByGet /* 非对象数据，不能生成Class代码**/
+{}"
 `;
 
 exports[`生成 Class 类测试 array单参数: array单参数 1`] = `
 "/**
- * @description list
+ * @description uploads an image
  * @summary Request data entity class
- * @url [ GET ] /system/user/list
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export class SystemUserListRequestclassByGet {
-  // { array } 门店id
-  storeIds = [];
-}
+export class V2PetPetIdUploadImageRequestClassByPost { 
+ // { array }
+storeIds =  [
+] 
+ } 
 "
 `;
 
-exports[`生成 Class 类测试 array单参数2: array单参数2 1`] = `
-"/**
- * @description list
- * @summary Request data entity class
- * @url [ GET ] /system/user/list
- */
-export class SystemUserListRequestclassByGet {
-  // { array }
-  storeIds = [];
-}
-"
-`;
-
-exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class dropComment属性测试 1`] = `
-"export class V2StoreOrderRequestclassByPost {
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error';
-      }
-    ]
-  ];
-  // { boolean }
-  complete = false;
-}
-"
-`;
+exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class dropComment属性测试 1`] = `"export class V2StoreInventoryRequestClassByGet {}"`;
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class name属性测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity class
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export class 自定义名称 {
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error';
-      }
-    ]
-  ];
-  // { boolean }
-  complete = false;
-}
-"
+export class 自定义名称 {}"
 `;
 
-exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class onlyBody属性测试 1`] = `
-"{
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error';
-      }
-    ]
-  ];
-  // { boolean }
-  complete = false;
-}"
-`;
+exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class onlyBody属性测试 1`] = `"{}"`;
 
 exports[`生成 Class 类测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 Class prefix属性测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity class
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export class V2StoreOrderRequestclassByPost {
-  // { string }
-  id = '';
-  // { string }
-  petId = '';
-  // { number }
-  quantity = 0;
-  // { string }
-  shipDate = '';
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status = 'placed';
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error';
-      }
-    ]
-  ];
-  // { boolean }
-  complete = false;
-}
-"
-`;
-
-exports[`生成 Class 类测试 空属性: 空属性 1`] = `
-"/**
- * @description Place an order for a pet
- * @summary Request data entity class
- * @url [ POST ] /v2/store/order
- */
-export class V2StoreOrderRequestclassByPost {
-  /* 非对象数据，不能生成Class代码**/
-}
-"
-`;
-
-exports[`生成 Class 类测试 空属性: 空数组 1`] = `
-"/**
- * @description Place an order for a pet
- * @summary Request data entity class
- * @url [ POST ] /v2/store/order
- */
-export class V2StoreOrderRequestclassByPost {}
-"
+export class V2StoreInventoryRequestClassByGet {}"
 `;

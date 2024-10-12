@@ -1,42 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`生成 interface 测试 OpenAPI-2.0-source生成 interface 测试: OpenAPI-2.0-source生成 interface 测试 1`] = `
+exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0生成 interface 测试 1`] = `
 "/**
  * @description uploads an image
  * @summary Request data types
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface 安逗和黑子 {
-  code: number;
-  type: string;
-  message: string;
-}
-"
-`;
-
-exports[`生成 interface 测试 OpenAPI-2.0生成 interface 测试: OpenAPI-2.0生成 interface 测试 1`] = `
-"/**
- * @description Place an order for a pet
- * @summary Request data types
- * @url [ POST ] /v2/store/order
- */
-export interface 安逗和黑子 {
-  id: string;
-  petId: string;
-  quantity: number;
-  shipDate: string;
-  // Order Status
-  status: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag: Array<
-    // Order Tag Child
-    Array<{
-      tagName: 'error' | 'waring' | 'info';
-    }>
-  >;
-  complete: boolean;
-}
-"
+export interface 安逗和黑仔 {
+code: number
+type: string
+message: string
+}"
 `;
 
 exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0生成 interface 测试 1`] = `
@@ -46,235 +20,94 @@ exports[`生成 interface 测试 OpenAPI-3.0生成 interface 测试: OpenAPI-3.0
  * @url [ POST ] /api/v3/store/order
  */
 export interface ApiV3StoreOrderResponseByPost {
-  id?: string;
-  petId?: string;
-  quantity?: number;
-  shipDate?: string;
-  // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
-}
-"
+id?: string
+petId?: string
+quantity?: number
+shipDate?: string
+// Order Status
+status?: 'placed' | 'approved' | 'delivered'
+complete?: boolean
+}"
 `;
 
-exports[`生成 interface 测试 array单参数: array单参数 1`] = `
-"/**
- * @description list
- * @summary Request data types
- * @url [ GET ] /system/user/list
- */
-export type SystemUserListRequestByGet = {
-  // 门店id
-  storeIds?: Array<string>;
-};
-
-/**
- * @description list
- * @summary Request data types
- * @url [ GET ] /system/user/list
- */
-export type SystemUserListRequestByGet = any;
-"
-`;
-
-exports[`生成 interface 测试 array单参数2: array单参数2 1`] = `
-"/**
- * @description list
- * @summary Request data types
- * @url [ GET ] /system/user/list
- */
-export type SystemUserListRequestByGet = {
-  storeIds: Array<any>;
-};
-
-/**
- * @description list
- * @summary Request data types
- * @url [ GET ] /system/user/list
- */
-export type SystemUserListRequestByGet = any;
-"
-`;
-
-exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `
-"export interface V2StoreOrderRequestByPost {
-  id: string;
-  petId: string;
-  quantity: number;
-  shipDate: string;
-  // Order Status
-  status: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag: Array<
-    // Order Tag Child
-    Array<{
-      tagName: 'error' | 'waring' | 'info';
-    }>
-  >;
-  complete: boolean;
-}
-"
-`;
+exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - dropComment属性测试 1`] = `"export type V2StoreInventoryRequestByGet =any;"`;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - name属性测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data types
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export interface 自定义名称 {
-  id: string;
-  petId: string;
-  quantity: number;
-  shipDate: string;
-  // Order Status
-  status: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag: Array<
-    // Order Tag Child
-    Array<{
-      tagName: 'error' | 'waring' | 'info';
-    }>
-  >;
-  complete: boolean;
-}
-"
+export type 自定义名称 =any;"
 `;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - onlyBody属性测试 1`] = `
 "{
-  // 手机号
-  phone: string;
-  // 账户名
-  username: string;
+// 手机号
+phone: string
+// 账户名
+username: string
 }"
 `;
 
 exports[`生成 interface 测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 interface - prefix属性测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data types
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-interface V2StoreOrderRequestByPost {
-  id: string;
-  petId: string;
-  quantity: number;
-  shipDate: string;
-  // Order Status
-  status: 'placed' | 'approved' | 'delivered';
-  // Order Tag
-  tag: Array<
-    // Order Tag Child
-    Array<{
-      tagName: 'error' | 'waring' | 'info';
-    }>
-  >;
-  complete: boolean;
-}
-"
+type V2StoreInventoryRequestByGet =any;"
 `;
 
-exports[`生成 interface 测试 open-api-2.0-dot.json: open-api-2.0-dot.json 1`] = `
+exports[`生成 interface 测试 open-api-3.0-dot.json: open-api-3.0-dot.json 1`] = `
 "/**
- * @description list
+ * @description 兼容非标准的dot参数形式
  * @summary Request data types
- * @url [ GET ] /system/user/list
+ * @url [ GET ] /compatible-error-specification-dot-query-param
  */
-export interface SystemUserListRequestByGet {
-  // 创建者
-  '2021-05'?: string;
-  // 门店id
-  storeIds?: Array<string>;
-  // 有分页参数的话就加,根据你的实际查询参数编写
-  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
-  // 主键id集合
-  pics: Array<string>;
-  dept?: {
-    // 创建者
-    createBy?: string;
-    ancestors?: string;
-  };
-  // ID集合
-  ids?: Array<string>;
-  roles?: Array<{
-    // 创建者
-    createBy?: string;
-    // 创建时间
-    createTime?: string;
-  }>;
+export interface CompatibleErrorSpecificationDotQueryParamRequestByGet {
+// ID集合
+ids?: 
+Array<string>
+dept?: 
+{
+// 创建者1号
+deptCreateBy1?: string
+// 创建者2号
+deptCreateBy2?: string
 }
-
+roles?: 
+Array<{
+// 角色创建者1号
+roleCreateBy1?: string
+// 角色创建时间
+roleCreateTime?: string
+}>
+// 有分页参数的话就加,根据你的实际查询参数编写
+"有分页参数的话就加,根据你的实际查询参数编写"?: string
+}
 /**
- * @description list
+ * @description 兼容非标准的dot参数形式
  * @summary Request data types
- * @url [ GET ] /system/user/list
+ * @url [ GET ] /compatible-error-specification-dot-query-param
  */
-export type SystemUserListRequestByGet = any;
-"
+export type CompatibleErrorSpecificationDotQueryParamRequestByGet =any;"
 `;
 
 exports[`生成 interface 测试 open-api-响应参数为List: open-api-响应参数为List 1`] = `
 "/**
- * @description 获取用户列表信息
+ * @description 响应数据 array
  * @summary Request data types
- * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
+ * @url [ POST ] /resp-array
  */
-export interface SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet {
-  userId: string;
-}
-
+export type RespArrayRequestByPost =any;
 /**
- * @description 获取用户列表信息
+ * @description 响应数据 array
  * @summary Request data types
- * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
+ * @url [ POST ] /resp-array
  */
-export type SystemAppPersonnelsStaffRosterWorkerHomeDetailUserIdRequestByGet =
-  // 返回值
-  Array<{
-    // 门店名称
-    storename: string;
-    // 所属组织
-    organizeid: string;
-    // 所属组织名称
-    organizename: string;
-    // 门店展示图
-    storepic: string;
-    // 负责人
-    storeheaduserid: string;
-    // 负责人
-    storeheadusername: string;
-    // 定位
-    address: string;
-    // 是否禁用
-    disabled: string;
-    // 经度
-    longitude: string;
-    // 纬度
-    latitude: string;
-    // 距离
-    distance: number;
-    // 用户id
-    users: Array<{
-      // 用户id
-      userid: string;
-      // 门店id
-      storeid: string;
-      // 用户姓名
-      username: string;
-      // 手机号
-      mobilenum: string;
-      // 岗位名称
-      position: string;
-      // 可排班标识
-      shiftsmarks: string;
-      // 账号
-      account: string;
-      // 岗位名称
-      organizeName: string;
-    }>;
-    // 主键
-    id: string;
-  }>;
-"
+export type RespArrayRequestByPost =Array<{
+// 用户名
+username: string
+}>"
 `;

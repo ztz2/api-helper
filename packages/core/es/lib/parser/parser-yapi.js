@@ -109,7 +109,7 @@ var ParserYapi = /** @class */ (function () {
         });
         this.apiList.forEach(function (apiMap) {
             var e_1, _a, e_2, _b, e_3, _c, e_4, _d;
-            var _e, _f;
+            var _e, _f, _g, _h;
             var apiContent = apiMap.content;
             // 没有详情内容，不做任何处理
             if (!apiContent) {
@@ -125,8 +125,39 @@ var ParserYapi = /** @class */ (function () {
                 path: mergeUrl(isHttp(project.basePath) ? '' : project.basePath, apiMap.path),
                 docURL: (_e = apiMap.docURL) !== null && _e !== void 0 ? _e : '',
             });
+            var headerSchema = createSchema('object');
+            (_f = apiContent === null || apiContent === void 0 ? void 0 : apiContent.req_headers) === null || _f === void 0 ? void 0 : _f.forEach(function (item) {
+                var _a;
+                if (!(item === null || item === void 0 ? void 0 : item.value)) {
+                    return;
+                }
+                switch (item.value) {
+                    // 请求数据类型
+                    case 'Content-Type': {
+                        api.requestContentType = [item.value];
+                        break;
+                    }
+                    // 其他请求头信息
+                    default: {
+                        headerSchema.params.push(createSchema('string', {
+                            keyName: item.value,
+                            title: (_a = filterDesc(item.desc)) !== null && _a !== void 0 ? _a : '',
+                            rules: {
+                                required: ['1', 1].includes(item.required),
+                            }
+                        }));
+                    }
+                }
+            });
+            if (headerSchema.params.length) {
+                api.headers = headerSchema;
+            }
+            // 响应数据类型
+            if (apiContent === null || apiContent === void 0 ? void 0 : apiContent.res_body_type) {
+                api.responseContentType = [apiContent === null || apiContent === void 0 ? void 0 : apiContent.res_body_type];
+            }
             try {
-                api.label = api.title ? api.title : api.description ? api.description : '';
+                api.label = api.title || api.description || '';
                 // API content-type，暂无特殊处理
                 // switch (apiMap.req_body_type) {
                 //   case 'form':
@@ -251,8 +282,8 @@ var ParserYapi = /** @class */ (function () {
                     case 'form': {
                         try {
                             // Form Data数据
-                            for (var _g = __values(apiContent.req_body_form), _h = _g.next(); !_h.done; _h = _g.next()) {
-                                var p = _h.value;
+                            for (var _j = __values(apiContent.req_body_form), _k = _j.next(); !_k.done; _k = _j.next()) {
+                                var p = _k.value;
                                 var keyName = filterKeyName(p.name);
                                 // 参数字段没有，跳过该字段
                                 if (!keyName || requestKeyNameMemo.includes(keyName)) {
@@ -266,7 +297,9 @@ var ParserYapi = /** @class */ (function () {
                                     type: 'string',
                                     rules: {
                                         required: Number(p.required) === 1
-                                    }
+                                    },
+                                    rawType: p.type,
+                                    format: (_g = p === null || p === void 0 ? void 0 : p.format) !== null && _g !== void 0 ? _g : '',
                                 });
                                 scm.type = transformType(p.type, p === null || p === void 0 ? void 0 : p.format, 'string');
                                 scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
@@ -278,7 +311,7 @@ var ParserYapi = /** @class */ (function () {
                         catch (e_3_1) { e_3 = { error: e_3_1 }; }
                         finally {
                             try {
-                                if (_h && !_h.done && (_c = _g.return)) _c.call(_g);
+                                if (_k && !_k.done && (_c = _j.return)) _c.call(_j);
                             }
                             finally { if (e_3) throw e_3.error; }
                         }
@@ -328,7 +361,7 @@ var ParserYapi = /** @class */ (function () {
                             api.responseDataSchema = parserSchema(responsesSchemaSource, undefined, undefined, undefined, {
                                 autoGenerateId: _this.autoGenerateId
                             });
-                            if (((_f = api.responseDataSchema) === null || _f === void 0 ? void 0 : _f.type) === 'object') {
+                            if (((_h = api.responseDataSchema) === null || _h === void 0 ? void 0 : _h.type) === 'object') {
                                 api.responseDataSchema.keyName = '';
                             }
                         }

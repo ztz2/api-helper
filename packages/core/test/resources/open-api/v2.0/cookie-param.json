@@ -1,0 +1,58 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/cookies": {
+      "get": {
+        "summary": "Cookies",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "buid",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "x-example": ""
+          },
+          {
+            "name": "token",
+            "in": "cookie",
+            "description": "",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-example": "",
+            "collectionFormat": "multi"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {},
+  "securityDefinitions": {},
+  "x-components": {}
+}

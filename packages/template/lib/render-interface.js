@@ -32,6 +32,8 @@ var util_2 = require("../lib/utils/util");
 var art_template_1 = __importDefault(require("../lib/art-template"));
 var render_object_1 = require("../lib/render-object");
 function renderInterface(schema, api, options) {
+    var _a;
+    if (options === void 0) { options = {}; }
     options = (0, merge_1.default)({
         onlyBody: false,
         prefix: 'export ',
@@ -41,7 +43,7 @@ function renderInterface(schema, api, options) {
     schema = (0, cloneDeep_1.default)(schema);
     schema = (0, render_object_1.precessArraySchema)(schema);
     var sourceSchema = schema;
-    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
+    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _b = options.paramType, paramType = _b === void 0 ? 'request' : _b;
     if (Array.isArray(schema)) {
         schema = (0, helpers_1.createSchema)('object', {
             id: (0, util_1.randomChar)(),
@@ -50,7 +52,7 @@ function renderInterface(schema, api, options) {
     }
     var isInterface = (0, util_2.checkIsInterface)(schema);
     var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
-    var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
+    var onRenderInterfaceName = (_a = options.onRenderInterfaceName) !== null && _a !== void 0 ? _a : renderInterfaceName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
     var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(api, {
         schema: schema,

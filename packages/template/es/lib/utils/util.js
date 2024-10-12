@@ -10,7 +10,6 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import { filterSchemaPrimitiveValue } from '@api-helper/core/lib/utils/util';
-import formatCode from '../../lib/utils/prettier';
 export function postCode(_a, _b) {
     var _c = _a.code, code = _c === void 0 ? '' : _c, _d = _a.ki, ki = _d === void 0 ? '' : _d, _e = _a.commentCode, commentCode = _e === void 0 ? '' : _e;
     var _f = _b.onlyBody, onlyBody = _f === void 0 ? false : _f;
@@ -18,10 +17,11 @@ export function postCode(_a, _b) {
     ki = ki.replace(/\s(\s+)/gim, ' ');
     // 移除双换行符。
     code = code.replace(/\n\n/gim, '\n');
+    code = ki + code;
     // 格式化代码
-    code = formatCode(ki + code, {
-        parser: 'typescript'
-    });
+    // code = formatCode(code, {
+    //   parser: 'typescript'
+    // });
     // 如果只输出body部分，移除 export xxx 部分
     if (onlyBody) {
         var currentKi = ki.trim();

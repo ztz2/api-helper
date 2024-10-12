@@ -2,372 +2,129 @@
 
 exports[`生成 javascript 对象测试 OpenAPI-2.0生成List对象: OpenAPI-2.0生成List对象 1`] = `
 "/**
- * @description 获取用户列表信息
+ * @description 响应数据 array
  * @summary Response data entity object
- * @url [ GET ] /system/app/personnels-staff-roster/worker-home-detail/{userId}
+ * @url [ POST ] /resp-array
  */
-export const systemAppPersonnelsStaffRosterWorkerHomeDetailUserIdResponseentityByGet =
-  [
-    {
-      // { string } 门店名称
-      storename: '',
-      // { string } 所属组织
-      organizeid: '',
-      // { string } 所属组织名称
-      organizename: '',
-      // { string } 门店展示图
-      storepic: '',
-      // { string } 负责人
-      storeheaduserid: '',
-      // { string } 负责人
-      storeheadusername: '',
-      // { string } 定位
-      address: '',
-      // { string } 是否禁用
-      disabled: '',
-      // { string } 经度
-      longitude: '',
-      // { string } 纬度
-      latitude: '',
-      // { number } 距离
-      distance: 0,
-      // { array } 用户id
-      users: [
-        {
-          // { string } 用户id
-          userid: '',
-          // { string } 门店id
-          storeid: '',
-          // { string } 用户姓名
-          username: '',
-          // { string } 手机号
-          mobilenum: '',
-          // { string } 岗位名称
-          position: '',
-          // { string } 可排班标识
-          shiftsmarks: '',
-          // { string } 账号
-          account: '',
-          // { string } 岗位名称
-          organizeName: ''
-        }
-      ],
-      // { string } 主键
-      id: ''
-    }
-  ];
-"
+export const respArrayResponseentityByPost = [
+{
+// { string } 用户名
+username: ''
+}
+]"
 `;
 
-exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2.0生成 interface 测试 1`] = `
-"{
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error'
-      }
-    ]
-  ],
-  // { boolean }
-  complete: false
-}"
-`;
+exports[`生成 javascript 对象测试 OpenAPI-2.0生成对象测试: OpenAPI-2.0生成 interface 测试 1`] = `"{}"`;
 
 exports[`生成 javascript 对象测试 OpenAPI-3.0生成对象测试: OpenAPI-3.00生成对象测试 1`] = `
 "/**
- * @description Place an order for a pet、Place a new order in the store
+ * @description Place an order for a pet
  * @summary Response data entity object
- * @url [ POST ] /api/v3/store/order
+ * @url [ POST ] /v2/store/order
  */
-export const apiV3StoreOrderResponseentityByPost = {
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { boolean }
-  complete: false
-};
-"
-`;
-
-exports[`生成 javascript 对象测试 array单参数: array单参数 1`] = `
-"/**
- * @description list
- * @summary Request data entity object
- * @url [ GET ] /system/user/list
- */
-export const systemUserListRequestentityByGet = {
-  // { array } 门店id
-  storeIds: []
-};
-"
-`;
-
-exports[`生成 javascript 对象测试 array单参数2: array单参数2 1`] = `
-"/**
- * @description list
- * @summary Request data entity object
- * @url [ GET ] /system/user/list
- */
-export const systemUserListRequestentityByGet = {
-  // { array }
-  storeIds: []
-};
-"
+export const v2StoreOrderResponseentityByPost = {
+// { string }
+id: '',
+// { string }
+petId: '',
+// { number }
+quantity: 0,
+// { string }
+shipDate: '',
+// { 'placed' | 'approved' | 'delivered' } Order Status
+status: 'placed',
+// { boolean }
+complete: false
+}"
 `;
 
 exports[`生成 javascript 对象测试 formatter: formatter 1`] = `
 "[
-    {
-      // { string } 门店名称
-      storename: '字符串',
-      // { string } 所属组织
-      organizeid: '字符串',
-      // { string } 所属组织名称
-      organizename: '字符串',
-      // { string } 门店展示图
-      storepic: '字符串',
-      // { string } 负责人
-      storeheaduserid: '字符串',
-      // { string } 负责人
-      storeheadusername: '字符串',
-      // { string } 定位
-      address: '字符串',
-      // { string } 是否禁用
-      disabled: '字符串',
-      // { string } 经度
-      longitude: '字符串',
-      // { string } 纬度
-      latitude: '字符串',
-      // { number } 距离
-      distance: 0,
-      // { array } 用户id
-      users: [
-        {
-          // { string } 用户id
-          userid: '字符串',
-          // { string } 门店id
-          storeid: '字符串',
-          // { string } 用户姓名
-          username: '字符串',
-          // { string } 手机号
-          mobilenum: '字符串',
-          // { string } 岗位名称
-          position: '字符串',
-          // { string } 可排班标识
-          shiftsmarks: '字符串',
-          // { string } 账号
-          account: '字符串',
-          // { string } 岗位名称
-          organizeName: '字符串'
-        }
-      ],
-      // { string } 主键
-      id: '字符串'
-    }
-  ]"
+{
+// { string } 用户名
+username: "字符串"
+}
+]"
 `;
 
 exports[`生成 javascript 对象测试 formatter-null: formatter-null 1`] = `"null"`;
 
-exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 dropComment测试 1`] = `
-"export const v2StoreOrderRequestentityByPost = {
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error'
-      }
-    ]
-  ],
-  // { boolean }
-  complete: false
-};
-"
-`;
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 dropComment测试 1`] = `"export const v2StoreInventoryRequestentityByGet = {}"`;
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 name测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity object
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export const 自定义名称 = {
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error'
-      }
-    ]
-  ],
-  // { boolean }
-  complete: false
-};
-"
+export const 自定义名称 = {}"
 `;
 
-exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 onlyBody测试 1`] = `
-"{
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error'
-      }
-    ]
-  ],
-  // { boolean }
-  complete: false
-}"
-`;
+exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 onlyBody测试 1`] = `"{}"`;
 
 exports[`生成 javascript 对象测试 name - prefix - dropComment - onlyBody 属性测试: OpenAPI-2.0生成 对象 prefix测试 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity object
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export const v2StoreOrderRequestentityByPost = {
-  // { string }
-  id: '',
-  // { string }
-  petId: '',
-  // { number }
-  quantity: 0,
-  // { string }
-  shipDate: '',
-  // { 'placed' | 'approved' | 'delivered' } Order Status
-  status: 'placed',
-  // { array } Order Tag
-  tag: [
-    [
-      {
-        // { 'error' | 'waring' | 'info' }
-        tagName: 'error'
-      }
-    ]
-  ],
-  // { boolean }
-  complete: false
-};
-"
+export const v2StoreInventoryRequestentityByGet = {}"
 `;
 
-exports[`生成 javascript 对象测试 open-api-2.0-dot: OpenAPI-2.0生成 对象 null 属性 1`] = `
+exports[`生成 javascript 对象测试 open-api-3.0-dot: OpenAPI-2.0生成 对象 null 属性 1`] = `
 "/**
- * @description list
+ * @description 兼容非标准的dot参数形式
  * @summary Request data entity object
- * @url [ GET ] /system/user/list
+ * @url [ GET ] /compatible-error-specification-dot-query-param
  */
-export const systemUserListRequestentityByGet = {
-  // { string } 创建者
-  '2021-05': '',
-  // { array } 门店id
-  storeIds: [],
-  // { string } 有分页参数的话就加,根据你的实际查询参数编写
-  '有分页参数的话就加,根据你的实际查询参数编写': '',
-  // { array } 主键id集合
-  pics: [],
-  // { object }
-  dept: {
-    // { string } 创建者
-    createBy: '',
-    // { string }
-    ancestors: ''
-  },
-  // { array } ID集合
-  ids: [],
-  // { array }
-  roles: [
-    {
-      // { string } 创建者
-      createBy: '',
-      // { string } 创建时间
-      createTime: ''
-    }
-  ]
-};
-"
+export const compatibleErrorSpecificationDotQueryParamRequestentityByGet = {
+// { array } ID集合
+ids: [
+],
+// { object }
+dept: {
+// { string } 创建者1号
+deptCreateBy1: '',
+// { string } 创建者2号
+deptCreateBy2: ''
+},
+// { array }
+roles: [
+{
+// { string } 角色创建者1号
+roleCreateBy1: '',
+// { string } 角色创建时间
+roleCreateTime: ''
+}
+],
+// { string } 有分页参数的话就加,根据你的实际查询参数编写
+"有分页参数的话就加,根据你的实际查询参数编写": ''
+}"
 `;
 
-exports[`生成 javascript 对象测试 open-api-2.0-dot: open-api-2.0-dot 1`] = `
+exports[`生成 javascript 对象测试 open-api-3.0-dot: open-api-3.0-dot 1`] = `
 "/**
- * @description list
+ * @description 兼容非标准的dot参数形式
  * @summary Request data entity object
- * @url [ GET ] /system/user/list
+ * @url [ GET ] /compatible-error-specification-dot-query-param
  */
-export const systemUserListRequestentityByGet = {};
-"
+export const compatibleErrorSpecificationDotQueryParamRequestentityByGet = {}"
 `;
 
 exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 null 属性 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity object
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export const v2StoreOrderRequestentityByPost = {};
-"
+export const v2StoreInventoryRequestentityByGet = {}"
 `;
 
 exports[`生成 javascript 对象测试 空属性: OpenAPI-2.0生成 对象 空数组 1`] = `
 "/**
- * @description Place an order for a pet
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data entity object
- * @url [ POST ] /v2/store/order
+ * @url [ GET ] /v2/store/inventory
  */
-export const v2StoreOrderRequestentityByPost = {};
-"
+export const v2StoreInventoryRequestentityByGet = {}"
 `;

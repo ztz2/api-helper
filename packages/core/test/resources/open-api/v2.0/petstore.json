@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "title": "Swagger Petstore",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
@@ -60,7 +60,7 @@
           {
             "name": "petId",
             "in": "path",
-            "description": "ID of pet \r\r\n\n /** 换行符测试 **/ to update",
+            "description": "ID of pet to update",
             "required": true,
             "type": "integer",
             "format": "int64"
@@ -430,6 +430,37 @@
         ]
       }
     },
+    "/store/inventory": {
+      "get": {
+        "tags": [
+          "store"
+        ],
+        "summary": "Returns pet inventories by status",
+        "description": "Returns a map of status codes to quantities",
+        "operationId": "getInventory",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
     "/store/order": {
       "post": {
         "tags": [
@@ -540,99 +571,6 @@
         }
       }
     },
-    "/store/inventory": {
-      "get": {
-        "tags": [
-          "store"
-        ],
-        "summary": "Returns pet inventories by status",
-        "description": "Returns a map of status codes to quantities",
-        "operationId": "getInventory",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "integer",
-                "format": "int32"
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      }
-    },
-    "/user/createWithArray": {
-      "post": {
-        "tags": [
-          "user"
-        ],
-        "summary": "Creates list of users with given input array",
-        "description": "",
-        "operationId": "createUsersWithArrayInput",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json",
-          "application/xml"
-        ],
-        "parameters": [
-          {
-            "in": "query",
-            "name": "userName",
-            "description": "List of user object",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "description": "The name that needs to be fetched. Use user1 for testing. ",
-            "required": true,
-            "type": "number"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "List of user object",
-            "required": true,
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          }
-        ],
-        "responses": {
-          "default": {
-            "description": "successful operation"
-          }
-        }
-      }
-    },
     "/user/createWithList": {
       "post": {
         "tags": [
@@ -683,7 +621,7 @@
         ],
         "parameters": [
           {
-            "name": "username1",
+            "name": "username",
             "in": "path",
             "description": "The name that needs to be fetched. Use user1 for testing. ",
             "required": true,
@@ -759,7 +697,7 @@
         ],
         "parameters": [
           {
-            "name": "username1",
+            "name": "username",
             "in": "path",
             "description": "The name that needs to be deleted",
             "required": true,
@@ -842,6 +780,42 @@
           "application/xml"
         ],
         "parameters": [],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/user/createWithArray": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Creates list of users with given input array",
+        "description": "",
+        "operationId": "createUsersWithArrayInput",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "List of user object",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": "successful operation"
@@ -1028,23 +1002,6 @@
             "approved",
             "delivered"
           ]
-        },
-        "tag": {
-          "type": "array",
-          "description": "Order Tag",
-          "items": {
-            "type": "array",
-            "description": "Order Tag Child",
-            "items": {
-              "type": "object",
-              "properties": {
-                "tagName": {
-                  "type": "string",
-                  "enum": ["error", "waring", "info"]
-                }
-              }
-            }
-          }
         },
         "complete": {
           "type": "boolean"

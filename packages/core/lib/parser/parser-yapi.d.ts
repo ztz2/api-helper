@@ -88,6 +88,8 @@ declare type ParserYapiParams = {
                 name: string;
                 value: string;
                 required: number | string;
+                example: string;
+                desc: string;
             }>;
             'req_params': Array<{
                 name: string;

@@ -4,6 +4,10 @@ import { renderInterfaceName } from '../lib/render-interface';
 export declare function renderRequestFunction(api: APIHelper.API, options?: {
     codeType?: 'typescript' | 'javascript';
     dataKey?: string | undefined;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
 }): string;

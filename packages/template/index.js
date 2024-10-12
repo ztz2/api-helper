@@ -22,15 +22,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderTemplate = exports.renderClass = exports.renderAllApi = exports.formatCodeServer = exports.formatCode = exports.changeCase = exports.artTemplate = exports.utils = void 0;
+exports.renderRequestFunctionName = exports.renderRequestFunction = exports.renderObjectName = exports.renderComment = exports.renderObject = exports.renderInterfaceName = exports.renderInterface = exports.renderClassName = exports.renderTemplate = exports.renderClass = exports.renderAllApi = exports.formatCodeServer = exports.changeCase = exports.artTemplate = exports.utils = void 0;
 var changeCase = __importStar(require("change-case"));
 exports.changeCase = changeCase;
 var utils = __importStar(require("./lib/utils/util"));
 exports.utils = utils;
 var art_template_1 = __importDefault(require("./lib/art-template"));
 exports.artTemplate = art_template_1.default;
-var prettier_1 = __importDefault(require("./lib/utils/prettier"));
-exports.formatCode = prettier_1.default;
 var format_code_server_1 = __importDefault(require("./lib/utils/format-code-server"));
 exports.formatCodeServer = format_code_server_1.default;
 var render_template_1 = __importDefault(require("./lib/render-template"));

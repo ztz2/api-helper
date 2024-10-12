@@ -10,8 +10,6 @@ export declare namespace APIHelper {
   type OpenAPIDocument = OpenAPI.Document & {
     documentServerUrl?: string;
   }
-  type OpenAPIDocumentList = Array<OpenAPIDocument>;
-  type TemplateContentList = Array<TemplateContent>;
   type CategoryList = Array<Category>;
   type APIList = Array<API>;
   type SchemaList = Array<Schema>;
@@ -87,6 +85,14 @@ export declare namespace APIHelper {
     requestExtraDataSchema: Schema | null;
     // 响应数据
     responseDataSchema: Schema | null;
+    // 请求：content-type
+    requestContentType: string[];
+    // 响应：content-type
+    responseContentType: string[];
+    // 请求头
+    headers: Schema | null;
+    // cookie
+    cookies: Schema | null;
   }
 
   // Schema

@@ -1,0 +1,49 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/resp-array": {
+      "post": {
+        "summary": "响应数据 array",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {},
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "title": "用户名"
+                  }
+                },
+                "required": [
+                  "username"
+                ]
+              },
+              "description": ""
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {},
+  "securityDefinitions": {},
+  "x-components": {}
+}

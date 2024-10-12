@@ -8,8 +8,6 @@ export declare namespace APIHelper {
     type OpenAPIDocument = OpenAPI.Document & {
         documentServerUrl?: string;
     };
-    type OpenAPIDocumentList = Array<OpenAPIDocument>;
-    type TemplateContentList = Array<TemplateContent>;
     type CategoryList = Array<Category>;
     type APIList = Array<API>;
     type SchemaList = Array<Schema>;
@@ -44,6 +42,10 @@ export declare namespace APIHelper {
         requestDataSchema: Schema | null;
         requestExtraDataSchema: Schema | null;
         responseDataSchema: Schema | null;
+        requestContentType: string[];
+        responseContentType: string[];
+        headers: Schema | null;
+        cookies: Schema | null;
     }
     type Schema = IStringSchema | INumberSchema | IObjectSchema | IArraySchema | IBooleanSchema | IFileSchema | INullSchema | IAnySchema | IUnknownSchema;
     interface IAbstractSchema {

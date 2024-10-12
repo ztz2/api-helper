@@ -1,9 +1,9 @@
 /* eslint-disable */
 /* prettier-ignore-start */
 
-/* 代码生成时间:  */
+/* 代码生成时间： */
 /* 提示：该文件由 API Helper CLI 自动生成，请勿直接修改。 */
-/* 文档参考：https://github.com/ztz2/api-helper/blob/main/packages/cli/README.md */
+/* 文档参考：https://github.com/ztz2/api-helper */
 
 // prettier-ignore
 import { processRequestFunctionConfig } from '@api-helper/cli/lib/helpers';
@@ -104,7 +104,7 @@ export function v2PetPetIdByPost(data, extraData, ...args) {
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
-  formDataKeyNameList: ['name', 'status'],
+  formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
 };

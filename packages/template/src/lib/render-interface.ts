@@ -17,7 +17,7 @@ import { precessArraySchema } from '@/lib/render-object';
 export function renderInterface(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
-  options?: {
+  options: {
     // 请求数据还是响应数据
     paramType?: 'request' | 'response';
     // 前缀
@@ -34,7 +34,7 @@ export function renderInterface(
     isExtraData?: boolean;
     // 当数据为空的body代码
     emptyBodyCode?: string;
-  }) {
+  } = {}) {
   options = merge({
     onlyBody: false,
     prefix: 'export ',
@@ -65,7 +65,7 @@ export function renderInterface(
 
   const isInterface = checkIsInterface(schema);
   const keyword = isInterface ? `${prefix} interface` : `${prefix}type`;
-  const onRenderInterfaceName = options?.onRenderInterfaceName ? options.onRenderInterfaceName : renderInterfaceName;
+  const onRenderInterfaceName = options.onRenderInterfaceName ?? renderInterfaceName;
   let commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
   let interfaceName = options?.name ? options.name : onRenderInterfaceName(api, {
     schema,

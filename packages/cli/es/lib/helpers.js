@@ -88,16 +88,20 @@ var FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval("re
 var isMiniProgramEnv = checkMiniProgramEnv();
 export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var e_1, _a;
-    var _b, _c;
+    var _b, _c, _d;
     var requestFunctionConfig = {
         path: requestConfig.path,
-        sourcePath: requestConfig.path,
+        rawPath: requestConfig.path,
         method: requestConfig.method,
         data: undefined,
-        rowData: data,
-        rowExtraData: extraData,
+        rawData: data,
+        rawExtraData: extraData,
         hasFormData: false,
     };
+    if (data == null || typeof data !== 'object') {
+        requestFunctionConfig.data = data;
+        return requestFunctionConfig;
+    }
     var queryParams = {};
     var cloneData = (checkType(data, 'Object') ? __assign({}, data) : {});
     var formData;
@@ -132,7 +136,7 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || requestConfig.formDataKeyNameList.includes(k))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_c = requestConfig.formDataKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             var val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -147,22 +151,22 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             return "continue";
         }
         // URL 参数处理
-        if ((_c = requestConfig.queryStringKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
+        if ((_d = requestConfig.queryStringKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
     };
     try {
         // 数据处理
-        for (var _d = __values(Object.entries(cloneData)), _e = _d.next(); !_e.done; _e = _d.next()) {
-            var _f = __read(_e.value, 2), k = _f[0], v = _f[1];
+        for (var _e = __values(Object.entries(cloneData)), _f = _e.next(); !_f.done; _f = _e.next()) {
+            var _g = __read(_f.value, 2), k = _g[0], v = _g[1];
             _loop_1(k, v);
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_e && !_e.done && (_a = _d.return)) _a.call(_d);
+            if (_f && !_f.done && (_a = _e.return)) _a.call(_e);
         }
         finally { if (e_1) throw e_1.error; }
     }
@@ -174,9 +178,10 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     // 合并Data
     if (requestFunctionConfig.hasFormData) {
         requestFunctionConfig.data = formData;
+        // @ts-ignore
     }
-    else if (extraData) {
-        requestFunctionConfig.data = extraData;
+    else if (data instanceof FormDataPolyfill) {
+        requestFunctionConfig.data = data;
     }
     else {
         requestFunctionConfig.data = cloneData;

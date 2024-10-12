@@ -3,6 +3,10 @@ import { renderRequestFunctionName } from '../lib/render-request-function';
 import { renderInterfaceName } from '../lib/render-interface';
 export declare function renderRequestFunctionDeclare(api: APIHelper.API, options?: {
     dataKey?: string | undefined;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
 }): string;

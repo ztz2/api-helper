@@ -1,41 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解析转换测试 1`] = `
-Array [
-  Object {
+[
+  {
     "basePath": "/v2",
-    "categoryList": Array [
-      Object {
-        "apiList": Array [
-          Object {
+    "categoryList": [
+      {
+        "apiList": [
+          {
+            "cookies": null,
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": Array [],
+            "formDataKeyNameList": [],
+            "headers": null,
             "id": "",
             "label": "Finds Pets by status",
             "method": "get",
             "path": "/v2/pet/findByStatus",
-            "pathParamKeyNameList": Array [],
-            "queryStringKeyNameList": Array [
+            "pathParamKeyNameList": [],
+            "queryStringKeyNameList": [
               "status",
             ],
+            "requestContentType": [],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": Array [],
-              "examples": Array [],
+              "enum": [],
+              "examples": [],
+              "format": "",
               "id": "",
               "keyName": "",
               "label": "",
-              "params": Array [
+              "params": [
                 StringSchema {
                   "description": "Status values that need to be considered for filter",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "status",
                   "label": "Status values that need to be considered for filter",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -45,38 +51,46 @@ Array [
                   "type": "string",
                 },
               ],
-              "rules": Object {
+              "rawType": "object",
+              "rules": {
                 "required": false,
               },
               "title": "",
               "type": "object",
             },
             "requestExtraDataSchema": null,
+            "responseContentType": [
+              "json",
+            ],
             "responseDataSchema": ArraySchema {
               "description": "",
-              "enum": Array [],
-              "examples": Array [],
+              "enum": [],
+              "examples": [],
+              "format": "",
               "id": "",
               "keyName": "",
               "label": "",
-              "params": Array [
+              "params": [
                 ObjectSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "",
                   "label": "",
-                  "params": Array [
+                  "params": [
                     StringSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "int64",
                       "id": "",
                       "keyName": "id",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "integer",
+                      "rules": {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "pattern": undefined,
@@ -87,21 +101,24 @@ Array [
                     },
                     ObjectSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "category",
                       "label": "",
-                      "params": Array [
+                      "params": [
                         StringSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "int64",
                           "id": "",
                           "keyName": "id",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rawType": "integer",
+                          "rules": {
                             "maxLength": undefined,
                             "minLength": undefined,
                             "pattern": undefined,
@@ -112,20 +129,26 @@ Array [
                         },
                         StringSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "",
                           "id": "",
                           "keyName": "name",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rawType": "string",
+                          "rules": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
                             "required": true,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": Object {
+                      "rawType": "object",
+                      "rules": {
                         "required": true,
                       },
                       "title": "",
@@ -133,13 +156,18 @@ Array [
                     },
                     StringSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "name",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "string",
+                      "rules": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
                         "required": true,
                       },
                       "title": "",
@@ -147,28 +175,35 @@ Array [
                     },
                     ArraySchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "photoUrls",
                       "label": "",
-                      "params": Array [
+                      "params": [
                         StringSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "",
                           "id": "",
                           "keyName": "",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rawType": "string",
+                          "rules": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
                             "required": true,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": Object {
+                      "rawType": "array",
+                      "rules": {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "required": true,
@@ -179,29 +214,33 @@ Array [
                     },
                     ArraySchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "tags",
                       "label": "",
-                      "params": Array [
+                      "params": [
                         ObjectSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "",
                           "id": "",
                           "keyName": "",
                           "label": "",
-                          "params": Array [
+                          "params": [
                             StringSchema {
                               "description": "",
-                              "enum": Array [],
-                              "examples": Array [],
+                              "enum": [],
+                              "examples": [],
+                              "format": "int64",
                               "id": "",
                               "keyName": "id",
                               "label": "",
-                              "params": Array [],
-                              "rules": Object {
+                              "params": [],
+                              "rawType": "integer",
+                              "rules": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
                                 "pattern": undefined,
@@ -212,27 +251,34 @@ Array [
                             },
                             StringSchema {
                               "description": "",
-                              "enum": Array [],
-                              "examples": Array [],
+                              "enum": [],
+                              "examples": [],
+                              "format": "",
                               "id": "",
                               "keyName": "name",
                               "label": "",
-                              "params": Array [],
-                              "rules": Object {
+                              "params": [],
+                              "rawType": "string",
+                              "rules": {
+                                "maxLength": undefined,
+                                "minLength": undefined,
+                                "pattern": undefined,
                                 "required": true,
                               },
                               "title": "",
                               "type": "string",
                             },
                           ],
-                          "rules": Object {
+                          "rawType": "object",
+                          "rules": {
                             "required": true,
                           },
                           "title": "",
                           "type": "object",
                         },
                       ],
-                      "rules": Object {
+                      "rawType": "array",
+                      "rules": {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "required": true,
@@ -243,31 +289,38 @@ Array [
                     },
                     StringSchema {
                       "description": "pet status in the store",
-                      "enum": Array [
+                      "enum": [
                         "available",
                         "pending",
                         "sold",
                       ],
-                      "examples": Array [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "status",
                       "label": "pet status in the store",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "string",
+                      "rules": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
                         "required": true,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": Object {
+                  "rawType": "object",
+                  "rules": {
                     "required": true,
                   },
                   "title": "",
                   "type": "object",
                 },
               ],
-              "rules": Object {
+              "rawType": "array",
+              "rules": {
                 "maxLength": undefined,
                 "minLength": undefined,
                 "required": true,
@@ -278,38 +331,79 @@ Array [
             },
             "title": "Finds Pets by status",
           },
-          Object {
+          {
+            "cookies": null,
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": Array [
+            "formDataKeyNameList": [
               "additionalMetadata",
               "file",
             ],
+            "headers": ObjectSchema {
+              "description": "",
+              "enum": [],
+              "examples": [],
+              "format": "",
+              "id": "",
+              "keyName": "",
+              "label": "",
+              "params": [
+                StringSchema {
+                  "description": "",
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
+                  "id": "",
+                  "keyName": "multipart/form-data",
+                  "label": "",
+                  "params": [],
+                  "rawType": "",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                    "required": true,
+                  },
+                  "title": "",
+                  "type": "string",
+                },
+              ],
+              "rawType": "object",
+              "rules": {
+                "required": false,
+              },
+              "title": "",
+              "type": "object",
+            },
             "id": "",
             "label": "uploads an image",
             "method": "post",
             "path": "/v2/pet/{petId}/uploadImage",
-            "pathParamKeyNameList": Array [
+            "pathParamKeyNameList": [
               "petId",
             ],
-            "queryStringKeyNameList": Array [],
+            "queryStringKeyNameList": [],
+            "requestContentType": [],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": Array [],
-              "examples": Array [],
+              "enum": [],
+              "examples": [],
+              "format": "",
               "id": "",
               "keyName": "",
               "label": "",
-              "params": Array [
+              "params": [
                 StringSchema {
                   "description": "ID of pet to update",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "petId",
                   "label": "ID of pet to update",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -320,13 +414,15 @@ Array [
                 },
                 StringSchema {
                   "description": "Additional data to pass to server",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "additionalMetadata",
                   "label": "Additional data to pass to server",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "text",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -337,13 +433,15 @@ Array [
                 },
                 StringSchema {
                   "description": "file to upload",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "file",
                   "label": "file to upload",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "file",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -353,30 +451,37 @@ Array [
                   "type": "File",
                 },
               ],
-              "rules": Object {
+              "rawType": "object",
+              "rules": {
                 "required": false,
               },
               "title": "",
               "type": "object",
             },
             "requestExtraDataSchema": null,
+            "responseContentType": [
+              "json",
+            ],
             "responseDataSchema": ObjectSchema {
               "description": "",
-              "enum": Array [],
-              "examples": Array [],
+              "enum": [],
+              "examples": [],
+              "format": "",
               "id": "",
               "keyName": "",
               "label": "",
-              "params": Array [
+              "params": [
                 NumberSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "int32",
                   "id": "",
                   "keyName": "code",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "integer",
+                  "rules": {
                     "exclusiveMaximum": undefined,
                     "exclusiveMinimum": undefined,
                     "maximum": undefined,
@@ -389,13 +494,18 @@ Array [
                 },
                 StringSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "type",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "string",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
                     "required": true,
                   },
                   "title": "",
@@ -403,20 +513,26 @@ Array [
                 },
                 StringSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "message",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "string",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
                     "required": true,
                   },
                   "title": "",
                   "type": "string",
                 },
               ],
-              "rules": Object {
+              "rawType": "object",
+              "rules": {
                 "required": true,
               },
               "title": "",
@@ -424,33 +540,74 @@ Array [
             },
             "title": "uploads an image",
           },
-          Object {
+          {
+            "cookies": null,
             "description": "",
             "docURL": "",
-            "formDataKeyNameList": Array [],
+            "formDataKeyNameList": [],
+            "headers": ObjectSchema {
+              "description": "",
+              "enum": [],
+              "examples": [],
+              "format": "",
+              "id": "",
+              "keyName": "",
+              "label": "",
+              "params": [
+                StringSchema {
+                  "description": "",
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
+                  "id": "",
+                  "keyName": "application/json",
+                  "label": "",
+                  "params": [],
+                  "rawType": "",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
+                    "required": true,
+                  },
+                  "title": "",
+                  "type": "string",
+                },
+              ],
+              "rawType": "object",
+              "rules": {
+                "required": false,
+              },
+              "title": "",
+              "type": "object",
+            },
             "id": "",
             "label": "Add a new pet to the store",
             "method": "post",
             "path": "/v2/pet",
-            "pathParamKeyNameList": Array [],
-            "queryStringKeyNameList": Array [],
+            "pathParamKeyNameList": [],
+            "queryStringKeyNameList": [],
+            "requestContentType": [],
             "requestDataSchema": ObjectSchema {
               "description": "",
-              "enum": Array [],
-              "examples": Array [],
+              "enum": [],
+              "examples": [],
+              "format": "",
               "id": "",
               "keyName": "",
               "label": "",
-              "params": Array [
+              "params": [
                 StringSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "int64",
                   "id": "",
                   "keyName": "id",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "integer",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "pattern": undefined,
@@ -461,21 +618,24 @@ Array [
                 },
                 ObjectSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "category",
                   "label": "",
-                  "params": Array [
+                  "params": [
                     StringSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "int64",
                       "id": "",
                       "keyName": "id",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "integer",
+                      "rules": {
                         "maxLength": undefined,
                         "minLength": undefined,
                         "pattern": undefined,
@@ -486,20 +646,26 @@ Array [
                     },
                     StringSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "name",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "string",
+                      "rules": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": Object {
+                  "rawType": "object",
+                  "rules": {
                     "required": false,
                   },
                   "title": "",
@@ -507,13 +673,18 @@ Array [
                 },
                 StringSchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "name",
                   "label": "",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "string",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
                     "required": true,
                   },
                   "title": "",
@@ -521,28 +692,35 @@ Array [
                 },
                 ArraySchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "photoUrls",
                   "label": "",
-                  "params": Array [
+                  "params": [
                     StringSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": Array [],
-                      "rules": Object {
+                      "params": [],
+                      "rawType": "string",
+                      "rules": {
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "pattern": undefined,
                         "required": false,
                       },
                       "title": "",
                       "type": "string",
                     },
                   ],
-                  "rules": Object {
+                  "rawType": "array",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "required": true,
@@ -553,29 +731,33 @@ Array [
                 },
                 ArraySchema {
                   "description": "",
-                  "enum": Array [],
-                  "examples": Array [],
+                  "enum": [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "tags",
                   "label": "",
-                  "params": Array [
+                  "params": [
                     ObjectSchema {
                       "description": "",
-                      "enum": Array [],
-                      "examples": Array [],
+                      "enum": [],
+                      "examples": [],
+                      "format": "",
                       "id": "",
                       "keyName": "",
                       "label": "",
-                      "params": Array [
+                      "params": [
                         StringSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "int64",
                           "id": "",
                           "keyName": "id",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rawType": "integer",
+                          "rules": {
                             "maxLength": undefined,
                             "minLength": undefined,
                             "pattern": undefined,
@@ -586,27 +768,34 @@ Array [
                         },
                         StringSchema {
                           "description": "",
-                          "enum": Array [],
-                          "examples": Array [],
+                          "enum": [],
+                          "examples": [],
+                          "format": "",
                           "id": "",
                           "keyName": "name",
                           "label": "",
-                          "params": Array [],
-                          "rules": Object {
+                          "params": [],
+                          "rawType": "string",
+                          "rules": {
+                            "maxLength": undefined,
+                            "minLength": undefined,
+                            "pattern": undefined,
                             "required": false,
                           },
                           "title": "",
                           "type": "string",
                         },
                       ],
-                      "rules": Object {
+                      "rawType": "object",
+                      "rules": {
                         "required": false,
                       },
                       "title": "",
                       "type": "object",
                     },
                   ],
-                  "rules": Object {
+                  "rawType": "array",
+                  "rules": {
                     "maxLength": undefined,
                     "minLength": undefined,
                     "required": false,
@@ -617,30 +806,39 @@ Array [
                 },
                 StringSchema {
                   "description": "pet status in the store",
-                  "enum": Array [
+                  "enum": [
                     "available",
                     "pending",
                     "sold",
                   ],
-                  "examples": Array [],
+                  "examples": [],
+                  "format": "",
                   "id": "",
                   "keyName": "status",
                   "label": "pet status in the store",
-                  "params": Array [],
-                  "rules": Object {
+                  "params": [],
+                  "rawType": "string",
+                  "rules": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "pattern": undefined,
                     "required": false,
                   },
                   "title": "",
                   "type": "string",
                 },
               ],
-              "rules": Object {
+              "rawType": "object",
+              "rules": {
                 "required": false,
               },
               "title": "",
               "type": "object",
             },
             "requestExtraDataSchema": null,
+            "responseContentType": [
+              "raw",
+            ],
             "responseDataSchema": null,
             "title": "Add a new pet to the store",
           },
@@ -649,8 +847,8 @@ Array [
         "id": "",
         "name": "pet",
       },
-      Object {
-        "apiList": Array [],
+      {
+        "apiList": [],
         "description": "未设置分组的接口集合",
         "id": "",
         "name": "未知分组",

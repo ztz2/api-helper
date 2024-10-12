@@ -2,6 +2,20 @@
 
 exports[`生成接口函数测试 OpenAPI-2.0生成接口函数测试: OpenAPI-2.0生成接口函数测试 1`] = `
 "/**
+   * @description Returns pet inventories by status、Returns a map of status codes to quantities
+   * @url [ GET ] /v2/store/inventory
+   */
+declare const v2StoreInventoryByGet: {
+  (data?: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
+  requestConfig: {
+    path: '/v2/store/inventory',
+    method: 'get',
+    formDataKeyNameList: [],
+    pathParamKeyNameList: [],
+    queryStringKeyNameList: []
+  }
+};
+/**
    * @description Place an order for a pet
    * @url [ POST ] /v2/store/order
    */
@@ -25,7 +39,7 @@ declare const v2StoreOrderOrderIdByGet: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };
@@ -39,21 +53,7 @@ declare const v2StoreOrderOrderIdByDelete: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
-    queryStringKeyNameList: []
-  }
-};
-/**
-   * @description Returns pet inventories by status、Returns a map of status codes to quantities
-   * @url [ GET ] /v2/store/inventory
-   */
-declare const v2StoreInventoryByGet: {
-  (data?: V2StoreInventoryRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType): Promise<V2StoreInventoryResponseByGet>;
-  requestConfig: {
-    path: '/v2/store/inventory',
-    method: 'get',
-    formDataKeyNameList: [],
-    pathParamKeyNameList: [],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };"
@@ -85,7 +85,7 @@ declare const apiV3StoreOrderByPost: {
     method: 'post',
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: [\\"id\\",\\"petId\\",\\"quantity\\",\\"shipDate\\",\\"status\\",\\"complete\\"]
+    queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
   }
 };
 /**
@@ -98,7 +98,7 @@ declare const apiV3StoreOrderOrderIdByGet: {
     path: '/api/v3/store/order/{orderId}',
     method: 'get',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };
@@ -112,7 +112,7 @@ declare const apiV3StoreOrderOrderIdByDelete: {
     path: '/api/v3/store/order/{orderId}',
     method: 'delete',
     formDataKeyNameList: [],
-    pathParamKeyNameList: [\\"orderId\\"],
+    pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
   }
 };"

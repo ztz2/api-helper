@@ -18,6 +18,7 @@ import { processKeyName, filterSchemaPrimitiveValue, } from '@api-helper/core/li
 import { postCode } from '../lib/utils/util';
 export function renderObject(schema, api, options) {
     var _a, _b;
+    if (options === void 0) { options = {}; }
     options = merge({
         prefix: 'export ',
         suffixName: 'entity',

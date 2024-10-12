@@ -42,12 +42,13 @@ var util_2 = require("../lib/utils/util");
 var render_object_1 = require("../lib/render-object");
 function renderClass(schema, api, options) {
     var _a;
+    if (options === void 0) { options = {}; }
     options = (0, merge_1.default)({
         onlyBody: false,
         prefix: 'export ',
         paramType: 'request',
         emptyBodyCode: '{}',
-        suffixName: 'class',
+        suffixName: 'Class',
     }, options);
     schema = (0, cloneDeep_1.default)(schema);
     schema = (0, render_object_1.precessArraySchema)(schema);

@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/compatible-error-specification-dot-query-param": {
+      "get": {
+        "summary": "兼容非标准的dot参数形式",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "ids[0]",
+            "in": "query",
+            "description": "ID集合",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "dept.deptCreateBy1",
+            "in": "query",
+            "description": "创建者1号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dept.deptCreateBy2",
+            "in": "query",
+            "description": "创建者2号",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "roles[0].roleCreateBy1",
+            "in": "query",
+            "description": "角色创建者1号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roles[0].roleCreateBy1",
+            "in": "query",
+            "description": "角色创建者2号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "roles[0].roleCreateTime",
+            "in": "query",
+            "description": "角色创建时间",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "有分页参数的话就加,根据你的实际查询参数编写",
+            "in": "query",
+            "description": "有分页参数的话就加,根据你的实际查询参数编写",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {},
+    "securitySchemes": {}
+  },
+  "servers": []
+}

@@ -7,6 +7,8 @@ import { postCode, isEmptyObject, checkIsInterface, } from '../lib/utils/util';
 import artTemplate from '../lib/art-template';
 import { precessArraySchema } from '../lib/render-object';
 export function renderInterface(schema, api, options) {
+    var _a;
+    if (options === void 0) { options = {}; }
     options = merge({
         onlyBody: false,
         prefix: 'export ',
@@ -16,7 +18,7 @@ export function renderInterface(schema, api, options) {
     schema = cloneDeep(schema);
     schema = precessArraySchema(schema);
     var sourceSchema = schema;
-    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _a = options.paramType, paramType = _a === void 0 ? 'request' : _a;
+    var prefix = options.prefix, onlyBody = options.onlyBody, dropComment = options.dropComment, isExtraData = options.isExtraData, emptyBodyCode = options.emptyBodyCode, _b = options.paramType, paramType = _b === void 0 ? 'request' : _b;
     if (Array.isArray(schema)) {
         schema = createSchema('object', {
             id: randomChar(),
@@ -25,7 +27,7 @@ export function renderInterface(schema, api, options) {
     }
     var isInterface = checkIsInterface(schema);
     var keyword = isInterface ? "".concat(prefix, " interface") : "".concat(prefix, "type");
-    var onRenderInterfaceName = (options === null || options === void 0 ? void 0 : options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
+    var onRenderInterfaceName = (_a = options.onRenderInterfaceName) !== null && _a !== void 0 ? _a : renderInterfaceName;
     var commentCode = onlyBody ? '' : dropComment !== true ? renderInterfaceComment(api, paramType, isExtraData) : '';
     var interfaceName = (options === null || options === void 0 ? void 0 : options.name) ? options.name : onRenderInterfaceName(api, {
         schema: schema,

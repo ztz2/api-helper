@@ -1,0 +1,98 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/compatible-error-specification-dot-query-param": {
+      "get": {
+        "summary": "兼容非标准的请求json参数，例子1",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "ids[0]",
+            "in": "query",
+            "description": "ID集合",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "dept.deptCreateBy1",
+            "in": "query",
+            "description": "创建者1号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "dept.deptCreateBy2",
+            "in": "query",
+            "description": "创建者2号",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "name": "roles[0].roleCreateBy1",
+            "in": "query",
+            "description": "角色创建者1号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roles[0].roleCreateBy1",
+            "in": "query",
+            "description": "角色创建者2号",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "roles[0].roleCreateTime",
+            "in": "query",
+            "description": "角色创建时间",
+            "required": false,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "有分页参数的话就加,根据你的实际查询参数编写",
+            "in": "query",
+            "description": "有分页参数的话就加,根据你的实际查询参数编写",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+
+              }
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {
+
+  },
+  "securityDefinitions": {
+
+  },
+  "x-components": {
+
+  }
+}

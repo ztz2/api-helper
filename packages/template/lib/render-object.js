@@ -43,6 +43,7 @@ var util_1 = require("@api-helper/core/lib/utils/util");
 var util_2 = require("../lib/utils/util");
 function renderObject(schema, api, options) {
     var _a, _b;
+    if (options === void 0) { options = {}; }
     options = (0, merge_1.default)({
         prefix: 'export ',
         suffixName: 'entity',

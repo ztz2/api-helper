@@ -21,8 +21,7 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
     alias: {
-      '@': path.resolve(process.cwd(), './src'),
-      '@root': path.resolve(process.cwd(), './')
+      '@': path.resolve(process.cwd(), './src')
     },
     fallback: {
       http: require.resolve('stream-http'),
@@ -68,14 +67,13 @@ Released under the MIT License.`
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
-    new webpack.DefinePlugin({
-      process: {
-        env: {
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
-          // 在浏览器环境中，process.env 属性可能并不存在，因此您可以手动定义这些属性：
-          APP_ENV: JSON.stringify('browser')
-        }
-      }
-    })
+    // new webpack.DefinePlugin({
+    //   process: {
+    //     env: {
+    //       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+    //       APP_ENV: JSON.stringify('browser')
+    //     }
+    //   }
+    // })
   ]
 };

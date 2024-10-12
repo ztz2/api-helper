@@ -43,6 +43,12 @@ var AbstractSchema = /** @class */ (function () {
         this.examples = [];
         this.params = [];
         this.enum = [];
+        // 原始类型，没有经过 transformType 函数处理
+        this.rawType = '';
+        // 特定数字类型的提示:
+        // number类型：float、double、int32、int64
+        // File类型：binary、byte
+        this.format = '';
     }
     return AbstractSchema;
 }());
@@ -83,6 +89,7 @@ var ObjectSchema = /** @class */ (function (_super) {
     function ObjectSchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'object';
+        _this.rawType = 'object';
         return _this;
     }
     return ObjectSchema;
@@ -92,6 +99,7 @@ var ArraySchema = /** @class */ (function (_super) {
     function ArraySchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'array';
+        _this.rawType = 'array';
         _this.rules = {
             required: false,
             minLength: undefined,
@@ -107,6 +115,7 @@ var BooleanSchema = /** @class */ (function (_super) {
     function BooleanSchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'boolean';
+        _this.rawType = 'boolean';
         return _this;
     }
     return BooleanSchema;
@@ -116,6 +125,7 @@ var NullSchema = /** @class */ (function (_super) {
     function NullSchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'null';
+        _this.rawType = 'null';
         return _this;
     }
     return NullSchema;
@@ -134,6 +144,7 @@ var AnySchema = /** @class */ (function (_super) {
     function AnySchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'any';
+        _this.rawType = 'any';
         return _this;
     }
     return AnySchema;
@@ -143,12 +154,13 @@ var UnknownSchema = /** @class */ (function (_super) {
     function UnknownSchema() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.type = 'unknown';
+        _this.rawType = 'unknown';
         return _this;
     }
     return UnknownSchema;
 }(AbstractSchema));
 function createSchema(type, options) {
-    var instance = new AbstractSchema();
+    var instance;
     switch (type) {
         case 'string':
         case 'enum': {
@@ -195,6 +207,7 @@ function createSchema(type, options) {
     if (Object.prototype.toString.call(options) === '[object Object]') {
         instance = (0, merge_1.default)(instance, options);
     }
+    instance.label = instance.title || instance.description || '';
     return instance;
 }
 exports.createSchema = createSchema;
@@ -243,6 +256,10 @@ function createApi(options) {
         requestDataSchema: null,
         requestExtraDataSchema: null,
         responseDataSchema: null,
+        requestContentType: [],
+        responseContentType: [],
+        cookies: null,
+        headers: null,
     };
     if (Object.prototype.toString.call(options) === '[object Object]') {
         instance = (0, merge_1.default)(instance, options);

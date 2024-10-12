@@ -12,7 +12,7 @@ import { createSchema } from '@api-helper/core';
 export function renderClass(
   schema: APIHelper.Schema | Array<APIHelper.Schema> | null,
   api: APIHelper.API,
-  options?: {
+  options: {
     // 请求数据还是响应数据
     paramType?: 'request' | 'response';
     // 前缀
@@ -29,14 +29,14 @@ export function renderClass(
     emptyBodyCode?: string;
     // 生成接口名称回调
     onRenderClassName?: typeof renderClassName;
-  }
+  } = {}
 ) {
   options = merge({
     onlyBody: false,
     prefix: 'export ',
     paramType: 'request',
     emptyBodyCode: '{}',
-    suffixName: 'class',
+    suffixName: 'Class',
   }, options);
 
   schema = cloneDeep(schema);

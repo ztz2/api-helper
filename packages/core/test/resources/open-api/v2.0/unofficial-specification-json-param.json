@@ -1,0 +1,105 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/compatible-error-specification-json-param1": {
+      "get": {
+        "summary": "兼容非标准的请求json参数，例子1",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "id",
+            "description": "任务id",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+
+              }
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/compatible-error-specification-json-param2": {
+      "get": {
+        "summary": "兼容非标准的请求json参数，例子2",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "id",
+            "description": "册、分册主键id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "body",
+            "name": "level",
+            "description": "册、分册level",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {
+
+            },
+            "schema": {
+              "type": "object",
+              "properties": {
+
+              }
+            }
+          }
+        },
+        "security": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {
+
+  },
+  "securityDefinitions": {
+
+  },
+  "x-components": {
+
+  }
+}

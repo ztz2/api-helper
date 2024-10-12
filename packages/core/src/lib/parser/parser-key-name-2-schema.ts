@@ -69,6 +69,7 @@ export class ParserKeyName2Schema{
           this.text += char;
         }
       }
+
       switch (this.status) {
         case BRACKET_NOTATION_START: {
           this.pushSchema(isEnd);
@@ -105,7 +106,6 @@ export class ParserKeyName2Schema{
         }
       }
     }
-
     return {
       targetSchema: this.targetSchema,
       wrapSchema: this.wrapSchema,
@@ -113,9 +113,8 @@ export class ParserKeyName2Schema{
   }
 
   private pushSchema(isEnd = false) {
-    let schema = createSchema('string', {
+    let schema = createSchema(isEnd ? this.valueType : this.getStatusType(), {
       keyName: this.text,
-      type: isEnd ? this.valueType : this.getStatusType(),
     });
 
     if (isEnd) {
@@ -145,7 +144,7 @@ export class ParserKeyName2Schema{
     }
   }
 
-  private getStatusType(): string {
+  private getStatusType(): APIHelper.SchemaType {
     const typeMap: Recordable = {
       BRACKET_NOTATION_START: 'array',
       DOT_NOTATION: 'object',

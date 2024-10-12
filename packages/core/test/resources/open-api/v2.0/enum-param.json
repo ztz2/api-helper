@@ -1,0 +1,77 @@
+{
+  "info": {
+    "title": "API HELPER 示例项目",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [],
+  "paths": {
+    "/enum": {
+      "post": {
+        "summary": "请求参数 enum",
+        "deprecated": false,
+        "description": "",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status1": {
+                  "type": "string",
+                  "description": "",
+                  "enum": [
+                    "available",
+                    "pending",
+                    "sold"
+                  ]
+                },
+                "status2": {
+                  "type": "array",
+                  "description": "",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "available",
+                      "pending",
+                      "sold"
+                    ],
+                    "default": "available"
+                  },
+                  "collectionFormat": "multi"
+                }
+              },
+              "required": [
+                "status1",
+                "status2"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {},
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "security": [],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {},
+  "securityDefinitions": {},
+  "x-components": {}
+}

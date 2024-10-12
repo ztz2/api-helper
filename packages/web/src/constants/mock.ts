@@ -23,6 +23,10 @@ export const DOCUMENT: APIHelper.Document = {
       formDataKeyNameList: [],
       pathParamKeyNameList: [],
       queryStringKeyNameList: [],
+      headers: null,
+      cookies: null,
+      requestContentType: [],
+      responseContentType: [],
       requestDataSchema: {
         id: '1ace2cfb-1df8-4378-bead-738a14b19487',
         type: 'object',
@@ -389,6 +393,10 @@ export const DOCUMENT: APIHelper.Document = {
       formDataKeyNameList: [],
       pathParamKeyNameList: [],
       queryStringKeyNameList: ['tenantId', 'submitToken'],
+      headers: null,
+      cookies: null,
+      requestContentType: [],
+      responseContentType: [],
       requestDataSchema: {
         id: 'a7b79fe9-2277-4ada-9338-5f17600f0ef4',
         type: 'object',
@@ -678,6 +686,10 @@ export const DOCUMENT: APIHelper.Document = {
       formDataKeyNameList: [],
       pathParamKeyNameList: [],
       queryStringKeyNameList: ['code', 'phone', 'uuid'],
+      headers: null,
+      cookies: null,
+      requestContentType: [],
+      responseContentType: [],
       requestDataSchema: {
         id: 'd71dbebb-728d-449c-810a-c7ef187aa046',
         type: 'object',

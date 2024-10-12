@@ -15,6 +15,7 @@ import {
   artTemplate,
   renderAllApi,
 } from '@api-helper/template';
+import { merge, pick } from 'lodash';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 
@@ -38,6 +39,7 @@ import { Config, formatCode } from '@/lib';
 import { EXTENSIONS } from '@/lib/service/const';
 import ParserYapiPlugin from './parser-plugins/parser-yapi-plugin';
 import ParserSwaggerPlugin from './parser-plugins/parser-swagger-plugin';
+import { ServerConfig } from '@/lib/types';
 
 type DocumentServers = Config['documentServers'];
 
@@ -98,7 +100,7 @@ class Service{
       try {
         const config = configList[i];
         if (len > 1) {
-          logger.info(`\n———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
+          logger.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
         }
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
@@ -260,7 +262,7 @@ class Service{
 
     // 生成代码
     const spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
-    const genCode = (documentList: APIHelper.Document | APIHelper.CategoryList, params: Recordable) => {
+    const _genCode = (documentList: APIHelper.Document | APIHelper.CategoryList, params: Recordable) => {
       params = {...params};
       let code: string = renderAllApi(documentList, params) || '';
       let codeDeclare =  '';
@@ -297,14 +299,15 @@ class Service{
       const { dataKey} = documentServer;
       const serverName = documentServer.name ? pinyin(documentServer.name, { toneType: 'none', type: 'array' }).join('') : '';
       await Promise.all(parsedDocumentList.map(async (d) => {
+        const mgConfig = mergeConfig(config, documentServer);
+        const eventTemp = mgConfig.events;
+        delete mgConfig.events;
+        Object.assign(mgConfig, eventTemp);
         const param = {
-          ...config,
-          ...documentServer,
+          ...mgConfig,
           codeType: isTS ? 'typescript' : 'javascript',
           dataKey: dataKey,
           isDeclare: false,
-          onRenderInterfaceName: documentServer?.events?.onRenderInterfaceName,
-          onRenderRequestFunctionName: documentServer?.events?.onRenderRequestFunctionName,
         };
 
         // let workerStartError = false;
@@ -370,7 +373,7 @@ class Service{
           const fileNameMap: Record<string, string> = {};
           await Promise.all(d.categoryList.map(async (category) => {
             try {
-              const [code, codeDeclare] = genCode([category], param);
+              const [code, codeDeclare] = _genCode([category], param);
               const lastName: string = category.name.split('/').filter(Boolean).pop()?.replace(/[.\s]/gim, '') as string;
               const fileNameBase = pinyin(lastName, { toneType: 'none', type: 'array' }).join('');
               fileNameRecord[fileNameBase] = fileNameRecord[fileNameBase] ? fileNameRecord[fileNameBase] + 1 : 1;
@@ -418,7 +421,7 @@ class Service{
         }
 
         try {
-          const [code, codeDeclare] = genCode(d, param);
+          const [code, codeDeclare] = _genCode(d, param);
           let currentOutputFilePath = outputFilePath;
           if (serverName) {
             const outputFilePathList = toUnixPath(outputFilePath).split('/');
@@ -805,6 +808,19 @@ export default async function request<ResponseData>(config: RequestFunctionConfi
     process.exit(1);
   }
   return requestFunctionFilePath;
+}
+
+function mergeConfig(rootConfig: Config, serverConfig: ServerConfig): ServerConfig {
+  return { ...merge(serverConfig, pick(rootConfig, [
+      'genHeaders',
+      'genCookies',
+      'genRequestContentType',
+      'genResponseContentType',
+      'requestFunctionFilePath',
+      'requiredRequestField',
+      'requiredResponseField',
+      'events',
+    ])) };
 }
 
 export default Service;

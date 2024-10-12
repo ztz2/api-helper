@@ -89,6 +89,7 @@ import { pinyin } from 'pinyin-pro';
 import { join, isAbsolute, } from 'path';
 import { stat, outputFile, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
+import { merge, pick } from 'lodash';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 import { resolve, toUnixPath, loadModule, removeFolder, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
 // import './worker-thread';
@@ -141,7 +142,7 @@ var Service = /** @class */ (function () {
                         _b.trys.push([4, 9, , 10]);
                         config = configList[i];
                         if (len > 1) {
-                            logger.info("\n\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
+                            logger.info("\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
                     case 5:
@@ -374,7 +375,7 @@ var Service = /** @class */ (function () {
     // 4. 生成代码
     Service.prototype.genCode = function (config, parserPluginRunResult) {
         return __awaiter(this, void 0, void 0, function () {
-            var result, outputFilePath, isTS, spinner, genCode, formatResultCode, _loop_1, parserPluginRunResult_1, parserPluginRunResult_1_1, item, e_5_1;
+            var result, outputFilePath, isTS, spinner, _genCode, formatResultCode, _loop_1, parserPluginRunResult_1, parserPluginRunResult_1_1, item, e_5_1;
             var e_5, _a;
             var _this = this;
             return __generator(this, function (_b) {
@@ -388,7 +389,7 @@ var Service = /** @class */ (function () {
                     case 2:
                         isTS = _b.sent();
                         spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
-                        genCode = function (documentList, params) {
+                        _genCode = function (documentList, params) {
                             params = __assign({}, params);
                             var code = renderAllApi(documentList, params) || '';
                             var codeDeclare = '';
@@ -444,13 +445,17 @@ var Service = /** @class */ (function () {
                                         dataKey = documentServer.dataKey;
                                         serverName = documentServer.name ? pinyin(documentServer.name, { toneType: 'none', type: 'array' }).join('') : '';
                                         return [4 /*yield*/, Promise.all(parsedDocumentList.map(function (d) { return __awaiter(_this, void 0, void 0, function () {
-                                                var param, fileNameRecord_1, codes_1, codeDeclares_1, fileNameMap_1, _a, _b, code2_1, _c, codeDeclare2_1, e_6, _d, code, codeDeclare, currentOutputFilePath, outputFilePathList_1, lastPath, lastPathSplit, outputFilePathList, requestFilePath, _e, _f, _g, renderHeaderParams, _h, codeHead, codeHeadDeclare, _j, code2, codeDeclare2, e_7;
+                                                var mgConfig, eventTemp, param, fileNameRecord_1, codes_1, codeDeclares_1, fileNameMap_1, _a, _b, code2_1, _c, codeDeclare2_1, e_6, _d, code, codeDeclare, currentOutputFilePath, outputFilePathList_1, lastPath, lastPathSplit, outputFilePathList, requestFilePath, _e, _f, _g, renderHeaderParams, _h, codeHead, codeHeadDeclare, _j, code2, codeDeclare2, e_7;
                                                 var _this = this;
-                                                var _k, _l, _m, _o;
-                                                return __generator(this, function (_p) {
-                                                    switch (_p.label) {
+                                                var _k, _l;
+                                                return __generator(this, function (_m) {
+                                                    switch (_m.label) {
                                                         case 0:
-                                                            param = __assign(__assign(__assign({}, config), documentServer), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false, onRenderInterfaceName: (_k = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _k === void 0 ? void 0 : _k.onRenderInterfaceName, onRenderRequestFunctionName: (_l = documentServer === null || documentServer === void 0 ? void 0 : documentServer.events) === null || _l === void 0 ? void 0 : _l.onRenderRequestFunctionName });
+                                                            mgConfig = mergeConfig(config, documentServer);
+                                                            eventTemp = mgConfig.events;
+                                                            delete mgConfig.events;
+                                                            Object.assign(mgConfig, eventTemp);
+                                                            param = __assign(__assign({}, mgConfig), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false });
                                                             if (!config.group) return [3 /*break*/, 7];
                                                             fileNameRecord_1 = {};
                                                             codes_1 = [];
@@ -461,7 +466,7 @@ var Service = /** @class */ (function () {
                                                                     var _b;
                                                                     return __generator(this, function (_c) {
                                                                         try {
-                                                                            _a = __read(genCode([category], param), 2), code = _a[0], codeDeclare = _a[1];
+                                                                            _a = __read(_genCode([category], param), 2), code = _a[0], codeDeclare = _a[1];
                                                                             lastName = (_b = category.name.split('/').filter(Boolean).pop()) === null || _b === void 0 ? void 0 : _b.replace(/[.\s]/gim, '');
                                                                             fileNameBase = pinyin(lastName, { toneType: 'none', type: 'array' }).join('');
                                                                             fileNameRecord_1[fileNameBase] = fileNameRecord_1[fileNameBase] ? fileNameRecord_1[fileNameBase] + 1 : 1;
@@ -479,13 +484,13 @@ var Service = /** @class */ (function () {
                                                                     });
                                                                 }); }))];
                                                         case 1:
-                                                            _p.sent();
-                                                            _p.label = 2;
+                                                            _m.sent();
+                                                            _m.label = 2;
                                                         case 2:
-                                                            _p.trys.push([2, 5, , 6]);
+                                                            _m.trys.push([2, 5, , 6]);
                                                             return [4 /*yield*/, formatResultCode(codes_1, codeDeclares_1)];
                                                         case 3:
-                                                            _a = __read.apply(void 0, [_p.sent(), 2]), _b = _a[0], code2_1 = _b === void 0 ? '' : _b, _c = _a[1], codeDeclare2_1 = _c === void 0 ? '' : _c;
+                                                            _a = __read.apply(void 0, [_m.sent(), 2]), _b = _a[0], code2_1 = _b === void 0 ? '' : _b, _c = _a[1], codeDeclare2_1 = _c === void 0 ? '' : _c;
                                                             return [4 /*yield*/, Promise.all(Object.entries(fileNameMap_1).map(function (_a, index) {
                                                                     var _b = __read(_a, 2), item = _b[0], currentOutputFilePath = _b[1];
                                                                     return __awaiter(_this, void 0, void 0, function () {
@@ -522,16 +527,16 @@ var Service = /** @class */ (function () {
                                                                     });
                                                                 }))];
                                                         case 4:
-                                                            _p.sent();
+                                                            _m.sent();
                                                             return [3 /*break*/, 6];
                                                         case 5:
-                                                            e_6 = _p.sent();
+                                                            e_6 = _m.sent();
                                                             logger.error(e_6);
                                                             return [3 /*break*/, 6];
                                                         case 6: return [2 /*return*/];
                                                         case 7:
-                                                            _p.trys.push([7, 10, , 11]);
-                                                            _d = __read(genCode(d, param), 2), code = _d[0], codeDeclare = _d[1];
+                                                            _m.trys.push([7, 10, , 11]);
+                                                            _d = __read(_genCode(d, param), 2), code = _d[0], codeDeclare = _d[1];
                                                             currentOutputFilePath = outputFilePath;
                                                             if (serverName) {
                                                                 outputFilePathList_1 = toUnixPath(outputFilePath).split('/');
@@ -548,7 +553,7 @@ var Service = /** @class */ (function () {
                                                                 currentOutputFilePath = outputFilePathList_1.join('/');
                                                             }
                                                             outputFilePathList = toUnixPath(currentOutputFilePath).split('/');
-                                                            if (((_o = (_m = outputFilePathList.pop()) === null || _m === void 0 ? void 0 : _m.includes) === null || _o === void 0 ? void 0 : _o.call(_m, '.')) === false) {
+                                                            if (((_l = (_k = outputFilePathList.pop()) === null || _k === void 0 ? void 0 : _k.includes) === null || _l === void 0 ? void 0 : _l.call(_k, '.')) === false) {
                                                                 currentOutputFilePath += isTS ? '.ts' : '.js';
                                                             }
                                                             _e = removeExtensionName;
@@ -556,7 +561,7 @@ var Service = /** @class */ (function () {
                                                             _g = [currentOutputFilePath];
                                                             return [4 /*yield*/, getRequestFunctionFilePath(config)];
                                                         case 8:
-                                                            requestFilePath = _e.apply(void 0, [_f.apply(void 0, _g.concat([_p.sent()])), EXTENSIONS]);
+                                                            requestFilePath = _e.apply(void 0, [_f.apply(void 0, _g.concat([_m.sent()])), EXTENSIONS]);
                                                             renderHeaderParams = {
                                                                 isTS: isTS,
                                                                 config: config,
@@ -566,7 +571,7 @@ var Service = /** @class */ (function () {
                                                             _h = __read(renderHeader(this.isTestEnv, renderHeaderParams, __assign(__assign({}, renderHeaderParams), { isTS: true, onlyTyping: config.onlyTyping }), this.locales), 2), codeHead = _h[0], codeHeadDeclare = _h[1];
                                                             return [4 /*yield*/, formatResultCode([codeHead, code], [codeHeadDeclare, codeDeclare])];
                                                         case 9:
-                                                            _j = __read.apply(void 0, [_p.sent(), 2]), code2 = _j[0], codeDeclare2 = _j[1];
+                                                            _j = __read.apply(void 0, [_m.sent(), 2]), code2 = _j[0], codeDeclare2 = _j[1];
                                                             result.push({
                                                                 outputFilePath: currentOutputFilePath,
                                                                 code: code2,
@@ -574,7 +579,7 @@ var Service = /** @class */ (function () {
                                                             });
                                                             return [3 /*break*/, 11];
                                                         case 10:
-                                                            e_7 = _p.sent();
+                                                            e_7 = _m.sent();
                                                             logger.error(e_7);
                                                             return [3 /*break*/, 11];
                                                         case 11: return [2 /*return*/];
@@ -938,5 +943,17 @@ function getRequestFunctionFilePath(config) {
             }
         });
     });
+}
+function mergeConfig(rootConfig, serverConfig) {
+    return __assign({}, merge(serverConfig, pick(rootConfig, [
+        'genHeaders',
+        'genCookies',
+        'genRequestContentType',
+        'genResponseContentType',
+        'requestFunctionFilePath',
+        'requiredRequestField',
+        'requiredResponseField',
+        'events',
+    ])));
 }
 export default Service;

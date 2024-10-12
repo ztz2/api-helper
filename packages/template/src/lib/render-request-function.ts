@@ -9,22 +9,26 @@ import { isEmptySchema } from '@/lib/utils/util';
 
 export function renderRequestFunction(
   api: APIHelper.API,
-  options?: {
+  options: {
     codeType?: 'typescript' | 'javascript';
     dataKey?: string | undefined;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
-  }
+  } = {}
 ) {
   if (!api) {
     return '';
   }
-  const codeType = options?.codeType || 'typescript';
-  const dataKey = options?.dataKey;
+  const dataKey = options.dataKey;
+  const codeType = options.codeType || 'typescript';
   const isEmptyRequestData = isEmptySchema(api.requestDataSchema);
   const emptyRequestDataValue = isEmptyRequestData ? api.requestDataSchema?.type === 'array' ? '[]' : '{}' : '';
-  const onRenderRequestFunctionName = (options && options.onRenderRequestFunctionName) ? options.onRenderRequestFunctionName : renderRequestFunctionName;
-  const onRenderInterfaceName = (options && options.onRenderInterfaceName) ? options.onRenderInterfaceName : renderInterfaceName;
+  const onRenderRequestFunctionName = options.onRenderRequestFunctionName ?? renderRequestFunctionName;
+  const onRenderInterfaceName = options.onRenderInterfaceName ?? renderInterfaceName;
   const responseDataSchema = dataKey ? getSchema(api.responseDataSchema, dataKey) : api.responseDataSchema;
 
   const requestFunctionName = onRenderRequestFunctionName(api, {
@@ -47,18 +51,26 @@ export function renderRequestFunction(
     schema: responseDataSchema,
   });
 
+  const headers = api.headers?.params?.map?.((item) => item.keyName)?.filter?.(Boolean) ?? [];
+  const cookies = api.cookies?.params?.map?.((item) =>  item.keyName)?.filter?.(Boolean) ?? [];
+
   const templateTenderParams = {
     api,
+    options,
     emptyRequestDataValue,
+    requestFunctionName,
+    requestDataInterfaceName,
+    requestExtraDataInterfaceName,
+    responseDataInterfaceName,
     isTypescript: codeType === 'typescript',
     commentCode: renderRequestFunctionComment(api),
     formDataKeyNameListStr: JSON.stringify(api.formDataKeyNameList),
     pathParamKeyNameListStr: JSON.stringify(api.pathParamKeyNameList),
     queryStringKeyNameListStr: JSON.stringify(api.queryStringKeyNameList),
-    requestFunctionName,
-    requestDataInterfaceName,
-    requestExtraDataInterfaceName,
-    responseDataInterfaceName,
+    headersStr: JSON.stringify(headers),
+    cookiesStr: JSON.stringify(cookies),
+    requestContentTypeStr: JSON.stringify(api.requestContentType ?? []),
+    responseContentTypeStr: JSON.stringify(api.responseContentType ?? []),
   };
 
   const code = artTemplate.render(
@@ -71,10 +83,14 @@ export function renderRequestFunction(
 }
 《requestFunctionName》.requestConfig = {
   path: '《api.path》',
-  method: '《api.method.toUpperCase()》',
+  method: '《api.method.toUpperCase()》',《if options.genHeaders》
+  headers: 《headersStr》,《/if》《if options.genCookies》
+  cookies: 《cookiesStr》,《/if》《if options.genRequestContentType》
+  requestContentType: 《requestContentTypeStr》,《/if》《if options.genResponseContentType》
+  responseContentType: 《responseContentTypeStr》,《/if》
   formDataKeyNameList: 《formDataKeyNameListStr》,
   pathParamKeyNameList: 《pathParamKeyNameListStr》,
-  queryStringKeyNameList: 《queryStringKeyNameListStr》
+  queryStringKeyNameList: 《queryStringKeyNameListStr》,
 }`, templateTenderParams);
 
   return code;

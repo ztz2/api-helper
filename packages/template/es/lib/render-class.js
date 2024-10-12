@@ -17,12 +17,13 @@ import { postCode } from '../lib/utils/util';
 import { precessArraySchema, renderComment } from '../lib/render-object';
 export function renderClass(schema, api, options) {
     var _a;
+    if (options === void 0) { options = {}; }
     options = merge({
         onlyBody: false,
         prefix: 'export ',
         paramType: 'request',
         emptyBodyCode: '{}',
-        suffixName: 'class',
+        suffixName: 'Class',
     }, options);
     schema = cloneDeep(schema);
     schema = precessArraySchema(schema);

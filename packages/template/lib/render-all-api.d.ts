@@ -7,6 +7,10 @@ export declare function renderAllApi(apiDocument: APIHelper.Document | APIHelper
     codeType?: 'typescript' | 'javascript';
     isDeclare?: boolean;
     onlyTyping?: boolean;
+    genHeaders?: boolean;
+    genCookies?: boolean;
+    genRequestContentType?: boolean;
+    genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
 }): string;

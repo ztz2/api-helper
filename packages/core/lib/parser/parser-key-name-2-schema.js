@@ -123,9 +123,8 @@ var ParserKeyName2Schema = /** @class */ (function () {
     };
     ParserKeyName2Schema.prototype.pushSchema = function (isEnd) {
         if (isEnd === void 0) { isEnd = false; }
-        var schema = (0, index_1.createSchema)('string', {
+        var schema = (0, index_1.createSchema)(isEnd ? this.valueType : this.getStatusType(), {
             keyName: this.text,
-            type: isEnd ? this.valueType : this.getStatusType(),
         });
         if (isEnd) {
             this.targetSchema = schema;
