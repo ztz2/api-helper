@@ -29,6 +29,9 @@
     "type": "git",
     "url": "git+https://github.com/ztz2/api-helper.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "keywords": [
     "api-helper"
   ],
