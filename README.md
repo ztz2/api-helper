@@ -44,7 +44,7 @@ $ yarn add @api-helper/cli
 ![API代码](./packages/docs/src/public/images/example/en/api-code-cli.gif)
 #### Examples
 ```sh
-$ npx apih -u http://your-api-documentation-address.com
+$ npx apih -u https://api-documentation.com/demo/swagger-ui.html
 # or
 $ npx apih -u ./local-openapi.json
 ```
@@ -119,8 +119,8 @@ export default defineConfig({
   requiredResponseField: true,
   // Interface document service configuration
   documentServers: [{
-    // Interface Document address [When the type below is 'swagger', you can read local files, here can be a local file path]
-    url: 'http://your-api-documentation-address.com',
+    // Interface Document address [When the type is 'swagger', you can read local files, here can be a local file path]
+    url: 'https://api-documentation.com/demo/swagger-ui.html',
     // Interface document type, call the built-in parser according to the document type, default value: 'swagger' [Built-in yapi and swagger parser, other document types, add parserPlugins to implement document parsing by yourself]
     type: 'swagger',
     // The name of the current interface document service. When there is a value, the file output becomes -> path/current name
@@ -162,19 +162,35 @@ Web services provide custom code generation based on interfaces and provide fron
 
 For Windows environment, please install **pnpm** first, and then double-click to run the **run-web-server.bat** file. The following are manual deployment steps.
 
-#### Step 1: Download the project code.
-Download or use git to pull the entire project code.
+#### Pull the project.
 ```sh
 git clone https://github.com/ztz2/api-helper.git
 ```
-#### Step 2: Packaging.
-* To package the browser code, go to the web package, and enter the command: `pnpm run build`.
-* To package the server-side code, go to the server package, and enter the command: `pnpm run build`.
+#### Docker Deployment【Recommend】
+##### Build a Docker image
+###### Using Dockerfile.
+```sh
+docker build -t api_helper/server .
+```
+###### Using Docker compose
+```sh
+docker compose build
+```
+##### Run Services
+###### Run based on the Dockerfile build.
+```shell
+docker run -d -p 3210:3210 api_helper/server
+```
+###### Run based on the Docker Compose build.
+```shell
+docker-compose up -d
+```
 
-#### Step 3: Start the service.
-* To start the service, go to the server package, and enter the command: `pnpm run start:prod`.
-* After the service starts, visit the address: [http://localhost:3210](http://localhost:3210).
-* If you need to run the latest code, you need to start from step 1. The subsequent service start-up operations are all step 3.
+#### Manual command deployment.
+* Build the front-end service by navigating to the web package and entering the command：`pnpm run build`。
+* Build the back-end service by navigating to the server package and entering the command：`pnpm run build`。
+* Start the service by navigating to the server package and entering the command：`pnpm run start:prod`。
+* Access address after the service starts：[http://localhost:3210](http://localhost:3210)。
 
 ![](./packages/docs/src/public/images/api-code.gif)
 ![](./packages/docs/src/public/images/map-code.gif)
