@@ -35,7 +35,6 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
-.changeset/*
 !.config.json
 !.pre.json
 !.README.md
