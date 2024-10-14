@@ -14,7 +14,6 @@ export function renderRequestFunction(
     dataKey?: string | undefined;
     genHeaders?: boolean;
     genCookies?: boolean;
-    genRequestContentType?: boolean;
     genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
@@ -72,7 +71,6 @@ export function renderRequestFunction(
     requestContentTypeStr: JSON.stringify(api.requestContentType ?? []),
     responseContentTypeStr: JSON.stringify(api.responseContentType ?? []),
   };
-
   const code = artTemplate.render(
     `《if commentCode》《commentCode》
 《/if》export function 《requestFunctionName》(data《if isTypescript》: 《requestDataInterfaceName》《/if》《if emptyRequestDataValue》 = 《emptyRequestDataValue》《/if》, extraData《if isTypescript》?: 《if api.requestExtraDataSchema》《requestExtraDataInterfaceName》《else》unknown《/if》《/if》, ...args《if isTypescript》: CurrentRequestFunctionRestArgsType《/if》) {
@@ -85,8 +83,8 @@ export function renderRequestFunction(
   path: '《api.path》',
   method: '《api.method.toUpperCase()》',《if options.genHeaders》
   headers: 《headersStr》,《/if》《if options.genCookies》
-  cookies: 《cookiesStr》,《/if》《if options.genRequestContentType》
-  requestContentType: 《requestContentTypeStr》,《/if》《if options.genResponseContentType》
+  cookies: 《cookiesStr》,《/if》
+  requestContentType: 《requestContentTypeStr》,《if options.genResponseContentType》
   responseContentType: 《responseContentTypeStr》,《/if》
   formDataKeyNameList: 《formDataKeyNameListStr》,
   pathParamKeyNameList: 《pathParamKeyNameListStr》,

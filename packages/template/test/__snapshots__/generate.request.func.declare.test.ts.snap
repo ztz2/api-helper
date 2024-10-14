@@ -10,6 +10,7 @@ declare const v2StoreInventoryByGet: {
   requestConfig: {
     path: '/v2/store/inventory',
     method: 'get',
+    requestContentType: [],
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
     queryStringKeyNameList: []
@@ -24,6 +25,7 @@ declare const v2StoreOrderByPost: {
   requestConfig: {
     path: '/v2/store/order',
     method: 'post',
+    requestContentType: ["application/json"],
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
     queryStringKeyNameList: []
@@ -38,6 +40,7 @@ declare const v2StoreOrderOrderIdByGet: {
   requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'get',
+    requestContentType: [],
     formDataKeyNameList: [],
     pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
@@ -52,6 +55,7 @@ declare const v2StoreOrderOrderIdByDelete: {
   requestConfig: {
     path: '/v2/store/order/{orderId}',
     method: 'delete',
+    requestContentType: [],
     formDataKeyNameList: [],
     pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
@@ -69,6 +73,7 @@ declare const apiV3StoreInventoryByGet: {
   requestConfig: {
     path: '/api/v3/store/inventory',
     method: 'get',
+    requestContentType: ["application/json"],
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
     queryStringKeyNameList: []
@@ -83,6 +88,7 @@ declare const apiV3StoreOrderByPost: {
   requestConfig: {
     path: '/api/v3/store/order',
     method: 'post',
+    requestContentType: ["application/json"],
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
     queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
@@ -97,6 +103,7 @@ declare const apiV3StoreOrderOrderIdByGet: {
   requestConfig: {
     path: '/api/v3/store/order/{orderId}',
     method: 'get',
+    requestContentType: ["application/json"],
     formDataKeyNameList: [],
     pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []
@@ -111,6 +118,7 @@ declare const apiV3StoreOrderOrderIdByDelete: {
   requestConfig: {
     path: '/api/v3/store/order/{orderId}',
     method: 'delete',
+    requestContentType: [],
     formDataKeyNameList: [],
     pathParamKeyNameList: ["orderId"],
     queryStringKeyNameList: []

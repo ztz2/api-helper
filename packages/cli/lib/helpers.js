@@ -22,6 +22,7 @@ class FormDataItem {
     }
 }
 exports.FormDataItem = FormDataItem;
+;
 function checkMiniProgramEnv() {
     var _a, _b;
     try {
@@ -54,23 +55,30 @@ const hasNativeFormData = typeof FormData !== 'undefined';
 const hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
 const FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
 const isMiniProgramEnv = checkMiniProgramEnv();
+function omit(obj, keys) {
+    const result = {};
+    for (let key in obj) {
+        if (!keys.includes(key)) {
+            result[key] = obj[key];
+        }
+    }
+    return result;
+}
 function processRequestFunctionConfig(data, extraData, requestConfig) {
-    var _a, _b, _c;
-    const requestFunctionConfig = {
-        path: requestConfig.path,
-        rawPath: requestConfig.path,
-        method: requestConfig.method,
-        data: undefined,
-        rawData: data,
-        rawExtraData: extraData,
-        hasFormData: false,
-    };
-    if (data == null || typeof data !== 'object') {
+    var _a, _b, _c, _d, _e;
+    const requestFunctionConfig = Object.assign(Object.assign({}, requestConfig), { path: requestConfig.path, rawPath: requestConfig.path, method: requestConfig.method, data: undefined, rawData: data, rawExtraData: extraData, hasFormData: false });
+    let isBinary = false;
+    try {
+        isBinary = data instanceof File || data instanceof Blob;
+    }
+    catch (_f) { }
+    if (data == null || typeof data !== 'object' || isBinary) {
         requestFunctionConfig.data = data;
         return requestFunctionConfig;
     }
     const queryParams = {};
     const cloneData = (checkType(data, 'Object') ? Object.assign({}, data) : {});
+    const isFormUrlencodedType = (_b = (_a = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _a === void 0 ? void 0 : _a.includes) === null || _b === void 0 ? void 0 : _b.call(_a, 'application/x-www-form-urlencoded');
     let formData;
     let appendFormData = (key, val) => { };
     if (!isMiniProgramEnv) {
@@ -98,13 +106,13 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
     // 数据处理
     for (const [k, v] of Object.entries(cloneData)) {
         // 路径参数处理
-        if ((_a = requestConfig.pathParamKeyNameList) === null || _a === void 0 ? void 0 : _a.includes(k)) {
+        if ((_c = requestConfig.pathParamKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp(`\{${k}\}`, 'g'), v);
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_b = requestConfig.formDataKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_d = requestConfig.formDataKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             const val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -119,7 +127,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             continue;
         }
         // URL 参数处理
-        if ((_c = requestConfig.queryStringKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
+        if ((_e = requestConfig.queryStringKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
@@ -129,16 +137,36 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
     if (queryString.length) {
         requestFunctionConfig.path += `?${queryString}`;
     }
-    // 合并Data
-    if (requestFunctionConfig.hasFormData) {
-        requestFunctionConfig.data = formData;
-        // @ts-ignore
-    }
-    else if (data instanceof FormDataPolyfill) {
-        requestFunctionConfig.data = data;
+    // application/x-www-form-urlencoded 单独处理
+    if (isFormUrlencodedType) {
+        const formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), [
+            ...requestConfig.formDataKeyNameList,
+            ...requestConfig.queryStringKeyNameList,
+            ...requestConfig.pathParamKeyNameList,
+        ]);
+        const formUrlencodedStr = (0, stringify_1.default)(formUrlencodedData);
+        if (formUrlencodedStr) {
+            const keyText = requestFunctionConfig.path.includes('?') ? '&' : '?';
+            if (requestConfig.method.toLowerCase() === 'get') {
+                requestFunctionConfig.path += `${keyText}${formUrlencodedStr}`;
+            }
+            else {
+                requestFunctionConfig.data = formUrlencodedStr;
+            }
+        }
     }
     else {
-        requestFunctionConfig.data = cloneData;
+        // 合并Data
+        if (requestFunctionConfig.hasFormData) {
+            requestFunctionConfig.data = formData;
+            // @ts-ignore
+        }
+        else if (data instanceof FormDataPolyfill) {
+            requestFunctionConfig.data = data;
+        }
+        else {
+            requestFunctionConfig.data = cloneData;
+        }
     }
     return requestFunctionConfig;
 }

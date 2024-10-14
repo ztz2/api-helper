@@ -1499,9 +1499,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
           "queryStringKeyNameList": [
             "status",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],
@@ -1850,9 +1848,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
           "queryStringKeyNameList": [
             "tags",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],
@@ -3985,9 +3981,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "username",
             "password",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],
@@ -4541,9 +4535,7 @@ exports[`swagger-parser v2 query-param.json: query-param.json 1`] = `
             "username",
             "phone",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],
@@ -4833,9 +4825,7 @@ exports[`swagger-parser v2 unofficial-specification-dot-query-param.json: unoffi
             "roles",
             "有分页参数的话就加,根据你的实际查询参数编写",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],

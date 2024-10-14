@@ -7,7 +7,18 @@ export declare class FormDataItem<T> {
     get(): T | undefined;
     set(value: T): void;
 }
-export declare type RequestFunctionConfig = {
+interface RequestConfig {
+    path: string;
+    method: RequestMethod | string;
+    formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
+    pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
+    queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
+    requestContentType?: APIHelper.API['requestContentType'];
+    responseContentType?: APIHelper.API['responseContentType'];
+    headers?: APIHelper.API['headers'];
+    cookies?: APIHelper.API['cookies'];
+}
+export interface RequestFunctionConfig extends RequestConfig {
     path: string;
     rawPath: string;
     method: RequestMethod;
@@ -15,14 +26,7 @@ export declare type RequestFunctionConfig = {
     hasFormData: boolean;
     rawData: unknown;
     rawExtraData?: unknown;
-};
+}
 export declare function checkMiniProgramEnv(): boolean;
-declare type RequestConfig = {
-    path: string;
-    method: RequestMethod | string;
-    formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
-    pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
-    queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
-};
 export declare function processRequestFunctionConfig<T, R>(data: T, extraData: R, requestConfig: RequestConfig): RequestFunctionConfig;
 export {};

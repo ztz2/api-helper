@@ -777,7 +777,6 @@ function mergeConfig(rootConfig, serverConfig) {
     return Object.assign({}, (0, lodash_1.merge)(serverConfig, (0, lodash_1.pick)(rootConfig, [
         'genHeaders',
         'genCookies',
-        'genRequestContentType',
         'genResponseContentType',
         'requestFunctionFilePath',
         'requiredRequestField',

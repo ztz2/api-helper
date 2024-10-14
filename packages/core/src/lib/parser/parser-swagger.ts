@@ -168,8 +168,6 @@ export default class ParserSwagger {
             if (!api?.requestContentType?.length) {
               if (api.formDataKeyNameList?.length) {
                 api.requestContentType = ['multipart/form-data'];
-              } else if (api.queryStringKeyNameList?.length) {
-                api.requestContentType = ['application/x-www-form-urlencoded'];
               }
             }
 

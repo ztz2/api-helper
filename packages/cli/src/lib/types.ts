@@ -20,8 +20,6 @@ export interface CommonConfig {
   genHeaders?: boolean;
   // 生成Cookies，默认：false
   genCookies?: boolean;
-  // 生成请求Content-Type，默认：false
-  genRequestContentType?: boolean;
   // 生成响应Content-Type，默认：false
   genResponseContentType?: boolean;
   // 接口请求函数文件路径

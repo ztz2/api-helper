@@ -22,7 +22,19 @@ export class FormDataItem<T> {
   }
 }
 
-export type RequestFunctionConfig = {
+interface RequestConfig {
+  path: string;
+  method: RequestMethod | string;
+  formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
+  pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
+  queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
+  requestContentType?: APIHelper.API['requestContentType'];
+  responseContentType?: APIHelper.API['responseContentType'];
+  headers?: APIHelper.API['headers'];
+  cookies?: APIHelper.API['cookies'];
+};
+
+export interface RequestFunctionConfig extends RequestConfig {
   // 请求路径，可以看做是URL，该资源路径包含了url参数，合并了路径参数等
   path: string;
   // 源请求路径，没有经过任何处理
@@ -76,21 +88,19 @@ const hasNodeFormData = !hasNativeFormData && global?.['process']?.['versions']?
 const FormDataPolyfill: typeof FormData | undefined = hasNativeFormData ? FormData : hasNodeFormData ? eval(`require('form-data')`) : undefined;
 const isMiniProgramEnv = checkMiniProgramEnv();
 
-type RequestConfig = {
-  // 请求资源路径地址
-  path: string;
-  // 请求方法
-  method: RequestMethod | string;
-  // 表单参数字段集合
-  formDataKeyNameList: APIHelper.API['formDataKeyNameList'];
-  // 路径参数字段集合
-  pathParamKeyNameList: APIHelper.API['pathParamKeyNameList'];
-  // URL参数字段集合
-  queryStringKeyNameList: APIHelper.API['queryStringKeyNameList'];
-};
+function omit<T>(obj: Recordable, keys: string[]) {
+  const result: Recordable = {};
+  for (let key in obj) {
+    if (!keys.includes(key)) {
+      result[key] = obj[key];
+    }
+  }
+  return result;
+}
 
 export function processRequestFunctionConfig<T, R>(data: T, extraData: R, requestConfig: RequestConfig) {
   const requestFunctionConfig: RequestFunctionConfig = {
+    ...requestConfig,
     path: requestConfig.path,
     rawPath: requestConfig.path,
     method: requestConfig.method as RequestMethod,
@@ -100,15 +110,20 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
     hasFormData: false,
   };
 
-  if (data == null || typeof data !== 'object') {
+  let isBinary = false;
+  try {
+    isBinary = data instanceof File || data instanceof Blob;
+  } catch {}
+  if (data == null || typeof data !== 'object' || isBinary) {
     requestFunctionConfig.data = data;
     return requestFunctionConfig;
   }
 
   const queryParams: Recordable = {};
   const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as Recordable;
-
+  const isFormUrlencodedType = requestConfig?.requestContentType?.includes?.('application/x-www-form-urlencoded');
   let formData: any;
+
   let appendFormData = (key: string, val: any) => {};
   if (!isMiniProgramEnv) {
     if (FormDataPolyfill != null) {
@@ -129,7 +144,6 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
       }
     }
   }
-
   // 数据处理
   for (const [k, v] of Object.entries(cloneData)) {
     // 路径参数处理
@@ -158,21 +172,37 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
       delete cloneData[k];
     }
   }
-
   // 合并URL参数
   const queryString = stringify(queryParams, { allowDots: true });
   if (queryString.length) {
     requestFunctionConfig.path += `?${queryString}`;
   }
-
-  // 合并Data
-  if (requestFunctionConfig.hasFormData) {
-    requestFunctionConfig.data = formData;
-    // @ts-ignore
-  } else if (data instanceof FormDataPolyfill) {
-    requestFunctionConfig.data = data;
+  // application/x-www-form-urlencoded 单独处理
+  if (isFormUrlencodedType) {
+    const formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), [
+      ...requestConfig.formDataKeyNameList,
+      ...requestConfig.queryStringKeyNameList,
+      ...requestConfig.pathParamKeyNameList,
+    ]);
+    const formUrlencodedStr = stringify(formUrlencodedData);
+    if (formUrlencodedStr) {
+      const keyText = requestFunctionConfig.path.includes('?') ? '&' : '?';
+      if (requestConfig.method.toLowerCase() === 'get') {
+        requestFunctionConfig.path += `${keyText}${formUrlencodedStr}`;
+      } else {
+        requestFunctionConfig.data = formUrlencodedStr;
+      }
+    }
   } else {
-    requestFunctionConfig.data = cloneData;
+    // 合并Data
+    if (requestFunctionConfig.hasFormData) {
+      requestFunctionConfig.data = formData;
+      // @ts-ignore
+    } else if (data instanceof FormDataPolyfill) {
+      requestFunctionConfig.data = data;
+    } else {
+      requestFunctionConfig.data = cloneData;
+    }
   }
 
   return requestFunctionConfig;

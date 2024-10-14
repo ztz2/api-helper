@@ -9,7 +9,6 @@ export declare function renderAllApi(apiDocument: APIHelper.Document | APIHelper
     onlyTyping?: boolean;
     genHeaders?: boolean;
     genCookies?: boolean;
-    genRequestContentType?: boolean;
     genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;

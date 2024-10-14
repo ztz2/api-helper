@@ -59,6 +59,7 @@ export function v2PetPetIdUploadImageByPost(
 v2PetPetIdUploadImageByPost.requestConfig = {
   path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
+  requestContentType: ['multipart/form-data'],
   formDataKeyNameList: ['additionalMetadata', 'file'],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -99,6 +100,7 @@ export function v2PetByPost(data: V2PetRequestByPost, extraData?: unknown, ...ar
 v2PetByPost.requestConfig = {
   path: '/v2/pet',
   method: 'POST',
+  requestContentType: ['application/json', 'application/xml'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -139,6 +141,7 @@ export function v2PetByPut(data: V2PetRequestByPut, extraData?: unknown, ...args
 v2PetByPut.requestConfig = {
   path: '/v2/pet',
   method: 'PUT',
+  requestContentType: ['application/json', 'application/xml'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -189,6 +192,7 @@ export function v2PetFindByStatusByGet(
 v2PetFindByStatusByGet.requestConfig = {
   path: '/v2/pet/findByStatus',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['status'],
@@ -232,6 +236,7 @@ export function v2PetFindByTagsByGet(data: V2PetFindByTagsRequestByGet, extraDat
 v2PetFindByTagsByGet.requestConfig = {
   path: '/v2/pet/findByTags',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['tags'],
@@ -275,6 +280,7 @@ export function v2PetPetIdByGet(data: V2PetPetIdRequestByGet, extraData?: unknow
 v2PetPetIdByGet.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -308,6 +314,7 @@ export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unkn
 v2PetPetIdByPost.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'POST',
+  requestContentType: ['application/x-www-form-urlencoded'],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -337,6 +344,7 @@ export function v2PetPetIdByDelete(data: V2PetPetIdRequestByDelete, extraData?: 
 v2PetPetIdByDelete.requestConfig = {
   path: '/v2/pet/{petId}',
   method: 'DELETE',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -370,6 +378,7 @@ export function v2StoreInventoryByGet(
 v2StoreInventoryByGet.requestConfig = {
   path: '/v2/store/inventory',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -412,6 +421,7 @@ export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: 
 v2StoreOrderByPost.requestConfig = {
   path: '/v2/store/order',
   method: 'POST',
+  requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -456,6 +466,7 @@ export function v2StoreOrderOrderIdByGet(
 v2StoreOrderOrderIdByGet.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
@@ -492,6 +503,7 @@ export function v2StoreOrderOrderIdByDelete(
 v2StoreOrderOrderIdByDelete.requestConfig = {
   path: '/v2/store/order/{orderId}',
   method: 'DELETE',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
@@ -535,6 +547,7 @@ export function v2UserCreateWithListByPost(
 v2UserCreateWithListByPost.requestConfig = {
   path: '/v2/user/createWithList',
   method: 'POST',
+  requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -574,6 +587,7 @@ export function v2UserUsernameByGet(data: V2UserUsernameRequestByGet, extraData?
 v2UserUsernameByGet.requestConfig = {
   path: '/v2/user/{username}',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
@@ -611,6 +625,7 @@ export function v2UserUsernameByPut(data: V2UserUsernameRequestByPut, extraData?
 v2UserUsernameByPut.requestConfig = {
   path: '/v2/user/{username}',
   method: 'PUT',
+  requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
@@ -647,6 +662,7 @@ export function v2UserUsernameByDelete(
 v2UserUsernameByDelete.requestConfig = {
   path: '/v2/user/{username}',
   method: 'DELETE',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
@@ -678,6 +694,7 @@ export function v2UserLoginByGet(data: V2UserLoginRequestByGet, extraData?: unkn
 v2UserLoginByGet.requestConfig = {
   path: '/v2/user/login',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['username', 'password'],
@@ -704,6 +721,7 @@ export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData
 v2UserLogoutByGet.requestConfig = {
   path: '/v2/user/logout',
   method: 'GET',
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -747,6 +765,7 @@ export function v2UserCreateWithArrayByPost(
 v2UserCreateWithArrayByPost.requestConfig = {
   path: '/v2/user/createWithArray',
   method: 'POST',
+  requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -783,6 +802,7 @@ export function v2UserByPost(data: V2UserRequestByPost, extraData?: unknown, ...
 v2UserByPost.requestConfig = {
   path: '/v2/user',
   method: 'POST',
+  requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],

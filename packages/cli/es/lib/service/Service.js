@@ -975,7 +975,6 @@ function mergeConfig(rootConfig, serverConfig) {
     return __assign({}, merge(serverConfig, pick(rootConfig, [
         'genHeaders',
         'genCookies',
-        'genRequestContentType',
         'genResponseContentType',
         'requestFunctionFilePath',
         'requiredRequestField',

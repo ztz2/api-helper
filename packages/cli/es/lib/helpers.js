@@ -36,6 +36,15 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var _a, _b;
 // @ts-ignore
 import stringify from 'qs/lib/stringify';
@@ -55,6 +64,7 @@ var FormDataItem = /** @class */ (function () {
     return FormDataItem;
 }());
 export { FormDataItem };
+;
 export function checkMiniProgramEnv() {
     var _a, _b;
     try {
@@ -86,24 +96,31 @@ var hasNativeFormData = typeof FormData !== 'undefined';
 var hasNodeFormData = !hasNativeFormData && ((_b = (_a = global === null || global === void 0 ? void 0 : global['process']) === null || _a === void 0 ? void 0 : _a['versions']) === null || _b === void 0 ? void 0 : _b['node']) != null;
 var FormDataPolyfill = hasNativeFormData ? FormData : hasNodeFormData ? eval("require('form-data')") : undefined;
 var isMiniProgramEnv = checkMiniProgramEnv();
+function omit(obj, keys) {
+    var result = {};
+    for (var key in obj) {
+        if (!keys.includes(key)) {
+            result[key] = obj[key];
+        }
+    }
+    return result;
+}
 export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var e_1, _a;
-    var _b, _c, _d;
-    var requestFunctionConfig = {
-        path: requestConfig.path,
-        rawPath: requestConfig.path,
-        method: requestConfig.method,
-        data: undefined,
-        rawData: data,
-        rawExtraData: extraData,
-        hasFormData: false,
-    };
-    if (data == null || typeof data !== 'object') {
+    var _b, _c, _d, _e, _f;
+    var requestFunctionConfig = __assign(__assign({}, requestConfig), { path: requestConfig.path, rawPath: requestConfig.path, method: requestConfig.method, data: undefined, rawData: data, rawExtraData: extraData, hasFormData: false });
+    var isBinary = false;
+    try {
+        isBinary = data instanceof File || data instanceof Blob;
+    }
+    catch (_g) { }
+    if (data == null || typeof data !== 'object' || isBinary) {
         requestFunctionConfig.data = data;
         return requestFunctionConfig;
     }
     var queryParams = {};
     var cloneData = (checkType(data, 'Object') ? __assign({}, data) : {});
+    var isFormUrlencodedType = (_c = (_b = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _b === void 0 ? void 0 : _b.includes) === null || _c === void 0 ? void 0 : _c.call(_b, 'application/x-www-form-urlencoded');
     var formData;
     var appendFormData = function (key, val) { };
     if (!isMiniProgramEnv) {
@@ -130,13 +147,13 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     }
     var _loop_1 = function (k, v) {
         // 路径参数处理
-        if ((_b = requestConfig.pathParamKeyNameList) === null || _b === void 0 ? void 0 : _b.includes(k)) {
+        if ((_d = requestConfig.pathParamKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp("{".concat(k, "}"), 'g'), v);
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_c = requestConfig.formDataKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_e = requestConfig.formDataKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             var val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -151,22 +168,22 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             return "continue";
         }
         // URL 参数处理
-        if ((_d = requestConfig.queryStringKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
+        if ((_f = requestConfig.queryStringKeyNameList) === null || _f === void 0 ? void 0 : _f.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
     };
     try {
         // 数据处理
-        for (var _e = __values(Object.entries(cloneData)), _f = _e.next(); !_f.done; _f = _e.next()) {
-            var _g = __read(_f.value, 2), k = _g[0], v = _g[1];
+        for (var _h = __values(Object.entries(cloneData)), _j = _h.next(); !_j.done; _j = _h.next()) {
+            var _k = __read(_j.value, 2), k = _k[0], v = _k[1];
             _loop_1(k, v);
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_f && !_f.done && (_a = _e.return)) _a.call(_e);
+            if (_j && !_j.done && (_a = _h.return)) _a.call(_h);
         }
         finally { if (e_1) throw e_1.error; }
     }
@@ -175,16 +192,32 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     if (queryString.length) {
         requestFunctionConfig.path += "?".concat(queryString);
     }
-    // 合并Data
-    if (requestFunctionConfig.hasFormData) {
-        requestFunctionConfig.data = formData;
-        // @ts-ignore
-    }
-    else if (data instanceof FormDataPolyfill) {
-        requestFunctionConfig.data = data;
+    // application/x-www-form-urlencoded 单独处理
+    if (isFormUrlencodedType) {
+        var formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), __spreadArray(__spreadArray(__spreadArray([], __read(requestConfig.formDataKeyNameList), false), __read(requestConfig.queryStringKeyNameList), false), __read(requestConfig.pathParamKeyNameList), false));
+        var formUrlencodedStr = stringify(formUrlencodedData);
+        if (formUrlencodedStr) {
+            var keyText = requestFunctionConfig.path.includes('?') ? '&' : '?';
+            if (requestConfig.method.toLowerCase() === 'get') {
+                requestFunctionConfig.path += "".concat(keyText).concat(formUrlencodedStr);
+            }
+            else {
+                requestFunctionConfig.data = formUrlencodedStr;
+            }
+        }
     }
     else {
-        requestFunctionConfig.data = cloneData;
+        // 合并Data
+        if (requestFunctionConfig.hasFormData) {
+            requestFunctionConfig.data = formData;
+            // @ts-ignore
+        }
+        else if (data instanceof FormDataPolyfill) {
+            requestFunctionConfig.data = data;
+        }
+        else {
+            requestFunctionConfig.data = cloneData;
+        }
     }
     return requestFunctionConfig;
 }

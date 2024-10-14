@@ -15,7 +15,6 @@ export declare abstract class AbstractParserPlugin {
 export interface CommonConfig {
     genHeaders?: boolean;
     genCookies?: boolean;
-    genRequestContentType?: boolean;
     genResponseContentType?: boolean;
     requestFunctionFilePath: string;
     requiredRequestField?: boolean;

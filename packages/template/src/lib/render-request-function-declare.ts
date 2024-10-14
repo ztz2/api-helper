@@ -16,7 +16,6 @@ export function renderRequestFunctionDeclare(
     dataKey?: string | undefined;
     genHeaders?: boolean;
     genCookies?: boolean;
-    genRequestContentType?: boolean;
     genResponseContentType?: boolean;
     onRenderInterfaceName?: typeof renderInterfaceName;
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
@@ -73,8 +72,8 @@ export function renderRequestFunctionDeclare(
     path: '《api.path》',
     method: '《api.method.toLowerCase()》',《if options.genHeaders》
     headers: 《headersStr》,《/if》《if options.genCookies》
-    cookies: 《cookiesStr》,《/if》《if options.genRequestContentType》
-    requestContentType: 《requestContentTypeStr》,《/if》《if options.genResponseContentType》
+    cookies: 《cookiesStr》,《/if》
+    requestContentType: 《requestContentTypeStr》,《if options.genResponseContentType》
     responseContentType: 《responseContentTypeStr》,《/if》
     formDataKeyNameList: 《formDataKeyNameListStr》,
     pathParamKeyNameList: 《pathParamKeyNameListStr》,

@@ -2795,9 +2795,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
             "name",
             "status",
           ],
-          "requestContentType": [
-            "application/x-www-form-urlencoded",
-          ],
+          "requestContentType": [],
           "requestDataSchema": ObjectSchema {
             "description": "",
             "enum": [],

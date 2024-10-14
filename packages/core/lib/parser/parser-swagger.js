@@ -170,11 +170,11 @@ var ParserSwagger = /** @class */ (function () {
     };
     ParserSwagger.prototype.parserPath2API = function (parsedDocumentMap) {
         var e_3, _a, e_4, _b, e_5, _c;
-        var _d, _e, _f, _g, _h, _j, _k;
+        var _d, _e, _f, _g, _h, _j;
         var result = [];
         try {
             for (var parsedDocumentMap_1 = __values(parsedDocumentMap), parsedDocumentMap_1_1 = parsedDocumentMap_1.next(); !parsedDocumentMap_1_1.done; parsedDocumentMap_1_1 = parsedDocumentMap_1.next()) {
-                var _l = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _l[0], openAPIDocument = _l[1];
+                var _k = __read(parsedDocumentMap_1_1.value, 2), apiDocument = _k[0], openAPIDocument = _k[1];
                 var paths = openAPIDocument.paths;
                 if (!paths) {
                     continue;
@@ -183,7 +183,7 @@ var ParserSwagger = /** @class */ (function () {
                 var pathsEntries = Object.entries(paths);
                 var categoryMap = this.parserCategory(openAPIDocument);
                 for (var i = 0; i < pathsEntries.length; i++) {
-                    var _m = __read(pathsEntries[i], 2), path = _m[0], methodMap = _m[1];
+                    var _l = __read(pathsEntries[i], 2), path = _l[0], methodMap = _l[1];
                     var methodMapEntries = Object.entries(methodMap);
                     for (var w = 0; w < methodMapEntries.length; w++) {
                         var method = methodMapEntries[w][0].toLowerCase();
@@ -223,12 +223,9 @@ var ParserSwagger = /** @class */ (function () {
                                 if ((_h = api.formDataKeyNameList) === null || _h === void 0 ? void 0 : _h.length) {
                                     api.requestContentType = ['multipart/form-data'];
                                 }
-                                else if ((_j = api.queryStringKeyNameList) === null || _j === void 0 ? void 0 : _j.length) {
-                                    api.requestContentType = ['application/x-www-form-urlencoded'];
-                                }
                             }
                             // 将该API添加到所依赖的模块中
-                            var apiTags = ((_k = apiMap === null || apiMap === void 0 ? void 0 : apiMap.tags) === null || _k === void 0 ? void 0 : _k.length) > 0 ? apiMap.tags : [constant_1.UNKNOWN_GROUP_NAME];
+                            var apiTags = ((_j = apiMap === null || apiMap === void 0 ? void 0 : apiMap.tags) === null || _j === void 0 ? void 0 : _j.length) > 0 ? apiMap.tags : [constant_1.UNKNOWN_GROUP_NAME];
                             try {
                                 for (var apiTags_1 = (e_4 = void 0, __values(apiTags)), apiTags_1_1 = apiTags_1.next(); !apiTags_1_1.done; apiTags_1_1 = apiTags_1.next()) {
                                     var tagName = apiTags_1_1.value;
@@ -252,7 +249,7 @@ var ParserSwagger = /** @class */ (function () {
                 try {
                     // 将转换完成的分组添加到文档中
                     for (var categoryMap_1 = (e_5 = void 0, __values(categoryMap)), categoryMap_1_1 = categoryMap_1.next(); !categoryMap_1_1.done; categoryMap_1_1 = categoryMap_1.next()) {
-                        var _o = __read(categoryMap_1_1.value, 2), category = _o[1];
+                        var _m = __read(categoryMap_1_1.value, 2), category = _m[1];
                         apiDocument.categoryList.push(category);
                     }
                 }

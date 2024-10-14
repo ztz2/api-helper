@@ -52,7 +52,7 @@ describe('生成接口函数测试', () => {
     const category = openAPIDocument.categoryList[0];
     const codeBox: string[] = [];
     for (const api of category.apiList) {
-      codeBox.push(renderRequestFunction(api, { genRequestContentType: true, genResponseContentType: true }));
+      codeBox.push(renderRequestFunction(api, { genResponseContentType: true }));
     }
     expect(
       codeBox.join('\n'),

@@ -1,5 +1,14 @@
 # @api-helper/web
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies
+  - @api-helper/template@3.0.2
+  - @api-helper/core@3.0.2
+  - @api-helper/cli@3.0.2
+
 ## 0.0.3
 
 ### Patch Changes

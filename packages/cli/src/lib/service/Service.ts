@@ -840,7 +840,6 @@ function mergeConfig(rootConfig: Config, serverConfig: ServerConfig): ServerConf
   return { ...merge(serverConfig, pick(rootConfig, [
       'genHeaders',
       'genCookies',
-      'genRequestContentType',
       'genResponseContentType',
       'requestFunctionFilePath',
       'requiredRequestField',
