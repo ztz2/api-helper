@@ -18,7 +18,8 @@
     "publish:beta": "npm run changeset:pre-beta && npm run changeset:exit && npm run changeset:version && npm run publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.26.0"
+    "@changesets/cli": "^2.27.9",
+    "changeset": "^0.2.6"
   },
   "dependencies": {
     "koa": "^2.14.1"
