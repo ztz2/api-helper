@@ -44,7 +44,7 @@ $ yarn add @api-helper/cli
 ![API代码](./packages/docs/src/public/images/api-code-cli.gif)
 #### 例子
 ```sh
-$ npx apih -u https://接口文档地址.com
+$ npx apih -u https://接口文档.com/swagger-ui.html
 # or
 $ npx apih -u ./local-openapi.json
 ```
@@ -122,7 +122,7 @@ export default defineConfig({
   // 接口文档服务配置
   documentServers: [{
     // 文档地址【当type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
-    url: 'https://接口文档地址.com',
+    url: 'https://接口文档.com/swagger-ui.html',
     // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
     type: 'swagger',
     // 当前接口文档服务名称，有值的情况下，文件输出变成 -> 路径/当前name
