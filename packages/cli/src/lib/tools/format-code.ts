@@ -56,7 +56,7 @@ async function format(config: FormatCodeConfig & OnlyClearTempFolder): Promise<s
 
     if (!FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
       const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${FORMAT_CODE_EXTENSION.toString()}`;
-      log.warn('提示', errorText);
+      log.warn(errorText);
       return resolve(errorText);
     }
 
@@ -72,7 +72,7 @@ async function format(config: FormatCodeConfig & OnlyClearTempFolder): Promise<s
         resolve(config.sourceCode);
         const errorText = `\n@api-helper/cli/lib/tools/format.ts 格式化代码失败：\n${getErrorMessage(err as Error)}`;
         console.log('\n');
-        log.warn('提示', errorText);
+        log.warn(errorText);
         return clear();
       }
       try {
@@ -82,7 +82,7 @@ async function format(config: FormatCodeConfig & OnlyClearTempFolder): Promise<s
         resolve(config.sourceCode);
         const errorText = `\n@api-helper/lib/tools/format.ts 读取临时文件失败：\n${getErrorMessage(e as Error)}`;
         console.log('\n');
-        log.warn('提示', errorText);
+        log.warn(errorText);
       } finally {
         clear();
       }

@@ -45,17 +45,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -71,6 +60,17 @@ var __read = (this && this.__read) || function (o, n) {
         finally { if (e) throw e.error; }
     }
     return ar;
+};
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 import path from 'path';
 import to from 'await-to-js';
@@ -90,21 +90,21 @@ var ParserSwaggerPlugin = /** @class */ (function () {
     ParserSwaggerPlugin.prototype.run = function (documentServers, options) {
         if (options === void 0) { options = {}; }
         return __awaiter(this, void 0, void 0, function () {
-            var locales, result, tasks, _loop_1, documentServers_1, documentServers_1_1, documentServer;
-            var e_1, _a;
+            var locales, result, tasks, _loop_1, i;
             var _this = this;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0: return [4 /*yield*/, new Locales().init()];
                     case 1:
-                        locales = _b.sent();
+                        locales = _a.sent();
                         result = [];
                         if (documentServers.length === 0) {
                             return [2 /*return*/, result];
                         }
                         tasks = [];
-                        _loop_1 = function (documentServer) {
-                            var serverUrlText = "\u3010".concat(documentServer.url, "\u3011");
+                        _loop_1 = function (i) {
+                            var documentServer = documentServers[i];
+                            var serverUrlText = "".concat(documentServer.url);
                             tasks.push((function () { return __awaiter(_this, void 0, void 0, function () {
                                 var openAPIDocumentList, parsedDocumentList;
                                 return __generator(this, function (_a) {
@@ -113,14 +113,14 @@ var ParserSwaggerPlugin = /** @class */ (function () {
                                         case 1:
                                             openAPIDocumentList = _a.sent();
                                             if (openAPIDocumentList.length === 0) {
-                                                logger.error("".concat(locales.$t('没有获取到swagger配置文档：')).concat(serverUrlText));
+                                                logger.error("".concat(locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')).concat(serverUrlText).replace('%0', String(i)));
                                                 return [2 /*return*/];
                                             }
                                             return [4 /*yield*/, new ParserSwagger(options).parser(openAPIDocumentList)];
                                         case 2:
                                             parsedDocumentList = _a.sent();
                                             if (parsedDocumentList.length === 0) {
-                                                logger.error("".concat(locales.$t('解析swagger配置失败：')).concat(serverUrlText));
+                                                logger.error("".concat(locales.$t('解析swagger配置失败：documentServers[%0].url -> ')).concat(serverUrlText).replace('%0', String(i)));
                                                 return [2 /*return*/];
                                             }
                                             result.push({
@@ -132,22 +132,12 @@ var ParserSwaggerPlugin = /** @class */ (function () {
                                 });
                             }); })());
                         };
-                        try {
-                            for (documentServers_1 = __values(documentServers), documentServers_1_1 = documentServers_1.next(); !documentServers_1_1.done; documentServers_1_1 = documentServers_1.next()) {
-                                documentServer = documentServers_1_1.value;
-                                _loop_1(documentServer);
-                            }
-                        }
-                        catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                        finally {
-                            try {
-                                if (documentServers_1_1 && !documentServers_1_1.done && (_a = documentServers_1.return)) _a.call(documentServers_1);
-                            }
-                            finally { if (e_1) throw e_1.error; }
+                        for (i = 0; i < documentServers.length; i++) {
+                            _loop_1(i);
                         }
                         return [4 /*yield*/, to(Promise.all(tasks))];
                     case 2:
-                        _b.sent();
+                        _a.sent();
                         return [2 /*return*/, result];
                 }
             });
@@ -160,7 +150,7 @@ function getDocument(documentServer) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function () {
         var locales, requestConfig, openAPIDocumentList, isHttp, serverUrlText, filepath, _c, e, json, errorText, _d, openAPIDocument, origin, _e, swaggerResources, tasks2, _loop_2, swaggerResources_1, swaggerResources_1_1, sr;
-        var _f, _g, e_2, _h;
+        var _f, _g, e_1, _h;
         return __generator(this, function (_j) {
             switch (_j.label) {
                 case 0: return [4 /*yield*/, new Locales().init()];
@@ -227,12 +217,12 @@ function getDocument(documentServer) {
                             _loop_2(sr);
                         }
                     }
-                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
                     finally {
                         try {
                             if (swaggerResources_1_1 && !swaggerResources_1_1.done && (_h = swaggerResources_1.return)) _h.call(swaggerResources_1);
                         }
-                        finally { if (e_2) throw e_2.error; }
+                        finally { if (e_1) throw e_1.error; }
                     }
                     return [4 /*yield*/, to(Promise.all(tasks2))];
                 case 10:

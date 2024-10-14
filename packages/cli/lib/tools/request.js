@@ -49,7 +49,7 @@ request.interceptors.response.use((response) => {
     if (errorMsg) {
         if (!uniqueStatusMesMemo.includes(uniqueStatus)) {
             uniqueStatusMesMemo.push(uniqueStatus);
-            logger_1.default.error('提示', `${status} ${errorMsg}${documentServerUrl}`);
+            logger_1.default.error(`${status} ${errorMsg}${documentServerUrl}`);
         }
     }
     return Promise.reject(error);

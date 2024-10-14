@@ -58,7 +58,7 @@ function format(config) {
             }
             if (!constant_1.FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
                 const errorText = `@api-helper/cli/lib/tools/format.ts 未知的文件类型${formatCodeExtension}。允许的类型：${constant_1.FORMAT_CODE_EXTENSION.toString()}`;
-                logger_1.default.warn('提示', errorText);
+                logger_1.default.warn(errorText);
                 return resolve(errorText);
             }
             const prettierOptionsStr = JSON.stringify((0, merge_1.default)(new interface_1.PrettierOptions(), prettierOptions));
@@ -73,7 +73,7 @@ function format(config) {
                     resolve(config.sourceCode);
                     const errorText = `\n@api-helper/cli/lib/tools/format.ts 格式化代码失败：\n${(0, util_1.getErrorMessage)(err)}`;
                     console.log('\n');
-                    logger_1.default.warn('提示', errorText);
+                    logger_1.default.warn(errorText);
                     return clear();
                 }
                 try {
@@ -84,7 +84,7 @@ function format(config) {
                     resolve(config.sourceCode);
                     const errorText = `\n@api-helper/lib/tools/format.ts 读取临时文件失败：\n${(0, util_1.getErrorMessage)(e)}`;
                     console.log('\n');
-                    logger_1.default.warn('提示', errorText);
+                    logger_1.default.warn(errorText);
                 }
                 finally {
                     clear();

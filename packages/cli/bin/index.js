@@ -12,21 +12,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = __importDefault(require("path"));
+const ts_node_1 = require("ts-node");
 const commander_1 = require("commander");
+const findup_sync_1 = __importDefault(require("findup-sync"));
 const util_1 = require("../lib/tools/util");
 const lib_1 = require("../lib");
 const locales_1 = __importDefault(require("../lib/locales"));
-const program = new commander_1.Command();
-const basePath = (0, util_1.createFolder)(path_1.default.join(__dirname, './.cache.load.module'));
-const { version } = (0, util_1.loadModule)(path_1.default.join(require.resolve('@api-helper/cli'), '../../package.json'), {
-    isAsync: false,
-    folder: basePath,
-    callback: () => {
-        (0, util_1.removeFolder)(basePath);
-    }
+(0, ts_node_1.register)({
+    skipProject: true,
+    transpileOnly: true,
+    compilerOptions: {
+        strict: false,
+        lib: ['es2015'],
+        target: 'es2015',
+        module: 'commonjs',
+        moduleResolution: 'node',
+        allowJs: true,
+        declaration: false,
+        importHelpers: false,
+        removeComments: false,
+        esModuleInterop: true,
+        allowSyntheticDefaultImports: true,
+    },
 });
+const program = new commander_1.Command();
+const version = (_a = (0, util_1.loadJSON)((0, findup_sync_1.default)('package.json', { cwd: __dirname }))) === null || _a === void 0 ? void 0 : _a.version;
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         const locales = yield new locales_1.default().init();
@@ -48,6 +60,17 @@ function main() {
         });
         // 帮助信息
         program.addHelpText('after', locales.$t('帮助信息'));
+        // 初始化配置
+        program
+            .command('init')
+            .description(locales.$t('初始化配置'))
+            .option('-c, --config <string>', locales.$t('自定义配置文件路径'))
+            .action(function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                const options = program.opts();
+                yield (0, lib_1.run)('init', options);
+            });
+        });
         // 初始化配置
         program
             .command('init')

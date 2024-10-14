@@ -12,9 +12,9 @@ import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
 import tmp, { FileOptions } from 'tmp';
+import * as process from 'node:process';
 import { AxiosRequestConfig } from 'axios';
 import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
-import esbuild, { BuildOptions, BuildResult } from 'esbuild'
 
 import {
   Config,
@@ -122,63 +122,15 @@ export function removeFolder(path = '') {
 }
 
 /**
- * @description 模块加载
- * @param file {string} 模块路径，绝对路径。
- * @param options {object} 是否异步执行，默认true。
- * @return {T} 模块默认返回的内容
+ * @description 加载JSON对象
+ * @param jsonFile {string} 模块路径。
+ * @return { T } 模块默认返回的内容
  */
-export function loadModule<T>(file: string, options?: {
-  isAsync?: boolean,
-  folder?: string,
-  callback?: Function,
-}): Promise<T> | T {
-  const { isAsync, folder, callback } = merge({
-    isAsync: true,
-    folder: '',
-    callback: (a: any) => {}
-  }, options);
-  file = isAbsolute(file) ? file : resolve(file);
+export function loadJSON<T>(jsonFile: string): T {
   try {
-    fs.accessSync(file, fs.constants.F_OK);
-  } catch (e) {
-    throw Error(`can't resolve ${file}`);
-  }
-
-  // 编译文件
-  const buildParams: BuildOptions = {
-    entryPoints: [file],
-    bundle: false,
-    splitting: false,
-    format: 'cjs',
-    platform: 'node',
-    minify: false,
-    color: true,
-    write: false
-  };
-
-  const handleModule = (res: BuildResult): T => {
-    const { outputFiles } = res;
-    const [ outputFile ] = outputFiles ?? [];
-    const { text } = outputFile;
-    const filePath = createTempFile(text,  { folder: folder, postfix: '.js' });
-    const moduleContent = require(filePath);
-    if (moduleContent.__esModule) {
-      callback && callback(moduleContent.default);
-      return moduleContent.default;
-    }
-    callback && callback(moduleContent);
-    return moduleContent;
-  }
-
-  if (isAsync) {
-    return new Promise(async (resolve) => {
-      const res = await esbuild.build(buildParams);
-      resolve(handleModule(res));
-    });
-  }
-  const res = esbuild.buildSync(buildParams);
-
-  return handleModule(res);
+    return fsExtra.readJSONSync(jsonFile);
+  } catch (error) {}
+  return null as unknown as T;
 }
 
 /**
@@ -278,9 +230,10 @@ export async function documentServersRunParserPlugins(
 
   const execParserPluginMap = new Map();
   const spinner = ora(locales.$t('文档获取与解析，这可能需要等待一段时间...')).start();
-  for (const documentServer of documentServers) {
+  for (let i = 0; i < documentServers.length; i++) {
+    const documentServer = documentServers[i];
     if (!documentServer.url) {
-      logger.error(locales.$t(`documentServers.url 不可为空!`));
+      logger.error(locales.$t(`documentServers.url 不可为空!`).replace('%0', String(i)));
       continue;
     }
 
@@ -332,4 +285,15 @@ export function processTSFile (filename:string){
     return filename.replace('.ts','.js');
   }
   return filename;
+}
+
+export function getAbsolutePath(pathStr: string) {
+  return isAbsolute(pathStr) ? pathStr : join(process.cwd(), pathStr);
+}
+
+export function removeCwdPath(pathStr: string) {
+  pathStr = toUnixPath(pathStr);
+  const cwdPath = toUnixPath(process.cwd());
+  const temp = pathStr.replace(cwdPath, '');
+  return temp.startsWith('/') ? temp.slice(1) : temp;
 }

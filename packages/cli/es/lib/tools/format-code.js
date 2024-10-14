@@ -95,7 +95,7 @@ function format(config) {
                         }
                         if (!FORMAT_CODE_EXTENSION.includes(formatCodeExtension)) {
                             errorText = "@api-helper/cli/lib/tools/format.ts \u672A\u77E5\u7684\u6587\u4EF6\u7C7B\u578B".concat(formatCodeExtension, "\u3002\u5141\u8BB8\u7684\u7C7B\u578B\uFF1A").concat(FORMAT_CODE_EXTENSION.toString());
-                            log.warn('提示', errorText);
+                            log.warn(errorText);
                             return [2 /*return*/, resolve(errorText)];
                         }
                         prettierOptionsStr = JSON.stringify(merge(new PrettierOptions(), prettierOptions));
@@ -114,7 +114,7 @@ function format(config) {
                                             resolve(config.sourceCode);
                                             errorText = "\n@api-helper/cli/lib/tools/format.ts \u683C\u5F0F\u5316\u4EE3\u7801\u5931\u8D25\uFF1A\n".concat(getErrorMessage(err));
                                             console.log('\n');
-                                            log.warn('提示', errorText);
+                                            log.warn(errorText);
                                             return [2 /*return*/, clear()];
                                         }
                                         _a.label = 1;
@@ -130,7 +130,7 @@ function format(config) {
                                         resolve(config.sourceCode);
                                         errorText = "\n@api-helper/lib/tools/format.ts \u8BFB\u53D6\u4E34\u65F6\u6587\u4EF6\u5931\u8D25\uFF1A\n".concat(getErrorMessage(e_1));
                                         console.log('\n');
-                                        log.warn('提示', errorText);
+                                        log.warn(errorText);
                                         return [3 /*break*/, 5];
                                     case 4:
                                         clear();

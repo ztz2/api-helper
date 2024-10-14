@@ -1,28 +1,3 @@
-var __read = (this && this.__read) || function (o, n) {
-    var m = typeof Symbol === "function" && o[Symbol.iterator];
-    if (!m) return o;
-    var i = m.call(o), r, ar = [], e;
-    try {
-        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-    }
-    catch (error) { e = { error: error }; }
-    finally {
-        try {
-            if (r && !r.done && (m = i["return"])) m.call(i);
-        }
-        finally { if (e) throw e.error; }
-    }
-    return ar;
-};
-var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
-    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
-        if (ar || !(i in from)) {
-            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
-            ar[i] = from[i];
-        }
-    }
-    return to.concat(ar || Array.prototype.slice.call(from));
-};
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
@@ -45,67 +20,64 @@ var Logger = /** @class */ (function () {
             npmlog.level = level;
         }
     }
-    Logger.prototype.processMessage = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
-        if (message === void 0) { message = ''; }
-        var currentPrefix = prefix;
-        var currentMessage = message;
-        if (!message) {
-            currentPrefix = '';
-            currentMessage = prefix;
+    Logger.prototype.logLineFeed = function (options) {
+        if (options === null || options === void 0 ? void 0 : options.lineFeed) {
+            console.log(' ');
         }
-        if (currentPrefix instanceof Error) {
-            currentPrefix = currentPrefix.message;
-        }
-        if (currentMessage instanceof Error) {
-            currentMessage = currentMessage.message;
-        }
-        return [currentPrefix, currentMessage];
     };
-    Logger.prototype.silly = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.silly = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.silly.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.silly((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.verbose = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.verbose = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.verbose.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.verbose((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.info = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.info = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.info.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.info((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.timing = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.timing = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.timing.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.timing((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.http = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.http = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.http.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.http((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.notice = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.notice = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.notice.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.notice((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.warn = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.warn = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.warn.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.warn((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.error = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.error = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.error.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.error((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
-    Logger.prototype.silent = function (prefix, message) {
-        if (prefix === void 0) { prefix = ''; }
+    Logger.prototype.silent = function (message, options) {
+        var _a;
         if (message === void 0) { message = ''; }
-        npmlog.silent.apply(npmlog, __spreadArray([], __read(this.processMessage(prefix, message)), false));
+        this.logLineFeed(options);
+        npmlog.silent((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     };
     return Logger;
 }());

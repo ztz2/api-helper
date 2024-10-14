@@ -54,17 +54,18 @@ class ParserSwaggerPlugin {
                 return result;
             }
             const tasks = [];
-            for (const documentServer of documentServers) {
-                const serverUrlText = `【${documentServer.url}】`;
+            for (let i = 0; i < documentServers.length; i++) {
+                const documentServer = documentServers[i];
+                const serverUrlText = `${documentServer.url}`;
                 tasks.push((() => __awaiter(this, void 0, void 0, function* () {
                     const openAPIDocumentList = yield getDocument(documentServer);
                     if (openAPIDocumentList.length === 0) {
-                        logger_1.default.error(`${locales.$t('没有获取到swagger配置文档：')}${serverUrlText}`);
+                        logger_1.default.error(`${locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
                         return;
                     }
                     const parsedDocumentList = yield new core_1.ParserSwagger(options).parser(openAPIDocumentList);
                     if (parsedDocumentList.length === 0) {
-                        logger_1.default.error(`${locales.$t('解析swagger配置失败：')}${serverUrlText}`);
+                        logger_1.default.error(`${locales.$t('解析swagger配置失败：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
                         return;
                     }
                     result.push({

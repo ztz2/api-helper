@@ -2,89 +2,74 @@ import npmlog, { LogLevels } from 'npmlog';
 
 const Logger_Levels: Array<LogLevels> = ['silly', 'verbose', 'info', 'timing', 'http', 'notice', 'warn', 'error', 'silent'];
 
+type LoggerConstructorOptions = {
+  level?: LogLevels;
+  prefix?: string;
+}
 type LoggerOptions = {
-  level?: LogLevels
+  prefix?: string;
+  lineFeed?: boolean;
 }
 class Logger {
-  constructor(options: LoggerOptions = {}) {
+  constructor(options: LoggerConstructorOptions = {}) {
     const level = options.level || 'verbose';
     if (Logger_Levels.includes(level)) {
       npmlog.level = level;
     }
   }
-  private processMessage(prefix: string | Error = '', message: string | Error = ''): [string, string] {
-    let currentPrefix = prefix;
-    let currentMessage = message;
-    if (!message) {
-      currentPrefix = '';
-      currentMessage = prefix;
-    }
-    if (currentPrefix instanceof Error) {
-      currentPrefix = currentPrefix.message;
-    }
-    if (currentMessage instanceof Error) {
-      currentMessage = currentMessage.message;
-    }
-    return [ currentPrefix, currentMessage ];
+
+  private logLineFeed(options?: LoggerOptions) {
+    if (options?.lineFeed) { console.log(' '); }
   }
 
-  public silly(message: string): void;
-  public silly(prefix: string, message: string): void;
-  public silly (prefix = '', message = '') {
-    npmlog.silly(...this.processMessage(prefix, message));
+  public silly (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.silly(options?.prefix ?? '', message);
   }
 
-  public verbose(message: string): void;
-  public verbose(prefix: string, message: string): void;
-  public verbose (prefix = '', message = '') {
-    npmlog.verbose(...this.processMessage(prefix, message));
+  public verbose (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.verbose(options?.prefix ?? '', message);
   }
 
-  public info(message: string): void;
-  public info(prefix: string, message: string): void;
-  public info (prefix = '', message = '') {
-    npmlog.info(...this.processMessage(prefix, message));
+  public info (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.info(options?.prefix ?? '', message);
   }
 
-  public timing(message: string): void;
-  public timing(prefix: string, message: string): void;
-  public timing (prefix = '', message = '') {
-    npmlog.timing(...this.processMessage(prefix, message));
+  public timing (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.timing(options?.prefix ?? '', message);
   }
 
-  public http(message: string): void;
-  public http(prefix: string, message: string): void;
-  public http (prefix = '', message = '') {
-    npmlog.http(...this.processMessage(prefix, message));
+  public http (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.http(options?.prefix ?? '', message);
   }
 
-  public notice(message: string): void;
-  public notice(prefix: string, message: string): void;
-  public notice (prefix = '', message = '') {
-    npmlog.notice(...this.processMessage(prefix, message));
+  public notice (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.notice(options?.prefix ?? '', message);
   }
 
-  public warn(message: string): void;
-  public warn(prefix: string, message: string): void;
-  public warn (prefix = '', message = '') {
-    npmlog.warn(...this.processMessage(prefix, message));
+  public warn (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.warn(options?.prefix ?? '', message);
   }
 
-  public error(message: string | Error): void;
-  public error(prefix: string, message: string | Error): void;
-  public error (prefix: string | Error = '', message: string | Error = '') {
-    npmlog.error(...this.processMessage(prefix, message));
+  public error (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.error(options?.prefix ?? '', message);
   }
 
-  public silent(message: string): void;
-  public silent(prefix: string, message: string): void;
-  public silent (prefix = '', message = '') {
-    npmlog.silent(...this.processMessage(prefix, message));
+  public silent (message = '', options?: LoggerOptions) {
+    this.logLineFeed(options);
+    npmlog.silent(options?.prefix ?? '', message);
   }
 }
 
 // 判断是否启用了debug模式，debug模式下，显示更多的日志信息，通过debug指令
-const loggerOptions: LoggerOptions = {
+const loggerOptions: LoggerConstructorOptions = {
   level: 'verbose'
 };
 for (const v of process.argv) {

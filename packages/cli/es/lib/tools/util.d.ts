@@ -29,16 +29,11 @@ export declare function checkType<T>(value: T, target: string): boolean;
 export declare function createFolder(path: string, isFile?: boolean): string;
 export declare function removeFolder(path?: string): boolean;
 /**
- * @description 模块加载
- * @param file {string} 模块路径，绝对路径。
- * @param options {object} 是否异步执行，默认true。
- * @return {T} 模块默认返回的内容
+ * @description 加载JSON对象
+ * @param jsonFile {string} 模块路径。
+ * @return { T } 模块默认返回的内容
  */
-export declare function loadModule<T>(file: string, options?: {
-    isAsync?: boolean;
-    folder?: string;
-    callback?: Function;
-}): Promise<T> | T;
+export declare function loadJSON<T>(jsonFile: string): T;
 /**
  * @description 将路径统一为 unix 风格的路径。
  * @param {string} path 路径
@@ -66,4 +61,6 @@ export declare function documentServersRunParserPlugins(documentServers: Documen
     parserPluginRunResult: ParserPluginRunResult;
 }>;
 export declare function processTSFile(filename: string): string;
+export declare function getAbsolutePath(pathStr: string): string;
+export declare function removeCwdPath(pathStr: string): string;
 export {};

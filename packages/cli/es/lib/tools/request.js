@@ -44,7 +44,7 @@ request.interceptors.response.use(function (response) {
     if (errorMsg) {
         if (!uniqueStatusMesMemo.includes(uniqueStatus)) {
             uniqueStatusMesMemo.push(uniqueStatus);
-            log.error('提示', "".concat(status, " ").concat(errorMsg).concat(documentServerUrl));
+            log.error("".concat(status, " ").concat(errorMsg).concat(documentServerUrl));
         }
     }
     return Promise.reject(error);

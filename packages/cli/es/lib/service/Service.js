@@ -87,11 +87,11 @@ import fg from 'fast-glob';
 import { pinyin } from 'pinyin-pro';
 // import { Worker } from 'node:worker_threads';
 import { join, isAbsolute, } from 'path';
-import { stat, outputFile, } from 'fs-extra';
+import { stat, outputFile, pathExistsSync, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
-import { merge, pick } from 'lodash';
+import { merge, pick, castArray } from 'lodash';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
-import { resolve, toUnixPath, loadModule, removeFolder, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
+import { resolve, toUnixPath, removeFolder, getAbsolutePath, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
 // import './worker-thread';
 import Locales from '../../lib/locales';
 import logger from '../../lib/tools/logger';
@@ -119,53 +119,59 @@ var Service = /** @class */ (function () {
         this.locales = new Locales();
     }
     Service.prototype.run = function () {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _a;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+            var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _b;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0: return [4 /*yield*/, this.locales.init()];
                     case 1:
-                        _b.sent();
+                        _c.sent();
                         this.startDate = Date.now();
                         return [4 /*yield*/, this.getConfigFile()];
                     case 2:
-                        configList = _b.sent();
+                        configList = _c.sent();
                         len = configList.length;
                         // 添加解析插件
                         this.injectParserPlugins(configList);
                         i = 0;
-                        _b.label = 3;
+                        _c.label = 3;
                     case 3:
                         if (!(i < configList.length)) return [3 /*break*/, 11];
-                        _b.label = 4;
+                        _c.label = 4;
                     case 4:
-                        _b.trys.push([4, 9, , 10]);
+                        _c.trys.push([4, 9, , 10]);
                         config = configList[i];
                         if (len > 1) {
                             logger.info("\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
+                        // 缺少文档配置，跳过该项
+                        if (!((_a = config.documentServers) === null || _a === void 0 ? void 0 : _a.length)) {
+                            logger.error(this.locales.$t('缺少 documentServers 配置'));
+                            return [3 /*break*/, 10];
+                        }
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
                     case 5:
-                        parserPluginRunResult = _b.sent();
+                        parserPluginRunResult = _c.sent();
                         return [4 /*yield*/, this.chooseDocument(parserPluginRunResult)];
                     case 6:
-                        chooseDocumentList = _b.sent();
+                        chooseDocumentList = _c.sent();
                         return [4 /*yield*/, this.genCode(config, chooseDocumentList)];
                     case 7:
-                        codes = _b.sent();
+                        codes = _c.sent();
                         return [4 /*yield*/, this.output(config, codes)];
                     case 8:
-                        _b.sent();
+                        _c.sent();
                         return [3 /*break*/, 10];
                     case 9:
-                        _a = _b.sent();
+                        _b = _c.sent();
                         return [3 /*break*/, 10];
                     case 10:
                         i++;
                         return [3 /*break*/, 3];
                     case 11: return [4 /*yield*/, this.clear()];
                     case 12:
-                        _b.sent();
+                        _c.sent();
                         return [2 /*return*/];
                 }
             });
@@ -236,12 +242,14 @@ var Service = /** @class */ (function () {
     Service.prototype.getConfigFile = function () {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
-            var constructorOptions, outputPath, isJS, target, suffixName, configFilePath, spinner, c, e_4, files, c;
-            return __generator(this, function (_d) {
-                switch (_d.label) {
+            var constructorOptions, outputPath, isJS, target, suffixName, configFilePath, spinner, c, configList_2, files, configList, configPath, hasConfigFile, files_1, files_1_1, file, c, temp;
+            var e_4, _d;
+            return __generator(this, function (_e) {
+                switch (_e.label) {
                     case 0:
                         constructorOptions = this.constructorOptions;
                         // 如果基于CLI执行，不需要在进行查找文件
+                        // npx apih -url https://xxxx.com/swagger-ui.html
                         if (constructorOptions.url) {
                             outputPath = (_a = constructorOptions === null || constructorOptions === void 0 ? void 0 : constructorOptions.outputPath) !== null && _a !== void 0 ? _a : '';
                             isJS = outputPath.endsWith('.js') || constructorOptions.target === 'javascript';
@@ -262,45 +270,64 @@ var Service = /** @class */ (function () {
                         }
                         configFilePath = this.configFilePath;
                         spinner = ora(this.locales.$t('读取配置文件')).start();
-                        if (!configFilePath) return [3 /*break*/, 4];
-                        _d.label = 1;
+                        // 有配置文件
+                        if (configFilePath) {
+                            c = getAbsolutePath(configFilePath);
+                            if (!pathExistsSync(c)) {
+                                spinner.fail();
+                                logger.error(this.locales.$t('配置文件不存在，程序退出'));
+                                return [2 /*return*/, process.exit(1)];
+                            }
+                            configList_2 = castArray(require(c).default);
+                            if (!configList_2.length) {
+                                spinner.fail();
+                                logger.error(this.locales.$t('配置为空，程序退出'));
+                                return [2 /*return*/, process.exit(1)];
+                            }
+                            spinner.succeed();
+                            logger.info(this.locales.$t('配置已加载：') + toUnixPath(configFilePath));
+                            return [2 /*return*/, configList_2];
+                        }
+                        return [4 /*yield*/, fg(['apih.config.(ts|js|cjs|mjs)'], { cwd: process.cwd(), absolute: true })];
                     case 1:
-                        _d.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, loadModule(configFilePath, {
-                                folder: this.tempFolder
-                            })];
-                    case 2:
-                        c = _d.sent();
-                        if (c) {
-                            spinner.succeed();
-                            return [2 /*return*/, Array.isArray(c) ? c : [c]];
+                        files = _e.sent();
+                        configList = [];
+                        configPath = '';
+                        hasConfigFile = false;
+                        try {
+                            for (files_1 = __values(files), files_1_1 = files_1.next(); !files_1_1.done; files_1_1 = files_1.next()) {
+                                file = files_1_1.value;
+                                c = getAbsolutePath(file);
+                                if (pathExistsSync(c)) {
+                                    hasConfigFile = true;
+                                    temp = castArray(require(c).default);
+                                    if (temp && temp.length) {
+                                        configPath = file;
+                                        configList = temp;
+                                    }
+                                }
+                            }
                         }
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_4 = _d.sent();
-                        spinner.fail();
-                        logger.error(e_4);
-                        process.exit(1);
-                        return [3 /*break*/, 4];
-                    case 4: return [4 /*yield*/, fg(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true })];
-                    case 5:
-                        files = _d.sent();
-                        if (!files.length) return [3 /*break*/, 7];
-                        return [4 /*yield*/, loadModule(files[0], {
-                                folder: this.tempFolder
-                            })];
-                    case 6:
-                        c = _d.sent();
-                        if (c) {
-                            spinner.succeed();
-                            return [2 /*return*/, Array.isArray(c) ? c : [c]];
+                        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                        finally {
+                            try {
+                                if (files_1_1 && !files_1_1.done && (_d = files_1.return)) _d.call(files_1);
+                            }
+                            finally { if (e_4) throw e_4.error; }
                         }
-                        _d.label = 7;
-                    case 7:
-                        spinner.fail();
-                        logger.error(this.locales.$t('配置文件不存在，程序退出'));
-                        process.exit(1);
-                        return [2 /*return*/];
+                        if (!hasConfigFile) {
+                            spinner.fail();
+                            logger.error(this.locales.$t('配置文件不存在，程序退出'));
+                            process.exit(1);
+                        }
+                        if (!configList.length) {
+                            spinner.fail();
+                            logger.error(this.locales.$t('配置为空，程序退出'));
+                            return [2 /*return*/, process.exit(1)];
+                        }
+                        spinner.succeed();
+                        logger.info(this.locales.$t('配置已加载：') + toUnixPath(configPath));
+                        return [2 /*return*/, configList];
                 }
             });
         });

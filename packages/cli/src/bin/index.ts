@@ -1,26 +1,36 @@
 #!/usr/bin/env node
-import path from 'path';
+import { register } from 'ts-node';
 import { Command } from 'commander';
+import findUpSync from 'findup-sync';
 
 import {
-  loadModule,
-  createFolder,
-  removeFolder,
+  loadJSON
 } from '@/lib/tools/util';
 import { run } from '@/lib';
 import Locales from '@/lib/locales';
 import { ServerOptions } from '@/lib/service/Service';
 
+register({
+  skipProject: true,
+  transpileOnly: true,
+  compilerOptions: {
+    strict: false,
+    lib: ['es2015'],
+    target: 'es2015',
+    module: 'commonjs',
+    moduleResolution: 'node',
+    allowJs: true,
+    declaration: false,
+    importHelpers: false,
+    removeComments: false,
+    esModuleInterop: true,
+    allowSyntheticDefaultImports: true,
+  },
+});
+
 const program = new Command();
 
-const basePath = createFolder(path.join(__dirname, './.cache.load.module'));
-const { version } = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), {
-  isAsync: false,
-  folder: basePath,
-  callback: () => {
-    removeFolder(basePath);
-  }
-}) as Recordable;
+const version = loadJSON<Recordable>(findUpSync('package.json', { cwd: __dirname }) as string)?.version;
 
 async function main() {
   const locales = await new Locales().init();
@@ -40,10 +50,20 @@ async function main() {
       await run(null, options);
     });
 
-// 帮助信息
+  // 帮助信息
   program.addHelpText('after', locales.$t('帮助信息'));
 
-// 初始化配置
+  // 初始化配置
+  program
+    .command('init')
+    .description(locales.$t('初始化配置'))
+    .option('-c, --config <string>', locales.$t('自定义配置文件路径'))
+    .action(async function () {
+      const options: ServerOptions = program.opts();
+      await run('init', options);
+    });
+
+  // 初始化配置
   program
     .command('init')
     .description(locales.$t('初始化配置'))

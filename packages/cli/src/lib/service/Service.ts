@@ -3,27 +3,28 @@ import fg from 'fast-glob';
 // import os from 'node:os';
 import { pinyin } from 'pinyin-pro';
 // import { Worker } from 'node:worker_threads';
-import {
+import path, {
   join,
   isAbsolute,
 } from 'path';
 import {
   stat,
   outputFile,
+  pathExistsSync,
 } from 'fs-extra';
 import {
   artTemplate,
   renderAllApi,
 } from '@api-helper/template';
-import { merge, pick } from 'lodash';
+import { merge, pick, castArray } from 'lodash';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 
 import {
   resolve,
   toUnixPath,
-  loadModule,
   removeFolder,
+  getAbsolutePath,
   getExtensionName,
   getNormalizedRelativePath,
   documentServersRunParserPlugins,
@@ -54,6 +55,7 @@ type GenCodeType = Array<{ outputFilePath: string; code: string; codeDeclare: st
 export type ServerOptions = {
   // 配置文件路径
   config: string;
+  // 其余属性也是 Config 项，来自CLI直接操作
   url?: string;
   outputPath?: string;
   target?: string;
@@ -86,10 +88,9 @@ class Service{
   }
 
   async run() {
-
     await this.locales.init();
-
     this.startDate = Date.now();
+
     const configList = await this.getConfigFile();
     const len = configList.length;
 
@@ -101,6 +102,11 @@ class Service{
         const config = configList[i];
         if (len > 1) {
           logger.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
+        }
+        // 缺少文档配置，跳过该项
+        if (!config.documentServers?.length) {
+          logger.error(this.locales.$t('缺少 documentServers 配置'));
+          continue;
         }
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
@@ -145,6 +151,7 @@ class Service{
   private async getConfigFile(): Promise<Config[]> {
     const constructorOptions = this.constructorOptions;
     // 如果基于CLI执行，不需要在进行查找文件
+    // npx apih -url https://xxxx.com/swagger-ui.html
     if (constructorOptions.url) {
       const outputPath: string = constructorOptions?.outputPath ?? '';
       const isJS = outputPath.endsWith('.js') || constructorOptions.target === 'javascript';
@@ -169,36 +176,55 @@ class Service{
 
     // 有配置文件
     if (configFilePath) {
-      try {
-        const c = await loadModule(configFilePath, {
-          folder: this.tempFolder
-        });
-        if (c) {
-          spinner.succeed();
-          return Array.isArray(c) ? c : [c];
-        }
-      } catch (e: any) {
+      const c = getAbsolutePath(configFilePath);
+      if (!pathExistsSync(c)) {
         spinner.fail();
-        logger.error(e);
-        process.exit(1);
+        logger.error(this.locales.$t('配置文件不存在，程序退出'));
+        return process.exit(1);
       }
+      const configList = castArray(require(c).default);
+      if (!configList.length) {
+        spinner.fail();
+        logger.error(this.locales.$t('配置为空，程序退出'));
+        return process.exit(1);
+      }
+      spinner.succeed();
+      logger.info(this.locales.$t('配置已加载：') + toUnixPath(configFilePath));
+      return configList;
     }
 
     // 没有从根目录寻找
-    const files = await fg(['apih.config.(js|ts|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
-    if (files.length) {
-      const c = await loadModule(files[0], {
-        folder: this.tempFolder
-      });
-      if (c) {
-        spinner.succeed();
-        return Array.isArray(c) ? c : [c];
+    const files = await fg(['apih.config.(ts|js|cjs|mjs)'], { cwd: process.cwd(), absolute: true });
+    let configList = [];
+    let configPath = '';
+    let hasConfigFile = false;
+    for (const file of files) {
+      const c = getAbsolutePath(file);
+      if (pathExistsSync(c)) {
+        hasConfigFile = true;
+        const temp = castArray(require(c).default);
+        if (temp && temp.length) {
+          configPath = file;
+          configList = temp;
+        }
       }
     }
 
-    spinner.fail();
-    logger.error(this.locales.$t('配置文件不存在，程序退出'));
-    process.exit(1);
+    if (!hasConfigFile) {
+      spinner.fail();
+      logger.error(this.locales.$t('配置文件不存在，程序退出'));
+      process.exit(1);
+    }
+
+    if (!configList.length) {
+      spinner.fail();
+      logger.error(this.locales.$t('配置为空，程序退出'));
+      return process.exit(1);
+    }
+
+    spinner.succeed();
+    logger.info(this.locales.$t('配置已加载：') + toUnixPath(configPath));
+    return configList;
   }
 
   // 2. 文档获取与解析

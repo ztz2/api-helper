@@ -53,7 +53,7 @@ request.interceptors.response.use(
     if (errorMsg) {
       if (!uniqueStatusMesMemo.includes(uniqueStatus)) {
         uniqueStatusMesMemo.push(uniqueStatus);
-        log.error('提示', `${status} ${errorMsg}${documentServerUrl}`)
+        log.error(`${status} ${errorMsg}${documentServerUrl}`)
       }
     }
 

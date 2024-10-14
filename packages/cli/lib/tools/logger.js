@@ -12,47 +12,55 @@ class Logger {
             npmlog_1.default.level = level;
         }
     }
-    processMessage(prefix = '', message = '') {
-        let currentPrefix = prefix;
-        let currentMessage = message;
-        if (!message) {
-            currentPrefix = '';
-            currentMessage = prefix;
+    logLineFeed(options) {
+        if (options === null || options === void 0 ? void 0 : options.lineFeed) {
+            console.log(' ');
         }
-        if (currentPrefix instanceof Error) {
-            currentPrefix = currentPrefix.message;
-        }
-        if (currentMessage instanceof Error) {
-            currentMessage = currentMessage.message;
-        }
-        return [currentPrefix, currentMessage];
     }
-    silly(prefix = '', message = '') {
-        npmlog_1.default.silly(...this.processMessage(prefix, message));
+    silly(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.silly((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    verbose(prefix = '', message = '') {
-        npmlog_1.default.verbose(...this.processMessage(prefix, message));
+    verbose(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.verbose((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    info(prefix = '', message = '') {
-        npmlog_1.default.info(...this.processMessage(prefix, message));
+    info(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.info((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    timing(prefix = '', message = '') {
-        npmlog_1.default.timing(...this.processMessage(prefix, message));
+    timing(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.timing((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    http(prefix = '', message = '') {
-        npmlog_1.default.http(...this.processMessage(prefix, message));
+    http(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.http((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    notice(prefix = '', message = '') {
-        npmlog_1.default.notice(...this.processMessage(prefix, message));
+    notice(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.notice((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    warn(prefix = '', message = '') {
-        npmlog_1.default.warn(...this.processMessage(prefix, message));
+    warn(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.warn((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    error(prefix = '', message = '') {
-        npmlog_1.default.error(...this.processMessage(prefix, message));
+    error(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.error((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
-    silent(prefix = '', message = '') {
-        npmlog_1.default.silent(...this.processMessage(prefix, message));
+    silent(message = '', options) {
+        var _a;
+        this.logLineFeed(options);
+        npmlog_1.default.silent((_a = options === null || options === void 0 ? void 0 : options.prefix) !== null && _a !== void 0 ? _a : '', message);
     }
 }
 // 判断是否启用了debug模式，debug模式下，显示更多的日志信息，通过debug指令

@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processTSFile = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadModule = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
+exports.removeCwdPath = exports.getAbsolutePath = exports.processTSFile = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadJSON = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
 const qs_1 = __importDefault(require("qs"));
 const ora_1 = __importDefault(require("ora"));
 const path_1 = __importStar(require("path"));
@@ -40,8 +40,8 @@ const fs_extra_1 = __importDefault(require("fs-extra"));
 const url_parse_1 = __importDefault(require("url-parse"));
 const lodash_1 = require("lodash");
 const tmp_1 = __importDefault(require("tmp"));
+const process = __importStar(require("node:process"));
 const util_1 = require("@api-helper/core/lib/utils/util");
-const esbuild_1 = __importDefault(require("esbuild"));
 const locales_1 = __importDefault(require("../../lib/locales"));
 const logger_1 = __importDefault(require("../../lib/tools/logger"));
 function resolve(p = '') {
@@ -131,58 +131,18 @@ function removeFolder(path = '') {
 }
 exports.removeFolder = removeFolder;
 /**
- * @description 模块加载
- * @param file {string} 模块路径，绝对路径。
- * @param options {object} 是否异步执行，默认true。
- * @return {T} 模块默认返回的内容
+ * @description 加载JSON对象
+ * @param jsonFile {string} 模块路径。
+ * @return { T } 模块默认返回的内容
  */
-function loadModule(file, options) {
-    const { isAsync, folder, callback } = (0, lodash_1.merge)({
-        isAsync: true,
-        folder: '',
-        callback: (a) => { }
-    }, options);
-    file = (0, path_1.isAbsolute)(file) ? file : resolve(file);
+function loadJSON(jsonFile) {
     try {
-        node_fs_1.default.accessSync(file, node_fs_1.default.constants.F_OK);
+        return fs_extra_1.default.readJSONSync(jsonFile);
     }
-    catch (e) {
-        throw Error(`can't resolve ${file}`);
-    }
-    // 编译文件
-    const buildParams = {
-        entryPoints: [file],
-        bundle: false,
-        splitting: false,
-        format: 'cjs',
-        platform: 'node',
-        minify: false,
-        color: true,
-        write: false
-    };
-    const handleModule = (res) => {
-        const { outputFiles } = res;
-        const [outputFile] = outputFiles !== null && outputFiles !== void 0 ? outputFiles : [];
-        const { text } = outputFile;
-        const filePath = createTempFile(text, { folder: folder, postfix: '.js' });
-        const moduleContent = require(filePath);
-        if (moduleContent.__esModule) {
-            callback && callback(moduleContent.default);
-            return moduleContent.default;
-        }
-        callback && callback(moduleContent);
-        return moduleContent;
-    };
-    if (isAsync) {
-        return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
-            const res = yield esbuild_1.default.build(buildParams);
-            resolve(handleModule(res));
-        }));
-    }
-    const res = esbuild_1.default.buildSync(buildParams);
-    return handleModule(res);
+    catch (error) { }
+    return null;
 }
-exports.loadModule = loadModule;
+exports.loadJSON = loadJSON;
 /**
  * @description 将路径统一为 unix 风格的路径。
  * @param {string} path 路径
@@ -254,9 +214,10 @@ function documentServersRunParserPlugins(documentServers, parserPlugins, options
         };
         const execParserPluginMap = new Map();
         const spinner = (0, ora_1.default)(locales.$t('文档获取与解析，这可能需要等待一段时间...')).start();
-        for (const documentServer of documentServers) {
+        for (let i = 0; i < documentServers.length; i++) {
+            const documentServer = documentServers[i];
             if (!documentServer.url) {
-                logger_1.default.error(locales.$t(`documentServers.url 不可为空!`));
+                logger_1.default.error(locales.$t(`documentServers.url 不可为空!`).replace('%0', String(i)));
                 continue;
             }
             if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
@@ -304,3 +265,14 @@ function processTSFile(filename) {
     return filename;
 }
 exports.processTSFile = processTSFile;
+function getAbsolutePath(pathStr) {
+    return (0, path_1.isAbsolute)(pathStr) ? pathStr : (0, path_1.join)(process.cwd(), pathStr);
+}
+exports.getAbsolutePath = getAbsolutePath;
+function removeCwdPath(pathStr) {
+    pathStr = toUnixPath(pathStr);
+    const cwdPath = toUnixPath(process.cwd());
+    const temp = pathStr.replace(cwdPath, '');
+    return temp.startsWith('/') ? temp.slice(1) : temp;
+}
+exports.removeCwdPath = removeCwdPath;

@@ -45,6 +45,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __read = (this && this.__read) || function (o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m) return o;
@@ -61,17 +72,6 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-var __values = (this && this.__values) || function(o) {
-    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-    if (m) return m.call(o);
-    if (o && typeof o.length === "number") return {
-        next: function () {
-            if (o && i >= o.length) o = void 0;
-            return { value: o && o[i++], done: !o };
-        }
-    };
-    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
 import qs from 'qs';
 import ora from 'ora';
 import path, { join, dirname, relative, isAbsolute, resolve as pathResolve, } from 'path';
@@ -80,8 +80,8 @@ import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
 import tmp from 'tmp';
+import * as process from 'node:process';
 import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
-import esbuild from 'esbuild';
 import Locales from '../../lib/locales';
 import logger from '../../lib/tools/logger';
 export function resolve(p) {
@@ -168,65 +168,16 @@ export function removeFolder(path) {
     }
 }
 /**
- * @description 模块加载
- * @param file {string} 模块路径，绝对路径。
- * @param options {object} 是否异步执行，默认true。
- * @return {T} 模块默认返回的内容
+ * @description 加载JSON对象
+ * @param jsonFile {string} 模块路径。
+ * @return { T } 模块默认返回的内容
  */
-export function loadModule(file, options) {
-    var _this = this;
-    var _a = merge({
-        isAsync: true,
-        folder: '',
-        callback: function (a) { }
-    }, options), isAsync = _a.isAsync, folder = _a.folder, callback = _a.callback;
-    file = isAbsolute(file) ? file : resolve(file);
+export function loadJSON(jsonFile) {
     try {
-        fs.accessSync(file, fs.constants.F_OK);
+        return fsExtra.readJSONSync(jsonFile);
     }
-    catch (e) {
-        throw Error("can't resolve ".concat(file));
-    }
-    // 编译文件
-    var buildParams = {
-        entryPoints: [file],
-        bundle: false,
-        splitting: false,
-        format: 'cjs',
-        platform: 'node',
-        minify: false,
-        color: true,
-        write: false
-    };
-    var handleModule = function (res) {
-        var outputFiles = res.outputFiles;
-        var _a = __read(outputFiles !== null && outputFiles !== void 0 ? outputFiles : [], 1), outputFile = _a[0];
-        var text = outputFile.text;
-        var filePath = createTempFile(text, { folder: folder, postfix: '.js' });
-        var moduleContent = require(filePath);
-        if (moduleContent.__esModule) {
-            callback && callback(moduleContent.default);
-            return moduleContent.default;
-        }
-        callback && callback(moduleContent);
-        return moduleContent;
-    };
-    if (isAsync) {
-        return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
-            var res;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, esbuild.build(buildParams)];
-                    case 1:
-                        res = _a.sent();
-                        resolve(handleModule(res));
-                        return [2 /*return*/];
-                }
-            });
-        }); });
-    }
-    var res = esbuild.buildSync(buildParams);
-    return handleModule(res);
+    catch (error) { }
+    return null;
 }
 /**
  * @description 将路径统一为 unix 风格的路径。
@@ -286,13 +237,13 @@ export function processRequestConfig(documentServer, options) {
 export function documentServersRunParserPlugins(documentServers, parserPlugins, options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var locales, parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, spinner, documentServers_1, documentServers_1_1, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b, errorText;
-        var e_1, _c, e_2, _d, e_3, _e;
-        return __generator(this, function (_f) {
-            switch (_f.label) {
+        var locales, parserPluginMap, parserPlugins_1, parserPlugins_1_1, parserPlugin, result, execParserPluginMap, spinner, i, documentServer, parserPlugin, tasks, execParserPluginMap_1, execParserPluginMap_1_1, _a, parserPlugin, _documentServers, _b, errorText;
+        var e_1, _c, e_2, _d;
+        return __generator(this, function (_e) {
+            switch (_e.label) {
                 case 0: return [4 /*yield*/, new Locales().init()];
                 case 1:
-                    locales = _f.sent();
+                    locales = _e.sent();
                     parserPluginMap = new Map();
                     try {
                         for (parserPlugins_1 = __values(parserPlugins), parserPlugins_1_1 = parserPlugins_1.next(); !parserPlugins_1_1.done; parserPlugins_1_1 = parserPlugins_1.next()) {
@@ -313,32 +264,23 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                     };
                     execParserPluginMap = new Map();
                     spinner = ora(locales.$t('文档获取与解析，这可能需要等待一段时间...')).start();
-                    try {
-                        for (documentServers_1 = __values(documentServers), documentServers_1_1 = documentServers_1.next(); !documentServers_1_1.done; documentServers_1_1 = documentServers_1.next()) {
-                            documentServer = documentServers_1_1.value;
-                            if (!documentServer.url) {
-                                logger.error(locales.$t("documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!"));
-                                continue;
-                            }
-                            if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
-                                result.noParserPluginNames.push(documentServer.type);
-                                continue;
-                            }
-                            parserPlugin = !documentServer.type ? parserPluginMap.get('swagger') : parserPluginMap.get(documentServer.type);
-                            if (execParserPluginMap.has(parserPlugin)) {
-                                execParserPluginMap.get(parserPlugin).push(documentServer);
-                            }
-                            else {
-                                execParserPluginMap.set(parserPlugin, [documentServer]);
-                            }
+                    for (i = 0; i < documentServers.length; i++) {
+                        documentServer = documentServers[i];
+                        if (!documentServer.url) {
+                            logger.error(locales.$t("documentServers.url \u4E0D\u53EF\u4E3A\u7A7A!").replace('%0', String(i)));
+                            continue;
                         }
-                    }
-                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
-                    finally {
-                        try {
-                            if (documentServers_1_1 && !documentServers_1_1.done && (_d = documentServers_1.return)) _d.call(documentServers_1);
+                        if (documentServer.type && !parserPluginMap.has(documentServer.type)) {
+                            result.noParserPluginNames.push(documentServer.type);
+                            continue;
                         }
-                        finally { if (e_2) throw e_2.error; }
+                        parserPlugin = !documentServer.type ? parserPluginMap.get('swagger') : parserPluginMap.get(documentServer.type);
+                        if (execParserPluginMap.has(parserPlugin)) {
+                            execParserPluginMap.get(parserPlugin).push(documentServer);
+                        }
+                        else {
+                            execParserPluginMap.set(parserPlugin, [documentServer]);
+                        }
                     }
                     tasks = [];
                     try {
@@ -349,22 +291,22 @@ export function documentServersRunParserPlugins(documentServers, parserPlugins, 
                             }));
                         }
                     }
-                    catch (e_3_1) { e_3 = { error: e_3_1 }; }
+                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
                     finally {
                         try {
-                            if (execParserPluginMap_1_1 && !execParserPluginMap_1_1.done && (_e = execParserPluginMap_1.return)) _e.call(execParserPluginMap_1);
+                            if (execParserPluginMap_1_1 && !execParserPluginMap_1_1.done && (_d = execParserPluginMap_1.return)) _d.call(execParserPluginMap_1);
                         }
-                        finally { if (e_3) throw e_3.error; }
+                        finally { if (e_2) throw e_2.error; }
                     }
-                    _f.label = 2;
+                    _e.label = 2;
                 case 2:
-                    _f.trys.push([2, 4, , 5]);
+                    _e.trys.push([2, 4, , 5]);
                     return [4 /*yield*/, Promise.all(tasks)];
                 case 3:
-                    _f.sent();
+                    _e.sent();
                     return [3 /*break*/, 5];
                 case 4:
-                    _b = _f.sent();
+                    _b = _e.sent();
                     return [3 /*break*/, 5];
                 case 5:
                     if (result.noParserPluginNames.length > 0) {
@@ -388,4 +330,13 @@ export function processTSFile(filename) {
         return filename.replace('.ts', '.js');
     }
     return filename;
+}
+export function getAbsolutePath(pathStr) {
+    return isAbsolute(pathStr) ? pathStr : join(process.cwd(), pathStr);
+}
+export function removeCwdPath(pathStr) {
+    pathStr = toUnixPath(pathStr);
+    var cwdPath = toUnixPath(process.cwd());
+    var temp = pathStr.replace(cwdPath, '');
+    return temp.startsWith('/') ? temp.slice(1) : temp;
 }

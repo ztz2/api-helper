@@ -35,20 +35,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import path from 'path';
+var _a;
+import { register } from 'ts-node';
 import { Command } from 'commander';
-import { loadModule, createFolder, removeFolder, } from '../lib/tools/util';
+import findUpSync from 'findup-sync';
+import { loadJSON } from '../lib/tools/util';
 import { run } from '../lib';
 import Locales from '../lib/locales';
+register({
+    skipProject: true,
+    transpileOnly: true,
+    compilerOptions: {
+        strict: false,
+        lib: ['es2015'],
+        target: 'es2015',
+        module: 'commonjs',
+        moduleResolution: 'node',
+        allowJs: true,
+        declaration: false,
+        importHelpers: false,
+        removeComments: false,
+        esModuleInterop: true,
+        allowSyntheticDefaultImports: true,
+    },
+});
 var program = new Command();
-var basePath = createFolder(path.join(__dirname, './.cache.load.module'));
-var version = loadModule(path.join(require.resolve('@api-helper/cli'), '../../package.json'), {
-    isAsync: false,
-    folder: basePath,
-    callback: function () {
-        removeFolder(basePath);
-    }
-}).version;
+var version = (_a = loadJSON(findUpSync('package.json', { cwd: __dirname }))) === null || _a === void 0 ? void 0 : _a.version;
 function main() {
     return __awaiter(this, void 0, void 0, function () {
         var locales;
@@ -84,6 +96,26 @@ function main() {
                     });
                     // 帮助信息
                     program.addHelpText('after', locales.$t('帮助信息'));
+                    // 初始化配置
+                    program
+                        .command('init')
+                        .description(locales.$t('初始化配置'))
+                        .option('-c, --config <string>', locales.$t('自定义配置文件路径'))
+                        .action(function () {
+                        return __awaiter(this, void 0, void 0, function () {
+                            var options;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        options = program.opts();
+                                        return [4 /*yield*/, run('init', options)];
+                                    case 1:
+                                        _a.sent();
+                                        return [2 /*return*/];
+                                }
+                            });
+                        });
+                    });
                     // 初始化配置
                     program
                         .command('init')
