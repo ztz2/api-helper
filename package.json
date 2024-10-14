@@ -6,9 +6,8 @@
   ],
   "scripts": {
     "preinstall": "node ./scripts/preinstall.js",
-    "build": "pnpm -r run build",
-    "watch": "pnpm --parallel -r run watch",
     "publish": "pnpm changeset publish",
+    "changeset": "changeset",
     "changeset:exit": "changeset pre exit",
     "changeset:version": "pnpm changeset version",
     "changeset:pre-alpha": "changeset pre enter alpha",
