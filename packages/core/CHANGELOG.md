@@ -1,5 +1,11 @@
 # 更新日志
 
+## 3.1.0
+
+### Minor Changes
+
+- v3.1.0
+
 ## 3.0.2
 
 ### Patch Changes

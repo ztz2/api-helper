@@ -107,13 +107,13 @@ function omit(obj, keys) {
 }
 export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var e_1, _a;
-    var _b, _c, _d, _e, _f;
+    var _b, _c, _d, _e, _f, _g, _h;
     var requestFunctionConfig = __assign(__assign({}, requestConfig), { path: requestConfig.path, rawPath: requestConfig.path, method: requestConfig.method, data: undefined, rawData: data, rawExtraData: extraData, hasFormData: false });
     var isBinary = false;
     try {
         isBinary = data instanceof File || data instanceof Blob;
     }
-    catch (_g) { }
+    catch (_j) { }
     if (data == null || typeof data !== 'object' || isBinary) {
         requestFunctionConfig.data = data;
         return requestFunctionConfig;
@@ -121,6 +121,7 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     var queryParams = {};
     var cloneData = (checkType(data, 'Object') ? __assign({}, data) : {});
     var isFormUrlencodedType = (_c = (_b = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _b === void 0 ? void 0 : _b.includes) === null || _c === void 0 ? void 0 : _c.call(_b, 'application/x-www-form-urlencoded');
+    var isJSONCodeType = (_d = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _d === void 0 ? void 0 : _d.some(function (item) { return ['application/json', 'text/json'].includes(item); });
     var formData;
     var appendFormData = function (key, val) { };
     if (!isMiniProgramEnv) {
@@ -147,13 +148,13 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
     }
     var _loop_1 = function (k, v) {
         // 路径参数处理
-        if ((_d = requestConfig.pathParamKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
+        if ((_e = requestConfig.pathParamKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp("{".concat(k, "}"), 'g'), v);
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_e = requestConfig.formDataKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_f = requestConfig.formDataKeyNameList) === null || _f === void 0 ? void 0 : _f.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             var val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -168,22 +169,22 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             return "continue";
         }
         // URL 参数处理
-        if ((_f = requestConfig.queryStringKeyNameList) === null || _f === void 0 ? void 0 : _f.includes(k)) {
+        if ((_g = requestConfig.queryStringKeyNameList) === null || _g === void 0 ? void 0 : _g.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
     };
     try {
         // 数据处理
-        for (var _h = __values(Object.entries(cloneData)), _j = _h.next(); !_j.done; _j = _h.next()) {
-            var _k = __read(_j.value, 2), k = _k[0], v = _k[1];
+        for (var _k = __values(Object.entries(cloneData)), _l = _k.next(); !_l.done; _l = _k.next()) {
+            var _m = __read(_l.value, 2), k = _m[0], v = _m[1];
             _loop_1(k, v);
         }
     }
     catch (e_1_1) { e_1 = { error: e_1_1 }; }
     finally {
         try {
-            if (_j && !_j.done && (_a = _h.return)) _a.call(_h);
+            if (_l && !_l.done && (_a = _k.return)) _a.call(_k);
         }
         finally { if (e_1) throw e_1.error; }
     }
@@ -193,7 +194,7 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
         requestFunctionConfig.path += "?".concat(queryString);
     }
     // application/x-www-form-urlencoded 单独处理
-    if (isFormUrlencodedType) {
+    if ((!isJSONCodeType && isFormUrlencodedType) || (isFormUrlencodedType && ((_h = requestConfig.method) === null || _h === void 0 ? void 0 : _h.toLowerCase()) === 'get')) {
         var formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), __spreadArray(__spreadArray(__spreadArray([], __read(requestConfig.formDataKeyNameList), false), __read(requestConfig.queryStringKeyNameList), false), __read(requestConfig.pathParamKeyNameList), false));
         var formUrlencodedStr = stringify(formUrlencodedData);
         if (formUrlencodedStr) {

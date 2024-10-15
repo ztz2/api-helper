@@ -69,7 +69,41 @@ describe('processRequestFunctionConfig', () => {
       method: 'GET',
       requestContentType: ['application/x-www-form-urlencoded'],
       formDataKeyNameList: [],
-      pathParamKeyNameList: [''],
+      pathParamKeyNameList: [],
+      queryStringKeyNameList: [],
+    });
+    expect(lodash.pick(res, ['data', 'path'])).toEqual({
+      path: '/ossFile/delete?name=ztz2.png&remarks=remark%20content%21&id=ad54521sdf5421erf52102&size=1024&type=image%2Fpng',
+      data: undefined,
+    });
+  });
+  test('json', async () => {
+    const res = processRequestFunctionConfig(mockData, null, {
+      path: '/ossFile/delete',
+      method: 'POST',
+      requestContentType: ['application/x-www-form-urlencoded', 'application/json'],
+      formDataKeyNameList: [],
+      pathParamKeyNameList: [],
+      queryStringKeyNameList: [],
+    });
+    expect(lodash.pick(res, ['data', 'path'])).toEqual({
+      path: '/ossFile/delete',
+      data: {
+        name: 'ztz2.png',
+        remarks: 'remark content!',
+        id: 'ad54521sdf5421erf52102',
+        size: 1024,
+        type: 'image/png'
+      },
+    });
+  });
+  test('json and http get', async () => {
+    const res = processRequestFunctionConfig(mockData, null, {
+      path: '/ossFile/delete',
+      method: 'get',
+      requestContentType: ['application/x-www-form-urlencoded', 'application/json'],
+      formDataKeyNameList: [],
+      pathParamKeyNameList: [],
       queryStringKeyNameList: [],
     });
     expect(lodash.pick(res, ['data', 'path'])).toEqual({

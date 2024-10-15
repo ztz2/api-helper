@@ -122,6 +122,7 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
   const queryParams: Recordable = {};
   const cloneData = (checkType(data, 'Object') ? { ...data } : {}) as Recordable;
   const isFormUrlencodedType = requestConfig?.requestContentType?.includes?.('application/x-www-form-urlencoded');
+  const isJSONCodeType = requestConfig?.requestContentType?.some((item) => ['application/json', 'text/json'].includes(item));
   let formData: any;
 
   let appendFormData = (key: string, val: any) => {};
@@ -178,7 +179,7 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
     requestFunctionConfig.path += `?${queryString}`;
   }
   // application/x-www-form-urlencoded 单独处理
-  if (isFormUrlencodedType) {
+  if ((!isJSONCodeType && isFormUrlencodedType) || (isFormUrlencodedType && requestConfig.method?.toLowerCase() === 'get')) {
     const formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), [
       ...requestConfig.formDataKeyNameList,
       ...requestConfig.queryStringKeyNameList,

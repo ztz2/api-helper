@@ -1,5 +1,17 @@
 # 更新日志
 
+## 3.1.0
+
+### Minor Changes
+
+- v3.1.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @api-helper/template@3.1.0
+  - @api-helper/core@3.1.0
+
 ## 3.0.2
 
 ### Patch Changes

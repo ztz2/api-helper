@@ -91,7 +91,7 @@ declare const apiV3StoreOrderByPost: {
     requestContentType: ["application/json"],
     formDataKeyNameList: [],
     pathParamKeyNameList: [],
-    queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"]
+    queryStringKeyNameList: []
   }
 };
 /**

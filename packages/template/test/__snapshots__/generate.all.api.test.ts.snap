@@ -1885,7 +1885,7 @@ apiV3PetByPut.requestConfig = {
   requestContentType: ["application/json"],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"],
+  queryStringKeyNameList: [],
 }
 /**
  * @description Add a new pet to the store、Add a new pet to the store
@@ -1947,7 +1947,7 @@ apiV3PetByPost.requestConfig = {
   requestContentType: ["application/json"],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","name","category","photoUrls","tags","status"],
+  queryStringKeyNameList: [],
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -2267,7 +2267,7 @@ apiV3StoreOrderByPost.requestConfig = {
   requestContentType: ["application/json"],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","petId","quantity","shipDate","status","complete"],
+  queryStringKeyNameList: [],
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
@@ -2375,7 +2375,7 @@ apiV3UserByPost.requestConfig = {
   requestContentType: ["application/json"],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"],
+  queryStringKeyNameList: [],
 }
 /**
  * @description Creates list of users with given input array、Creates list of users with given input array
@@ -2565,7 +2565,7 @@ apiV3UserUsernameByPut.requestConfig = {
   requestContentType: ["application/json"],
   formDataKeyNameList: [],
   pathParamKeyNameList: ["username1"],
-  queryStringKeyNameList: ["id","username","firstName","lastName","email","password","phone","userStatus"],
+  queryStringKeyNameList: [],
 }
 /**
  * @description Delete user、This can only be done by the logged in user.

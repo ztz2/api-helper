@@ -773,14 +773,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
           "method": "put",
           "path": "/api/v3/pet",
           "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
-            "id",
-            "name",
-            "category",
-            "photoUrls",
-            "tags",
-            "status",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/json",
           ],
@@ -1293,14 +1286,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
           "method": "post",
           "path": "/api/v3/pet",
           "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
-            "id",
-            "name",
-            "category",
-            "photoUrls",
-            "tags",
-            "status",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/json",
           ],
@@ -3174,14 +3160,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
           "method": "post",
           "path": "/api/v3/store/order",
           "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
-            "id",
-            "petId",
-            "quantity",
-            "shipDate",
-            "status",
-            "complete",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/json",
           ],
@@ -3722,16 +3701,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
           "method": "post",
           "path": "/api/v3/user",
           "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
-            "id",
-            "username",
-            "firstName",
-            "lastName",
-            "email",
-            "password",
-            "phone",
-            "userStatus",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/json",
           ],
@@ -4648,16 +4618,7 @@ exports[`swagger-parser v3 petstore.json: petstore.json 1`] = `
           "pathParamKeyNameList": [
             "username1",
           ],
-          "queryStringKeyNameList": [
-            "id",
-            "username",
-            "firstName",
-            "lastName",
-            "email",
-            "password",
-            "phone",
-            "userStatus",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/json",
           ],
@@ -6184,9 +6145,7 @@ exports[`swagger-parser v3 x-www-form-urlencoded-param.json: x-www-form-urlencod
           "method": "post",
           "path": "/x-www-form-urlencoded",
           "pathParamKeyNameList": [],
-          "queryStringKeyNameList": [
-            "username",
-          ],
+          "queryStringKeyNameList": [],
           "requestContentType": [
             "application/x-www-form-urlencoded",
           ],

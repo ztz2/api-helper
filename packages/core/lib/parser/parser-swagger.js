@@ -507,10 +507,11 @@ var ParserSwagger = /** @class */ (function () {
     };
     // 请求参数
     ParserSwagger.prototype.parseV3Param = function (_a) {
-        var _b, _c, _d, _e, _f, _g, _h;
+        var e_6, _b;
+        var _c, _d, _e, _f, _g, _h, _j;
         var api = _a.api, apiMap = _a.apiMap, requestExtraDataSchemaWrap = _a.requestExtraDataSchemaWrap, requestDataSchema = _a.requestDataSchema, requestKeyNameMemo = _a.requestKeyNameMemo, requestSchemaRecord = _a.requestSchemaRecord;
         // FormData数据
-        var formDataSource = (_d = (_c = (_b = apiMap.requestBody) === null || _b === void 0 ? void 0 : _b.content) === null || _c === void 0 ? void 0 : _c['multipart/form-data']) === null || _d === void 0 ? void 0 : _d.schema;
+        var formDataSource = (_e = (_d = (_c = apiMap.requestBody) === null || _c === void 0 ? void 0 : _c.content) === null || _d === void 0 ? void 0 : _d['multipart/form-data']) === null || _e === void 0 ? void 0 : _e.schema;
         if (formDataSource) {
             api.requestContentType = ['multipart/form-data'];
             var formDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, formDataSource, undefined, {
@@ -518,53 +519,44 @@ var ParserSwagger = /** @class */ (function () {
             });
             // 记录表单数据key
             if (formDataSchema) {
-                (_e = formDataSchema === null || formDataSchema === void 0 ? void 0 : formDataSchema.params) === null || _e === void 0 ? void 0 : _e.forEach(function (_a) {
+                (_f = formDataSchema === null || formDataSchema === void 0 ? void 0 : formDataSchema.params) === null || _f === void 0 ? void 0 : _f.forEach(function (_a) {
                     var keyName = _a.keyName;
                     api.formDataKeyNameList.push(keyName);
                     requestKeyNameMemo.push(keyName);
                 });
             }
         }
-        // x-www-form-urlencoded 类型参数
-        var wwwFormUrlencodedSchema = (_h = (_g = (_f = apiMap.requestBody) === null || _f === void 0 ? void 0 : _f.content) === null || _g === void 0 ? void 0 : _g['application/x-www-form-urlencoded']) === null || _h === void 0 ? void 0 : _h.schema;
-        if (wwwFormUrlencodedSchema) {
-            api.requestContentType = ['application/x-www-form-urlencoded'];
-            (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, wwwFormUrlencodedSchema, requestKeyNameMemo, {
-                autoGenerateId: this.autoGenerateId,
-                callback: function (parsedSchema) {
-                    // 收集URL query 参数字段
-                    if (parsedSchema === null || parsedSchema === void 0 ? void 0 : parsedSchema.params) {
-                        parsedSchema === null || parsedSchema === void 0 ? void 0 : parsedSchema.params.forEach(function (itm) { return (itm === null || itm === void 0 ? void 0 : itm.keyName) && api.queryStringKeyNameList.push(itm.keyName); });
-                    }
-                }
-            });
-        }
         var requestSchemaTypes = [
             'application/json',
             'text/json',
             'text/plain',
+            'application/x-www-form-urlencoded',
             'application/xml',
             'application/octet-stream',
         ];
-        var requestSchemaSource = null;
-        requestSchemaTypes.find(function (item) {
-            var _a, _b, _c;
-            var temp = (_c = (_b = (_a = apiMap.requestBody) === null || _a === void 0 ? void 0 : _a.content) === null || _b === void 0 ? void 0 : _b[item]) === null || _c === void 0 ? void 0 : _c.schema;
-            if (temp) {
-                api.requestContentType = [item];
-                requestSchemaSource = temp;
-                return temp;
+        try {
+            for (var requestSchemaTypes_1 = __values(requestSchemaTypes), requestSchemaTypes_1_1 = requestSchemaTypes_1.next(); !requestSchemaTypes_1_1.done; requestSchemaTypes_1_1 = requestSchemaTypes_1.next()) {
+                var item = requestSchemaTypes_1_1.value;
+                var requestSchemaSource = (_j = (_h = (_g = apiMap.requestBody) === null || _g === void 0 ? void 0 : _g.content) === null || _h === void 0 ? void 0 : _h[item]) === null || _j === void 0 ? void 0 : _j.schema;
+                if (requestSchemaSource) {
+                    api.requestContentType = [item];
+                    requestExtraDataSchemaWrap.value = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
+                        autoGenerateId: this.autoGenerateId,
+                    });
+                    break;
+                }
             }
-        });
-        // fix: requestExtraDataSchema 参数丢失问题
-        if (requestSchemaSource) {
-            requestExtraDataSchemaWrap.value = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
-                autoGenerateId: this.autoGenerateId,
-            });
+        }
+        catch (e_6_1) { e_6 = { error: e_6_1 }; }
+        finally {
+            try {
+                if (requestSchemaTypes_1_1 && !requestSchemaTypes_1_1.done && (_b = requestSchemaTypes_1.return)) _b.call(requestSchemaTypes_1);
+            }
+            finally { if (e_6) throw e_6.error; }
         }
     };
     ParserSwagger.prototype.parserCategory = function (openAPIDocument) {
-        var e_6, _a;
+        var e_7, _a;
         var result = new Map();
         if (openAPIDocument.tags) {
             try {
@@ -577,12 +569,12 @@ var ParserSwagger = /** @class */ (function () {
                     }));
                 }
             }
-            catch (e_6_1) { e_6 = { error: e_6_1 }; }
+            catch (e_7_1) { e_7 = { error: e_7_1 }; }
             finally {
                 try {
                     if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
                 }
-                finally { if (e_6) throw e_6.error; }
+                finally { if (e_7) throw e_7.error; }
             }
         }
         result.set(constant_1.UNKNOWN_GROUP_NAME, (0, helpers_1.createCategory)({

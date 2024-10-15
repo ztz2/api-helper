@@ -512,53 +512,29 @@ export default class ParserSwagger {
         });
       }
     }
-    // x-www-form-urlencoded 类型参数
-    const wwwFormUrlencodedSchema = apiMap.requestBody?.content?.['application/x-www-form-urlencoded']?.schema;
-    if (wwwFormUrlencodedSchema) {
-      api.requestContentType = ['application/x-www-form-urlencoded'];
-      processRequestSchema(
-        requestDataSchema,
-        requestSchemaRecord,
-        wwwFormUrlencodedSchema,
-        requestKeyNameMemo,
-        {
-          autoGenerateId: this.autoGenerateId,
-          callback(parsedSchema: APIHelper.Schema) {
-            // 收集URL query 参数字段
-            if (parsedSchema?.params) {
-              parsedSchema?.params.forEach((itm) => itm?.keyName && api.queryStringKeyNameList.push(itm.keyName));
-            }
-          }
-        }
-      );
-    }
     const requestSchemaTypes = [
       'application/json',
       'text/json',
       'text/plain',
+      'application/x-www-form-urlencoded',
       'application/xml',
       'application/octet-stream',
     ];
-    let requestSchemaSource = null;
-    requestSchemaTypes.find((item) => {
-      const temp = apiMap.requestBody?.content?.[item]?.schema;
-      if (temp) {
+    for (const item of requestSchemaTypes) {
+      const requestSchemaSource = apiMap.requestBody?.content?.[item]?.schema;
+      if (requestSchemaSource) {
         api.requestContentType = [item];
-        requestSchemaSource = temp;
-        return temp;
+        requestExtraDataSchemaWrap.value = processRequestSchema(
+          requestDataSchema,
+          requestSchemaRecord,
+          requestSchemaSource,
+          undefined,
+          {
+            autoGenerateId: this.autoGenerateId,
+          }
+        );
+        break;
       }
-    });
-    // fix: requestExtraDataSchema 参数丢失问题
-    if (requestSchemaSource) {
-      requestExtraDataSchemaWrap.value = processRequestSchema(
-        requestDataSchema,
-        requestSchemaRecord,
-        requestSchemaSource,
-        undefined,
-        {
-          autoGenerateId: this.autoGenerateId,
-        }
-      );
     }
   }
 

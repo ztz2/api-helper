@@ -65,13 +65,13 @@ function omit(obj, keys) {
     return result;
 }
 function processRequestFunctionConfig(data, extraData, requestConfig) {
-    var _a, _b, _c, _d, _e;
+    var _a, _b, _c, _d, _e, _f, _g;
     const requestFunctionConfig = Object.assign(Object.assign({}, requestConfig), { path: requestConfig.path, rawPath: requestConfig.path, method: requestConfig.method, data: undefined, rawData: data, rawExtraData: extraData, hasFormData: false });
     let isBinary = false;
     try {
         isBinary = data instanceof File || data instanceof Blob;
     }
-    catch (_f) { }
+    catch (_h) { }
     if (data == null || typeof data !== 'object' || isBinary) {
         requestFunctionConfig.data = data;
         return requestFunctionConfig;
@@ -79,6 +79,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
     const queryParams = {};
     const cloneData = (checkType(data, 'Object') ? Object.assign({}, data) : {});
     const isFormUrlencodedType = (_b = (_a = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _a === void 0 ? void 0 : _a.includes) === null || _b === void 0 ? void 0 : _b.call(_a, 'application/x-www-form-urlencoded');
+    const isJSONCodeType = (_c = requestConfig === null || requestConfig === void 0 ? void 0 : requestConfig.requestContentType) === null || _c === void 0 ? void 0 : _c.some((item) => ['application/json', 'text/json'].includes(item));
     let formData;
     let appendFormData = (key, val) => { };
     if (!isMiniProgramEnv) {
@@ -106,13 +107,13 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
     // 数据处理
     for (const [k, v] of Object.entries(cloneData)) {
         // 路径参数处理
-        if ((_c = requestConfig.pathParamKeyNameList) === null || _c === void 0 ? void 0 : _c.includes(k)) {
+        if ((_d = requestConfig.pathParamKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)) {
             // 合并路径参数
             requestFunctionConfig.path = requestFunctionConfig.path.replace(new RegExp(`\{${k}\}`, 'g'), v);
             delete cloneData[k];
         }
         // FormData处理
-        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_d = requestConfig.formDataKeyNameList) === null || _d === void 0 ? void 0 : _d.includes(k)))) {
+        if (!isMiniProgramEnv && (v instanceof FormDataItem || ((_e = requestConfig.formDataKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)))) {
             requestFunctionConfig.hasFormData = true;
             const val = v instanceof FormDataItem ? v.get() : v;
             if (Array.isArray(val)) {
@@ -127,7 +128,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
             continue;
         }
         // URL 参数处理
-        if ((_e = requestConfig.queryStringKeyNameList) === null || _e === void 0 ? void 0 : _e.includes(k)) {
+        if ((_f = requestConfig.queryStringKeyNameList) === null || _f === void 0 ? void 0 : _f.includes(k)) {
             queryParams[k] = v;
             delete cloneData[k];
         }
@@ -138,7 +139,7 @@ function processRequestFunctionConfig(data, extraData, requestConfig) {
         requestFunctionConfig.path += `?${queryString}`;
     }
     // application/x-www-form-urlencoded 单独处理
-    if (isFormUrlencodedType) {
+    if ((!isJSONCodeType && isFormUrlencodedType) || (isFormUrlencodedType && ((_g = requestConfig.method) === null || _g === void 0 ? void 0 : _g.toLowerCase()) === 'get')) {
         const formUrlencodedData = omit((checkType(data, 'Object') ? data : {}), [
             ...requestConfig.formDataKeyNameList,
             ...requestConfig.queryStringKeyNameList,
