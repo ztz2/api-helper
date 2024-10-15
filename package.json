@@ -7,9 +7,9 @@
   "scripts": {
     "preinstall": "node ./scripts/preinstall.js",
     "publish": "pnpm changeset publish",
+    "changeset:version": "pnpm changeset version",
     "changeset": "changeset",
     "changeset:exit": "changeset pre exit",
-    "changeset:version": "pnpm changeset version",
     "changeset:pre-alpha": "changeset pre enter alpha",
     "changeset:pre-beta": "changeset pre enter beta",
     "changeset:pre-rc": "changeset pre enter rc",
