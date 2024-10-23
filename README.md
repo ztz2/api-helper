@@ -117,6 +117,16 @@ export default defineConfig({
   requiredRequestField: false,
   // Set all fields of the response data as required attributes, default: true，默认：true
   requiredResponseField: true,
+  // Generate an interface that contains only these categories
+  includeCategory: [],
+  // Exclude interfaces for these categories
+  excludeCategory: [],
+  // Generate specified interface
+  // Example：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，The * in the example represents all the request modes
+  // More syntax reference for matching rules：https://github.com/micromatch/micromatch
+  includeAPI: [],
+  // Exclude specified interface
+  excludeAPI: [],
   // Interface document service configuration
   documentServers: [{
     // Interface Document address [When the type is 'swagger', you can read local files, here can be a local file path]
