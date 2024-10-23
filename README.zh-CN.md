@@ -119,6 +119,16 @@ export default defineConfig({
   requiredRequestField: false,
   // 响应数据所有字段设置成必有属性，默认：true
   requiredResponseField: true,
+  // 生成只包含这些分类的接口
+  includeCategory: [],
+  // 排除这些分类的接口
+  excludeCategory: [],
+  // 生成指定接口
+  // 例子：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
+  // 更多匹配规则语法参考：https://github.com/micromatch/micromatch
+  includeAPI: [],
+  // 排除指定接口
+  excludeAPI: [],
   // 接口文档服务配置
   documentServers: [{
     // 文档地址【当type为'swagger'类型时，可以读取本地文件，这里就可以一个本地文件路径】
