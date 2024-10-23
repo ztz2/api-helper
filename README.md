@@ -103,12 +103,12 @@ defineConfig accepts a Config object or Config[]. When you need to generate mult
 import { defineConfig } from '@api-helper/cli';
 
 export default defineConfig({
-  // Use group function. After enabling this function, multi-file code will be generated according to the group
-  group: false,
   // Whether to generate only the TypeScript type of interface request data and return data. If yes, the request file and request function will not be generated.
   onlyTyping: false,
   // The output path after code generation
   outputPath: 'src/api/index.ts',
+  // Use category output. After this function is enabled, multi-file code is output based on interface classification
+  outputByCategory: false,
   // The target type of the generated code. Default: typescript
   target: 'typescript',
   // File path of the request function.
