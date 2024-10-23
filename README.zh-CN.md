@@ -105,12 +105,12 @@ defineConfig 接收一个`Config` 对象或者`Config[]`，当需要生成多个
 import { defineConfig } from '@api-helper/cli';
 
 export default defineConfig({
-  // 使用分组功能，启用该功能后，按照分组多文件代码生成
-  group: false,
   // 是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
   onlyTyping: false,
   // 代码生成后的输出路径
   outputPath: 'src/api/index.ts',
+  // 使用分类输出，启用该功能后，按照接口分类进行多文件代码输出
+  outputByCategory: false,
   // 生成的目标代码类型。默认: typescript
   target: 'typescript',
   // request请求工具函数文件路径。
