@@ -64,7 +64,6 @@ var FormDataItem = /** @class */ (function () {
     return FormDataItem;
 }());
 export { FormDataItem };
-;
 export function checkMiniProgramEnv() {
     var _a, _b;
     try {

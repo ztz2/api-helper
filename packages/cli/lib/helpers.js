@@ -22,7 +22,6 @@ class FormDataItem {
     }
 }
 exports.FormDataItem = FormDataItem;
-;
 function checkMiniProgramEnv() {
     var _a, _b;
     try {

@@ -32,7 +32,7 @@ interface RequestConfig {
   responseContentType?: APIHelper.API['responseContentType'];
   headers?: APIHelper.API['headers'];
   cookies?: APIHelper.API['cookies'];
-};
+}
 
 export interface RequestFunctionConfig extends RequestConfig {
   // 请求路径，可以看做是URL，该资源路径包含了url参数，合并了路径参数等

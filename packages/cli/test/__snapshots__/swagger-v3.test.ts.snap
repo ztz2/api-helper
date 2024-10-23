@@ -23,55 +23,792 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @description 兼容非标准的dot参数形式
+ * @description uploads an image
  * @summary Request data types
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface CompatibleErrorSpecificationDotQueryParamRequestByGet {
-  // ID集合
-  ids?: Array<string>;
-  dept?: {
-    // 创建者1号
-    deptCreateBy1?: string;
-    // 创建者2号
-    deptCreateBy2?: string;
-  };
-  roles?: Array<{
-    // 角色创建者1号
-    roleCreateBy1?: string;
-    // 角色创建时间
-    roleCreateTime?: string;
-  }>;
-  // 有分页参数的话就加,根据你的实际查询参数编写
-  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
+export interface V2PetPetIdUploadImageRequestByPost {
+  // ID of pet to update
+  petId: string;
+  // Additional data to pass to server
+  additionalMetadata: string;
+  // file to upload
+  file: File;
 }
 /**
- * @description 兼容非标准的dot参数形式
+ * @description uploads an image
  * @summary Response data types
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export type CompatibleErrorSpecificationDotQueryParamResponseByGet = any;
+export interface V2PetPetIdUploadImageResponseByPost {
+  code?: number;
+  type?: string;
+  message?: string;
+}
 /**
- * @description 兼容非标准的dot参数形式
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @description uploads an image
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export function compatibleErrorSpecificationDotQueryParamByGet(
-  data: CompatibleErrorSpecificationDotQueryParamRequestByGet,
+export function v2PetPetIdUploadImageByPost(
+  data: V2PetPetIdUploadImageRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<CompatibleErrorSpecificationDotQueryParamResponseByGet>(
-    processRequestFunctionConfig(data, extraData, compatibleErrorSpecificationDotQueryParamByGet.requestConfig),
+  return request<V2PetPetIdUploadImageResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
-compatibleErrorSpecificationDotQueryParamByGet.requestConfig = {
-  path: '/compatible-error-specification-dot-query-param',
+v2PetPetIdUploadImageByPost.requestConfig = {
+  path: '/v2/pet/{petId}/uploadImage',
+  method: 'POST',
+  requestContentType: ['multipart/form-data'],
+  formDataKeyNameList: ['additionalMetadata', 'file'],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Add a new pet to the store
+ * @summary Request data types
+ * @url [ POST ] /v2/pet
+ */
+export interface V2PetRequestByPost {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Add a new pet to the store
+ * @summary Response data types
+ * @url [ POST ] /v2/pet
+ */
+export type V2PetResponseByPost = any;
+/**
+ * @description Add a new pet to the store
+ * @url [ POST ] /v2/pet
+ */
+export function v2PetByPost(data: V2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
+}
+v2PetByPost.requestConfig = {
+  path: '/v2/pet',
+  method: 'POST',
+  requestContentType: ['application/json', 'application/xml'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Update an existing pet
+ * @summary Request data types
+ * @url [ PUT ] /v2/pet
+ */
+export interface V2PetRequestByPut {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Update an existing pet
+ * @summary Response data types
+ * @url [ PUT ] /v2/pet
+ */
+export type V2PetResponseByPut = any;
+/**
+ * @description Update an existing pet
+ * @url [ PUT ] /v2/pet
+ */
+export function v2PetByPut(data: V2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPut>(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
+}
+v2PetByPut.requestConfig = {
+  path: '/v2/pet',
+  method: 'PUT',
+  requestContentType: ['application/json', 'application/xml'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export interface V2PetFindByStatusRequestByGet {
+  // Status values that need to be considered for filter
+  status: Array<'available' | 'pending' | 'sold'>;
+}
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export type V2PetFindByStatusResponseByGet = Array<{
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}>;
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export function v2PetFindByStatusByGet(
+  data: V2PetFindByStatusRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2PetFindByStatusResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
+    ...args
+  );
+}
+v2PetFindByStatusByGet.requestConfig = {
+  path: '/v2/pet/findByStatus',
   method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['status'],
+};
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export interface V2PetFindByTagsRequestByGet {
+  // Tags to filter by
+  tags: Array<string>;
+}
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export type V2PetFindByTagsResponseByGet = Array<{
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}>;
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export function v2PetFindByTagsByGet(data: V2PetFindByTagsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetFindByTagsResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig), ...args);
+}
+v2PetFindByTagsByGet.requestConfig = {
+  path: '/v2/pet/findByTags',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['tags'],
+};
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByGet {
+  // ID of pet to return
+  petId: string;
+}
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdResponseByGet {
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByGet(data: V2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig), ...args);
+}
+v2PetPetIdByGet.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByPost {
+  // ID of pet that needs to be updated
+  petId: string;
+  // Updated name of the pet
+  name: string;
+  // Updated status of the pet
+  status: string;
+}
+/**
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export type V2PetPetIdResponseByPost = any;
+/**
+ * @description Updates a pet in the store with form data
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig), ...args);
+}
+v2PetPetIdByPost.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'POST',
+  requestContentType: ['application/x-www-form-urlencoded'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Deletes a pet
+ * @summary Request data types
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByDelete {
+  // Pet id to delete
+  petId: string;
+}
+/**
+ * @description Deletes a pet
+ * @summary Response data types
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export type V2PetPetIdResponseByDelete = any;
+/**
+ * @description Deletes a pet
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByDelete(data: V2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByDelete>(processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig), ...args);
+}
+v2PetPetIdByDelete.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryRequestByGet = Record<string, any>;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryResponseByGet = any;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
+ */
+export function v2StoreInventoryByGet(
+  data: V2StoreInventoryRequestByGet = {},
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Place an order for a pet
+ * @summary Request data types
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderRequestByPost {
+  id: string;
+  petId: string;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
+}
+/**
+ * @description Place an order for a pet
+ * @summary Response data types
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderResponseByPost {
+  id?: string;
+  petId?: string;
+  quantity?: number;
+  shipDate?: string;
+  // Order Status
+  status?: 'placed' | 'approved' | 'delivered';
+  complete?: boolean;
+}
+/**
+ * @description Place an order for a pet
+ * @url [ POST ] /v2/store/order
+ */
+export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderResponseByPost>(processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig), ...args);
+}
+v2StoreOrderByPost.requestConfig = {
+  path: '/v2/store/order',
+  method: 'POST',
   requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['ids', 'dept', 'roles', '有分页参数的话就加,根据你的实际查询参数编写'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByGet {
+  // ID of pet that needs to be fetched
+  orderId: string;
+}
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdResponseByGet {
+  id?: string;
+  petId?: string;
+  quantity?: number;
+  shipDate?: string;
+  // Order Status
+  status?: 'placed' | 'approved' | 'delivered';
+  complete?: boolean;
+}
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByGet(
+  data: V2StoreOrderOrderIdRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByGet.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByDelete {
+  // ID of the order that needs to be deleted
+  orderId: string;
+}
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export type V2StoreOrderOrderIdResponseByDelete = any;
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByDelete(
+  data: V2StoreOrderOrderIdRequestByDelete,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreOrderOrderIdResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @summary Request data types
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
+/**
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(
+  data: V2UserCreateWithListRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithListResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Get user by user name
+ * @summary Request data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByGet {
+  // The name that needs to be fetched. Use user1 for testing.
+  username: string;
+}
+/**
+ * @description Get user by user name
+ * @summary Response data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameResponseByGet {
+  id?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}
+/**
+ * @description Get user by user name
+ * @url [ GET ] /v2/user/{username}
+ */
+export function v2UserUsernameByGet(data: V2UserUsernameRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig), ...args);
+}
+v2UserUsernameByGet.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByPut {
+  // name that need to be updated
+  username: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByPut = any;
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @url [ PUT ] /v2/user/{username}
+ */
+export function v2UserUsernameByPut(data: V2UserUsernameRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByPut>(processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig), ...args);
+}
+v2UserUsernameByPut.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'PUT',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByDelete {
+  // The name that needs to be deleted
+  username: string;
+}
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByDelete = any;
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export function v2UserUsernameByDelete(
+  data: V2UserUsernameRequestByDelete,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserUsernameResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
+    ...args
+  );
+}
+v2UserUsernameByDelete.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Logs user into the system
+ * @summary Request data types
+ * @url [ GET ] /v2/user/login
+ */
+export interface V2UserLoginRequestByGet {
+  // The user name for login
+  username: string;
+  // The password for login in clear text
+  password: string;
+}
+/**
+ * @description Logs user into the system
+ * @summary Response data types
+ * @url [ GET ] /v2/user/login
+ */
+export type V2UserLoginResponseByGet = string;
+/**
+ * @description Logs user into the system
+ * @url [ GET ] /v2/user/login
+ */
+export function v2UserLoginByGet(data: V2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLoginResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig), ...args);
+}
+v2UserLoginByGet.requestConfig = {
+  path: '/v2/user/login',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['username', 'password'],
+};
+/**
+ * @description Logs out current logged in user session
+ * @summary Request data types
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutRequestByGet = Record<string, any>;
+/**
+ * @description Logs out current logged in user session
+ * @summary Response data types
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutResponseByGet = any;
+/**
+ * @description Logs out current logged in user session
+ * @url [ GET ] /v2/user/logout
+ */
+export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLogoutResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
+}
+v2UserLogoutByGet.requestConfig = {
+  path: '/v2/user/logout',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @summary Request data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
+/**
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(
+  data: V2UserCreateWithArrayRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithArrayResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ POST ] /v2/user
+ */
+export interface V2UserRequestByPost {
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ POST ] /v2/user
+ */
+export type V2UserResponseByPost = any;
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @url [ POST ] /v2/user
+ */
+export function v2UserByPost(data: V2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserResponseByPost>(processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig), ...args);
+}
+v2UserByPost.requestConfig = {
+  path: '/v2/user',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
 };
 "
 `;
@@ -99,111 +836,128 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @description Update an existing pet、Update an existing pet by Id
+ * @description uploads an image
  * @summary Request data types
- * @url [ PUT ] /api/v3/pet
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface ApiV3PetRequestByPut {
-  id: string;
-  name: string;
-  category: {
-    id: string;
-    name: string;
-  };
-  photoUrls: Array<string>;
-  tags: Array<{
-    id: string;
-    name: string;
-  }>;
-  // pet status in the store
-  status: 'available' | 'pending' | 'sold';
+export interface V2PetPetIdUploadImageRequestByPost {
+  // ID of pet to update
+  petId: string;
+  // Additional data to pass to server
+  additionalMetadata: string;
+  // file to upload
+  file: File;
 }
 /**
- * @description Update an existing pet、Update an existing pet by Id
+ * @description uploads an image
  * @summary Response data types
- * @url [ PUT ] /api/v3/pet
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface ApiV3PetResponseByPut {
-  id?: string;
-  name: string;
-  category?: {
-    id?: string;
-    name?: string;
-  };
-  photoUrls: Array<string>;
-  tags?: Array<{
-    id?: string;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+export interface V2PetPetIdUploadImageResponseByPost {
+  code?: number;
+  type?: string;
+  message?: string;
 }
 /**
- * @description Update an existing pet、Update an existing pet by Id
- * @url [ PUT ] /api/v3/pet
+ * @description uploads an image
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export function apiV3PetByPut(data: ApiV3PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3PetResponseByPut>(processRequestFunctionConfig(data, extraData, apiV3PetByPut.requestConfig), ...args);
+export function v2PetPetIdUploadImageByPost(
+  data: V2PetPetIdUploadImageRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2PetPetIdUploadImageResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
+    ...args
+  );
 }
-apiV3PetByPut.requestConfig = {
-  path: '/api/v3/pet',
-  method: 'PUT',
-  requestContentType: ['application/json'],
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Add a new pet to the store、Add a new pet to the store
- * @summary Request data types
- * @url [ POST ] /api/v3/pet
- */
-export interface ApiV3PetRequestByPost {
-  id: string;
-  name: string;
-  category: {
-    id: string;
-    name: string;
-  };
-  photoUrls: Array<string>;
-  tags: Array<{
-    id: string;
-    name: string;
-  }>;
-  // pet status in the store
-  status: 'available' | 'pending' | 'sold';
-}
-/**
- * @description Add a new pet to the store、Add a new pet to the store
- * @summary Response data types
- * @url [ POST ] /api/v3/pet
- */
-export interface ApiV3PetResponseByPost {
-  id?: string;
-  name: string;
-  category?: {
-    id?: string;
-    name?: string;
-  };
-  photoUrls: Array<string>;
-  tags?: Array<{
-    id?: string;
-    name?: string;
-  }>;
-  // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
-}
-/**
- * @description Add a new pet to the store、Add a new pet to the store
- * @url [ POST ] /api/v3/pet
- */
-export function apiV3PetByPost(data: ApiV3PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3PetResponseByPost>(processRequestFunctionConfig(data, extraData, apiV3PetByPost.requestConfig), ...args);
-}
-apiV3PetByPost.requestConfig = {
-  path: '/api/v3/pet',
+v2PetPetIdUploadImageByPost.requestConfig = {
+  path: '/v2/pet/{petId}/uploadImage',
   method: 'POST',
-  requestContentType: ['application/json'],
+  requestContentType: ['multipart/form-data'],
+  formDataKeyNameList: ['additionalMetadata', 'file'],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Add a new pet to the store
+ * @summary Request data types
+ * @url [ POST ] /v2/pet
+ */
+export interface V2PetRequestByPost {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Add a new pet to the store
+ * @summary Response data types
+ * @url [ POST ] /v2/pet
+ */
+export type V2PetResponseByPost = any;
+/**
+ * @description Add a new pet to the store
+ * @url [ POST ] /v2/pet
+ */
+export function v2PetByPost(data: V2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
+}
+v2PetByPost.requestConfig = {
+  path: '/v2/pet',
+  method: 'POST',
+  requestContentType: ['application/json', 'application/xml'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Update an existing pet
+ * @summary Request data types
+ * @url [ PUT ] /v2/pet
+ */
+export interface V2PetRequestByPut {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Update an existing pet
+ * @summary Response data types
+ * @url [ PUT ] /v2/pet
+ */
+export type V2PetResponseByPut = any;
+/**
+ * @description Update an existing pet
+ * @url [ PUT ] /v2/pet
+ */
+export function v2PetByPut(data: V2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPut>(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
+}
+v2PetByPut.requestConfig = {
+  path: '/v2/pet',
+  method: 'PUT',
+  requestContentType: ['application/json', 'application/xml'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
@@ -211,24 +965,24 @@ apiV3PetByPost.requestConfig = {
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
  * @summary Request data types
- * @url [ GET ] /api/v3/pet/findByStatus
+ * @url [ GET ] /v2/pet/findByStatus
  */
-export interface ApiV3PetFindByStatusRequestByGet {
+export interface V2PetFindByStatusRequestByGet {
   // Status values that need to be considered for filter
-  status: 'available' | 'pending' | 'sold';
+  status: Array<'available' | 'pending' | 'sold'>;
 }
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
  * @summary Response data types
- * @url [ GET ] /api/v3/pet/findByStatus
+ * @url [ GET ] /v2/pet/findByStatus
  */
-export type ApiV3PetFindByStatusResponseByGet = Array<{
+export type V2PetFindByStatusResponseByGet = Array<{
   id?: string;
-  name: string;
   category?: {
     id?: string;
     name?: string;
   };
+  name: string;
   photoUrls: Array<string>;
   tags?: Array<{
     id?: string;
@@ -239,22 +993,22 @@ export type ApiV3PetFindByStatusResponseByGet = Array<{
 }>;
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
- * @url [ GET ] /api/v3/pet/findByStatus
+ * @url [ GET ] /v2/pet/findByStatus
  */
-export function apiV3PetFindByStatusByGet(
-  data: ApiV3PetFindByStatusRequestByGet,
+export function v2PetFindByStatusByGet(
+  data: V2PetFindByStatusRequestByGet,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3PetFindByStatusResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3PetFindByStatusByGet.requestConfig),
+  return request<V2PetFindByStatusResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
     ...args
   );
 }
-apiV3PetFindByStatusByGet.requestConfig = {
-  path: '/api/v3/pet/findByStatus',
+v2PetFindByStatusByGet.requestConfig = {
+  path: '/v2/pet/findByStatus',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['status'],
@@ -262,24 +1016,24 @@ apiV3PetFindByStatusByGet.requestConfig = {
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  * @summary Request data types
- * @url [ GET ] /api/v3/pet/findByTags
+ * @url [ GET ] /v2/pet/findByTags
  */
-export interface ApiV3PetFindByTagsRequestByGet {
+export interface V2PetFindByTagsRequestByGet {
   // Tags to filter by
   tags: Array<string>;
 }
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
  * @summary Response data types
- * @url [ GET ] /api/v3/pet/findByTags
+ * @url [ GET ] /v2/pet/findByTags
  */
-export type ApiV3PetFindByTagsResponseByGet = Array<{
+export type V2PetFindByTagsResponseByGet = Array<{
   id?: string;
-  name: string;
   category?: {
     id?: string;
     name?: string;
   };
+  name: string;
   photoUrls: Array<string>;
   tags?: Array<{
     id?: string;
@@ -290,22 +1044,15 @@ export type ApiV3PetFindByTagsResponseByGet = Array<{
 }>;
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
- * @url [ GET ] /api/v3/pet/findByTags
+ * @url [ GET ] /v2/pet/findByTags
  */
-export function apiV3PetFindByTagsByGet(
-  data: ApiV3PetFindByTagsRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetFindByTagsResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3PetFindByTagsByGet.requestConfig),
-    ...args
-  );
+export function v2PetFindByTagsByGet(data: V2PetFindByTagsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetFindByTagsResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig), ...args);
 }
-apiV3PetFindByTagsByGet.requestConfig = {
-  path: '/api/v3/pet/findByTags',
+v2PetFindByTagsByGet.requestConfig = {
+  path: '/v2/pet/findByTags',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['tags'],
@@ -313,24 +1060,24 @@ apiV3PetFindByTagsByGet.requestConfig = {
 /**
  * @description Find pet by ID、Returns a single pet
  * @summary Request data types
- * @url [ GET ] /api/v3/pet/{petId}
+ * @url [ GET ] /v2/pet/{petId}
  */
-export interface ApiV3PetPetIdRequestByGet {
+export interface V2PetPetIdRequestByGet {
   // ID of pet to return
   petId: string;
 }
 /**
  * @description Find pet by ID、Returns a single pet
  * @summary Response data types
- * @url [ GET ] /api/v3/pet/{petId}
+ * @url [ GET ] /v2/pet/{petId}
  */
-export interface ApiV3PetPetIdResponseByGet {
+export interface V2PetPetIdResponseByGet {
   id?: string;
-  name: string;
   category?: {
     id?: string;
     name?: string;
   };
+  name: string;
   photoUrls: Array<string>;
   tags?: Array<{
     id?: string;
@@ -341,15 +1088,15 @@ export interface ApiV3PetPetIdResponseByGet {
 }
 /**
  * @description Find pet by ID、Returns a single pet
- * @url [ GET ] /api/v3/pet/{petId}
+ * @url [ GET ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByGet(data: ApiV3PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3PetPetIdResponseByGet>(processRequestFunctionConfig(data, extraData, apiV3PetPetIdByGet.requestConfig), ...args);
+export function v2PetPetIdByGet(data: V2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig), ...args);
 }
-apiV3PetPetIdByGet.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByGet.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
   queryStringKeyNameList: [],
@@ -357,68 +1104,61 @@ apiV3PetPetIdByGet.requestConfig = {
 /**
  * @description Updates a pet in the store with form data
  * @summary Request data types
- * @url [ POST ] /api/v3/pet/{petId}
+ * @url [ POST ] /v2/pet/{petId}
  */
-export interface ApiV3PetPetIdRequestByPost {
+export interface V2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
   petId: string;
-  // Name of pet that needs to be updated
+  // Updated name of the pet
   name: string;
-  // Status of pet that needs to be updated
+  // Updated status of the pet
   status: string;
 }
 /**
  * @description Updates a pet in the store with form data
  * @summary Response data types
- * @url [ POST ] /api/v3/pet/{petId}
+ * @url [ POST ] /v2/pet/{petId}
  */
-export type ApiV3PetPetIdResponseByPost = any;
+export type V2PetPetIdResponseByPost = any;
 /**
  * @description Updates a pet in the store with form data
- * @url [ POST ] /api/v3/pet/{petId}
+ * @url [ POST ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByPost(data: ApiV3PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3PetPetIdResponseByPost>(processRequestFunctionConfig(data, extraData, apiV3PetPetIdByPost.requestConfig), ...args);
+export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig), ...args);
 }
-apiV3PetPetIdByPost.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByPost.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'POST',
-  requestContentType: [],
+  requestContentType: ['application/x-www-form-urlencoded'],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: ['name', 'status'],
+  queryStringKeyNameList: [],
 };
 /**
  * @description Deletes a pet
  * @summary Request data types
- * @url [ DELETE ] /api/v3/pet/{petId}
+ * @url [ DELETE ] /v2/pet/{petId}
  */
-export interface ApiV3PetPetIdRequestByDelete {
+export interface V2PetPetIdRequestByDelete {
   // Pet id to delete
   petId: string;
 }
 /**
  * @description Deletes a pet
  * @summary Response data types
- * @url [ DELETE ] /api/v3/pet/{petId}
+ * @url [ DELETE ] /v2/pet/{petId}
  */
-export type ApiV3PetPetIdResponseByDelete = any;
+export type V2PetPetIdResponseByDelete = any;
 /**
  * @description Deletes a pet
- * @url [ DELETE ] /api/v3/pet/{petId}
+ * @url [ DELETE ] /v2/pet/{petId}
  */
-export function apiV3PetPetIdByDelete(
-  data: ApiV3PetPetIdRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdResponseByDelete>(
-    processRequestFunctionConfig(data, extraData, apiV3PetPetIdByDelete.requestConfig),
-    ...args
-  );
+export function v2PetPetIdByDelete(data: V2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByDelete>(processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig), ...args);
 }
-apiV3PetPetIdByDelete.requestConfig = {
-  path: '/api/v3/pet/{petId}',
+v2PetPetIdByDelete.requestConfig = {
+  path: '/v2/pet/{petId}',
   method: 'DELETE',
   requestContentType: [],
   formDataKeyNameList: [],
@@ -426,88 +1166,45 @@ apiV3PetPetIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description uploads an image
- * @summary Request data types
- * @url [ POST ] /api/v3/pet/{petId}/uploadImage
- */
-export interface ApiV3PetPetIdUploadImageRequestByPost {
-  // ID of pet to update
-  petId: string;
-  // Additional Metadata
-  additionalMetadata: string;
-}
-/**
- * @description uploads an image
- * @summary Response data types
- * @url [ POST ] /api/v3/pet/{petId}/uploadImage
- */
-export interface ApiV3PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
-}
-/**
- * @description uploads an image
- * @url [ POST ] /api/v3/pet/{petId}/uploadImage
- */
-export function apiV3PetPetIdUploadImageByPost(
-  data: ApiV3PetPetIdUploadImageRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3PetPetIdUploadImageResponseByPost>(
-    processRequestFunctionConfig(data, extraData, apiV3PetPetIdUploadImageByPost.requestConfig),
-    ...args
-  );
-}
-apiV3PetPetIdUploadImageByPost.requestConfig = {
-  path: '/api/v3/pet/{petId}/uploadImage',
-  method: 'POST',
-  requestContentType: ['application/octet-stream'],
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['petId'],
-  queryStringKeyNameList: ['additionalMetadata'],
-};
-/**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Request data types
- * @url [ GET ] /api/v3/store/inventory
+ * @url [ GET ] /v2/store/inventory
  */
-export type ApiV3StoreInventoryRequestByGet = Record<string, any>;
+export type V2StoreInventoryRequestByGet = Record<string, any>;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities
  * @summary Response data types
- * @url [ GET ] /api/v3/store/inventory
+ * @url [ GET ] /v2/store/inventory
  */
-export type ApiV3StoreInventoryResponseByGet = any;
+export type V2StoreInventoryResponseByGet = any;
 /**
  * @description Returns pet inventories by status、Returns a map of status codes to quantities
- * @url [ GET ] /api/v3/store/inventory
+ * @url [ GET ] /v2/store/inventory
  */
-export function apiV3StoreInventoryByGet(
-  data: ApiV3StoreInventoryRequestByGet = {},
+export function v2StoreInventoryByGet(
+  data: V2StoreInventoryRequestByGet = {},
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3StoreInventoryResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3StoreInventoryByGet.requestConfig),
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
     ...args
   );
 }
-apiV3StoreInventoryByGet.requestConfig = {
-  path: '/api/v3/store/inventory',
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
 /**
- * @description Place an order for a pet、Place a new order in the store
+ * @description Place an order for a pet
  * @summary Request data types
- * @url [ POST ] /api/v3/store/order
+ * @url [ POST ] /v2/store/order
  */
-export interface ApiV3StoreOrderRequestByPost {
+export interface V2StoreOrderRequestByPost {
   id: string;
   petId: string;
   quantity: number;
@@ -517,11 +1214,11 @@ export interface ApiV3StoreOrderRequestByPost {
   complete: boolean;
 }
 /**
- * @description Place an order for a pet、Place a new order in the store
+ * @description Place an order for a pet
  * @summary Response data types
- * @url [ POST ] /api/v3/store/order
+ * @url [ POST ] /v2/store/order
  */
-export interface ApiV3StoreOrderResponseByPost {
+export interface V2StoreOrderResponseByPost {
   id?: string;
   petId?: string;
   quantity?: number;
@@ -531,21 +1228,14 @@ export interface ApiV3StoreOrderResponseByPost {
   complete?: boolean;
 }
 /**
- * @description Place an order for a pet、Place a new order in the store
- * @url [ POST ] /api/v3/store/order
+ * @description Place an order for a pet
+ * @url [ POST ] /v2/store/order
  */
-export function apiV3StoreOrderByPost(
-  data: ApiV3StoreOrderRequestByPost,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3StoreOrderResponseByPost>(
-    processRequestFunctionConfig(data, extraData, apiV3StoreOrderByPost.requestConfig),
-    ...args
-  );
+export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderResponseByPost>(processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig), ...args);
 }
-apiV3StoreOrderByPost.requestConfig = {
-  path: '/api/v3/store/order',
+v2StoreOrderByPost.requestConfig = {
+  path: '/v2/store/order',
   method: 'POST',
   requestContentType: ['application/json'],
   formDataKeyNameList: [],
@@ -553,20 +1243,20 @@ apiV3StoreOrderByPost.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
  * @summary Request data types
- * @url [ GET ] /api/v3/store/order/{orderId}
+ * @url [ GET ] /v2/store/order/{orderId}
  */
-export interface ApiV3StoreOrderOrderIdRequestByGet {
-  // ID of order that needs to be fetched
+export interface V2StoreOrderOrderIdRequestByGet {
+  // ID of pet that needs to be fetched
   orderId: string;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
  * @summary Response data types
- * @url [ GET ] /api/v3/store/order/{orderId}
+ * @url [ GET ] /v2/store/order/{orderId}
  */
-export interface ApiV3StoreOrderOrderIdResponseByGet {
+export interface V2StoreOrderOrderIdResponseByGet {
   id?: string;
   petId?: string;
   quantity?: number;
@@ -576,58 +1266,58 @@ export interface ApiV3StoreOrderOrderIdResponseByGet {
   complete?: boolean;
 }
 /**
- * @description Find purchase order by ID、For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
- * @url [ GET ] /api/v3/store/order/{orderId}
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @url [ GET ] /v2/store/order/{orderId}
  */
-export function apiV3StoreOrderOrderIdByGet(
-  data: ApiV3StoreOrderOrderIdRequestByGet,
+export function v2StoreOrderOrderIdByGet(
+  data: V2StoreOrderOrderIdRequestByGet,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3StoreOrderOrderIdResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3StoreOrderOrderIdByGet.requestConfig),
+  return request<V2StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
     ...args
   );
 }
-apiV3StoreOrderOrderIdByGet.requestConfig = {
-  path: '/api/v3/store/order/{orderId}',
+v2StoreOrderOrderIdByGet.requestConfig = {
+  path: '/v2/store/order/{orderId}',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: ['orderId'],
   queryStringKeyNameList: [],
 };
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
  * @summary Request data types
- * @url [ DELETE ] /api/v3/store/order/{orderId}
+ * @url [ DELETE ] /v2/store/order/{orderId}
  */
-export interface ApiV3StoreOrderOrderIdRequestByDelete {
+export interface V2StoreOrderOrderIdRequestByDelete {
   // ID of the order that needs to be deleted
   orderId: string;
 }
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
  * @summary Response data types
- * @url [ DELETE ] /api/v3/store/order/{orderId}
+ * @url [ DELETE ] /v2/store/order/{orderId}
  */
-export type ApiV3StoreOrderOrderIdResponseByDelete = any;
+export type V2StoreOrderOrderIdResponseByDelete = any;
 /**
- * @description Delete purchase order by ID、For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
- * @url [ DELETE ] /api/v3/store/order/{orderId}
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @url [ DELETE ] /v2/store/order/{orderId}
  */
-export function apiV3StoreOrderOrderIdByDelete(
-  data: ApiV3StoreOrderOrderIdRequestByDelete,
+export function v2StoreOrderOrderIdByDelete(
+  data: V2StoreOrderOrderIdRequestByDelete,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3StoreOrderOrderIdResponseByDelete>(
-    processRequestFunctionConfig(data, extraData, apiV3StoreOrderOrderIdByDelete.requestConfig),
+  return request<V2StoreOrderOrderIdResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
     ...args
   );
 }
-apiV3StoreOrderOrderIdByDelete.requestConfig = {
-  path: '/api/v3/store/order/{orderId}',
+v2StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/v2/store/order/{orderId}',
   method: 'DELETE',
   requestContentType: [],
   formDataKeyNameList: [],
@@ -635,48 +1325,11 @@ apiV3StoreOrderOrderIdByDelete.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Create user、This can only be done by the logged in user.
+ * @description Creates list of users with given input array
  * @summary Request data types
- * @url [ POST ] /api/v3/user
+ * @url [ POST ] /v2/user/createWithList
  */
-export interface ApiV3UserRequestByPost {
-  id: string;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
-  // User Status
-  userStatus: number;
-}
-/**
- * @description Create user、This can only be done by the logged in user.
- * @summary Response data types
- * @url [ POST ] /api/v3/user
- */
-export type ApiV3UserResponseByPost = any;
-/**
- * @description Create user、This can only be done by the logged in user.
- * @url [ POST ] /api/v3/user
- */
-export function apiV3UserByPost(data: ApiV3UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3UserResponseByPost>(processRequestFunctionConfig(data, extraData, apiV3UserByPost.requestConfig), ...args);
-}
-apiV3UserByPost.requestConfig = {
-  path: '/api/v3/user',
-  method: 'POST',
-  requestContentType: ['application/json'],
-  formDataKeyNameList: [],
-  pathParamKeyNameList: [],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Creates list of users with given input array、Creates list of users with given input array
- * @summary Request data types
- * @url [ POST ] /api/v3/user/createWithList
- */
-export type ApiV3UserCreateWithListRequestByPost = Array<{
+export type V2UserCreateWithListRequestByPost = Array<{
   id: string;
   username: string;
   firstName: string;
@@ -688,11 +1341,48 @@ export type ApiV3UserCreateWithListRequestByPost = Array<{
   userStatus: number;
 }>;
 /**
- * @description Creates list of users with given input array、Creates list of users with given input array
+ * @description Creates list of users with given input array
  * @summary Response data types
- * @url [ POST ] /api/v3/user/createWithList
+ * @url [ POST ] /v2/user/createWithList
  */
-export interface ApiV3UserCreateWithListResponseByPost {
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(
+  data: V2UserCreateWithListRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithListResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Get user by user name
+ * @summary Request data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByGet {
+  // The name that needs to be fetched. Use user1 for testing.
+  username: string;
+}
+/**
+ * @description Get user by user name
+ * @summary Response data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameResponseByGet {
   id?: string;
   username?: string;
   firstName?: string;
@@ -704,33 +1394,101 @@ export interface ApiV3UserCreateWithListResponseByPost {
   userStatus?: number;
 }
 /**
- * @description Creates list of users with given input array、Creates list of users with given input array
- * @url [ POST ] /api/v3/user/createWithList
+ * @description Get user by user name
+ * @url [ GET ] /v2/user/{username}
  */
-export function apiV3UserCreateWithListByPost(
-  data: ApiV3UserCreateWithListRequestByPost,
+export function v2UserUsernameByGet(data: V2UserUsernameRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig), ...args);
+}
+v2UserUsernameByGet.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByPut {
+  // name that need to be updated
+  username: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByPut = any;
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @url [ PUT ] /v2/user/{username}
+ */
+export function v2UserUsernameByPut(data: V2UserUsernameRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByPut>(processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig), ...args);
+}
+v2UserUsernameByPut.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'PUT',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByDelete {
+  // The name that needs to be deleted
+  username: string;
+}
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByDelete = any;
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export function v2UserUsernameByDelete(
+  data: V2UserUsernameRequestByDelete,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3UserCreateWithListResponseByPost>(
-    processRequestFunctionConfig(data, extraData, apiV3UserCreateWithListByPost.requestConfig),
+  return request<V2UserUsernameResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
     ...args
   );
 }
-apiV3UserCreateWithListByPost.requestConfig = {
-  path: '/api/v3/user/createWithList',
-  method: 'POST',
-  requestContentType: ['application/json'],
+v2UserUsernameByDelete.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'DELETE',
+  requestContentType: [],
   formDataKeyNameList: [],
-  pathParamKeyNameList: [],
+  pathParamKeyNameList: ['username'],
   queryStringKeyNameList: [],
 };
 /**
  * @description Logs user into the system
  * @summary Request data types
- * @url [ GET ] /api/v3/user/login
+ * @url [ GET ] /v2/user/login
  */
-export interface ApiV3UserLoginRequestByGet {
+export interface V2UserLoginRequestByGet {
   // The user name for login
   username: string;
   // The password for login in clear text
@@ -739,20 +1497,20 @@ export interface ApiV3UserLoginRequestByGet {
 /**
  * @description Logs user into the system
  * @summary Response data types
- * @url [ GET ] /api/v3/user/login
+ * @url [ GET ] /v2/user/login
  */
-export type ApiV3UserLoginResponseByGet = string;
+export type V2UserLoginResponseByGet = string;
 /**
  * @description Logs user into the system
- * @url [ GET ] /api/v3/user/login
+ * @url [ GET ] /v2/user/login
  */
-export function apiV3UserLoginByGet(data: ApiV3UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
-  return request<ApiV3UserLoginResponseByGet>(processRequestFunctionConfig(data, extraData, apiV3UserLoginByGet.requestConfig), ...args);
+export function v2UserLoginByGet(data: V2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLoginResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig), ...args);
 }
-apiV3UserLoginByGet.requestConfig = {
-  path: '/api/v3/user/login',
+v2UserLoginByGet.requestConfig = {
+  path: '/v2/user/login',
   method: 'GET',
-  requestContentType: ['application/json'],
+  requestContentType: [],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
   queryStringKeyNameList: ['username', 'password'],
@@ -760,28 +1518,24 @@ apiV3UserLoginByGet.requestConfig = {
 /**
  * @description Logs out current logged in user session
  * @summary Request data types
- * @url [ GET ] /api/v3/user/logout
+ * @url [ GET ] /v2/user/logout
  */
-export type ApiV3UserLogoutRequestByGet = Record<string, any>;
+export type V2UserLogoutRequestByGet = Record<string, any>;
 /**
  * @description Logs out current logged in user session
  * @summary Response data types
- * @url [ GET ] /api/v3/user/logout
+ * @url [ GET ] /v2/user/logout
  */
-export type ApiV3UserLogoutResponseByGet = any;
+export type V2UserLogoutResponseByGet = any;
 /**
  * @description Logs out current logged in user session
- * @url [ GET ] /api/v3/user/logout
+ * @url [ GET ] /v2/user/logout
  */
-export function apiV3UserLogoutByGet(
-  data: ApiV3UserLogoutRequestByGet = {},
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserLogoutResponseByGet>(processRequestFunctionConfig(data, extraData, apiV3UserLogoutByGet.requestConfig), ...args);
+export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLogoutResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
 }
-apiV3UserLogoutByGet.requestConfig = {
-  path: '/api/v3/user/logout',
+v2UserLogoutByGet.requestConfig = {
+  path: '/v2/user/logout',
   method: 'GET',
   requestContentType: [],
   formDataKeyNameList: [],
@@ -789,60 +1543,55 @@ apiV3UserLogoutByGet.requestConfig = {
   queryStringKeyNameList: [],
 };
 /**
- * @description Get user by user name
+ * @description Creates list of users with given input array
  * @summary Request data types
- * @url [ GET ] /api/v3/user/{username}
+ * @url [ POST ] /v2/user/createWithArray
  */
-export interface ApiV3UserUsernameRequestByGet {
-  // The name that needs to be fetched. Use user1 for testing.
-  username1: string;
-}
-/**
- * @description Get user by user name
- * @summary Response data types
- * @url [ GET ] /api/v3/user/{username}
- */
-export interface ApiV3UserUsernameResponseByGet {
-  id?: string;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+export type V2UserCreateWithArrayRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
-}
+  userStatus: number;
+}>;
 /**
- * @description Get user by user name
- * @url [ GET ] /api/v3/user/{username}
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithArray
  */
-export function apiV3UserUsernameByGet(
-  data: ApiV3UserUsernameRequestByGet,
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(
+  data: V2UserCreateWithArrayRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<ApiV3UserUsernameResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3UserUsernameByGet.requestConfig),
+  return request<V2UserCreateWithArrayResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
     ...args
   );
 }
-apiV3UserUsernameByGet.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'GET',
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
   requestContentType: ['application/json'],
   formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
+  pathParamKeyNameList: [],
   queryStringKeyNameList: [],
 };
 /**
- * @description Update user、This can only be done by the logged in user.
+ * @description Create user、This can only be done by the logged in user.
  * @summary Request data types
- * @url [ PUT ] /api/v3/user/{username}
+ * @url [ POST ] /v2/user
  */
-export interface ApiV3UserUsernameRequestByPut {
-  // name that need to be deleted
-  username1: string;
+export interface V2UserRequestByPost {
   id: string;
   username: string;
   firstName: string;
@@ -854,142 +1603,25 @@ export interface ApiV3UserUsernameRequestByPut {
   userStatus: number;
 }
 /**
- * @description Update user、This can only be done by the logged in user.
+ * @description Create user、This can only be done by the logged in user.
  * @summary Response data types
- * @url [ PUT ] /api/v3/user/{username}
+ * @url [ POST ] /v2/user
  */
-export type ApiV3UserUsernameResponseByPut = any;
+export type V2UserResponseByPost = any;
 /**
- * @description Update user、This can only be done by the logged in user.
- * @url [ PUT ] /api/v3/user/{username}
+ * @description Create user、This can only be done by the logged in user.
+ * @url [ POST ] /v2/user
  */
-export function apiV3UserUsernameByPut(
-  data: ApiV3UserUsernameRequestByPut,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserUsernameResponseByPut>(
-    processRequestFunctionConfig(data, extraData, apiV3UserUsernameByPut.requestConfig),
-    ...args
-  );
+export function v2UserByPost(data: V2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserResponseByPost>(processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig), ...args);
 }
-apiV3UserUsernameByPut.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'PUT',
-  requestContentType: ['application/json'],
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username1'],
-  queryStringKeyNameList: [],
-};
-/**
- * @description Delete user、This can only be done by the logged in user.
- * @summary Request data types
- * @url [ DELETE ] /api/v3/user/{username}
- */
-export interface ApiV3UserUsernameRequestByDelete {
-  // The name that needs to be deleted
-  username: string;
-}
-/**
- * @description Delete user、This can only be done by the logged in user.
- * @summary Response data types
- * @url [ DELETE ] /api/v3/user/{username}
- */
-export type ApiV3UserUsernameResponseByDelete = any;
-/**
- * @description Delete user、This can only be done by the logged in user.
- * @url [ DELETE ] /api/v3/user/{username}
- */
-export function apiV3UserUsernameByDelete(
-  data: ApiV3UserUsernameRequestByDelete,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3UserUsernameResponseByDelete>(
-    processRequestFunctionConfig(data, extraData, apiV3UserUsernameByDelete.requestConfig),
-    ...args
-  );
-}
-apiV3UserUsernameByDelete.requestConfig = {
-  path: '/api/v3/user/{username}',
-  method: 'DELETE',
-  requestContentType: [],
-  formDataKeyNameList: [],
-  pathParamKeyNameList: ['username'],
-  queryStringKeyNameList: [],
-};
-/**
- * @description 查看排班列表、/api/tbt
- * @summary Request data types
- * @url [ GET ] /api/v3/api/tbf/arranging/work
- */
-export interface ApiV3ApiTbfArrangingWorkRequestByGet {
-  // 考勤组id
-  groupId: string;
-  // 成员名称
-  realName: string;
-  // 月份
-  month: string;
-  // 用户id集合
-  userIds: Array<string>;
-}
-/**
- * @description 查看排班列表、/api/tbt
- * @summary Response data types
- * @url [ GET ] /api/v3/api/tbf/arranging/work
- */
-export type ApiV3ApiTbfArrangingWorkResponseByGet = Array<{
-  // 排班实体
-  schedulesVO: {
-    // 用户id
-    userId: string;
-    // 名称
-    realName: string;
-    // 是否移除(1移除)
-    delMark: string;
-    // 是否自己的考勤组
-    selfGroup: string;
-    val: {
-      '2023-11-10'?: Array<{
-        // 类型
-        type: number;
-        // 时段id
-        periodId: string;
-        // 开始时间点
-        start: string;
-        // 结束时间点
-        end: string;
-        // 下班时间是否为次日(1今日 2次日)
-        isEndTomorrow: string;
-        // 是否自己的考勤组
-        selfGroup: string;
-        // 排序
-        sort: number;
-      }>;
-    };
-  };
-}>;
-/**
- * @description 查看排班列表、/api/tbt
- * @url [ GET ] /api/v3/api/tbf/arranging/work
- */
-export function apiV3ApiTbfArrangingWorkByGet(
-  data: ApiV3ApiTbfArrangingWorkRequestByGet,
-  extraData?: unknown,
-  ...args: CurrentRequestFunctionRestArgsType
-) {
-  return request<ApiV3ApiTbfArrangingWorkResponseByGet>(
-    processRequestFunctionConfig(data, extraData, apiV3ApiTbfArrangingWorkByGet.requestConfig),
-    ...args
-  );
-}
-apiV3ApiTbfArrangingWorkByGet.requestConfig = {
-  path: '/api/v3/api/tbf/arranging/work',
-  method: 'GET',
+v2UserByPost.requestConfig = {
+  path: '/v2/user',
+  method: 'POST',
   requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['groupId', 'realName', 'month', 'userIds'],
+  queryStringKeyNameList: [],
 };
 "
 `;
@@ -1017,55 +1649,792 @@ import request from './request';
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;
 
 /**
- * @description 兼容非标准的dot参数形式
+ * @description uploads an image
  * @summary Request data types
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export interface CompatibleErrorSpecificationDotQueryParamRequestByGet {
-  // ID集合
-  ids?: Array<string>;
-  dept?: {
-    // 创建者1号
-    deptCreateBy1?: string;
-    // 创建者2号
-    deptCreateBy2?: string;
-  };
-  roles?: Array<{
-    // 角色创建者1号
-    roleCreateBy1?: string;
-    // 角色创建时间
-    roleCreateTime?: string;
-  }>;
-  // 有分页参数的话就加,根据你的实际查询参数编写
-  '有分页参数的话就加,根据你的实际查询参数编写'?: string;
+export interface V2PetPetIdUploadImageRequestByPost {
+  // ID of pet to update
+  petId: string;
+  // Additional data to pass to server
+  additionalMetadata: string;
+  // file to upload
+  file: File;
 }
 /**
- * @description 兼容非标准的dot参数形式
+ * @description uploads an image
  * @summary Response data types
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export type CompatibleErrorSpecificationDotQueryParamResponseByGet = any;
+export interface V2PetPetIdUploadImageResponseByPost {
+  code?: number;
+  type?: string;
+  message?: string;
+}
 /**
- * @description 兼容非标准的dot参数形式
- * @url [ GET ] /compatible-error-specification-dot-query-param
+ * @description uploads an image
+ * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
-export function compatibleErrorSpecificationDotQueryParamByGet(
-  data: CompatibleErrorSpecificationDotQueryParamRequestByGet,
+export function v2PetPetIdUploadImageByPost(
+  data: V2PetPetIdUploadImageRequestByPost,
   extraData?: unknown,
   ...args: CurrentRequestFunctionRestArgsType
 ) {
-  return request<CompatibleErrorSpecificationDotQueryParamResponseByGet>(
-    processRequestFunctionConfig(data, extraData, compatibleErrorSpecificationDotQueryParamByGet.requestConfig),
+  return request<V2PetPetIdUploadImageResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2PetPetIdUploadImageByPost.requestConfig),
     ...args
   );
 }
-compatibleErrorSpecificationDotQueryParamByGet.requestConfig = {
-  path: '/compatible-error-specification-dot-query-param',
+v2PetPetIdUploadImageByPost.requestConfig = {
+  path: '/v2/pet/{petId}/uploadImage',
+  method: 'POST',
+  requestContentType: ['multipart/form-data'],
+  formDataKeyNameList: ['additionalMetadata', 'file'],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Add a new pet to the store
+ * @summary Request data types
+ * @url [ POST ] /v2/pet
+ */
+export interface V2PetRequestByPost {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Add a new pet to the store
+ * @summary Response data types
+ * @url [ POST ] /v2/pet
+ */
+export type V2PetResponseByPost = any;
+/**
+ * @description Add a new pet to the store
+ * @url [ POST ] /v2/pet
+ */
+export function v2PetByPost(data: V2PetRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetByPost.requestConfig), ...args);
+}
+v2PetByPost.requestConfig = {
+  path: '/v2/pet',
+  method: 'POST',
+  requestContentType: ['application/json', 'application/xml'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Update an existing pet
+ * @summary Request data types
+ * @url [ PUT ] /v2/pet
+ */
+export interface V2PetRequestByPut {
+  id: string;
+  category: {
+    id: string;
+    name: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags: Array<{
+    id: string;
+    name: string;
+  }>;
+  // pet status in the store
+  status: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Update an existing pet
+ * @summary Response data types
+ * @url [ PUT ] /v2/pet
+ */
+export type V2PetResponseByPut = any;
+/**
+ * @description Update an existing pet
+ * @url [ PUT ] /v2/pet
+ */
+export function v2PetByPut(data: V2PetRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetResponseByPut>(processRequestFunctionConfig(data, extraData, v2PetByPut.requestConfig), ...args);
+}
+v2PetByPut.requestConfig = {
+  path: '/v2/pet',
+  method: 'PUT',
+  requestContentType: ['application/json', 'application/xml'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export interface V2PetFindByStatusRequestByGet {
+  // Status values that need to be considered for filter
+  status: Array<'available' | 'pending' | 'sold'>;
+}
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export type V2PetFindByStatusResponseByGet = Array<{
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}>;
+/**
+ * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
+ * @url [ GET ] /v2/pet/findByStatus
+ */
+export function v2PetFindByStatusByGet(
+  data: V2PetFindByStatusRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2PetFindByStatusResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2PetFindByStatusByGet.requestConfig),
+    ...args
+  );
+}
+v2PetFindByStatusByGet.requestConfig = {
+  path: '/v2/pet/findByStatus',
   method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['status'],
+};
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export interface V2PetFindByTagsRequestByGet {
+  // Tags to filter by
+  tags: Array<string>;
+}
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export type V2PetFindByTagsResponseByGet = Array<{
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}>;
+/**
+ * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+ * @url [ GET ] /v2/pet/findByTags
+ */
+export function v2PetFindByTagsByGet(data: V2PetFindByTagsRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetFindByTagsResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetFindByTagsByGet.requestConfig), ...args);
+}
+v2PetFindByTagsByGet.requestConfig = {
+  path: '/v2/pet/findByTags',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['tags'],
+};
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @summary Request data types
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByGet {
+  // ID of pet to return
+  petId: string;
+}
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @summary Response data types
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdResponseByGet {
+  id?: string;
+  category?: {
+    id?: string;
+    name?: string;
+  };
+  name: string;
+  photoUrls: Array<string>;
+  tags?: Array<{
+    id?: string;
+    name?: string;
+  }>;
+  // pet status in the store
+  status?: 'available' | 'pending' | 'sold';
+}
+/**
+ * @description Find pet by ID、Returns a single pet
+ * @url [ GET ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByGet(data: V2PetPetIdRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByGet>(processRequestFunctionConfig(data, extraData, v2PetPetIdByGet.requestConfig), ...args);
+}
+v2PetPetIdByGet.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Updates a pet in the store with form data
+ * @summary Request data types
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByPost {
+  // ID of pet that needs to be updated
+  petId: string;
+  // Updated name of the pet
+  name: string;
+  // Updated status of the pet
+  status: string;
+}
+/**
+ * @description Updates a pet in the store with form data
+ * @summary Response data types
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export type V2PetPetIdResponseByPost = any;
+/**
+ * @description Updates a pet in the store with form data
+ * @url [ POST ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByPost(data: V2PetPetIdRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByPost>(processRequestFunctionConfig(data, extraData, v2PetPetIdByPost.requestConfig), ...args);
+}
+v2PetPetIdByPost.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'POST',
+  requestContentType: ['application/x-www-form-urlencoded'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Deletes a pet
+ * @summary Request data types
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export interface V2PetPetIdRequestByDelete {
+  // Pet id to delete
+  petId: string;
+}
+/**
+ * @description Deletes a pet
+ * @summary Response data types
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export type V2PetPetIdResponseByDelete = any;
+/**
+ * @description Deletes a pet
+ * @url [ DELETE ] /v2/pet/{petId}
+ */
+export function v2PetPetIdByDelete(data: V2PetPetIdRequestByDelete, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2PetPetIdResponseByDelete>(processRequestFunctionConfig(data, extraData, v2PetPetIdByDelete.requestConfig), ...args);
+}
+v2PetPetIdByDelete.requestConfig = {
+  path: '/v2/pet/{petId}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['petId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Request data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryRequestByGet = Record<string, any>;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @summary Response data types
+ * @url [ GET ] /v2/store/inventory
+ */
+export type V2StoreInventoryResponseByGet = any;
+/**
+ * @description Returns pet inventories by status、Returns a map of status codes to quantities
+ * @url [ GET ] /v2/store/inventory
+ */
+export function v2StoreInventoryByGet(
+  data: V2StoreInventoryRequestByGet = {},
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreInventoryResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreInventoryByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreInventoryByGet.requestConfig = {
+  path: '/v2/store/inventory',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Place an order for a pet
+ * @summary Request data types
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderRequestByPost {
+  id: string;
+  petId: string;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
+}
+/**
+ * @description Place an order for a pet
+ * @summary Response data types
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderResponseByPost {
+  id?: string;
+  petId?: string;
+  quantity?: number;
+  shipDate?: string;
+  // Order Status
+  status?: 'placed' | 'approved' | 'delivered';
+  complete?: boolean;
+}
+/**
+ * @description Place an order for a pet
+ * @url [ POST ] /v2/store/order
+ */
+export function v2StoreOrderByPost(data: V2StoreOrderRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2StoreOrderResponseByPost>(processRequestFunctionConfig(data, extraData, v2StoreOrderByPost.requestConfig), ...args);
+}
+v2StoreOrderByPost.requestConfig = {
+  path: '/v2/store/order',
+  method: 'POST',
   requestContentType: ['application/json'],
   formDataKeyNameList: [],
   pathParamKeyNameList: [],
-  queryStringKeyNameList: ['ids', 'dept', 'roles', '有分页参数的话就加,根据你的实际查询参数编写'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Request data types
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByGet {
+  // ID of pet that needs to be fetched
+  orderId: string;
+}
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @summary Response data types
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdResponseByGet {
+  id?: string;
+  petId?: string;
+  quantity?: number;
+  shipDate?: string;
+  // Order Status
+  status?: 'placed' | 'approved' | 'delivered';
+  complete?: boolean;
+}
+/**
+ * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
+ * @url [ GET ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByGet(
+  data: V2StoreOrderOrderIdRequestByGet,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreOrderOrderIdResponseByGet>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByGet.requestConfig),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByGet.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Request data types
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export interface V2StoreOrderOrderIdRequestByDelete {
+  // ID of the order that needs to be deleted
+  orderId: string;
+}
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @summary Response data types
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export type V2StoreOrderOrderIdResponseByDelete = any;
+/**
+ * @description Delete purchase order by ID、For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors
+ * @url [ DELETE ] /v2/store/order/{orderId}
+ */
+export function v2StoreOrderOrderIdByDelete(
+  data: V2StoreOrderOrderIdRequestByDelete,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2StoreOrderOrderIdResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2StoreOrderOrderIdByDelete.requestConfig),
+    ...args
+  );
+}
+v2StoreOrderOrderIdByDelete.requestConfig = {
+  path: '/v2/store/order/{orderId}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['orderId'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @summary Request data types
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
+/**
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithList
+ */
+export type V2UserCreateWithListResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithList
+ */
+export function v2UserCreateWithListByPost(
+  data: V2UserCreateWithListRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithListResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithListByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithListByPost.requestConfig = {
+  path: '/v2/user/createWithList',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Get user by user name
+ * @summary Request data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByGet {
+  // The name that needs to be fetched. Use user1 for testing.
+  username: string;
+}
+/**
+ * @description Get user by user name
+ * @summary Response data types
+ * @url [ GET ] /v2/user/{username}
+ */
+export interface V2UserUsernameResponseByGet {
+  id?: string;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
+  // User Status
+  userStatus?: number;
+}
+/**
+ * @description Get user by user name
+ * @url [ GET ] /v2/user/{username}
+ */
+export function v2UserUsernameByGet(data: V2UserUsernameRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserUsernameByGet.requestConfig), ...args);
+}
+v2UserUsernameByGet.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByPut {
+  // name that need to be updated
+  username: string;
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ PUT ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByPut = any;
+/**
+ * @description Updated user、This can only be done by the logged in user.
+ * @url [ PUT ] /v2/user/{username}
+ */
+export function v2UserUsernameByPut(data: V2UserUsernameRequestByPut, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserUsernameResponseByPut>(processRequestFunctionConfig(data, extraData, v2UserUsernameByPut.requestConfig), ...args);
+}
+v2UserUsernameByPut.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'PUT',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export interface V2UserUsernameRequestByDelete {
+  // The name that needs to be deleted
+  username: string;
+}
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export type V2UserUsernameResponseByDelete = any;
+/**
+ * @description Delete user、This can only be done by the logged in user.
+ * @url [ DELETE ] /v2/user/{username}
+ */
+export function v2UserUsernameByDelete(
+  data: V2UserUsernameRequestByDelete,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserUsernameResponseByDelete>(
+    processRequestFunctionConfig(data, extraData, v2UserUsernameByDelete.requestConfig),
+    ...args
+  );
+}
+v2UserUsernameByDelete.requestConfig = {
+  path: '/v2/user/{username}',
+  method: 'DELETE',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: ['username'],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Logs user into the system
+ * @summary Request data types
+ * @url [ GET ] /v2/user/login
+ */
+export interface V2UserLoginRequestByGet {
+  // The user name for login
+  username: string;
+  // The password for login in clear text
+  password: string;
+}
+/**
+ * @description Logs user into the system
+ * @summary Response data types
+ * @url [ GET ] /v2/user/login
+ */
+export type V2UserLoginResponseByGet = string;
+/**
+ * @description Logs user into the system
+ * @url [ GET ] /v2/user/login
+ */
+export function v2UserLoginByGet(data: V2UserLoginRequestByGet, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLoginResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLoginByGet.requestConfig), ...args);
+}
+v2UserLoginByGet.requestConfig = {
+  path: '/v2/user/login',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: ['username', 'password'],
+};
+/**
+ * @description Logs out current logged in user session
+ * @summary Request data types
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutRequestByGet = Record<string, any>;
+/**
+ * @description Logs out current logged in user session
+ * @summary Response data types
+ * @url [ GET ] /v2/user/logout
+ */
+export type V2UserLogoutResponseByGet = any;
+/**
+ * @description Logs out current logged in user session
+ * @url [ GET ] /v2/user/logout
+ */
+export function v2UserLogoutByGet(data: V2UserLogoutRequestByGet = {}, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserLogoutResponseByGet>(processRequestFunctionConfig(data, extraData, v2UserLogoutByGet.requestConfig), ...args);
+}
+v2UserLogoutByGet.requestConfig = {
+  path: '/v2/user/logout',
+  method: 'GET',
+  requestContentType: [],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Creates list of users with given input array
+ * @summary Request data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayRequestByPost = Array<{
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}>;
+/**
+ * @description Creates list of users with given input array
+ * @summary Response data types
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export type V2UserCreateWithArrayResponseByPost = any;
+/**
+ * @description Creates list of users with given input array
+ * @url [ POST ] /v2/user/createWithArray
+ */
+export function v2UserCreateWithArrayByPost(
+  data: V2UserCreateWithArrayRequestByPost,
+  extraData?: unknown,
+  ...args: CurrentRequestFunctionRestArgsType
+) {
+  return request<V2UserCreateWithArrayResponseByPost>(
+    processRequestFunctionConfig(data, extraData, v2UserCreateWithArrayByPost.requestConfig),
+    ...args
+  );
+}
+v2UserCreateWithArrayByPost.requestConfig = {
+  path: '/v2/user/createWithArray',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
+};
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Request data types
+ * @url [ POST ] /v2/user
+ */
+export interface V2UserRequestByPost {
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  // User Status
+  userStatus: number;
+}
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @summary Response data types
+ * @url [ POST ] /v2/user
+ */
+export type V2UserResponseByPost = any;
+/**
+ * @description Create user、This can only be done by the logged in user.
+ * @url [ POST ] /v2/user
+ */
+export function v2UserByPost(data: V2UserRequestByPost, extraData?: unknown, ...args: CurrentRequestFunctionRestArgsType) {
+  return request<V2UserResponseByPost>(processRequestFunctionConfig(data, extraData, v2UserByPost.requestConfig), ...args);
+}
+v2UserByPost.requestConfig = {
+  path: '/v2/user',
+  method: 'POST',
+  requestContentType: ['application/json'],
+  formDataKeyNameList: [],
+  pathParamKeyNameList: [],
+  queryStringKeyNameList: [],
 };
 "
 `;

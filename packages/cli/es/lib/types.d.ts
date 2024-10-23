@@ -23,6 +23,10 @@ export interface CommonConfig {
         onRenderInterfaceName?: typeof renderInterfaceName;
         onRenderRequestFunctionName?: typeof renderRequestFunctionName;
     };
+    includeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
+    excludeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
+    includeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+    excludeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
     type?: 'swagger' | 'yapi' | string;
     name?: string;
     dataKey?: string;
@@ -37,10 +41,10 @@ export interface ServerConfig extends CommonConfig {
     url: string;
 }
 export interface Config extends CommonConfig {
-    group?: boolean;
     onlyTyping?: boolean;
     outputPath: string;
     outputFilePath?: string;
+    outputByCategory?: boolean;
     target?: 'javascript' | 'typescript';
     documentServers: Array<ServerConfig>;
     parserPlugins?: AbstractParserPlugin[];

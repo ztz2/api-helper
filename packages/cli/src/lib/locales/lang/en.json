@@ -4,6 +4,8 @@
   "插件已经注册": "The %0 plugin has already been registered.",
   "读取配置文件": "Loading configuration file.",
   "缺少 documentServers 配置": "Missing documentServers configuration.",
+  "Config[%0]: 缺少 outputPath 配置": "Config[%0]: Missing outputPath configuration.",
+  "Config[%0]: 缺少 documentServers 配置": "Config[%0]: Missing documentServers configuration.",
   "配置文件不存在，程序退出": "The configuration file does not exist, the program will exit.",
   "未选择接口文档": "No API documentation was selected.",
   "文档获取与解析，这可能需要等待一段时间...": "Interface document acquisition and parsing, This might take a while...",
@@ -18,7 +20,8 @@
   "请选择配置文件类型？": "Please select the type of configuration file?",
   "检测到已经存在配置文件，是否覆盖已有配置文件？": "An existing configuration file has been detected, do you want to overwrite it?",
 
-  "group": "Use group function. After enabling this function, multi-file code will be generated according to the group",
+  "更多完整配置，参考文档：": "Refer to the documentation for more complete configurations：",
+  "outputByCategory": "Use category output. After this function is enabled, multi-file code is output based on interface classification",
   "onlyTyping": "Whether to generate only the TypeScript type of interface request data and return data. If yes, the request file and request function will not be generated.",
   "outputPath": "The output path after code generation",
   "target": "The target type of the generated code. Default: typescript",

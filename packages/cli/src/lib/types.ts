@@ -36,6 +36,18 @@ export interface CommonConfig {
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
   };
 
+  // 生成只包含这些分类的接口
+  includeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
+  // 排除这些分类的接口
+  excludeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
+
+  // 生成指定接口
+  // 例子：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
+  // 更多匹配规则语法参考：https://github.com/micromatch/micromatch
+  includeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+  // 排除指定接口
+  excludeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+
   // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
   type?: 'swagger' | 'yapi' | string;
   // 服务名称
@@ -59,14 +71,14 @@ export interface ServerConfig extends CommonConfig {
 }
 
 export interface Config extends CommonConfig {
-  // 使用分组功能，启用该功能后，按照分组多文件代码生成
-  group?: boolean;
   // 是否只生成接口请求数据和返回数据的 TypeScript 类型。是，则请求文件和请求函数都不会生成。
   onlyTyping?: boolean;
   // 代码生成后的输出路径
   outputPath: string;
   // 功能和作用和output一样，向下兼容，该字段已废弃，使用上面字段
   outputFilePath?: string;
+  // 使用分类输出，启用该功能后，按照接口分类进行多文件代码输出
+  outputByCategory?: boolean;
   // 生成的目标代码类型。默认: typescript
   target?: 'javascript' | 'typescript';
   // 接口文档服务配置

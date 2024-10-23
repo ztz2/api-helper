@@ -16,9 +16,11 @@ import {
   artTemplate,
   renderAllApi,
 } from '@api-helper/template';
+import micromatch from 'micromatch';
 import { merge, pick, castArray } from 'lodash';
 import { APIHelper } from '@api-helper/core/lib/types';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
+import { checkDocument } from '@api-helper/template/lib/render-all-api';
 
 import {
   resolve,
@@ -103,9 +105,14 @@ class Service{
         if (len > 1) {
           logger.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
         }
+        // 缺少输出路径跳过该项
+        if (!config.outputPath && !config.outputFilePath) {
+          logger.error(this.locales.$t('Config[%0]: 缺少 outputPath 配置').replace('%0', String(i)));
+          continue;
+        }
         // 缺少文档配置，跳过该项
         if (!config.documentServers?.length) {
-          logger.error(this.locales.$t('缺少 documentServers 配置'));
+          logger.error(this.locales.$t('Config[%0]: 缺少 documentServers 配置').replace('%0', String(i)));
           continue;
         }
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
@@ -290,6 +297,7 @@ class Service{
     const spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
     const _genCode = (documentList: APIHelper.Document | APIHelper.CategoryList, params: Recordable) => {
       params = {...params};
+      documentList = filterCategory(documentList, params);
       let code: string = renderAllApi(documentList, params) || '';
       let codeDeclare =  '';
       if (!code.endsWith('\n')) {
@@ -392,7 +400,7 @@ class Service{
         // }
         // 普通模式
 
-        if (config.group) {
+        if (config.outputByCategory) {
           const fileNameRecord: Record<string, number> = {};
           const codes: Array<string> = [];
           const codeDeclares: Array<string> = [];
@@ -561,39 +569,22 @@ Service.init = async function (options: ServerOptions = {} as ServerOptions) {
 
   const code =
     `import { defineConfig } from '@api-helper/cli';
-
+// ${locales.$t('更多完整配置，参考文档：')}https://github.com/ztz2/api-helper
 export default defineConfig({
-  // ${locales.$t('group')}
-  group: false,
-  // ${locales.$t('onlyTyping')}
-  onlyTyping: false,
-  // ${locales.$t('outputPath')}
-  outputPath: 'src/api/index.ts',
   // ${locales.$t('target')}
   target: 'typescript',
+  // ${locales.$t('outputPath')}
+  outputPath: 'src/api/index.ts',
   // ${locales.$t('requestFunctionFilePath')}
   requestFunctionFilePath: 'src/api/request.ts',
-  // ${locales.$t('requiredRequestField')}
-  requiredRequestField: false,
-  // ${locales.$t('requiredResponseField')}
-  requiredResponseField: true,
   // ${locales.$t('documentServers')}
   documentServers: [{
     // ${locales.$t('url')}
     url: '${locales.$t('urlValue')}',
     // ${locales.$t('type')}
     type: 'swagger',
-    // ${locales.$t('name')}
-    name: '',
     // ${locales.$t('dataKey')}
     dataKey: '',
-    // ${locales.$t('auth')}
-    auth: {
-      username: '',
-      password: '',
-    },
-    // ${locales.$t('authToken')}
-    authToken: '',
   }],
 });
 `
@@ -651,6 +642,59 @@ import request from '《requestFilePath》';
   return [codeHead, codeHeadDeclare];
 }
 
+function filterCategory(apiDocument: APIHelper.Document | APIHelper.CategoryList, params: Config | Recordable): APIHelper.Document | APIHelper.CategoryList{
+  const isDocument = checkDocument(apiDocument);
+  let categoryList: APIHelper.CategoryList = isDocument ? (apiDocument as APIHelper.Document).categoryList : apiDocument as APIHelper.CategoryList;
+  if (
+    typeof params.excludeCategory === 'function' || (Array.isArray(params.excludeCategory) && params.excludeCategory.length > 0) ||
+    typeof params.includeCategory === 'function' || (Array.isArray(params.includeCategory) && params.includeCategory.length > 0)
+  ) {
+    categoryList = categoryList.filter((item, index) => {
+      let isRemove = false;
+      if (typeof params.excludeCategory === 'function') {
+        isRemove = params.excludeCategory(item);
+      } else if (Array.isArray(params.excludeCategory) && params.excludeCategory.length > 0) {
+        isRemove = micromatch.isMatch(item.name, params.excludeCategory as string[]);
+      } else if (typeof params.includeCategory === 'function') {
+        isRemove = !params.includeCategory(item);
+      } else if (Array.isArray(params.includeCategory) && params.includeCategory.length > 0) {
+        isRemove = !micromatch.isMatch(item.name, params.includeCategory as string[]);
+      }
+      return !isRemove;
+    });
+  }
+  if (
+    typeof params.includeAPI === 'function' || (Array.isArray(params.includeAPI) && params.includeAPI.length > 0) ||
+    typeof params.excludeAPI === 'function' || (Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)
+  ) {
+    categoryList.forEach((item) => {
+      item.apiList = item.apiList.filter((api) => {
+        if (typeof params.excludeAPI === 'function') {
+          return !params.excludeAPI(api);
+        }
+        if ((Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
+          return !params.excludeAPI.some(([u, m = '*']) => {
+            return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
+          });
+        }
+        if (typeof params.includeAPI === 'function') {
+          return params.includeAPI(api);
+        }
+        if ((Array.isArray(params.includeAPI) && params.includeAPI.length > 0)) {
+          return params.includeAPI.some(([u, m = '*']) => {
+            return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
+          });
+        }
+      });
+    });
+  }
+
+  if (isDocument && 'categoryList' in apiDocument) {
+    apiDocument.categoryList = categoryList;
+    return apiDocument;
+  }
+  return categoryList;
+}
 function filterDeclareFilename(filename: string): string {
   const types = ['.ts', '.js', '.tsx', '.jsx', '.mjs', '.ejs'];
   const type = types.find((t) => filename.endsWith(t));
@@ -845,6 +889,10 @@ function mergeConfig(rootConfig: Config, serverConfig: ServerConfig): ServerConf
       'requiredRequestField',
       'requiredResponseField',
       'events',
+      'includeCategory',
+      'excludeCategory',
+      'includeAPI',
+      'excludeAPI',
     ])) };
 }
 

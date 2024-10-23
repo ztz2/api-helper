@@ -89,8 +89,10 @@ import { pinyin } from 'pinyin-pro';
 import { join, isAbsolute, } from 'path';
 import { stat, outputFile, pathExistsSync, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
+import micromatch from 'micromatch';
 import { merge, pick, castArray } from 'lodash';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
+import { checkDocument } from '@api-helper/template/lib/render-all-api';
 import { resolve, toUnixPath, removeFolder, getAbsolutePath, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
 // import './worker-thread';
 import Locales from '../../lib/locales';
@@ -145,9 +147,14 @@ var Service = /** @class */ (function () {
                         if (len > 1) {
                             logger.info("\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
+                        // 缺少输出路径跳过该项
+                        if (!config.outputPath && !config.outputFilePath) {
+                            logger.error(this.locales.$t('Config[%0]: 缺少 outputPath 配置').replace('%0', String(i)));
+                            return [3 /*break*/, 10];
+                        }
                         // 缺少文档配置，跳过该项
                         if (!((_a = config.documentServers) === null || _a === void 0 ? void 0 : _a.length)) {
-                            logger.error(this.locales.$t('缺少 documentServers 配置'));
+                            logger.error(this.locales.$t('Config[%0]: 缺少 documentServers 配置').replace('%0', String(i)));
                             return [3 /*break*/, 10];
                         }
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
@@ -418,6 +425,7 @@ var Service = /** @class */ (function () {
                         spinner = ora(this.locales.$t('代码生成，这可能需要等待一段时间...')).start();
                         _genCode = function (documentList, params) {
                             params = __assign({}, params);
+                            documentList = filterCategory(documentList, params);
                             var code = renderAllApi(documentList, params) || '';
                             var codeDeclare = '';
                             if (!code.endsWith('\n')) {
@@ -483,7 +491,7 @@ var Service = /** @class */ (function () {
                                                             delete mgConfig.events;
                                                             Object.assign(mgConfig, eventTemp);
                                                             param = __assign(__assign({}, mgConfig), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false });
-                                                            if (!config.group) return [3 /*break*/, 7];
+                                                            if (!config.outputByCategory) return [3 /*break*/, 7];
                                                             fileNameRecord_1 = {};
                                                             codes_1 = [];
                                                             codeDeclares_1 = [];
@@ -768,7 +776,7 @@ Service.init = function (options) {
                     _a = _b.sent();
                     return [3 /*break*/, 8];
                 case 8:
-                    code = "import { defineConfig } from '@api-helper/cli';\n\nexport default defineConfig({\n  // ".concat(locales.$t('group'), "\n  group: false,\n  // ").concat(locales.$t('onlyTyping'), "\n  onlyTyping: false,\n  // ").concat(locales.$t('outputPath'), "\n  outputPath: 'src/api/index.ts',\n  // ").concat(locales.$t('target'), "\n  target: 'typescript',\n  // ").concat(locales.$t('requestFunctionFilePath'), "\n  requestFunctionFilePath: 'src/api/request.ts',\n  // ").concat(locales.$t('requiredRequestField'), "\n  requiredRequestField: false,\n  // ").concat(locales.$t('requiredResponseField'), "\n  requiredResponseField: true,\n  // ").concat(locales.$t('documentServers'), "\n  documentServers: [{\n    // ").concat(locales.$t('url'), "\n    url: '").concat(locales.$t('urlValue'), "',\n    // ").concat(locales.$t('type'), "\n    type: 'swagger',\n    // ").concat(locales.$t('name'), "\n    name: '',\n    // ").concat(locales.$t('dataKey'), "\n    dataKey: '',\n    // ").concat(locales.$t('auth'), "\n    auth: {\n      username: '',\n      password: '',\n    },\n    // ").concat(locales.$t('authToken'), "\n    authToken: '',\n  }],\n});\n");
+                    code = "import { defineConfig } from '@api-helper/cli';\n// ".concat(locales.$t('更多完整配置，参考文档：'), "https://github.com/ztz2/api-helper\nexport default defineConfig({\n  // ").concat(locales.$t('target'), "\n  target: 'typescript',\n  // ").concat(locales.$t('outputPath'), "\n  outputPath: 'src/api/index.ts',\n  // ").concat(locales.$t('requestFunctionFilePath'), "\n  requestFunctionFilePath: 'src/api/request.ts',\n  // ").concat(locales.$t('documentServers'), "\n  documentServers: [{\n    // ").concat(locales.$t('url'), "\n    url: '").concat(locales.$t('urlValue'), "',\n    // ").concat(locales.$t('type'), "\n    type: 'swagger',\n    // ").concat(locales.$t('dataKey'), "\n    dataKey: '',\n  }],\n});\n");
                     _b.label = 9;
                 case 9:
                     _b.trys.push([9, 12, , 13]);
@@ -800,6 +808,59 @@ function renderHeader(isTestEnv, options1, options2, locales) {
     codeHead = codeHead ? codeHead + '\n\n' : codeHead;
     codeHeadDeclare = codeHeadDeclare ? codeHeadDeclare + '\n\n' : codeHeadDeclare;
     return [codeHead, codeHeadDeclare];
+}
+function filterCategory(apiDocument, params) {
+    var isDocument = checkDocument(apiDocument);
+    var categoryList = isDocument ? apiDocument.categoryList : apiDocument;
+    if (typeof params.excludeCategory === 'function' || (Array.isArray(params.excludeCategory) && params.excludeCategory.length > 0) ||
+        typeof params.includeCategory === 'function' || (Array.isArray(params.includeCategory) && params.includeCategory.length > 0)) {
+        categoryList = categoryList.filter(function (item, index) {
+            var isRemove = false;
+            if (typeof params.excludeCategory === 'function') {
+                isRemove = params.excludeCategory(item);
+            }
+            else if (Array.isArray(params.excludeCategory) && params.excludeCategory.length > 0) {
+                isRemove = micromatch.isMatch(item.name, params.excludeCategory);
+            }
+            else if (typeof params.includeCategory === 'function') {
+                isRemove = !params.includeCategory(item);
+            }
+            else if (Array.isArray(params.includeCategory) && params.includeCategory.length > 0) {
+                isRemove = !micromatch.isMatch(item.name, params.includeCategory);
+            }
+            return !isRemove;
+        });
+    }
+    if (typeof params.includeAPI === 'function' || (Array.isArray(params.includeAPI) && params.includeAPI.length > 0) ||
+        typeof params.excludeAPI === 'function' || (Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
+        categoryList.forEach(function (item) {
+            item.apiList = item.apiList.filter(function (api) {
+                if (typeof params.excludeAPI === 'function') {
+                    return !params.excludeAPI(api);
+                }
+                if ((Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
+                    return !params.excludeAPI.some(function (_a) {
+                        var _b = __read(_a, 2), u = _b[0], _c = _b[1], m = _c === void 0 ? '*' : _c;
+                        return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
+                    });
+                }
+                if (typeof params.includeAPI === 'function') {
+                    return params.includeAPI(api);
+                }
+                if ((Array.isArray(params.includeAPI) && params.includeAPI.length > 0)) {
+                    return params.includeAPI.some(function (_a) {
+                        var _b = __read(_a, 2), u = _b[0], _c = _b[1], m = _c === void 0 ? '*' : _c;
+                        return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
+                    });
+                }
+            });
+        });
+    }
+    if (isDocument && 'categoryList' in apiDocument) {
+        apiDocument.categoryList = categoryList;
+        return apiDocument;
+    }
+    return categoryList;
 }
 function filterDeclareFilename(filename) {
     var types = ['.ts', '.js', '.tsx', '.jsx', '.mjs', '.ejs'];
@@ -980,6 +1041,10 @@ function mergeConfig(rootConfig, serverConfig) {
         'requiredRequestField',
         'requiredResponseField',
         'events',
+        'includeCategory',
+        'excludeCategory',
+        'includeAPI',
+        'excludeAPI',
     ])));
 }
 export default Service;
