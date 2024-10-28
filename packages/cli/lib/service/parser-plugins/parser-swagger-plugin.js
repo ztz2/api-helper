@@ -81,7 +81,7 @@ class ParserSwaggerPlugin {
 }
 exports.default = ParserSwaggerPlugin;
 function getDocument(documentServer) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const locales = yield new locales_1.default().init();
         const requestConfig = (0, util_2.processRequestConfig)(documentServer);
@@ -105,7 +105,7 @@ function getDocument(documentServer) {
             return openAPIDocumentList;
         }
         // 直接根据资源地址获取配置
-        const [, openAPIDocument] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: documentServer.url })));
+        const [baseError, openAPIDocument] = yield (0, await_to_js_1.default)((0, request_1.default)(Object.assign(Object.assign({}, requestConfig), { method: 'get', url: documentServer.url })));
         if ((0, validator_1.validateOpenAPIDocument)(openAPIDocument)) {
             openAPIDocument.documentServerUrl = documentServer.url;
             openAPIDocumentList.push(openAPIDocument);
@@ -134,6 +134,9 @@ function getDocument(documentServer) {
                 })));
             }
             yield (0, await_to_js_1.default)(Promise.all(tasks2));
+        }
+        if (baseError && !openAPIDocumentList.length) {
+            logger_1.default.error(`\n` + ((_c = baseError) === null || _c === void 0 ? void 0 : _c.message) + `\t${documentServer.url}`);
         }
         return openAPIDocumentList;
     });

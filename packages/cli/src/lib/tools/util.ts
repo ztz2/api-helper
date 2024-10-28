@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
+import cryptoJsMD5 from 'crypto-js/md5';
 import tmp, { FileOptions } from 'tmp';
 import * as process from 'node:process';
 import { AxiosRequestConfig } from 'axios';
@@ -296,4 +297,10 @@ export function removeCwdPath(pathStr: string) {
   const cwdPath = toUnixPath(process.cwd());
   const temp = pathStr.replace(cwdPath, '');
   return temp.startsWith('/') ? temp.slice(1) : temp;
+}
+
+export function md5(content: string, options?: { outputLength?: 16 | 32 }) {
+  const outputLength = [16, 32].includes(options?.outputLength as number) ? options?.outputLength : 32;
+  const text = cryptoJsMD5(content).toString();
+  return outputLength === 16 ? text.substring(8, 16) : text;
 }

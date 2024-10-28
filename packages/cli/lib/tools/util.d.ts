@@ -63,4 +63,7 @@ export declare function documentServersRunParserPlugins(documentServers: Documen
 export declare function processTSFile(filename: string): string;
 export declare function getAbsolutePath(pathStr: string): string;
 export declare function removeCwdPath(pathStr: string): string;
+export declare function md5(content: string, options?: {
+    outputLength?: 16 | 32;
+}): string;
 export {};

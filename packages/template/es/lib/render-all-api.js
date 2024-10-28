@@ -102,7 +102,7 @@ export function renderAllApi(apiDocument, options) {
                     p.push(renderRequestFunctionDeclare(api, __assign(__assign({}, options), { dataKey: dataKey, onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName })));
                 }
             }
-            if (!(onlyTyping && codeType === 'typescript')) {
+            if (!(onlyTyping && codeType === 'typescript') && !isDeclare) {
                 p.push(renderRequestFunction(api, __assign(__assign({}, options), { dataKey: dataKey, codeType: codeType, onRenderInterfaceName: options === null || options === void 0 ? void 0 : options.onRenderInterfaceName, onRenderRequestFunctionName: options === null || options === void 0 ? void 0 : options.onRenderRequestFunctionName })));
             }
             code.push(p.join(''));

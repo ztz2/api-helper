@@ -147,15 +147,15 @@ var ParserSwaggerPlugin = /** @class */ (function () {
 }());
 export default ParserSwaggerPlugin;
 function getDocument(documentServer) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
-        var locales, requestConfig, openAPIDocumentList, isHttp, serverUrlText, filepath, _c, e, json, errorText, _d, openAPIDocument, origin, _e, swaggerResources, tasks2, _loop_2, swaggerResources_1, swaggerResources_1_1, sr;
-        var _f, _g, e_1, _h;
-        return __generator(this, function (_j) {
-            switch (_j.label) {
+        var locales, requestConfig, openAPIDocumentList, isHttp, serverUrlText, filepath, _d, e, json, errorText, _e, baseError, openAPIDocument, origin, _f, swaggerResources, tasks2, _loop_2, swaggerResources_1, swaggerResources_1_1, sr;
+        var _g, _h, e_1, _j;
+        return __generator(this, function (_k) {
+            switch (_k.label) {
                 case 0: return [4 /*yield*/, new Locales().init()];
                 case 1:
-                    locales = _j.sent();
+                    locales = _k.sent();
                     requestConfig = processRequestConfig(documentServer);
                     openAPIDocumentList = [];
                     isHttp = /^(http(s?):\/\/.*?)($|\/)/.test(String(documentServer.url));
@@ -164,7 +164,7 @@ function getDocument(documentServer) {
                     filepath = path.isAbsolute(documentServer.url) ? documentServer.url : path.join(process.cwd(), documentServer.url);
                     return [4 /*yield*/, to(readJson(filepath))];
                 case 2:
-                    _c = __read.apply(void 0, [_j.sent(), 2]), e = _c[0], json = _c[1];
+                    _d = __read.apply(void 0, [_k.sent(), 2]), e = _d[0], json = _d[1];
                     if (e) {
                         errorText = "".concat(locales.$t('swagger文件读取失败：')).concat(getErrorMessage(e, ': ')).concat(serverUrlText);
                         logger.error(errorText);
@@ -178,7 +178,7 @@ function getDocument(documentServer) {
                     return [2 /*return*/, openAPIDocumentList];
                 case 3: return [4 /*yield*/, to(request(__assign(__assign({}, requestConfig), { method: 'get', url: documentServer.url })))];
                 case 4:
-                    _d = __read.apply(void 0, [_j.sent(), 2]), openAPIDocument = _d[1];
+                    _e = __read.apply(void 0, [_k.sent(), 2]), baseError = _e[0], openAPIDocument = _e[1];
                     if (validateOpenAPIDocument(openAPIDocument)) {
                         openAPIDocument.documentServerUrl = documentServer.url;
                         openAPIDocumentList.push(openAPIDocument);
@@ -187,18 +187,18 @@ function getDocument(documentServer) {
                     origin = requestConfig.origin;
                     return [4 /*yield*/, to(request(__assign(__assign({}, requestConfig), { method: 'get', url: mergeUrl(origin, '/swagger-resources', requestConfig.qs) })))];
                 case 5:
-                    _e = __read.apply(void 0, [_j.sent(), 2]), swaggerResources = _e[1];
+                    _f = __read.apply(void 0, [_k.sent(), 2]), swaggerResources = _f[1];
                     if (!!((_a = swaggerResources) === null || _a === void 0 ? void 0 : _a.length)) return [3 /*break*/, 7];
                     return [4 /*yield*/, to(request(__assign(__assign({}, requestConfig), { method: 'get', url: mergeUrl(origin, '/data/openapi.json', requestConfig.qs) })))];
                 case 6:
-                    _f = __read.apply(void 0, [_j.sent(), 2]), swaggerResources = _f[1];
-                    _j.label = 7;
+                    _g = __read.apply(void 0, [_k.sent(), 2]), swaggerResources = _g[1];
+                    _k.label = 7;
                 case 7:
                     if (!!((_b = swaggerResources) === null || _b === void 0 ? void 0 : _b.length)) return [3 /*break*/, 9];
                     return [4 /*yield*/, to(request(__assign(__assign({}, requestConfig), { method: 'get', url: mergeUrl(origin, '/openapi.json', requestConfig.qs) })))];
                 case 8:
-                    _g = __read.apply(void 0, [_j.sent(), 2]), swaggerResources = _g[1];
-                    _j.label = 9;
+                    _h = __read.apply(void 0, [_k.sent(), 2]), swaggerResources = _h[1];
+                    _k.label = 9;
                 case 9:
                     if (!Array.isArray(swaggerResources)) return [3 /*break*/, 11];
                     tasks2 = [];
@@ -220,15 +220,19 @@ function getDocument(documentServer) {
                     catch (e_1_1) { e_1 = { error: e_1_1 }; }
                     finally {
                         try {
-                            if (swaggerResources_1_1 && !swaggerResources_1_1.done && (_h = swaggerResources_1.return)) _h.call(swaggerResources_1);
+                            if (swaggerResources_1_1 && !swaggerResources_1_1.done && (_j = swaggerResources_1.return)) _j.call(swaggerResources_1);
                         }
                         finally { if (e_1) throw e_1.error; }
                     }
                     return [4 /*yield*/, to(Promise.all(tasks2))];
                 case 10:
-                    _j.sent();
-                    _j.label = 11;
-                case 11: return [2 /*return*/, openAPIDocumentList];
+                    _k.sent();
+                    _k.label = 11;
+                case 11:
+                    if (baseError && !openAPIDocumentList.length) {
+                        logger.error("\n" + ((_c = baseError) === null || _c === void 0 ? void 0 : _c.message) + "\t".concat(documentServer.url));
+                    }
+                    return [2 /*return*/, openAPIDocumentList];
             }
         });
     });

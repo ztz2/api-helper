@@ -23,7 +23,7 @@ export interface CommonConfig {
   // 生成响应Content-Type，默认：false
   genResponseContentType?: boolean;
   // 接口请求函数文件路径
-  requestFunctionFilePath: string;
+  requestFunctionFilePath?: string;
   // 请求数据所有字段设置成必有属性，默认: false
   requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true

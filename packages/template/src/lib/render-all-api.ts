@@ -93,7 +93,7 @@ export function renderAllApi(
         }));
       }
     }
-    if (!(onlyTyping && codeType === 'typescript')) {
+    if (!(onlyTyping && codeType === 'typescript') && !isDeclare) {
       p.push(renderRequestFunction(api, {
         ...options,
         dataKey,

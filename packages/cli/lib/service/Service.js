@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -18,7 +37,7 @@ const fast_glob_1 = __importDefault(require("fast-glob"));
 const pinyin_pro_1 = require("pinyin-pro");
 // import { Worker } from 'node:worker_threads';
 const path_1 = require("path");
-const fs_extra_1 = require("fs-extra");
+const fs_extra_1 = __importStar(require("fs-extra"));
 const template_1 = require("@api-helper/template");
 const micromatch_1 = __importDefault(require("micromatch"));
 const lodash_1 = require("lodash");
@@ -43,6 +62,11 @@ class Service {
             new parser_yapi_plugin_1.default(),
             new parser_swagger_plugin_1.default(),
         ];
+        this.apiHelperCLIRunningData = {
+            selectedDocumentEtag: []
+        };
+        this.selectedDocumentEtagTemp = [];
+        this.hasApiHelperCLIRunningData = false;
         this.tempFolder = (0, path_1.join)(__dirname, './.cache.server');
         this.isTestEnv = isTestEnv;
         this.configFilePath = options.config;
@@ -75,12 +99,13 @@ class Service {
                         continue;
                     }
                     const parserPluginRunResult = yield this.parserDocument(config.documentServers, config);
-                    const chooseDocumentList = yield this.chooseDocument(parserPluginRunResult);
+                    const chooseDocumentList = yield this.chooseDocument(parserPluginRunResult, config, i);
                     const codes = yield this.genCode(config, chooseDocumentList);
                     yield this.output(config, codes);
                 }
                 catch (_b) { }
             }
+            this.setApiHelperCLIRunningData();
             yield this.clear();
         });
     }
@@ -109,6 +134,84 @@ class Service {
             map.set(parserPlugin.name, parserPlugin);
         }
         return map;
+    }
+    getApiHelperCLIRunningData(configFilePath) {
+        var _a, _b;
+        try {
+            const content = fs_extra_1.default.readFileSync(configFilePath).toString();
+            const apiHelperCLIRunningData = (_b = (_a = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im)) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : '';
+            if (!apiHelperCLIRunningData) {
+                return;
+            }
+            this.hasApiHelperCLIRunningData = true;
+            const getAllValue = (str, objectFields = []) => {
+                var _a;
+                const result = {};
+                /*// @字段名称 值 */
+                const fields = (_a = str.match(/\/\/\s+@(.*)/g)) !== null && _a !== void 0 ? _a : [];
+                fields.forEach((f) => {
+                    var _a, _b, _c;
+                    const key = (_a = f.match(/\/\/\s+@(.*?)(\s+|$)/)) === null || _a === void 0 ? void 0 : _a[1];
+                    const value = (_c = (_b = f.match(/\/\/\s+@.*?\s+(.*)/)) === null || _b === void 0 ? void 0 : _b[1]) !== null && _c !== void 0 ? _c : '';
+                    if (objectFields.includes(key) && value) {
+                        let temp = [];
+                        try {
+                            temp = JSON.parse(value);
+                            temp = Array.isArray(temp) ? temp : [];
+                        }
+                        catch (_d) { }
+                        result[key] = temp;
+                    }
+                    else {
+                        result[key] = value;
+                    }
+                });
+                return result;
+            };
+            this.apiHelperCLIRunningData = Object.assign(Object.assign({}, this.apiHelperCLIRunningData), getAllValue(apiHelperCLIRunningData, ['selectedDocumentEtag']));
+        }
+        catch (e) {
+            logger_1.default.warn(e === null || e === void 0 ? void 0 : e.message);
+        }
+    }
+    setApiHelperCLIRunningData() {
+        try {
+            if (!this.configFileAbsolutePath) {
+                return;
+            }
+            const toComment = (obj) => {
+                const temp = [];
+                for (const [key, value] of Object.entries(obj)) {
+                    let val = value;
+                    if (typeof value === 'object' && value !== null) {
+                        val = JSON.stringify(value);
+                    }
+                    else if (value === undefined) {
+                        val = '';
+                    }
+                    temp.push(`// @${key} ${val}`);
+                }
+                return `// ==ApiHelperCLIRunningData==
+${temp.join('\n')}
+// ==/ApiHelperCLIRunningData==`;
+            };
+            let content = fs_extra_1.default.readFileSync(this.configFileAbsolutePath).toString();
+            let temp = toComment(Object.assign(Object.assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp }));
+            const apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
+            if (apiHelperCLIRunningData) {
+                content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
+            }
+            else {
+                if (!(content.endsWith('\n') || content.endsWith('\r'))) {
+                    temp = '\n' + temp;
+                }
+                content += temp;
+            }
+            fs_extra_1.default.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
+        }
+        catch (e) {
+            logger_1.default.warn(e === null || e === void 0 ? void 0 : e.message);
+        }
     }
     // 1. 获取配置文件
     getConfigFile() {
@@ -153,6 +256,8 @@ class Service {
                 }
                 spinner.succeed();
                 logger_1.default.info(this.locales.$t('配置已加载：') + (0, util_2.toUnixPath)(configFilePath));
+                this.configFileAbsolutePath = c;
+                this.getApiHelperCLIRunningData(c);
                 return configList;
             }
             // 没有从根目录寻找
@@ -183,6 +288,8 @@ class Service {
             }
             spinner.succeed();
             logger_1.default.info(this.locales.$t('配置已加载：') + (0, util_2.toUnixPath)(configPath));
+            this.configFileAbsolutePath = configPath;
+            this.getApiHelperCLIRunningData(configPath);
             return configList;
         });
     }
@@ -194,17 +301,21 @@ class Service {
         });
     }
     // 3. 选择项目文档
-    chooseDocument(parserPluginRunResult) {
+    chooseDocument(parserPluginRunResult, config, index) {
         return __awaiter(this, void 0, void 0, function* () {
             const choicesDocumentListOptions = [];
+            const genEtg = (url) => (0, util_2.md5)(index + url, { outputLength: 16 });
             parserPluginRunResult.forEach((d, idx) => {
                 d.parsedDocumentList.forEach((item) => {
                     const choice = {
                         title: item.title,
-                        description: d.documentServer.url,
+                        description: item.documentServerUrl,
                         value: item.id,
                         selected: true,
                     };
+                    if (this.hasApiHelperCLIRunningData && this.apiHelperCLIRunningData.selectedDocumentEtag.length > 0) {
+                        choice.selected = this.apiHelperCLIRunningData.selectedDocumentEtag.includes(genEtg(item.documentServerUrl));
+                    }
                     if (!choice.title) {
                         choice.title = `[${idx}]${d.documentServer.url}`;
                         delete choice.description;
@@ -226,6 +337,9 @@ class Service {
                 }
                 parserPluginRunResult = parserPluginRunResult.filter((d) => {
                     d.parsedDocumentList = d.parsedDocumentList.filter((item) => answers.documentList.includes(item.id));
+                    d.parsedDocumentList.forEach((item) => {
+                        this.selectedDocumentEtagTemp.push(genEtg(item.documentServerUrl));
+                    });
                     return d.parsedDocumentList.length > 0;
                 });
             }
@@ -343,7 +457,8 @@ class Service {
                     //   }
                     // }
                     // 普通模式
-                    if (config.outputByCategory) {
+                    // @ts-ignore
+                    if (config.outputByCategory || ('group' in config && config.group)) {
                         const fileNameRecord = {};
                         const codes = [];
                         const codeDeclares = [];
@@ -506,6 +621,7 @@ Service.init = function (options = {}) {
         }
         catch (_a) { }
         const code = `import { defineConfig } from '@api-helper/cli';
+
 // ${locales.$t('更多完整配置，参考文档：')}https://github.com/ztz2/api-helper
 export default defineConfig({
   // ${locales.$t('target')}

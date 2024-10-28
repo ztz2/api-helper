@@ -84,7 +84,7 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
   }
 
   // 直接根据资源地址获取配置
-  const [, openAPIDocument] = await to(request({
+  const [baseError, openAPIDocument] = await to(request({
     ...requestConfig,
     method: 'get',
     url: documentServer.url,
@@ -135,6 +135,10 @@ async function getDocument(documentServer: DocumentServers[number]): Promise<Arr
       })));
     }
     await to(Promise.all(tasks2));
+  }
+
+  if (baseError && !openAPIDocumentList.length) {
+    logger.error(`\n` + (baseError as any)?.message + `\t${documentServer.url}`);
   }
 
   return openAPIDocumentList;

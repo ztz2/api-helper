@@ -87,13 +87,13 @@ import fg from 'fast-glob';
 import { pinyin } from 'pinyin-pro';
 // import { Worker } from 'node:worker_threads';
 import { join, isAbsolute, } from 'path';
-import { stat, outputFile, pathExistsSync, } from 'fs-extra';
+import fsExtra, { stat, outputFile, pathExistsSync, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
 import micromatch from 'micromatch';
 import { merge, pick, castArray } from 'lodash';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 import { checkDocument } from '@api-helper/template/lib/render-all-api';
-import { resolve, toUnixPath, removeFolder, getAbsolutePath, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, } from '../tools/util';
+import { resolve, toUnixPath, removeFolder, getAbsolutePath, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, md5, } from '../tools/util';
 // import './worker-thread';
 import Locales from '../../lib/locales';
 import logger from '../../lib/tools/logger';
@@ -114,6 +114,11 @@ var Service = /** @class */ (function () {
             new ParserYapiPlugin(),
             new ParserSwaggerPlugin(),
         ];
+        this.apiHelperCLIRunningData = {
+            selectedDocumentEtag: []
+        };
+        this.selectedDocumentEtagTemp = [];
+        this.hasApiHelperCLIRunningData = false;
         this.tempFolder = join(__dirname, './.cache.server');
         this.isTestEnv = isTestEnv;
         this.configFilePath = options.config;
@@ -160,7 +165,7 @@ var Service = /** @class */ (function () {
                         return [4 /*yield*/, this.parserDocument(config.documentServers, config)];
                     case 5:
                         parserPluginRunResult = _c.sent();
-                        return [4 /*yield*/, this.chooseDocument(parserPluginRunResult)];
+                        return [4 /*yield*/, this.chooseDocument(parserPluginRunResult, config, i)];
                     case 6:
                         chooseDocumentList = _c.sent();
                         return [4 /*yield*/, this.genCode(config, chooseDocumentList)];
@@ -176,7 +181,9 @@ var Service = /** @class */ (function () {
                     case 10:
                         i++;
                         return [3 /*break*/, 3];
-                    case 11: return [4 /*yield*/, this.clear()];
+                    case 11:
+                        this.setApiHelperCLIRunningData();
+                        return [4 /*yield*/, this.clear()];
                     case 12:
                         _c.sent();
                         return [2 /*return*/];
@@ -245,12 +252,100 @@ var Service = /** @class */ (function () {
         }
         return map;
     };
+    Service.prototype.getApiHelperCLIRunningData = function (configFilePath) {
+        var _a, _b;
+        try {
+            var content = fsExtra.readFileSync(configFilePath).toString();
+            var apiHelperCLIRunningData = (_b = (_a = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im)) === null || _a === void 0 ? void 0 : _a[0]) !== null && _b !== void 0 ? _b : '';
+            if (!apiHelperCLIRunningData) {
+                return;
+            }
+            this.hasApiHelperCLIRunningData = true;
+            var getAllValue = function (str, objectFields) {
+                var _a;
+                if (objectFields === void 0) { objectFields = []; }
+                var result = {};
+                /*// @字段名称 值 */
+                var fields = (_a = str.match(/\/\/\s+@(.*)/g)) !== null && _a !== void 0 ? _a : [];
+                fields.forEach(function (f) {
+                    var _a, _b, _c;
+                    var key = (_a = f.match(/\/\/\s+@(.*?)(\s+|$)/)) === null || _a === void 0 ? void 0 : _a[1];
+                    var value = (_c = (_b = f.match(/\/\/\s+@.*?\s+(.*)/)) === null || _b === void 0 ? void 0 : _b[1]) !== null && _c !== void 0 ? _c : '';
+                    if (objectFields.includes(key) && value) {
+                        var temp = [];
+                        try {
+                            temp = JSON.parse(value);
+                            temp = Array.isArray(temp) ? temp : [];
+                        }
+                        catch (_d) { }
+                        result[key] = temp;
+                    }
+                    else {
+                        result[key] = value;
+                    }
+                });
+                return result;
+            };
+            this.apiHelperCLIRunningData = __assign(__assign({}, this.apiHelperCLIRunningData), getAllValue(apiHelperCLIRunningData, ['selectedDocumentEtag']));
+        }
+        catch (e) {
+            logger.warn(e === null || e === void 0 ? void 0 : e.message);
+        }
+    };
+    Service.prototype.setApiHelperCLIRunningData = function () {
+        try {
+            if (!this.configFileAbsolutePath) {
+                return;
+            }
+            var toComment = function (obj) {
+                var e_4, _a;
+                var temp = [];
+                try {
+                    for (var _b = __values(Object.entries(obj)), _c = _b.next(); !_c.done; _c = _b.next()) {
+                        var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
+                        var val = value;
+                        if (typeof value === 'object' && value !== null) {
+                            val = JSON.stringify(value);
+                        }
+                        else if (value === undefined) {
+                            val = '';
+                        }
+                        temp.push("// @".concat(key, " ").concat(val));
+                    }
+                }
+                catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                finally {
+                    try {
+                        if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+                    }
+                    finally { if (e_4) throw e_4.error; }
+                }
+                return "// ==ApiHelperCLIRunningData==\n".concat(temp.join('\n'), "\n// ==/ApiHelperCLIRunningData==");
+            };
+            var content = fsExtra.readFileSync(this.configFileAbsolutePath).toString();
+            var temp = toComment(__assign(__assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp }));
+            var apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
+            if (apiHelperCLIRunningData) {
+                content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
+            }
+            else {
+                if (!(content.endsWith('\n') || content.endsWith('\r'))) {
+                    temp = '\n' + temp;
+                }
+                content += temp;
+            }
+            fsExtra.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
+        }
+        catch (e) {
+            logger.warn(e === null || e === void 0 ? void 0 : e.message);
+        }
+    };
     // 1. 获取配置文件
     Service.prototype.getConfigFile = function () {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function () {
             var constructorOptions, outputPath, isJS, target, suffixName, configFilePath, spinner, c, configList_2, files, configList, configPath, hasConfigFile, files_1, files_1_1, file, c, temp;
-            var e_4, _d;
+            var e_5, _d;
             return __generator(this, function (_e) {
                 switch (_e.label) {
                     case 0:
@@ -293,6 +388,8 @@ var Service = /** @class */ (function () {
                             }
                             spinner.succeed();
                             logger.info(this.locales.$t('配置已加载：') + toUnixPath(configFilePath));
+                            this.configFileAbsolutePath = c;
+                            this.getApiHelperCLIRunningData(c);
                             return [2 /*return*/, configList_2];
                         }
                         return [4 /*yield*/, fg(['apih.config.(ts|js|cjs|mjs)'], { cwd: process.cwd(), absolute: true })];
@@ -315,12 +412,12 @@ var Service = /** @class */ (function () {
                                 }
                             }
                         }
-                        catch (e_4_1) { e_4 = { error: e_4_1 }; }
+                        catch (e_5_1) { e_5 = { error: e_5_1 }; }
                         finally {
                             try {
                                 if (files_1_1 && !files_1_1.done && (_d = files_1.return)) _d.call(files_1);
                             }
-                            finally { if (e_4) throw e_4.error; }
+                            finally { if (e_5) throw e_5.error; }
                         }
                         if (!hasConfigFile) {
                             spinner.fail();
@@ -334,6 +431,8 @@ var Service = /** @class */ (function () {
                         }
                         spinner.succeed();
                         logger.info(this.locales.$t('配置已加载：') + toUnixPath(configPath));
+                        this.configFileAbsolutePath = configPath;
+                        this.getApiHelperCLIRunningData(configPath);
                         return [2 /*return*/, configList];
                 }
             });
@@ -354,21 +453,26 @@ var Service = /** @class */ (function () {
         });
     };
     // 3. 选择项目文档
-    Service.prototype.chooseDocument = function (parserPluginRunResult) {
+    Service.prototype.chooseDocument = function (parserPluginRunResult, config, index) {
         return __awaiter(this, void 0, void 0, function () {
-            var choicesDocumentListOptions, answers_1, failText, failText;
+            var choicesDocumentListOptions, genEtg, answers_1, failText, failText;
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         choicesDocumentListOptions = [];
+                        genEtg = function (url) { return md5(index + url, { outputLength: 16 }); };
                         parserPluginRunResult.forEach(function (d, idx) {
                             d.parsedDocumentList.forEach(function (item) {
                                 var choice = {
                                     title: item.title,
-                                    description: d.documentServer.url,
+                                    description: item.documentServerUrl,
                                     value: item.id,
                                     selected: true,
                                 };
+                                if (_this.hasApiHelperCLIRunningData && _this.apiHelperCLIRunningData.selectedDocumentEtag.length > 0) {
+                                    choice.selected = _this.apiHelperCLIRunningData.selectedDocumentEtag.includes(genEtg(item.documentServerUrl));
+                                }
                                 if (!choice.title) {
                                     choice.title = "[".concat(idx, "]").concat(d.documentServer.url);
                                     delete choice.description;
@@ -392,6 +496,9 @@ var Service = /** @class */ (function () {
                         }
                         parserPluginRunResult = parserPluginRunResult.filter(function (d) {
                             d.parsedDocumentList = d.parsedDocumentList.filter(function (item) { return answers_1.documentList.includes(item.id); });
+                            d.parsedDocumentList.forEach(function (item) {
+                                _this.selectedDocumentEtagTemp.push(genEtg(item.documentServerUrl));
+                            });
                             return d.parsedDocumentList.length > 0;
                         });
                         _a.label = 2;
@@ -409,8 +516,8 @@ var Service = /** @class */ (function () {
     // 4. 生成代码
     Service.prototype.genCode = function (config, parserPluginRunResult) {
         return __awaiter(this, void 0, void 0, function () {
-            var result, outputFilePath, isTS, spinner, _genCode, formatResultCode, _loop_1, parserPluginRunResult_1, parserPluginRunResult_1_1, item, e_5_1;
-            var e_5, _a;
+            var result, outputFilePath, isTS, spinner, _genCode, formatResultCode, _loop_1, parserPluginRunResult_1, parserPluginRunResult_1_1, item, e_6_1;
+            var e_6, _a;
             var _this = this;
             return __generator(this, function (_b) {
                 switch (_b.label) {
@@ -480,7 +587,7 @@ var Service = /** @class */ (function () {
                                         dataKey = documentServer.dataKey;
                                         serverName = documentServer.name ? pinyin(documentServer.name, { toneType: 'none', type: 'array' }).join('') : '';
                                         return [4 /*yield*/, Promise.all(parsedDocumentList.map(function (d) { return __awaiter(_this, void 0, void 0, function () {
-                                                var mgConfig, eventTemp, param, fileNameRecord_1, codes_1, codeDeclares_1, fileNameMap_1, _a, _b, code2_1, _c, codeDeclare2_1, e_6, _d, code, codeDeclare, currentOutputFilePath, outputFilePathList_1, lastPath, lastPathSplit, outputFilePathList, requestFilePath, _e, _f, _g, renderHeaderParams, _h, codeHead, codeHeadDeclare, _j, code2, codeDeclare2, e_7;
+                                                var mgConfig, eventTemp, param, fileNameRecord_1, codes_1, codeDeclares_1, fileNameMap_1, _a, _b, code2_1, _c, codeDeclare2_1, e_7, _d, code, codeDeclare, currentOutputFilePath, outputFilePathList_1, lastPath, lastPathSplit, outputFilePathList, requestFilePath, _e, _f, _g, renderHeaderParams, _h, codeHead, codeHeadDeclare, _j, code2, codeDeclare2, e_8;
                                                 var _this = this;
                                                 var _k, _l;
                                                 return __generator(this, function (_m) {
@@ -491,7 +598,7 @@ var Service = /** @class */ (function () {
                                                             delete mgConfig.events;
                                                             Object.assign(mgConfig, eventTemp);
                                                             param = __assign(__assign({}, mgConfig), { codeType: isTS ? 'typescript' : 'javascript', dataKey: dataKey, isDeclare: false });
-                                                            if (!config.outputByCategory) return [3 /*break*/, 7];
+                                                            if (!(config.outputByCategory || ('group' in config && config.group))) return [3 /*break*/, 7];
                                                             fileNameRecord_1 = {};
                                                             codes_1 = [];
                                                             codeDeclares_1 = [];
@@ -565,8 +672,8 @@ var Service = /** @class */ (function () {
                                                             _m.sent();
                                                             return [3 /*break*/, 6];
                                                         case 5:
-                                                            e_6 = _m.sent();
-                                                            logger.error(e_6);
+                                                            e_7 = _m.sent();
+                                                            logger.error(e_7);
                                                             return [3 /*break*/, 6];
                                                         case 6: return [2 /*return*/];
                                                         case 7:
@@ -614,8 +721,8 @@ var Service = /** @class */ (function () {
                                                             });
                                                             return [3 /*break*/, 11];
                                                         case 10:
-                                                            e_7 = _m.sent();
-                                                            logger.error(e_7);
+                                                            e_8 = _m.sent();
+                                                            logger.error(e_8);
                                                             return [3 /*break*/, 11];
                                                         case 11: return [2 /*return*/];
                                                     }
@@ -644,14 +751,14 @@ var Service = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 7: return [3 /*break*/, 10];
                     case 8:
-                        e_5_1 = _b.sent();
-                        e_5 = { error: e_5_1 };
+                        e_6_1 = _b.sent();
+                        e_6 = { error: e_6_1 };
                         return [3 /*break*/, 10];
                     case 9:
                         try {
                             if (parserPluginRunResult_1_1 && !parserPluginRunResult_1_1.done && (_a = parserPluginRunResult_1.return)) _a.call(parserPluginRunResult_1);
                         }
-                        finally { if (e_5) throw e_5.error; }
+                        finally { if (e_6) throw e_6.error; }
                         return [7 /*endfinally*/];
                     case 10:
                         spinner.succeed();
@@ -663,8 +770,8 @@ var Service = /** @class */ (function () {
     // 5. 输出
     Service.prototype.output = function (config, genCodes) {
         return __awaiter(this, void 0, void 0, function () {
-            var isTS, spinner, genCodes_1, genCodes_1_1, genCode, outputFilePath, declareFilePath, e_8_1, error_1;
-            var e_8, _a;
+            var isTS, spinner, genCodes_1, genCodes_1_1, genCode, outputFilePath, declareFilePath, e_9_1, error_1;
+            var e_9, _a;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0: return [4 /*yield*/, checkOutputTS(config)];
@@ -697,14 +804,14 @@ var Service = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 8: return [3 /*break*/, 11];
                     case 9:
-                        e_8_1 = _b.sent();
-                        e_8 = { error: e_8_1 };
+                        e_9_1 = _b.sent();
+                        e_9 = { error: e_9_1 };
                         return [3 /*break*/, 11];
                     case 10:
                         try {
                             if (genCodes_1_1 && !genCodes_1_1.done && (_a = genCodes_1.return)) _a.call(genCodes_1);
                         }
-                        finally { if (e_8) throw e_8.error; }
+                        finally { if (e_9) throw e_9.error; }
                         return [7 /*endfinally*/];
                     case 11:
                         spinner.succeed();
@@ -726,7 +833,7 @@ var Service = /** @class */ (function () {
 Service.init = function (options) {
     if (options === void 0) { options = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var locales, configFile, answers, overrideAnswer, _a, code, e_9;
+        var locales, configFile, answers, overrideAnswer, _a, code, e_10;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0: return [4 /*yield*/, new Locales().init()];
@@ -776,7 +883,7 @@ Service.init = function (options) {
                     _a = _b.sent();
                     return [3 /*break*/, 8];
                 case 8:
-                    code = "import { defineConfig } from '@api-helper/cli';\n// ".concat(locales.$t('更多完整配置，参考文档：'), "https://github.com/ztz2/api-helper\nexport default defineConfig({\n  // ").concat(locales.$t('target'), "\n  target: 'typescript',\n  // ").concat(locales.$t('outputPath'), "\n  outputPath: 'src/api/index.ts',\n  // ").concat(locales.$t('requestFunctionFilePath'), "\n  requestFunctionFilePath: 'src/api/request.ts',\n  // ").concat(locales.$t('documentServers'), "\n  documentServers: [{\n    // ").concat(locales.$t('url'), "\n    url: '").concat(locales.$t('urlValue'), "',\n    // ").concat(locales.$t('type'), "\n    type: 'swagger',\n    // ").concat(locales.$t('dataKey'), "\n    dataKey: '',\n  }],\n});\n");
+                    code = "import { defineConfig } from '@api-helper/cli';\n\n// ".concat(locales.$t('更多完整配置，参考文档：'), "https://github.com/ztz2/api-helper\nexport default defineConfig({\n  // ").concat(locales.$t('target'), "\n  target: 'typescript',\n  // ").concat(locales.$t('outputPath'), "\n  outputPath: 'src/api/index.ts',\n  // ").concat(locales.$t('requestFunctionFilePath'), "\n  requestFunctionFilePath: 'src/api/request.ts',\n  // ").concat(locales.$t('documentServers'), "\n  documentServers: [{\n    // ").concat(locales.$t('url'), "\n    url: '").concat(locales.$t('urlValue'), "',\n    // ").concat(locales.$t('type'), "\n    type: 'swagger',\n    // ").concat(locales.$t('dataKey'), "\n    dataKey: '',\n  }],\n});\n");
                     _b.label = 9;
                 case 9:
                     _b.trys.push([9, 12, , 13]);
@@ -789,7 +896,7 @@ Service.init = function (options) {
                     logger.info(locales.$t('已生成配置文件.'));
                     return [3 /*break*/, 13];
                 case 12:
-                    e_9 = _b.sent();
+                    e_10 = _b.sent();
                     return [2 /*return*/, logger.error(locales.$t('配置文件生成失败.'))];
                 case 13: return [2 /*return*/];
             }
@@ -931,7 +1038,7 @@ function getOutputPath(config, showDiscardWarn) {
     });
 }
 function removeExtensionName(filepath, extensions) {
-    var e_10, _a;
+    var e_11, _a;
     if (filepath === void 0) { filepath = ''; }
     if (extensions === void 0) { extensions = []; }
     try {
@@ -943,12 +1050,12 @@ function removeExtensionName(filepath, extensions) {
             }
         }
     }
-    catch (e_10_1) { e_10 = { error: e_10_1 }; }
+    catch (e_11_1) { e_11 = { error: e_11_1 }; }
     finally {
         try {
             if (EXTENSIONS_1_1 && !EXTENSIONS_1_1.done && (_a = EXTENSIONS_1.return)) _a.call(EXTENSIONS_1);
         }
-        finally { if (e_10) throw e_10.error; }
+        finally { if (e_11) throw e_11.error; }
     }
     return filepath;
 }

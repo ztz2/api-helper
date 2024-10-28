@@ -79,6 +79,7 @@ import fs from 'node:fs';
 import fsExtra from 'fs-extra';
 import parse from 'url-parse';
 import { merge } from 'lodash';
+import cryptoJsMD5 from 'crypto-js/md5';
 import tmp from 'tmp';
 import * as process from 'node:process';
 import { mergeUrl, uuid } from '@api-helper/core/lib/utils/util';
@@ -339,4 +340,9 @@ export function removeCwdPath(pathStr) {
     var cwdPath = toUnixPath(process.cwd());
     var temp = pathStr.replace(cwdPath, '');
     return temp.startsWith('/') ? temp.slice(1) : temp;
+}
+export function md5(content, options) {
+    var outputLength = [16, 32].includes(options === null || options === void 0 ? void 0 : options.outputLength) ? options === null || options === void 0 ? void 0 : options.outputLength : 32;
+    var text = cryptoJsMD5(content).toString();
+    return outputLength === 16 ? text.substring(8, 16) : text;
 }

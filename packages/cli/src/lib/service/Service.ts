@@ -7,7 +7,7 @@ import path, {
   join,
   isAbsolute,
 } from 'path';
-import {
+import fsExtra, {
   stat,
   outputFile,
   pathExistsSync,
@@ -29,7 +29,7 @@ import {
   getAbsolutePath,
   getExtensionName,
   getNormalizedRelativePath,
-  documentServersRunParserPlugins,
+  documentServersRunParserPlugins, md5,
 } from '../tools/util';
 import {
   AbstractParserPlugin,
@@ -67,20 +67,29 @@ export type ServerOptions = {
 
 class Service{
   static init: (options: ServerOptions) => void;
+
   private startDate = 0;
   private parserPlugins: AbstractParserPlugin[] = [
     new ParserYapiPlugin(),
     new ParserSwaggerPlugin(),
   ];
 
+  private apiHelperCLIRunningData: {
+    selectedDocumentEtag: string[]
+  } = {
+    selectedDocumentEtag: []
+  }
+
+  private selectedDocumentEtagTemp: string[] = [];
+
   private readonly isTestEnv: boolean;
   private configFilePath?: string;
-
+  private configFileAbsolutePath?: string;
+  private hasApiHelperCLIRunningData = false;
   private tempFolder = join(__dirname, './.cache.server');
 
-  private constructorOptions: ServerOptions;
-
   private locales: Locales;
+  private constructorOptions: ServerOptions;
 
   constructor(options: ServerOptions = {} as ServerOptions, isTestEnv = false) {
     this.isTestEnv = isTestEnv;
@@ -117,7 +126,7 @@ class Service{
         }
         const parserPluginRunResult = await this.parserDocument(config.documentServers, config);
 
-        const chooseDocumentList = await this.chooseDocument(parserPluginRunResult);
+        const chooseDocumentList = await this.chooseDocument(parserPluginRunResult, config, i);
 
         const codes = await this.genCode(config, chooseDocumentList);
 
@@ -125,6 +134,7 @@ class Service{
       } catch {}
     }
 
+    this.setApiHelperCLIRunningData();
     await this.clear();
   }
 
@@ -152,6 +162,83 @@ class Service{
       map.set(parserPlugin.name, parserPlugin);
     }
     return map;
+  }
+
+  private getApiHelperCLIRunningData(configFilePath: string) {
+    try {
+      const content = fsExtra.readFileSync(configFilePath).toString();
+      const apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im)?.[0] ?? '';
+      if (!apiHelperCLIRunningData) {
+        return;
+      }
+      this.hasApiHelperCLIRunningData = true;
+      const getAllValue = (str: string, objectFields: string[] = []) => {
+        const result: Recordable = {};
+        /*// @字段名称 值 */
+        const fields = str.match(/\/\/\s+@(.*)/g) ?? [];
+        fields.forEach((f: string) => {
+          const key = f.match(/\/\/\s+@(.*?)(\s+|$)/)?.[1];
+          const value = f.match(/\/\/\s+@.*?\s+(.*)/)?.[1] ?? '';
+          if (objectFields.includes(key as string) && value) {
+            let temp = [];
+            try {
+              temp = JSON.parse(value);
+              temp = Array.isArray(temp) ? temp : [];
+            } catch {}
+            result[key as string] = temp;
+          } else {
+            result[key as string] = value;
+          }
+        });
+        return result;
+      }
+      this.apiHelperCLIRunningData = {
+        ...this.apiHelperCLIRunningData,
+        ...getAllValue(apiHelperCLIRunningData, ['selectedDocumentEtag']),
+      };
+    } catch (e: any) {
+      logger.warn(e?.message);
+    }
+  }
+
+  private setApiHelperCLIRunningData() {
+    try {
+      if (!this.configFileAbsolutePath) {
+        return;
+      }
+      const toComment = (obj: Recordable) => {
+        const temp = [];
+        for (const [key, value] of Object.entries(obj)) {
+          let val = value;
+          if (typeof value === 'object' && value !== null) {
+            val = JSON.stringify(value);
+          } else if (value === undefined) {
+            val = '';
+          }
+          temp.push(`// @${key} ${val}`);
+        }
+        return `// ==ApiHelperCLIRunningData==
+${temp.join('\n')}
+// ==/ApiHelperCLIRunningData==`;
+      }
+      let content = fsExtra.readFileSync(this.configFileAbsolutePath).toString();
+      let temp = toComment({
+        ...this.apiHelperCLIRunningData,
+        selectedDocumentEtag: this.selectedDocumentEtagTemp,
+      });
+      const apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
+      if (apiHelperCLIRunningData) {
+        content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
+      } else {
+        if (!(content.endsWith('\n') || content.endsWith('\r'))) {
+          temp = '\n' + temp;
+        }
+        content += temp;
+      }
+      fsExtra.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
+    } catch (e: any) {
+      logger.warn(e?.message);
+    }
   }
 
   // 1. 获取配置文件
@@ -197,6 +284,8 @@ class Service{
       }
       spinner.succeed();
       logger.info(this.locales.$t('配置已加载：') + toUnixPath(configFilePath));
+      this.configFileAbsolutePath = c;
+      this.getApiHelperCLIRunningData(c);
       return configList;
     }
 
@@ -231,6 +320,9 @@ class Service{
 
     spinner.succeed();
     logger.info(this.locales.$t('配置已加载：') + toUnixPath(configPath));
+
+    this.configFileAbsolutePath = configPath;
+    this.getApiHelperCLIRunningData(configPath);
     return configList;
   }
 
@@ -241,16 +333,19 @@ class Service{
   }
 
   // 3. 选择项目文档
-  private async chooseDocument (parserPluginRunResult: ParserPluginRunResult): Promise<ParserPluginRunResult> {
+  private async chooseDocument (parserPluginRunResult: ParserPluginRunResult, config: Config, index: number): Promise<ParserPluginRunResult> {
     const choicesDocumentListOptions: Recordable[] = [];
-
+    const genEtg = (url: string) => md5(index + url, { outputLength: 16 });
     parserPluginRunResult.forEach((d, idx) => {
       d.parsedDocumentList.forEach((item) => {
         const choice: Recordable = {
           title: item.title,
-          description: d.documentServer.url,
+          description: item.documentServerUrl,
           value: item.id,
           selected: true,
+        };
+        if (this.hasApiHelperCLIRunningData && this.apiHelperCLIRunningData.selectedDocumentEtag.length > 0) {
+          choice.selected = this.apiHelperCLIRunningData.selectedDocumentEtag.includes(genEtg(item.documentServerUrl));
         }
         if (!choice.title) {
           choice.title = `[${idx}]${d.documentServer.url}`;
@@ -274,6 +369,9 @@ class Service{
       }
       parserPluginRunResult = parserPluginRunResult.filter((d) => {
         d.parsedDocumentList = d.parsedDocumentList.filter((item) => answers.documentList.includes(item.id));
+        d.parsedDocumentList.forEach((item) => {
+          this.selectedDocumentEtagTemp.push(genEtg(item.documentServerUrl));
+        });
         return d.parsedDocumentList.length > 0;
       });
     }
@@ -399,8 +497,8 @@ class Service{
         //   }
         // }
         // 普通模式
-
-        if (config.outputByCategory) {
+        // @ts-ignore
+        if (config.outputByCategory || ('group' in config && config.group)) {
           const fileNameRecord: Record<string, number> = {};
           const codes: Array<string> = [];
           const codeDeclares: Array<string> = [];
@@ -569,6 +667,7 @@ Service.init = async function (options: ServerOptions = {} as ServerOptions) {
 
   const code =
     `import { defineConfig } from '@api-helper/cli';
+
 // ${locales.$t('更多完整配置，参考文档：')}https://github.com/ztz2/api-helper
 export default defineConfig({
   // ${locales.$t('target')}

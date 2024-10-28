@@ -31,7 +31,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeCwdPath = exports.getAbsolutePath = exports.processTSFile = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadJSON = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
+exports.md5 = exports.removeCwdPath = exports.getAbsolutePath = exports.processTSFile = exports.documentServersRunParserPlugins = exports.processRequestConfig = exports.getNormalizedRelativePath = exports.toUnixPath = exports.loadJSON = exports.removeFolder = exports.createFolder = exports.checkType = exports.createTempFileByTMP = exports.createTempFile = exports.getExtensionName = exports.resolve = void 0;
 const qs_1 = __importDefault(require("qs"));
 const ora_1 = __importDefault(require("ora"));
 const path_1 = __importStar(require("path"));
@@ -39,6 +39,7 @@ const node_fs_1 = __importDefault(require("node:fs"));
 const fs_extra_1 = __importDefault(require("fs-extra"));
 const url_parse_1 = __importDefault(require("url-parse"));
 const lodash_1 = require("lodash");
+const md5_1 = __importDefault(require("crypto-js/md5"));
 const tmp_1 = __importDefault(require("tmp"));
 const process = __importStar(require("node:process"));
 const util_1 = require("@api-helper/core/lib/utils/util");
@@ -276,3 +277,9 @@ function removeCwdPath(pathStr) {
     return temp.startsWith('/') ? temp.slice(1) : temp;
 }
 exports.removeCwdPath = removeCwdPath;
+function md5(content, options) {
+    const outputLength = [16, 32].includes(options === null || options === void 0 ? void 0 : options.outputLength) ? options === null || options === void 0 ? void 0 : options.outputLength : 32;
+    const text = (0, md5_1.default)(content).toString();
+    return outputLength === 16 ? text.substring(8, 16) : text;
+}
+exports.md5 = md5;

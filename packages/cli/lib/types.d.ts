@@ -16,7 +16,7 @@ export interface CommonConfig {
     genHeaders?: boolean;
     genCookies?: boolean;
     genResponseContentType?: boolean;
-    requestFunctionFilePath: string;
+    requestFunctionFilePath?: string;
     requiredRequestField?: boolean;
     requiredResponseField?: boolean;
     events?: {
