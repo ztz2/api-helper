@@ -230,10 +230,14 @@ ${temp.join('\n')}
       if (apiHelperCLIRunningData) {
         content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
       } else {
-        if (!(content.endsWith('\n') || content.endsWith('\r'))) {
-          temp = '\n' + temp;
+        if (!(content.endsWith('\n\n') || content.endsWith('\r\r'))) {
+          if (content.endsWith('\n') || content.endsWith('\r')) {
+            temp = '\n' + temp;
+          } else {
+            temp = '\n\n' + temp;
+          }
         }
-        content += temp;
+        content += temp + '\n';
       }
       fsExtra.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
     } catch (e: any) {
