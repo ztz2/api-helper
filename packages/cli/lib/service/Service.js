@@ -82,11 +82,12 @@ class Service {
             const len = configList.length;
             // 添加解析插件
             this.injectParserPlugins(configList);
+            let hasGen = false;
             for (let i = 0; i < configList.length; i++) {
                 try {
                     const config = configList[i];
                     if (len > 1) {
-                        logger_1.default.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i + 1))}\x1B[0m ————————————————————`);
+                        logger_1.default.info(`———————————————————— \x1B[34m${this.locales.$t('正在处理').replace('%0', String(i))}\x1B[0m ————————————————————`);
                     }
                     // 缺少输出路径跳过该项
                     if (!config.outputPath && !config.outputFilePath) {
@@ -102,10 +103,11 @@ class Service {
                     const chooseDocumentList = yield this.chooseDocument(parserPluginRunResult, config, i);
                     const codes = yield this.genCode(config, chooseDocumentList);
                     yield this.output(config, codes);
+                    hasGen = true;
                 }
                 catch (_b) { }
             }
-            this.setApiHelperCLIRunningData();
+            hasGen && this.setApiHelperCLIRunningData();
             yield this.clear();
         });
     }
@@ -195,22 +197,43 @@ class Service {
 ${temp.join('\n')}
 // ==/ApiHelperCLIRunningData==`;
             };
+            let notChange = (0, lodash_1.isEqual)(this.selectedDocumentEtagTemp, this.apiHelperCLIRunningData.selectedDocumentEtag);
+            const removeBreakLine = (str) => {
+                str = str !== null && str !== void 0 ? str : '';
+                while (str.endsWith('\n') || str.endsWith('\r')) {
+                    str = str.replace(/[\n\r]$/, '');
+                }
+                return str;
+            };
+            if (notChange) {
+                if (this.apiHelperCLIRunningData.selectedDocumentEtag.length === 0) {
+                    let content = fs_extra_1.default.readFileSync(this.configFileAbsolutePath).toString();
+                    const apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
+                    if (apiHelperCLIRunningData) {
+                        content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, '');
+                        content = removeBreakLine(content);
+                        content += '\n';
+                        fs_extra_1.default.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
+                    }
+                }
+                return;
+            }
             let content = fs_extra_1.default.readFileSync(this.configFileAbsolutePath).toString();
+            const val = Object.assign(Object.assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp });
             let temp = toComment(Object.assign(Object.assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp }));
+            // 取消生成内容
+            if (!val.selectedDocumentEtag.length) {
+                temp = '';
+            }
             const apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
             if (apiHelperCLIRunningData) {
                 content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
+                content = removeBreakLine(content);
+                content += '\n';
             }
             else {
-                if (!(content.endsWith('\n\n') || content.endsWith('\r\r'))) {
-                    if (content.endsWith('\n') || content.endsWith('\r')) {
-                        temp = '\n' + temp;
-                    }
-                    else {
-                        temp = '\n\n' + temp;
-                    }
-                }
-                content += temp + '\n';
+                content = removeBreakLine(content);
+                content = content + (temp ? '\n\n' + `${temp}\n` : '\n');
             }
             fs_extra_1.default.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
         }

@@ -58,20 +58,25 @@ class ParserSwaggerPlugin {
                 const documentServer = documentServers[i];
                 const serverUrlText = `${documentServer.url}`;
                 tasks.push((() => __awaiter(this, void 0, void 0, function* () {
-                    const openAPIDocumentList = yield getDocument(documentServer);
-                    if (openAPIDocumentList.length === 0) {
-                        logger_1.default.error(`${locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
-                        return;
+                    try {
+                        const openAPIDocumentList = yield getDocument(documentServer);
+                        if (openAPIDocumentList.length === 0) {
+                            logger_1.default.error(`${locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
+                            return;
+                        }
+                        const parsedDocumentList = yield new core_1.ParserSwagger(options).parser(openAPIDocumentList);
+                        if (parsedDocumentList.length === 0) {
+                            logger_1.default.error(`${locales.$t('解析swagger配置失败：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
+                            return;
+                        }
+                        result.push({
+                            documentServer,
+                            parsedDocumentList
+                        });
                     }
-                    const parsedDocumentList = yield new core_1.ParserSwagger(options).parser(openAPIDocumentList);
-                    if (parsedDocumentList.length === 0) {
-                        logger_1.default.error(`${locales.$t('解析swagger配置失败：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
-                        return;
+                    catch (e) {
+                        logger_1.default.error('\n' + (e.message + `\tdocumentServers[${i}].url -> ${serverUrlText}`).trim());
                     }
-                    result.push({
-                        documentServer,
-                        parsedDocumentList
-                    });
                 }))());
             }
             yield (0, await_to_js_1.default)(Promise.all(tasks));

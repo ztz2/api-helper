@@ -36,20 +36,24 @@ export default class ParserSwaggerPlugin implements AbstractParserPlugin {
       const documentServer = documentServers[i];
       const serverUrlText = `${documentServer.url}`;
       tasks.push((async () => {
-        const openAPIDocumentList = await getDocument(documentServer);
-        if (openAPIDocumentList.length === 0) {
-          logger.error(`${locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
-          return;
+        try {
+          const openAPIDocumentList = await getDocument(documentServer);
+          if (openAPIDocumentList.length === 0) {
+            logger.error(`${locales.$t('没有获取到swagger配置文档：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
+            return;
+          }
+          const parsedDocumentList = await new ParserSwagger(options).parser(openAPIDocumentList as any);
+          if (parsedDocumentList.length === 0) {
+            logger.error(`${locales.$t('解析swagger配置失败：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
+            return;
+          }
+          result.push({
+            documentServer,
+            parsedDocumentList
+          });
+        } catch (e: any) {
+          logger.error('\n' + (e.message + `\tdocumentServers[${i}].url -> ${serverUrlText}`).trim());
         }
-        const parsedDocumentList = await new ParserSwagger(options).parser(openAPIDocumentList as any);
-        if (parsedDocumentList.length === 0) {
-          logger.error(`${locales.$t('解析swagger配置失败：documentServers[%0].url -> ')}${serverUrlText}`.replace('%0', String(i)));
-          return;
-        }
-        result.push({
-          documentServer,
-          parsedDocumentList
-        });
       })());
     }
 

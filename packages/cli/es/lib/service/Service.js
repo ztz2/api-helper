@@ -90,7 +90,7 @@ import { join, isAbsolute, } from 'path';
 import fsExtra, { stat, outputFile, pathExistsSync, } from 'fs-extra';
 import { artTemplate, renderAllApi, } from '@api-helper/template';
 import micromatch from 'micromatch';
-import { merge, pick, castArray } from 'lodash';
+import { merge, pick, castArray, isEqual } from 'lodash';
 import { uuid, formatDate } from '@api-helper/core/lib/utils/util';
 import { checkDocument } from '@api-helper/template/lib/render-all-api';
 import { resolve, toUnixPath, removeFolder, getAbsolutePath, getExtensionName, getNormalizedRelativePath, documentServersRunParserPlugins, md5, } from '../tools/util';
@@ -128,7 +128,7 @@ var Service = /** @class */ (function () {
     Service.prototype.run = function () {
         var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var configList, len, i, config, parserPluginRunResult, chooseDocumentList, codes, _b;
+            var configList, len, hasGen, i, config, parserPluginRunResult, chooseDocumentList, codes, _b;
             return __generator(this, function (_c) {
                 switch (_c.label) {
                     case 0: return [4 /*yield*/, this.locales.init()];
@@ -141,6 +141,7 @@ var Service = /** @class */ (function () {
                         len = configList.length;
                         // 添加解析插件
                         this.injectParserPlugins(configList);
+                        hasGen = false;
                         i = 0;
                         _c.label = 3;
                     case 3:
@@ -150,7 +151,7 @@ var Service = /** @class */ (function () {
                         _c.trys.push([4, 9, , 10]);
                         config = configList[i];
                         if (len > 1) {
-                            logger.info("\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i + 1)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
+                            logger.info("\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014 \u001B[34m".concat(this.locales.$t('正在处理').replace('%0', String(i)), "\u001B[0m \u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014\u2014"));
                         }
                         // 缺少输出路径跳过该项
                         if (!config.outputPath && !config.outputFilePath) {
@@ -174,6 +175,7 @@ var Service = /** @class */ (function () {
                         return [4 /*yield*/, this.output(config, codes)];
                     case 8:
                         _c.sent();
+                        hasGen = true;
                         return [3 /*break*/, 10];
                     case 9:
                         _b = _c.sent();
@@ -182,7 +184,7 @@ var Service = /** @class */ (function () {
                         i++;
                         return [3 /*break*/, 3];
                     case 11:
-                        this.setApiHelperCLIRunningData();
+                        hasGen && this.setApiHelperCLIRunningData();
                         return [4 /*yield*/, this.clear()];
                     case 12:
                         _c.sent();
@@ -303,14 +305,14 @@ var Service = /** @class */ (function () {
                 try {
                     for (var _b = __values(Object.entries(obj)), _c = _b.next(); !_c.done; _c = _b.next()) {
                         var _d = __read(_c.value, 2), key = _d[0], value = _d[1];
-                        var val = value;
+                        var val_1 = value;
                         if (typeof value === 'object' && value !== null) {
-                            val = JSON.stringify(value);
+                            val_1 = JSON.stringify(value);
                         }
                         else if (value === undefined) {
-                            val = '';
+                            val_1 = '';
                         }
-                        temp.push("// @".concat(key, " ").concat(val));
+                        temp.push("// @".concat(key, " ").concat(val_1));
                     }
                 }
                 catch (e_4_1) { e_4 = { error: e_4_1 }; }
@@ -322,22 +324,43 @@ var Service = /** @class */ (function () {
                 }
                 return "// ==ApiHelperCLIRunningData==\n".concat(temp.join('\n'), "\n// ==/ApiHelperCLIRunningData==");
             };
+            var notChange = isEqual(this.selectedDocumentEtagTemp, this.apiHelperCLIRunningData.selectedDocumentEtag);
+            var removeBreakLine = function (str) {
+                str = str !== null && str !== void 0 ? str : '';
+                while (str.endsWith('\n') || str.endsWith('\r')) {
+                    str = str.replace(/[\n\r]$/, '');
+                }
+                return str;
+            };
+            if (notChange) {
+                if (this.apiHelperCLIRunningData.selectedDocumentEtag.length === 0) {
+                    var content_1 = fsExtra.readFileSync(this.configFileAbsolutePath).toString();
+                    var apiHelperCLIRunningData_1 = content_1.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
+                    if (apiHelperCLIRunningData_1) {
+                        content_1 = content_1.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, '');
+                        content_1 = removeBreakLine(content_1);
+                        content_1 += '\n';
+                        fsExtra.writeFileSync(this.configFileAbsolutePath, content_1, { encoding: 'utf-8' });
+                    }
+                }
+                return;
+            }
             var content = fsExtra.readFileSync(this.configFileAbsolutePath).toString();
+            var val = __assign(__assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp });
             var temp = toComment(__assign(__assign({}, this.apiHelperCLIRunningData), { selectedDocumentEtag: this.selectedDocumentEtagTemp }));
+            // 取消生成内容
+            if (!val.selectedDocumentEtag.length) {
+                temp = '';
+            }
             var apiHelperCLIRunningData = content.match(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im);
             if (apiHelperCLIRunningData) {
                 content = content.replace(/\/\/\s==ApiHelperCLIRunningData==([\s\S]*)\/\/\s==\/ApiHelperCLIRunningData==/im, temp);
+                content = removeBreakLine(content);
+                content += '\n';
             }
             else {
-                if (!(content.endsWith('\n\n') || content.endsWith('\r\r'))) {
-                    if (content.endsWith('\n') || content.endsWith('\r')) {
-                        temp = '\n' + temp;
-                    }
-                    else {
-                        temp = '\n\n' + temp;
-                    }
-                }
-                content += temp + '\n';
+                content = removeBreakLine(content);
+                content = content + (temp ? '\n\n' + "".concat(temp, "\n") : '\n');
             }
             fsExtra.writeFileSync(this.configFileAbsolutePath, content, { encoding: 'utf-8' });
         }

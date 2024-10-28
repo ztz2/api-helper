@@ -1,5 +1,5 @@
 {
-    "正在处理": "Processing item %0",
+    "正在处理": "Processing item -> Config[%0]",
     "配置已加载：": "Configuration loaded:：",
     "插件已经注册": "The %0 plugin has already been registered.",
     "读取配置文件": "Loading configuration file.",

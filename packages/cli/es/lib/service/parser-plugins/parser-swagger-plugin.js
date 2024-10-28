@@ -106,10 +106,12 @@ var ParserSwaggerPlugin = /** @class */ (function () {
                             var documentServer = documentServers[i];
                             var serverUrlText = "".concat(documentServer.url);
                             tasks.push((function () { return __awaiter(_this, void 0, void 0, function () {
-                                var openAPIDocumentList, parsedDocumentList;
+                                var openAPIDocumentList, parsedDocumentList, e_1;
                                 return __generator(this, function (_a) {
                                     switch (_a.label) {
-                                        case 0: return [4 /*yield*/, getDocument(documentServer)];
+                                        case 0:
+                                            _a.trys.push([0, 3, , 4]);
+                                            return [4 /*yield*/, getDocument(documentServer)];
                                         case 1:
                                             openAPIDocumentList = _a.sent();
                                             if (openAPIDocumentList.length === 0) {
@@ -127,7 +129,12 @@ var ParserSwaggerPlugin = /** @class */ (function () {
                                                 documentServer: documentServer,
                                                 parsedDocumentList: parsedDocumentList
                                             });
-                                            return [2 /*return*/];
+                                            return [3 /*break*/, 4];
+                                        case 3:
+                                            e_1 = _a.sent();
+                                            logger.error('\n' + (e_1.message + "\tdocumentServers[".concat(i, "].url -> ").concat(serverUrlText)).trim());
+                                            return [3 /*break*/, 4];
+                                        case 4: return [2 /*return*/];
                                     }
                                 });
                             }); })());
@@ -150,7 +157,7 @@ function getDocument(documentServer) {
     var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function () {
         var locales, requestConfig, openAPIDocumentList, isHttp, serverUrlText, filepath, _d, e, json, errorText, _e, baseError, openAPIDocument, origin, _f, swaggerResources, tasks2, _loop_2, swaggerResources_1, swaggerResources_1_1, sr;
-        var _g, _h, e_1, _j;
+        var _g, _h, e_2, _j;
         return __generator(this, function (_k) {
             switch (_k.label) {
                 case 0: return [4 /*yield*/, new Locales().init()];
@@ -217,12 +224,12 @@ function getDocument(documentServer) {
                             _loop_2(sr);
                         }
                     }
-                    catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                    catch (e_2_1) { e_2 = { error: e_2_1 }; }
                     finally {
                         try {
                             if (swaggerResources_1_1 && !swaggerResources_1_1.done && (_j = swaggerResources_1.return)) _j.call(swaggerResources_1);
                         }
-                        finally { if (e_1) throw e_1.error; }
+                        finally { if (e_2) throw e_2.error; }
                     }
                     return [4 /*yield*/, to(Promise.all(tasks2))];
                 case 10:
