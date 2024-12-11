@@ -124,7 +124,7 @@ export default defineConfig({
   // 排除这些分类的接口
   excludeCategory: [],
   // 生成指定接口
-  // 例子：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
+  // 例子：['/v1/login', ['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
   // 更多匹配规则语法参考：https://github.com/micromatch/micromatch
   includeAPI: [],
   // 排除指定接口
