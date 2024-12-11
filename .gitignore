@@ -44,3 +44,4 @@ lerna-debug.log*
 packages/core/test/resources/openapi
 packages/core/test/resources/swaggerApi.json
 packages/cli/tests/__folder__
+.changeset/*-*.md
