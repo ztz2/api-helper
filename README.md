@@ -122,7 +122,7 @@ export default defineConfig({
   // Exclude interfaces for these categories
   excludeCategory: [],
   // Generate specified interface
-  // Example：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，The * in the example represents all the request modes
+  // Example：['/v1/login', ['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，The * in the example represents all the request modes
   // More syntax reference for matching rules：https://github.com/micromatch/micromatch
   includeAPI: [],
   // Exclude specified interface
