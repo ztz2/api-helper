@@ -724,6 +724,17 @@ import request from '《requestFilePath》';
     codeHeadDeclare = codeHeadDeclare ? codeHeadDeclare + '\n\n' : codeHeadDeclare;
     return [codeHead, codeHeadDeclare];
 }
+function filterMatchParams(param) {
+    return param.map((item) => {
+        if (typeof item === 'string') {
+            return [item, '*'];
+        }
+        if ((item === null || item === void 0 ? void 0 : item.length) === 1) {
+            return [item[0], '*'];
+        }
+        return item;
+    });
+}
 function filterCategory(apiDocument, params) {
     const isDocument = (0, render_all_api_1.checkDocument)(apiDocument);
     let categoryList = isDocument ? apiDocument.categoryList : apiDocument;
@@ -754,7 +765,8 @@ function filterCategory(apiDocument, params) {
                     return !params.excludeAPI(api);
                 }
                 if ((Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
-                    return !params.excludeAPI.some(([u, m = '*']) => {
+                    const temp = filterMatchParams(params.excludeAPI);
+                    return !temp.some(([u, m = '*']) => {
                         return micromatch_1.default.isMatch(api.path, u) && micromatch_1.default.isMatch(api.method.toLowerCase(), m.toLocaleString());
                     });
                 }
@@ -762,7 +774,8 @@ function filterCategory(apiDocument, params) {
                     return params.includeAPI(api);
                 }
                 if ((Array.isArray(params.includeAPI) && params.includeAPI.length > 0)) {
-                    return params.includeAPI.some(([u, m = '*']) => {
+                    const temp = filterMatchParams(params.includeAPI);
+                    return temp.some(([u, m = '*']) => {
                         return micromatch_1.default.isMatch(api.path, u) && micromatch_1.default.isMatch(api.method.toLowerCase(), m.toLocaleString());
                     });
                 }

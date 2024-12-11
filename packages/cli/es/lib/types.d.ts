@@ -25,8 +25,8 @@ export interface CommonConfig {
     };
     includeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
     excludeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
-    includeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
-    excludeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+    includeAPI?: Array<string | [string, string?]> | ((api: APIHelper.API) => boolean);
+    excludeAPI?: Array<string | [string, string?]> | ((api: APIHelper.API) => boolean);
     type?: 'swagger' | 'yapi' | string;
     name?: string;
     dataKey?: string;

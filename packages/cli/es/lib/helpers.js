@@ -133,10 +133,10 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
         appendFormData = function (key, v) {
             if (FormDataPolyfill != null) {
                 var val = v instanceof FormDataItem ? v.get() : v;
-                if (val instanceof File) {
+                if (File != null && val instanceof File) {
                     formData.append(key, val, val.name);
                 }
-                else if (val instanceof Blob) {
+                else if (Blob != null && val instanceof Blob) {
                     formData.append(key, val, 'blob');
                 }
                 else {
@@ -212,7 +212,7 @@ export function processRequestFunctionConfig(data, extraData, requestConfig) {
             requestFunctionConfig.data = formData;
             // @ts-ignore
         }
-        else if (data instanceof FormDataPolyfill) {
+        else if (FormDataPolyfill != null && data instanceof FormDataPolyfill) {
             requestFunctionConfig.data = data;
         }
         else {

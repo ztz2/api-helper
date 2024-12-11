@@ -135,9 +135,9 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
     appendFormData = (key: string, v: any) => {
       if (FormDataPolyfill != null) {
         const val = v instanceof FormDataItem ? v.get() : v;
-        if (val instanceof File) {
+        if (File != null && val instanceof File) {
           (formData as FormData).append(key, val, val.name);
-        } else if (val instanceof Blob) {
+        } else if (Blob != null && val instanceof Blob) {
           (formData as FormData).append(key, val, 'blob');
         } else {
           (formData as FormData).append(key, val);
@@ -199,7 +199,7 @@ export function processRequestFunctionConfig<T, R>(data: T, extraData: R, reques
     if (requestFunctionConfig.hasFormData) {
       requestFunctionConfig.data = formData;
       // @ts-ignore
-    } else if (data instanceof FormDataPolyfill) {
+    } else if (FormDataPolyfill != null && data instanceof FormDataPolyfill) {
       requestFunctionConfig.data = data;
     } else {
       requestFunctionConfig.data = cloneData;

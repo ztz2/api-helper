@@ -42,11 +42,11 @@ export interface CommonConfig {
   excludeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
 
   // 生成指定接口
-  // 例子：[['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
+  // 例子：['/v1/logon', ['/v1/login', 'get'], ['/v1/login', '(get|post|put)'], ['/v1/login', '*']]，例子中*表示所有的请求方式
   // 更多匹配规则语法参考：https://github.com/micromatch/micromatch
-  includeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+  includeAPI?: Array<string | [string, string?]> | ((api: APIHelper.API) => boolean);
   // 排除指定接口
-  excludeAPI?: Array<[string, string?]> | ((api: APIHelper.API) => boolean);
+  excludeAPI?: Array<string | [string, string?]> | ((api: APIHelper.API) => boolean);
 
   // 文档类型，根据文档类型，调用内置的解析器，默认值: 'swagger'【内置yapi和swagger的解析，其他文档类型，添加parserPlugins自行实现文档解析】
   type?: 'swagger' | 'yapi' | string;

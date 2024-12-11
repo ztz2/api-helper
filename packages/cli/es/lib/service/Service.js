@@ -944,6 +944,17 @@ function renderHeader(isTestEnv, options1, options2, locales) {
     codeHeadDeclare = codeHeadDeclare ? codeHeadDeclare + '\n\n' : codeHeadDeclare;
     return [codeHead, codeHeadDeclare];
 }
+function filterMatchParams(param) {
+    return param.map(function (item) {
+        if (typeof item === 'string') {
+            return [item, '*'];
+        }
+        if ((item === null || item === void 0 ? void 0 : item.length) === 1) {
+            return [item[0], '*'];
+        }
+        return item;
+    });
+}
 function filterCategory(apiDocument, params) {
     var isDocument = checkDocument(apiDocument);
     var categoryList = isDocument ? apiDocument.categoryList : apiDocument;
@@ -974,7 +985,8 @@ function filterCategory(apiDocument, params) {
                     return !params.excludeAPI(api);
                 }
                 if ((Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
-                    return !params.excludeAPI.some(function (_a) {
+                    var temp = filterMatchParams(params.excludeAPI);
+                    return !temp.some(function (_a) {
                         var _b = __read(_a, 2), u = _b[0], _c = _b[1], m = _c === void 0 ? '*' : _c;
                         return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
                     });
@@ -983,7 +995,8 @@ function filterCategory(apiDocument, params) {
                     return params.includeAPI(api);
                 }
                 if ((Array.isArray(params.includeAPI) && params.includeAPI.length > 0)) {
-                    return params.includeAPI.some(function (_a) {
+                    var temp = filterMatchParams(params.includeAPI);
+                    return temp.some(function (_a) {
                         var _b = __read(_a, 2), u = _b[0], _c = _b[1], m = _c === void 0 ? '*' : _c;
                         return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
                     });

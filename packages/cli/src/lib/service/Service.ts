@@ -772,6 +772,18 @@ import request from '《requestFilePath》';
   return [codeHead, codeHeadDeclare];
 }
 
+function filterMatchParams(param: Array<string | [string, string?]>): Array<[string, string]> {
+  return param.map((item) => {
+    if (typeof item === 'string') {
+       return [item, '*'];
+    }
+    if (item?.length === 1) {
+      return [item[0], '*'];
+    }
+    return item as [string, string];
+  });
+}
+
 function filterCategory(apiDocument: APIHelper.Document | APIHelper.CategoryList, params: Config | Recordable): APIHelper.Document | APIHelper.CategoryList{
   const isDocument = checkDocument(apiDocument);
   let categoryList: APIHelper.CategoryList = isDocument ? (apiDocument as APIHelper.Document).categoryList : apiDocument as APIHelper.CategoryList;
@@ -803,7 +815,8 @@ function filterCategory(apiDocument: APIHelper.Document | APIHelper.CategoryList
           return !params.excludeAPI(api);
         }
         if ((Array.isArray(params.excludeAPI) && params.excludeAPI.length > 0)) {
-          return !params.excludeAPI.some(([u, m = '*']) => {
+          const temp = filterMatchParams(params.excludeAPI);
+          return !temp.some(([u, m = '*']) => {
             return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
           });
         }
@@ -811,7 +824,8 @@ function filterCategory(apiDocument: APIHelper.Document | APIHelper.CategoryList
           return params.includeAPI(api);
         }
         if ((Array.isArray(params.includeAPI) && params.includeAPI.length > 0)) {
-          return params.includeAPI.some(([u, m = '*']) => {
+          const temp = filterMatchParams(params.includeAPI);
+          return temp.some(([u, m = '*']) => {
             return micromatch.isMatch(api.path, u) && micromatch.isMatch(api.method.toLowerCase(), m.toLocaleString());
           });
         }
