@@ -115,6 +115,9 @@ export default defineConfig({
   target: 'typescript',
   // request请求工具函数文件路径。
   requestFunctionFilePath: 'src/api/request.ts',
+  // 自定义类型转换
+  // 例子：{ long: 'number' }，long类型转换成number类型
+  transformType: Record<string, string | ((type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: string) => string)>,
   // 请求数据所有字段设置成必有属性，默认: false
   requiredRequestField: false,
   // 响应数据所有字段设置成必有属性，默认：true

@@ -113,6 +113,9 @@ export default defineConfig({
   target: 'typescript',
   // File path of the request function.
   requestFunctionFilePath: 'src/api/request.ts',
+  // Custom type conversion
+  // Example: { long: 'number' } — converts the 'long' type to 'number'
+  transformType: Record<string, string | ((type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: string) => string)>,
   // Set all fields of the request data as required attributes, default: false
   requiredRequestField: false,
   // Set all fields of the response data as required attributes, default: true，默认：true
