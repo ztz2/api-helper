@@ -14,7 +14,7 @@ import {
 } from '@api-helper/cli/lib/helpers';
 // @ts-ignore
 // prettier-ignore
-import request from './request';
+import request from './__temp__/request';
 // @ts-ignore
 // prettier-ignore
 type CurrentRequestFunctionRestArgsType = RequestFunctionRestArgsType<typeof request>;

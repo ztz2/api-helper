@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import to from 'await-to-js';
 import merge from 'lodash/merge';
+// import * as prettier from 'prettier';
 import cp from 'node:child_process';
 import { readFile } from 'fs-extra';
 import { getErrorMessage } from '@api-helper/core/lib/utils/util';

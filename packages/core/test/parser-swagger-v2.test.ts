@@ -48,7 +48,10 @@ describe('swagger-parser v2', () => {
   });
   test('petstore.json', async () => {
     const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api/v2.0/petstore.json'));
-    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocumentList = await new ParserSwagger({
+      autoGenerateId: false,
+      transformType: { int64: 'number', }
+    }).parser([openAPIDocumentJSON]);
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('petstore.json');
   });

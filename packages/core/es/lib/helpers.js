@@ -257,10 +257,31 @@ export function createApi(options) {
     }
     return instance;
 }
-export function transformType(type, format, emptyType) {
-    var _a;
+export function transformType(type, options) {
+    var _a, _b, _c, _d;
+    var args = [];
+    for (var _i = 2; _i < arguments.length; _i++) {
+        args[_i - 2] = arguments[_i];
+    }
     if (Array.isArray(type)) {
         type = (_a = type === null || type === void 0 ? void 0 : type[0]) !== null && _a !== void 0 ? _a : 'string';
+    }
+    var format = (_b = options === null || options === void 0 ? void 0 : options.format) !== null && _b !== void 0 ? _b : (typeof options === 'string' ? options : null);
+    var emptyType = (_c = options === null || options === void 0 ? void 0 : options.emptyType) !== null && _c !== void 0 ? _c : args[0];
+    var transformTypeMap = (_d = options === null || options === void 0 ? void 0 : options.transformTypeMap) !== null && _d !== void 0 ? _d : {};
+    if (typeof format === 'string') {
+        if (typeof transformTypeMap[format] === 'string') {
+            return transformTypeMap[format];
+        }
+        if (typeof transformTypeMap[format] === 'function') {
+            return transformTypeMap[format](type, { format: format, emptyType: emptyType });
+        }
+    }
+    if (typeof transformTypeMap[type] === 'string') {
+        return transformTypeMap[type];
+    }
+    if (typeof transformTypeMap[type] === 'function') {
+        return transformTypeMap[type](type, { format: format, emptyType: emptyType });
     }
     var typeMap = {
         number: 'number',
@@ -296,7 +317,7 @@ export function transformType(type, format, emptyType) {
         return 'string';
     }
     var typeValue = typeMap[type];
-    return typeValue ? typeValue : emptyType ? emptyType : 'unknown';
+    return typeValue ? typeValue : (options === null || options === void 0 ? void 0 : options.emptyType) ? options.emptyType : 'unknown';
 }
 export function getSchema(schema, path, clearKeyName) {
     if (path === void 0) { path = ''; }

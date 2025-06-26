@@ -227,7 +227,8 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
     if (keyName === void 0) { keyName = ''; }
     if (memo === void 0) { memo = new Map(); }
     if (options === void 0) { options = {
-        autoGenerateId: true
+        autoGenerateId: true,
+        transformTypeMap: {},
     }; }
     if (!schema) {
         return null;
@@ -239,12 +240,20 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
     keyName = filterKeyName(keyName);
     var requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []);
     // 定义数据，收集类型，对象类型在下面在进行单独处理
-    var resultSchema = (0, helpers_1.createSchema)((0, helpers_1.transformType)(schema.type, schema.format, 'string'), {
+    var resultSchema = (0, helpers_1.createSchema)((0, helpers_1.transformType)(schema.type, {
+        format: schema.format,
+        emptyType: 'string',
+        transformTypeMap: options.transformTypeMap
+    }), {
         id: options.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),
         keyName: keyName,
-        type: (0, helpers_1.transformType)(schema.type, schema.format, 'string'),
+        type: (0, helpers_1.transformType)(schema.type, {
+            format: schema.format,
+            emptyType: 'string',
+            transformTypeMap: options.transformTypeMap,
+        }),
         examples: (_b = schema.examples) !== null && _b !== void 0 ? _b : [],
         rules: {
             required: requiredFieldList.includes(keyName),
@@ -381,6 +390,7 @@ function processRequestSchema(requestDataSchema, requestSchemaRecord, requestJSO
     if (keyNameMemo === void 0) { keyNameMemo = []; }
     if (options === void 0) { options = {
         autoGenerateId: true,
+        transformTypeMap: {},
     }; }
     if (!requestJSONSchemaSource || !(0, validator_1.validateSchema)(requestJSONSchemaSource)) {
         return null;

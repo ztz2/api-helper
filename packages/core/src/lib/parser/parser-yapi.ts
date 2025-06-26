@@ -22,8 +22,8 @@ import {
   createCategory,
   createDocument,
   createSchema,
-  transformType,
-} from '../helpers';
+  transformType, TransformTypeOptions
+} from "../helpers";
 import ParserKeyName2Schema from './parser-key-name-2-schema';
 
 type ParserYapiParams = {
@@ -32,6 +32,7 @@ type ParserYapiParams = {
   requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true
   requiredResponseField?: boolean;
+  transformType?: TransformTypeOptions['transformTypeMap'];
   projectInfo: {
     'switch_notice': boolean,
     'is_mock_open': boolean,
@@ -150,6 +151,7 @@ export default class ParserYapi {
   private requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true
   private requiredResponseField?: boolean;
+  private transformType?: TransformTypeOptions['transformTypeMap']
 
   private projectInfo: ParserYapiParams['projectInfo'];
   private categoryList: ParserYapiParams['categoryList'];
@@ -158,6 +160,7 @@ export default class ParserYapi {
   constructor(params: ParserYapiParams) {
     this.requiredRequestField = params.requiredRequestField;
     this.requiredResponseField = params.requiredResponseField ?? true;
+    this.transformType = params.transformType ?? {};
 
     this.projectInfo = params.projectInfo;
     this.categoryList = params.categoryList;
@@ -390,7 +393,11 @@ export default class ParserYapi {
                 rawType: p.type,
                 format: p?.format ?? '',
               });
-              scm.type = transformType(p.type, p?.format, 'string');
+              scm.type = transformType(p.type, {
+                format: p?.format,
+                emptyType:  'string',
+                transformTypeMap: this.transformType,
+              });
               scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
 
               api.formDataKeyNameList.push(keyName);
@@ -410,7 +417,8 @@ export default class ParserYapi {
                     jsonParam,
                     requestKeyNameMemo,
                     {
-                      autoGenerateId: this.autoGenerateId
+                      autoGenerateId: this.autoGenerateId,
+                      transformTypeMap: this.transformType,
                     }
                   );
                 }
@@ -453,7 +461,8 @@ export default class ParserYapi {
                 undefined,
                 undefined,
                 {
-                  autoGenerateId: this.autoGenerateId
+                  autoGenerateId: this.autoGenerateId,
+                  transformTypeMap: this.transformType,
                 }
               );
               if (api.responseDataSchema?.type === 'object') {

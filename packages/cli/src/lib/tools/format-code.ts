@@ -1,6 +1,6 @@
 import to from 'await-to-js';
 import merge from 'lodash/merge';
-import * as prettier from 'prettier';
+// import * as prettier from 'prettier';
 
 import cp from 'node:child_process';
 import fsExtra, { remove, readFile } from 'fs-extra';

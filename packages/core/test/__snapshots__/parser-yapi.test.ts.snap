@@ -80,7 +80,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "keyName": "",
                   "label": "",
                   "params": [
-                    StringSchema {
+                    NumberSchema {
                       "description": "",
                       "enum": [],
                       "examples": [],
@@ -91,13 +91,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                       "params": [],
                       "rawType": "integer",
                       "rules": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
+                        "exclusiveMaximum": undefined,
+                        "exclusiveMinimum": undefined,
+                        "maximum": undefined,
+                        "minimum": undefined,
+                        "multipleOf": undefined,
                         "required": true,
                       },
                       "title": "",
-                      "type": "string",
+                      "type": "number",
                     },
                     ObjectSchema {
                       "description": "",
@@ -108,7 +110,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                       "keyName": "category",
                       "label": "",
                       "params": [
-                        StringSchema {
+                        NumberSchema {
                           "description": "",
                           "enum": [],
                           "examples": [],
@@ -119,13 +121,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                           "params": [],
                           "rawType": "integer",
                           "rules": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "pattern": undefined,
+                            "exclusiveMaximum": undefined,
+                            "exclusiveMinimum": undefined,
+                            "maximum": undefined,
+                            "minimum": undefined,
+                            "multipleOf": undefined,
                             "required": true,
                           },
                           "title": "",
-                          "type": "string",
+                          "type": "number",
                         },
                         StringSchema {
                           "description": "",
@@ -230,7 +234,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                           "keyName": "",
                           "label": "",
                           "params": [
-                            StringSchema {
+                            NumberSchema {
                               "description": "",
                               "enum": [],
                               "examples": [],
@@ -241,13 +245,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                               "params": [],
                               "rawType": "integer",
                               "rules": {
-                                "maxLength": undefined,
-                                "minLength": undefined,
-                                "pattern": undefined,
+                                "exclusiveMaximum": undefined,
+                                "exclusiveMinimum": undefined,
+                                "maximum": undefined,
+                                "minimum": undefined,
+                                "multipleOf": undefined,
                                 "required": true,
                               },
                               "title": "",
-                              "type": "string",
+                              "type": "number",
                             },
                             StringSchema {
                               "description": "",
@@ -597,7 +603,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
               "keyName": "",
               "label": "",
               "params": [
-                StringSchema {
+                NumberSchema {
                   "description": "",
                   "enum": [],
                   "examples": [],
@@ -608,13 +614,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "params": [],
                   "rawType": "integer",
                   "rules": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "pattern": undefined,
+                    "exclusiveMaximum": undefined,
+                    "exclusiveMinimum": undefined,
+                    "maximum": undefined,
+                    "minimum": undefined,
+                    "multipleOf": undefined,
                     "required": false,
                   },
                   "title": "",
-                  "type": "string",
+                  "type": "number",
                 },
                 ObjectSchema {
                   "description": "",
@@ -625,7 +633,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                   "keyName": "category",
                   "label": "",
                   "params": [
-                    StringSchema {
+                    NumberSchema {
                       "description": "",
                       "enum": [],
                       "examples": [],
@@ -636,13 +644,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                       "params": [],
                       "rawType": "integer",
                       "rules": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "pattern": undefined,
+                        "exclusiveMaximum": undefined,
+                        "exclusiveMinimum": undefined,
+                        "maximum": undefined,
+                        "minimum": undefined,
+                        "multipleOf": undefined,
                         "required": false,
                       },
                       "title": "",
-                      "type": "string",
+                      "type": "number",
                     },
                     StringSchema {
                       "description": "",
@@ -747,7 +757,7 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                       "keyName": "",
                       "label": "",
                       "params": [
-                        StringSchema {
+                        NumberSchema {
                           "description": "",
                           "enum": [],
                           "examples": [],
@@ -758,13 +768,15 @@ exports[`yapi-parser yapi-parser文档解析转换测试: yapi-parser文档解�
                           "params": [],
                           "rawType": "integer",
                           "rules": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "pattern": undefined,
+                            "exclusiveMaximum": undefined,
+                            "exclusiveMinimum": undefined,
+                            "maximum": undefined,
+                            "minimum": undefined,
+                            "multipleOf": undefined,
                             "required": false,
                           },
                           "title": "",
-                          "type": "string",
+                          "type": "number",
                         },
                         StringSchema {
                           "description": "",

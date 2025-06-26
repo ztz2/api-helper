@@ -30,8 +30,9 @@ import {
   createCategory,
   createDocument,
   createSchema,
-  transformType
-} from '../helpers';
+  transformType,
+  TransformTypeOptions
+} from "../helpers";
 import ParserKeyName2Schema from './parser-key-name-2-schema';
 
 export default class ParserSwagger {
@@ -40,19 +41,23 @@ export default class ParserSwagger {
   private requiredRequestField?: boolean;
   // 响应数据所有字段设置成必有属性，默认：true
   private requiredResponseField?: boolean;
+  private transformType: TransformTypeOptions['transformTypeMap'];
 
   constructor(options?: {
     autoGenerateId?: boolean;
     requiredResponseField?: boolean;
     requiredRequestField?: boolean;
+    transformType?: TransformTypeOptions['transformTypeMap'];
   } | boolean) {
     this.autoGenerateId = typeof options === 'boolean' ? options : typeof options?.autoGenerateId === 'boolean' ? options?.autoGenerateId : true;
     const currentOptions = Object.assign({
       requiredResponseField: true,
       requiredRequestField: false,
+      transformType: {},
     }, checkType(options, 'Object') ? options : {});
     this.requiredRequestField = currentOptions.requiredRequestField;
     this.requiredResponseField = currentOptions.requiredResponseField;
+    this.transformType = currentOptions.transformType;
   }
 
   async parser(documentList: Array<APIHelper.OpenAPIDocument>): Promise<Array<APIHelper.Document>> {
@@ -227,7 +232,13 @@ export default class ParserSwagger {
             if (requestKeyNameMemo.includes(keyName)) {
               continue;
             }
-            const type = transformType(parameter.type, parameter?.format, 'string');
+
+            const type = transformType(parameter.type, {
+              format: parameter?.format,
+              emptyType: 'string',
+              transformTypeMap: this.transformType,
+            });
+
             let scm = parserSchema(
               parameterSchema,
               undefined,
@@ -235,6 +246,7 @@ export default class ParserSwagger {
               undefined,
               {
                 autoGenerateId: this.autoGenerateId,
+                transformTypeMap: this.transformType ?? { a: '5'},
               }
             );
 
@@ -306,6 +318,7 @@ export default class ParserSwagger {
               undefined,
               {
                 autoGenerateId: this.autoGenerateId,
+                transformTypeMap: this.transformType ?? { a: '4'},
               }
             );
             if (temp) {
@@ -362,7 +375,10 @@ export default class ParserSwagger {
         undefined,
         undefined,
         undefined,
-        { autoGenerateId: this.autoGenerateId }
+        {
+          autoGenerateId: this.autoGenerateId,
+          transformTypeMap: this.transformType ?? { a: '3'},
+        }
       );
       if (api.responseDataSchema?.type === 'object') {
         api.responseDataSchema.keyName = '';
@@ -407,6 +423,7 @@ export default class ParserSwagger {
               undefined,
               {
                 autoGenerateId: this.autoGenerateId,
+                transformTypeMap: this.transformType ?? { a: '2'},
               }
             );
             if (scm == null) {
@@ -430,6 +447,7 @@ export default class ParserSwagger {
                 requestKeyNameMemo,
                 {
                   autoGenerateId: this.autoGenerateId,
+                  transformTypeMap: this.transformType,
                 }
               );
               // application/json 数据
@@ -440,14 +458,19 @@ export default class ParserSwagger {
               const isTextPlain = apiMap.consumes?.includes('text/plain');
               const isOctetStream = apiMap.consumes?.includes('application/octet-stream');
               const isRootBody = isTextPlain || isOctetStream;
-              const t = transformType(parameter.schema.type, parameter?.schema?.format, 'string');
+              const t = transformType(parameter.schema.type, {
+                format: parameter?.schema?.format,
+                emptyType: 'string',
+                transformTypeMap: this.transformType,
+              });
               const temp = parserSchema(
                 parameter.schema,
                 undefined,
                 undefined,
                 undefined,
                 {
-                  autoGenerateId: this.autoGenerateId
+                  autoGenerateId: this.autoGenerateId,
+                  transformTypeMap: this.transformType ?? { a: '1'},
                 }
               );
               if (isRootBody) {
@@ -502,6 +525,7 @@ export default class ParserSwagger {
         undefined,
         {
           autoGenerateId: this.autoGenerateId,
+          transformTypeMap: this.transformType,
         }
       );
       // 记录表单数据key
@@ -531,6 +555,7 @@ export default class ParserSwagger {
           undefined,
           {
             autoGenerateId: this.autoGenerateId,
+            transformTypeMap: this.transformType,
           }
         );
         break;

@@ -11,7 +11,7 @@ import {
   LINE_FEED_CODE_MAC
 } from '../constant';
 import { validateKeyName, validateSchema } from './validator';
-import { createSchema, transformType } from '../helpers';
+import { createSchema, transformType, TransformTypeOptions } from "../helpers";
 
 export function pushArray<T, R>(target: T, value: R): T {
   [].push.apply(target, value as any);
@@ -159,8 +159,10 @@ export function parserSchema(
   memo: Map<JSONSchema4, null> = new Map(),
   options: {
     autoGenerateId: boolean;
+    transformTypeMap?: TransformTypeOptions['transformTypeMap']
   } = {
-    autoGenerateId: true
+    autoGenerateId: true,
+    transformTypeMap: {},
   }
 ): APIHelper.Schema | null {
   if (!schema) {
@@ -177,12 +179,20 @@ export function parserSchema(
   const requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []) as string[];
 
   // 定义数据，收集类型，对象类型在下面在进行单独处理
-  const resultSchema = createSchema(transformType(schema.type as string, schema.format, 'string'), {
+  const resultSchema = createSchema(transformType(schema.type as string, {
+    format: schema.format,
+    emptyType: 'string',
+    transformTypeMap: options.transformTypeMap
+  }), {
     id: options.autoGenerateId ? randomId() : '',
     title: filterDesc(schema.title),
     description: filterDesc(schema.description),
     keyName,
-    type: transformType(schema.type as string, schema.format, 'string'),
+    type: transformType(schema.type as string, {
+      format: schema.format,
+      emptyType:  'string',
+      transformTypeMap: options.transformTypeMap,
+    }),
     examples: schema.examples ?? [],
     rules: {
       required: requiredFieldList.includes(keyName),
@@ -308,9 +318,11 @@ export function processRequestSchema(
   keyNameMemo: string[] = [],
   options: {
     autoGenerateId: boolean,
+    transformTypeMap: TransformTypeOptions['transformTypeMap'],
     callback?(parsedSchema: APIHelper.Schema): void
   } = {
     autoGenerateId: true,
+    transformTypeMap: {},
   }
 ) {
   if (!requestJSONSchemaSource || !validateSchema(requestJSONSchemaSource)) {

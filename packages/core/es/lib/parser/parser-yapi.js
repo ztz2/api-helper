@@ -48,18 +48,19 @@ var __values = (this && this.__values) || function(o) {
 import { isHttp, randomId, mergeUrl, filterDesc, parserSchema, filterKeyName, processRequestSchema, processRequestSchemaPipeline, processResponseSchemaPipeline, } from '../utils/util';
 import { UNKNOWN_GROUP_DESC, UNKNOWN_GROUP_NAME, } from '../constant';
 import { validateSchema } from '../utils/validator';
-import { createApi, createCategory, createDocument, createSchema, transformType, } from '../helpers';
+import { createApi, createCategory, createDocument, createSchema, transformType } from "../helpers";
 import ParserKeyName2Schema from './parser-key-name-2-schema';
 var ParserYapi = /** @class */ (function () {
     function ParserYapi(params) {
-        var _a, _b;
+        var _a, _b, _c;
         this.autoGenerateId = true;
         this.requiredRequestField = params.requiredRequestField;
         this.requiredResponseField = (_a = params.requiredResponseField) !== null && _a !== void 0 ? _a : true;
+        this.transformType = (_b = params.transformType) !== null && _b !== void 0 ? _b : {};
         this.projectInfo = params.projectInfo;
         this.categoryList = params.categoryList;
         this.apiList = params.apiList;
-        this.autoGenerateId = (_b = params.autoGenerateId) !== null && _b !== void 0 ? _b : true;
+        this.autoGenerateId = (_c = params.autoGenerateId) !== null && _c !== void 0 ? _c : true;
     }
     ParserYapi.prototype.parser = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -301,7 +302,11 @@ var ParserYapi = /** @class */ (function () {
                                     rawType: p.type,
                                     format: (_g = p === null || p === void 0 ? void 0 : p.format) !== null && _g !== void 0 ? _g : '',
                                 });
-                                scm.type = transformType(p.type, p === null || p === void 0 ? void 0 : p.format, 'string');
+                                scm.type = transformType(p.type, {
+                                    format: p === null || p === void 0 ? void 0 : p.format,
+                                    emptyType: 'string',
+                                    transformTypeMap: _this.transformType,
+                                });
                                 scm.label = scm.title ? scm.title : scm.description ? scm.description : '';
                                 api.formDataKeyNameList.push(keyName);
                                 requestKeyNameMemo.push(keyName);
@@ -323,7 +328,8 @@ var ParserYapi = /** @class */ (function () {
                                 var jsonParam = JSON.parse(apiContent.req_body_other);
                                 if (jsonParam) {
                                     requestExtraDataSchema = processRequestSchema(requestDataSchema, requestSchemaRecord, jsonParam, requestKeyNameMemo, {
-                                        autoGenerateId: _this.autoGenerateId
+                                        autoGenerateId: _this.autoGenerateId,
+                                        transformTypeMap: _this.transformType,
                                     });
                                 }
                             }
@@ -359,7 +365,8 @@ var ParserYapi = /** @class */ (function () {
                         var responsesSchemaSource = JSON.parse(apiContent.res_body);
                         if (validateSchema(responsesSchemaSource)) {
                             api.responseDataSchema = parserSchema(responsesSchemaSource, undefined, undefined, undefined, {
-                                autoGenerateId: _this.autoGenerateId
+                                autoGenerateId: _this.autoGenerateId,
+                                transformTypeMap: _this.transformType,
                             });
                             if (((_h = api.responseDataSchema) === null || _h === void 0 ? void 0 : _h.type) === 'object') {
                                 api.responseDataSchema.keyName = '';

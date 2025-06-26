@@ -21,10 +21,8 @@ describe('yapi文档', () => {
 //     }
 //   ],
 //   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-//   output: {
-//     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-//     filename: 'api.ts',
-//   }
+//   outputFilePath: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+//   transformType: { 'int64': 'number' },
 // };`, {
 //       folder: tempBasePath,
 //     });
@@ -47,10 +45,8 @@ describe('yapi文档', () => {
 //     }
 //   ],
 //   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-//   output: {
-//     path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-//     filename: 'api.ts',
-//   }
+//   outputFilePath: path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+//   transformType: { 'int64': 'number' },
 // };`, {
 //       folder: tempBasePath,
 //     });

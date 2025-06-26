@@ -13,6 +13,7 @@ describe('yapi-parser', () => {
       categoryList,
       apiList,
       autoGenerateId: false,
+      transformType: { int64: 'number' }
     }).parser()).toMatchSnapshot('yapi-parser文档解析转换测试');
   });
 });

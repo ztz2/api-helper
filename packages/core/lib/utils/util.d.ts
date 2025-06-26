@@ -1,5 +1,6 @@
 import { JSONSchema4 } from 'json-schema';
 import { APIHelper } from '../types';
+import { TransformTypeOptions } from "../helpers";
 export declare function pushArray<T, R>(target: T, value: R): T;
 export declare function checkType<T>(value: T, type: string): boolean;
 export declare function isHttp<T>(value: T): boolean;
@@ -145,9 +146,11 @@ export declare function filterDotKeyName(v: string): string;
 export declare function filterSchemaRequired(schemaList: Array<APIHelper.Schema>): (APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema)[];
 export declare function parserSchema(schema: JSONSchema4, parentSchema?: JSONSchema4, keyName?: string, memo?: Map<JSONSchema4, null>, options?: {
     autoGenerateId: boolean;
+    transformTypeMap?: TransformTypeOptions['transformTypeMap'];
 }): APIHelper.Schema | null;
 export declare function processRequestSchema(requestDataSchema: APIHelper.Schema, requestSchemaRecord: Array<JSONSchema4>, requestJSONSchemaSource: JSONSchema4, keyNameMemo?: string[], options?: {
     autoGenerateId: boolean;
+    transformTypeMap: TransformTypeOptions['transformTypeMap'];
     callback?(parsedSchema: APIHelper.Schema): void;
 }): APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema | null;
 export declare function uniqueRequestDataRootSchema(api: APIHelper.API): APIHelper.API;

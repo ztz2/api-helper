@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const await_to_js_1 = __importDefault(require("await-to-js"));
 const merge_1 = __importDefault(require("lodash/merge"));
+// import * as prettier from 'prettier';
 const node_child_process_1 = __importDefault(require("node:child_process"));
 const fs_extra_1 = require("fs-extra");
 const util_1 = require("@api-helper/core/lib/utils/util");

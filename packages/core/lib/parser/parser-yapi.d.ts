@@ -1,8 +1,10 @@
 import { APIHelper } from '../types';
+import { TransformTypeOptions } from "../helpers";
 declare type ParserYapiParams = {
     autoGenerateId?: boolean;
     requiredRequestField?: boolean;
     requiredResponseField?: boolean;
+    transformType?: TransformTypeOptions['transformTypeMap'];
     projectInfo: {
         'switch_notice': boolean;
         'is_mock_open': boolean;
@@ -116,6 +118,7 @@ export default class ParserYapi {
     private autoGenerateId;
     private requiredRequestField?;
     private requiredResponseField?;
+    private transformType?;
     private projectInfo;
     private categoryList;
     private apiList;

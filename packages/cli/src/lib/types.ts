@@ -2,6 +2,7 @@ import type { AxiosHeaders } from 'axios';
 import type { APIHelper } from '@api-helper/core/lib/types';
 import { renderInterfaceName } from '@api-helper/template/lib/render-interface';
 import { renderRequestFunctionName } from '@api-helper/template/lib/render-request-function';
+import { transformType } from "@api-helper/core/src";
 
 export type ParserPluginRunResult = Array<{
   documentServer: Config['documentServers'][number];
@@ -35,6 +36,9 @@ export interface CommonConfig {
     // 当生成API名称时候事件回调
     onRenderRequestFunctionName?: typeof renderRequestFunctionName;
   };
+
+  // 自定义类型转换
+  transformType: Record<string, string | ((type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: string) => string)>,
 
   // 生成只包含这些分类的接口
   includeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);

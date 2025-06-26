@@ -79,9 +79,11 @@ var ParserSwagger = /** @class */ (function () {
         var currentOptions = Object.assign({
             requiredResponseField: true,
             requiredRequestField: false,
+            transformType: {},
         }, (0, util_1.checkType)(options, 'Object') ? options : {});
         this.requiredRequestField = currentOptions.requiredRequestField;
         this.requiredResponseField = currentOptions.requiredResponseField;
+        this.transformType = currentOptions.transformType;
     }
     ParserSwagger.prototype.parser = function (documentList) {
         return __awaiter(this, void 0, void 0, function () {
@@ -274,7 +276,7 @@ var ParserSwagger = /** @class */ (function () {
     };
     // 解析：路径参数、查询字符串参数(v2[x-www-form-urlencoded])、响应数据。预留header、cookie
     ParserSwagger.prototype.parseCommonParam = function (_a) {
-        var _b, _c, _d, _e, _f, _g;
+        var _b, _c, _d, _e, _f, _g, _h, _j, _k;
         var apiDocument = _a.apiDocument, api = _a.api, apiMap = _a.apiMap, requestDataSchema = _a.requestDataSchema, requestKeyNameMemo = _a.requestKeyNameMemo, parserKeyName2SchemaWrap = _a.parserKeyName2SchemaWrap;
         var parameters = apiMap.parameters;
         var cookieSchema = (0, helpers_1.createSchema)('object');
@@ -301,9 +303,14 @@ var ParserSwagger = /** @class */ (function () {
                         if (requestKeyNameMemo.includes(keyName)) {
                             return "continue";
                         }
-                        var type = (0, helpers_1.transformType)(parameter.type, parameter === null || parameter === void 0 ? void 0 : parameter.format, 'string');
+                        var type = (0, helpers_1.transformType)(parameter.type, {
+                            format: parameter === null || parameter === void 0 ? void 0 : parameter.format,
+                            emptyType: 'string',
+                            transformTypeMap: this_1.transformType,
+                        });
                         var scm_1 = (0, util_1.parserSchema)(parameterSchema, undefined, keyName, undefined, {
                             autoGenerateId: this_1.autoGenerateId,
+                            transformTypeMap: (_e = this_1.transformType) !== null && _e !== void 0 ? _e : { a: '5' },
                         });
                         var parserKeyName2SchemaWrapNode = null;
                         // dot 参数
@@ -362,6 +369,7 @@ var ParserSwagger = /** @class */ (function () {
                     case 'cookie': {
                         var temp = (0, util_1.parserSchema)(parameterSchema, undefined, keyName, undefined, {
                             autoGenerateId: this_1.autoGenerateId,
+                            transformTypeMap: (_f = this_1.transformType) !== null && _f !== void 0 ? _f : { a: '4' },
                         });
                         if (temp) {
                             if (parameterIn === 'cookie') {
@@ -393,7 +401,7 @@ var ParserSwagger = /** @class */ (function () {
             api.responseContentType = apiMap.produces;
         }
         // 响应数据：V2
-        var responsesSchemaSource = (_f = (_e = apiMap.responses) === null || _e === void 0 ? void 0 : _e['200']) === null || _f === void 0 ? void 0 : _f.schema;
+        var responsesSchemaSource = (_h = (_g = apiMap.responses) === null || _g === void 0 ? void 0 : _g['200']) === null || _h === void 0 ? void 0 : _h.schema;
         // 响应数据：V3，同时获取对于的Content-Type
         if (!responsesSchemaSource) {
             var responsesSchemaTypes = [
@@ -414,15 +422,18 @@ var ParserSwagger = /** @class */ (function () {
             });
         }
         if (responsesSchemaSource && (0, validator_1.validateSchema)(responsesSchemaSource)) {
-            api.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, { autoGenerateId: this.autoGenerateId });
-            if (((_g = api.responseDataSchema) === null || _g === void 0 ? void 0 : _g.type) === 'object') {
+            api.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, {
+                autoGenerateId: this.autoGenerateId,
+                transformTypeMap: (_j = this.transformType) !== null && _j !== void 0 ? _j : { a: '3' },
+            });
+            if (((_k = api.responseDataSchema) === null || _k === void 0 ? void 0 : _k.type) === 'object') {
                 api.responseDataSchema.keyName = '';
             }
         }
     };
     // 解析v2：请求json数据、formData
     ParserSwagger.prototype.parseV2Param = function (_a) {
-        var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
+        var _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
         var api = _a.api, apiMap = _a.apiMap, requestExtraDataSchemaWrap = _a.requestExtraDataSchemaWrap, requestDataSchema = _a.requestDataSchema, requestKeyNameMemo = _a.requestKeyNameMemo, requestSchemaRecord = _a.requestSchemaRecord, parserKeyName2SchemaWrap = _a.parserKeyName2SchemaWrap;
         if (apiMap === null || apiMap === void 0 ? void 0 : apiMap.consumes) {
             api.requestContentType = apiMap === null || apiMap === void 0 ? void 0 : apiMap.consumes;
@@ -446,13 +457,14 @@ var ParserSwagger = /** @class */ (function () {
                         }
                         var scm = (0, util_1.parserSchema)(parameter, undefined, keyName, undefined, {
                             autoGenerateId: this.autoGenerateId,
+                            transformTypeMap: (_f = this.transformType) !== null && _f !== void 0 ? _f : { a: '2' },
                         });
                         if (scm == null) {
                             break;
                         }
                         scm.label = (0, util_1.filterDesc)(scm.title ? scm.title : scm.description ? scm.description : '');
                         // application/x-www-form-urlencoded 类型不属于真正的formData，这是v2独有的特征
-                        if (!((_g = (_f = apiMap.consumes) === null || _f === void 0 ? void 0 : _f.includes) === null || _g === void 0 ? void 0 : _g.call(_f, 'application/x-www-form-urlencoded'))) {
+                        if (!((_h = (_g = apiMap.consumes) === null || _g === void 0 ? void 0 : _g.includes) === null || _h === void 0 ? void 0 : _h.call(_g, 'application/x-www-form-urlencoded'))) {
                             !api.formDataKeyNameList.includes(keyName) && api.formDataKeyNameList.push(keyName);
                         }
                         !requestKeyNameMemo.includes(keyName) && requestKeyNameMemo.push(keyName);
@@ -460,22 +472,28 @@ var ParserSwagger = /** @class */ (function () {
                         break;
                     }
                     case 'body': {
-                        if (((_h = parameter.schema) === null || _h === void 0 ? void 0 : _h.type) === 'object' || ((_j = parameter.schema) === null || _j === void 0 ? void 0 : _j.type) === 'array') {
+                        if (((_j = parameter.schema) === null || _j === void 0 ? void 0 : _j.type) === 'object' || ((_k = parameter.schema) === null || _k === void 0 ? void 0 : _k.type) === 'array') {
                             requestExtraDataSchemaWrap.value = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, parameter.schema, requestKeyNameMemo, {
                                 autoGenerateId: this.autoGenerateId,
+                                transformTypeMap: this.transformType,
                             });
                             // application/json 数据
                             // 如果是普通属性，合并平台属性，整理成一个对象
                             // 还有可能是 'text/plain' 数据
                             // { in: 'body', name: 'body' }
                         }
-                        else if (((_k = parameter.schema) === null || _k === void 0 ? void 0 : _k.type) && (parameter === null || parameter === void 0 ? void 0 : parameter.name)) {
-                            var isTextPlain = (_l = apiMap.consumes) === null || _l === void 0 ? void 0 : _l.includes('text/plain');
-                            var isOctetStream = (_m = apiMap.consumes) === null || _m === void 0 ? void 0 : _m.includes('application/octet-stream');
+                        else if (((_l = parameter.schema) === null || _l === void 0 ? void 0 : _l.type) && (parameter === null || parameter === void 0 ? void 0 : parameter.name)) {
+                            var isTextPlain = (_m = apiMap.consumes) === null || _m === void 0 ? void 0 : _m.includes('text/plain');
+                            var isOctetStream = (_o = apiMap.consumes) === null || _o === void 0 ? void 0 : _o.includes('application/octet-stream');
                             var isRootBody = isTextPlain || isOctetStream;
-                            var t = (0, helpers_1.transformType)(parameter.schema.type, (_o = parameter === null || parameter === void 0 ? void 0 : parameter.schema) === null || _o === void 0 ? void 0 : _o.format, 'string');
+                            var t = (0, helpers_1.transformType)(parameter.schema.type, {
+                                format: (_p = parameter === null || parameter === void 0 ? void 0 : parameter.schema) === null || _p === void 0 ? void 0 : _p.format,
+                                emptyType: 'string',
+                                transformTypeMap: this.transformType,
+                            });
                             var temp = (0, util_1.parserSchema)(parameter.schema, undefined, undefined, undefined, {
-                                autoGenerateId: this.autoGenerateId
+                                autoGenerateId: this.autoGenerateId,
+                                transformTypeMap: (_q = this.transformType) !== null && _q !== void 0 ? _q : { a: '1' },
                             });
                             if (isRootBody) {
                                 requestExtraDataSchemaWrap.value = temp;
@@ -488,12 +506,12 @@ var ParserSwagger = /** @class */ (function () {
                                     title: (0, util_1.filterDesc)(parameter === null || parameter === void 0 ? void 0 : parameter.title),
                                     description: (0, util_1.filterDesc)(parameter === null || parameter === void 0 ? void 0 : parameter.description),
                                     type: t,
-                                    examples: (_p = parameter.examples) !== null && _p !== void 0 ? _p : [],
+                                    examples: (_r = parameter.examples) !== null && _r !== void 0 ? _r : [],
                                     rules: {
-                                        required: !!(parameter === null || parameter === void 0 ? void 0 : parameter.required) || !!((_q = parameter.schema) === null || _q === void 0 ? void 0 : _q.required),
+                                        required: !!(parameter === null || parameter === void 0 ? void 0 : parameter.required) || !!((_s = parameter.schema) === null || _s === void 0 ? void 0 : _s.required),
                                     },
                                     rawType: 'object',
-                                    format: (_r = parameter === null || parameter === void 0 ? void 0 : parameter.format) !== null && _r !== void 0 ? _r : '',
+                                    format: (_t = parameter === null || parameter === void 0 ? void 0 : parameter.format) !== null && _t !== void 0 ? _t : '',
                                 }));
                             }
                         }
@@ -516,6 +534,7 @@ var ParserSwagger = /** @class */ (function () {
             api.requestContentType = ['multipart/form-data'];
             var formDataSchema = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, formDataSource, undefined, {
                 autoGenerateId: this.autoGenerateId,
+                transformTypeMap: this.transformType,
             });
             // 记录表单数据key
             if (formDataSchema) {
@@ -542,6 +561,7 @@ var ParserSwagger = /** @class */ (function () {
                     api.requestContentType = [item];
                     requestExtraDataSchemaWrap.value = (0, util_1.processRequestSchema)(requestDataSchema, requestSchemaRecord, requestSchemaSource, undefined, {
                         autoGenerateId: this.autoGenerateId,
+                        transformTypeMap: this.transformType,
                     });
                     break;
                 }

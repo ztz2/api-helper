@@ -19,6 +19,14 @@ export declare function createSchema(type: APIHelper.SchemaType | 'enum' | 'file
 export declare function createDocument(options?: Partial<APIHelper.Document & Recordable>): APIHelper.Document;
 export declare function createCategory(options?: Partial<APIHelper.Category & Recordable>): APIHelper.Category;
 export declare function createApi(options?: Partial<APIHelper.API & Recordable>): APIHelper.API;
-export declare function transformType(type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: APIHelper.SchemaType): APIHelper.SchemaType;
+export declare type TransformTypeOptions = {
+    format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password';
+    emptyType?: APIHelper.SchemaType;
+    transformTypeMap?: Record<string, string | ((type: string, options?: {
+        format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password';
+        emptyType?: string;
+    }) => string)>;
+};
+export declare function transformType(type: string, options?: TransformTypeOptions, ...args: any[]): APIHelper.SchemaType;
 export declare function getSchema(schema: APIHelper.Schema | null, path?: string, clearKeyName?: boolean): APIHelper.Schema | null;
 export {};

@@ -190,10 +190,35 @@ export function createApi(options?: Partial<APIHelper.API & Recordable>): APIHel
   return instance;
 }
 
-export function transformType(type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: APIHelper.SchemaType): APIHelper.SchemaType {
+export type TransformTypeOptions = {
+  format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password',
+  emptyType?: APIHelper.SchemaType,
+  transformTypeMap?: Record<string, string | ((type: string, options?: { format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: string }) => string)>
+};
+export function transformType(type: string, options?: TransformTypeOptions, ...args: any[]): APIHelper.SchemaType {
   if (Array.isArray(type)) {
     type = type?.[0] ?? 'string';
   }
+
+  const format = options?.format ?? (typeof options === 'string' ? options : null);
+  const emptyType = options?.emptyType ?? args[0];
+
+  const transformTypeMap = options?.transformTypeMap ?? {};
+  if (typeof format === 'string') {
+    if (typeof transformTypeMap[format] === 'string') {
+      return transformTypeMap[format] as APIHelper.SchemaType;
+    }
+    if (typeof transformTypeMap[format] === 'function') {
+      return (transformTypeMap[format] as Function)(type, { format, emptyType }) as APIHelper.SchemaType;
+    }
+  }
+  if (typeof transformTypeMap[type] === 'string') {
+    return transformTypeMap[type] as APIHelper.SchemaType;
+  }
+  if (typeof transformTypeMap[type] === 'function') {
+    return (transformTypeMap[type] as Function)(type, { format, emptyType }) as APIHelper.SchemaType;
+  }
+
   const typeMap: Record<string, APIHelper.SchemaType> = {
     number: 'number',
     byte: 'number',
@@ -227,7 +252,7 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
     file: 'File',
     File: 'File',
     binary: 'File',
-  }
+  };
   if (format === 'binary') {
     return 'File';
   }
@@ -235,7 +260,7 @@ export function transformType(type: string, format?: string | 'int32' | 'int64' 
     return 'string';
   }
   const typeValue = typeMap[type];
-  return typeValue ? typeValue : emptyType ? emptyType : 'unknown';
+  return typeValue ? typeValue : options?.emptyType ? options.emptyType : 'unknown';
 }
 
 export function getSchema(schema: APIHelper.Schema | null, path = '', clearKeyName = true): APIHelper.Schema | null {

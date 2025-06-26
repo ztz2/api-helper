@@ -799,7 +799,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "ID of pet to update",
                 "enum": [],
                 "examples": [],
@@ -810,13 +810,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               StringSchema {
                 "description": "Additional data to pass to server",
@@ -968,7 +970,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -979,13 +981,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               ObjectSchema {
                 "description": "",
@@ -996,7 +1000,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "category",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -1007,13 +1011,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   StringSchema {
                     "description": "",
@@ -1118,7 +1124,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "keyName": "",
                     "label": "",
                     "params": [
-                      StringSchema {
+                      NumberSchema {
                         "description": "",
                         "enum": [],
                         "examples": [],
@@ -1129,13 +1135,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "params": [],
                         "rawType": "integer",
                         "rules": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "pattern": undefined,
+                          "exclusiveMaximum": undefined,
+                          "exclusiveMinimum": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "multipleOf": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "string",
+                        "type": "number",
                       },
                       StringSchema {
                         "description": "",
@@ -1239,7 +1247,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -1250,13 +1258,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               ObjectSchema {
                 "description": "",
@@ -1267,7 +1277,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "category",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -1278,13 +1288,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   StringSchema {
                     "description": "",
@@ -1389,7 +1401,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "keyName": "",
                     "label": "",
                     "params": [
-                      StringSchema {
+                      NumberSchema {
                         "description": "",
                         "enum": [],
                         "examples": [],
@@ -1400,13 +1412,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "params": [],
                         "rawType": "integer",
                         "rules": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "pattern": undefined,
+                          "exclusiveMaximum": undefined,
+                          "exclusiveMinimum": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "multipleOf": undefined,
                           "required": false,
                         },
                         "title": "",
-                        "type": "string",
+                        "type": "number",
                       },
                       StringSchema {
                         "description": "",
@@ -1583,7 +1597,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -1594,13 +1608,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   ObjectSchema {
                     "description": "",
@@ -1611,7 +1627,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "keyName": "category",
                     "label": "",
                     "params": [
-                      StringSchema {
+                      NumberSchema {
                         "description": "",
                         "enum": [],
                         "examples": [],
@@ -1622,13 +1638,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "params": [],
                         "rawType": "integer",
                         "rules": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "pattern": undefined,
+                          "exclusiveMaximum": undefined,
+                          "exclusiveMinimum": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "multipleOf": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "string",
+                        "type": "number",
                       },
                       StringSchema {
                         "description": "",
@@ -1733,7 +1751,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "keyName": "",
                         "label": "",
                         "params": [
-                          StringSchema {
+                          NumberSchema {
                             "description": "",
                             "enum": [],
                             "examples": [],
@@ -1744,13 +1762,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                             "params": [],
                             "rawType": "integer",
                             "rules": {
-                              "maxLength": undefined,
-                              "minLength": undefined,
-                              "pattern": undefined,
+                              "exclusiveMaximum": undefined,
+                              "exclusiveMinimum": undefined,
+                              "maximum": undefined,
+                              "minimum": undefined,
+                              "multipleOf": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "string",
+                            "type": "number",
                           },
                           StringSchema {
                             "description": "",
@@ -1928,7 +1948,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -1939,13 +1959,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   ObjectSchema {
                     "description": "",
@@ -1956,7 +1978,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "keyName": "category",
                     "label": "",
                     "params": [
-                      StringSchema {
+                      NumberSchema {
                         "description": "",
                         "enum": [],
                         "examples": [],
@@ -1967,13 +1989,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "params": [],
                         "rawType": "integer",
                         "rules": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "pattern": undefined,
+                          "exclusiveMaximum": undefined,
+                          "exclusiveMinimum": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "multipleOf": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "string",
+                        "type": "number",
                       },
                       StringSchema {
                         "description": "",
@@ -2078,7 +2102,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "keyName": "",
                         "label": "",
                         "params": [
-                          StringSchema {
+                          NumberSchema {
                             "description": "",
                             "enum": [],
                             "examples": [],
@@ -2089,13 +2113,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                             "params": [],
                             "rawType": "integer",
                             "rules": {
-                              "maxLength": undefined,
-                              "minLength": undefined,
-                              "pattern": undefined,
+                              "exclusiveMaximum": undefined,
+                              "exclusiveMinimum": undefined,
+                              "maximum": undefined,
+                              "minimum": undefined,
+                              "multipleOf": undefined,
                               "required": true,
                             },
                             "title": "",
-                            "type": "string",
+                            "type": "number",
                           },
                           StringSchema {
                             "description": "",
@@ -2203,7 +2229,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "ID of pet to return",
                 "enum": [],
                 "examples": [],
@@ -2214,13 +2240,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
             ],
             "rawType": "object",
@@ -2244,7 +2272,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -2255,13 +2283,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               ObjectSchema {
                 "description": "",
@@ -2272,7 +2302,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "category",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -2283,13 +2313,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": true,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   StringSchema {
                     "description": "",
@@ -2394,7 +2426,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "keyName": "",
                     "label": "",
                     "params": [
-                      StringSchema {
+                      NumberSchema {
                         "description": "",
                         "enum": [],
                         "examples": [],
@@ -2405,13 +2437,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                         "params": [],
                         "rawType": "integer",
                         "rules": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "pattern": undefined,
+                          "exclusiveMaximum": undefined,
+                          "exclusiveMinimum": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "multipleOf": undefined,
                           "required": true,
                         },
                         "title": "",
-                        "type": "string",
+                        "type": "number",
                       },
                       StringSchema {
                         "description": "",
@@ -2510,7 +2544,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "ID of pet that needs to be updated",
                 "enum": [],
                 "examples": [],
@@ -2521,13 +2555,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               StringSchema {
                 "description": "Updated name of the pet",
@@ -2642,7 +2678,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "Pet id to delete",
                 "enum": [],
                 "examples": [],
@@ -2653,13 +2689,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
             ],
             "rawType": "object",
@@ -2744,7 +2782,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -2755,15 +2793,17 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -2774,13 +2814,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               NumberSchema {
                 "description": "",
@@ -2883,7 +2925,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -2894,15 +2936,17 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -2913,13 +2957,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               NumberSchema {
                 "description": "",
@@ -3034,7 +3080,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "ID of pet that needs to be fetched",
                 "enum": [],
                 "examples": [],
@@ -3045,13 +3091,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
             ],
             "rawType": "object",
@@ -3075,7 +3123,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -3086,15 +3134,17 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -3105,13 +3155,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               NumberSchema {
                 "description": "",
@@ -3226,7 +3278,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "ID of the order that needs to be deleted",
                 "enum": [],
                 "examples": [],
@@ -3237,13 +3289,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
             ],
             "rawType": "object",
@@ -3301,7 +3355,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -3312,13 +3366,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   StringSchema {
                     "description": "",
@@ -3547,7 +3603,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -3558,13 +3614,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": true,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               StringSchema {
                 "description": "",
@@ -3756,7 +3814,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "title": "",
                 "type": "string",
               },
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -3767,13 +3825,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               StringSchema {
                 "description": "",
@@ -4118,7 +4178,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "keyName": "",
                 "label": "",
                 "params": [
-                  StringSchema {
+                  NumberSchema {
                     "description": "",
                     "enum": [],
                     "examples": [],
@@ -4129,13 +4189,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                     "params": [],
                     "rawType": "integer",
                     "rules": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "pattern": undefined,
+                      "exclusiveMaximum": undefined,
+                      "exclusiveMinimum": undefined,
+                      "maximum": undefined,
+                      "minimum": undefined,
+                      "multipleOf": undefined,
                       "required": false,
                     },
                     "title": "",
-                    "type": "string",
+                    "type": "number",
                   },
                   StringSchema {
                     "description": "",
@@ -4323,7 +4385,7 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
             "keyName": "",
             "label": "",
             "params": [
-              StringSchema {
+              NumberSchema {
                 "description": "",
                 "enum": [],
                 "examples": [],
@@ -4334,13 +4396,15 @@ exports[`swagger-parser v2 petstore.json: petstore.json 1`] = `
                 "params": [],
                 "rawType": "integer",
                 "rules": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "pattern": undefined,
+                  "exclusiveMaximum": undefined,
+                  "exclusiveMinimum": undefined,
+                  "maximum": undefined,
+                  "minimum": undefined,
+                  "multipleOf": undefined,
                   "required": false,
                 },
                 "title": "",
-                "type": "string",
+                "type": "number",
               },
               StringSchema {
                 "description": "",

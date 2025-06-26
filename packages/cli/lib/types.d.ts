@@ -23,6 +23,7 @@ export interface CommonConfig {
         onRenderInterfaceName?: typeof renderInterfaceName;
         onRenderRequestFunctionName?: typeof renderRequestFunctionName;
     };
+    transformType: Record<string, string | ((type: string, format?: string | 'int32' | 'int64' | 'float' | 'double' | 'byte' | 'binary' | 'date' | 'date-time' | 'password', emptyType?: string) => string)>;
     includeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
     excludeCategory?: Array<string> | ((category: APIHelper.Category) => boolean);
     includeAPI?: Array<string | [string, string?]> | ((api: APIHelper.API) => boolean);

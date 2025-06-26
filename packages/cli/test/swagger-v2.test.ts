@@ -23,10 +23,8 @@ export default {
     }
   ],
   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-  output: {
-    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-    filename: 'api.ts',
-  }
+  outputFilePath: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+  transformType: { 'int64': 'number' },
 };`, {
       folder: tempBasePath,
     });
@@ -48,10 +46,8 @@ export default {
     }
   ],
   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-  output: {
-    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-    filename: 'api.js',
-  }
+  outputFilePath: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+  transformType: { 'int64': 'number' },
 };`, {
       folder: tempBasePath,
     });
@@ -77,10 +73,8 @@ export default {
     }
   ],
   requestFunctionFilePath: '${join(process.cwd(), './test/__temp__/request.ts').replace(/\\/gim, '\\\\')}',
-  output: {
-    path: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
-    filename: 'api.ts',
-  }
+  outputFilePath: '${join(process.cwd(), './test/__temp__').replace(/\\/gim, '\\\\')}',
+  transformType: { 'int64': 'number' },
 };`, {
       folder: tempBasePath,
     });
