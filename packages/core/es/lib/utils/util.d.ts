@@ -144,10 +144,12 @@ export declare function filterSchemaRoot(schemaList: Array<APIHelper.Schema>): (
 export declare function filterKeyName<T extends string>(v: T): T;
 export declare function filterDotKeyName(v: string): string;
 export declare function filterSchemaRequired(schemaList: Array<APIHelper.Schema>): (APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema)[];
-export declare function parserSchema(schema: JSONSchema4, parentSchema?: JSONSchema4, keyName?: string, memo?: Map<JSONSchema4, null>, options?: {
-    autoGenerateId: boolean;
+declare type ParserSchemaOptions = {
+    subNodeMemo?: JSONSchema4[];
+    autoGenerateId?: boolean;
     transformTypeMap?: TransformTypeOptions['transformTypeMap'];
-}): APIHelper.Schema | null;
+};
+export declare function parserSchema(schema: JSONSchema4, parentSchema?: JSONSchema4, keyName?: string, memo?: Map<JSONSchema4, null>, options?: ParserSchemaOptions): APIHelper.Schema | null;
 export declare function processRequestSchema(requestDataSchema: APIHelper.Schema, requestSchemaRecord: Array<JSONSchema4>, requestJSONSchemaSource: JSONSchema4, keyNameMemo?: string[], options?: {
     autoGenerateId: boolean;
     transformTypeMap: TransformTypeOptions['transformTypeMap'];
@@ -179,3 +181,4 @@ export declare function getErrorMessage<T extends string | Error & {
 export declare function formatDate(date: number | string | Date, format?: string): string;
 export declare function processKeyName(keyName: string): string;
 export declare function deepMergeSchema(source: APIHelper.Schema | null, other: APIHelper.Schema | null): APIHelper.Schema | null;
+export {};

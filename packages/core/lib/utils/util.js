@@ -63,7 +63,8 @@ function pushArray(target, value) {
 }
 exports.pushArray = pushArray;
 function checkType(value, type) {
-    return Object.prototype.toString.call(value) === "[object ".concat(type, "]");
+    var _a, _b, _c, _d;
+    return Object.prototype.toString.call(value) === "[object ".concat(type ? (((_c = (_b = (_a = type === null || type === void 0 ? void 0 : type.charAt) === null || _a === void 0 ? void 0 : _a.call(type, 0)) === null || _b === void 0 ? void 0 : _b.toUpperCase) === null || _c === void 0 ? void 0 : _c.call(_b)) + ((_d = type === null || type === void 0 ? void 0 : type.slice) === null || _d === void 0 ? void 0 : _d.call(type, 1))) : type, "]");
 }
 exports.checkType = checkType;
 function isHttp(value) {
@@ -222,44 +223,47 @@ function filterSchemaRequired(schemaList) {
 exports.filterSchemaRequired = filterSchemaRequired;
 function parserSchema(schema, parentSchema, keyName, memo, options) {
     var e_3, _a;
-    var _b, _c, _d, _e, _f, _g, _h, _j;
+    var _b, _c, _d, _e, _f, _g, _h, _j, _k;
     if (parentSchema === void 0) { parentSchema = {}; }
     if (keyName === void 0) { keyName = ''; }
     if (memo === void 0) { memo = new Map(); }
-    if (options === void 0) { options = {
+    if (options === void 0) { options = {}; }
+    var optionsTemp = checkType(options, 'object') ? options : {};
+    var currentOptions = Object.assign({
         autoGenerateId: true,
         transformTypeMap: {},
-    }; }
+    }, optionsTemp);
+    keyName = filterKeyName(keyName);
     if (!schema) {
         return null;
     }
-    if (memo.has(schema)) {
+    if (memo.has(schema) && !((_b = currentOptions === null || currentOptions === void 0 ? void 0 : currentOptions.subNodeMemo) === null || _b === void 0 ? void 0 : _b.includes(schema))) {
         return memo.get(schema);
     }
+    delete currentOptions.subNodeMemo;
     memo.set(schema, null);
-    keyName = filterKeyName(keyName);
     var requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []);
     // 定义数据，收集类型，对象类型在下面在进行单独处理
     var resultSchema = (0, helpers_1.createSchema)((0, helpers_1.transformType)(schema.type, {
         format: schema.format,
         emptyType: 'string',
-        transformTypeMap: options.transformTypeMap
+        transformTypeMap: currentOptions.transformTypeMap
     }), {
-        id: options.autoGenerateId ? randomId() : '',
+        id: currentOptions.autoGenerateId ? randomId() : '',
         title: filterDesc(schema.title),
         description: filterDesc(schema.description),
         keyName: keyName,
         type: (0, helpers_1.transformType)(schema.type, {
             format: schema.format,
             emptyType: 'string',
-            transformTypeMap: options.transformTypeMap,
+            transformTypeMap: currentOptions.transformTypeMap,
         }),
-        examples: (_b = schema.examples) !== null && _b !== void 0 ? _b : [],
+        examples: (_c = schema.examples) !== null && _c !== void 0 ? _c : [],
         rules: {
             required: requiredFieldList.includes(keyName),
         },
         rawType: schema.type,
-        format: (_c = schema === null || schema === void 0 ? void 0 : schema.format) !== null && _c !== void 0 ? _c : '',
+        format: (_d = schema === null || schema === void 0 ? void 0 : schema.format) !== null && _d !== void 0 ? _d : '',
     });
     resultSchema.label = resultSchema.title ? resultSchema.title : resultSchema.description ? resultSchema.description : '';
     try {
@@ -267,7 +271,7 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
         if (schema.enum) {
             resultSchema.enum = schema.enum.filter(function (t) { return !(0, isPlainObject_1.default)(t); });
         }
-        var type = Array.isArray(schema.type) ? ((_e = (_d = schema.type) === null || _d === void 0 ? void 0 : _d[0]) !== null && _e !== void 0 ? _e : 'string') : schema.type;
+        var type = Array.isArray(schema.type) ? ((_f = (_e = schema.type) === null || _e === void 0 ? void 0 : _e[0]) !== null && _f !== void 0 ? _f : 'string') : schema.type;
         // 其他类型处理
         // eslint-disable-next-line default-case
         switch (type) {
@@ -311,14 +315,16 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
             case 'object':
                 if (schema.properties) {
                     var schemaProperties = Object.entries(schema.properties);
+                    var subNodeMemo = [];
                     for (var i = 0; i < schemaProperties.length; i++) {
-                        var _k = __read(schemaProperties[i], 2), childKeyName = _k[0], childSchema = _k[1];
+                        var _l = __read(schemaProperties[i], 2), childKeyName = _l[0], childSchema = _l[1];
                         // fix: 当为Object类型，属性为空，导致成为一个异常的对象
-                        if (((_f = childKeyName === null || childKeyName === void 0 ? void 0 : childKeyName.trim) === null || _f === void 0 ? void 0 : _f.call(childKeyName)) === '') {
+                        if (((_g = childKeyName === null || childKeyName === void 0 ? void 0 : childKeyName.trim) === null || _g === void 0 ? void 0 : _g.call(childKeyName)) === '') {
                             continue;
                         }
                         if ((0, validator_1.validateSchema)(childSchema)) {
-                            var tmp = parserSchema(childSchema, schema, childKeyName, memo, options);
+                            subNodeMemo.push(childSchema);
+                            var tmp = parserSchema(childSchema, schema, childKeyName, memo, __assign(__assign({}, currentOptions), { subNodeMemo: subNodeMemo }));
                             tmp && resultSchema.params.push(tmp);
                         }
                     }
@@ -329,10 +335,10 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
                 // 数组内存在多种类型
                 if (Array.isArray(schema.items)) {
                     try {
-                        for (var _l = __values(schema.items), _m = _l.next(); !_m.done; _m = _l.next()) {
-                            var item = _m.value;
+                        for (var _m = __values(schema.items), _o = _m.next(); !_o.done; _o = _m.next()) {
+                            var item = _o.value;
                             if ((0, validator_1.validateSchema)(item)) {
-                                var tmp = parserSchema(item, schema, '', memo, options);
+                                var tmp = parserSchema(item, schema, '', memo, currentOptions);
                                 if (tmp) {
                                     resultSchema.params.push(tmp);
                                 }
@@ -342,17 +348,17 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
                     catch (e_3_1) { e_3 = { error: e_3_1 }; }
                     finally {
                         try {
-                            if (_m && !_m.done && (_a = _l.return)) _a.call(_l);
+                            if (_o && !_o.done && (_a = _m.return)) _a.call(_m);
                         }
                         finally { if (e_3) throw e_3.error; }
                     }
                     // 数组单一类型 schema.properties
                 }
                 else if (checkType(schema.items, 'Object')) {
-                    if (checkType((_g = schema === null || schema === void 0 ? void 0 : schema.items) === null || _g === void 0 ? void 0 : _g.oneOf, 'Array')) {
-                        (_j = (_h = schema === null || schema === void 0 ? void 0 : schema.items) === null || _h === void 0 ? void 0 : _h.oneOf) === null || _j === void 0 ? void 0 : _j.forEach(function (itm) {
+                    if (checkType((_h = schema === null || schema === void 0 ? void 0 : schema.items) === null || _h === void 0 ? void 0 : _h.oneOf, 'Array')) {
+                        (_k = (_j = schema === null || schema === void 0 ? void 0 : schema.items) === null || _j === void 0 ? void 0 : _j.oneOf) === null || _k === void 0 ? void 0 : _k.forEach(function (itm) {
                             if (itm && (0, validator_1.validateSchema)(itm)) {
-                                var tmp = parserSchema(itm, schema, '', memo, options);
+                                var tmp = parserSchema(itm, schema, '', memo, currentOptions);
                                 if (tmp) {
                                     resultSchema.params.push(tmp);
                                 }
@@ -361,7 +367,7 @@ function parserSchema(schema, parentSchema, keyName, memo, options) {
                     }
                     else {
                         if (schema.items && (0, validator_1.validateSchema)(schema.items)) {
-                            var tmp = parserSchema(schema.items, schema, '', memo, options);
+                            var tmp = parserSchema(schema.items, schema, '', memo, currentOptions);
                             if (tmp) {
                                 resultSchema.params.push(tmp);
                             }

@@ -97,4 +97,10 @@ describe('swagger-parser v3', () => {
     const ahDocument = ahDocumentList[0];
     expect(ahDocument).toMatchSnapshot('x-www-form-urlencoded-param.json');
   });
+  test('same-sibling-node.json', async () => {
+    const openAPIDocumentJSON = await readJsonFile(join(__dirname, './resources/open-api/v3.0/same-sibling-node.json'));
+    const ahDocumentList = await new ParserSwagger(false).parser([openAPIDocumentJSON]);
+    const ahDocument = ahDocumentList[0];
+    expect(ahDocument).toMatchSnapshot('same-sibling-node.json');
+  });
 });

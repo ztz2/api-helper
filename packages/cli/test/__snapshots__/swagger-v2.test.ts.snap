@@ -37,9 +37,9 @@ export interface V2PetPetIdUploadImageRequestByPost {
   // ID of pet to update
   petId: number;
   // Additional data to pass to server
-  additionalMetadata: string;
+  additionalMetadata?: string;
   // file to upload
-  file: File;
+  file?: File;
 }
 /**
  * @description uploads an image
@@ -47,9 +47,9 @@ export interface V2PetPetIdUploadImageRequestByPost {
  * @url [ POST ] /v2/pet/{petId}/uploadImage
  */
 export interface V2PetPetIdUploadImageResponseByPost {
-  code?: number;
-  type?: string;
-  message?: string;
+  code: number;
+  type: string;
+  message: string;
 }
 /**
  * @description uploads an image
@@ -79,19 +79,19 @@ v2PetPetIdUploadImageByPost.requestConfig = {
  * @url [ POST ] /v2/pet
  */
 export interface V2PetRequestByPost {
-  id: number;
-  category: {
-    id: number;
-    name: string;
+  id?: number;
+  category?: {
+    id?: number;
+    name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
-    id: number;
-    name: string;
+  tags?: Array<{
+    id?: number;
+    name?: string;
   }>;
   // pet status in the store
-  status: 'available' | 'pending' | 'sold';
+  status?: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Add a new pet to the store
@@ -120,19 +120,19 @@ v2PetByPost.requestConfig = {
  * @url [ PUT ] /v2/pet
  */
 export interface V2PetRequestByPut {
-  id: number;
-  category: {
-    id: number;
-    name: string;
+  id?: number;
+  category?: {
+    id?: number;
+    name?: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags: Array<{
-    id: number;
-    name: string;
+  tags?: Array<{
+    id?: number;
+    name?: string;
   }>;
   // pet status in the store
-  status: 'available' | 'pending' | 'sold';
+  status?: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Update an existing pet
@@ -170,19 +170,19 @@ export interface V2PetFindByStatusRequestByGet {
  * @url [ GET ] /v2/pet/findByStatus
  */
 export type V2PetFindByStatusResponseByGet = Array<{
-  id?: number;
-  category?: {
-    id?: number;
-    name?: string;
+  id: number;
+  category: {
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags?: Array<{
-    id?: number;
-    name?: string;
+  tags: Array<{
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by status、Multiple status values can be provided with comma separated strings
@@ -221,19 +221,19 @@ export interface V2PetFindByTagsRequestByGet {
  * @url [ GET ] /v2/pet/findByTags
  */
 export type V2PetFindByTagsResponseByGet = Array<{
-  id?: number;
-  category?: {
-    id?: number;
-    name?: string;
+  id: number;
+  category: {
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags?: Array<{
-    id?: number;
-    name?: string;
+  tags: Array<{
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }>;
 /**
  * @description Finds Pets by tags、Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
@@ -265,19 +265,19 @@ export interface V2PetPetIdRequestByGet {
  * @url [ GET ] /v2/pet/{petId}
  */
 export interface V2PetPetIdResponseByGet {
-  id?: number;
-  category?: {
-    id?: number;
-    name?: string;
+  id: number;
+  category: {
+    id: number;
+    name: string;
   };
   name: string;
   photoUrls: Array<string>;
-  tags?: Array<{
-    id?: number;
-    name?: string;
+  tags: Array<{
+    id: number;
+    name: string;
   }>;
   // pet status in the store
-  status?: 'available' | 'pending' | 'sold';
+  status: 'available' | 'pending' | 'sold';
 }
 /**
  * @description Find pet by ID、Returns a single pet
@@ -303,9 +303,9 @@ export interface V2PetPetIdRequestByPost {
   // ID of pet that needs to be updated
   petId: number;
   // Updated name of the pet
-  name: string;
+  name?: string;
   // Updated status of the pet
-  status: string;
+  status?: string;
 }
 /**
  * @description Updates a pet in the store with form data
@@ -398,20 +398,6 @@ v2StoreInventoryByGet.requestConfig = {
  * @url [ POST ] /v2/store/order
  */
 export interface V2StoreOrderRequestByPost {
-  id: number;
-  petId: number;
-  quantity: number;
-  shipDate: string;
-  // Order Status
-  status: 'placed' | 'approved' | 'delivered';
-  complete: boolean;
-}
-/**
- * @description Place an order for a pet
- * @summary Response data types
- * @url [ POST ] /v2/store/order
- */
-export interface V2StoreOrderResponseByPost {
   id?: number;
   petId?: number;
   quantity?: number;
@@ -419,6 +405,20 @@ export interface V2StoreOrderResponseByPost {
   // Order Status
   status?: 'placed' | 'approved' | 'delivered';
   complete?: boolean;
+}
+/**
+ * @description Place an order for a pet
+ * @summary Response data types
+ * @url [ POST ] /v2/store/order
+ */
+export interface V2StoreOrderResponseByPost {
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
+  // Order Status
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Place an order for a pet
@@ -450,13 +450,13 @@ export interface V2StoreOrderOrderIdRequestByGet {
  * @url [ GET ] /v2/store/order/{orderId}
  */
 export interface V2StoreOrderOrderIdResponseByGet {
-  id?: number;
-  petId?: number;
-  quantity?: number;
-  shipDate?: string;
+  id: number;
+  petId: number;
+  quantity: number;
+  shipDate: string;
   // Order Status
-  status?: 'placed' | 'approved' | 'delivered';
-  complete?: boolean;
+  status: 'placed' | 'approved' | 'delivered';
+  complete: boolean;
 }
 /**
  * @description Find purchase order by ID、For valid response try integer IDs with value >= 1 and <= 10. Other values will generated exceptions
@@ -523,15 +523,15 @@ v2StoreOrderOrderIdByDelete.requestConfig = {
  * @url [ POST ] /v2/user/createWithList
  */
 export type V2UserCreateWithListRequestByPost = Array<{
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
   // User Status
-  userStatus: number;
+  userStatus?: number;
 }>;
 /**
  * @description Creates list of users with given input array
@@ -576,15 +576,15 @@ export interface V2UserUsernameRequestByGet {
  * @url [ GET ] /v2/user/{username}
  */
 export interface V2UserUsernameResponseByGet {
-  id?: number;
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  phone?: string;
+  id: number;
+  username: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
   // User Status
-  userStatus?: number;
+  userStatus: number;
 }
 /**
  * @description Get user by user name
@@ -609,14 +609,14 @@ v2UserUsernameByGet.requestConfig = {
 export interface V2UserUsernameRequestByPut {
   // name that need to be updated
   username: string;
-  id: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
   // User Status
-  userStatus: number;
+  userStatus?: number;
 }
 /**
  * @description Updated user、This can only be done by the logged in user.
@@ -741,15 +741,15 @@ v2UserLogoutByGet.requestConfig = {
  * @url [ POST ] /v2/user/createWithArray
  */
 export type V2UserCreateWithArrayRequestByPost = Array<{
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
   // User Status
-  userStatus: number;
+  userStatus?: number;
 }>;
 /**
  * @description Creates list of users with given input array
@@ -785,15 +785,15 @@ v2UserCreateWithArrayByPost.requestConfig = {
  * @url [ POST ] /v2/user
  */
 export interface V2UserRequestByPost {
-  id: number;
-  username: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
+  id?: number;
+  username?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  phone?: string;
   // User Status
-  userStatus: number;
+  userStatus?: number;
 }
 /**
  * @description Create user、This can only be done by the logged in user.

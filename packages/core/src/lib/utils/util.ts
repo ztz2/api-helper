@@ -19,7 +19,7 @@ export function pushArray<T, R>(target: T, value: R): T {
 }
 
 export function checkType<T>(value: T, type: string): boolean{
-  return Object.prototype.toString.call(value) === `[object ${type}]`;
+  return Object.prototype.toString.call(value) === `[object ${type ? (type?.charAt?.(0)?.toUpperCase?.() + type?.slice?.(1)) : type}]`;
 }
 
 export function isHttp<T>(value: T) {
@@ -152,46 +152,53 @@ export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
   return dfs(cloneDeep(schemaList));
 }
 
+type ParserSchemaOptions = {
+  subNodeMemo?: JSONSchema4[],
+  autoGenerateId?: boolean;
+  transformTypeMap?: TransformTypeOptions['transformTypeMap']
+};
 export function parserSchema(
   schema: JSONSchema4,
   parentSchema: JSONSchema4 = {},
   keyName = '',
   memo: Map<JSONSchema4, null> = new Map(),
-  options: {
-    autoGenerateId: boolean;
-    transformTypeMap?: TransformTypeOptions['transformTypeMap']
-  } = {
+  options: ParserSchemaOptions = {}
+): APIHelper.Schema | null {
+  const optionsTemp = checkType(options, 'object') ? options : {};
+
+  const currentOptions: Required<Omit<ParserSchemaOptions, 'subNodeMemo'>> & ParserSchemaOptions = Object.assign({
     autoGenerateId: true,
     transformTypeMap: {},
-  }
-): APIHelper.Schema | null {
+  }, optionsTemp);
+  keyName = filterKeyName(keyName);
+
   if (!schema) {
     return null;
   }
 
-  if (memo.has(schema)) {
+  if (memo.has(schema) && !currentOptions?.subNodeMemo?.includes(schema)) {
     return memo.get(schema) as null;
   }
+  delete currentOptions.subNodeMemo;
 
   memo.set(schema, null);
 
-  keyName = filterKeyName(keyName);
   const requiredFieldList = (Array.isArray(parentSchema.required) ? parentSchema.required : checkType(parentSchema.required, 'String') ? [parentSchema.required] : []) as string[];
 
   // 定义数据，收集类型，对象类型在下面在进行单独处理
   const resultSchema = createSchema(transformType(schema.type as string, {
     format: schema.format,
     emptyType: 'string',
-    transformTypeMap: options.transformTypeMap
+    transformTypeMap: currentOptions.transformTypeMap
   }), {
-    id: options.autoGenerateId ? randomId() : '',
+    id: currentOptions.autoGenerateId ? randomId() : '',
     title: filterDesc(schema.title),
     description: filterDesc(schema.description),
     keyName,
     type: transformType(schema.type as string, {
       format: schema.format,
       emptyType:  'string',
-      transformTypeMap: options.transformTypeMap,
+      transformTypeMap: currentOptions.transformTypeMap,
     }),
     examples: schema.examples ?? [],
     rules: {
@@ -246,19 +253,25 @@ export function parserSchema(
       case 'object':
         if (schema.properties) {
           const schemaProperties = Object.entries(schema.properties);
+          const subNodeMemo = [];
           for (let i = 0; i < schemaProperties.length; i++) {
             const [childKeyName, childSchema] = schemaProperties[i];
             // fix: 当为Object类型，属性为空，导致成为一个异常的对象
             if (childKeyName?.trim?.() === '') {
               continue;
             }
+
             if (validateSchema(childSchema)) {
+              subNodeMemo.push(childSchema);
               const tmp = parserSchema(
                 childSchema,
                 schema as JSONSchema4,
                 childKeyName,
                 memo,
-                options,
+                {
+                  ...currentOptions,
+                  subNodeMemo,
+                },
               );
               tmp && resultSchema.params.push(tmp);
             }
@@ -271,7 +284,7 @@ export function parserSchema(
         if (Array.isArray(schema.items)) {
           for (const item of schema.items) {
             if (validateSchema(item)) {
-              const tmp = parserSchema(item, schema, '', memo, options);
+              const tmp = parserSchema(item, schema, '', memo, currentOptions);
               if (tmp) {
                 resultSchema.params.push(tmp);
               }
@@ -282,7 +295,7 @@ export function parserSchema(
           if (checkType(schema?.items?.oneOf, 'Array')) {
             schema?.items?.oneOf?.forEach((itm) => {
               if (itm && validateSchema(itm)) {
-                const tmp = parserSchema(itm, schema, '', memo, options);
+                const tmp = parserSchema(itm, schema, '', memo, currentOptions);
                 if (tmp) {
                   resultSchema.params.push(tmp);
                 }
@@ -290,7 +303,7 @@ export function parserSchema(
             });
           } else {
             if (schema.items && validateSchema(schema.items)) {
-              const tmp = parserSchema(schema.items, schema, '', memo, options);
+              const tmp = parserSchema(schema.items, schema, '', memo, currentOptions);
               if (tmp) {
                 resultSchema.params.push(tmp);
               }

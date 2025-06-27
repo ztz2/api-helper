@@ -1,0 +1,199 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "XX后台管理APi",
+    "description": "API V1.0",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/tboxDevice/SafetyListmgTJ": {
+      "post": {
+        "tags": [
+          "tboxDevice"
+        ],
+        "summary": "麦谷主动安全统计 (Auth)",
+        "operationId": "tboxDevice-SafetyListmgTJ",
+        "requestBody": {
+          "description": "查询参数",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmTJ"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmTJ"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlarmTJ"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaysDtoWebApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaysDtoWebApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DaysDtoWebApiResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "oauth2": [ ]
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlarmTJ": {
+        "type": "object",
+        "properties": {
+          "event_type": {
+            "type": "string",
+            "description": "主动安全事件类型ID,具体见主动安全事件类型说明",
+            "nullable": true
+          },
+          "belonging": {
+            "type": "integer",
+            "description": "前端不用传",
+            "format": "int32",
+            "nullable": true
+          },
+          "dataAuthority": {
+            "type": "string",
+            "description": "前端不用传",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "安全统计"
+      },
+      "DaysDtoWebApiResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/Status"
+          },
+          "message": {
+            "type": "string",
+            "description": "返回信息",
+            "nullable": true
+          },
+          "timestamp": {
+            "type": "string",
+            "description": "返回时间戳",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DaysDto"
+          }
+        },
+        "additionalProperties": false,
+        "description": "接口返回对象"
+      },
+      "DaysDto": {
+        "type": "object",
+        "properties": {
+          "aggregations": {
+            "$ref": "#/components/schemas/aggregations"
+          },
+          "alarmDay": {
+            "$ref": "#/components/schemas/aggregations"
+          }
+        },
+        "additionalProperties": false,
+        "description": "日期统计"
+      },
+      "aggregations": {
+        "type": "object",
+        "properties": {
+          "days": {
+            "$ref": "#/components/schemas/days"
+          }
+        },
+        "additionalProperties": false,
+        "description": ""
+      },
+      "days": {
+        "type": "object",
+        "properties": {
+          "buckets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/buckets"
+            },
+            "description": "",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "buckets": {
+        "type": "object",
+        "properties": {
+          "key_as_string": {
+            "type": "string",
+            "description": "日期",
+            "nullable": true
+          },
+          "doc_count": {
+            "type": "integer",
+            "description": "条数",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": ""
+      },
+      "Status": {
+        "enum": [
+          200,
+          202,
+          205,
+          210,
+          401,
+          402,
+          403,
+          404,
+          500,
+          1000
+        ],
+        "type": "integer",
+        "description": "状态返回编码",
+        "format": "int32"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "tboxDevice",
+      "description": "tbox设备管理"
+    }
+  ]
+}

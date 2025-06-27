@@ -310,7 +310,7 @@ var ParserSwagger = /** @class */ (function () {
                         });
                         var scm_1 = (0, util_1.parserSchema)(parameterSchema, undefined, keyName, undefined, {
                             autoGenerateId: this_1.autoGenerateId,
-                            transformTypeMap: (_e = this_1.transformType) !== null && _e !== void 0 ? _e : { a: '5' },
+                            transformTypeMap: (_e = this_1.transformType) !== null && _e !== void 0 ? _e : {},
                         });
                         var parserKeyName2SchemaWrapNode = null;
                         // dot 参数
@@ -424,7 +424,7 @@ var ParserSwagger = /** @class */ (function () {
         if (responsesSchemaSource && (0, validator_1.validateSchema)(responsesSchemaSource)) {
             api.responseDataSchema = (0, util_1.parserSchema)(responsesSchemaSource, undefined, undefined, undefined, {
                 autoGenerateId: this.autoGenerateId,
-                transformTypeMap: (_j = this.transformType) !== null && _j !== void 0 ? _j : { a: '3' },
+                transformTypeMap: (_j = this.transformType) !== null && _j !== void 0 ? _j : {},
             });
             if (((_k = api.responseDataSchema) === null || _k === void 0 ? void 0 : _k.type) === 'object') {
                 api.responseDataSchema.keyName = '';

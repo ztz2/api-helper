@@ -238,7 +238,6 @@ export default class ParserSwagger {
               emptyType: 'string',
               transformTypeMap: this.transformType,
             });
-
             let scm = parserSchema(
               parameterSchema,
               undefined,
@@ -246,7 +245,7 @@ export default class ParserSwagger {
               undefined,
               {
                 autoGenerateId: this.autoGenerateId,
-                transformTypeMap: this.transformType ?? { a: '5'},
+                transformTypeMap: this.transformType ?? {},
               }
             );
 
@@ -377,7 +376,7 @@ export default class ParserSwagger {
         undefined,
         {
           autoGenerateId: this.autoGenerateId,
-          transformTypeMap: this.transformType ?? { a: '3'},
+          transformTypeMap: this.transformType ?? {},
         }
       );
       if (api.responseDataSchema?.type === 'object') {
