@@ -153,7 +153,6 @@ export function filterSchemaRequired(schemaList: Array<APIHelper.Schema>) {
 }
 
 type ParserSchemaOptions = {
-  subNodeMemo?: JSONSchema4[],
   autoGenerateId?: boolean;
   transformTypeMap?: TransformTypeOptions['transformTypeMap']
 };
@@ -176,10 +175,9 @@ export function parserSchema(
     return null;
   }
 
-  if (memo.has(schema) && !currentOptions?.subNodeMemo?.includes(schema)) {
+  if (memo.has(schema)) {
     return memo.get(schema) as null;
   }
-  delete currentOptions.subNodeMemo;
 
   memo.set(schema, null);
 
@@ -267,11 +265,8 @@ export function parserSchema(
                 childSchema,
                 schema as JSONSchema4,
                 childKeyName,
-                memo,
-                {
-                  ...currentOptions,
-                  subNodeMemo,
-                },
+                new Map(memo),
+                currentOptions,
               );
               tmp && resultSchema.params.push(tmp);
             }

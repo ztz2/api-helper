@@ -145,7 +145,6 @@ export declare function filterKeyName<T extends string>(v: T): T;
 export declare function filterDotKeyName(v: string): string;
 export declare function filterSchemaRequired(schemaList: Array<APIHelper.Schema>): (APIHelper.IStringSchema | APIHelper.INumberSchema | APIHelper.IObjectSchema | APIHelper.IArraySchema | APIHelper.IBooleanSchema | APIHelper.IFileSchema | APIHelper.INullSchema | APIHelper.IAnySchema | APIHelper.IUnknownSchema)[];
 declare type ParserSchemaOptions = {
-    subNodeMemo?: JSONSchema4[];
     autoGenerateId?: boolean;
     transformTypeMap?: TransformTypeOptions['transformTypeMap'];
 };
